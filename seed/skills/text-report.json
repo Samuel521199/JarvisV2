@@ -1,0 +1,15 @@
+{
+  "schema": "jarvis.skill-seed.v1",
+  "id": "text-report",
+  "method": [
+    "Analyze supplied text",
+    "Persist report in task artifact directory",
+    "Read back and verify digest"
+  ],
+  "capabilities": [
+    "text.analyze.v1",
+    "artifact.write.v1"
+  ],
+  "authorization": "requires-existing-grant",
+  "limits": "local bounded text; no network, arbitrary file access, or subprocess tools"
+}

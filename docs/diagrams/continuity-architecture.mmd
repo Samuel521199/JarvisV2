@@ -1,0 +1,66 @@
+%%{init: {"theme":"base","themeVariables":{"fontSize":"17px","primaryTextColor":"#19324f","lineColor":"#526b88","clusterBkg":"#f5f8fc","clusterBorder":"#c5d3e3","edgeLabelBackground":"#f5f8fc"},"flowchart":{"curve":"linear","nodeSpacing":32,"rankSpacing":40,"wrappingWidth":320}}}%%
+flowchart TB
+  subgraph A["00 入口与连续身份"]
+    direction LR
+    A1["主人 / 工作台 / 语音<br/>自然交流 / 已授权事件"]
+    A2["Continuity 连续身份<br/>起源 / 经历 / 承诺 / 有效规则"]
+    A3["Context Service<br/>个人 / 项目 / 私密的用途视图"]
+    A1 ~~~ A2 ~~~ A3
+  end
+  subgraph B["01 三个职能面"]
+    direction LR
+    B1["定向 Direction<br/>理解目标 / 优先级 / 计划提案"]
+    B2["协作 Engagement<br/>自然沟通 / 办事编排 / 交付"]
+    B3["观察成长 Reflection<br/>SelfModel / 自检 / 自愈 / 进化"]
+    B1 -->|计划候选| B2
+    B2 -->|结果证据| B3
+  end
+  subgraph C["02 职责与能力装配"]
+    direction LR
+    C1["Bot / 子 Bot<br/>长期职责 / 通道 / 触发与范围"]
+    C2["AgentBlueprint + Skill<br/>角色配方 / 按需方法 / 版本"]
+    C3["Registry + Composer<br/>能力核对 / 固定 RunSpec"]
+    C1 -.-> C2
+    C2 -.-> C3
+  end
+  subgraph D["03 共用运行与控制"]
+    direction LR
+    D1["Task Runtime<br/>受理 / 预算 / 恢复 / 动作账本"]
+    D2["Agent Runtime<br/>AgentInstance / 团队 / 一步提案"]
+    D3["规则与监督 / Action Gateway<br/>现行许可 / 停止 / 独立准入"]
+    D1 <-->|派发 / 候选| D2
+    D2 ~~~ D3
+    D1 -->|已绑定动作| D3
+  end
+  subgraph E["04 执行与推理资源"]
+    direction LR
+    E1["Tool + Connector / Worker<br/>文件 / API / MCP / 网页 / 设备"]
+    E2["ModelGateway + 模型部署<br/>用途策略 / 主备 / 本地与外部"]
+    E3["原领域执行器与核验<br/>实际结果 / 版本证据 / 未知状态"]
+    E1 ~~~ E2 ~~~ E3
+  end
+  subgraph F["05 数据与基础"]
+    direction LR
+    F1["原 SQLite / 文件 / 私密存储<br/>按域读写 / 纠正 / 遗忘"]
+    F2["发布与最小恢复通道<br/>隔离候选 / 灰度 / 兼容回退"]
+    F3["Federation 共同体适配<br/>离线自治 / 分域同步 / 所有权对账"]
+    F1 ~~~ F2 ~~~ F3
+  end
+  A -->|当前请求与获准上下文| B
+  B -->|需要行动时才装配| C
+  C -->|原准入接回现有执行器| D
+  D -->|动作经网关，推理经模型用途策略| E
+  E -->|结果留原域，变更及同步各自受控| F
+  NOTE["目标设计 proposed · 2026-10-22<br/>实线：任务与结果；虚线：配方或资料引用<br/>逻辑职责不等于独立进程或 Pod"]
+  F ~~~ NOTE
+  classDef identity fill:#e5f4f4,stroke:#8aabba,color:#19324f;
+  classDef core fill:#eaf2fc,stroke:#8fa9c7,color:#19324f;
+  classDef growth fill:#eeebfa,stroke:#a29ac4,color:#19324f;
+  classDef execution fill:#fff4df,stroke:#bfa578,color:#19324f;
+  classDef note fill:#fff,stroke:#fff,color:#526b88;
+  class A1,A2,A3 identity;
+  class B1,B2,C3,D1,D2 core;
+  class B3,C1,C2,F2 growth;
+  class D3,E1,E2,E3 execution;
+  class F1,F3 identity;
+  class NOTE note;

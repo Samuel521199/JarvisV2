@@ -1,0 +1,12 @@
+flowchart TD
+  Q["确认身份与会话<br/>未知身份使用访客视图"] --> P["筛选允许的数据域<br/>个人 · 成员 · 明确共享"]
+  P --> L{"私密资料已解锁<br/>且本次用途允许？"}
+  L -- "否" --> N["不读取私密正文<br/>必要时请求有效认证"]
+  L -- "是" --> V["仅装配必要内容"]
+  V --> C{"实际输出渠道允许？<br/>云模型 · TTS · 屏幕 · 通知"}
+  C -- "私人渠道允许" --> A["最小必要回答<br/>发送前复核撤销"]
+  C -- "共享场景或渠道不允许" --> B["仅给不泄密提示<br/>转到获准的个人渠道"]
+  classDef private fill:#fff3dd,stroke:#bb8c44,color:#543a19;
+  classDef output fill:#eef6ef,stroke:#6e9675,color:#193c24;
+  class P,L,V,C private;
+  class N,A,B output;

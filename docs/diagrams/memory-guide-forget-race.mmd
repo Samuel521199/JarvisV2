@@ -1,0 +1,17 @@
+sequenceDiagram
+  participant U as 用户
+  participant A as 事实与撤销管理
+  participant W as 后台提取器
+  participant R as 检索与输出
+  A-->>W: 来源 S，修订 r7
+  W->>W: 处理旧资料
+  U->>A: 忘记来源 S 的这项内容
+  A->>A: 先提交撤销与新修订 r8
+  A-->>R: 后续读取失效，发送前再核查
+  A-->>U: 已停止使用；副本清理状态可见
+  W->>A: 迟到候选，依赖 S/r7
+  A-->>W: 拒绝提交：来源已撤销
+  A->>A: 清理受影响摘要、索引与缓存
+  R->>A: 查询或发送前核对当前修订
+  A-->>R: 排除已撤回内容
+  Note over U,R: 已发出的文本无法追回；离线副本单独显示状态

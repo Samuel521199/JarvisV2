@@ -1,0 +1,452 @@
+{
+  "origin": "http://127.0.0.1:18282",
+  "id": "1f65439e8a9f471e99b66d2dcae54b30",
+  "model_submissions": 0,
+  "status": "passed",
+  "errors": [],
+  "before": {
+    "status": "CANDIDATE",
+    "calls": 1
+  },
+  "url": "http://127.0.0.1:18282/api/anatomy/artifacts/c38e85b888f940568947a25b32ab80f2",
+  "receipt": {
+    "artifact": {
+      "adapter_version": "3.0.0",
+      "bytes": 89863,
+      "composition_id": "1f65439e8a9f471e99b66d2dcae54b30",
+      "configuration": {
+        "description": "采用开链正弦几何运动学配置底座、两级转动摆臂与伸缩末端，呈现多自由度轨迹运动。运动按独立正弦函数叠加，无闭环机构动力学求解与负载反作用。",
+        "links": [],
+        "modules": [
+          {
+            "effects": [
+              "trace"
+            ],
+            "id": "robot-arm",
+            "label": "两级摆臂与伸缩末端机械臂",
+            "params": {
+              "parts": [
+                {
+                  "amplitude": 0,
+                  "axis": "z",
+                  "color": "steel",
+                  "frequency": 0,
+                  "id": "base",
+                  "joint": "fixed",
+                  "offset": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "parent": "",
+                  "phase": 0,
+                  "position": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "rotation": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "shape": "cylinder",
+                  "size": [
+                    60,
+                    60,
+                    15
+                  ]
+                },
+                {
+                  "amplitude": 45,
+                  "axis": "z",
+                  "color": "teal",
+                  "frequency": 0.3,
+                  "id": "arm1",
+                  "joint": "revolute",
+                  "offset": [
+                    35,
+                    0,
+                    0
+                  ],
+                  "parent": "base",
+                  "phase": 0,
+                  "position": [
+                    0,
+                    0,
+                    15
+                  ],
+                  "rotation": [
+                    0,
+                    -30,
+                    0
+                  ],
+                  "shape": "box",
+                  "size": [
+                    70,
+                    14,
+                    14
+                  ]
+                },
+                {
+                  "amplitude": 40,
+                  "axis": "y",
+                  "color": "amber",
+                  "frequency": 0.5,
+                  "id": "arm2",
+                  "joint": "revolute",
+                  "offset": [
+                    30,
+                    0,
+                    0
+                  ],
+                  "parent": "arm1",
+                  "phase": 45,
+                  "position": [
+                    70,
+                    0,
+                    0
+                  ],
+                  "rotation": [
+                    0,
+                    30,
+                    0
+                  ],
+                  "shape": "box",
+                  "size": [
+                    60,
+                    10,
+                    12
+                  ]
+                },
+                {
+                  "amplitude": 25,
+                  "axis": "x",
+                  "color": "blue",
+                  "frequency": 0.8,
+                  "id": "slider",
+                  "joint": "prismatic",
+                  "offset": [
+                    15,
+                    0,
+                    0
+                  ],
+                  "parent": "arm2",
+                  "phase": 90,
+                  "position": [
+                    60,
+                    0,
+                    0
+                  ],
+                  "rotation": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "shape": "box",
+                  "size": [
+                    30,
+                    8,
+                    8
+                  ]
+                }
+              ]
+            },
+            "type": "assembly"
+          }
+        ],
+        "title": "自定义机械臂机构（底座、双摆臂与伸缩端）",
+        "unfulfilled": [
+          "真实碰撞检测",
+          "关节及构件受力分析与受力图（动力学/FEA仿真）"
+        ],
+        "version": 1
+      },
+      "host_validation_sha256": {
+        "host/anatomy.py": "f436facd3c37ca7d513a092863ee0a2ee30912b631725fab1c41cf8db00c2b78",
+        "host/anatomy_composer.py": "8a8d5e52b55c879dce124ccc251c99379f613b8b48e7fb4332e62c74d0d71d15",
+        "host/anatomy_scene.py": "684983787c72f6ce2f98a76e217e246e7c4134ba322fef1724bd54141ba82fdf"
+      },
+      "id": "c38e85b888f940568947a25b32ab80f2",
+      "limits": "Bounded declarative teaching scenes; no CAD, combustion/CFD/FEA, circuit transient or hydraulic load solver. Field particles are qualitative.",
+      "mechanism": "studio",
+      "model_calls": 1,
+      "model_receipts": [
+        {
+          "billing": {
+            "amount": 0.00969225,
+            "currency": "USD",
+            "price": {
+              "cache_read": 0.075,
+              "cache_write": null,
+              "checked_at": "2026-10-16",
+              "currency": "USD",
+              "fee_percent": 0,
+              "input": 0.75,
+              "max_input_tokens": 1000000,
+              "output": 3.75,
+              "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+              "valid_until": "2026-12-31"
+            },
+            "reason": "token_rates"
+          },
+          "created": 1792730038.6716104,
+          "error": null,
+          "model": "gemini-3.8-flash",
+          "provider": "vertex",
+          "status": "SUCCEEDED",
+          "usage": {
+            "completion_tokens": 456,
+            "prompt_tokens": 1653,
+            "reasoning_in_completion": false,
+            "reasoning_tokens": 1798,
+            "total_tokens": 3907
+          }
+        }
+      ],
+      "normalizations": [
+        {
+          "from": "robot_arm",
+          "path": "modules[0].id",
+          "to": "robot-arm"
+        }
+      ],
+      "path": "D:\\Jarvis\\user-data\\artifacts\\anatomy\\c38e85b888f940568947a25b32ab80f2.html",
+      "renderer_sha256": {
+        "build.mjs": "2886f069dbfdb4e39b493e2a35ee1d79371df9997a98b6a866c410bcdcec3545",
+        "page.html": "eebf13ce0501fc39fe04c247d1ad3fcc1fa701311b1d749a0be3d66569611ce7",
+        "planetary-model.mjs": "8f323bb11485a666b89ddb1c4649b17962caf2e66a8adf39d932dd04503768ba",
+        "planetary-view.js": "53307d54f37b5d8c61bde91a6d2e5698b45ae53527915382124da6796169cf53",
+        "planetary.html": "faff47da6ddbb94792ffa2c64c7a136d9019a39a2349adbce67c7bcbdbca1f2b",
+        "scene-schema.json": "8a37ef9cac7fa26039b664f8f8ae0eedd4690ab8ee29084c8709b1c9a8bceabd",
+        "studio-model.mjs": "a45a3fa11fbf482724e74a67963b0bb8b65b5dd1c502fc2734fc4b978d2aaad0",
+        "studio-presets.json": "6764674393f9f2c642058ebd8e9fc0d16bc73cdb9b4b212556504c008cfb4e87",
+        "studio-view.js": "c5be412c2ae76184a24c6b291e2dae3629e6c41548eb83863fc38635ae795e57",
+        "studio.html": "0bab7b113972ca9c624a04b37e4ac792ccef9f952edc67a8395eebf81aaee070"
+      },
+      "sha256": "fe6c2bd3f5e438f6a1a8ae958b545cc206f8b253a7ae9e0746883143c989c105",
+      "skill": "gears",
+      "source": {
+        "commit": "1482e8469b0a9e0d8cc18ea2740a01423d29ae80",
+        "copyright": "Copyright (c) 2026 Ryan",
+        "files": {
+          "LICENSE": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+          "SKILL.md.txt": "3423ada45a05033bb6e320dfc3b3ac832569969a5afb059bbfc9096c5cf0c71b",
+          "kit/iso-kit.mjs": "6d3ecc725d30c3b0346da309cf61dfa5a65017c23620bbd4093009d4fb104018",
+          "kit/iso.css": "ef19bac5a42ba9be42b56b2c1cf7fc7e21d332a8060765e9ca1d987b8ab23924",
+          "references/craft.md.txt": "38761fa9b81d66b30e50b05488501d4815830d3627f153d60f76ca783f598936",
+          "references/kit.md.txt": "684672e069fdb52735efabc3f4310dedd840d0c8066a8dc7784be2b7e656be71",
+          "references/motion.md.txt": "dda401ca1b4661a5f0b7c1e33dac6e7e4b8c13d51ca5d9312123a5c02dab320b",
+          "references/verify.md.txt": "fb81437fc5d75094a34432eb6f545644aa228e15173a27d08b3cace912033561"
+        },
+        "license": "MIT",
+        "note": "Markdown reference snapshots use .md.txt locally; bytes and original upstream paths/hashes are retained.",
+        "repository": "https://github.com/wheresryan22/anatomy",
+        "upstream_files": {
+          "LICENSE": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+          "SKILL.md": "3423ada45a05033bb6e320dfc3b3ac832569969a5afb059bbfc9096c5cf0c71b",
+          "kit/iso-kit.mjs": "6d3ecc725d30c3b0346da309cf61dfa5a65017c23620bbd4093009d4fb104018",
+          "kit/iso.css": "ef19bac5a42ba9be42b56b2c1cf7fc7e21d332a8060765e9ca1d987b8ab23924",
+          "references/craft.md": "38761fa9b81d66b30e50b05488501d4815830d3627f153d60f76ca783f598936",
+          "references/kit.md": "684672e069fdb52735efabc3f4310dedd840d0c8066a8dc7784be2b7e656be71",
+          "references/motion.md": "dda401ca1b4661a5f0b7c1e33dac6e7e4b8c13d51ca5d9312123a5c02dab320b",
+          "references/verify.md": "fb81437fc5d75094a34432eb6f545644aa228e15173a27d08b3cace912033561"
+        }
+      },
+      "url": "/api/anatomy/artifacts/c38e85b888f940568947a25b32ab80f2"
+    },
+    "calls": [
+      {
+        "billing": {
+          "amount": 0.00969225,
+          "currency": "USD",
+          "price": {
+            "cache_read": 0.075,
+            "cache_write": null,
+            "checked_at": "2026-10-16",
+            "currency": "USD",
+            "fee_percent": 0,
+            "input": 0.75,
+            "max_input_tokens": 1000000,
+            "output": 3.75,
+            "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+            "valid_until": "2026-12-31"
+          },
+          "reason": "token_rates"
+        },
+        "created": 1792730038.6716104,
+        "error": null,
+        "model": "gemini-3.8-flash",
+        "provider": "vertex",
+        "status": "SUCCEEDED",
+        "usage": {
+          "completion_tokens": 456,
+          "prompt_tokens": 1653,
+          "reasoning_in_completion": false,
+          "reasoning_tokens": 1798,
+          "total_tokens": 3907
+        }
+      }
+    ],
+    "chat_id": "chat-fd79dbe8523342deac40878d5a09473d",
+    "created": 1792730038.6461797,
+    "error": null,
+    "id": "1f65439e8a9f471e99b66d2dcae54b30",
+    "normalizations": [
+      {
+        "from": "robot_arm",
+        "path": "modules[0].id",
+        "to": "robot-arm"
+      }
+    ],
+    "scene": {
+      "description": "采用开链正弦几何运动学配置底座、两级转动摆臂与伸缩末端，呈现多自由度轨迹运动。运动按独立正弦函数叠加，无闭环机构动力学求解与负载反作用。",
+      "links": [],
+      "modules": [
+        {
+          "effects": [
+            "trace"
+          ],
+          "id": "robot-arm",
+          "label": "两级摆臂与伸缩末端机械臂",
+          "params": {
+            "parts": [
+              {
+                "amplitude": 0,
+                "axis": "z",
+                "color": "steel",
+                "frequency": 0,
+                "id": "base",
+                "joint": "fixed",
+                "offset": [
+                  0,
+                  0,
+                  0
+                ],
+                "parent": "",
+                "phase": 0,
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ],
+                "shape": "cylinder",
+                "size": [
+                  60,
+                  60,
+                  15
+                ]
+              },
+              {
+                "amplitude": 45,
+                "axis": "z",
+                "color": "teal",
+                "frequency": 0.3,
+                "id": "arm1",
+                "joint": "revolute",
+                "offset": [
+                  35,
+                  0,
+                  0
+                ],
+                "parent": "base",
+                "phase": 0,
+                "position": [
+                  0,
+                  0,
+                  15
+                ],
+                "rotation": [
+                  0,
+                  -30,
+                  0
+                ],
+                "shape": "box",
+                "size": [
+                  70,
+                  14,
+                  14
+                ]
+              },
+              {
+                "amplitude": 40,
+                "axis": "y",
+                "color": "amber",
+                "frequency": 0.5,
+                "id": "arm2",
+                "joint": "revolute",
+                "offset": [
+                  30,
+                  0,
+                  0
+                ],
+                "parent": "arm1",
+                "phase": 45,
+                "position": [
+                  70,
+                  0,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  30,
+                  0
+                ],
+                "shape": "box",
+                "size": [
+                  60,
+                  10,
+                  12
+                ]
+              },
+              {
+                "amplitude": 25,
+                "axis": "x",
+                "color": "blue",
+                "frequency": 0.8,
+                "id": "slider",
+                "joint": "prismatic",
+                "offset": [
+                  15,
+                  0,
+                  0
+                ],
+                "parent": "arm2",
+                "phase": 90,
+                "position": [
+                  60,
+                  0,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ],
+                "shape": "box",
+                "size": [
+                  30,
+                  8,
+                  8
+                ]
+              }
+            ]
+          },
+          "type": "assembly"
+        }
+      ],
+      "title": "自定义机械臂机构（底座、双摆臂与伸缩端）",
+      "unfulfilled": [
+        "真实碰撞检测",
+        "关节及构件受力分析与受力图（动力学/FEA仿真）"
+      ],
+      "version": 1
+    },
+    "status": "DELIVERED"
+  }
+}

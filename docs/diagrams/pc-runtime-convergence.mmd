@@ -1,0 +1,52 @@
+flowchart TB
+  UI["文字 / 语音 / 桌面 / 可选 BotBinding<br/>事件与持续职责，不另建执行栈"]
+  subgraph HOST["本机宿主（proposed）"]
+    CORE["个人助手核心<br/>持续身份 / 人格 / 交流 / 注意力"]
+    CONTEXT["Context Service<br/>个人 / 项目 / 世界的获准视图"]
+    COMPOSE["Planner + Composer<br/>目标 → 方法 → 固定 RunSpec"]
+    CATALOG["能力目录 + SelfModel 派生观察<br/>蓝图 / Skill / Tool / 依赖与证据"]
+    TASK["Task Runtime<br/>唯一任务与动作账本 / 等待与恢复"]
+    AGENT["Agent Runtime<br/>按需实例 / 独立上下文 / 提出下一步"]
+    GATE["Action Gateway + 资源准入<br/>现行许可 / 停止代际 / 父任务预算"]
+    MODEL["ModelGateway<br/>按用途主备 / 本地或云端 / 用量"]
+    DOMAIN["领域服务与本地存储<br/>唯一写入者 / 证据与产物引用"]
+    GROW["自检 / 自愈 / 进化<br/>候选研发 → 独立验收 → 灰度 / 回退"]
+    CORE -->|需要行动| COMPOSE
+    CATALOG --> COMPOSE
+    COMPOSE -->|待准入配置| TASK
+    TASK -->|认知步骤| AGENT
+    AGENT -->|动作或子任务候选| TASK
+    TASK -->|确定性或工具动作| GATE
+    CORE --> CONTEXT
+    AGENT --> CONTEXT
+    CORE --> MODEL
+    AGENT --> MODEL
+    TASK --> DOMAIN
+    CONTEXT --> DOMAIN
+    DOMAIN -->|真实结果与进度| CORE
+    DOMAIN -.->|反馈与证据| GROW
+    GROW -->|研发任务| TASK
+    GROW -->|获准版本| CATALOG
+  end
+  UI <--> CORE
+  WORK["按需隔离 Worker / Connector<br/>API / 文件 / 浏览器 / 桌面 / 设备"]
+  INFER["共享模型服务<br/>云端或按需本地权重"]
+  SYNC["共同体适配器<br/>分域事件 / 检查点交接 / 所有权核验"]
+  CONTROL["独立监督、停止与最小恢复<br/>锁存后禁止业务自动复活"]
+  GATE --> WORK
+  WORK -->|回执与核验| DOMAIN
+  MODEL --> INFER
+  DOMAIN <-->|获准数据与任务交接| SYNC
+  CONTROL -.-> TASK
+  CONTROL -.-> GATE
+  CONTROL -.-> GROW
+  classDef control fill:#e9f1fc,stroke:#537aac,color:#18324f;
+  classDef personal fill:#e5f5f9,stroke:#21869b,color:#123f4a,stroke-width:2px;
+  classDef optional fill:#f4efff,stroke:#9070bf,color:#403154;
+  classDef external fill:#eaf6f2,stroke:#579982,color:#244d40;
+  classDef safety fill:#fff0e6,stroke:#b36635,color:#64351b;
+  class COMPOSE,CATALOG,TASK,AGENT,GATE,MODEL control;
+  class CORE,CONTEXT personal;
+  class GROW,SYNC optional;
+  class UI,WORK,INFER,DOMAIN external;
+  class CONTROL safety;

@@ -1,0 +1,10 @@
+{
+  "schema": "jarvis.evaluation-fixture.v1",
+  "purpose": "Independent behavior fixture; implementation candidates do not select expected outputs",
+  "cases": [
+    {"input": "", "expected": {"characters": 0, "lines": 0, "words": 0, "utf8_bytes": 0}},
+    {"input": "hello world\n", "expected": {"characters": 12, "lines": 1, "words": 2, "utf8_bytes": 12}},
+    {"input": "你好 世界", "expected": {"characters": 5, "lines": 1, "words": 2, "utf8_bytes": 13}},
+    {"input": "a\tb\n\nc", "expected": {"characters": 6, "lines": 3, "words": 3, "utf8_bytes": 6}}
+  ]
+}

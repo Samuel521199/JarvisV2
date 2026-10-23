@@ -1,0 +1,146 @@
+{
+  "type": "object",
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "jarvis.development.v1"
+    },
+    "request_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "[A-Za-z0-9][A-Za-z0-9._-]{0,79}"
+    },
+    "principal_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "[A-Za-z0-9][A-Za-z0-9._-]{0,79}"
+    },
+    "scope_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "[A-Za-z0-9][A-Za-z0-9._-]{0,79}"
+    },
+    "grant_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "[A-Za-z0-9][A-Za-z0-9._-]{0,79}"
+    },
+    "goal": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4000
+    },
+    "capability": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "plugin\\.[a-z][a-z0-9-]{0,40}\\.v1"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4000
+    },
+    "public_cases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "input": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 8000
+          },
+          "expected": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 8000
+          }
+        },
+        "required": [
+          "input",
+          "expected"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 32
+    },
+    "evaluation_cases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "input": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 8000
+          },
+          "expected": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 8000
+          }
+        },
+        "required": [
+          "input",
+          "expected"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 32
+    },
+    "sample_input": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 8000
+    },
+    "limits": {
+      "type": "object",
+      "properties": {
+        "max_attempts": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3
+        },
+        "max_model_calls": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 8
+        },
+        "max_seconds": {
+          "type": "integer",
+          "minimum": 30,
+          "maximum": 1800
+        }
+      },
+      "required": [
+        "max_attempts",
+        "max_model_calls",
+        "max_seconds"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema",
+    "request_id",
+    "principal_id",
+    "scope_id",
+    "grant_id",
+    "goal",
+    "capability",
+    "description",
+    "public_cases",
+    "evaluation_cases",
+    "sample_input",
+    "limits"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

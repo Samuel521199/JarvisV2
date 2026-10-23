@@ -1,0 +1,41 @@
+sequenceDiagram
+  autonumber
+  participant P as 主人/已授权事件
+  participant C as 个人核心
+  participant A as 装配器
+  participant T as Task Runtime
+  participant R as Agent Runtime
+  participant M as 模型网关
+  participant D as 动作门/领域执行器
+  Note over P,D: 目标时序 proposed；0.1.107 只完成首批装配与原执行器绑定
+  P->>C: 当前目标或有效职责触发
+  alt 普通交流
+    C-->>P: 沿原聊天链回复
+  else 需要执行的目标
+    C->>A: 原请求、获准上下文与候选能力
+    A-->>T: 固定 RunSpec，保留原请求身份
+    T->>T: 去重、受理、预算及任务持久化
+    T-->>C: 可查询进展；前台继续交流
+    loop 有界步骤；未达到终止条件
+      alt 确定性工作流步骤
+        T->>D: 复核后提交原动作
+      else 需要语义判断
+        T->>R: 当前检查点、任务修订、用途视图
+        R->>M: 一次有界请求；仅获准资料
+        M-->>R: 候选及调用回执
+        R-->>T: respond / propose_action / wait 等
+        T->>T: 验证类型、版本、代际和剩余预算
+        opt 动作候选被准入
+          T->>D: 原 action_id 与核定参数
+        end
+      end
+      opt 本步确已提交领域动作
+        D-->>T: 领域结果、UNKNOWN 或等待条件
+      end
+      T->>T: 保存回执引用与检查点
+      Note over T,R: 等待时释放槽位；到达事件后重新准入
+    end
+    T-->>C: 已核验产物与真实状态；未完成则保留原因
+    C-->>P: 结果、未完成项及需要关注的变化
+    Note over C,T: 经验只提交候选；原记忆和知识域决定纳入
+  end

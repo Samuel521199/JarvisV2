@@ -1,0 +1,15 @@
+flowchart TD
+  S["受管原件与事件<br/>原话 · 时间 · 版本 · 实际回执"] --> W["短期工作记忆<br/>指代 · 当前约束 · 检查点"]
+  S --> C["候选主张<br/>来源 · 范围 · 适用条件"]
+  C --> V["核对与提交<br/>矛盾 · 修订 · 撤销"]
+  V --> F["事实与共同经历<br/>可纠正 · 可遗忘"]
+  F --> K["主题知识与方法<br/>结论 · 反例 · 证据"]
+  F --> I["派生索引<br/>词项 · 向量 · 关系"]
+  K --> I
+  I --> R["本轮上下文<br/>按身份与用途过滤"]
+  W --> R
+  S -. "需要时回查原件" .-> R
+  classDef truth fill:#e7f2ff,stroke:#6089b3,color:#18334f;
+  classDef view fill:#eef6ef,stroke:#6e9675,color:#193c24;
+  class S,F truth;
+  class W,K,I,R view;

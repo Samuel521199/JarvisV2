@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "jarvis.goal-plan.v1"
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 2000
+    },
+    "input_text": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 12000
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 200
+          },
+          "capability": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 80
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "input",
+              "previous"
+            ]
+          },
+          "expected": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 1000
+          }
+        },
+        "required": [
+          "title",
+          "capability",
+          "source",
+          "expected"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0,
+      "maxItems": 4
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 0,
+        "maxLength": 500
+      },
+      "minItems": 0,
+      "maxItems": 4
+    }
+  },
+  "required": [
+    "schema",
+    "summary",
+    "input_text",
+    "steps",
+    "questions"
+  ],
+  "additionalProperties": false
+}

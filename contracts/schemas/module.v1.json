@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:jarvis:module:v1",
+  "title": "Jarvis module v1",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "jarvis.module.v1"
+    },
+    "module_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "[A-Za-z0-9][A-Za-z0-9._-]{0,79}"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 40,
+      "pattern": "[0-9]+\\.[0-9]+\\.[0-9]+"
+    },
+    "runtime_provider_ref": {
+      "type": "string",
+      "const": "trusted-builtin.v1"
+    },
+    "provides": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 80,
+        "pattern": "[A-Za-z0-9][A-Za-z0-9._-]{0,79}"
+      },
+      "minItems": 1,
+      "maxItems": 16
+    },
+    "requires": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 80,
+        "pattern": "[A-Za-z0-9][A-Za-z0-9._-]{0,79}"
+      },
+      "minItems": 0,
+      "maxItems": 16
+    },
+    "implementations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 80,
+        "pattern": "[A-Za-z0-9][A-Za-z0-9._-]{0,79}"
+      },
+      "minItems": 1,
+      "maxItems": 8
+    },
+    "state_schema": {
+      "type": "string",
+      "const": "stateless.v1"
+    },
+    "management": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "describe",
+          "probe",
+          "start",
+          "stop",
+          "rollback"
+        ]
+      },
+      "minItems": 1,
+      "maxItems": 8
+    },
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "sha256": {
+            "type": "string",
+            "minLength": 64,
+            "maxLength": 64,
+            "pattern": "[0-9a-f]{64}"
+          }
+        },
+        "required": [
+          "path",
+          "sha256"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 16
+    },
+    "source": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "license": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80
+    },
+    "isolation": {
+      "type": "string",
+      "const": "trusted-host-not-os-sandbox"
+    }
+  },
+  "required": [
+    "schema",
+    "module_id",
+    "version",
+    "runtime_provider_ref",
+    "provides",
+    "requires",
+    "implementations",
+    "state_schema",
+    "management",
+    "files",
+    "source",
+    "license",
+    "isolation"
+  ],
+  "additionalProperties": false
+}

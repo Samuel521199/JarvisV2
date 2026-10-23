@@ -1,0 +1,929 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>&lt;/script&gt;&lt;img src=x onerror=alert(1)&gt; · Anatomy</title><style id="studio-style">
+:root{font-family:Inter,"Segoe UI","Microsoft YaHei",sans-serif;color:#20303f;background:#f3f5f7;--panel:#fff;--line:#dce3e9;--muted:#637484;--ink:#20303f;--accent:#087c83}*{box-sizing:border-box}body{margin:0}body.dark{color:#e4ecf5;background:#111b26;--panel:#1b2835;--line:#344656;--muted:#a0b2c3;--ink:#e4ecf5;--accent:#67d7d1}header{max-width:1500px;margin:auto;padding:32px 32px 20px;display:flex;justify-content:space-between;gap:24px}h1{font-size:27px;line-height:1.35;margin:8px 0 10px;letter-spacing:-.5px}p{line-height:1.7;margin:8px 0}.eyebrow{font-size:11px;letter-spacing:2px;color:var(--accent);font-weight:700}.note{font-size:12px;color:var(--muted)}button,select,input,textarea{font:inherit;color:inherit}button,select{background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:9px 13px}button{cursor:pointer}button:hover{border-color:var(--accent)}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #26a7be;outline-offset:3px}button.primary{background:#087c83;color:white;border-color:#087c83}.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.layout{max-width:1500px;margin:auto;padding:0 32px 32px;display:grid;grid-template-columns:275px minmax(0,1fr);gap:20px}aside,.module,.info{background:var(--panel);border:1px solid var(--line);border-radius:16px}aside{padding:20px;align-self:start;position:sticky;top:18px}h2{font-size:15px;margin:0 0 10px}h3{font-size:15px;margin:0}.field{display:block;font-size:12px;margin:16px 0}.field>span{display:flex;justify-content:space-between;gap:12px;margin-bottom:8px}.field input[type=range]{width:100%;accent-color:#087c83}.field select{width:100%}.check{display:flex;align-items:center;gap:8px;margin:10px 0;font-size:12px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.grid.single{grid-template-columns:1fr}.module{overflow:hidden}.module-head{padding:18px 20px 8px;display:flex;justify-content:space-between;gap:14px}.pill{font-size:10px;border-radius:30px;padding:5px 9px;background:#e9f3f4;color:#146f77;white-space:nowrap;align-self:start}.drawing{display:block;width:100%;height:auto;background:radial-gradient(ellipse at 48% 50%,#fff 0%,#f4f8fa 90%)}.dark .drawing{background:#182735}.metrics{display:flex;flex-wrap:wrap;gap:10px;padding:12px 20px;border-top:1px solid var(--line);min-height:66px}.metric{flex:1;min-width:92px}.metric small{display:block;color:var(--muted);font-size:10px;margin-bottom:4px}.metric b{font-size:14px;font-variant-numeric:tabular-nums}.module-note{font-size:11px;color:var(--muted);padding:0 20px 14px;line-height:1.65}.info{padding:20px;margin-top:18px}.flow{display:flex;gap:8px;flex-wrap:wrap;font-size:12px;margin-bottom:18px}.flow span{border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:7px 10px}.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:11px;margin:12px 0;color:var(--muted)}.dot{width:8px;height:8px;display:inline-block;border-radius:50%;margin-right:5px}.dot.blue{background:#42b8e8}.dot.orange{background:#fba049}.dot.yellow{background:#f8cc4e}.dot.purple{background:#a08be3}details{margin-top:20px;font-size:12px}.component-controls{border-bottom:1px solid var(--line);padding-bottom:12px;margin-top:15px}.component-controls>summary{font-weight:600;line-height:1.7}summary{cursor:pointer}textarea{width:100%;min-height:280px;font-family:Consolas,monospace;font-size:11px;line-height:1.6;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px;margin:12px 0;resize:vertical}a{color:var(--accent)}pre{white-space:pre-wrap;font-size:10px;color:var(--muted)}#status{min-height:22px}#errors{color:#c45f35}#timeline{width:100%;accent-color:#087c83}.axis{stroke:#8294a6;stroke-width:3;fill:none;stroke-linecap:round}.wire{stroke:#81a5b8;stroke-width:1.2;fill:#95b5c4;fill-opacity:.05}.metal{fill:#a6bbc8;stroke:#617d91;stroke-width:1}.lightmetal{fill:#dce7ee;stroke:#819db0;stroke-width:1}.copper{fill:#de985d;stroke:#aa6c3f;stroke-width:1}.motorfill{fill:#96b7c9;stroke:#4d7a92}.current{stroke:#f1bb33;stroke-width:3;fill:none}.water{stroke:#43b4dc;fill:#68c9e2;fill-opacity:.23}.drawing text{font-family:"Segoe UI","Microsoft YaHei",sans-serif;font-size:11px;fill:#405f74}.dark .drawing text{fill:#c1d2df}.muted-path{stroke:#7695a9;fill:none;stroke-width:2}.flame{fill:#ff9951;stroke:#f0b64c;stroke-width:.7}.iso-solid .iso-fill{fill:#b4c8d4}.iso-solid .iso-top{fill:#deebef}.iso-solid .iso-line{stroke:#6b899e;stroke-width:.8;fill:none}.iso-solid .iso-edge{stroke:#6b899e;stroke-width:.8;fill:none}.iso-shade[data-shade="0"]{fill:#7898ab}.iso-shade[data-shade="1"]{fill:#8aa8ba}.iso-shade[data-shade="2"]{fill:#9cb9c9}.iso-shade[data-shade="3"]{fill:#acc5d2}.piston .iso-fill{fill:#76a7c2}.piston .iso-top{fill:#c0dbe9}.base .iso-fill{fill:#b4c8cf}.base .iso-top{fill:#dde8ec}.gas path{stroke-width:0}.drawing .small{font-size:9px}.warning{color:#b76a23}footer{max-width:1500px;margin:auto;padding:0 32px 30px;font-size:11px;color:var(--muted)}@media(min-width:1150px){.grid.single .drawing{max-height:480px}}@media(max-width:950px){header{padding:22px 18px 16px}.layout{grid-template-columns:1fr;padding:0 18px 20px}aside{position:static}.grid{grid-template-columns:1fr}aside .controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 20px}footer{padding:0 18px 24px}}@media(max-width:520px){header{display:block}h1{font-size:23px}.toolbar{margin-top:16px}aside .controls{display:block}.module-head{padding:15px}.metrics{padding:12px 15px}.pill{font-size:9px}}
+</style></head><body><header><div><div class="eyebrow">JARVIS / ANATOMY STUDIO · 3.0</div><h1 id="title">&lt;/script&gt;&lt;img src=x onerror=alert(1)&gt;</h1><p id="description" class="note">电路驱动电机，经减速齿轮带动水泵，再驱动水槽。轴速按传动比联动，水泵到波幅为教学映射；没有求解水力负载反馈。</p></div><div class="toolbar"><button id="theme" title="切换明暗配色">明暗</button><button id="save-svg">导出全景 SVG</button><button id="save-json">保存场景 JSON</button><button id="save-html">保存交互 HTML</button></div></header>
+<div class="layout"><aside><h2>实验控制</h2><p class="note">统一时间轴，关联组件同步运动。调节参数会更新联动读数。</p><div class="toolbar"><button class="primary" id="play">播放</button><button id="step">步进</button><button id="reset">归零</button></div><label class="field"><span>演示时间倍率 <b id="scale-label">0.10×</b></span><input id="scale" type="range" min="0.01" max="1" step="0.01" value="0.1" style=""></label><label class="field"><span>仿真时刻（秒）<b id="time-label">0.00</b></span><input id="timeline" type="range" min="0" max="10" step="0.01" value="0" style=""></label><label class="check"><input id="effects" type="checkbox" checked="" style="">显示气流 / 火焰 / 电流 / 水波</label><label class="check"><input id="cutaway" type="checkbox" checked="" style="">显示结构外壳与剖视线</label><p id="status" class="note" role="status">已暂停 · 可以拖动时间或单步。</p><hr><div class="controls" id="controls"><details class="component-controls" open=""><summary>电源与直流电机</summary><label class="field"><span>电源电压 / V<b>24</b></span><input data-module="motor" data-param="voltage" aria-label="电源与直流电机 电源电压 / V" type="range" min="0" max="24" step="0.01"></label><label class="field"><span>电枢电阻 / Ω<b>4</b></span><input data-module="motor" data-param="resistance" aria-label="电源与直流电机 电枢电阻 / Ω" type="range" min="1" max="20" step="0.01"></label><label class="field"><span>电机常数 / SI<b>0.08</b></span><input data-module="motor" data-param="constant" aria-label="电源与直流电机 电机常数 / SI" type="range" min="0.02" max="0.3" step="0.001"></label><label class="field"><span>负载转矩 / N·m<b>0.04</b></span><input data-module="motor" data-param="load" aria-label="电源与直流电机 负载转矩 / N·m" type="range" min="0" max="0.2" step="0.001"></label><label class="field"><span>电路开关<b>开启</b></span><select data-module="motor" data-param="switch_closed" aria-label="电源与直流电机 电路开关"><option value="true">开启</option><option value="false">关闭</option></select></label><label class="check"><input type="checkbox" aria-label="电源与直流电机 电流"><span>电流</span></label><label class="check"><input type="checkbox" aria-label="电源与直流电机 磁场"><span>磁场</span></label></details><details class="component-controls"><summary>一级减速传动</summary><label class="field"><span>设定转速 / rpm<small> · 前级驱动</small><b>60</b></span><input data-module="gear" data-param="rpm" aria-label="一级减速传动 设定转速 / rpm" type="range" min="-120" max="120" step="1" disabled="" title="由前级轴速连接控制"></label><label class="field"><span>输入齿数<b>18</b></span><input data-module="gear" data-param="teeth_a" aria-label="一级减速传动 输入齿数" type="range" min="12" max="60" step="1"></label><label class="field"><span>输出齿数<b>36</b></span><input data-module="gear" data-param="teeth_b" aria-label="一级减速传动 输出齿数" type="range" min="12" max="60" step="1"></label><label class="check"><input type="checkbox" aria-label="一级减速传动 运动轨迹"><span>运动轨迹</span></label></details><details class="component-controls"><summary>离心叶轮与水流</summary><label class="field"><span>设定转速 / rpm<small> · 前级驱动</small><b>600</b></span><input data-module="pump" data-param="rpm" aria-label="离心叶轮与水流 设定转速 / rpm" type="range" min="0" max="1500" step="1" disabled="" title="由前级轴速连接控制"></label><label class="check"><input type="checkbox" aria-label="离心叶轮与水流 水流"><span>水流</span></label></details><details class="component-controls"><summary>被驱动水波槽</summary><label class="field"><span>波幅 / m<b>0.025</b></span><input data-module="water" data-param="amplitude" aria-label="被驱动水波槽 波幅 / m" type="range" min="0" max="0.04" step="0.001"></label><label class="field"><span>波长 / m<b>1.8</b></span><input data-module="water" data-param="wavelength" aria-label="被驱动水波槽 波长 / m" type="range" min="0.5" max="4" step="0.01"></label><label class="field"><span>水深 / m<b>0.5</b></span><input data-module="water" data-param="depth" aria-label="被驱动水波槽 水深 / m" type="range" min="0.2" max="2" step="0.01"></label><label class="field"><span>反向波干涉<b>关闭</b></span><select data-module="water" data-param="interference" aria-label="被驱动水波槽 反向波干涉"><option value="true">开启</option><option value="false">关闭</option></select></label><label class="check"><input type="checkbox" aria-label="被驱动水波槽 水面波动"><span>水面波动</span></label></details></div><details open=""><summary>场景配置与自由组合</summary><p class="note">可以增删已登记组件及连接。自由描述生成入口在 Jarvis 技能页；这里可直接编辑 JSON，效果立即预览。</p><label class="field">切换示例<select id="preset"><option value="">保留当前配置</option><option value="engine">四缸发动机 · 720° 工作循环</option><option value="jet">喷气引擎 · 从进气到尾流</option><option value="electric-water">电 → 机械 → 水波</option><option value="waves">线性水波 · 双向干涉</option><option value="hybrid">发动机驱动水泵</option><option value="robot">自由机构 · 关节机械臂</option></select></label><textarea id="scene-editor" aria-label="场景 JSON 配置" spellcheck="false" style=""></textarea><button id="apply">校验并应用配置</button><p id="errors" role="alert"></p><button id="schema">查看组件结构</button><pre id="schema-text" hidden=""></pre></details></aside><main><div class="flow" id="connections"><span>电源与直流电机 → 一级减速传动 · 轴速 × 1</span><span>一级减速传动 → 离心叶轮与水流 · 轴速 × 1</span><span>离心叶轮与水流 → 被驱动水波槽 · 波幅映射 × 1</span></div><div id="grid" class="grid"><section class="module" data-id="motor"><div class="module-head"><h3>电源与直流电机</h3><span class="pill">直流电机与电路</span></div><svg viewBox="0 0 600 330" role="img" aria-label="电源与直流电机 动态教学剖视" class="drawing"><path d="M55 215L55 71L178 71L215 71L315 71L315 114" class="muted-path"></path><path d="M315 221L315 260L55 260L55 244" class="muted-path"></path><line x1="38" y1="216" x2="72" y2="216" stroke="#d6aa36" stroke-width="3"></line><line x1="44" y1="230" x2="65" y2="230" stroke="#d6aa36" stroke-width="5"></line><text x="26" y="190">24.0 V</text><circle cx="178" cy="71" r="3" class="metal"></circle><circle cx="216" cy="71" r="3" class="metal"></circle><line x1="178" y1="71" x2="216" y2="71" stroke="#ca9c38" stroke-width="3"></line><rect x="238" y="111" width="161" height="113" rx="26" fill="#aac0cd" fill-opacity=".1" stroke="#7894a6" stroke-width="2"></rect><rect x="256" y="121" width="126" height="23" rx="7" fill="#d98e7e"></rect><rect x="256" y="192" width="126" height="22" rx="7" fill="#7d9dc8"></rect><text x="271" y="137">N</text><text x="271" y="208">S</text><circle cx="318" cy="167" r="38" class="lightmetal"></circle><line x1="330" y1="167" x2="352" y2="167" stroke="#d39558" stroke-width="9" stroke-linecap="round"></line><line x1="318" y1="179" x2="318" y2="201" stroke="#d39558" stroke-width="9" stroke-linecap="round"></line><line x1="306" y1="167" x2="284" y2="167" stroke="#d39558" stroke-width="9" stroke-linecap="round"></line><line x1="318" y1="155" x2="318" y2="133" stroke="#d39558" stroke-width="9" stroke-linecap="round"></line><circle cx="318" cy="167" r="10" class="metal"></circle><line x1="352" y1="167" x2="465" y2="167" stroke="#a6b5c0" stroke-width="8"></line><circle cx="466" cy="167" r="27" class="metal"></circle><line x1="466" y1="167" x2="487" y2="167" stroke="#f5b64d" stroke-width="4"></line><path d="M276 147L276 190" stroke="#a494d3" stroke-width="1" stroke-dasharray="3 4" fill="none"></path><path d="M297 147L297 190" stroke="#a494d3" stroke-width="1" stroke-dasharray="3 4" fill="none"></path><path d="M318 147L318 190" stroke="#a494d3" stroke-width="1" stroke-dasharray="3 4" fill="none"></path><path d="M339 147L339 190" stroke="#a494d3" stroke-width="1" stroke-dasharray="3 4" fill="none"></path><path d="M360 147L360 190" stroke="#a494d3" stroke-width="1" stroke-dasharray="3 4" fill="none"></path><circle cx="55" cy="215" r="2.4" fill="#efbf36" opacity=".85"></circle><circle cx="55" cy="186.20000000000002" r="2.4" fill="#efbf36" opacity=".85"></circle><circle cx="55" cy="157.4" r="2.4" fill="#efbf36" opacity=".85"></circle><circle cx="55" cy="128.60000000000002" r="2.4" fill="#efbf36" opacity=".85"></circle><circle cx="55" cy="99.80000000000003" r="2.4" fill="#efbf36" opacity=".85"></circle><circle cx="55" cy="71.00000000000003" r="2.4" fill="#efbf36" opacity=".85"></circle><circle cx="106.99999999999993" cy="71" r="2.4" fill="#efbf36" opacity=".85"></circle><circle cx="159.00000000000009" cy="71" r="2.4" fill="#efbf36" opacity=".85"></circle><circle cx="210.99999999999991" cy="71" r="2.4" fill="#efbf36" opacity=".85"></circle><circle cx="263.00000000000006" cy="71" r="2.4" fill="#efbf36" opacity=".85"></circle><circle cx="314.9999999999999" cy="71" r="2.4" fill="#efbf36" opacity=".85"></circle><circle cx="315" cy="79.60000000000001" r="2.4" fill="#efbf36" opacity=".85"></circle><circle cx="315" cy="88.20000000000002" r="2.4" fill="#efbf36" opacity=".85"></circle><circle cx="315" cy="96.80000000000001" r="2.4" fill="#efbf36" opacity=".85"></circle><circle cx="315" cy="105.39999999999999" r="2.4" fill="#efbf36" opacity=".85"></circle><circle cx="315" cy="221" r="2.4" fill="#efbf36" opacity=".85"></circle><circle cx="315" cy="230.75" r="2.4" fill="#efbf36" opacity=".85"></circle><circle cx="315" cy="240.5" r="2.4" fill="#efbf36" opacity=".85"></circle><circle cx="315" cy="250.25" r="2.4" fill="#efbf36" opacity=".85"></circle><circle cx="315" cy="260" r="2.4" fill="#efbf36" opacity=".85"></circle><circle cx="249.99999999999994" cy="260" r="2.4" fill="#efbf36" opacity=".85"></circle><circle cx="185" cy="260" r="2.4" fill="#efbf36" opacity=".85"></circle><circle cx="119.99999999999989" cy="260" r="2.4" fill="#efbf36" opacity=".85"></circle><circle cx="55.000000000000114" cy="260" r="2.4" fill="#efbf36" opacity=".85"></circle><circle cx="55" cy="256" r="2.4" fill="#efbf36" opacity=".85"></circle><circle cx="55" cy="252" r="2.4" fill="#efbf36" opacity=".85"></circle><circle cx="55" cy="248" r="2.4" fill="#efbf36" opacity=".85"></circle><text x="112" y="52">闭合回路</text><text x="440" y="216">输出轴</text><text x="115" y="100">电枢 R = 4.0 Ω</text><text x="223" y="299">稳态模型 · 电感和启动过程未求解</text></svg><div class="metrics"><div class="metric"><small>转速</small><b>2334.3 rpm</b></div><div class="metric"><small>电流</small><b>1.111 A</b></div><div class="metric"><small>反电势</small><b>19.56 V</b></div><div class="metric"><small>电功率</small><b>26.67 W</b></div></div><div class="module-note">V = RI + Kω；K I = bω + T负载。b = 0.0002 N·m·s；参数变化直接求稳态，没有启动瞬态。</div></section><section class="module" data-id="gear"><div class="module-head"><h3>一级减速传动</h3><span class="pill">齿轮传动</span></div><svg viewBox="0 0 600 330" role="img" aria-label="一级减速传动 动态教学剖视" class="drawing"><path d="M236.4 153.7L243.7 155.8L243.7 168.2L236.4 170.3L235.8 173.5L242 177.9L237.7 189.7L230.1 189.1L228.5 191.9L232.8 198.2L224.8 207.7L217.8 204.6L215.4 206.7L217.3 214L206.4 220.3L201 215L198 216.1L197.2 223.6L184.9 225.8L181.6 219L178.4 219L175.1 225.8L162.8 223.6L162 216.1L159 215L153.6 220.3L142.7 214L144.6 206.7L142.2 204.6L135.2 207.7L127.2 198.2L131.5 191.9L129.9 189.1L122.3 189.7L118 177.9L124.2 173.5L123.6 170.3L116.3 168.2L116.3 155.8L123.6 153.7L124.2 150.5L118 146.1L122.3 134.3L129.9 134.9L131.5 132.1L127.2 125.8L135.2 116.3L142.2 119.4L144.6 117.3L142.7 110L153.6 103.7L159 109L162 107.9L162.8 100.4L175.1 98.2L178.4 105L181.6 105L184.9 98.2L197.2 100.4L198 107.9L201 109L206.4 103.7L217.3 110L215.4 117.3L217.8 119.4L224.8 116.3L232.8 125.8L228.5 132.1L230.1 134.9L237.7 134.3L242 146.1L235.8 150.5Z" fill="#88b7ce" stroke="#6c8fa6" stroke-width="1.2"></path><circle cx="180" cy="162" r="33.6" fill="#f0f6f9" fill-opacity=".35" stroke="#7492a8"></circle><circle cx="180" cy="162" r="9" class="metal"></circle><line x1="180" y1="162" x2="228" y2="162" stroke="#f3c46c" stroke-width="4"></line><path d="M477 163.6L483.9 166.8L482.9 178.8L475.5 180.7L474.9 183.9L481.2 188.2L478.1 199.9L470.5 200.5L469.4 203.5L474.8 208.9L469.7 219.8L462.1 219.1L460.5 221.9L464.9 228.1L458 238L450.7 235.9L448.6 238.5L451.9 245.3L443.3 253.9L436.5 250.6L433.9 252.7L436 260L426.1 266.9L419.9 262.5L417.1 264.1L417.8 271.7L406.9 276.8L401.5 271.4L398.5 272.5L397.9 280.1L386.2 283.2L381.9 276.9L378.7 277.5L376.8 284.9L364.8 285.9L361.6 279L358.4 279L355.2 285.9L343.2 284.9L341.3 277.5L338.1 276.9L333.8 283.2L322.1 280.1L321.5 272.5L318.5 271.4L313.1 276.8L302.2 271.7L302.9 264.1L300.1 262.5L293.9 266.9L284 260L286.1 252.7L283.5 250.6L276.7 253.9L268.1 245.3L271.4 238.5L269.3 235.9L262 238L255.1 228.1L259.5 221.9L257.9 219.1L250.3 219.8L245.2 208.9L250.6 203.5L249.5 200.5L241.9 199.9L238.8 188.2L245.1 183.9L244.5 180.7L237.1 178.8L236.1 166.8L243 163.6L243 160.4L236.1 157.2L237.1 145.2L244.5 143.3L245.1 140.1L238.8 135.8L241.9 124.1L249.5 123.5L250.6 120.5L245.2 115.1L250.3 104.2L257.9 104.9L259.5 102.1L255.1 95.9L262 86L269.3 88.1L271.4 85.5L268.1 78.7L276.7 70.1L283.5 73.4L286.1 71.3L284 64L293.9 57.1L300.1 61.5L302.9 59.9L302.2 52.3L313.1 47.2L318.5 52.6L321.5 51.5L322.1 43.9L333.8 40.8L338.1 47.1L341.3 46.5L343.2 39.1L355.2 38.1L358.4 45L361.6 45L364.8 38.1L376.8 39.1L378.7 46.5L381.9 47.1L386.2 40.8L397.9 43.9L398.5 51.5L401.5 52.6L406.9 47.2L417.8 52.3L417.1 59.9L419.9 61.5L426.1 57.1L436 64L433.9 71.3L436.5 73.4L443.3 70.1L451.9 78.7L448.6 85.5L450.7 88.1L458 86L464.9 95.9L460.5 102.1L462.1 104.9L469.7 104.2L474.8 115.1L469.4 120.5L470.5 123.5L478.1 124.1L481.2 135.8L474.9 140.1L475.5 143.3L482.9 145.2L483.9 157.2L477 160.4Z" fill="#b2c8b9" stroke="#6c8fa6" stroke-width="1.2"></path><circle cx="360" cy="162" r="67.2" fill="#f0f6f9" fill-opacity=".35" stroke="#7492a8"></circle><circle cx="360" cy="162" r="9" class="metal"></circle><line x1="360" y1="162" x2="455.63469101680755" y2="170.36695130377518" stroke="#f3c46c" stroke-width="4"></line><circle cx="180" cy="162" r="60" fill="none" stroke="#8bafc3" stroke-dasharray="4 5"></circle><circle cx="360" cy="162" r="120" fill="none" stroke="#8bafc3" stroke-dasharray="4 5"></circle><text x="44" y="299">n₂ = − n₁ × Z₁ / Z₂ · 齿形为教学轮廓</text></svg><div class="metrics"><div class="metric"><small>输入</small><b>2334.3 rpm</b></div><div class="metric"><small>输出</small><b>-1167.1 rpm</b></div><div class="metric"><small>齿数</small><b>18 : 36</b></div></div><div class="module-note">输入与输出反向。齿数影响传动比，图形为简化教学轮廓，未做齿形接触或制造校核。</div></section><section class="module" data-id="pump"><div class="module-head"><h3>离心叶轮与水流</h3><span class="pill">离心水泵示意</span></div><svg viewBox="0 0 600 330" role="img" aria-label="离心叶轮与水流 动态教学剖视" class="drawing"><path d="M236 91L377 91L377 127L353 127L353 230L257 252L206 225L198 165L217 118Z" fill="#a5cad8" fill-opacity=".15" stroke="#7299b0" stroke-width="2"></path><path d="M43 161L215 161L215 191L43 191Z" class="water"></path><path d="M331 100L331 47L512 47L512 79L363 79L363 116Z" class="water"></path><circle cx="285" cy="171" r="64" fill="#9bbac8" fill-opacity=".12" stroke="#7f9dac"></circle><path d="M303 171L308.9 173L314.6 176.1L319.8 180.1L324.6 185L328.7 190.8L332.1 197.4L334.7 204.6" stroke="#8eafc1" stroke-width="7" fill="none" stroke-linecap="round"></path><path d="M296.2 185.1L298.3 191L299.5 197.3L299.6 203.9L298.7 210.7L296.8 217.5L293.8 224.3L289.7 230.8" stroke="#8eafc1" stroke-width="7" fill="none" stroke-linecap="round"></path><path d="M281 188.5L277.7 193.9L273.5 198.7L268.4 202.9L262.5 206.5L256 209.2L248.8 211.1L241.2 212" stroke="#8eafc1" stroke-width="7" fill="none" stroke-linecap="round"></path><path d="M268.8 178.8L262.6 179.5L256.2 179.3L249.7 177.9L243.2 175.6L237 172.1L231.1 167.7L225.6 162.3" stroke="#8eafc1" stroke-width="7" fill="none" stroke-linecap="round"></path><path d="M268.8 163.2L264.3 158.8L260.6 153.6L257.6 147.7L255.4 141.2L254.2 134.2L254 126.8L254.8 119.1" stroke="#8eafc1" stroke-width="7" fill="none" stroke-linecap="round"></path><path d="M281 153.5L281.7 147.2L283.4 141L286.1 135L289.8 129.3L294.6 124L300.2 119.2L306.7 115.1" stroke="#8eafc1" stroke-width="7" fill="none" stroke-linecap="round"></path><path d="M296.2 156.9L301.5 153.6L307.4 151L313.8 149.4L320.6 148.8L327.7 149.2L335 150.6L342.3 153.1" stroke="#8eafc1" stroke-width="7" fill="none" stroke-linecap="round"></path><circle cx="285" cy="171" r="17" class="metal"></circle><circle cx="43" cy="175" r="2.4" fill="#36b6df" opacity=".85"></circle><circle cx="70.23076923076921" cy="175" r="2.4" fill="#36b6df" opacity=".85"></circle><circle cx="97.46153846153842" cy="175" r="2.4" fill="#36b6df" opacity=".85"></circle><circle cx="124.69230769230772" cy="175" r="2.4" fill="#36b6df" opacity=".85"></circle><circle cx="151.92307692307693" cy="175" r="2.4" fill="#36b6df" opacity=".85"></circle><circle cx="179.15384615384613" cy="175" r="2.4" fill="#36b6df" opacity=".85"></circle><circle cx="206.38461538461544" cy="175" r="2.4" fill="#36b6df" opacity=".85"></circle><circle cx="224.99999999999997" cy="174.69230769230768" r="2.4" fill="#36b6df" opacity=".85"></circle><circle cx="235" cy="174.07692307692307" r="2.4" fill="#36b6df" opacity=".85"></circle><circle cx="245" cy="173.46153846153845" r="2.4" fill="#36b6df" opacity=".85"></circle><circle cx="255" cy="172.84615384615384" r="2.4" fill="#36b6df" opacity=".85"></circle><circle cx="265" cy="172.23076923076923" r="2.4" fill="#36b6df" opacity=".85"></circle><circle cx="275" cy="171.6153846153846" r="2.4" fill="#36b6df" opacity=".85"></circle><path d="M300 171L302.6 175.9L303.4 182.2L301.9 189.1L297.9 195.9L291.4 201.6L282.6 205.5L272.3 206.6L261.3 204.6L250.6 199L241.3 190L234.6 177.9L231.4 163.6L232.4 148.1L238 132.7L248.1 118.8L262.5 107.7L280.2 100.7L300 98.8L320.4 102.7L339.8 112.4L356.3 127.6L368.5 147.6L375 171L346 62L512 62" stroke="#51b2ce" stroke-width="1" fill="none" opacity=".5"></path><circle cx="300" cy="171" r="2.4" fill="#41c0e5" opacity=".85"></circle><circle cx="303.120296683871" cy="180.09714136842072" r="2.4" fill="#41c0e5" opacity=".85"></circle><circle cx="300.5775729363168" cy="191.37447775574773" r="2.4" fill="#41c0e5" opacity=".85"></circle><circle cx="291.36905779990855" cy="201.64958883179446" r="2.4" fill="#41c0e5" opacity=".85"></circle><circle cx="275.76893849561696" cy="206.25624168106125" r="2.4" fill="#41c0e5" opacity=".85"></circle><circle cx="257.7369373142666" cy="202.7069971159755" r="2.4" fill="#41c0e5" opacity=".85"></circle><circle cx="241.3327662978926" cy="189.96735623398413" r="2.4" fill="#41c0e5" opacity=".85"></circle><circle cx="232.45057155807288" cy="168.39507279989786" r="2.4" fill="#41c0e5" opacity=".85"></circle><circle cx="234.22383932598459" cy="142.99787594885626" r="2.4" fill="#41c0e5" opacity=".85"></circle><circle cx="248.14260549961503" cy="118.78496770759348" r="2.4" fill="#41c0e5" opacity=".85"></circle><circle cx="274.2971823173085" cy="103.05449366882719" r="2.4" fill="#41c0e5" opacity=".85"></circle><circle cx="306.7975507396025" cy="100.12098704615539" r="2.4" fill="#41c0e5" opacity=".85"></circle><circle cx="339.7526325755833" cy="112.3742454742113" r="2.4" fill="#41c0e5" opacity=".85"></circle><circle cx="364.456887438362" cy="140.9407202755861" r="2.4" fill="#41c0e5" opacity=".85"></circle><circle cx="365.33333333333337" cy="134.66666666666677" r="2.4" fill="#41c0e5" opacity=".85"></circle><text x="62" y="218">入口</text><text x="426" y="100">出口</text><text x="151" y="300">叶轮和流线为示意；未计算扬程、流量或气蚀</text></svg><div class="metrics"><div class="metric"><small>轴速</small><b>-1167.1 rpm</b></div><div class="metric"><small>液压负载</small><b>未反馈</b></div></div><div class="module-note">轴速可由前级传入；流线为示意。流体没有反向施加负载，不能用于选泵。</div></section><section class="module" data-id="water"><div class="module-head"><h3>被驱动水波槽</h3><span class="pill">水波实验槽</span></div><svg viewBox="0 0 600 330" role="img" aria-label="被驱动水波槽 动态教学剖视" class="drawing"><path d="M203.3 233.9L455.5 283.6L396.7 336.9L144.5 287.2Z" fill="#aad5e3" opacity=".2" stroke="#76a9be"></path><path d="M203.3 172.2L207.5 173.2L211.7 174.8L215.9 176.8L220.1 179.2L224.3 182L228.5 185L232.7 188.1L236.9 191.3L241.1 194.5L245.3 197.5L249.5 200.2L253.7 202.6L257.9 204.6L262.1 206.2L266.3 207.3L270.6 207.9L274.8 208L279 207.6L283.2 206.8L287.4 205.7L291.6 204.4L295.8 202.9L300 201.4L304.2 199.9L308.4 198.5L312.6 197.4L316.8 196.7L321 196.3L325.2 196.4L329.4 197L333.6 198.1L337.8 199.6L342 201.7L346.2 204.1L350.4 206.8L354.6 209.8L358.8 213L363 216.2L367.2 219.3L371.4 222.3L375.6 225.1L379.8 227.5L384 229.5L388.3 231.1L392.5 232.1L396.7 232.7L400.9 232.8L405.1 232.4L409.3 231.7L413.5 230.6L417.7 229.3L421.9 227.8L426.1 226.2L430.3 224.7L434.5 223.4L438.7 222.3L442.9 221.5L447.1 221.2L451.3 221.3L455.5 221.9" stroke="#4aaed0" stroke-width="1.2" fill="none" opacity=".7"></path><path d="M199.1 176L203.3 177L207.5 178.6L211.7 180.6L215.9 183L220.1 185.8L224.3 188.8L228.5 191.9L232.7 195.1L236.9 198.3L241.1 201.3L245.3 204L249.5 206.4L253.7 208.4L257.9 210L262.1 211.1L266.4 211.7L270.6 211.8L274.8 211.4L279 210.6L283.2 209.6L287.4 208.2L291.6 206.7L295.8 205.2L300 203.7L304.2 202.3L308.4 201.3L312.6 200.5L316.8 200.1L321 200.2L325.2 200.8L329.4 201.9L333.6 203.4L337.8 205.5L342 207.9L346.2 210.6L350.4 213.6L354.6 216.8L358.8 220L363 223.1L367.2 226.1L371.4 228.9L375.6 231.3L379.8 233.3L384 234.9L388.3 235.9L392.5 236.5L396.7 236.6L400.9 236.3L405.1 235.5L409.3 234.4L413.5 233.1L417.7 231.6L421.9 230L426.1 228.5L430.3 227.2L434.5 226.1L438.7 225.3L442.9 225L447.1 225.1L451.3 225.7" stroke="#4aaed0" stroke-width="1.2" fill="none" opacity=".7"></path><path d="M194.9 179.8L199.1 180.8L203.3 182.4L207.5 184.4L211.7 186.8L215.9 189.6L220.1 192.6L224.3 195.7L228.5 198.9L232.7 202.1L236.9 205.1L241.1 207.8L245.3 210.2L249.5 212.3L253.7 213.8L257.9 214.9L262.2 215.5L266.4 215.6L270.6 215.2L274.8 214.4L279 213.4L283.2 212L287.4 210.5L291.6 209L295.8 207.5L300 206.1L304.2 205.1L308.4 204.3L312.6 203.9L316.8 204L321 204.6L325.2 205.7L329.4 207.3L333.6 209.3L337.8 211.7L342 214.4L346.2 217.4L350.4 220.6L354.6 223.8L358.8 226.9L363 229.9L367.2 232.7L371.4 235.1L375.6 237.1L379.8 238.7L384.1 239.7L388.3 240.3L392.5 240.4L396.7 240.1L400.9 239.3L405.1 238.2L409.3 236.9L413.5 235.4L417.7 233.8L421.9 232.3L426.1 231L430.3 229.9L434.5 229.2L438.7 228.8L442.9 228.9L447.1 229.5" stroke="#4aaed0" stroke-width="1.2" fill="none" opacity=".7"></path><path d="M190.7 183.6L194.9 184.6L199.1 186.2L203.3 188.2L207.5 190.6L211.7 193.4L215.9 196.4L220.1 199.5L224.3 202.7L228.5 205.9L232.7 208.9L236.9 211.6L241.1 214L245.3 216.1L249.5 217.6L253.7 218.7L258 219.3L262.2 219.4L266.4 219L270.6 218.3L274.8 217.2L279 215.8L283.2 214.3L287.4 212.8L291.6 211.3L295.8 210L300 208.9L304.2 208.1L308.4 207.7L312.6 207.8L316.8 208.4L321 209.5L325.2 211.1L329.4 213.1L333.6 215.5L337.8 218.2L342 221.2L346.2 224.4L350.4 227.6L354.6 230.7L358.8 233.7L363 236.5L367.2 238.9L371.4 240.9L375.6 242.5L379.9 243.5L384.1 244.1L388.3 244.2L392.5 243.9L396.7 243.1L400.9 242L405.1 240.7L409.3 239.2L413.5 237.6L417.7 236.1L421.9 234.8L426.1 233.7L430.3 233L434.5 232.6L438.7 232.7L442.9 233.3" stroke="#4aaed0" stroke-width="1.2" fill="none" opacity=".7"></path><path d="M186.5 187.4L190.7 188.5L194.9 190L199.1 192L203.3 194.4L207.5 197.2L211.7 200.2L215.9 203.3L220.1 206.5L224.3 209.7L228.5 212.7L232.7 215.4L236.9 217.9L241.1 219.9L245.3 221.4L249.5 222.5L253.8 223.1L258 223.2L262.2 222.8L266.4 222.1L270.6 221L274.8 219.6L279 218.1L283.2 216.6L287.4 215.1L291.6 213.8L295.8 212.7L300 211.9L304.2 211.6L308.4 211.7L312.6 212.2L316.8 213.3L321 214.9L325.2 216.9L329.4 219.3L333.6 222L337.8 225L342 228.2L346.2 231.4L350.4 234.5L354.6 237.5L358.8 240.3L363 242.7L367.2 244.7L371.4 246.3L375.7 247.4L379.9 247.9L384.1 248L388.3 247.7L392.5 246.9L396.7 245.8L400.9 244.5L405.1 243L409.3 241.4L413.5 240L417.7 238.6L421.9 237.5L426.1 236.8L430.3 236.4L434.5 236.5L438.7 237.1" stroke="#4aaed0" stroke-width="1.2" fill="none" opacity=".7"></path><path d="M182.3 191.2L186.5 192.3L190.7 193.8L194.9 195.8L199.1 198.3L203.3 201L207.5 204L211.7 207.1L215.9 210.3L220.1 213.5L224.3 216.5L228.5 219.2L232.7 221.7L236.9 223.7L241.1 225.2L245.3 226.3L249.6 226.9L253.8 227L258 226.6L262.2 225.9L266.4 224.8L270.6 223.4L274.8 221.9L279 220.4L283.2 218.9L287.4 217.6L291.6 216.5L295.8 215.7L300 215.4L304.2 215.5L308.4 216L312.6 217.1L316.8 218.7L321 220.7L325.2 223.1L329.4 225.9L333.6 228.8L337.8 232L342 235.2L346.2 238.3L350.4 241.3L354.6 244.1L358.8 246.5L363 248.5L367.2 250.1L371.5 251.2L375.7 251.7L379.9 251.8L384.1 251.5L388.3 250.7L392.5 249.6L396.7 248.3L400.9 246.8L405.1 245.3L409.3 243.8L413.5 242.4L417.7 241.3L421.9 240.6L426.1 240.2L430.3 240.3L434.5 240.9" stroke="#4aaed0" stroke-width="1.2" fill="none" opacity=".7"></path><path d="M178.1 195L182.3 196.1L186.5 197.6L190.7 199.6L194.9 202.1L199.1 204.8L203.3 207.8L207.5 211L211.7 214.2L215.9 217.3L220.1 220.3L224.3 223L228.5 225.5L232.7 227.5L236.9 229L241.1 230.1L245.4 230.7L249.6 230.8L253.8 230.4L258 229.7L262.2 228.6L266.4 227.2L270.6 225.8L274.8 224.2L279 222.7L283.2 221.4L287.4 220.3L291.6 219.5L295.8 219.2L300 219.3L304.2 219.8L308.4 220.9L312.6 222.5L316.8 224.5L321 226.9L325.2 229.7L329.4 232.7L333.6 235.8L337.8 239L342 242.2L346.2 245.2L350.4 247.9L354.6 250.3L358.8 252.3L363 253.9L367.3 255L371.5 255.5L375.7 255.6L379.9 255.3L384.1 254.5L388.3 253.4L392.5 252.1L396.7 250.6L400.9 249.1L405.1 247.6L409.3 246.2L413.5 245.1L417.7 244.4L421.9 244L426.1 244.1L430.3 244.7" stroke="#4aaed0" stroke-width="1.2" fill="none" opacity=".7"></path><path d="M173.9 198.8L178.1 199.9L182.3 201.4L186.5 203.5L190.7 205.9L194.9 208.6L199.1 211.6L203.3 214.8L207.5 218L211.7 221.1L215.9 224.1L220.1 226.9L224.3 229.3L228.5 231.3L232.7 232.8L236.9 233.9L241.2 234.5L245.4 234.6L249.6 234.2L253.8 233.5L258 232.4L262.2 231.1L266.4 229.6L270.6 228L274.8 226.5L279 225.2L283.2 224.1L287.4 223.3L291.6 223L295.8 223.1L300 223.7L304.2 224.7L308.4 226.3L312.6 228.3L316.8 230.7L321 233.5L325.2 236.5L329.4 239.6L333.6 242.8L337.8 246L342 249L346.2 251.7L350.4 254.1L354.6 256.1L358.8 257.7L363.1 258.8L367.3 259.4L371.5 259.5L375.7 259.1L379.9 258.3L384.1 257.2L388.3 255.9L392.5 254.4L396.7 252.9L400.9 251.4L405.1 250L409.3 248.9L413.5 248.2L417.7 247.8L421.9 247.9L426.1 248.5" stroke="#4aaed0" stroke-width="1.2" fill="none" opacity=".7"></path><path d="M169.7 202.6L173.9 203.7L178.1 205.2L182.3 207.3L186.5 209.7L190.7 212.4L194.9 215.4L199.1 218.6L203.3 221.8L207.5 224.9L211.7 227.9L215.9 230.7L220.1 233.1L224.3 235.1L228.5 236.7L232.7 237.7L237 238.3L241.2 238.4L245.4 238L249.6 237.3L253.8 236.2L258 234.9L262.2 233.4L266.4 231.8L270.6 230.3L274.8 229L279 227.9L283.2 227.1L287.4 226.8L291.6 226.9L295.8 227.5L300 228.5L304.2 230.1L308.4 232.1L312.6 234.5L316.8 237.3L321 240.3L325.2 243.4L329.4 246.6L333.6 249.8L337.8 252.8L342 255.5L346.2 257.9L350.4 259.9L354.6 261.5L358.9 262.6L363.1 263.2L367.3 263.3L371.5 262.9L375.7 262.1L379.9 261L384.1 259.7L388.3 258.2L392.5 256.7L396.7 255.2L400.9 253.8L405.1 252.8L409.3 252L413.5 251.6L417.7 251.7L421.9 252.3" stroke="#4aaed0" stroke-width="1.2" fill="none" opacity=".7"></path><path d="M165.5 206.4L169.7 207.5L173.9 209.1L178.1 211.1L182.3 213.5L186.5 216.2L190.7 219.2L194.9 222.4L199.1 225.6L203.3 228.7L207.5 231.7L211.7 234.5L215.9 236.9L220.1 238.9L224.3 240.5L228.5 241.5L232.8 242.1L237 242.2L241.2 241.9L245.4 241.1L249.6 240L253.8 238.7L258 237.2L262.2 235.6L266.4 234.1L270.6 232.8L274.8 231.7L279 230.9L283.2 230.6L287.4 230.7L291.6 231.3L295.8 232.3L300 233.9L304.2 235.9L308.4 238.3L312.6 241.1L316.8 244.1L321 247.2L325.2 250.4L329.4 253.6L333.6 256.6L337.8 259.3L342 261.7L346.2 263.8L350.4 265.3L354.7 266.4L358.9 267L363.1 267.1L367.3 266.7L371.5 265.9L375.7 264.9L379.9 263.5L384.1 262L388.3 260.5L392.5 259L396.7 257.6L400.9 256.6L405.1 255.8L409.3 255.4L413.5 255.5L417.7 256.1" stroke="#4aaed0" stroke-width="1.2" fill="none" opacity=".7"></path><path d="M161.3 210.2L165.5 211.3L169.7 212.9L173.9 214.9L178.1 217.3L182.3 220L186.5 223L190.7 226.2L194.9 229.4L199.1 232.5L203.3 235.5L207.5 238.3L211.7 240.7L215.9 242.7L220.1 244.3L224.3 245.3L228.6 245.9L232.8 246L237 245.7L241.2 244.9L245.4 243.8L249.6 242.5L253.8 241L258 239.4L262.2 237.9L266.4 236.6L270.6 235.5L274.8 234.8L279 234.4L283.2 234.5L287.4 235.1L291.6 236.1L295.8 237.7L300 239.7L304.2 242.1L308.4 244.9L312.6 247.9L316.8 251L321 254.2L325.2 257.4L329.4 260.4L333.6 263.1L337.8 265.5L342 267.6L346.2 269.1L350.5 270.2L354.7 270.8L358.9 270.9L363.1 270.5L367.3 269.8L371.5 268.7L375.7 267.3L379.9 265.8L384.1 264.3L388.3 262.8L392.5 261.5L396.7 260.4L400.9 259.6L405.1 259.2L409.3 259.3L413.5 259.9" stroke="#4aaed0" stroke-width="1.2" fill="none" opacity=".7"></path><path d="M157.1 214L161.3 215.1L165.5 216.7L169.7 218.7L173.9 221.1L178.1 223.8L182.3 226.8L186.5 230L190.7 233.2L194.9 236.3L199.1 239.3L203.3 242.1L207.5 244.5L211.7 246.5L215.9 248.1L220.1 249.2L224.4 249.7L228.6 249.8L232.8 249.5L237 248.7L241.2 247.6L245.4 246.3L249.6 244.8L253.8 243.2L258 241.7L262.2 240.4L266.4 239.3L270.6 238.6L274.8 238.2L279 238.3L283.2 238.9L287.4 240L291.6 241.5L295.8 243.5L300 245.9L304.2 248.7L308.4 251.7L312.6 254.8L316.8 258L321 261.2L325.2 264.2L329.4 266.9L333.6 269.3L337.8 271.4L342 272.9L346.3 274L350.5 274.6L354.7 274.7L358.9 274.3L363.1 273.6L367.3 272.5L371.5 271.1L375.7 269.6L379.9 268.1L384.1 266.6L388.3 265.3L392.5 264.2L396.7 263.4L400.9 263.1L405.1 263.1L409.3 263.7" stroke="#4aaed0" stroke-width="1.2" fill="none" opacity=".7"></path><path d="M152.9 217.8L157.1 218.9L161.3 220.5L165.5 222.5L169.7 224.9L173.9 227.6L178.1 230.6L182.3 233.8L186.5 237L190.7 240.1L194.9 243.1L199.1 245.9L203.3 248.3L207.5 250.3L211.7 251.9L215.9 253L220.2 253.5L224.4 253.6L228.6 253.3L232.8 252.5L237 251.4L241.2 250.1L245.4 248.6L249.6 247L253.8 245.6L258 244.2L262.2 243.1L266.4 242.4L270.6 242L274.8 242.1L279 242.7L283.2 243.8L287.4 245.3L291.6 247.3L295.8 249.8L300 252.5L304.2 255.5L308.4 258.6L312.6 261.8L316.8 265L321 268L325.2 270.7L329.4 273.2L333.6 275.2L337.8 276.7L342.1 277.8L346.3 278.4L350.5 278.5L354.7 278.1L358.9 277.4L363.1 276.3L367.3 274.9L371.5 273.4L375.7 271.9L379.9 270.4L384.1 269.1L388.3 268L392.5 267.2L396.7 266.9L400.9 267L405.1 267.5" stroke="#4aaed0" stroke-width="1.2" fill="none" opacity=".7"></path><path d="M148.7 221.6L152.9 222.7L157.1 224.3L161.3 226.3L165.5 228.7L169.7 231.5L173.9 234.5L178.1 237.6L182.3 240.8L186.5 244L190.7 246.9L194.9 249.7L199.1 252.1L203.3 254.1L207.5 255.7L211.7 256.8L216 257.3L220.2 257.4L224.4 257.1L228.6 256.3L232.8 255.2L237 253.9L241.2 252.4L245.4 250.9L249.6 249.4L253.8 248L258 246.9L262.2 246.2L266.4 245.8L270.6 245.9L274.8 246.5L279 247.6L283.2 249.1L287.4 251.1L291.6 253.6L295.8 256.3L300 259.3L304.2 262.5L308.4 265.7L312.6 268.8L316.8 271.8L321 274.5L325.2 277L329.4 279L333.6 280.5L337.9 281.6L342.1 282.2L346.3 282.3L350.5 281.9L354.7 281.2L358.9 280.1L363.1 278.7L367.3 277.3L371.5 275.7L375.7 274.2L379.9 272.9L384.1 271.8L388.3 271L392.5 270.7L396.7 270.8L400.9 271.3" stroke="#4aaed0" stroke-width="1.2" fill="none" opacity=".7"></path><path d="M144.5 225.4L148.7 226.5L152.9 228.1L157.1 230.1L161.3 232.5L165.5 235.3L169.7 238.3L173.9 241.4L178.1 244.6L182.3 247.8L186.5 250.8L190.7 253.5L194.9 255.9L199.1 257.9L203.3 259.5L207.5 260.6L211.7 261.2L216 261.2L220.2 260.9L224.4 260.1L228.6 259L232.8 257.7L237 256.2L241.2 254.7L245.4 253.2L249.6 251.8L253.8 250.7L258 250L262.2 249.6L266.4 249.7L270.6 250.3L274.8 251.4L279 252.9L283.2 255L287.4 257.4L291.6 260.1L295.8 263.1L300 266.3L304.2 269.5L308.4 272.6L312.6 275.6L316.8 278.4L321 280.8L325.2 282.8L329.4 284.3L333.7 285.4L337.9 286L342.1 286.1L346.3 285.7L350.5 285L354.7 283.9L358.9 282.5L363.1 281.1L367.3 279.5L371.5 278L375.7 276.7L379.9 275.6L384.1 274.8L388.3 274.5L392.5 274.6L396.7 275.1" stroke="#4aaed0" stroke-width="1.2" fill="none" opacity=".7"></path><path d="M203.3 172.2L144.5 225.4" stroke="#6cc5dc" stroke-width=".9" fill="none" opacity=".5"></path><path d="M211.7 174.8L152.9 228.1" stroke="#6cc5dc" stroke-width=".9" fill="none" opacity=".5"></path><path d="M220.1 179.2L161.3 232.5" stroke="#6cc5dc" stroke-width=".9" fill="none" opacity=".5"></path><path d="M228.5 185L169.7 238.3" stroke="#6cc5dc" stroke-width=".9" fill="none" opacity=".5"></path><path d="M236.9 191.3L178.1 244.6" stroke="#6cc5dc" stroke-width=".9" fill="none" opacity=".5"></path><path d="M245.3 197.5L186.5 250.8" stroke="#6cc5dc" stroke-width=".9" fill="none" opacity=".5"></path><path d="M253.7 202.6L194.9 255.9" stroke="#6cc5dc" stroke-width=".9" fill="none" opacity=".5"></path><path d="M262.1 206.2L203.3 259.5" stroke="#6cc5dc" stroke-width=".9" fill="none" opacity=".5"></path><path d="M270.6 207.9L211.7 261.2" stroke="#6cc5dc" stroke-width=".9" fill="none" opacity=".5"></path><path d="M279 207.6L220.2 260.9" stroke="#6cc5dc" stroke-width=".9" fill="none" opacity=".5"></path><path d="M287.4 205.7L228.6 259" stroke="#6cc5dc" stroke-width=".9" fill="none" opacity=".5"></path><path d="M295.8 202.9L237 256.2" stroke="#6cc5dc" stroke-width=".9" fill="none" opacity=".5"></path><path d="M304.2 199.9L245.4 253.2" stroke="#6cc5dc" stroke-width=".9" fill="none" opacity=".5"></path><path d="M312.6 197.4L253.8 250.7" stroke="#6cc5dc" stroke-width=".9" fill="none" opacity=".5"></path><path d="M321 196.3L262.2 249.6" stroke="#6cc5dc" stroke-width=".9" fill="none" opacity=".5"></path><path d="M329.4 197L270.6 250.3" stroke="#6cc5dc" stroke-width=".9" fill="none" opacity=".5"></path><path d="M337.8 199.6L279 252.9" stroke="#6cc5dc" stroke-width=".9" fill="none" opacity=".5"></path><path d="M346.2 204.1L287.4 257.4" stroke="#6cc5dc" stroke-width=".9" fill="none" opacity=".5"></path><path d="M354.6 209.8L295.8 263.1" stroke="#6cc5dc" stroke-width=".9" fill="none" opacity=".5"></path><path d="M363 216.2L304.2 269.5" stroke="#6cc5dc" stroke-width=".9" fill="none" opacity=".5"></path><path d="M371.4 222.3L312.6 275.6" stroke="#6cc5dc" stroke-width=".9" fill="none" opacity=".5"></path><path d="M379.8 227.5L321 280.8" stroke="#6cc5dc" stroke-width=".9" fill="none" opacity=".5"></path><path d="M388.3 231.1L329.4 284.3" stroke="#6cc5dc" stroke-width=".9" fill="none" opacity=".5"></path><path d="M396.7 232.7L337.9 286" stroke="#6cc5dc" stroke-width=".9" fill="none" opacity=".5"></path><path d="M405.1 232.4L346.3 285.7" stroke="#6cc5dc" stroke-width=".9" fill="none" opacity=".5"></path><path d="M413.5 230.6L354.7 283.9" stroke="#6cc5dc" stroke-width=".9" fill="none" opacity=".5"></path><path d="M421.9 227.8L363.1 281.1" stroke="#6cc5dc" stroke-width=".9" fill="none" opacity=".5"></path><path d="M430.3 224.7L371.5 278" stroke="#6cc5dc" stroke-width=".9" fill="none" opacity=".5"></path><path d="M438.7 222.3L379.9 275.6" stroke="#6cc5dc" stroke-width=".9" fill="none" opacity=".5"></path><path d="M447.1 221.2L388.3 274.5" stroke="#6cc5dc" stroke-width=".9" fill="none" opacity=".5"></path><path d="M455.5 221.9L396.7 275.1" stroke="#6cc5dc" stroke-width=".9" fill="none" opacity=".5"></path><line x1="203.29773613336363" y1="233.94334259901117" x2="203.29773613336363" y2="158.2810252789895" class="wire"></line><line x1="144.49453946656413" y1="287.2371376407791" x2="144.49453946656413" y2="211.57482032075745" class="wire"></line><line x1="455.5054605334359" y1="283.6459521192498" x2="455.5054605334359" y2="207.9836347992281" class="wire"></line><line x1="396.7022638666364" y1="336.93974716101775" x2="396.7022638666364" y2="261.27742984099604" class="wire"></line><path d="M203.3 158.3L455.5 208L396.7 261.3L144.5 211.6Z" class="wire"></path><text x="40" y="300">η = A cos(kx − ωt) · 水面竖向位移放大显示</text></svg><div class="metrics"><div class="metric"><small>频率</small><b>0.903 Hz</b></div><div class="metric"><small>相速度</small><b>1.626 m/s</b></div><div class="metric"><small>当前波幅</small><b>25.0 mm</b></div></div><div class="module-note">ω² = g k tanh(kh)，小振幅、无黏、无反射边界。水面竖向放大；泵关联波幅为教学映射。</div></section></div><section class="info"><h2>如何阅读这场实验</h2><div class="legend"><span><i class="dot blue"></i>气流 / 水流</span><span><i class="dot orange"></i>燃烧阶段示意</span><span><i class="dot yellow"></i>电流 / 电火花</span><span><i class="dot purple"></i>排气 / 磁场示意</span></div><p class="note">计算：活塞与连杆几何、720° 阶段、齿轮转速、直流电机稳态、电路功率平衡、小振幅水波色散。自定义机构按基本体与关节运动树生成，支持固定、转动与移动关节；轴速连接为单向运动传递；水泵到波幅是教学映射，不反算液体负载。</p><p class="note">示意：粒子、火焰形状、气流路径、泵流线和磁场。没有求解燃烧、湍流、电路瞬态、流固耦合、受力或材料。喷气引擎不能据此预测推力；所有结构均不是制造 CAD。</p><p id="unfulfilled" class="warning"></p><details><summary>来源、许可与模型依据</summary><p>Anatomy by Ryan · MIT · <a href="https://github.com/wheresryan22/anatomy" rel="noreferrer">上游仓库</a>。Jarvis 独立实现组合协议、教学模型与场效果；使用上游等轴投影工具。</p><p id="source" class="note">上游固定提交 1482e8469b0a9e0d8cc18ea2740a01423d29ae80</p><p><a href="https://www.grc.nasa.gov/www/k-12/airplane/otto.html">NASA：四冲程循环</a> · <a href="https://vlabs.iitkgp.ac.in/ctrl/Exp3/theory.html">IIT Kharagpur：直流电机</a> · <a href="https://coastal.citg.tudelft.nl/book/2a_pre_knowledge_waves.html">TU Delft：线性水波</a></p><pre id="license">MIT License
+
+Copyright (c) 2026 Ryan
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+</pre></details></section></main></div><footer>自由组合范围：最多 8 个组件、8 条无环连接；每个自定义机构最多 16 个盒体/圆柱零件及父子关节。模型只提供声明式数据，不执行模型生成的代码。页面内的修改在下载或由 Jarvis 重新生成前不会写回产物回执。</footer>
+<script id="scene-data" type="application/json">{"version":1,"title":"\u003c/script>\u003cimg src=x onerror=alert(1)>","description":"电路驱动电机，经减速齿轮带动水泵，再驱动水槽。轴速按传动比联动，水泵到波幅为教学映射；没有求解水力负载反馈。","modules":[{"id":"motor","type":"motor","label":"电源与直流电机","params":{"voltage":24,"resistance":4,"constant":0.08,"load":0.04,"switch_closed":true},"effects":["current","field"]},{"id":"gear","type":"gear-pair","label":"一级减速传动","params":{"rpm":60,"teeth_a":18,"teeth_b":36},"effects":["trace"]},{"id":"pump","type":"pump","label":"离心叶轮与水流","params":{"rpm":600},"effects":["flow"]},{"id":"water","type":"wave","label":"被驱动水波槽","params":{"amplitude":0.025,"wavelength":1.8,"depth":0.5,"interference":false},"effects":["water"]}],"links":[{"from":"motor","to":"gear","kind":"shaft","ratio":1},{"from":"gear","to":"pump","kind":"shaft","ratio":1},{"from":"pump","to":"water","kind":"flow","ratio":1}],"unfulfilled":[]}</script><script>
+const AZIMUTH = 45;
+const ELEVATION = 30;
+const SHADES = 4;
+const RADIANS = Math.PI / 180;
+const UNIT = Math.sqrt(1.6);
+function cameraOf({ scale, azimuth = AZIMUTH, elevation = ELEVATION }) {
+    const a = azimuth * RADIANS;
+    const e = elevation * RADIANS;
+    return { sinA: Math.sin(a), cosA: Math.cos(a), sinE: Math.sin(e), cosE: Math.cos(e), k: scale * UNIT };
+}
+function iso([x, y, z], projection) {
+    const { origin } = projection;
+    const { sinA, cosA, sinE, cosE, k } = cameraOf(projection);
+    return [origin[0] + (x * sinA - y * cosA) * k, origin[1] + ((x * cosA + y * sinA) * sinE - z * cosE) * k];
+}
+function towardViewer(projection) {
+    const { sinA, cosA } = cameraOf(projection);
+    return [cosA, sinA];
+}
+function depthOf([x, y, z], projection) {
+    const { sinA, cosA, sinE, cosE } = cameraOf(projection);
+    return (x * cosA + y * sinA) * cosE + z * sinE;
+}
+const tenth = (value) => {
+    const text = (Math.round(value * 10) / 10).toFixed(1).replace(/\.0$/, "");
+    return text === "-0" ? "0" : text;
+};
+function pathOf(points, closed = false) {
+    if (!points.length)
+        return "";
+    return points.map(([x, y], at) => `${at ? "L" : "M"}${tenth(x)} ${tenth(y)}`).join("") + (closed ? "Z" : "");
+}
+const joinPaths = (paths) => paths.filter(Boolean).join("");
+function roundedPlan({ x, y, w, d, r }, steps = 8) {
+    const radius = Math.max(0, Math.min(r, w / 2, d / 2));
+    const corners = [
+        [x + w - radius, y + radius, -90],
+        [x + w - radius, y + d - radius, 0],
+        [x + radius, y + d - radius, 90],
+        [x + radius, y + radius, 180],
+    ];
+    const out = [];
+    for (const [cx, cy, start] of corners) {
+        const count = radius > 0 ? steps : 0;
+        for (let step = 0; step <= count; step++) {
+            const angle = (start + (count ? (90 * step) / count : 45)) * RADIANS;
+            out.push([cx + radius * Math.cos(angle), cy + radius * Math.sin(angle)]);
+        }
+    }
+    return out;
+}
+function signedArea(points) {
+    let area = 0;
+    for (let index = 0; index < points.length; index++) {
+        const [ax, ay] = points[index];
+        const [bx, by] = points[(index + 1) % points.length];
+        area += ax * by - bx * ay;
+    }
+    return area / 2;
+}
+const oriented = (points) => (signedArea(points) < 0 ? [...points].reverse() : points);
+function convexHull(points) {
+    const sorted = [...points].sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+    if (sorted.length < 3)
+        return sorted;
+    const cross = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+    const lower = [];
+    for (const point of sorted) {
+        while (lower.length >= 2 && cross(lower[lower.length - 2], lower[lower.length - 1], point) <= 0)
+            lower.pop();
+        lower.push(point);
+    }
+    const upper = [];
+    for (let index = sorted.length - 1; index >= 0; index--) {
+        const point = sorted[index];
+        while (upper.length >= 2 && cross(upper[upper.length - 2], upper[upper.length - 1], point) <= 0)
+            upper.pop();
+        upper.push(point);
+    }
+    return [...lower.slice(0, -1), ...upper.slice(0, -1)];
+}
+function runsOf(flags, want) {
+    const count = flags.length;
+    const runs = [];
+    const start = flags.findIndex((flag, index) => flag !== flags[(index + count - 1) % count]);
+    if (start < 0)
+        return flags[0] === want ? [Array.from({ length: count + 1 }, (_, index) => index % count)] : [];
+    let run = null;
+    for (let step = 0; step < count; step++) {
+        const index = (start + step) % count;
+        if (flags[index] === want) {
+            if (!run)
+                run = [index];
+            run.push((index + 1) % count);
+        }
+        else if (run) {
+            runs.push(run);
+            run = null;
+        }
+    }
+    if (run)
+        runs.push(run);
+    return runs;
+}
+function extrude(ring, z, height, projection, options = {}) {
+    const convex = options.convex ?? true;
+    const count = ring.length;
+    const counter = signedArea(ring) > 0;
+    const [vx, vy] = towardViewer(projection);
+    const { sinA, cosA } = cameraOf(projection);
+    const normals = ring.map(([ax, ay], index) => {
+        const [bx, by] = ring[(index + 1) % count];
+        const dx = bx - ax;
+        const dy = by - ay;
+        const length = Math.hypot(dx, dy) || 1;
+        return (counter ? [dy / length, -dx / length] : [-dy / length, dx / length]);
+    });
+    const facing = normals.map(([nx, ny]) => nx * vx + ny * vy > 1e-9);
+    const top = ring.map(([x, y]) => iso([x, y, z + height], projection));
+    const bottom = ring.map(([x, y]) => iso([x, y, z], projection));
+    const outline = [];
+    const crease = [];
+    for (const run of runsOf(facing, false))
+        outline.push(pathOf(run.map((index) => top[index])));
+    for (const run of runsOf(facing, true)) {
+        crease.push(pathOf(run.map((index) => top[index])));
+        if (height > 0)
+            outline.push(pathOf(run.map((index) => bottom[index])));
+    }
+    if (height > 0) {
+        for (let index = 0; index < count; index++) {
+            if (facing[(index + count - 1) % count] !== facing[index])
+                outline.push(pathOf([top[index], bottom[index]]));
+        }
+    }
+    let fill;
+    if (convex) {
+        fill = pathOf(convexHull([...top, ...bottom]), true);
+    }
+    else {
+        const parts = [pathOf(oriented(top), true), pathOf(oriented(bottom), true)];
+        for (let index = 0; index < count; index++) {
+            if (!facing[index])
+                continue;
+            const next = (index + 1) % count;
+            parts.push(pathOf(oriented([top[index], top[next], bottom[next], bottom[index]]), true));
+        }
+        fill = parts.join("");
+    }
+    const buckets = Array.from({ length: SHADES }, () => []);
+    if (height > 0) {
+        const [lx, ly] = [-sinA, cosA];
+        for (let index = 0; index < count; index++) {
+            if (!facing[index])
+                continue;
+            const [nx, ny] = normals[index];
+            const lit = (nx * lx + ny * ly + 1) / 2;
+            const shade = Math.min(SHADES - 1, Math.max(0, Math.floor(lit * SHADES)));
+            const next = (index + 1) % count;
+            buckets[shade].push(pathOf(oriented([top[index], top[next], bottom[next], bottom[index]]), true));
+        }
+    }
+    let bevel;
+    if (options.bevel && options.bevel > 0) {
+        const by = options.bevel;
+        const inset = ring.map(([x, y], index) => {
+            const [ax, ay] = normals[(index + count - 1) % count];
+            const [bx, by2] = normals[index];
+            const mx = ax + bx;
+            const my = ay + by2;
+            const length = Math.hypot(mx, my) || 1;
+            return [x - (mx / length) * by, y - (my / length) * by];
+        });
+        const insetTop = inset.map(([x, y]) => iso([x, y, z + height], projection));
+        bevel = runsOf(facing, true)
+            .map((run) => pathOf([top[run[0]], ...run.slice(1, -1).map((index) => insetTop[index]), top[run[run.length - 1]]]))
+            .join("");
+    }
+    return {
+        fill,
+        outline: outline.join(""),
+        crease: crease.join(""),
+        top: pathOf(oriented(top), true),
+        shades: buckets.map((paths) => paths.join("")),
+        bevel,
+    };
+}
+const ringOf = (plan, steps = 8) => roundedPlan(plan, steps);
+function slabOf(plan, z, height, projection, steps = 8, bevel = 0) {
+    return extrude(ringOf(plan, steps), z, height, projection, { convex: true, bevel });
+}
+function circleRing(cx, cy, radius, steps = 40) {
+    return Array.from({ length: steps }, (_, step) => {
+        const angle = (step / steps) * Math.PI * 2;
+        return [cx + radius * Math.cos(angle), cy + radius * Math.sin(angle)];
+    });
+}
+function cylinder(cx, cy, radius, z, height, projection, steps = 32, bevel = 0) {
+    return extrude(circleRing(cx, cy, radius, steps), z, height, projection, { convex: true, bevel });
+}
+const insetPlan = ({ x, y, w, d, r }, by) => ({ x: x + by, y: y + by, w: w - by * 2, d: d - by * 2, r: Math.max(0, r - by) });
+function onTop(points, z, projection, closed = false) {
+    return pathOf(points.map(([x, y]) => iso([x, y, z], projection)), closed);
+}
+const planOutline = (plan, z, projection, steps = 8) => onTop(ringOf(plan, steps), z, projection, true);
+const lineOnTop = (from, to, z, projection) => onTop([from, to], z, projection);
+const segment = (from, to, projection) => pathOf([iso(from, projection), iso(to, projection)]);
+const rise = (at, from, to, projection) => segment([at[0], at[1], from], [at[0], at[1], to], projection);
+const ring = (cx, cy, radius, z, projection, steps = 40) => onTop(circleRing(cx, cy, radius, steps), z, projection, true);
+const pointsAt = (points, projection) => points.map((point) => iso(point, projection));
+function dotGrid(x, y, columns, rows, gap, z, projection) {
+    const dots = [];
+    for (let row = 0; row < rows; row++) {
+        for (let column = 0; column < columns; column++)
+            dots.push(iso([x + column * gap, y + row * gap, z], projection));
+    }
+    return dots;
+}
+function corners({ x, y, w, d }, inset = 0) {
+    return [
+        [x + inset, y + inset],
+        [x + w - inset, y + inset],
+        [x + inset, y + d - inset],
+        [x + w - inset, y + d - inset],
+    ];
+}
+function boxCorners({ x, y, w, d }, z0, z1) {
+    const out = [];
+    for (const px of [x, x + w])
+        for (const py of [y, y + d])
+            for (const z of [z0, z1])
+                out.push([px, py, z]);
+    return out;
+}
+function knurl(cx, cy, radius, z0, z1, count, projection, inset = 0.4) {
+    const [vx, vy] = towardViewer(projection);
+    const lines = [];
+    for (let index = 0; index < count; index++) {
+        const angle = (index / count) * Math.PI * 2;
+        const nx = Math.cos(angle);
+        const ny = Math.sin(angle);
+        if (nx * vx + ny * vy < 0.15)
+            continue;
+        lines.push(segment([cx + radius * nx, cy + radius * ny, z0 + inset], [cx + radius * nx, cy + radius * ny, z1 - inset], projection));
+    }
+    return lines.join("");
+}
+function sideArc(cx, cy, radius, z, projection, steps = 24) {
+    const [vx, vy] = towardViewer(projection);
+    const facing = Math.atan2(vy, vx);
+    const points = [];
+    for (let step = 0; step <= steps; step++) {
+        const angle = facing - Math.PI / 2 + (step / steps) * Math.PI;
+        points.push(iso([cx + radius * Math.cos(angle), cy + radius * Math.sin(angle), z], projection));
+    }
+    return pathOf(points);
+}
+function ringSeam(ring, z, projection) {
+    const count = ring.length;
+    const counter = signedArea(ring) > 0;
+    const [vx, vy] = towardViewer(projection);
+    const facing = ring.map(([ax, ay], index) => {
+        const [bx, by] = ring[(index + 1) % count];
+        const dx = bx - ax;
+        const dy = by - ay;
+        const [nx, ny] = counter ? [dy, -dx] : [-dy, dx];
+        return nx * vx + ny * vy > 1e-9;
+    });
+    return runsOf(facing, true).map((run) => pathOf(run.map((index) => iso([ring[index][0], ring[index][1], z], projection)))).join("");
+}
+const sideSeam = (plan, z, projection, steps = 8) => ringSeam(ringOf(plan, steps), z, projection);
+function sideRing(center, radius, axis, projection, steps = 20) {
+    const [px, py, pz] = center;
+    const points = [];
+    for (let step = 0; step < steps; step++) {
+        const angle = (step / steps) * Math.PI * 2;
+        const u = radius * Math.cos(angle);
+        const v = radius * Math.sin(angle);
+        points.push(iso(axis === "x" ? [px, py + u, pz + v] : [px + u, py, pz + v], projection));
+    }
+    return pathOf(points, true);
+}
+function coil(from, to, center, radius, turns, axis, projection, perTurn = 16) {
+    const count = Math.max(1, Math.round(turns * perTurn));
+    const back = [];
+    const front = [];
+    let run = [];
+    let near = null;
+    for (let index = 0; index <= count; index++) {
+        const share = index / count;
+        const angle = share * turns * Math.PI * 2;
+        const u = radius * Math.cos(angle);
+        const v = radius * Math.sin(angle);
+        const along = from + (to - from) * share;
+        const point = axis === "x" ? [along, center[0] + u, center[1] + v] : [center[0] + u, along, center[1] + v];
+        const normal = axis === "x" ? [0, Math.cos(angle), Math.sin(angle)] : [Math.cos(angle), 0, Math.sin(angle)];
+        const facing = depthOf(normal, projection) > 0;
+        const flat = iso(point, projection);
+        if (near === null)
+            near = facing;
+        if (facing !== near) {
+            run.push(flat);
+            (near ? front : back).push(pathOf(run));
+            run = [flat];
+            near = facing;
+            continue;
+        }
+        run.push(flat);
+    }
+    if (run.length > 1)
+        (near ? front : back).push(pathOf(run));
+    return { back: back.join(""), front: front.join("") };
+}
+function topTicks(from, to, step, every, edge, z, lengths, projection, axis = "x") {
+    const minor = [];
+    const major = [];
+    const first = Math.ceil(from / step) * step;
+    for (let at = first, index = Math.round(first / step); at <= to + 1e-9; at += step, index++) {
+        const big = index % every === 0;
+        const length = big ? lengths[1] : lengths[0];
+        const a = axis === "x" ? [at, edge] : [edge, at];
+        const b = axis === "x" ? [at, edge + length] : [edge + length, at];
+        (big ? major : minor).push(lineOnTop(a, b, z, projection));
+    }
+    return { minor: minor.join(""), major: major.join("") };
+}
+function sideTicks(from, to, step, every, face, top, lengths, projection, axis = "x") {
+    const minor = [];
+    const major = [];
+    const first = Math.ceil(from / step) * step;
+    for (let at = first, index = Math.round(first / step); at <= to + 1e-9; at += step, index++) {
+        const big = index % every === 0;
+        const length = big ? lengths[1] : lengths[0];
+        const a = axis === "x" ? [at, face, top] : [face, at, top];
+        const b = axis === "x" ? [at, face, top - length] : [face, at, top - length];
+        (big ? major : minor).push(segment(a, b, projection));
+    }
+    return { minor: minor.join(""), major: major.join("") };
+}
+function radialTicks(cx, cy, radius, count, every, z, lengths, projection, from = 0, span = Math.PI * 2) {
+    const minor = [];
+    const major = [];
+    const closed = Math.abs(span - Math.PI * 2) < 1e-9;
+    const steps = closed ? count : count + 1;
+    for (let index = 0; index < steps; index++) {
+        const angle = from + (index / count) * span;
+        const big = index % every === 0;
+        const inner = radius - (big ? lengths[1] : lengths[0]);
+        const sx = Math.sin(angle);
+        const sy = -Math.cos(angle);
+        (big ? major : minor).push(lineOnTop([cx + sx * inner, cy + sy * inner], [cx + sx * radius, cy + sy * radius], z, projection));
+    }
+    return { minor: minor.join(""), major: major.join("") };
+}
+const haloOf = (plan, z, height, projection) => slabOf(plan, z, height, projection).fill;
+function axisVector(projection, [dx, dy, dz]) {
+    const origin = iso([0, 0, 0], projection);
+    const moved = iso([dx, dy, dz], projection);
+    return [moved[0] - origin[0], moved[1] - origin[1]];
+}
+const fine = (value) => Math.round(value * 100) / 100;
+function translateAlong(projection, by) {
+    const [x, y] = axisVector(projection, by);
+    return `translate(${fine(x)} ${fine(y)})`;
+}
+const thousandth = (value) => Math.round(value * 1000) / 1000;
+function axesAt(at, z, projection) {
+    const origin = iso([at[0], at[1], z], projection);
+    const along = (point) => {
+        const [px, py] = iso(point, projection);
+        return [px - origin[0], py - origin[1]];
+    };
+    return { origin, x: along([at[0] + 1, at[1], z]), y: along([at[0], at[1] + 1, z]), z: along([at[0], at[1], z + 1]) };
+}
+const matrixOf = (u, v, origin) => `matrix(${thousandth(u[0])} ${thousandth(u[1])} ${thousandth(v[0])} ${thousandth(v[1])} ${thousandth(origin[0])} ${thousandth(origin[1])})`;
+function holdStill(element, [dx, dy]) {
+    const text = dx || dy ? `translate(${-dx} ${-dy})` : "";
+    element.querySelectorAll("[data-hold]").forEach((node) => (text ? node.setAttribute("transform", text) : node.removeAttribute("transform")));
+}
+function topMatrix(at, z, projection, along = "x") {
+    const { origin, x, y } = axesAt(at, z, projection);
+    return along === "x" ? matrixOf(x, y, origin) : matrixOf([-y[0], -y[1]], x, origin);
+}
+function sideMatrix(at, z, projection, face) {
+    const { origin, x, y, z: up } = axesAt(at, z, projection);
+    const down = [-up[0], -up[1]];
+    return face === "left" ? matrixOf(x, down, origin) : matrixOf([-y[0], -y[1]], down, origin);
+}
+function screenRise(height, projection) {
+    const { cosE, k } = cameraOf(projection);
+    return height * cosE * k;
+}
+function fitProjection(points, width, height, { pad = 24, headroom = 0, azimuth = AZIMUTH, elevation = ELEVATION } = {}) {
+    const unit = { origin: [0, 0], scale: 1, azimuth, elevation };
+    const flat = points.map((point) => iso(point, unit));
+    const xs = flat.map(([x]) => x);
+    const ys = flat.map(([, y]) => y);
+    const left = Math.min(...xs);
+    const right = Math.max(...xs);
+    const up = Math.min(...ys);
+    const down = Math.max(...ys);
+    const scale = Math.min((width - pad * 2) / (right - left), (height - pad * 2 - headroom) / (down - up));
+    return {
+        origin: [width / 2 - ((left + right) / 2) * scale, headroom + (height - headroom) / 2 - ((up + down) / 2) * scale],
+        scale,
+        azimuth,
+        elevation,
+    };
+}
+const escape = (text) => text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+const attrs = (pairs) => Object.entries(pairs)
+    .filter(([, value]) => value !== undefined && value !== false)
+    .map(([key, value]) => ` ${key}="${escape(String(value))}"`)
+    .join("");
+function solidSvg(paths, { tone = "hi", crease = "faint", halo = false, lit = false, flat = false, className, inner = "" } = {}) {
+    const parts = [];
+    if (halo)
+        parts.push(`<path class="iso-halo" d="${paths.fill}"/>`);
+    parts.push(`<path class="iso-fill" d="${paths.fill}"/>`);
+    if (!flat) {
+        paths.shades.forEach((d, shade) => {
+            if (d)
+                parts.push(`<path class="iso-shade" data-shade="${shade}" d="${d}"/>`);
+        });
+        parts.push(`<path class="iso-top" d="${paths.top}"/>`);
+    }
+    if (crease !== "none" && paths.crease)
+        parts.push(`<path class="iso-line iso-crease" data-tone="${crease}" d="${paths.crease}"/>`);
+    if (crease !== "none" && paths.bevel)
+        parts.push(`<path class="iso-line iso-bevel" data-tone="${crease}" d="${paths.bevel}"/>`);
+    if (inner)
+        parts.push(inner);
+    parts.push(`<path class="iso-line iso-edge" data-tone="${tone}" d="${paths.outline}"/>`);
+    return `<g${attrs({ class: className ? `iso-solid ${className}` : "iso-solid", "data-lit": lit ? "" : undefined, "data-seamless": paths.seamless ? "" : undefined })}>${parts.join("")}</g>`;
+}
+function lineSvg(d, { tone = "lo", dotted = false, dashed = false, flow = false, className, free } = {}) {
+    if (!d)
+        return "";
+    return `<path${attrs({
+        class: className ? `iso-line ${className}` : "iso-line",
+        "data-tone": tone,
+        "data-free": free === true ? "" : free || undefined,
+        "data-dotted": dotted ? "" : undefined,
+        "data-dashed": dashed ? "" : undefined,
+        "data-flow": flow ? "" : undefined,
+        d,
+    })}/>`;
+}
+function dotsSvg(points, { size = 0.5, tone = "mid", pulse = false } = {}) {
+    const dots = points
+        .map(([x, y, alpha], index) => `<circle cx="${tenth(x)}" cy="${tenth(y)}" r="${size}"${alpha !== undefined && alpha < 1 ? ` fill-opacity="${Math.max(0, alpha).toFixed(2)}"` : ""}${pulse ? ` data-pulse="" style="--pulse-at:${(index * 137) % 1600}ms"` : ""}/>`)
+        .join("");
+    return `<g class="iso-dots" data-tone="${tone}">${dots}</g>`;
+}
+function fadedSvg(list, style = {}) {
+    const groups = new Map();
+    for (const entry of list) {
+        const [d, alpha] = Array.isArray(entry) ? entry : [entry.d, entry.alpha];
+        if (!d || !(alpha > 0.02))
+            continue;
+        const level = Math.min(1, Math.round(alpha * 20) / 20);
+        groups.set(level, (groups.get(level) ?? "") + d);
+    }
+    return [...groups].map(([alpha, d]) => (alpha >= 1 ? lineSvg(d, style) : `<g opacity="${alpha.toFixed(2)}">${lineSvg(d, style)}</g>`)).join("");
+}
+function fadeLineSvg(points, { fade = [0, 0], tone = "lo", className, stops = 6 } = {}) {
+    if (points.length < 2)
+        return "";
+    const ease = (t) => t * t * (3 - 2 * t);
+    const hashOf = (text) => {
+        let hash = 2166136261;
+        for (let index = 0; index < text.length; index++)
+            hash = Math.imul(hash ^ text.charCodeAt(index), 16777619);
+        return (hash >>> 0).toString(36);
+    };
+    const lengths = [0];
+    for (let index = 1; index < points.length; index++)
+        lengths.push(lengths[index - 1] + Math.hypot(points[index][0] - points[index - 1][0], points[index][1] - points[index - 1][1]));
+    const at = (length) => {
+        let index = 1;
+        while (index < points.length - 1 && lengths[index] < length)
+            index++;
+        const span = lengths[index] - lengths[index - 1] || 1;
+        const t = Math.max(0, Math.min(1, (length - lengths[index - 1]) / span));
+        return [points[index - 1][0] + (points[index][0] - points[index - 1][0]) * t, points[index - 1][1] + (points[index][1] - points[index - 1][1]) * t];
+    };
+    const pieceOf = (from, to) => [at(from), ...points.filter((_, index) => lengths[index] > from + 1e-6 && lengths[index] < to - 1e-6), at(to)];
+    const total = lengths[lengths.length - 1];
+    if (total < 1e-6)
+        return "";
+    let [start, end] = Array.isArray(fade) ? fade : [fade, fade];
+    if (start + end > total) {
+        const share = total / (start + end);
+        start *= share;
+        end *= share;
+    }
+    const paint = `var(--anatomy-${tone})`;
+    const ramp = (piece, rising) => {
+        const d = pathOf(piece);
+        const [x1, y1] = piece[0];
+        const [x2, y2] = piece[piece.length - 1];
+        const id = `iso-fade-${hashOf(`${d}|${tone}|${rising}`)}`;
+        const marks = Array.from({ length: stops + 1 }, (_, index) => {
+            const t = index / stops;
+            const alpha = ease(rising ? t : 1 - t);
+            return `<stop offset="${t.toFixed(3)}" stop-opacity="${alpha.toFixed(3)}" style="stop-color:${paint}"/>`;
+        }).join("");
+        const gradient = `<linearGradient id="${id}" gradientUnits="userSpaceOnUse" x1="${tenth(x1)}" y1="${tenth(y1)}" x2="${tenth(x2)}" y2="${tenth(y2)}">${marks}</linearGradient>`;
+        return `<defs>${gradient}</defs><path${attrs({ class: className ? `iso-line ${className}` : "iso-line", "data-tone": tone, "data-free": rising ? "start" : "end", d, style: `stroke:url(#${id})` })}/>`;
+    };
+    const parts = [];
+    if (start > 0.05)
+        parts.push(ramp(pieceOf(0, start), true));
+    if (total - end - start > 0.05)
+        parts.push(lineSvg(pathOf(pieceOf(start, total - end)), { tone, className }));
+    if (end > 0.05)
+        parts.push(ramp(pieceOf(total - end, total), false));
+    return `<g class="iso-fade">${parts.join("")}</g>`;
+}
+function wireSvg(from, to, { via = [], tone = "lo", dotted = false, dashed = false, flow = false, ends = "both", size = 1.2 } = {}) {
+    const d = pathOf([from, ...via, to]);
+    const end = ([x, y]) => `<circle class="iso-wire-end" cx="${tenth(x)}" cy="${tenth(y)}" r="${size}"/>`;
+    return `<g class="iso-wire" data-tone="${tone}">${lineSvg(d, { tone, dotted, dashed, flow })}${ends === "both" || ends === "from" ? end(from) : ""}${ends === "both" || ends === "to" ? end(to) : ""}</g>`;
+}
+function faceTextSvg(transform, text, { size = 3, tone = "mid", anchor = "start" } = {}) {
+    return `<text class="iso-face-text" data-tone="${tone}" transform="${transform}" font-size="${size}" text-anchor="${anchor}">${escape(text)}</text>`;
+}
+function groupSvg(children, extra = {}) {
+    return `<g${attrs(extra)}>${Array.isArray(children) ? children.join("") : children}</g>`;
+}
+function figureSvg({ width, height, label, body, standalone = false, className }) {
+    const style = standalone ? `<style>${ISO_CSS}</style>` : "";
+    return `<svg${attrs({
+        xmlns: "http://www.w3.org/2000/svg",
+        class: `iso-svg${standalone ? " iso" : ""}${className ? ` ${className}` : ""}`,
+        "data-theme": standalone || undefined,
+        viewBox: `0 0 ${width} ${height}`,
+        role: "img",
+        "aria-label": label,
+    })}>${style}${Array.isArray(body) ? body.join("") : body}</svg>`;
+}
+function swatchSvg(mark) {
+    if (mark === "raised" || mark === "flat" || mark === "lit") {
+        const body = mark === "flat" ? "M2 6.5 8 3.5 14 6.5 8 9.5Z" : "M2 4.5 8 1.5 14 4.5 14 6 8 9 2 6Z";
+        const crease = mark === "flat" ? "" : `<path class="iso-swatch-crease" d="M2 4.5 8 7.5 14 4.5"/>`;
+        return `<svg class="iso-swatch" data-mark="${mark}" viewBox="0 0 16 10" aria-hidden="true"><path d="${body}"/>${crease}</svg>`;
+    }
+    return `<svg class="iso-swatch" data-mark="${mark}" viewBox="0 0 16 10" aria-hidden="true"><path d="M1.5 5h13"/></svg>`;
+}
+function plateHtml({ fig, title, hint, readout = "", keys = [], caption, body }) {
+    const corner = (name, text, extra = "") => `<span class="iso-plate-corner" data-corner="${name}"${extra}>${escape(text)}</span>`;
+    const legend = keys.length || caption
+        ? `<figcaption class="iso-legend">${keys.length ? `<span class="iso-keys">${keys.map((key) => `<span class="iso-key">${swatchSvg(key.mark)}${escape(key.label)}</span>`).join("")}</span>` : ""}${caption ? `<span class="iso-caption">${escape(caption)}</span>` : ""}</figcaption>`
+        : "";
+    return `<figure class="iso-figure"><div class="iso-plate"><div class="iso-plate-corners" aria-hidden="true">${corner("fig", fig)}${title ? corner("title", title) : ""}${hint ? corner("hint", hint) : ""}${corner("readout", readout, " data-readout")}</div>${body}</div>${legend}</figure>`;
+}
+function pageHtml({ title, theme = "dark", body, script = "", width = 650 }) {
+    return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>${escape(title)}</title><style>${ISO_CSS}${PAGE_CSS.replace("__WIDTH__", String(width))}</style></head><body class="iso" data-theme="${theme}"><main class="iso-page">${body}</main>${script ? `<script type="module">${script.replace(/<\/(script)/gi, "<\\/$1")}<\/script>` : ""}</body></html>`;
+}
+const PAGE_CSS = `
+*{box-sizing:border-box}
+html{color-scheme:dark}
+body[data-theme="light"]{color-scheme:light}
+body{margin:0;background:var(--anatomy-page);color:var(--anatomy-text);font:14px/1.6 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+.iso-page{width:min(__WIDTH__px,100% - 32px);margin:64px auto 96px}
+`;
+const ISO_CSS = `
+.iso{
+  --anatomy-page:#0b0b0b;--anatomy-card:#131313;--anatomy-text:#a3a3a3;--anatomy-strong:#e6e6e6;--anatomy-muted:#6e6e6e;
+  --anatomy-paper:#131313;--anatomy-face:#1b1b1b;--anatomy-top:#1c1c1c;
+  --anatomy-shade-0:#0f0f0f;--anatomy-shade-1:#121212;--anatomy-shade-2:#151515;--anatomy-shade-3:#181818;
+  --anatomy-lit-top:#262626;--anatomy-lit-shade:#1d1d1d;
+  --anatomy-hi:#d4d4d4;--anatomy-mid:#6a6a6a;--anatomy-lo:#3e3e3e;--anatomy-faint:#2a2a2a;--anatomy-lit:#ffffff;
+  --anatomy-halo:#050505;--anatomy-halo-opacity:.9;--anatomy-dot:#e6e6e6;
+  --anatomy-red:#ff6b6b;--anatomy-green:#6be0a0;--anatomy-blue:#6b9bff;
+  --anatomy-weight:.6px;--anatomy-ease:cubic-bezier(.32,.72,0,1);
+  --anatomy-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --anatomy-lift:inset 0 1px 0 0 #ffffff0a,inset 0 0 0 1px #ffffff06,0 0 0 1px #00000026,0 1px 1px -.5px #00000014,0 3px 3px -1.5px #00000014,0 6px 6px -3px #00000014,0 12px 12px -6px #00000014;
+}
+.iso[data-theme="light"]{
+  --anatomy-page:#f2f2ef;--anatomy-card:#fbfbfa;--anatomy-text:#57575a;--anatomy-strong:#18181a;--anatomy-muted:#8c8c90;
+  --anatomy-paper:#fbfbfa;--anatomy-face:#ffffff;--anatomy-top:#ffffff;
+  --anatomy-shade-0:#dcdcd9;--anatomy-shade-1:#e5e5e2;--anatomy-shade-2:#ededea;--anatomy-shade-3:#f4f4f1;
+  --anatomy-lit-top:#ffffff;--anatomy-lit-shade:#eeeeeb;
+  --anatomy-hi:#26262a;--anatomy-mid:#8a8a8f;--anatomy-lo:#b4b4b8;--anatomy-faint:#d4d4d6;--anatomy-lit:#000000;
+  --anatomy-halo:#8a8a80;--anatomy-halo-opacity:.32;--anatomy-dot:#3a3a3e;
+  --anatomy-red:#e5484d;--anatomy-green:#30a46c;--anatomy-blue:#3e63dd;
+  --anatomy-lift:inset 0 1px 0 0 #ffffff,0 0 0 1px #0000000f,0 1px 1px -.5px #0000000a,0 3px 3px -1.5px #0000000a,0 6px 6px -3px #0000000a,0 12px 12px -6px #0000000a;
+}
+.iso-svg{display:block;width:100%;height:auto;overflow:visible}
+.iso-svg path,.iso-svg circle{vector-effect:non-scaling-stroke}
+.iso-fill{fill:var(--anatomy-paper);stroke:none}
+.iso-solid[data-lit]>.iso-fill{fill:var(--anatomy-face)}
+.iso-shade,.iso-top{stroke:none}
+.iso-shade[data-shade="0"]{fill:var(--anatomy-shade-0)}
+.iso-shade[data-shade="1"]{fill:var(--anatomy-shade-1)}
+.iso-shade[data-shade="2"]{fill:var(--anatomy-shade-2)}
+.iso-shade[data-shade="3"]{fill:var(--anatomy-shade-3)}
+.iso-top{fill:var(--anatomy-top)}
+.iso-solid[data-lit]>.iso-top{fill:var(--anatomy-lit-top)}
+.iso-solid[data-lit]>.iso-shade{fill:var(--anatomy-lit-shade)}
+.iso-solid[data-seamless]>.iso-shade,.iso-solid[data-seamless]>.iso-top{stroke-width:.4;stroke-linejoin:round}
+.iso-solid[data-seamless]>.iso-shade[data-shade="0"]{stroke:var(--anatomy-shade-0)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="1"]{stroke:var(--anatomy-shade-1)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="2"]{stroke:var(--anatomy-shade-2)}
+.iso-solid[data-seamless]>.iso-shade[data-shade="3"]{stroke:var(--anatomy-shade-3)}
+.iso-solid[data-seamless]>.iso-top{stroke:var(--anatomy-top)}
+.iso-solid[data-seamless][data-lit]>.iso-top{stroke:var(--anatomy-lit-top)}
+.iso-solid[data-seamless][data-lit]>.iso-shade{stroke:var(--anatomy-lit-shade)}
+.iso-solid[data-lit]>.iso-edge{stroke:var(--anatomy-lit)}
+.iso-halo{fill:var(--anatomy-halo);stroke:none;filter:blur(9px);opacity:var(--anatomy-halo-opacity);transform:translateY(3px)}
+.iso-line{fill:none;stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight);stroke-linecap:round;stroke-linejoin:round}
+.iso-line[data-tone="hi"]{stroke:var(--anatomy-hi)}
+.iso-line[data-tone="mid"]{stroke:var(--anatomy-mid)}
+.iso-line[data-tone="lo"]{stroke:var(--anatomy-lo)}
+.iso-line[data-tone="faint"]{stroke:var(--anatomy-faint)}
+.iso-line[data-tone="lit"]{stroke:var(--anatomy-lit)}
+.iso-line[data-tone="red"]{stroke:var(--anatomy-red)}
+.iso-line[data-tone="green"]{stroke:var(--anatomy-green)}
+.iso-line[data-tone="blue"]{stroke:var(--anatomy-blue)}
+.iso-line[data-dotted]{stroke-dasharray:.01 3.5;stroke-width:1}
+.iso-line[data-dashed]{stroke-dasharray:3 3}
+.iso-line[data-flow]{stroke-dasharray:2 6}
+.iso-wire-end{fill:var(--anatomy-paper);stroke:var(--anatomy-lo);stroke-width:var(--anatomy-weight)}
+.iso-wire[data-tone="hi"] .iso-wire-end{stroke:var(--anatomy-hi)}
+.iso-wire[data-tone="mid"] .iso-wire-end{stroke:var(--anatomy-mid)}
+.iso-wire[data-tone="faint"] .iso-wire-end{stroke:var(--anatomy-faint)}
+.iso-wire[data-tone="lit"] .iso-wire-end{stroke:var(--anatomy-lit)}
+.iso-dots circle{fill:var(--anatomy-dot);stroke:none;opacity:.32}
+.iso-dots[data-tone="hi"] circle{opacity:.85}
+.iso-dots[data-tone="mid"] circle{opacity:.45}
+.iso-dots[data-tone="lo"] circle{opacity:.22}
+.iso-dots[data-tone="faint"] circle{opacity:.12}
+.iso-face-text{fill:var(--anatomy-mid);font-family:var(--anatomy-mono);letter-spacing:.04em}
+.iso-face-text[data-tone="hi"]{fill:var(--anatomy-hi)}
+.iso-face-text[data-tone="lo"]{fill:var(--anatomy-lo)}
+.iso-face-text[data-tone="faint"]{fill:var(--anatomy-faint)}
+.tb-body{fill:var(--anatomy-shade-2);stroke:none}
+.tb-shine{fill:var(--anatomy-top);stroke:none}
+.tb-shade{fill:var(--anatomy-shade-0);stroke:none}
+.tb-ring{fill:none;stroke:var(--anatomy-lo);stroke-width:.45;stroke-linecap:butt;stroke-linejoin:round}
+.tb-ring[data-tone="mid"]{stroke:var(--anatomy-mid)}
+.tb-ring[data-tone="faint"]{stroke:var(--anatomy-faint)}
+.tb-ring[data-tone="hi"]{stroke:var(--anatomy-hi)}
+@keyframes iso-flow{to{stroke-dashoffset:-32}}
+@keyframes iso-pulse{0%,100%{opacity:.18}12%{opacity:1}40%{opacity:.18}}
+.iso-line[data-flow]{animation:iso-flow 1600ms linear infinite}
+.iso-dots circle[data-pulse]{animation:iso-pulse 1600ms steps(1,end) infinite;animation-delay:var(--pulse-at,0ms)}
+.iso-figure{margin:32px 0 36px}
+.iso-plate{position:relative;padding:52px 24px;border-radius:0;background:var(--anatomy-card);box-shadow:0 0 0 1px var(--anatomy-mid);--anatomy-paper:var(--anatomy-card)}
+.iso-plate-corners{position:absolute;inset:18px 20px;pointer-events:none}
+.iso-plate-corner{position:absolute;color:var(--anatomy-muted);font-family:var(--anatomy-mono);font-size:10.5px;line-height:1;letter-spacing:.04em;white-space:nowrap}
+.iso-plate-corner[data-corner="fig"]{top:0;left:0;color:var(--anatomy-text)}
+.iso-plate-corner[data-corner="title"]{top:0;right:0;text-transform:uppercase;letter-spacing:.1em}
+.iso-plate-corner[data-corner="hint"]{bottom:0;left:0;text-transform:uppercase;letter-spacing:.1em}
+.iso-plate-corner[data-corner="readout"]{right:0;bottom:0;color:var(--anatomy-text);font-variant-numeric:tabular-nums}
+.iso-plate .iso-svg{margin:0 auto}
+.iso-legend{display:grid;gap:8px;margin-top:12px;color:var(--anatomy-muted);font-size:13px;line-height:1.55}
+.iso-keys{display:flex;flex-wrap:wrap;gap:6px 18px}
+.iso-key{display:inline-flex;align-items:center;gap:7px}
+.iso-swatch{width:16px;height:10px;flex:none;overflow:visible}
+.iso-swatch path{fill:none;stroke:var(--anatomy-hi);stroke-width:1;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
+.iso-swatch[data-mark="raised"] path,.iso-swatch[data-mark="flat"] path{stroke:var(--anatomy-mid)}
+.iso-swatch[data-mark="lit"] path{stroke:var(--anatomy-lit)}
+.iso-swatch[data-mark="dim"] path{stroke:var(--anatomy-lo)}
+.iso-swatch[data-mark="dotted"] path{stroke-dasharray:.01 3;stroke-width:1.4}
+.iso-swatch[data-mark="dashed"] path{stroke-dasharray:3 2.5}
+.iso-swatch[data-mark="red"] path{stroke:var(--anatomy-red)}
+.iso-swatch[data-mark="green"] path{stroke:var(--anatomy-green)}
+.iso-swatch[data-mark="blue"] path{stroke:var(--anatomy-blue)}
+.iso-swatch-crease{stroke:var(--anatomy-lo)!important}
+@media (max-width:560px){.iso-plate{padding:48px 12px 70px}.iso-plate-corner[data-corner="hint"]{bottom:18px}}
+@media (prefers-reduced-motion:reduce){.iso-line[data-flow],.iso-dots circle[data-pulse]{animation:none}}
+`;
+
+const SceneModel=(()=>{// Pure, bounded teaching models. No combustion/CFD/circuit transient solver.
+function validateScene(value,schema){
+ const fail=()=>{throw Error('场景无效：请核对组件、参数、效果和无环连接。')},object=v=>v&&typeof v==='object'&&!Array.isArray(v),keys=(v,w)=>object(v)&&Object.keys(v).sort().join(',')===w.split(' ').sort().join(','),txt=(v,n,empty=false)=>typeof v==='string'&&(empty||v.trim().length>0)&&v.trim().length<=n&&!/[\x00-\x08\x0b\x0c\x0e-\x1f]/.test(v);
+ if(!keys(value,'version title description modules links unfulfilled')||value.version!==1||!txt(value.title,80)||!txt(value.description,500,true)||!Array.isArray(value.modules)||value.modules.length<1||value.modules.length>8||!Array.isArray(value.links)||value.links.length>8||!Array.isArray(value.unfulfilled)||value.unfulfilled.length>12||value.unfulfilled.some(x=>!txt(x,200)))fail();
+ const ids=new Map(),incoming=new Map();const scene={version:1,title:value.title.trim(),description:value.description.trim(),modules:[],links:[],unfulfilled:value.unfulfilled.map(x=>x.trim())};
+ for(const m of value.modules){
+  if(!keys(m,'id type label params effects')||typeof m.id!=='string'||!(/^[a-z][a-z0-9-]{0,23}$/).test(m.id)||ids.has(m.id)||!Object.hasOwn(schema.types,m.type)||!txt(m.label,50))fail();
+  const spec=schema.types[m.type],params={};if(!object(m.params)||Object.keys(m.params).some(k=>!Object.hasOwn(spec.params,k))||!Array.isArray(m.effects)||new Set(m.effects).size!==m.effects.length||m.effects.some(e=>!spec.effects.includes(e)))fail();
+  for(const [k,r] of Object.entries(spec.params)){const v=Object.hasOwn(m.params,k)?m.params[k]:r.default;if(r.kind==='parts'){params[k]=validateParts(v,schema);continue;}if(r.enum?!r.enum.includes(v):typeof v!=='number'||!Number.isFinite(v)||v<r.min||v>r.max||r.integer&&!Number.isInteger(v))fail();params[k]=v;}
+  const row={id:m.id,type:m.type,label:m.label.trim(),params,effects:[...m.effects]};ids.set(m.id,row);scene.modules.push(row);
+ }
+ for(const l of value.links){if(!keys(l,'from to kind ratio')||!ids.has(l.from)||!ids.has(l.to)||l.from===l.to||incoming.has(l.to)||!Object.hasOwn(schema.links,l.kind))fail();const s=schema.links[l.kind];if(!s.from.includes(ids.get(l.from).type)||!s.to.includes(ids.get(l.to).type)||typeof l.ratio!=='number'||!Number.isFinite(l.ratio)||Math.abs(l.ratio)<.1||Math.abs(l.ratio)>4||l.kind==='flow'&&l.ratio<0)fail();incoming.set(l.to,l);scene.links.push({...l});}
+ const active=new Set(),done=new Map();
+ function bound(id){if(active.has(id))fail();if(done.has(id))return done.get(id);active.add(id);const m=ids.get(id),p=m.params;let rpm=Math.abs(p.rpm||0);if(m.type==='motor')rpm=p.switch_closed?p.constant*p.voltage/(p.resistance*.0002+p.constant**2)*60/(2*Math.PI):0;if(incoming.has(id)){const l=incoming.get(id),s=bound(l.from);if(l.kind==='shaft')rpm=s*Math.abs(l.ratio);}if(m.type==='gear-pair')rpm*=p.teeth_a/p.teeth_b;if(rpm>24000)fail();active.delete(id);done.set(id,rpm);return rpm;}
+ for(const id of ids.keys())bound(id);return scene;
+}
+const mod=(x,n)=>((x%n)+n)%n;
+function validateParts(parts,schema){
+ const fail=()=>{throw Error('零件配置无效：请核对基本体、关节、范围与父子树。')},contract=schema.parts_contract,ids=new Map();if(!Array.isArray(parts)||parts.length<1||parts.length>16)fail();
+ for(const p of parts){if(!p||typeof p!=='object'||Array.isArray(p)||Object.keys(p).sort().join(',')!==[...contract.required].sort().join(',')||typeof p.id!=='string'||!(/^[a-z][a-z0-9-]{0,23}$/).test(p.id)||ids.has(p.id)||typeof p.parent!=='string')fail();
+  for(const k of ['shape','joint','axis','color'])if(!contract[k].includes(p[k]))fail();
+  for(const [k,lo,hi] of [['position',-150,150],['offset',-150,150],['size',2,100],['rotation',-180,180]])if(!Array.isArray(p[k])||p[k].length!==3||p[k].some(v=>typeof v!=='number'||!Number.isFinite(v)||v<lo||v>hi))fail();
+  if(p.shape==='cylinder'&&p.size[0]!==p.size[1])fail();
+  for(const [k,hi] of [['amplitude',p.joint==='revolute'?180:p.joint==='prismatic'?100:0],['frequency',2],['phase',360]])if(typeof p[k]!=='number'||!Number.isFinite(p[k])||p[k]<0||p[k]>hi)fail();ids.set(p.id,p);
+ }
+ const done=new Set(),active=new Set();function visit(id){if(active.has(id)||!ids.has(id))fail();if(done.has(id))return;active.add(id);if(ids.get(id).parent)visit(ids.get(id).parent);active.delete(id);done.add(id);}for(const id of ids.keys())visit(id);return structuredClone(parts);
+}
+const I3=()=>[[1,0,0],[0,1,0],[0,0,1]],mv=(a,b)=>a.map(row=>row.reduce((s,v,i)=>s+v*b[i],0)),mm=(a,b)=>a.map(row=>b[0].map((_,j)=>row.reduce((s,v,i)=>s+v*b[i][j],0))),add=(a,b)=>a.map((v,i)=>v+b[i]);
+function rotation(axis,degrees){const i='xyz'.indexOf(axis),j=(i+1)%3,k=(i+2)%3,r=I3(),c=Math.cos(degrees*Math.PI/180),s=Math.sin(degrees*Math.PI/180);r[j][j]=c;r[j][k]=-s;r[k][j]=s;r[k][k]=c;return r;}
+function assemblyState(parts,time){
+ const ids=new Map(parts.map(p=>[p.id,p])),done=new Map();
+ function visit(id){if(done.has(id))return done.get(id);const p=ids.get(id),parent=p.parent?visit(p.parent):{rotation:I3(),position:[0,0,0]},rest=mm(mm(rotation('x',p.rotation[0]),rotation('y',p.rotation[1])),rotation('z',p.rotation[2]));
+  const value=p.joint==='fixed'?0:p.amplitude*Math.sin(2*Math.PI*p.frequency*time+p.phase*Math.PI/180),shift=[0,0,0];if(p.joint==='prismatic')shift['xyz'.indexOf(p.axis)]=value;
+  const R=mm(parent.rotation,mm(rest,p.joint==='revolute'?rotation(p.axis,value):I3())),position=add(parent.position,mv(parent.rotation,add(p.position,mv(rest,shift)))),center=add(position,mv(R,p.offset));let local=[],faces=[];
+  if(p.shape==='box'){const [w,d,h]=p.size;for(const z of [-h/2,h/2])for(const y of [-d/2,d/2])for(const x of [-w/2,w/2])local.push([x,y,z]);faces=[[0,1,3,2],[4,6,7,5],[0,4,5,1],[2,3,7,6],[0,2,6,4],[1,5,7,3]];}
+  else{const n=20;for(const z of [-p.size[2]/2,p.size[2]/2])for(let i=0;i<n;i++)local.push([p.size[0]/2*Math.cos(i*2*Math.PI/n),p.size[0]/2*Math.sin(i*2*Math.PI/n),z]);faces.push(Array.from({length:n},(_,i)=>i),Array.from({length:n},(_,i)=>i+n));for(let i=0;i<n;i++)faces.push([i,(i+1)%n,(i+1)%n+n,i+n]);}
+  const row={id,value,rotation:R,position,center,vertices:local.map(v=>add(center,mv(R,v))),faces,color:p.color,joint:p.joint};done.set(id,row);return row;
+ }for(const id of ids.keys())visit(id);return Object.fromEntries(done);
+}
+function engineCylinder(p,angle,index=0){
+ const phase=mod(angle+index*720/p.cylinders,720),theta=phase*Math.PI/180,r=p.crank_mm,L=r*p.rod_ratio;
+ const pinX=r*Math.sin(theta),pinZ=r*Math.cos(theta),piston=pinZ+Math.sqrt(L*L-pinX*pinX),stage=Math.floor(phase/180);
+ return {phase,stage,pinX,pinZ,piston,displacement:r+L-piston,intake:stage===0,exhaust:stage===3,spark:phase>=360&&phase<374,flame:stage===2?Math.sin((phase-360)/180*Math.PI):0};
+}
+function motorState(p){
+ const b=.0002,K=p.constant,R=p.resistance,V=p.voltage;
+ const omega=p.switch_closed?Math.max(0,(K*V/R-p.load)/(b+K*K/R)):0;
+ const current=p.switch_closed?(V-K*omega)/R:0,torque=K*current;
+ return {omega,rpm:omega*60/(2*Math.PI),current,torque,backEmf:K*omega,inputPower:V*current,copperLoss:current*current*R,loadPower:p.load*omega,frictionPower:b*omega*omega,stalled:p.switch_closed&&V>0&&omega===0};
+}
+function waveState(p,x,t,drive=1){
+ const k=2*Math.PI/p.wavelength,omega=Math.sqrt(9.81*k*Math.tanh(k*p.depth)),a=p.amplitude*Math.min(1,Math.max(0,drive));
+ // Half-amplitude counterpropagating waves keep the requested peak bound.
+ const height=p.interference?a*Math.cos(k*x)*Math.cos(omega*t):a*Math.cos(k*x-omega*t);
+ return {k,omega,frequency:omega/(2*Math.PI),phaseSpeed:omega/k,height,amplitude:a};
+}
+function sceneState(scene,time,angles={}){
+ const ids=new Map(scene.modules.map(m=>[m.id,m])),incoming=new Map(scene.links.map(l=>[l.to,l])),done=new Map();
+ function visit(id){if(done.has(id))return done.get(id);const m=ids.get(id),p=m.params,l=incoming.get(id);let motor=m.type==='motor'?motorState(p):null,rpm=motor?motor.rpm:(p.rpm||0)*(m.type==='jet'?p.throttle:1),angle=angles[id]??rpm*time*6,drive=1;
+  if(l){const source=visit(l.from);if(l.kind==='shaft'){rpm=source.rpm*l.ratio;angle=source.angle*l.ratio;}else drive=Math.min(1,Math.abs(source.rpm)/600*l.ratio);}
+  const inputRpm=rpm===0?0:rpm,inputAngle=angle===0?0:angle;if(m.type==='gear-pair'){rpm=-rpm*p.teeth_a/p.teeth_b;angle=-angle*p.teeth_a/p.teeth_b;}if(rpm===0)rpm=0;if(angle===0)angle=0;
+  const row={id,type:m.type,rpm,angle,inputRpm,inputAngle,drive,motor,wave:m.type==='wave'?waveState(p,0,time,drive):null,assembly:m.type==='assembly'?assemblyState(p.parts,time):null,cylinders:m.type==='four-stroke'?Array.from({length:p.cylinders},(_,i)=>engineCylinder(p,angle,i)):null};done.set(id,row);return row;
+ }for(const id of ids.keys())visit(id);return Object.fromEntries(done);
+}
+
+return {validateScene,engineCylinder,motorState,waveState,sceneState,assemblyState,mod};})();
+const sceneSchema={"version":1,"max_modules":8,"max_links":8,"types":{"four-stroke":{"name":"四冲程发动机","effects":["airflow","flame","spark"],"params":{"cylinders":{"enum":[1,2,4,6,8],"default":4},"rpm":{"min":60,"max":3600,"default":600},"crank_mm":{"min":20,"max":70,"default":40},"rod_ratio":{"min":2.5,"max":5,"default":3}}},"jet":{"name":"喷气引擎剖面","effects":["airflow","flame"],"params":{"rpm":{"min":300,"max":12000,"default":3000},"throttle":{"min":0,"max":1,"default":0.65}}},"motor":{"name":"直流电机与电路","effects":["current","field"],"params":{"voltage":{"min":0,"max":24,"default":12},"resistance":{"min":1,"max":20,"default":4},"constant":{"min":0.02,"max":0.3,"default":0.08},"load":{"min":0,"max":0.2,"default":0.04},"switch_closed":{"enum":[true,false],"default":true}}},"gear-pair":{"name":"齿轮传动","effects":["trace"],"params":{"rpm":{"min":-120,"max":120,"default":60},"teeth_a":{"min":12,"max":60,"integer":true,"default":18},"teeth_b":{"min":12,"max":60,"integer":true,"default":36}}},"pump":{"name":"离心水泵示意","effects":["flow"],"params":{"rpm":{"min":0,"max":1500,"default":600}}},"wave":{"name":"水波实验槽","effects":["water"],"params":{"amplitude":{"min":0,"max":0.04,"default":0.025},"wavelength":{"min":0.5,"max":4,"default":1.8},"depth":{"min":0.2,"max":2,"default":0.5},"interference":{"enum":[true,false],"default":false}}},"assembly":{"name":"自定义关节机构","effects":["trace"],"params":{"parts":{"kind":"parts","default":[{"id":"base","parent":"","shape":"cylinder","joint":"fixed","axis":"z","position":[0,0,0],"offset":[0,0,0],"size":[45,45,12],"rotation":[0,0,0],"amplitude":0,"frequency":0,"phase":0,"color":"steel"},{"id":"shoulder","parent":"base","shape":"box","joint":"revolute","axis":"z","position":[0,0,15],"offset":[30,0,0],"size":[60,10,12],"rotation":[0,-35,0],"amplitude":60,"frequency":0.25,"phase":0,"color":"teal"},{"id":"elbow","parent":"shoulder","shape":"box","joint":"revolute","axis":"y","position":[60,0,0],"offset":[25,0,0],"size":[50,8,10],"rotation":[0,25,0],"amplitude":50,"frequency":0.4,"phase":60,"color":"amber"},{"id":"slider","parent":"elbow","shape":"box","joint":"prismatic","axis":"x","position":[50,0,0],"offset":[10,0,0],"size":[20,14,14],"rotation":[0,0,0],"amplitude":12,"frequency":0.7,"phase":90,"color":"blue"}]}}}},"links":{"shaft":{"from":["four-stroke","jet","motor","gear-pair"],"to":["gear-pair","pump"]},"flow":{"from":["pump"],"to":["wave"]}},"parts_contract":{"max_parts":16,"required":["id","parent","shape","joint","axis","position","offset","size","rotation","amplitude","frequency","phase","color"],"id":"regex ^[a-z][a-z0-9-]{0,23}$; no underscores; unique; parent empty means world, otherwise a part id; acyclic","shape":["box","cylinder"],"joint":["fixed","revolute","prismatic"],"axis":["x","y","z"],"position":"3 numbers -150..150 mm, in parent joint frame","offset":"3 numbers -150..150 mm, geometry center from joint","size":"3 numbers 2..100 mm; cylinder x=y diameter, z height","rotation":"3 rest angles -180..180 degrees, Rx Ry Rz","amplitude":"0..180 degrees revolute; 0..100 mm prismatic; fixed=0","frequency":"0..2 Hz; sinusoidal motion","phase":"0..360 degrees, sinusoid phase","color":["steel","teal","amber","blue"]}},studioPresets={"engine":{"version":1,"title":"四缸发动机 · 720° 工作循环","description":"观察进气、压缩、做功、排气，以及活塞、连杆与曲轴的几何关系。气体颜色、火焰和电火花是阶段示意。","modules":[{"id":"engine","type":"four-stroke","label":"直列四缸剖视","params":{"cylinders":4},"effects":["airflow","flame","spark"]}],"links":[],"unfulfilled":[]},"jet":{"version":1,"title":"喷气引擎 · 从进气到尾流","description":"压气机、燃烧室、涡轮与喷口的教学剖面；油门控制示意流量和火焰强度，不计算推力或温度。","modules":[{"id":"jet","type":"jet","label":"单轴喷气引擎","params":{},"effects":["airflow","flame"]}],"links":[],"unfulfilled":[]},"electric-water":{"version":1,"title":"电 → 机械 → 水波","description":"电路驱动电机，经减速齿轮带动水泵，再驱动水槽。轴速按传动比联动，水泵到波幅为教学映射；没有求解水力负载反馈。","modules":[{"id":"motor","type":"motor","label":"电源与直流电机","params":{},"effects":["current","field"]},{"id":"gear","type":"gear-pair","label":"一级减速传动","params":{},"effects":["trace"]},{"id":"pump","type":"pump","label":"离心叶轮与水流","params":{},"effects":["flow"]},{"id":"water","type":"wave","label":"被驱动水波槽","params":{},"effects":["water"]}],"links":[{"from":"motor","to":"gear","kind":"shaft","ratio":1},{"from":"gear","to":"pump","kind":"shaft","ratio":1},{"from":"pump","to":"water","kind":"flow","ratio":1}],"unfulfilled":[]},"waves":{"version":1,"title":"线性水波 · 双向干涉","description":"用有限水深色散关系计算角频率与相速度；叠加两个相反方向的小振幅波，观察驻波节点。","modules":[{"id":"water","type":"wave","label":"水面干涉实验","params":{"interference":true},"effects":["water"]}],"links":[],"unfulfilled":[]},"hybrid":{"version":1,"title":"发动机驱动水泵","description":"四冲程发动机经减速传动驱动水泵和水波；联动只传递运动和示意激励，不计算扭矩负载、燃烧或液体压强。","modules":[{"id":"engine","type":"four-stroke","label":"双缸动力源","params":{"cylinders":2,"rpm":480},"effects":["airflow","flame","spark"]},{"id":"gear","type":"gear-pair","label":"减速齿轮","params":{"teeth_a":20,"teeth_b":40},"effects":["trace"]},{"id":"pump","type":"pump","label":"水泵","params":{},"effects":["flow"]},{"id":"water","type":"wave","label":"水波","params":{},"effects":["water"]}],"links":[{"from":"engine","to":"gear","kind":"shaft","ratio":1},{"from":"gear","to":"pump","kind":"shaft","ratio":1},{"from":"pump","to":"water","kind":"flow","ratio":1}],"unfulfilled":[]},"robot":{"version":1,"title":"自由机构 · 关节机械臂","description":"用基础零件、父子关节与正弦驱动组合三维运动结构；支持转动和平移，不含逆运动学、闭环约束、碰撞或动力学。","modules":[{"id":"robot","type":"assembly","label":"两转动 + 一移动关节","params":{"parts":[{"id":"base","parent":"","shape":"cylinder","joint":"fixed","axis":"z","position":[0,0,0],"offset":[0,0,0],"size":[45,45,12],"rotation":[0,0,0],"amplitude":0,"frequency":0,"phase":0,"color":"steel"},{"id":"shoulder","parent":"base","shape":"box","joint":"revolute","axis":"z","position":[0,0,15],"offset":[30,0,0],"size":[60,10,12],"rotation":[0,-35,0],"amplitude":60,"frequency":0.25,"phase":0,"color":"teal"},{"id":"elbow","parent":"shoulder","shape":"box","joint":"revolute","axis":"y","position":[60,0,0],"offset":[25,0,0],"size":[50,8,10],"rotation":[0,25,0],"amplitude":50,"frequency":0.4,"phase":60,"color":"amber"},{"id":"slider","parent":"elbow","shape":"box","joint":"prismatic","axis":"x","position":[50,0,0],"offset":[10,0,0],"size":[20,14,14],"rotation":[0,0,0],"amplitude":12,"frequency":0.7,"phase":90,"color":"blue"}]},"effects":["trace"]}],"links":[],"unfulfilled":[]}},provenance={
+  "repository": "https://github.com/wheresryan22/anatomy",
+  "commit": "1482e8469b0a9e0d8cc18ea2740a01423d29ae80",
+  "license": "MIT",
+  "copyright": "Copyright (c) 2026 Ryan",
+  "files": {
+    "SKILL.md.txt": "3423ada45a05033bb6e320dfc3b3ac832569969a5afb059bbfc9096c5cf0c71b",
+    "LICENSE": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+    "kit/iso-kit.mjs": "6d3ecc725d30c3b0346da309cf61dfa5a65017c23620bbd4093009d4fb104018",
+    "kit/iso.css": "ef19bac5a42ba9be42b56b2c1cf7fc7e21d332a8060765e9ca1d987b8ab23924",
+    "references/kit.md.txt": "684672e069fdb52735efabc3f4310dedd840d0c8066a8dc7784be2b7e656be71",
+    "references/craft.md.txt": "38761fa9b81d66b30e50b05488501d4815830d3627f153d60f76ca783f598936",
+    "references/motion.md.txt": "dda401ca1b4661a5f0b7c1e33dac6e7e4b8c13d51ca5d9312123a5c02dab320b",
+    "references/verify.md.txt": "fb81437fc5d75094a34432eb6f545644aa228e15173a27d08b3cace912033561"
+  },
+  "upstream_files": {
+    "SKILL.md": "3423ada45a05033bb6e320dfc3b3ac832569969a5afb059bbfc9096c5cf0c71b",
+    "LICENSE": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+    "kit/iso-kit.mjs": "6d3ecc725d30c3b0346da309cf61dfa5a65017c23620bbd4093009d4fb104018",
+    "kit/iso.css": "ef19bac5a42ba9be42b56b2c1cf7fc7e21d332a8060765e9ca1d987b8ab23924",
+    "references/kit.md": "684672e069fdb52735efabc3f4310dedd840d0c8066a8dc7784be2b7e656be71",
+    "references/craft.md": "38761fa9b81d66b30e50b05488501d4815830d3627f153d60f76ca783f598936",
+    "references/motion.md": "dda401ca1b4661a5f0b7c1e33dac6e7e4b8c13d51ca5d9312123a5c02dab320b",
+    "references/verify.md": "fb81437fc5d75094a34432eb6f545644aa228e15173a27d08b3cace912033561"
+  },
+  "note": "Markdown reference snapshots use .md.txt locally; bytes and original upstream paths/hashes are retained."
+}
+,licenseText="MIT License\n\nCopyright (c) 2026 Ryan\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n";
+(()=>{'use strict';
+const Q=s=>document.querySelector(s),NS='http://www.w3.org/2000/svg',M=SceneModel;
+let scene=M.validateScene(JSON.parse(Q('#scene-data').textContent),sceneSchema),time=0,angles={},playing=!matchMedia('(prefers-reduced-motion: reduce)').matches,last=null,lastPaint=0,frames=0,shown=new Set();
+const fmt=(n,d=1)=>Number(n).toFixed(d),xy=p=>p.map(x=>fmt(x,2)).join(','),line=(a,b,attrs='class="axis"')=>`<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" ${attrs}/>`;
+const circle=(x,y,r,attrs='class="metal"')=>`<circle cx="${x}" cy="${y}" r="${r}" ${attrs}/>`,path=(points,attrs='class="muted-path"',closed=false)=>`<path d="${pathOf(points,closed)}" ${attrs}/>`;
+const fixedText=(x,y,s)=>`<text x="${x}" y="${y}">${s}</text>`;
+const has=(m,e)=>Q('#effects').checked&&m.effects.includes(e);
+function particlePath(points,t,color,count=10){let s='';for(let i=0;i<count;i++){const u=M.mod(t*.65+i/count,1)*(points.length-1),j=Math.min(points.length-2,Math.floor(u)),f=u-j,a=points[j],b=points[j+1];s+=circle(a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f,2.4,`fill="${color}" opacity=".85"`);}return s;}
+function engine(m,s){
+ const n=m.params.cylinders,scale=14/m.params.crank_mm,L=14*m.params.rod_ratio,spacing=33,extent=(n-1)*spacing;
+ const P=fitProjection(boxCorners({x:-35,y:-28,w:70,d:extent+56},-20,L+65),600,330,{pad:35,elevation:28,azimuth:20});
+ const pt=(x,y,z)=>iso([x,y,z],P);let out='';
+ const base=slabOf({x:-29,y:-22,w:58,d:extent+44,r:6},-14,6,P,4,.4);out+=solidSvg(base,{className:'base'});out+=line(pt(0,-21,0),pt(0,extent+23,0),'stroke="#809aac" stroke-width="8" stroke-linecap="round"');
+ for(let i=0;i<n;i++){
+  const c=s.cylinders[i],y=i*spacing,pz=c.piston*scale,px=c.pinX*scale,cz=c.pinZ*scale,head=14+L+11,gasColor=['#69bde0','#eec870','#f6a263','#a79acb'][c.stage];
+  if(Q('#cutaway').checked){for(const x of [-17,17]){out+=line(pt(x,y-12,-5),pt(x,y-12,head),'class="wire"');out+=line(pt(x,y+12,-5),pt(x,y+12,head),'class="wire"');}out+=path([pt(-17,y-12,head),pt(17,y-12,head),pt(17,y+12,head),pt(-17,y+12,head)],'class="wire"',true);}
+  // Exact pin-to-piston length; the walls remain open so the linkage is visible.
+  out+=line(pt(0,y,0),pt(px,y,cz),'stroke="#d99356" stroke-width="9" stroke-linecap="round"');out+=circle(...pt(px,y,cz),4,'fill="#efcba9" stroke="#a47956"');out+=line(pt(px,y,cz),pt(0,y,pz),'stroke="#8a9fac" stroke-width="6" stroke-linecap="round"');
+  out+=solidSvg(cylinder(0,y,14,pz-4,8,P,20,.4),{className:'piston'});out+=circle(...pt(0,y,pz),2,'fill="#f0f6fa"');
+  if(has(m,'airflow')||has(m,'flame'))out+=path([pt(-12,y-8,pz+4),pt(12,y-8,pz+4),pt(12,y-8,head-4),pt(-12,y-8,head-4)],`fill="${gasColor}" fill-opacity=".22" stroke="none"`,true);
+  out+=line(pt(-10,y,head+6),pt(-10,y,head-(c.intake?9:2)),`stroke="${c.intake?'#37a9d2':'#8c9aa6'}" stroke-width="3"`);out+=line(pt(10,y,head+6),pt(10,y,head-(c.exhaust?9:2)),`stroke="${c.exhaust?'#a08bcf':'#8c9aa6'}" stroke-width="3"`);
+  if(has(m,'airflow')){if(c.intake)out+=particlePath([pt(-29,y,head+9),pt(-10,y,head),pt(-3,y,pz+9)],time*2,'#44b7e1',6);if(c.exhaust)out+=particlePath([pt(4,y,pz+9),pt(10,y,head),pt(32,y,head+9)],time*2,'#a58cda',6);}
+  if(has(m,'flame')&&c.flame>0){const center=pt(0,y,head-7),height=Math.max(3,(head-pz-10)*P.scale*.9);for(let j=0;j<5;j++){const x=center[0]+(j-2)*4,h=height*(.4+.6*Math.abs(Math.sin(time*13+j)));out+=path([[x-3,center[1]],[x+Math.sin(time*10+j)*3,center[1]+h],[x+3,center[1]]],`class="flame" opacity="${.25+c.flame*.6}"`,true);}}
+  if(has(m,'spark')&&c.spark){const a=pt(0,y,head);out+=path([[a[0]-4,a[1]-8],[a[0]+3,a[1]-3],[a[0]-2,a[1]],[a[0]+5,a[1]+7]],'stroke="#ffcd42" stroke-width="3" fill="none"');}
+  const label=pt(0,y,head+16);out+=fixedText(label[0]-10,label[1],String(i+1));
+ }
+ out+=fixedText(24,308,'蓝：进气 · 黄：压缩 · 橙：做功 · 紫：排气');return out;
+}
+function jet(m,s){
+ const a=s.angle*Math.PI/180,th=m.params.throttle;let out='';
+ if(Q('#cutaway').checked){out+=path([[35,112],[110,86],[220,102],[340,90],[445,110],[540,128],[540,205],[445,224],[340,242],[220,230],[110,246],[35,220]],'fill="#9bb7c5" fill-opacity=".12" stroke="#7493a8" stroke-width="2"',true);}
+ out+=line([85,167],[478,167],'stroke="#9cb0be" stroke-width="12" stroke-linecap="round"');
+ for(let i=0;i<7;i++){const x=112+i*18,h=48-i*3,v=Math.sin(a+i*.6)*11;out+=path([[x,167],[x+v,167-h],[x+7+v,170-h],[x+6,167],[x+7-v,167+h],[x-v,167+h]],'class="metal"',true);}
+ for(let i=0;i<4;i++){const x=390+i*17,h=47-i*6,v=Math.sin(a+i)*12;out+=path([[x,166],[x+v,166-h],[x+v+7,166-h],[x+6,166],[x-v+6,166+h],[x-v,166+h]],'class="copper"',true);}
+ out+=path([[256,115],[345,115],[365,141],[256,141]],'class="copper"',true)+path([[256,192],[365,192],[345,217],[256,217]],'class="copper"',true);
+ if(has(m,'airflow')&&th>0){for(let j=0;j<6;j++){const y=127+j*16,route=[[20,y],[105,y],[235,140+j*10],[350,140+j*10],[490,y],[575,155+j*5]];out+=path(route,'stroke="#66b5d3" stroke-width=".8" opacity=".4" fill="none"');out+=particlePath(route,time*(.5+th),j<3?'#50b9e3':'#c6a3df',9);}}
+ if(has(m,'flame')&&th>0){for(let j=0;j<7;j++){const y=146+j*7,len=(20+35*th)*(1+.25*Math.sin(time*10+j));out+=path([[273,y-3],[273+len,y+Math.sin(time*14+j)*4],[273,y+3]],`class="flame" opacity="${.4+th*.4}"`,true);}for(let j=0;j<5;j++)out+=path([[540,151+j*7],[540+(15+55*th)*(1+.2*Math.sin(time*9+j)),154+j*7],[540,158+j*7]],'fill="#c1a1e5" opacity=".3"',true);}
+ out+=fixedText(60,280,'进气')+fixedText(142,280,'压气机')+fixedText(273,280,'燃烧室')+fixedText(400,280,'涡轮')+fixedText(503,280,'喷口');return out;
+}
+function motor(m,s){
+ const p=m.params,c=s.motor,a=s.angle*Math.PI/180,active=c.current>1e-8;let out='';
+ out+=path([[55,215],[55,71],[178,71],[215,71],[315,71],[315,114]],'class="muted-path"')+path([[315,221],[315,260],[55,260],[55,244]],'class="muted-path"');
+ out+=line([38,216],[72,216],'stroke="#d6aa36" stroke-width="3"')+line([44,230],[65,230],'stroke="#d6aa36" stroke-width="5"')+fixedText(26,190,fmt(p.voltage,1)+' V');
+ out+=circle(178,71,3)+circle(216,71,3)+line([178,71],p.switch_closed?[216,71]:[208,51],'stroke="#ca9c38" stroke-width="3"');
+ if(Q('#cutaway').checked)out+=`<rect x="238" y="111" width="161" height="113" rx="26" fill="#aac0cd" fill-opacity=".1" stroke="#7894a6" stroke-width="2"/>`;
+ out+=`<rect x="256" y="121" width="126" height="23" rx="7" fill="#d98e7e"/><rect x="256" y="192" width="126" height="22" rx="7" fill="#7d9dc8"/>`+fixedText(271,137,'N')+fixedText(271,208,'S');
+ out+=circle(318,167,38,'class="lightmetal"');for(let i=0;i<4;i++){const b=a+i*Math.PI/2;out+=line([318+12*Math.cos(b),167+12*Math.sin(b)],[318+34*Math.cos(b),167+34*Math.sin(b)],'stroke="#d39558" stroke-width="9" stroke-linecap="round"');}out+=circle(318,167,10,'class="metal"')+line([352,167],[465,167],'stroke="#a6b5c0" stroke-width="8"')+circle(466,167,27,'class="metal"');out+=line([466,167],[466+21*Math.cos(a),167+21*Math.sin(a)],'stroke="#f5b64d" stroke-width="4"');
+ if(has(m,'field'))for(let i=0;i<5;i++)out+=path([[276+i*21,147],[276+i*21,190]],'stroke="#a494d3" stroke-width="1" stroke-dasharray="3 4" fill="none"');
+ if(has(m,'current')&&active){out+=particlePath([[55,215],[55,71],[315,71],[315,114]],time*Math.min(c.current,3),'#efbf36',15);out+=particlePath([[315,221],[315,260],[55,260],[55,244]],time*Math.min(c.current,3),'#efbf36',12);}
+ out+=fixedText(112,52,p.switch_closed?'闭合回路':'开关断开')+fixedText(440,216,c.stalled?'负载堵转':'输出轴')+fixedText(115,100,'电枢 R = '+fmt(p.resistance,1)+' Ω')+fixedText(223,299,'稳态模型 · 电感和启动过程未求解');return out;
+}
+function gear(m,s){
+ let out='',a=s.inputAngle*Math.PI/180,b=s.angle*Math.PI/180,z1=m.params.teeth_a,z2=m.params.teeth_b,unit=180/(z1+z2),r1=z1*unit,r2=z2*unit,c1=[300-r2,162],c2=[300+r1,162];
+ function wheel(c,r,z,angle,color){const pts=[];for(let i=0;i<z;i++)for(const [phase,depth] of [[-.42,-3],[-.28,4],[.28,4],[.42,-3]]){const t=angle+(i+phase)*Math.PI*2/z;pts.push([c[0]+(r+depth)*Math.cos(t),c[1]+(r+depth)*Math.sin(t)]);}let x=path(pts,`fill="${color}" stroke="#6c8fa6" stroke-width="1.2"`,true);x+=circle(...c,r*.56,'fill="#f0f6f9" fill-opacity=".35" stroke="#7492a8"')+circle(...c,9,'class="metal"');x+=line(c,[c[0]+r*.8*Math.cos(angle),c[1]+r*.8*Math.sin(angle)],'stroke="#f3c46c" stroke-width="4"');return x;}
+ out+=wheel(c1,r1,z1,a,'#88b7ce')+wheel(c2,r2,z2,b+Math.PI/z2,'#b2c8b9');if(has(m,'trace'))out+=circle(...c1,r1,'fill="none" stroke="#8bafc3" stroke-dasharray="4 5"')+circle(...c2,r2,'fill="none" stroke="#8bafc3" stroke-dasharray="4 5"');return out+fixedText(44,299,'n₂ = − n₁ × Z₁ / Z₂ · 齿形为教学轮廓');
+}
+function pump(m,s){
+ const a=s.angle*Math.PI/180;let out='';
+ if(Q('#cutaway').checked)out+=path([[236,91],[377,91],[377,127],[353,127],[353,230],[257,252],[206,225],[198,165],[217,118]],'fill="#a5cad8" fill-opacity=".15" stroke="#7299b0" stroke-width="2"',true);
+ out+=path([[43,161],[215,161],[215,191],[43,191]],'class="water"',true)+path([[331,100],[331,47],[512,47],[512,79],[363,79],[363,116]],'class="water"',true);
+ out+=circle(285,171,64,'fill="#9bbac8" fill-opacity=".12" stroke="#7f9dac"');for(let i=0;i<7;i++){const t=a+i*Math.PI*2/7,pts=[];for(let j=0;j<8;j++){const r=18+j*6,theta=t+j*.085;pts.push([285+r*Math.cos(theta),171+r*Math.sin(theta)]);}out+=path(pts,'stroke="#8eafc1" stroke-width="7" fill="none" stroke-linecap="round"');}out+=circle(285,171,17,'class="metal"');
+ if(has(m,'flow')&&Math.abs(s.rpm)>0){out+=particlePath([[43,175],[220,175],[285,171]],time*Math.abs(s.rpm)/600,'#36b6df',13);const route=[];for(let i=0;i<24;i++){const t=i/23,r=15+t*75,theta=t*Math.PI*2;route.push([285+r*Math.cos(theta),171+r*Math.sin(theta)]);}route.push([346,62],[512,62]);out+=path(route,'stroke="#51b2ce" stroke-width="1" fill="none" opacity=".5"')+particlePath(route,time*Math.abs(s.rpm)/600,'#41c0e5',15);}
+ return out+fixedText(62,218,'入口')+fixedText(426,100,'出口')+fixedText(151,300,'叶轮和流线为示意；未计算扬程、流量或气蚀');
+}
+function wave(m,s){
+ const p=m.params,visible=has(m,'water'),P={scale:22,origin:[300,235],azimuth:65,elevation:25},pr=(x,y,z)=>iso([x,y,z],P);let out='';
+ const length=10,width=5,depth=2;out+=path([pr(-5,-2.5,-depth),pr(5,-2.5,-depth),pr(5,2.5,-depth),pr(-5,2.5,-depth)],'fill="#aad5e3" opacity=".2" stroke="#76a9be"',true);
+ const sample=(x,y)=>{const phaseX=(x+5)/10*p.wavelength*2,z=visible?M.waveState(p,phaseX,time,s.drive).height*18:0;return pr(x,y,z);};
+ for(let row=0;row<=14;row++){const y=-2.5+row*5/14,pts=[];for(let i=0;i<=60;i++)pts.push(sample(-5+i/6,y));out+=path(pts,'stroke="#4aaed0" stroke-width="1.2" fill="none" opacity=".7"');}
+ for(let col=0;col<=30;col++){const x=-5+col/3;out+=path([sample(x,-2.5),sample(x,2.5)],'stroke="#6cc5dc" stroke-width=".9" fill="none" opacity=".5"');}
+ if(Q('#cutaway').checked){for(const x of [-5,5])for(const y of [-2.5,2.5])out+=line(pr(x,y,-depth),pr(x,y,1),'class="wire"');out+=path([pr(-5,-2.5,1),pr(5,-2.5,1),pr(5,2.5,1),pr(-5,2.5,1)],'class="wire"',true);}
+ return out+fixedText(40,300,p.interference?'η = A cos(kx) cos(ωt) · 等幅反向波叠加':'η = A cos(kx − ωt) · 水面竖向位移放大显示');
+}
+function assembly(m,s){
+ const parts=Object.values(s.assembly),points=parts.flatMap(p=>p.vertices),P=fitProjection(points,600,330,{pad:38,elevation:30,azimuth:48}),palette={steel:['#c4d2dc','#8da7b9','#b2c6d3'],teal:['#99d0c9','#568f93','#75b3af'],amber:['#f2c98f','#bd8957','#d9aa70'],blue:['#9cc7e3','#6390b2','#7eabca']},faces=[];
+ for(const part of parts)part.faces.forEach((f,i)=>{const vertices=f.map(j=>part.vertices[j]),center=vertices[0].map((_,axis)=>vertices.reduce((sum,v)=>sum+v[axis],0)/vertices.length);faces.push({depth:depthOf(center,P),svg:path(vertices.map(v=>iso(v,P)),`fill="${palette[part.color][i%3]}" stroke="#6e8c9d" stroke-width=".8" stroke-linejoin="round"`,true)});});
+ let out=faces.sort((a,b)=>a.depth-b.depth).map(f=>f.svg).join('');
+ if(has(m,'trace')){const traces=Array.from({length:8},(_,i)=>M.assemblyState(m.params.parts,time-i*.04));for(const part of parts){if(part.joint==='fixed')continue;out+=path(traces.map(p=>iso(p[part.id].center,P)),'stroke="#c69348" stroke-dasharray="2 3" stroke-width="1.3" fill="none"');}}
+ if(Q('#cutaway').checked)for(const part of parts){const p=iso(part.position,P);out+=circle(...p,3.5,'fill="#f3d493" stroke="#99794a"')+fixedText(p[0]+5,p[1]-5,part.id);}
+ return out;
+}
+const drawings={'four-stroke':engine,jet,motor,'gear-pair':gear,pump,wave,assembly};
+const notes={assembly:'用盒体/圆柱、固定/转动/移动关节组合三维运动树。驱动为给定正弦运动，不求解闭环、碰撞、逆运动学、受力或刚体动力学。', 'four-stroke':'连杆长度保持不变；各缸按均匀循环相位演示，不代表具体车型点火顺序。火焰与气流表示阶段，没有温压计算。',jet:'压气机和涡轮单轴同步；流线、火焰和尾流为定性示意，无推力、压比或温度解。',motor:'V = RI + Kω；K I = bω + T负载。b = 0.0002 N·m·s；参数变化直接求稳态，没有启动瞬态。','gear-pair':'输入与输出反向。齿数影响传动比，图形为简化教学轮廓，未做齿形接触或制造校核。',pump:'轴速可由前级传入；流线为示意。流体没有反向施加负载，不能用于选泵。',wave:'ω² = g k tanh(kh)，小振幅、无黏、无反射边界。水面竖向放大；泵关联波幅为教学映射。'};
+const labels={cylinders:'气缸数',rpm:'设定转速 / rpm',crank_mm:'曲柄半径 / mm',rod_ratio:'连杆 / 曲柄',voltage:'电源电压 / V',resistance:'电枢电阻 / Ω',constant:'电机常数 / SI',load:'负载转矩 / N·m',switch_closed:'电路开关',throttle:'油门',teeth_a:'输入齿数',teeth_b:'输出齿数',amplitude:'波幅 / m',wavelength:'波长 / m',depth:'水深 / m',interference:'反向波干涉'};
+function node(tag,text,cls){const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;}
+function download(name,data,type){const url=URL.createObjectURL(new Blob([data],{type})),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1500);}
+function configure(next){
+ try{const valid=M.validateScene(next,sceneSchema);scene=valid;time=0;angles={};Q('#errors').textContent='';build();render();}catch(e){Q('#errors').textContent=e.message+' 原场景保留。';}
+}
+function build(){
+ Q('#title').textContent=scene.title;document.title=scene.title+' · Anatomy';Q('#description').textContent=scene.description;Q('#scene-editor').value=JSON.stringify(scene,null,2);Q('#unfulfilled').textContent=scene.unfulfilled.length?'尚未实现：'+scene.unfulfilled.join('；'):'';
+ const grid=Q('#grid'),controls=Q('#controls'),connections=Q('#connections');grid.replaceChildren();controls.replaceChildren();connections.replaceChildren();grid.classList.toggle('single',scene.modules.length===1);
+ if(!scene.links.length)connections.append(node('span','独立实验 · 共享时间轴'));
+ for(const link of scene.links){const from=scene.modules.find(m=>m.id===link.from),to=scene.modules.find(m=>m.id===link.to);connections.append(node('span',from.label+' → '+to.label+' · '+(link.kind==='shaft'?'轴速 × '+link.ratio:'波幅映射 × '+link.ratio)));}
+ for(const m of scene.modules){const spec=sceneSchema.types[m.type],card=node('section',undefined,'module');card.dataset.id=m.id;const head=node('div',undefined,'module-head');head.append(node('h3',m.label),node('span',spec.name,'pill'));const svg=document.createElementNS(NS,'svg');svg.setAttribute('viewBox','0 0 600 330');svg.setAttribute('role','img');svg.setAttribute('aria-label',m.label+' 动态教学剖视');svg.classList.add('drawing');card.append(head,svg,node('div',undefined,'metrics'),node('div',notes[m.type],'module-note'));grid.append(card);
+  const box=node('details');box.className='component-controls';box.open=m===scene.modules[0];box.append(node('summary',m.label));for(const [key,rule] of Object.entries(spec.params)){
+   if(rule.kind==='parts'){box.append(node('p',m.params.parts.length+' 个基础零件；在下方场景 JSON 编辑形状、尺寸、父子关节与驱动。','note'));continue;}
+   const label=node('label',undefined,'field'),caption=node('span',labels[key]||key),value=node('b'),input=document.createElement(rule.enum?'select':'input');input.dataset.module=m.id;input.dataset.param=key;input.setAttribute('aria-label',m.label+' '+labels[key]);
+   if(rule.enum){for(const v of rule.enum){const o=new Option(typeof v==='boolean'?(v?'开启':'关闭'):String(v),String(v));input.add(o);}input.value=String(m.params[key]);}
+   else{input.type='range';input.min=rule.min;input.max=rule.max;input.step=rule.integer||key==='rpm'||key==='crank_mm'?'1':key==='constant'||key==='load'||key==='amplitude'?'0.001':'0.01';input.value=m.params[key];}
+   if(scene.links.some(l=>l.to===m.id&&l.kind==='shaft')&&key==='rpm'){input.disabled=true;input.title='由前级轴速连接控制';caption.append(node('small',' · 前级驱动'));}
+   const valueText=v=>typeof v==='boolean'?(v?'开启':'关闭'):String(v);value.textContent=valueText(m.params[key]);caption.append(value);label.append(caption,input);box.append(label);
+   input.oninput=()=>{const n=structuredClone(scene),item=n.modules.find(x=>x.id===m.id),v=rule.enum?(rule.enum[0]===true?(input.value==='true'):Number(input.value)):Number(input.value);item.params[key]=v;try{scene=M.validateScene(n,sceneSchema);value.textContent=valueText(v);Q('#scene-editor').value=JSON.stringify(scene,null,2);Q('#errors').textContent='';render();}catch(e){input.value=scene.modules.find(x=>x.id===m.id).params[key];Q('#errors').textContent=e.message;}};
+  }
+  const effectNames={airflow:'气流',flame:'火焰',spark:'电火花',current:'电流',field:'磁场',trace:'运动轨迹',flow:'水流',water:'水面波动'};
+  for(const effect of spec.effects){const label=node('label',undefined,'check'),input=document.createElement('input');input.type='checkbox';input.checked=m.effects.includes(effect);input.setAttribute('aria-label',m.label+' '+effectNames[effect]);label.append(input,node('span',effectNames[effect]));input.onchange=()=>{const item=scene.modules.find(x=>x.id===m.id);item.effects=input.checked?[...item.effects,effect]:item.effects.filter(x=>x!==effect);Q('#scene-editor').value=JSON.stringify(scene,null,2);render();};box.append(label);}
+  controls.append(box);
+ }
+ Q('#source').textContent='上游固定提交 '+provenance.commit;Q('#license').textContent=licenseText;
+ const observer=new IntersectionObserver(rows=>{for(const row of rows){const id=row.target.parentElement.dataset.id;if(row.isIntersecting)shown.add(id);else shown.delete(id);}last=null;});if(window.studioObserver)window.studioObserver.disconnect();window.studioObserver=observer;for(const el of grid.querySelectorAll('.drawing'))observer.observe(el);
+}
+function metrics(m,s){const p=m.params;if(m.type==='assembly')return [['基础零件',String(p.parts.length)],['活动关节',String(p.parts.filter(x=>x.joint!=='fixed').length)],['模型','运动树 · 无动力学']];if(m.type==='four-stroke')return [['曲轴',fmt(s.rpm)+' rpm'],['行程',fmt(p.crank_mm*2)+' mm'],['一缸阶段',['进气','压缩','做功','排气'][s.cylinders[0].stage]],['一缸循环',fmt(s.cylinders[0].phase,0)+'°']];if(m.type==='jet')return [['单轴转速',fmt(s.rpm,0)+' rpm'],['油门',fmt(p.throttle*100,0)+'%'],['热流 / 推力','未求解']];if(m.type==='motor'){const c=s.motor;return [['转速',fmt(c.rpm)+' rpm'],['电流',fmt(c.current,3)+' A'],['反电势',fmt(c.backEmf,2)+' V'],['电功率',fmt(c.inputPower,2)+' W']];}if(m.type==='gear-pair')return [['输入',fmt(s.inputRpm)+' rpm'],['输出',fmt(s.rpm)+' rpm'],['齿数',p.teeth_a+' : '+p.teeth_b]];if(m.type==='pump')return [['轴速',fmt(s.rpm)+' rpm'],['液压负载','未反馈']];return [['频率',fmt(s.wave.frequency,3)+' Hz'],['相速度',fmt(s.wave.phaseSpeed,3)+' m/s'],['当前波幅',fmt(s.wave.amplitude*1000,1)+' mm']];}
+function render(force=true){
+ const states=M.sceneState(scene,time,angles);for(const m of scene.modules){const card=[...Q('#grid').children].find(c=>c.dataset.id===m.id),s=states[m.id];if(force||shown.has(m.id))card.querySelector('svg').innerHTML=drawings[m.type](m,s);const metricsNode=card.querySelector('.metrics');metricsNode.replaceChildren();for(const [label,value] of metrics(m,s)){const item=node('div',undefined,'metric');item.append(node('small',label),node('b',value));metricsNode.append(item);}}
+ Q('#time-label').textContent=fmt(time,2);Q('#timeline').value=Math.min(10,time);Q('#scale-label').textContent=fmt(Q('#scale').value,2)+'×';Q('#play').textContent=playing?'暂停':'播放';Q('#status').textContent=playing?'运行中 · '+fmt(Q('#scale').value,2)+'× 时间；高转速可降低倍率观察。':'已暂停 · 可以拖动时间或单步。';
+ window.anatomyStudioState={scene:structuredClone(scene),states,time,playing,frames:++frames};
+}
+function advance(dt){const states=M.sceneState(scene,time,angles);for(const m of scene.modules){if(scene.links.some(l=>l.to===m.id&&l.kind==='shaft'))continue;const s=states[m.id];angles[m.id]=(angles[m.id]??s.inputAngle)+s.inputRpm*dt*6;}time+=dt;}
+Q('#play').onclick=()=>{playing=!playing;last=null;render();};Q('#step').onclick=()=>{playing=false;advance(.01);render();};Q('#reset').onclick=()=>{time=0;angles={};render();};Q('#scale').oninput=()=>render();Q('#effects').onchange=()=>render();Q('#cutaway').onchange=()=>render();Q('#timeline').oninput=()=>{playing=false;time=Number(Q('#timeline').value);angles={};render();};
+Q('#theme').onclick=()=>document.body.classList.toggle('dark');Q('#apply').onclick=()=>{try{configure(JSON.parse(Q('#scene-editor').value));}catch(e){Q('#errors').textContent='JSON 语法无效。原场景保留。';}};
+for(const [id,p] of Object.entries(studioPresets))Q('#preset').add(new Option(p.title,id));Q('#preset').onchange=()=>{if(studioPresets[Q('#preset').value])configure(studioPresets[Q('#preset').value]);};
+Q('#schema').onclick=()=>{Q('#schema-text').hidden=!Q('#schema-text').hidden;Q('#schema-text').textContent=JSON.stringify(sceneSchema,null,2);};
+Q('#save-json').onclick=()=>download('jarvis-scene.json',JSON.stringify(scene,null,2),'application/json');
+Q('#save-html').onclick=()=>{render();const clone=document.documentElement.cloneNode(true);clone.querySelector('#scene-data').textContent=JSON.stringify(scene).replaceAll('<','\\u003c');download('jarvis-anatomy-studio.html','<!doctype html>\n'+clone.outerHTML,'text/html');};
+Q('#save-svg').onclick=()=>{render();const out=document.createElementNS(NS,'svg'),n=scene.modules.length;out.setAttribute('xmlns',NS);out.setAttribute('viewBox',`0 0 900 ${n*540+80}`);out.setAttribute('width','900');out.setAttribute('height',n*540+80);const style=document.createElementNS(NS,'style');style.textContent=Q('#studio-style').textContent;out.append(style);const bg=document.createElementNS(NS,'rect');bg.setAttribute('width','100%');bg.setAttribute('height','100%');bg.setAttribute('fill','#fff');out.append(bg);const desc=document.createElementNS(NS,'desc');desc.textContent='Jarvis Anatomy teaching illustration · '+provenance.repository+' @ '+provenance.commit+'\n'+licenseText+'\n'+scene.description;out.append(desc);scene.modules.forEach((m,i)=>{const label=document.createElementNS(NS,'text');label.setAttribute('x','30');label.setAttribute('y',String(40+i*540));label.textContent=m.label;label.setAttribute('font-size','22');out.append(label);const copy=[...Q('#grid').children].find(c=>c.dataset.id===m.id).querySelector('svg').cloneNode(true);copy.setAttribute('x','0');copy.setAttribute('y',String(50+i*540));copy.setAttribute('width','900');copy.setAttribute('height','495');out.append(copy);});download('jarvis-anatomy-studio.svg',out.outerHTML,'image/svg+xml');};
+document.addEventListener('visibilitychange',()=>last=null);matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',e=>{if(e.matches){playing=false;render();}});
+document.addEventListener('keydown',e=>{if(e.target.matches('input,textarea,select,button,a'))return;if(e.code==='Space'){e.preventDefault();playing=!playing;last=null;render();}if(e.key==='ArrowRight'){e.preventDefault();playing=false;advance(.01);render();}});
+function tick(now){if(last!==null&&playing&&!document.hidden&&now-lastPaint>=50){advance(Math.min(now-last,.15*1000)/1000*Number(Q('#scale').value));render(false);lastPaint=now;last=now;}if(last===null||!playing||document.hidden)last=now;requestAnimationFrame(tick);}
+build();render();requestAnimationFrame(tick);window.anatomyStudioModel=M;
+})();
+
+</script>
+</body></html>

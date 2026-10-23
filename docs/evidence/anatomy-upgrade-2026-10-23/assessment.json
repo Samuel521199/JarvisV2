@@ -1,0 +1,272 @@
+{
+  "status": "verified_within_declared_scope_and_available",
+  "observed_at": "2026-10-23T03:53:18.046405+00:00",
+  "project_version": "0.2.0-dev.10",
+  "adapter_version": "2.0.0",
+  "source": {
+    "repository": "https://github.com/wheresryan22/anatomy",
+    "commit": "1482e8469b0a9e0d8cc18ea2740a01423d29ae80",
+    "license": "MIT",
+    "copyright": "Copyright (c) 2026 Ryan",
+    "files": {
+      "SKILL.md.txt": "3423ada45a05033bb6e320dfc3b3ac832569969a5afb059bbfc9096c5cf0c71b",
+      "LICENSE": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+      "kit/iso-kit.mjs": "6d3ecc725d30c3b0346da309cf61dfa5a65017c23620bbd4093009d4fb104018",
+      "kit/iso.css": "ef19bac5a42ba9be42b56b2c1cf7fc7e21d332a8060765e9ca1d987b8ab23924",
+      "references/kit.md.txt": "684672e069fdb52735efabc3f4310dedd840d0c8066a8dc7784be2b7e656be71",
+      "references/craft.md.txt": "38761fa9b81d66b30e50b05488501d4815830d3627f153d60f76ca783f598936",
+      "references/motion.md.txt": "dda401ca1b4661a5f0b7c1e33dac6e7e4b8c13d51ca5d9312123a5c02dab320b",
+      "references/verify.md.txt": "fb81437fc5d75094a34432eb6f545644aa228e15173a27d08b3cace912033561"
+    },
+    "upstream_files": {
+      "SKILL.md": "3423ada45a05033bb6e320dfc3b3ac832569969a5afb059bbfc9096c5cf0c71b",
+      "LICENSE": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+      "kit/iso-kit.mjs": "6d3ecc725d30c3b0346da309cf61dfa5a65017c23620bbd4093009d4fb104018",
+      "kit/iso.css": "ef19bac5a42ba9be42b56b2c1cf7fc7e21d332a8060765e9ca1d987b8ab23924",
+      "references/kit.md": "684672e069fdb52735efabc3f4310dedd840d0c8066a8dc7784be2b7e656be71",
+      "references/craft.md": "38761fa9b81d66b30e50b05488501d4815830d3627f153d60f76ca783f598936",
+      "references/motion.md": "dda401ca1b4661a5f0b7c1e33dac6e7e4b8c13d51ca5d9312123a5c02dab320b",
+      "references/verify.md": "fb81437fc5d75094a34432eb6f545644aa228e15173a27d08b3cace912033561"
+    },
+    "note": "Markdown reference snapshots use .md.txt locally; bytes and original upstream paths/hashes are retained."
+  },
+  "checks": [
+    {
+      "command": [
+        "tests/anatomy_planetary.mjs"
+      ],
+      "status": "passed",
+      "log": "check-1.log",
+      "sha256": "3d8bfe376571e9adc1226f7832d228894a6b46a163670b3b33b1e739161980cc",
+      "result": {
+        "status": "passed",
+        "motion_cases": 57327,
+        "planet_phase_checks": 343962,
+        "worst_phase_radians": 7.428956945605075e-13,
+        "known_examples": 3,
+        "tooth_profile_bounds": true
+      }
+    },
+    {
+      "command": [
+        "tests/anatomy_planetary_geometry.mjs"
+      ],
+      "status": "passed",
+      "log": "check-2.log",
+      "sha256": "86458fc70f32c8b9326a14e520a7d78564606bf8d91dcf2f839560433f3b5e6f",
+      "result": {
+        "status": "passed",
+        "poses": 732,
+        "vertex_checks": 780678,
+        "penetrations": 0,
+        "limits": "Four declared tooth sets, 12 degree input increments; 2D vertex screening only, not exact swept 3D interference or root strength verification."
+      }
+    },
+    {
+      "command": [
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_anatomy.py",
+        "-q"
+      ],
+      "status": "passed",
+      "log": "check-3.log",
+      "sha256": "2c1001cbac429597719481b767250f8fe79c8ef82650c55e93d107a691b2029a",
+      "test_count": 6
+    },
+    {
+      "command": [
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_workspace_skills.py",
+        "-q"
+      ],
+      "status": "passed",
+      "log": "check-4.log",
+      "sha256": "2fd6cd52c5bde5762c141cc6f860590380eb88355d2b7141658239c7d5f69de4",
+      "test_count": 13
+    }
+  ],
+  "browser": {
+    "fixture": "fixture-1/browser.json",
+    "deployed": "deployed-3/browser.json",
+    "status": "passed",
+    "url": "http://127.0.0.1:18282/api/anatomy/artifacts/8fbc689d253d4771a6e1540036a2c641",
+    "page_errors": [],
+    "animation_frames_in_1300ms": 25
+  },
+  "delivery": {
+    "adapter_version": "2.0.0",
+    "bytes": 60721,
+    "configuration": {
+      "mode": "carrier-fixed",
+      "planet_teeth": 19,
+      "sun_teeth": 20
+    },
+    "id": "50c18f31cb024051be213ac6c19f5adc",
+    "limits": "Registered ideal mechanisms; no CAD/stress solver, arbitrary model JS or upstream geometry audit.",
+    "mechanism": "planetary",
+    "model_calls": 0,
+    "path": "D:\\Jarvis\\user-data\\artifacts\\anatomy\\50c18f31cb024051be213ac6c19f5adc.html",
+    "renderer_sha256": {
+      "build.mjs": "c004b83ea6823d182eefec5c45ddd57505cdeebb4dea44af3aa3dfd223f0bb02",
+      "page.html": "eebf13ce0501fc39fe04c247d1ad3fcc1fa701311b1d749a0be3d66569611ce7",
+      "planetary-model.mjs": "8f323bb11485a666b89ddb1c4649b17962caf2e66a8adf39d932dd04503768ba",
+      "planetary-view.js": "53307d54f37b5d8c61bde91a6d2e5698b45ae53527915382124da6796169cf53",
+      "planetary.html": "faff47da6ddbb94792ffa2c64c7a136d9019a39a2349adbce67c7bcbdbca1f2b"
+    },
+    "sha256": "fd055bf5df6399af60ecf1a62702200cfc7685c21ea7a989512634eef8001374",
+    "skill": "gears",
+    "source": {
+      "commit": "1482e8469b0a9e0d8cc18ea2740a01423d29ae80",
+      "copyright": "Copyright (c) 2026 Ryan",
+      "files": {
+        "LICENSE": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+        "SKILL.md.txt": "3423ada45a05033bb6e320dfc3b3ac832569969a5afb059bbfc9096c5cf0c71b",
+        "kit/iso-kit.mjs": "6d3ecc725d30c3b0346da309cf61dfa5a65017c23620bbd4093009d4fb104018",
+        "kit/iso.css": "ef19bac5a42ba9be42b56b2c1cf7fc7e21d332a8060765e9ca1d987b8ab23924",
+        "references/craft.md.txt": "38761fa9b81d66b30e50b05488501d4815830d3627f153d60f76ca783f598936",
+        "references/kit.md.txt": "684672e069fdb52735efabc3f4310dedd840d0c8066a8dc7784be2b7e656be71",
+        "references/motion.md.txt": "dda401ca1b4661a5f0b7c1e33dac6e7e4b8c13d51ca5d9312123a5c02dab320b",
+        "references/verify.md.txt": "fb81437fc5d75094a34432eb6f545644aa228e15173a27d08b3cace912033561"
+      },
+      "license": "MIT",
+      "note": "Markdown reference snapshots use .md.txt locally; bytes and original upstream paths/hashes are retained.",
+      "repository": "https://github.com/wheresryan22/anatomy",
+      "upstream_files": {
+        "LICENSE": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+        "SKILL.md": "3423ada45a05033bb6e320dfc3b3ac832569969a5afb059bbfc9096c5cf0c71b",
+        "kit/iso-kit.mjs": "6d3ecc725d30c3b0346da309cf61dfa5a65017c23620bbd4093009d4fb104018",
+        "kit/iso.css": "ef19bac5a42ba9be42b56b2c1cf7fc7e21d332a8060765e9ca1d987b8ab23924",
+        "references/craft.md": "38761fa9b81d66b30e50b05488501d4815830d3627f153d60f76ca783f598936",
+        "references/kit.md": "684672e069fdb52735efabc3f4310dedd840d0c8066a8dc7784be2b7e656be71",
+        "references/motion.md": "dda401ca1b4661a5f0b7c1e33dac6e7e4b8c13d51ca5d9312123a5c02dab320b",
+        "references/verify.md": "fb81437fc5d75094a34432eb6f545644aa228e15173a27d08b3cace912033561"
+      }
+    },
+    "url": "/api/anatomy/artifacts/50c18f31cb024051be213ac6c19f5adc"
+  },
+  "scope": {
+    "mechanisms": [
+      "slider-crank",
+      "planetary"
+    ],
+    "planetary_modes": [
+      "ring-fixed",
+      "sun-fixed",
+      "carrier-fixed"
+    ],
+    "presets": [
+      [
+        24,
+        18,
+        60
+      ],
+      [
+        18,
+        18,
+        54
+      ],
+      [
+        24,
+        24,
+        72
+      ],
+      [
+        20,
+        19,
+        58
+      ]
+    ],
+    "custom_bounds": {
+      "sun": [
+        18,
+        48
+      ],
+      "planet": [
+        18,
+        36
+      ],
+      "planets": 3,
+      "module_mm": 2
+    },
+    "valid_tooth_sets": 197,
+    "svg_export": "current pose in light theme, upstream MIT license included",
+    "configuration_persistence": "HTML opens with original receipt configuration; in-page edits are not persisted to the receipt"
+  },
+  "rating": {
+    "score": 8.1,
+    "scale": 10,
+    "weights": [
+      {
+        "dimension": "运动学与读数",
+        "score": 9,
+        "weight": 0.3
+      },
+      {
+        "dimension": "视觉清晰度",
+        "score": 8,
+        "weight": 0.2
+      },
+      {
+        "dimension": "交互体验",
+        "score": 9,
+        "weight": 0.2
+      },
+      {
+        "dimension": "Jarvis集成",
+        "score": 7,
+        "weight": 0.2
+      },
+      {
+        "dimension": "机制覆盖",
+        "score": 6,
+        "weight": 0.1
+      }
+    ],
+    "method": "Implementation Agent engineering judgement based on declared scope and checks; not independent blind review or success-rate measurement",
+    "previous_score": 7.4
+  },
+  "deployment": {
+    "origin": "http://127.0.0.1:18282",
+    "idle_checks": "task runner and development runner finished; all 11 dialogue turns succeeded before reload",
+    "reloaded_for_new_csp": true,
+    "csp": "sandbox allow-scripts allow-downloads; default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; base-uri 'none'; form-action 'none'",
+    "fixture_server": "18283 stopped after test"
+  },
+  "cloud_calls": 0,
+  "initial_findings": [
+    "2D sampled inner-ring contacts: 6330 vertex penetrations, maximum 0.0308253mm, zero sun/planet penetrations; drawing relief of 0.06mm fixed the declared sampling cases without relaxing the test tolerance",
+    "Standalone SVG initially inherited dark-default line colors; exported SVG now explicitly selects light theme",
+    "Custom tooth-count selection now identifies itself instead of leaving a misleading preset label"
+  ],
+  "limitations": [
+    "Only two registered mechanism families; no arbitrary mechanical generation or independent four-cylinder/differential template.",
+    "Four presets were sampled for 2D vertex penetration; no full swept 3D interference/clearance/depth audit, all-custom geometry proof, root strength, material, friction or manufacturing accuracy.",
+    "No CAD/STEP, tolerance stack, load/torque/efficiency solver, assembly-process or video export.",
+    "No natural-language drawing dispatch or generic task ledger/history browser; direct owned artifact receipts only.",
+    "No low-end PC/long-duration or cross-browser performance guarantee."
+  ],
+  "source_sha256": {
+    "host/anatomy.py": "10084255464c3f454d70ac88843db38e0ad6ee913866f7e7ca1c4101a9042f0e",
+    "modules/skills/anatomy/build.mjs": "c004b83ea6823d182eefec5c45ddd57505cdeebb4dea44af3aa3dfd223f0bb02",
+    "modules/skills/anatomy/page.html": "eebf13ce0501fc39fe04c247d1ad3fcc1fa701311b1d749a0be3d66569611ce7",
+    "modules/skills/anatomy/planetary-model.mjs": "8f323bb11485a666b89ddb1c4649b17962caf2e66a8adf39d932dd04503768ba",
+    "modules/skills/anatomy/planetary-view.js": "53307d54f37b5d8c61bde91a6d2e5698b45ae53527915382124da6796169cf53",
+    "modules/skills/anatomy/planetary.html": "faff47da6ddbb94792ffa2c64c7a136d9019a39a2349adbce67c7bcbdbca1f2b",
+    "apps/workbench/server.py": "164ecb021e7df0a80597de87e1ec671cfb8abd542f9795c1b0a3a09f8be2eb3e",
+    "apps/workbench/settings.js": "3ebaeb48a7d121786463c58b6b3a0c0da9e2b72da2d3921e2cafe2e52a6bb00a",
+    "seed/skills/conversation.json": "b78067a562612776a413f147b9d5317f6700b1d57358aa44cc3cb8a260ababf0",
+    "tests/test_anatomy.py": "803402126c3b444460d4ece39f995e7faaf1457414d664d47e8c2432a81ad640",
+    "tests/anatomy_planetary.mjs": "9692f0499317b7da45f1cb5e2966a3b1236d5485d8aaf230bda12d1852aa914b",
+    "tests/anatomy_planetary_geometry.mjs": "02376abe8ad8530a08d321d4cc4dfd2df8ee044f5cc027155229d1281322aadc"
+  }
+}

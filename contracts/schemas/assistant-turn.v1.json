@@ -1,0 +1,54 @@
+{
+  "type": "object",
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "jarvis.assistant-turn.v1"
+    },
+    "reply": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 12000
+    },
+    "action": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "chat",
+            "goal",
+            "amend",
+            "cancel",
+            "resume"
+          ]
+        },
+        "goal": {
+          "type": "string",
+          "maxLength": 4000
+        },
+        "input_text": {
+          "type": "string",
+          "maxLength": 12000
+        },
+        "target": {
+          "type": "string",
+          "maxLength": 60
+        }
+      },
+      "required": [
+        "kind",
+        "goal",
+        "input_text",
+        "target"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema",
+    "reply",
+    "action"
+  ],
+  "additionalProperties": false
+}

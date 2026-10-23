@@ -1,0 +1,172 @@
+{
+  "status": "passed",
+  "url": "http://127.0.0.1:18282/api/anatomy/artifacts/7857c37ee8254881b6e53548ed0ca5f0",
+  "errors": [],
+  "model_submissions": 0,
+  "checks": [
+    "exact five-component model scene rendered with one-stage 20:40 transmission",
+    "model-generated internal parts, 3D flame volume and annotations",
+    "model-generated complex scene animation advances",
+    "mobile view and no fetched scripts/textures/network assets"
+  ],
+  "updates_in_1500ms": 16,
+  "receipt": {
+    "adapter_version": "4.0.0",
+    "bytes": 125192,
+    "configuration": {
+      "description": "四冲程内燃机经20:40齿轮副减速后带动离心泵，水泵流量驱动双源干涉水波槽；旁置单轴喷气发动机作为热力对流对照。几何结构展示气门、凸轮轴、冷却套、环形燃烧室与叶轮等示意构型。系统采用单向运动学耦合，不包含真实热力学循环、受力变形、OEM级高精度制造CAD模型及CFD流体动力学数值求解。",
+      "links": [
+        {
+          "from": "engine",
+          "kind": "shaft",
+          "ratio": 1,
+          "to": "gear"
+        },
+        {
+          "from": "gear",
+          "kind": "shaft",
+          "ratio": 0.5,
+          "to": "pump"
+        },
+        {
+          "from": "pump",
+          "kind": "flow",
+          "ratio": 1,
+          "to": "wave"
+        }
+      ],
+      "modules": [
+        {
+          "effects": [
+            "airflow",
+            "flame",
+            "spark",
+            "coolant"
+          ],
+          "id": "engine",
+          "label": "四冲程四缸发动机",
+          "params": {
+            "crank_mm": 40,
+            "cylinders": 4,
+            "rod_ratio": 3,
+            "rpm": 1200
+          },
+          "type": "four-stroke"
+        },
+        {
+          "effects": [
+            "trace"
+          ],
+          "id": "gear",
+          "label": "减速齿轮副",
+          "params": {
+            "rpm": 60,
+            "teeth_a": 20,
+            "teeth_b": 40
+          },
+          "type": "gear-pair"
+        },
+        {
+          "effects": [
+            "flow"
+          ],
+          "id": "pump",
+          "label": "离心水泵",
+          "params": {
+            "rpm": 600
+          },
+          "type": "pump"
+        },
+        {
+          "effects": [
+            "water"
+          ],
+          "id": "wave",
+          "label": "干涉水波槽",
+          "params": {
+            "amplitude": 0.025,
+            "depth": 0.5,
+            "interference": true,
+            "wavelength": 1.8
+          },
+          "type": "wave"
+        },
+        {
+          "effects": [
+            "airflow",
+            "flame"
+          ],
+          "id": "jet",
+          "label": "对照用喷气引擎",
+          "params": {
+            "rpm": 4500,
+            "throttle": 0.7
+          },
+          "type": "jet"
+        }
+      ],
+      "title": "动力机械驱动与流体干涉科普实验台",
+      "unfulfilled": [
+        "真实CFD流体力学与燃烧仿真",
+        "OEM制造级CAD装配体与公差配合",
+        "结构瞬态应力与FEA有限元分析",
+        "闭环流固耦合反向载荷传递"
+      ],
+      "version": 1
+    },
+    "host_validation_sha256": {
+      "host/anatomy.py": "3c5531cb8e2b5bbeb24be09b33cbaa94d8891da905e46e64d743877fe169d1c4",
+      "host/anatomy_composer.py": "be6bea4a86dbd484413f407d9ef8fa341f13d98218c04e3ae786cd43a9d3d03b",
+      "host/anatomy_scene.py": "684983787c72f6ce2f98a76e217e246e7c4134ba322fef1724bd54141ba82fdf"
+    },
+    "id": "7857c37ee8254881b6e53548ed0ca5f0",
+    "limits": "Bounded declarative teaching scenes; no CAD, combustion/CFD/FEA, circuit transient or hydraulic load solver. Field particles are qualitative.",
+    "mechanism": "studio",
+    "model_calls": 0,
+    "path": "D:\\Jarvis\\user-data\\artifacts\\anatomy\\7857c37ee8254881b6e53548ed0ca5f0.html",
+    "renderer_sha256": {
+      "build.mjs": "93f0130f88c6ba1fee9b61e519b046e1b4d8d75f1e397b371c6951af667bf5b6",
+      "page.html": "eebf13ce0501fc39fe04c247d1ad3fcc1fa701311b1d749a0be3d66569611ce7",
+      "planetary-model.mjs": "8f323bb11485a666b89ddb1c4649b17962caf2e66a8adf39d932dd04503768ba",
+      "planetary-view.js": "53307d54f37b5d8c61bde91a6d2e5698b45ae53527915382124da6796169cf53",
+      "planetary.html": "faff47da6ddbb94792ffa2c64c7a136d9019a39a2349adbce67c7bcbdbca1f2b",
+      "scene-schema.json": "e5afa5b493b02d70f5dcf739fd30f0d13e88754c6bd60a96b5ada2a50661ff61",
+      "structure-scenes.mjs": "c1fde0acd68eeb5e00cfee1803daae3fa1ccd12ff8b83d6d2054db9b60042077",
+      "structure3d.mjs": "53d0194117a82ffb587b6c1cda7d1407a8e3fecea0f492acfa27f70067365904",
+      "studio-model.mjs": "a45a3fa11fbf482724e74a67963b0bb8b65b5dd1c502fc2734fc4b978d2aaad0",
+      "studio-presets.json": "67b9ec07e5e70dfec218b8100ca6c83df9b49bab0729529b30eafbaded55c822",
+      "studio-view.js": "65178f93ec708d386f59b3e54cc5711e4aadd59d824a9660485cc7bd7d762d96",
+      "studio.html": "b015ec2c50c3978b93dbe14ae5dcb995da28dd1531f7497ca7cba334ddfbbc59"
+    },
+    "sha256": "014e291ed29f11966b66155d62314bf992f696180e3ed625500a666f51b904ff",
+    "skill": "gears",
+    "source": {
+      "commit": "1482e8469b0a9e0d8cc18ea2740a01423d29ae80",
+      "copyright": "Copyright (c) 2026 Ryan",
+      "files": {
+        "LICENSE": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+        "SKILL.md.txt": "3423ada45a05033bb6e320dfc3b3ac832569969a5afb059bbfc9096c5cf0c71b",
+        "kit/iso-kit.mjs": "6d3ecc725d30c3b0346da309cf61dfa5a65017c23620bbd4093009d4fb104018",
+        "kit/iso.css": "ef19bac5a42ba9be42b56b2c1cf7fc7e21d332a8060765e9ca1d987b8ab23924",
+        "references/craft.md.txt": "38761fa9b81d66b30e50b05488501d4815830d3627f153d60f76ca783f598936",
+        "references/kit.md.txt": "684672e069fdb52735efabc3f4310dedd840d0c8066a8dc7784be2b7e656be71",
+        "references/motion.md.txt": "dda401ca1b4661a5f0b7c1e33dac6e7e4b8c13d51ca5d9312123a5c02dab320b",
+        "references/verify.md.txt": "fb81437fc5d75094a34432eb6f545644aa228e15173a27d08b3cace912033561"
+      },
+      "license": "MIT",
+      "note": "Markdown reference snapshots use .md.txt locally; bytes and original upstream paths/hashes are retained.",
+      "repository": "https://github.com/wheresryan22/anatomy",
+      "upstream_files": {
+        "LICENSE": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+        "SKILL.md": "3423ada45a05033bb6e320dfc3b3ac832569969a5afb059bbfc9096c5cf0c71b",
+        "kit/iso-kit.mjs": "6d3ecc725d30c3b0346da309cf61dfa5a65017c23620bbd4093009d4fb104018",
+        "kit/iso.css": "ef19bac5a42ba9be42b56b2c1cf7fc7e21d332a8060765e9ca1d987b8ab23924",
+        "references/craft.md": "38761fa9b81d66b30e50b05488501d4815830d3627f153d60f76ca783f598936",
+        "references/kit.md": "684672e069fdb52735efabc3f4310dedd840d0c8066a8dc7784be2b7e656be71",
+        "references/motion.md": "dda401ca1b4661a5f0b7c1e33dac6e7e4b8c13d51ca5d9312123a5c02dab320b",
+        "references/verify.md": "fb81437fc5d75094a34432eb6f545644aa228e15173a27d08b3cace912033561"
+      }
+    },
+    "url": "/api/anatomy/artifacts/7857c37ee8254881b6e53548ed0ca5f0"
+  }
+}

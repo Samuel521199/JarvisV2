@@ -1,0 +1,371 @@
+{
+  "version": 1,
+  "max_modules": 8,
+  "max_links": 8,
+  "types": {
+    "four-stroke": {
+      "name": "四冲程发动机",
+      "effects": [
+        "airflow",
+        "flame",
+        "spark",
+        "coolant"
+      ],
+      "params": {
+        "cylinders": {
+          "enum": [
+            1,
+            2,
+            4,
+            6,
+            8
+          ],
+          "default": 4
+        },
+        "rpm": {
+          "min": 60,
+          "max": 3600,
+          "default": 600
+        },
+        "crank_mm": {
+          "min": 20,
+          "max": 70,
+          "default": 40
+        },
+        "rod_ratio": {
+          "min": 2.5,
+          "max": 5,
+          "default": 3
+        }
+      }
+    },
+    "jet": {
+      "name": "喷气引擎剖面",
+      "effects": [
+        "airflow",
+        "flame"
+      ],
+      "params": {
+        "rpm": {
+          "min": 300,
+          "max": 12000,
+          "default": 3000
+        },
+        "throttle": {
+          "min": 0,
+          "max": 1,
+          "default": 0.65
+        }
+      }
+    },
+    "motor": {
+      "name": "直流电机与电路",
+      "effects": [
+        "current",
+        "field"
+      ],
+      "params": {
+        "voltage": {
+          "min": 0,
+          "max": 24,
+          "default": 12
+        },
+        "resistance": {
+          "min": 1,
+          "max": 20,
+          "default": 4
+        },
+        "constant": {
+          "min": 0.02,
+          "max": 0.3,
+          "default": 0.08
+        },
+        "load": {
+          "min": 0,
+          "max": 0.2,
+          "default": 0.04
+        },
+        "switch_closed": {
+          "enum": [
+            true,
+            false
+          ],
+          "default": true
+        }
+      }
+    },
+    "gear-pair": {
+      "name": "齿轮传动",
+      "effects": [
+        "trace"
+      ],
+      "params": {
+        "rpm": {
+          "min": -120,
+          "max": 120,
+          "default": 60
+        },
+        "teeth_a": {
+          "min": 12,
+          "max": 60,
+          "integer": true,
+          "default": 18
+        },
+        "teeth_b": {
+          "min": 12,
+          "max": 60,
+          "integer": true,
+          "default": 36
+        }
+      }
+    },
+    "pump": {
+      "name": "离心水泵示意",
+      "effects": [
+        "flow"
+      ],
+      "params": {
+        "rpm": {
+          "min": 0,
+          "max": 1500,
+          "default": 600
+        }
+      }
+    },
+    "wave": {
+      "name": "水波实验槽",
+      "effects": [
+        "water"
+      ],
+      "params": {
+        "amplitude": {
+          "min": 0,
+          "max": 0.04,
+          "default": 0.025
+        },
+        "wavelength": {
+          "min": 0.5,
+          "max": 4,
+          "default": 1.8
+        },
+        "depth": {
+          "min": 0.2,
+          "max": 2,
+          "default": 0.5
+        },
+        "interference": {
+          "enum": [
+            true,
+            false
+          ],
+          "default": false
+        }
+      }
+    },
+    "assembly": {
+      "name": "自定义关节机构",
+      "effects": [
+        "trace"
+      ],
+      "params": {
+        "parts": {
+          "kind": "parts",
+          "default": [
+            {
+              "id": "base",
+              "parent": "",
+              "shape": "cylinder",
+              "joint": "fixed",
+              "axis": "z",
+              "position": [
+                0,
+                0,
+                0
+              ],
+              "offset": [
+                0,
+                0,
+                0
+              ],
+              "size": [
+                45,
+                45,
+                12
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "amplitude": 0,
+              "frequency": 0,
+              "phase": 0,
+              "color": "steel"
+            },
+            {
+              "id": "shoulder",
+              "parent": "base",
+              "shape": "box",
+              "joint": "revolute",
+              "axis": "z",
+              "position": [
+                0,
+                0,
+                15
+              ],
+              "offset": [
+                30,
+                0,
+                0
+              ],
+              "size": [
+                60,
+                10,
+                12
+              ],
+              "rotation": [
+                0,
+                -35,
+                0
+              ],
+              "amplitude": 60,
+              "frequency": 0.25,
+              "phase": 0,
+              "color": "teal"
+            },
+            {
+              "id": "elbow",
+              "parent": "shoulder",
+              "shape": "box",
+              "joint": "revolute",
+              "axis": "y",
+              "position": [
+                60,
+                0,
+                0
+              ],
+              "offset": [
+                25,
+                0,
+                0
+              ],
+              "size": [
+                50,
+                8,
+                10
+              ],
+              "rotation": [
+                0,
+                25,
+                0
+              ],
+              "amplitude": 50,
+              "frequency": 0.4,
+              "phase": 60,
+              "color": "amber"
+            },
+            {
+              "id": "slider",
+              "parent": "elbow",
+              "shape": "box",
+              "joint": "prismatic",
+              "axis": "x",
+              "position": [
+                50,
+                0,
+                0
+              ],
+              "offset": [
+                10,
+                0,
+                0
+              ],
+              "size": [
+                20,
+                14,
+                14
+              ],
+              "rotation": [
+                0,
+                0,
+                0
+              ],
+              "amplitude": 12,
+              "frequency": 0.7,
+              "phase": 90,
+              "color": "blue"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "links": {
+    "shaft": {
+      "from": [
+        "four-stroke",
+        "jet",
+        "motor",
+        "gear-pair"
+      ],
+      "to": [
+        "gear-pair",
+        "pump"
+      ]
+    },
+    "flow": {
+      "from": [
+        "pump"
+      ],
+      "to": [
+        "wave"
+      ]
+    }
+  },
+  "parts_contract": {
+    "max_parts": 16,
+    "required": [
+      "id",
+      "parent",
+      "shape",
+      "joint",
+      "axis",
+      "position",
+      "offset",
+      "size",
+      "rotation",
+      "amplitude",
+      "frequency",
+      "phase",
+      "color"
+    ],
+    "id": "regex ^[a-z][a-z0-9-]{0,23}$; no underscores; unique; parent empty means world, otherwise a part id; acyclic",
+    "shape": [
+      "box",
+      "cylinder"
+    ],
+    "joint": [
+      "fixed",
+      "revolute",
+      "prismatic"
+    ],
+    "axis": [
+      "x",
+      "y",
+      "z"
+    ],
+    "position": "3 numbers -150..150 mm, in parent joint frame",
+    "offset": "3 numbers -150..150 mm, geometry center from joint",
+    "size": "3 numbers 2..100 mm; cylinder x=y diameter, z height",
+    "rotation": "3 rest angles -180..180 degrees, Rx Ry Rz",
+    "amplitude": "0..180 degrees revolute; 0..100 mm prismatic; fixed=0",
+    "frequency": "0..2 Hz; sinusoidal motion",
+    "phase": "0..360 degrees, sinusoid phase",
+    "color": [
+      "steel",
+      "teal",
+      "amber",
+      "blue"
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "routes": [
+    {"id": "qwen-primary", "endpoint": "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions", "model": "qwen3.8-flash", "key_env": "DASHSCOPE_API_KEY", "max_output_tokens": 4096, "timeout_seconds": 90},
+    {"id": "qwen-backup", "endpoint": "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions", "model": "qwen-plus", "key_env": "DASHSCOPE_API_KEY", "max_output_tokens": 4096, "timeout_seconds": 90}
+  ],
+  "order": ["qwen-primary", "qwen-backup"]
+}

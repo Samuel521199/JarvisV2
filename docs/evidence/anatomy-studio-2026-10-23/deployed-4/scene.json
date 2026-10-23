@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "title": "</script><img src=x onerror=alert(1)>",
+  "description": "电路驱动电机，经减速齿轮带动水泵，再驱动水槽。轴速按传动比联动，水泵到波幅为教学映射；没有求解水力负载反馈。",
+  "modules": [
+    {
+      "id": "motor",
+      "type": "motor",
+      "label": "电源与直流电机",
+      "params": {
+        "voltage": 24,
+        "resistance": 4,
+        "constant": 0.08,
+        "load": 0.04,
+        "switch_closed": true
+      },
+      "effects": [
+        "current",
+        "field"
+      ]
+    },
+    {
+      "id": "gear",
+      "type": "gear-pair",
+      "label": "一级减速传动",
+      "params": {
+        "rpm": 60,
+        "teeth_a": 18,
+        "teeth_b": 36
+      },
+      "effects": [
+        "trace"
+      ]
+    },
+    {
+      "id": "pump",
+      "type": "pump",
+      "label": "离心叶轮与水流",
+      "params": {
+        "rpm": 600
+      },
+      "effects": [
+        "flow"
+      ]
+    },
+    {
+      "id": "water",
+      "type": "wave",
+      "label": "被驱动水波槽",
+      "params": {
+        "amplitude": 0.025,
+        "wavelength": 1.8,
+        "depth": 0.5,
+        "interference": false
+      },
+      "effects": [
+        "water"
+      ]
+    }
+  ],
+  "links": [
+    {
+      "from": "motor",
+      "to": "gear",
+      "kind": "shaft",
+      "ratio": 1
+    },
+    {
+      "from": "gear",
+      "to": "pump",
+      "kind": "shaft",
+      "ratio": 1
+    },
+    {
+      "from": "pump",
+      "to": "water",
+      "kind": "flow",
+      "ratio": 1
+    }
+  ],
+  "unfulfilled": []
+}

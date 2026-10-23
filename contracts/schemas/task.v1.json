@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:jarvis:task:v1",
+  "title": "Jarvis task v1",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "jarvis.task.v1"
+    },
+    "request_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "[A-Za-z0-9][A-Za-z0-9._-]{0,79}"
+    },
+    "principal_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "[A-Za-z0-9][A-Za-z0-9._-]{0,79}"
+    },
+    "scope_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "[A-Za-z0-9][A-Za-z0-9._-]{0,79}"
+    },
+    "goal": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2000
+    },
+    "grant_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "[A-Za-z0-9][A-Za-z0-9._-]{0,79}"
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "step_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "pattern": "[A-Za-z0-9][A-Za-z0-9._-]{0,79}"
+          },
+          "capability": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "pattern": "[A-Za-z0-9][A-Za-z0-9._-]{0,79}"
+          },
+          "arguments": {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "string",
+                "minLength": 0,
+                "maxLength": 50000
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 80,
+                "pattern": "[A-Za-z0-9][A-Za-z0-9._-]{0,79}"
+              },
+              "content": {
+                "type": "string",
+                "minLength": 0,
+                "maxLength": 60000
+              }
+            },
+            "required": [],
+            "additionalProperties": false
+          },
+          "input_from": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "pattern": "[A-Za-z0-9][A-Za-z0-9._-]{0,79}"
+          }
+        },
+        "required": [
+          "step_id",
+          "capability",
+          "arguments"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 32
+    },
+    "limits": {
+      "type": "object",
+      "properties": {
+        "max_steps": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 32
+        },
+        "max_attempts": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "max_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 86400
+        },
+        "max_cost_units": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000
+        }
+      },
+      "required": [
+        "max_steps",
+        "max_attempts",
+        "max_seconds",
+        "max_cost_units"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema",
+    "request_id",
+    "principal_id",
+    "scope_id",
+    "goal",
+    "grant_id",
+    "steps",
+    "limits"
+  ],
+  "additionalProperties": false
+}

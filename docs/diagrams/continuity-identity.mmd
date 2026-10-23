@@ -1,0 +1,48 @@
+%%{init: {"theme":"base","themeVariables":{"fontSize":"17px","primaryTextColor":"#19324f","lineColor":"#526b88","clusterBkg":"#f5f8fc","clusterBorder":"#c5d3e3","edgeLabelBackground":"#f5f8fc"},"flowchart":{"curve":"linear","nodeSpacing":30,"rankSpacing":45,"wrappingWidth":320}}}%%
+flowchart TB
+  subgraph A["01 连续身份"]
+    direction LR
+    A1["身份来源与主人关系<br/>assistant_id / 起源 / 继承"]
+    A2["根宗旨与当前控制<br/>G0 / 有效许可 / 撤销与停止"]
+    A3["经历与共同承诺<br/>事实修订 / 未结事项 / 回执"]
+    A4["人格与能力认识<br/>适用偏好 / 有来源的自我认识"]
+    A1 ~~~ A2 ~~~ A3 ~~~ A4
+  end
+  subgraph B["02 原领域记录"]
+    direction LR
+    B1["身份与规则引用<br/>有界元数据 / 来源版本"]
+    B2["个人 / 项目 / 私密域<br/>纠正 / 遗忘 / 分域许可"]
+    B3["任务与动作账本<br/>原编号 / 真实效果 / UNKNOWN"]
+    B4["迁移与能力证据<br/>版本映射 / 核验 / 恢复边界"]
+    B1 ~~~ B2 ~~~ B3 ~~~ B4
+  end
+  subgraph C["03 用途视图"]
+    direction LR
+    C1["Context Service<br/>当前用途 / 受众 / 数据修订"]
+    C2["Continuity View<br/>我是谁 / 已知什么 / 承诺什么"]
+    C3["SelfModel<br/>当前能力 / 已知限制 / 证据"]
+    C3 -.-> C1 --> C2
+  end
+  subgraph D["04 可替换实现"]
+    direction LR
+    D1["Personal Core 与三职能<br/>定向 / 协作 / 观察成长"]
+    D2["Agent Runtime 与模型<br/>可恢复实例 / 本地或云端"]
+    D3["存储与检索实现<br/>SQL / 文件 / 索引适配"]
+    D4["界面与设备节点<br/>PC / 语音 / 具身 / 共同体"]
+    D1 ~~~ D2 ~~~ D3 ~~~ D4
+  end
+  A -->|以来源和修订落到记录| B
+  B -->|各域 API 构造获准视图| C
+  C -->|读取语义，候选写回仍经原领域| D
+  NOTE["proposed · 2026-10-22<br/>语义连续，不冻结实现"]
+  D ~~~ NOTE
+  classDef identity fill:#e5f4f4,stroke:#8aabba,color:#19324f;
+  classDef data fill:#edf2fa,stroke:#8fa9c7,color:#19324f;
+  classDef view fill:#efecfa,stroke:#a29ac4,color:#19324f;
+  classDef impl fill:#fff4df,stroke:#bfa578,color:#19324f;
+  classDef note fill:#ffffff,stroke:#ffffff,color:#526b88;
+  class A1,A2,A3,A4 identity;
+  class B1,B2,B3,B4 data;
+  class C1,C2,C3 view;
+  class D1,D2,D3,D4 impl;
+  class NOTE note;

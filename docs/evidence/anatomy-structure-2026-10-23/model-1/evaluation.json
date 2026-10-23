@@ -1,0 +1,503 @@
+{
+  "status": "passed",
+  "model_submissions": 2,
+  "scope": "real Jarvis generation and data-only model review",
+  "provider": "vertex",
+  "model": "gemini-3.8-flash",
+  "browser_evidence": "deployed-1/browser.json",
+  "composition_id": "cce61899d0f347148e30121871c9ad6e",
+  "generation_prompt": "制作一个复杂三维机械科普实验：四缸发动机含气门、凸轮轴、正时和冷却水套，经20:40齿轮驱动离心泵，再驱动干涉水波；另加单轴喷气引擎作对照。显示燃烧室内3D火焰、气流和水流，最多5个组件。说明内部关键结构，以及单向联动与示意效果的限制；不承诺真实CFD、制造CAD或受力结果。",
+  "generation": {
+    "artifact": {
+      "adapter_version": "4.0.0",
+      "bytes": 124335,
+      "composition_id": "cce61899d0f347148e30121871c9ad6e",
+      "configuration": {
+        "description": "四冲程内燃机经20:40齿轮副减速后带动离心泵，水泵流量驱动双源干涉水波槽；旁置单轴喷气发动机作为热力对流对照。几何结构展示气门、凸轮轴、冷却套、环形燃烧室与叶轮等示意构型。系统采用单向运动学耦合，不包含真实热力学循环、受力变形、OEM级高精度制造CAD模型及CFD流体动力学数值求解。",
+        "links": [
+          {
+            "from": "engine",
+            "kind": "shaft",
+            "ratio": 1,
+            "to": "gear"
+          },
+          {
+            "from": "gear",
+            "kind": "shaft",
+            "ratio": 0.5,
+            "to": "pump"
+          },
+          {
+            "from": "pump",
+            "kind": "flow",
+            "ratio": 1,
+            "to": "wave"
+          }
+        ],
+        "modules": [
+          {
+            "effects": [
+              "airflow",
+              "flame",
+              "spark",
+              "coolant"
+            ],
+            "id": "engine",
+            "label": "四冲程四缸发动机",
+            "params": {
+              "crank_mm": 40,
+              "cylinders": 4,
+              "rod_ratio": 3,
+              "rpm": 1200
+            },
+            "type": "four-stroke"
+          },
+          {
+            "effects": [
+              "trace"
+            ],
+            "id": "gear",
+            "label": "减速齿轮副",
+            "params": {
+              "rpm": 60,
+              "teeth_a": 20,
+              "teeth_b": 40
+            },
+            "type": "gear-pair"
+          },
+          {
+            "effects": [
+              "flow"
+            ],
+            "id": "pump",
+            "label": "离心水泵",
+            "params": {
+              "rpm": 600
+            },
+            "type": "pump"
+          },
+          {
+            "effects": [
+              "water"
+            ],
+            "id": "wave",
+            "label": "干涉水波槽",
+            "params": {
+              "amplitude": 0.025,
+              "depth": 0.5,
+              "interference": true,
+              "wavelength": 1.8
+            },
+            "type": "wave"
+          },
+          {
+            "effects": [
+              "airflow",
+              "flame"
+            ],
+            "id": "jet",
+            "label": "对照用喷气引擎",
+            "params": {
+              "rpm": 4500,
+              "throttle": 0.7
+            },
+            "type": "jet"
+          }
+        ],
+        "title": "动力机械驱动与流体干涉科普实验台",
+        "unfulfilled": [
+          "真实CFD流体力学与燃烧仿真",
+          "OEM制造级CAD装配体与公差配合",
+          "结构瞬态应力与FEA有限元分析",
+          "闭环流固耦合反向载荷传递"
+        ],
+        "version": 1
+      },
+      "host_validation_sha256": {
+        "host/anatomy.py": "3c5531cb8e2b5bbeb24be09b33cbaa94d8891da905e46e64d743877fe169d1c4",
+        "host/anatomy_composer.py": "be6bea4a86dbd484413f407d9ef8fa341f13d98218c04e3ae786cd43a9d3d03b",
+        "host/anatomy_scene.py": "684983787c72f6ce2f98a76e217e246e7c4134ba322fef1724bd54141ba82fdf"
+      },
+      "id": "2b2e157060f148f4b6822d9e972c0abb",
+      "limits": "Bounded declarative teaching scenes; no CAD, combustion/CFD/FEA, circuit transient or hydraulic load solver. Field particles are qualitative.",
+      "mechanism": "studio",
+      "model_calls": 1,
+      "model_receipts": [
+        {
+          "billing": {
+            "amount": 0.0063735,
+            "currency": "USD",
+            "price": {
+              "cache_read": 0.075,
+              "cache_write": null,
+              "checked_at": "2026-10-16",
+              "currency": "USD",
+              "fee_percent": 0,
+              "input": 0.75,
+              "max_input_tokens": 1000000,
+              "output": 3.75,
+              "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+              "valid_until": "2026-12-31"
+            },
+            "reason": "token_rates"
+          },
+          "created": 1792736349.3220747,
+          "error": null,
+          "model": "gemini-3.8-flash",
+          "provider": "vertex",
+          "status": "SUCCEEDED",
+          "usage": {
+            "completion_tokens": 411,
+            "prompt_tokens": 1798,
+            "reasoning_in_completion": false,
+            "reasoning_tokens": 929,
+            "total_tokens": 3138
+          }
+        }
+      ],
+      "normalizations": [],
+      "path": "D:\\Jarvis\\user-data\\artifacts\\anatomy\\2b2e157060f148f4b6822d9e972c0abb.html",
+      "renderer_sha256": {
+        "build.mjs": "93f0130f88c6ba1fee9b61e519b046e1b4d8d75f1e397b371c6951af667bf5b6",
+        "page.html": "eebf13ce0501fc39fe04c247d1ad3fcc1fa701311b1d749a0be3d66569611ce7",
+        "planetary-model.mjs": "8f323bb11485a666b89ddb1c4649b17962caf2e66a8adf39d932dd04503768ba",
+        "planetary-view.js": "53307d54f37b5d8c61bde91a6d2e5698b45ae53527915382124da6796169cf53",
+        "planetary.html": "faff47da6ddbb94792ffa2c64c7a136d9019a39a2349adbce67c7bcbdbca1f2b",
+        "scene-schema.json": "e5afa5b493b02d70f5dcf739fd30f0d13e88754c6bd60a96b5ada2a50661ff61",
+        "structure-scenes.mjs": "c1fde0acd68eeb5e00cfee1803daae3fa1ccd12ff8b83d6d2054db9b60042077",
+        "structure3d.mjs": "1994b0ef76363be0ec2ceee20f709f50b2a3b56b117a3f2ac4ee649e29f3006e",
+        "studio-model.mjs": "a45a3fa11fbf482724e74a67963b0bb8b65b5dd1c502fc2734fc4b978d2aaad0",
+        "studio-presets.json": "67b9ec07e5e70dfec218b8100ca6c83df9b49bab0729529b30eafbaded55c822",
+        "studio-view.js": "b9f2c5c2dfaa6113f05770150d5fd5a413aa28e6136b899b597b3064b3cb9cbb",
+        "studio.html": "b332f1e5b2dc96babc24da8ee09ee3f3f98bf97ce5d679c7c5c00f4e28ac3df2"
+      },
+      "sha256": "2cadbebf9f533bc5cb346101a134db9c1d95fd8f59748d34ab98d55355de4d1b",
+      "skill": "gears",
+      "source": {
+        "commit": "1482e8469b0a9e0d8cc18ea2740a01423d29ae80",
+        "copyright": "Copyright (c) 2026 Ryan",
+        "files": {
+          "LICENSE": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+          "SKILL.md.txt": "3423ada45a05033bb6e320dfc3b3ac832569969a5afb059bbfc9096c5cf0c71b",
+          "kit/iso-kit.mjs": "6d3ecc725d30c3b0346da309cf61dfa5a65017c23620bbd4093009d4fb104018",
+          "kit/iso.css": "ef19bac5a42ba9be42b56b2c1cf7fc7e21d332a8060765e9ca1d987b8ab23924",
+          "references/craft.md.txt": "38761fa9b81d66b30e50b05488501d4815830d3627f153d60f76ca783f598936",
+          "references/kit.md.txt": "684672e069fdb52735efabc3f4310dedd840d0c8066a8dc7784be2b7e656be71",
+          "references/motion.md.txt": "dda401ca1b4661a5f0b7c1e33dac6e7e4b8c13d51ca5d9312123a5c02dab320b",
+          "references/verify.md.txt": "fb81437fc5d75094a34432eb6f545644aa228e15173a27d08b3cace912033561"
+        },
+        "license": "MIT",
+        "note": "Markdown reference snapshots use .md.txt locally; bytes and original upstream paths/hashes are retained.",
+        "repository": "https://github.com/wheresryan22/anatomy",
+        "upstream_files": {
+          "LICENSE": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+          "SKILL.md": "3423ada45a05033bb6e320dfc3b3ac832569969a5afb059bbfc9096c5cf0c71b",
+          "kit/iso-kit.mjs": "6d3ecc725d30c3b0346da309cf61dfa5a65017c23620bbd4093009d4fb104018",
+          "kit/iso.css": "ef19bac5a42ba9be42b56b2c1cf7fc7e21d332a8060765e9ca1d987b8ab23924",
+          "references/craft.md": "38761fa9b81d66b30e50b05488501d4815830d3627f153d60f76ca783f598936",
+          "references/kit.md": "684672e069fdb52735efabc3f4310dedd840d0c8066a8dc7784be2b7e656be71",
+          "references/motion.md": "dda401ca1b4661a5f0b7c1e33dac6e7e4b8c13d51ca5d9312123a5c02dab320b",
+          "references/verify.md": "fb81437fc5d75094a34432eb6f545644aa228e15173a27d08b3cace912033561"
+        }
+      },
+      "url": "/api/anatomy/artifacts/2b2e157060f148f4b6822d9e972c0abb"
+    },
+    "calls": [
+      {
+        "billing": {
+          "amount": 0.0063735,
+          "currency": "USD",
+          "price": {
+            "cache_read": 0.075,
+            "cache_write": null,
+            "checked_at": "2026-10-16",
+            "currency": "USD",
+            "fee_percent": 0,
+            "input": 0.75,
+            "max_input_tokens": 1000000,
+            "output": 3.75,
+            "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+            "valid_until": "2026-12-31"
+          },
+          "reason": "token_rates"
+        },
+        "created": 1792736349.3220747,
+        "error": null,
+        "model": "gemini-3.8-flash",
+        "provider": "vertex",
+        "status": "SUCCEEDED",
+        "usage": {
+          "completion_tokens": 411,
+          "prompt_tokens": 1798,
+          "reasoning_in_completion": false,
+          "reasoning_tokens": 929,
+          "total_tokens": 3138
+        }
+      }
+    ],
+    "chat_id": "chat-449dfc27611e4f96978911cffe132093",
+    "created": 1792736349.2921984,
+    "error": null,
+    "id": "cce61899d0f347148e30121871c9ad6e",
+    "normalizations": [],
+    "scene": {
+      "description": "四冲程内燃机经20:40齿轮副减速后带动离心泵，水泵流量驱动双源干涉水波槽；旁置单轴喷气发动机作为热力对流对照。几何结构展示气门、凸轮轴、冷却套、环形燃烧室与叶轮等示意构型。系统采用单向运动学耦合，不包含真实热力学循环、受力变形、OEM级高精度制造CAD模型及CFD流体动力学数值求解。",
+      "links": [
+        {
+          "from": "engine",
+          "kind": "shaft",
+          "ratio": 1,
+          "to": "gear"
+        },
+        {
+          "from": "gear",
+          "kind": "shaft",
+          "ratio": 0.5,
+          "to": "pump"
+        },
+        {
+          "from": "pump",
+          "kind": "flow",
+          "ratio": 1,
+          "to": "wave"
+        }
+      ],
+      "modules": [
+        {
+          "effects": [
+            "airflow",
+            "flame",
+            "spark",
+            "coolant"
+          ],
+          "id": "engine",
+          "label": "四冲程四缸发动机",
+          "params": {
+            "crank_mm": 40,
+            "cylinders": 4,
+            "rod_ratio": 3,
+            "rpm": 1200
+          },
+          "type": "four-stroke"
+        },
+        {
+          "effects": [
+            "trace"
+          ],
+          "id": "gear",
+          "label": "减速齿轮副",
+          "params": {
+            "rpm": 60,
+            "teeth_a": 20,
+            "teeth_b": 40
+          },
+          "type": "gear-pair"
+        },
+        {
+          "effects": [
+            "flow"
+          ],
+          "id": "pump",
+          "label": "离心水泵",
+          "params": {
+            "rpm": 600
+          },
+          "type": "pump"
+        },
+        {
+          "effects": [
+            "water"
+          ],
+          "id": "wave",
+          "label": "干涉水波槽",
+          "params": {
+            "amplitude": 0.025,
+            "depth": 0.5,
+            "interference": true,
+            "wavelength": 1.8
+          },
+          "type": "wave"
+        },
+        {
+          "effects": [
+            "airflow",
+            "flame"
+          ],
+          "id": "jet",
+          "label": "对照用喷气引擎",
+          "params": {
+            "rpm": 4500,
+            "throttle": 0.7
+          },
+          "type": "jet"
+        }
+      ],
+      "title": "动力机械驱动与流体干涉科普实验台",
+      "unfulfilled": [
+        "真实CFD流体力学与燃烧仿真",
+        "OEM制造级CAD装配体与公差配合",
+        "结构瞬态应力与FEA有限元分析",
+        "闭环流固耦合反向载荷传递"
+      ],
+      "version": 1
+    },
+    "status": "DELIVERED"
+  },
+  "review_chat_id": "chat-dec8c6fbd34a47a1b11e2abeb9d3d433",
+  "review_turn_id": "anatomy-review-745f41ba2b584889b8bcb991176937a9",
+  "review_turn": {
+    "assistant_action": null,
+    "cancel": 0,
+    "chat_id": "chat-dec8c6fbd34a47a1b11e2abeb9d3d433",
+    "context_count": 1,
+    "created": 1792736364.5101728,
+    "error": null,
+    "guidance": null,
+    "id": "anatomy-review-745f41ba2b584889b8bcb991176937a9",
+    "memory_context": {
+      "enabled": false,
+      "epoch": 7,
+      "facts": [],
+      "provider": "vertex",
+      "scope": "personal"
+    },
+    "model": "gemini-3.8-flash",
+    "provider": "vertex",
+    "reply": "{\n  \"schema\": \"anatomy.review.v1\",\n  \"evidence_mode\": \"data-only\",\n  \"visual_score\": null,\n  \"scores\": {\n    \"structure\": 8.6,\n    \"motion_consistency\": 8.4,\n    \"effect_consistency\": 7.3,\n    \"inspectability\": 9.2\n  },\n  \"strengths\": [\n    \"各模块部件层级清晰，覆盖发动机配气连杆机构、双级减速齿轮副、离心泵动静密封流道及多级压气机/涡轮轴系，几何体与装配逻辑完整。\",\n    \"视差投影、视口变换与交互轨道测试通过，剖切剔除面（clipped faces）与内部清单在多场景下均有明确数值回执支持。\",\n    \"运动约束定义清晰，包含内燃机 2:1 正时传动、齿数比 20:40 齿轮啮合、泵与航空发动机恒定转速配置，并在停机状态下正确停止粒子演化。\",\n    \"浏览器交互覆盖全面，已验证部件选择高亮、外壳剖切/隐藏/透明切换、爆炸图分解以及独立流道层显示。\"\n  ],\n  \"issues\": [\n    {\n      \"severity\": \"medium\",\n      \"finding\": \"流体与燃烧表现为空间路径约束，非连续介质力学求解\",\n      \"evidence\": \"limits与unfulfilled记录显示流道及火焰为预设3D路径和体积粒子（非CFD流场与化学燃烧模型），且无反向载荷传递\",\n      \"improvement\": \"在UI中清晰标明流道与火焰为‘教学运动学示意’，防止用户将其与真实CFD数值模拟混淆。\"\n    },\n    {\n      \"severity\": \"low\",\n      \"finding\": \"剖切机制为表面多边形裁剪，未构建实体截面封盖\",\n      \"evidence\": \"数据表明仅实施外壳裁剪（clipped faces），limits明确指出无制造级实体截面封口（solid section cap）\",\n      \"improvement\": \"引入针对截断边界的轮廓封盖算法（Section Capping），避免在剖切视角下观察到空心几何薄壳。\"\n    },\n    {\n      \"severity\": \"low\",\n      \"finding\": \"动画更新回执频率偏低\",\n      \"evidence\": \"browser.animation_updates_in_1300ms记录为14次，折合交互更新率仅约10.8 updates/sec\",\n      \"improvement\": \"排查多边形排序与粒子遍历性能开销，优化RAF更新机制以保证60fps平滑回放。\"\n    }\n  ],\n  \"unverified\": [\n    \"无图像数据输入，材质质感、光照分布及视觉美感未评定\",\n    \"各部件瞬时接触干涉与真实制造装配公差\",\n    \"燃烧室实际热力学膨胀功及流固耦合应力响应\",\n    \"齿轮渐开线真实齿面接触动力学与滑动率\"\n  ]\n}",
+    "request": {
+      "chat_id": "chat-dec8c6fbd34a47a1b11e2abeb9d3d433",
+      "memory_enabled": false,
+      "model": "gemini-3.8-flash",
+      "provider": "vertex",
+      "reasoning": "default",
+      "request_id": "anatomy-review-745f41ba2b584889b8bcb991176937a9",
+      "skill": "none",
+      "text": "你是Jarvis的机械科普工具评审员。只根据实际结构数据、几何检查及浏览器回执严格评审；你没有收到截图，不能声称看过画面或评定视觉美感。不要因为生成者是自己就给高分。科普表达与工程求解严格区分。返回一个严格JSON对象：schema=\"anatomy.review.v1\"，evidence_mode=\"data-only\"，visual_score=null；scores包含structure、motion_consistency、effect_consistency、inspectability四个0—10数字或null；strengths为中文字符串数组；issues为对象数组，每项含severity(high/medium/low)、finding、evidence、improvement；unverified为字符串数组。没有证据的维度应为null。评分应解释部件与通道的结构覆盖、受限模型与效果的一致性、实际交互测试；禁止把空间粒子当作CFD验证、把源码坐标当作碰撞验证。不要执行任何任务或更改权限。实际证据：{\"checks\":{\"finite_geometry\":true,\"unique_parts\":true,\"camera_parallax\":true},\"independent_numerical_checks\":{\"status\":\"passed\",\"scenes\":48,\"faces\":55232,\"vertices\":229472,\"particles\":6172,\"checks\":[\"finite meshes\",\"camera parallax\",\"cut clipping\",\"internal inventories\",\"flame containment\",\"off state stops particles\"]},\"modules\":[{\"id\":\"engine\",\"type\":\"four-stroke\",\"stats\":{\"faces\":3416,\"visibleFaces\":3139,\"clipped\":277,\"particles\":248,\"vertices\":9504},\"parts\":[\"气缸体与冷却水套\",\"曲轴与曲柄销\",\"主轴承与支承座\",\"正时带与2:1带轮\",\"双顶置凸轮轴\",\"缸1 · 衬套\",\"缸1 · 活塞与活塞环\",\"缸1 · 连杆\",\"缸1 · 缸盖\",\"缸1 · 进气门\",\"进气凸轮 1\",\"缸1 · 排气门\",\"排气凸轮 1\",\"缸1 · 火花塞\",\"缸1 · 进排气歧管\",\"缸1 · 燃烧室气体\",\"缸1 · 冷却水流\",\"缸2 · 衬套\"],\"part_count\":53,\"effect_instances\":{\"flow\":6,\"flame\":1},\"configuration\":{\"cylinders\":4,\"rpm\":1200,\"crank_mm\":40,\"rod_ratio\":3}},{\"id\":\"gear\",\"type\":\"gear-pair\",\"stats\":{\"faces\":468,\"visibleFaces\":468,\"clipped\":0,\"particles\":0,\"vertices\":2040},\"parts\":[\"输入齿轮\",\"输出齿轮\"],\"part_count\":2,\"effect_instances\":{\"flow\":0,\"flame\":0},\"configuration\":{\"rpm\":60,\"teeth_a\":20,\"teeth_b\":40}},{\"id\":\"pump\",\"type\":\"pump\",\"stats\":{\"faces\":1720,\"visibleFaces\":1567,\"clipped\":153,\"particles\":175,\"vertices\":3340},\"parts\":[\"渐扩蜗壳\",\"泵盖与法兰\",\"后弯叶轮与轮毂\",\"泵轴与联轴器\",\"机械密封动静环\",\"轴承与轴承座\",\"入口—叶轮—蜗壳—出口水流\"],\"part_count\":7,\"effect_instances\":{\"flow\":7,\"flame\":0},\"configuration\":{\"rpm\":600}},{\"id\":\"wave\",\"type\":\"wave\",\"stats\":{\"faces\":462,\"visibleFaces\":453,\"clipped\":9,\"particles\":0,\"vertices\":120},\"parts\":[\"透明水槽与水深\",\"三维水面与水体\"],\"part_count\":2,\"effect_instances\":{\"flow\":0,\"flame\":0},\"configuration\":{\"amplitude\":0.025,\"wavelength\":1.8,\"depth\":0.5,\"interference\":true}},{\"id\":\"jet\",\"type\":\"jet\",\"stats\":{\"faces\":2292,\"visibleFaces\":1952,\"clipped\":340,\"particles\":808,\"vertices\":6816},\"parts\":[\"分段机匣\",\"压气机—涡轮主轴\",\"前后轴承\",\"压气机动叶 1\",\"压气机静叶 1\",\"压气机动叶 2\",\"压气机静叶 2\",\"压气机动叶 3\",\"压气机静叶 3\",\"压气机动叶 4\",\"压气机静叶 4\",\"压气机动叶 5\",\"压气机静叶 5\",\"环形燃烧室与内外火焰筒\",\"燃油歧管与喷嘴\",\"涡轮导向静叶 1\",\"涡轮动叶 1\",\"涡轮导向静叶 2\"],\"part_count\":22,\"effect_instances\":{\"flow\":10,\"flame\":8},\"configuration\":{\"rpm\":4500,\"throttle\":0.7}}],\"limits\":[\"Software projection with polygon depth sorting; no per-pixel z buffer or ray-traced transparency\",\"Housing-only section, no exact solid section cap/CAD manufacturing geometry\",\"Flows and flames are prescribed 3D paths/volumes, not computed fluids/combustion\",\"Motor steady state, water linear 1D shown as 3D surface; no loads fed upstream\",\"No screenshot was supplied to the model in this audit; visual beauty is not evaluated\"],\"browser\":{\"status\":\"passed\",\"checks\":[\"real workbench button, default 3D, detailed internal inventory\",\"mouse orbit and keyboard orbit preserve simulation time\",\"part selection, descriptions, full/transparent/section/hidden housing, cut plane\",\"exploded housing/head/cam groups and independent fluid layer\",\"3D scene jet\",\"3D scene electric-water\",\"3D scene waves\",\"3D scene hybrid\",\"3D scene robot\",\"water path through axial inlet/impeller/volute/outlet, seal inspection and animation\",\"current 3D SVG export with attribution\",\"diagram compatibility, dark view and 390px layout\"],\"errors\":[],\"animation_updates_in_1300ms\":14},\"unfulfilled\":[\"真实CFD流体力学与燃烧仿真\",\"OEM制造级CAD装配体与公差配合\",\"结构瞬态应力与FEA有限元分析\",\"闭环流固耦合反向载荷传递\"]}"
+    },
+    "status": "SUCCEEDED",
+    "usage": {
+      "completion_tokens": 711,
+      "prompt_tokens": 1405,
+      "reasoning_in_completion": false,
+      "reasoning_tokens": 1343,
+      "total_tokens": 3459
+    }
+  },
+  "review": {
+    "schema": "anatomy.review.v1",
+    "evidence_mode": "data-only",
+    "visual_score": null,
+    "scores": {
+      "structure": 8.6,
+      "motion_consistency": 8.4,
+      "effect_consistency": 7.3,
+      "inspectability": 9.2
+    },
+    "strengths": [
+      "各模块部件层级清晰，覆盖发动机配气连杆机构、双级减速齿轮副、离心泵动静密封流道及多级压气机/涡轮轴系，几何体与装配逻辑完整。",
+      "视差投影、视口变换与交互轨道测试通过，剖切剔除面（clipped faces）与内部清单在多场景下均有明确数值回执支持。",
+      "运动约束定义清晰，包含内燃机 2:1 正时传动、齿数比 20:40 齿轮啮合、泵与航空发动机恒定转速配置，并在停机状态下正确停止粒子演化。",
+      "浏览器交互覆盖全面，已验证部件选择高亮、外壳剖切/隐藏/透明切换、爆炸图分解以及独立流道层显示。"
+    ],
+    "issues": [
+      {
+        "severity": "medium",
+        "finding": "流体与燃烧表现为空间路径约束，非连续介质力学求解",
+        "evidence": "limits与unfulfilled记录显示流道及火焰为预设3D路径和体积粒子（非CFD流场与化学燃烧模型），且无反向载荷传递",
+        "improvement": "在UI中清晰标明流道与火焰为‘教学运动学示意’，防止用户将其与真实CFD数值模拟混淆。"
+      },
+      {
+        "severity": "low",
+        "finding": "剖切机制为表面多边形裁剪，未构建实体截面封盖",
+        "evidence": "数据表明仅实施外壳裁剪（clipped faces），limits明确指出无制造级实体截面封口（solid section cap）",
+        "improvement": "引入针对截断边界的轮廓封盖算法（Section Capping），避免在剖切视角下观察到空心几何薄壳。"
+      },
+      {
+        "severity": "low",
+        "finding": "动画更新回执频率偏低",
+        "evidence": "browser.animation_updates_in_1300ms记录为14次，折合交互更新率仅约10.8 updates/sec",
+        "improvement": "排查多边形排序与粒子遍历性能开销，优化RAF更新机制以保证60fps平滑回放。"
+      }
+    ],
+    "unverified": [
+      "无图像数据输入，材质质感、光照分布及视觉美感未评定",
+      "各部件瞬时接触干涉与真实制造装配公差",
+      "燃烧室实际热力学膨胀功及流固耦合应力响应",
+      "齿轮渐开线真实齿面接触动力学与滑动率"
+    ]
+  },
+  "technical_score": 8.3,
+  "score_scope": "data-only technical review; excludes visual quality, independent engineering validation and general success rate",
+  "usage": [
+    {
+      "billing": {
+        "amount": 0.00875625,
+        "currency": "USD",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        },
+        "reason": "token_rates"
+      },
+      "connection_label": "Google Vertex",
+      "created": 1792736364.524204,
+      "error": null,
+      "id": 16,
+      "key_label": "原有凭据 · v1",
+      "model": "gemini-3.8-flash",
+      "provider": "vertex",
+      "status": "SUCCEEDED",
+      "turn_id": "anatomy-review-745f41ba2b584889b8bcb991176937a9",
+      "usage": {
+        "completion_tokens": 711,
+        "prompt_tokens": 1405,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 1343,
+        "total_tokens": 3459
+      }
+    },
+    {
+      "billing": {
+        "amount": 0.0063735,
+        "currency": "USD",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        },
+        "reason": "token_rates"
+      },
+      "connection_label": "Google Vertex",
+      "created": 1792736349.3220747,
+      "error": null,
+      "id": 15,
+      "key_label": "原有凭据 · v1",
+      "model": "gemini-3.8-flash",
+      "provider": "vertex",
+      "status": "SUCCEEDED",
+      "turn_id": "anatomy-cce61899d0f347148e30121871c9ad6e",
+      "usage": {
+        "completion_tokens": 411,
+        "prompt_tokens": 1798,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 929,
+        "total_tokens": 3138
+      }
+    }
+  ]
+}

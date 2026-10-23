@@ -1,0 +1,39 @@
+flowchart TB
+  EVENT["恢复触发：重启 / 网络 / 授权 / 资源 / 结果到达<br/>目标流程 proposed"]
+  LOAD["读取原任务、RunSpec、检查点及动作回执"]
+  VALID{"未取消，所有权、停止代际与许可有效<br/>来源及版本仍可用？"}
+  HOLD["保留原记录及取消 / 暂停 / 拒绝状态<br/>锁存只能由原恢复规则处理"]
+  ACTION{"上个动作有什么证据？"}
+  DONE["已确认完成<br/>核验产物 / 跳过已完成步骤"]
+  UNSENT["确定尚未发出或可安全重试<br/>按原策略有限重试"]
+  UNKNOWN["已发出但结果未知<br/>只查询原动作，不盲目重放"]
+  QUERY{"提供商回执 / 本地证据<br/>能否明确对账？"}
+  WAIT["保持 UNKNOWN / 等待<br/>释放可释放资源，其他任务继续"]
+  READY{"剩余依赖、资源与预算满足？"}
+  FINISH{"目标及产物验收已完成？"}
+  END["交付结果，释放资源<br/>保留原任务及动作回执"]
+  SLEEP["登记等待原因与唤醒条件<br/>无进展或超预算则暂停本任务"]
+  NEXT["从核验后的步骤继续并保存检查点<br/>未执行部分可提出新修订"]
+  CANCEL["用户取消<br/>拒绝新动作，核对在途与迟到结果"]
+  EVENT --> LOAD --> VALID
+  VALID -->|否| HOLD
+  VALID -->|是| ACTION
+  ACTION -->|完成回执| DONE
+  ACTION -->|未发出 / 已确认失败| UNSENT
+  ACTION -->|不确定| UNKNOWN --> QUERY
+  QUERY -->|已完成| DONE
+  QUERY -->|明确未完成且可重试| UNSENT
+  QUERY -->|无查询能力或仍未知| WAIT
+  DONE --> FINISH
+  FINISH -->|是| END
+  FINISH -->|否| READY
+  UNSENT --> READY
+  READY -->|是| NEXT
+  READY -->|否| SLEEP
+  CANCEL -.-> LOAD
+  classDef work fill:#e9f0fc,stroke:#4c72aa,color:#183859;
+  classDef waiting fill:#fff2e2,stroke:#a96d2d,color:#623b13;
+  classDef ok fill:#e5f4eb,stroke:#397b55,color:#17472a;
+  class EVENT,LOAD,ACTION,VALID,QUERY,READY,FINISH work;
+  class HOLD,UNKNOWN,WAIT,SLEEP,CANCEL waiting;
+  class DONE,UNSENT,NEXT,END ok;

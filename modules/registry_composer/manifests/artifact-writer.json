@@ -1,0 +1,30 @@
+{
+  "schema": "jarvis.module.v1",
+  "module_id": "artifact-writer",
+  "version": "0.2.0",
+  "runtime_provider_ref": "trusted-builtin.v1",
+  "provides": [
+    "artifact.write.v1"
+  ],
+  "requires": [],
+  "implementations": [
+    "artifact.local.v1"
+  ],
+  "state_schema": "stateless.v1",
+  "management": [
+    "describe",
+    "probe",
+    "start",
+    "stop",
+    "rollback"
+  ],
+  "files": [
+    {
+      "path": "modules/registry_composer/builtins.py",
+      "sha256": "0e7319b39a70e2a77e80ed700432d3b4e5c710aa79bf46a77a7dfd74bb1aeb0f"
+    }
+  ],
+  "source": "independently authored in D:/Jarvis",
+  "license": "first-party-private; distribution license not selected",
+  "isolation": "trusted-host-not-os-sandbox"
+}

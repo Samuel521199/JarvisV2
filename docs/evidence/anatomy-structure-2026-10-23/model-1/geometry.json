@@ -1,0 +1,860 @@
+{
+  "schema": "anatomy.structure.audit.v1",
+  "scope": "geometry and limited teaching models; not screenshot vision or CFD",
+  "modules": [
+    {
+      "id": "engine",
+      "type": "four-stroke",
+      "label": "四冲程四缸发动机",
+      "configuration": {
+        "cylinders": 4,
+        "rpm": 1200,
+        "crank_mm": 40,
+        "rod_ratio": 3
+      },
+      "stats": {
+        "faces": 3416,
+        "visibleFaces": 3139,
+        "clipped": 277,
+        "particles": 248,
+        "vertices": 9504
+      },
+      "parts": [
+        {
+          "id": "block",
+          "label": "气缸体与冷却水套",
+          "layer": "housing",
+          "note": "剖开外壳显示气缸衬套与水套；基本外形简化。"
+        },
+        {
+          "id": "crankshaft",
+          "label": "曲轴与曲柄销",
+          "layer": "moving",
+          "note": "各缸曲柄相位来自720°教学循环；连杆把活塞往复运动与曲轴旋转关联。"
+        },
+        {
+          "id": "bearings",
+          "label": "主轴承与支承座",
+          "layer": "fixed",
+          "note": "支承曲轴主轴颈；未计算油膜和轴承载荷。"
+        },
+        {
+          "id": "timing",
+          "label": "正时带与2:1带轮",
+          "layer": "moving",
+          "note": "四冲程凸轮轴每720°曲轴转动一周；带轮和带为示意。"
+        },
+        {
+          "id": "camshafts",
+          "label": "双顶置凸轮轴",
+          "layer": "moving",
+          "note": "转速是曲轴的一半；凸轮几何是教学外形，升程使用理想分阶段正弦函数。"
+        },
+        {
+          "id": "liner-0",
+          "label": "缸1 · 衬套",
+          "layer": "housing",
+          "note": "缸孔、活塞与水套之间保留可见间隙；没有接触/制造公差解。"
+        },
+        {
+          "id": "piston-0",
+          "label": "缸1 · 活塞与活塞环",
+          "layer": "moving",
+          "note": "高度直接使用连杆几何计算；活塞环形状示意。"
+        },
+        {
+          "id": "rod-0",
+          "label": "缸1 · 连杆",
+          "layer": "moving",
+          "note": "大小头中心间距等于设定连杆长度；活塞销绘制偏移仅为外形。"
+        },
+        {
+          "id": "head-0",
+          "label": "缸1 · 缸盖",
+          "layer": "housing",
+          "note": "阀座、进排气口与火花塞的教学结构。"
+        },
+        {
+          "id": "intake-0",
+          "label": "缸1 · 进气门",
+          "layer": "moving",
+          "note": "气门只在对应理想冲程中打开；未建模提前/迟闭或重叠。"
+        },
+        {
+          "id": "cam-intake-0",
+          "label": "进气凸轮 1",
+          "layer": "moving",
+          "note": "随半速凸轮轴旋转的简化偏心轮；与气门理想升程同周期。"
+        },
+        {
+          "id": "exhaust-0",
+          "label": "缸1 · 排气门",
+          "layer": "moving",
+          "note": "气门只在对应理想冲程中打开；未建模提前/迟闭或重叠。"
+        },
+        {
+          "id": "cam-exhaust-0",
+          "label": "排气凸轮 1",
+          "layer": "moving",
+          "note": "随半速凸轮轴旋转的简化偏心轮；与气门理想升程同周期。"
+        },
+        {
+          "id": "plug-0",
+          "label": "缸1 · 火花塞",
+          "layer": "fixed",
+          "note": "火花只在理想做功开始附近显示；不计算点火提前角。"
+        },
+        {
+          "id": "ports-0",
+          "label": "缸1 · 进排气歧管",
+          "layer": "housing",
+          "note": "气体沿管道和开启的气门进入/离开气缸。"
+        },
+        {
+          "id": "gas-0",
+          "label": "缸1 · 燃烧室气体",
+          "layer": "fluid",
+          "note": "空间粒子与火焰体仅示意阶段和路径；没有化学反应、温度或压力求解。"
+        },
+        {
+          "id": "coolant-0",
+          "label": "缸1 · 冷却水流",
+          "layer": "fluid",
+          "note": "沿气缸外水套的教学流线，不计算传热或水泵工况。"
+        },
+        {
+          "id": "liner-1",
+          "label": "缸2 · 衬套",
+          "layer": "housing",
+          "note": "缸孔、活塞与水套之间保留可见间隙；没有接触/制造公差解。"
+        },
+        {
+          "id": "piston-1",
+          "label": "缸2 · 活塞与活塞环",
+          "layer": "moving",
+          "note": "高度直接使用连杆几何计算；活塞环形状示意。"
+        },
+        {
+          "id": "rod-1",
+          "label": "缸2 · 连杆",
+          "layer": "moving",
+          "note": "大小头中心间距等于设定连杆长度；活塞销绘制偏移仅为外形。"
+        },
+        {
+          "id": "head-1",
+          "label": "缸2 · 缸盖",
+          "layer": "housing",
+          "note": "阀座、进排气口与火花塞的教学结构。"
+        },
+        {
+          "id": "intake-1",
+          "label": "缸2 · 进气门",
+          "layer": "moving",
+          "note": "气门只在对应理想冲程中打开；未建模提前/迟闭或重叠。"
+        },
+        {
+          "id": "cam-intake-1",
+          "label": "进气凸轮 2",
+          "layer": "moving",
+          "note": "随半速凸轮轴旋转的简化偏心轮；与气门理想升程同周期。"
+        },
+        {
+          "id": "exhaust-1",
+          "label": "缸2 · 排气门",
+          "layer": "moving",
+          "note": "气门只在对应理想冲程中打开；未建模提前/迟闭或重叠。"
+        },
+        {
+          "id": "cam-exhaust-1",
+          "label": "排气凸轮 2",
+          "layer": "moving",
+          "note": "随半速凸轮轴旋转的简化偏心轮；与气门理想升程同周期。"
+        },
+        {
+          "id": "plug-1",
+          "label": "缸2 · 火花塞",
+          "layer": "fixed",
+          "note": "火花只在理想做功开始附近显示；不计算点火提前角。"
+        },
+        {
+          "id": "ports-1",
+          "label": "缸2 · 进排气歧管",
+          "layer": "housing",
+          "note": "气体沿管道和开启的气门进入/离开气缸。"
+        },
+        {
+          "id": "gas-1",
+          "label": "缸2 · 燃烧室气体",
+          "layer": "fluid",
+          "note": "空间粒子与火焰体仅示意阶段和路径；没有化学反应、温度或压力求解。"
+        },
+        {
+          "id": "coolant-1",
+          "label": "缸2 · 冷却水流",
+          "layer": "fluid",
+          "note": "沿气缸外水套的教学流线，不计算传热或水泵工况。"
+        },
+        {
+          "id": "liner-2",
+          "label": "缸3 · 衬套",
+          "layer": "housing",
+          "note": "缸孔、活塞与水套之间保留可见间隙；没有接触/制造公差解。"
+        },
+        {
+          "id": "piston-2",
+          "label": "缸3 · 活塞与活塞环",
+          "layer": "moving",
+          "note": "高度直接使用连杆几何计算；活塞环形状示意。"
+        },
+        {
+          "id": "rod-2",
+          "label": "缸3 · 连杆",
+          "layer": "moving",
+          "note": "大小头中心间距等于设定连杆长度；活塞销绘制偏移仅为外形。"
+        },
+        {
+          "id": "head-2",
+          "label": "缸3 · 缸盖",
+          "layer": "housing",
+          "note": "阀座、进排气口与火花塞的教学结构。"
+        },
+        {
+          "id": "intake-2",
+          "label": "缸3 · 进气门",
+          "layer": "moving",
+          "note": "气门只在对应理想冲程中打开；未建模提前/迟闭或重叠。"
+        },
+        {
+          "id": "cam-intake-2",
+          "label": "进气凸轮 3",
+          "layer": "moving",
+          "note": "随半速凸轮轴旋转的简化偏心轮；与气门理想升程同周期。"
+        },
+        {
+          "id": "exhaust-2",
+          "label": "缸3 · 排气门",
+          "layer": "moving",
+          "note": "气门只在对应理想冲程中打开；未建模提前/迟闭或重叠。"
+        },
+        {
+          "id": "cam-exhaust-2",
+          "label": "排气凸轮 3",
+          "layer": "moving",
+          "note": "随半速凸轮轴旋转的简化偏心轮；与气门理想升程同周期。"
+        },
+        {
+          "id": "plug-2",
+          "label": "缸3 · 火花塞",
+          "layer": "fixed",
+          "note": "火花只在理想做功开始附近显示；不计算点火提前角。"
+        },
+        {
+          "id": "ports-2",
+          "label": "缸3 · 进排气歧管",
+          "layer": "housing",
+          "note": "气体沿管道和开启的气门进入/离开气缸。"
+        },
+        {
+          "id": "gas-2",
+          "label": "缸3 · 燃烧室气体",
+          "layer": "fluid",
+          "note": "空间粒子与火焰体仅示意阶段和路径；没有化学反应、温度或压力求解。"
+        },
+        {
+          "id": "coolant-2",
+          "label": "缸3 · 冷却水流",
+          "layer": "fluid",
+          "note": "沿气缸外水套的教学流线，不计算传热或水泵工况。"
+        },
+        {
+          "id": "liner-3",
+          "label": "缸4 · 衬套",
+          "layer": "housing",
+          "note": "缸孔、活塞与水套之间保留可见间隙；没有接触/制造公差解。"
+        },
+        {
+          "id": "piston-3",
+          "label": "缸4 · 活塞与活塞环",
+          "layer": "moving",
+          "note": "高度直接使用连杆几何计算；活塞环形状示意。"
+        },
+        {
+          "id": "rod-3",
+          "label": "缸4 · 连杆",
+          "layer": "moving",
+          "note": "大小头中心间距等于设定连杆长度；活塞销绘制偏移仅为外形。"
+        },
+        {
+          "id": "head-3",
+          "label": "缸4 · 缸盖",
+          "layer": "housing",
+          "note": "阀座、进排气口与火花塞的教学结构。"
+        },
+        {
+          "id": "intake-3",
+          "label": "缸4 · 进气门",
+          "layer": "moving",
+          "note": "气门只在对应理想冲程中打开；未建模提前/迟闭或重叠。"
+        },
+        {
+          "id": "cam-intake-3",
+          "label": "进气凸轮 4",
+          "layer": "moving",
+          "note": "随半速凸轮轴旋转的简化偏心轮；与气门理想升程同周期。"
+        },
+        {
+          "id": "exhaust-3",
+          "label": "缸4 · 排气门",
+          "layer": "moving",
+          "note": "气门只在对应理想冲程中打开；未建模提前/迟闭或重叠。"
+        },
+        {
+          "id": "cam-exhaust-3",
+          "label": "排气凸轮 4",
+          "layer": "moving",
+          "note": "随半速凸轮轴旋转的简化偏心轮；与气门理想升程同周期。"
+        },
+        {
+          "id": "plug-3",
+          "label": "缸4 · 火花塞",
+          "layer": "fixed",
+          "note": "火花只在理想做功开始附近显示；不计算点火提前角。"
+        },
+        {
+          "id": "ports-3",
+          "label": "缸4 · 进排气歧管",
+          "layer": "housing",
+          "note": "气体沿管道和开启的气门进入/离开气缸。"
+        },
+        {
+          "id": "gas-3",
+          "label": "缸4 · 燃烧室气体",
+          "layer": "fluid",
+          "note": "空间粒子与火焰体仅示意阶段和路径；没有化学反应、温度或压力求解。"
+        },
+        {
+          "id": "coolant-3",
+          "label": "缸4 · 冷却水流",
+          "layer": "fluid",
+          "note": "沿气缸外水套的教学流线，不计算传热或水泵工况。"
+        }
+      ],
+      "effects": [
+        {
+          "kind": "flow",
+          "count": 22
+        },
+        {
+          "kind": "flow",
+          "count": 32
+        },
+        {
+          "kind": "flow",
+          "count": 32
+        },
+        {
+          "kind": "flame",
+          "start": [
+            52.5,
+            0,
+            182
+          ],
+          "end": [
+            52.5,
+            0,
+            138.17098864242888
+          ],
+          "radius": 27
+        },
+        {
+          "kind": "flow",
+          "count": 32
+        },
+        {
+          "kind": "flow",
+          "count": 22
+        },
+        {
+          "kind": "flow",
+          "count": 32
+        }
+      ]
+    },
+    {
+      "id": "gear",
+      "type": "gear-pair",
+      "label": "减速齿轮副",
+      "configuration": {
+        "rpm": 60,
+        "teeth_a": 20,
+        "teeth_b": 40
+      },
+      "stats": {
+        "faces": 468,
+        "visibleFaces": 468,
+        "clipped": 0,
+        "particles": 0,
+        "vertices": 2040
+      },
+      "parts": [
+        {
+          "id": "gear-in",
+          "label": "输入齿轮",
+          "layer": "moving",
+          "note": "简化齿形与轴；转速按齿数比计算。"
+        },
+        {
+          "id": "gear-out",
+          "label": "输出齿轮",
+          "layer": "moving",
+          "note": "简化齿形与轴；转速按齿数比计算。"
+        }
+      ],
+      "effects": []
+    },
+    {
+      "id": "pump",
+      "type": "pump",
+      "label": "离心水泵",
+      "configuration": {
+        "rpm": 600
+      },
+      "stats": {
+        "faces": 1720,
+        "visibleFaces": 1567,
+        "clipped": 153,
+        "particles": 175,
+        "vertices": 3340
+      },
+      "parts": [
+        {
+          "id": "volute",
+          "label": "渐扩蜗壳",
+          "layer": "housing",
+          "note": "沿叶轮外缘逐渐扩大的收集通道；形状为教学近似。"
+        },
+        {
+          "id": "cover",
+          "label": "泵盖与法兰",
+          "layer": "housing",
+          "note": "端盖、入口和紧固件；爆炸视图分离盖板以观察叶轮。"
+        },
+        {
+          "id": "impeller",
+          "label": "后弯叶轮与轮毂",
+          "layer": "moving",
+          "note": "7片后弯叶片随轴旋转；流线不用于预测泵性能。"
+        },
+        {
+          "id": "shaft",
+          "label": "泵轴与联轴器",
+          "layer": "moving",
+          "note": "轴把外部驱动传至叶轮；支承和机械密封位于叶轮后方。"
+        },
+        {
+          "id": "seal",
+          "label": "机械密封动静环",
+          "layer": "fixed",
+          "note": "简化的动静环配合位置；没有泄漏、摩擦或冷却计算。"
+        },
+        {
+          "id": "bearing",
+          "label": "轴承与轴承座",
+          "layer": "fixed",
+          "note": "泵轴支承；教学结构不包含滚动接触分析。"
+        },
+        {
+          "id": "water",
+          "label": "入口—叶轮—蜗壳—出口水流",
+          "layer": "fluid",
+          "note": "从轴向入口转入径向叶轮，再经蜗壳进入切向出口。水量和扬程未计算。"
+        }
+      ],
+      "effects": [
+        {
+          "kind": "flow",
+          "count": 25
+        },
+        {
+          "kind": "flow",
+          "count": 25
+        },
+        {
+          "kind": "flow",
+          "count": 25
+        },
+        {
+          "kind": "flow",
+          "count": 25
+        },
+        {
+          "kind": "flow",
+          "count": 25
+        },
+        {
+          "kind": "flow",
+          "count": 25
+        },
+        {
+          "kind": "flow",
+          "count": 25
+        }
+      ]
+    },
+    {
+      "id": "wave",
+      "type": "wave",
+      "label": "干涉水波槽",
+      "configuration": {
+        "amplitude": 0.025,
+        "wavelength": 1.8,
+        "depth": 0.5,
+        "interference": true
+      },
+      "stats": {
+        "faces": 462,
+        "visibleFaces": 453,
+        "clipped": 9,
+        "particles": 0,
+        "vertices": 120
+      },
+      "parts": [
+        {
+          "id": "tank",
+          "label": "透明水槽与水深",
+          "layer": "housing",
+          "note": "容器外形用于观察水面；线性波模型没有边界反射。"
+        },
+        {
+          "id": "water",
+          "label": "三维水面与水体",
+          "layer": "fluid",
+          "note": "三维网格表面来自一维线性波方程，竖向放大；没有自由表面流体求解。"
+        }
+      ],
+      "effects": []
+    },
+    {
+      "id": "jet",
+      "type": "jet",
+      "label": "对照用喷气引擎",
+      "configuration": {
+        "rpm": 4500,
+        "throttle": 0.7
+      },
+      "stats": {
+        "faces": 2292,
+        "visibleFaces": 1952,
+        "clipped": 340,
+        "particles": 808,
+        "vertices": 6816
+      },
+      "parts": [
+        {
+          "id": "casing",
+          "label": "分段机匣",
+          "layer": "housing",
+          "note": "外壳剖切仅切机匣；内部动静叶片保持完整。"
+        },
+        {
+          "id": "shaft",
+          "label": "压气机—涡轮主轴",
+          "layer": "moving",
+          "note": "单轴教学涡喷：涡轮与压气机由同一根轴联结。"
+        },
+        {
+          "id": "bearings",
+          "label": "前后轴承",
+          "layer": "fixed",
+          "note": "支撑主轴并传递载荷，外形简化。"
+        },
+        {
+          "id": "compressor-rotor-0",
+          "label": "压气机动叶 1",
+          "layer": "moving",
+          "note": "随主轴旋转的径向叶片列；不计算叶型气动性能。"
+        },
+        {
+          "id": "compressor-stator-0",
+          "label": "压气机静叶 1",
+          "layer": "fixed",
+          "note": "静叶列不随轴转动；教学上对应整理气流方向的结构。"
+        },
+        {
+          "id": "compressor-rotor-1",
+          "label": "压气机动叶 2",
+          "layer": "moving",
+          "note": "随主轴旋转的径向叶片列；不计算叶型气动性能。"
+        },
+        {
+          "id": "compressor-stator-1",
+          "label": "压气机静叶 2",
+          "layer": "fixed",
+          "note": "静叶列不随轴转动；教学上对应整理气流方向的结构。"
+        },
+        {
+          "id": "compressor-rotor-2",
+          "label": "压气机动叶 3",
+          "layer": "moving",
+          "note": "随主轴旋转的径向叶片列；不计算叶型气动性能。"
+        },
+        {
+          "id": "compressor-stator-2",
+          "label": "压气机静叶 3",
+          "layer": "fixed",
+          "note": "静叶列不随轴转动；教学上对应整理气流方向的结构。"
+        },
+        {
+          "id": "compressor-rotor-3",
+          "label": "压气机动叶 4",
+          "layer": "moving",
+          "note": "随主轴旋转的径向叶片列；不计算叶型气动性能。"
+        },
+        {
+          "id": "compressor-stator-3",
+          "label": "压气机静叶 4",
+          "layer": "fixed",
+          "note": "静叶列不随轴转动；教学上对应整理气流方向的结构。"
+        },
+        {
+          "id": "compressor-rotor-4",
+          "label": "压气机动叶 5",
+          "layer": "moving",
+          "note": "随主轴旋转的径向叶片列；不计算叶型气动性能。"
+        },
+        {
+          "id": "compressor-stator-4",
+          "label": "压气机静叶 5",
+          "layer": "fixed",
+          "note": "静叶列不随轴转动；教学上对应整理气流方向的结构。"
+        },
+        {
+          "id": "combustor",
+          "label": "环形燃烧室与内外火焰筒",
+          "layer": "housing",
+          "note": "空心环形通道；火焰在火焰筒内部，没有温压或燃烧稳定性求解。"
+        },
+        {
+          "id": "injectors",
+          "label": "燃油歧管与喷嘴",
+          "layer": "fixed",
+          "note": "周向布置8个喷嘴；用于标记燃料进入环形燃烧区的位置。"
+        },
+        {
+          "id": "turbine-stator-0",
+          "label": "涡轮导向静叶 1",
+          "layer": "fixed",
+          "note": "在转子前的固定导向叶片。"
+        },
+        {
+          "id": "turbine-rotor-0",
+          "label": "涡轮动叶 1",
+          "layer": "moving",
+          "note": "高温气流经过转子；主轴把运动传到压气机。"
+        },
+        {
+          "id": "turbine-stator-1",
+          "label": "涡轮导向静叶 2",
+          "layer": "fixed",
+          "note": "在转子前的固定导向叶片。"
+        },
+        {
+          "id": "turbine-rotor-1",
+          "label": "涡轮动叶 2",
+          "layer": "moving",
+          "note": "高温气流经过转子；主轴把运动传到压气机。"
+        },
+        {
+          "id": "nozzle",
+          "label": "收敛喷口与尾锥",
+          "layer": "housing",
+          "note": "喷口是三维空心锥段，不计算推力、马赫数或喷管压力。"
+        },
+        {
+          "id": "air",
+          "label": "三维核心气流",
+          "layer": "fluid",
+          "note": "沿进气道—压气机—环形燃烧室—涡轮—喷口的空间路径。"
+        },
+        {
+          "id": "flames",
+          "label": "环形燃烧火焰",
+          "layer": "fluid",
+          "note": "8个空间火焰簇位于火焰筒环隙中；尾流为定性显示。"
+        }
+      ],
+      "effects": [
+        {
+          "kind": "flow",
+          "count": 20
+        },
+        {
+          "kind": "flow",
+          "count": 20
+        },
+        {
+          "kind": "flow",
+          "count": 20
+        },
+        {
+          "kind": "flow",
+          "count": 20
+        },
+        {
+          "kind": "flow",
+          "count": 20
+        },
+        {
+          "kind": "flow",
+          "count": 20
+        },
+        {
+          "kind": "flow",
+          "count": 20
+        },
+        {
+          "kind": "flow",
+          "count": 20
+        },
+        {
+          "kind": "flow",
+          "count": 20
+        },
+        {
+          "kind": "flow",
+          "count": 20
+        },
+        {
+          "kind": "flame",
+          "start": [
+            5,
+            33,
+            0
+          ],
+          "end": [
+            71.8,
+            32.89445630798644,
+            2.637184900982699
+          ],
+          "radius": 6
+        },
+        {
+          "kind": "flame",
+          "start": [
+            5,
+            23.33452377915607,
+            23.334523779156065
+          ],
+          "end": [
+            71.8,
+            21.395121792094177,
+            25.124664445549453
+          ],
+          "radius": 6
+        },
+        {
+          "kind": "flame",
+          "start": [
+            5,
+            2.0206672185931327e-15,
+            33
+          ],
+          "end": [
+            71.8,
+            -2.637184900982699,
+            32.89445630798644
+          ],
+          "radius": 6
+        },
+        {
+          "kind": "flame",
+          "start": [
+            5,
+            -23.334523779156065,
+            23.33452377915607
+          ],
+          "end": [
+            71.8,
+            -25.124664445549453,
+            21.395121792094177
+          ],
+          "radius": 6
+        },
+        {
+          "kind": "flame",
+          "start": [
+            5,
+            -33,
+            4.0413344371862654e-15
+          ],
+          "end": [
+            71.8,
+            -32.89445630798644,
+            -2.6371849009826973
+          ],
+          "radius": 6
+        },
+        {
+          "kind": "flame",
+          "start": [
+            5,
+            -23.334523779156072,
+            -23.334523779156065
+          ],
+          "end": [
+            71.8,
+            -21.395121792094177,
+            -25.124664445549453
+          ],
+          "radius": 6
+        },
+        {
+          "kind": "flame",
+          "start": [
+            5,
+            -6.062001655779398e-15,
+            -33
+          ],
+          "end": [
+            71.8,
+            2.6371849009826946,
+            -32.89445630798644
+          ],
+          "radius": 6
+        },
+        {
+          "kind": "flame",
+          "start": [
+            5,
+            23.33452377915606,
+            -23.334523779156072
+          ],
+          "end": [
+            71.8,
+            25.124664445549453,
+            -21.395121792094177
+          ],
+          "radius": 6
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "finite_geometry": true,
+    "unique_parts": true,
+    "camera_parallax": true
+  },
+  "unfulfilled": [
+    "真实CFD流体力学与燃烧仿真",
+    "OEM制造级CAD装配体与公差配合",
+    "结构瞬态应力与FEA有限元分析",
+    "闭环流固耦合反向载荷传递"
+  ],
+  "limits": [
+    "Software projection with polygon depth sorting; no per-pixel z buffer or ray-traced transparency",
+    "Housing-only section, no exact solid section cap/CAD manufacturing geometry",
+    "Flows and flames are prescribed 3D paths/volumes, not computed fluids/combustion",
+    "Motor steady state, water linear 1D shown as 3D surface; no loads fed upstream",
+    "No screenshot was supplied to the model in this audit; visual beauty is not evaluated"
+  ]
+}

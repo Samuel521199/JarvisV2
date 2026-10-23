@@ -1,0 +1,121 @@
+{
+  "schema": 1,
+  "release": "0.2.0-dev.10",
+  "policy": "Legacy business/runtime code stays reference-only. Explicitly authorized images and pure visual CSS are reused; model configuration/DPAPI migration is separately authorized and recorded. No legacy JS, environment or business database.",
+  "references": [
+    {
+      "source": "H:\\Jarvis\\runtime\\node-host\\jarvis_core\\coding_workflow.py",
+      "sha256": "66559a8aaff27cf383ef6e19767a30a2e56fd963f1e25b59800c003315147b0d",
+      "adopted": "冻结验收与有界编程方法"
+    },
+    {
+      "source": "H:\\Jarvis\\runtime\\node-host\\jarvis_core\\coding_codex.py",
+      "sha256": "f00224c61ea0fdb226db4bb8e54ecbda0ac6e6abbe3acce07abf649f0e672c0c",
+      "adopted": "候选提供者、版本和未知结果边界；未导入旧凭据桥"
+    },
+    {
+      "source": "H:\\Jarvis\\runtime\\worker-host\\jarvis_worker\\windows.py",
+      "sha256": "14e9239ca70140b4d8e97559cefa1a1cd53269b2b59f0b4b087360f6de3f6df5",
+      "adopted": "LPAC/Job 和失败关闭的设计参考"
+    },
+    {
+      "source": "H:\\Jarvis\\tools\\prepare_worker.py",
+      "sha256": "afb0290e86ba68c4496ef5a3422cdb984f2ae67fc27be0fc450d5c2f30c91098",
+      "adopted": "独立运行包、GUI Python 入口避免控制台子进程"
+    },
+    {
+      "source": "H:\\Jarvis\\apps\\web\\brand\\logo.js",
+      "sha256": "3e9eeb750d88106637ecfe659db05e4571e4795202bda9a5c0eaf66f69ac2486",
+      "adopted": "状态、悬停、隐藏与减少动画的交互语义"
+    },
+    {
+      "source": "H:\\Jarvis\\apps\\web\\brand\\logo.css",
+      "sha256": "349f2bf7b40aaa9cf54b275947afc2682df71153fdca0a19380f933dd4226675",
+      "adopted": "已认可的品牌光效和状态节奏参考"
+    },
+    {
+      "source": "H:\\Jarvis\\config\\skills\\catalog.json",
+      "sha256": "91a6ea1b5e84e9061c8231b555fc2b6124faf8296fc196b8bb5387ee20c6ace5",
+      "adopted": "只读参考故障诊断、代码审阅、TDD 与接口设计方法；没有复制第三方 Skill 正文或执行其代码"
+    },
+    {
+      "source": "H:\\Jarvis\\apps\\web\\memory.js",
+      "sha256": "5d259bee20ad8fce9658e808d33db30e2dd9447c8267feaadc0586bdfdf1afa4",
+      "adopted": "分类、目的地许可、候选核对与纠正的交互参考；未复制旧业务 JS"
+    },
+    {
+      "source": "H:\\Jarvis\\apps\\web\\growth.js",
+      "sha256": "ab13c97445ac63ed51fc709414b37471bf62018b07d67c88445bbdc82c42af7a",
+      "adopted": "冻结目标、独立验收、候选审阅和交付回执的交互参考；未调用旧执行器"
+    },
+    {
+      "source": "H:\\Jarvis\\apps\\web\\tool-lifecycle.js",
+      "sha256": "471b962bb53bc28c7ebb6128c738e3cd30b2f87f1e144403a6a6a42ce385a568",
+      "adopted": "只读比较试用、状态、回执和生命周期入口；新目录投影与任务复用独立实现，不复制旧业务代码。旧实际收益评估和完整生命周期未在 dev.7 冒称已迁入。"
+    }
+  ],
+  "assets": [
+    {
+      "source": "H:\\Jarvis\\apps\\web\\brand\\core.png",
+      "target": "apps/workbench/brand/core.png",
+      "sha256": "3d66ab1a1d125e12ef289eaca563e37bc12b762b0c9d135f5f5c42902f610e4a",
+      "unchanged": true,
+      "authorization": "User requested preserving the existing workbench/logo/animation visual design"
+    },
+    {
+      "source": "H:\\Jarvis\\apps\\web\\brand\\icon.png",
+      "target": "apps/workbench/brand/icon.png",
+      "sha256": "727f3188b8121ece87fd31e7bc25bd68f8c1572c50c957f272bb429546a7e9d1",
+      "unchanged": true,
+      "authorization": "User requested preserving the existing workbench/logo/animation visual design"
+    },
+    {
+      "source": "H:/Jarvis/apps/web/theme.css",
+      "target": "apps/workbench/theme.css",
+      "sha256": "8d11aed299c3f9c71e429bbf414793a4beec70bd09707c564477934bab1728ba",
+      "unchanged": true,
+      "authorization": "2026-10-22 user requested matching the concrete legacy workbench style; pure visual styles only"
+    },
+    {
+      "source": "H:/Jarvis/apps/web/brand/logo.css",
+      "target": "apps/workbench/logo.css",
+      "sha256": "349f2bf7b40aaa9cf54b275947afc2682df71153fdca0a19380f933dd4226675",
+      "unchanged": true,
+      "authorization": "2026-10-22 user requested matching the concrete legacy workbench style; pure visual styles only"
+    },
+    {
+      "source": "H:/Jarvis/apps/web/brand/lifecycle.css",
+      "target": "apps/workbench/lifecycle.css",
+      "sha256": "3c8d7e784eb102f2f14d8dc63804eb62e44e1685030a68126fa612a1483eb2b7",
+      "unchanged": true,
+      "authorization": "User requested restoring original startup, status and preview animations; pure visual CSS only"
+    },
+    {
+      "source": "H:/Jarvis/apps/web/brand/preview.css",
+      "target": "apps/workbench/brand-preview.css",
+      "sha256": "51f8ce20ace24fa534d2e0b9749be291571069121e5344a8142359ff20840956",
+      "unchanged": true,
+      "authorization": "User requested restoring original startup, status and preview animations; pure visual CSS only"
+    }
+  ],
+  "workbench_mapping": {
+    "legacy_preview": "isolated temporary data; no real legacy account/chat imports",
+    "independent_frontend": [
+      "app.js",
+      "brand-lifecycle.js",
+      "brand-preview.js",
+      "brand-sound.js",
+      "brand-state.js",
+      "brand.js",
+      "model-picker.js",
+      "projects.js",
+      "settings-extensions.js",
+      "settings-models.js",
+      "settings-runtime.js",
+      "settings.js",
+      "ui.js"
+    ],
+    "adapted_methods": "10 independently authored text-only methods; 3 execution-dependent entries pending",
+    "icons": "SVG path design referenced from the original workbench; no imported script"
+  }
+}

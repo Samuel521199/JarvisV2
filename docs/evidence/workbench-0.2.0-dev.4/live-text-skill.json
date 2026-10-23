@@ -1,0 +1,45 @@
+{
+  "id": "95d86775-ba4d-4c25-bda8-ce9ae118bdbb",
+  "status": "SUCCEEDED",
+  "provider": "vertex",
+  "model": "gemini-3.8-flash",
+  "usage": {
+    "completion_tokens": 96,
+    "prompt_tokens": 189,
+    "total_tokens": 731
+  },
+  "guidance": {
+    "category": "规划与协作",
+    "description": "把目标整理为规格、验收条件和有依赖关系的任务。",
+    "enabled": true,
+    "guidance": "明确目标、限制与未知，拆为有依赖的步骤，逐项写产物、完成标准、资源和风险；把必须询问的信息与可自行判断的实现选择区分。此轮只输出计划，不声称任务已派发。",
+    "id": "plan",
+    "kind": "组合技能",
+    "name": "需求到任务计划",
+    "output": "规格与可验收任务清单",
+    "state": "ready",
+    "triggers": [
+      "任务计划",
+      "拆解任务",
+      "整理今天的计划",
+      "需求拆解"
+    ]
+  },
+  "request": {
+    "attachments": [
+      {
+        "name": "acceptance.md",
+        "text": "# 工作台验收\n\n此文件由新版 Jarvis 右侧编辑器创建并保存。\n验收代号：银杏。\n"
+      }
+    ],
+    "chat_id": "chat-616bfe3dd72e454bb9b0521d22999567",
+    "model": "",
+    "provider": "auto",
+    "reasoning": "default",
+    "request_id": "95d86775-ba4d-4c25-bda8-ce9ae118bdbb",
+    "requirements": "",
+    "skill": "plan",
+    "text": "工作台功能验收：根据附入文件的验收代号，给出一个两步检查计划。只需要两行，不要声称已执行。"
+  },
+  "reply": "第一步：以代号「银杏」核验工作台右侧编辑器的创建与保存记录元数据，确保与系统日志一致（产物：凭据核验记录；标准：代号及属性完全匹配）。\n第二步：基于「银杏」测试用例闭环校验编辑器的读写与持久化链路，评估异常风险（产物：双步功能验收清单；标准：端到端状态确认无误）。"
+}

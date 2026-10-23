@@ -1,0 +1,763 @@
+{
+  "status": "passed",
+  "origin": "http://127.0.0.1:18283",
+  "model_calls": 0,
+  "checks": [
+    "real workbench button, default 3D, detailed internal inventory",
+    "mouse orbit and keyboard orbit preserve simulation time",
+    "part selection, descriptions, full/transparent/section/hidden housing, cut plane",
+    "exploded housing/head/cam groups and independent fluid layer",
+    "3D scene jet",
+    "3D scene electric-water",
+    "3D scene waves",
+    "3D scene hybrid",
+    "3D scene robot",
+    "water path through axial inlet/impeller/volute/outlet, seal inspection and animation",
+    "current 3D SVG export with attribution",
+    "diagram compatibility, dark view and 390px layout"
+  ],
+  "errors": [],
+  "receipts": [
+    {
+      "adapter_version": "3.0.0",
+      "bytes": 123050,
+      "configuration": {
+        "description": "压气机、燃烧室、涡轮与喷口的教学剖面；油门控制示意流量和火焰强度，不计算推力或温度。",
+        "links": [],
+        "modules": [
+          {
+            "effects": [
+              "airflow",
+              "flame"
+            ],
+            "id": "jet",
+            "label": "单轴喷气引擎",
+            "params": {
+              "rpm": 3000,
+              "throttle": 0.65
+            },
+            "type": "jet"
+          }
+        ],
+        "title": "喷气引擎 · 从进气到尾流",
+        "unfulfilled": [],
+        "version": 1
+      },
+      "host_validation_sha256": {
+        "host/anatomy.py": "3c5531cb8e2b5bbeb24be09b33cbaa94d8891da905e46e64d743877fe169d1c4",
+        "host/anatomy_composer.py": "be6bea4a86dbd484413f407d9ef8fa341f13d98218c04e3ae786cd43a9d3d03b",
+        "host/anatomy_scene.py": "684983787c72f6ce2f98a76e217e246e7c4134ba322fef1724bd54141ba82fdf"
+      },
+      "id": "315e53b14ef6487e946c73b41b42c859",
+      "limits": "Bounded declarative teaching scenes; no CAD, combustion/CFD/FEA, circuit transient or hydraulic load solver. Field particles are qualitative.",
+      "mechanism": "studio",
+      "model_calls": 0,
+      "path": "D:\\Jarvis\\user-data\\diagnostics\\anatomy-structure-fixture\\artifacts\\anatomy\\315e53b14ef6487e946c73b41b42c859.html",
+      "renderer_sha256": {
+        "build.mjs": "93f0130f88c6ba1fee9b61e519b046e1b4d8d75f1e397b371c6951af667bf5b6",
+        "page.html": "eebf13ce0501fc39fe04c247d1ad3fcc1fa701311b1d749a0be3d66569611ce7",
+        "planetary-model.mjs": "8f323bb11485a666b89ddb1c4649b17962caf2e66a8adf39d932dd04503768ba",
+        "planetary-view.js": "53307d54f37b5d8c61bde91a6d2e5698b45ae53527915382124da6796169cf53",
+        "planetary.html": "faff47da6ddbb94792ffa2c64c7a136d9019a39a2349adbce67c7bcbdbca1f2b",
+        "scene-schema.json": "e5afa5b493b02d70f5dcf739fd30f0d13e88754c6bd60a96b5ada2a50661ff61",
+        "studio-model.mjs": "a45a3fa11fbf482724e74a67963b0bb8b65b5dd1c502fc2734fc4b978d2aaad0",
+        "studio-presets.json": "67b9ec07e5e70dfec218b8100ca6c83df9b49bab0729529b30eafbaded55c822",
+        "studio-view.js": "d4000fb5f7fc45a0cdbafbbe75861e245025b6369d8ea744ee8504a40e16cf5e",
+        "studio.html": "131397a60c368bd45211719d11b418185aafe34967443d1de32bb8b5649e1702"
+      },
+      "sha256": "d93b244d22d8f3e326644dbd7608d90c9330f6b36add138d5bfbc35dec657faa",
+      "skill": "gears",
+      "source": {
+        "commit": "1482e8469b0a9e0d8cc18ea2740a01423d29ae80",
+        "copyright": "Copyright (c) 2026 Ryan",
+        "files": {
+          "LICENSE": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+          "SKILL.md.txt": "3423ada45a05033bb6e320dfc3b3ac832569969a5afb059bbfc9096c5cf0c71b",
+          "kit/iso-kit.mjs": "6d3ecc725d30c3b0346da309cf61dfa5a65017c23620bbd4093009d4fb104018",
+          "kit/iso.css": "ef19bac5a42ba9be42b56b2c1cf7fc7e21d332a8060765e9ca1d987b8ab23924",
+          "references/craft.md.txt": "38761fa9b81d66b30e50b05488501d4815830d3627f153d60f76ca783f598936",
+          "references/kit.md.txt": "684672e069fdb52735efabc3f4310dedd840d0c8066a8dc7784be2b7e656be71",
+          "references/motion.md.txt": "dda401ca1b4661a5f0b7c1e33dac6e7e4b8c13d51ca5d9312123a5c02dab320b",
+          "references/verify.md.txt": "fb81437fc5d75094a34432eb6f545644aa228e15173a27d08b3cace912033561"
+        },
+        "license": "MIT",
+        "note": "Markdown reference snapshots use .md.txt locally; bytes and original upstream paths/hashes are retained.",
+        "repository": "https://github.com/wheresryan22/anatomy",
+        "upstream_files": {
+          "LICENSE": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+          "SKILL.md": "3423ada45a05033bb6e320dfc3b3ac832569969a5afb059bbfc9096c5cf0c71b",
+          "kit/iso-kit.mjs": "6d3ecc725d30c3b0346da309cf61dfa5a65017c23620bbd4093009d4fb104018",
+          "kit/iso.css": "ef19bac5a42ba9be42b56b2c1cf7fc7e21d332a8060765e9ca1d987b8ab23924",
+          "references/craft.md": "38761fa9b81d66b30e50b05488501d4815830d3627f153d60f76ca783f598936",
+          "references/kit.md": "684672e069fdb52735efabc3f4310dedd840d0c8066a8dc7784be2b7e656be71",
+          "references/motion.md": "dda401ca1b4661a5f0b7c1e33dac6e7e4b8c13d51ca5d9312123a5c02dab320b",
+          "references/verify.md": "fb81437fc5d75094a34432eb6f545644aa228e15173a27d08b3cace912033561"
+        }
+      },
+      "url": "/api/anatomy/artifacts/315e53b14ef6487e946c73b41b42c859"
+    },
+    {
+      "adapter_version": "3.0.0",
+      "bytes": 123678,
+      "configuration": {
+        "description": "电路驱动电机，经减速齿轮带动水泵，再驱动水槽。轴速按传动比联动，水泵到波幅为教学映射；没有求解水力负载反馈。",
+        "links": [
+          {
+            "from": "motor",
+            "kind": "shaft",
+            "ratio": 1,
+            "to": "gear"
+          },
+          {
+            "from": "gear",
+            "kind": "shaft",
+            "ratio": 1,
+            "to": "pump"
+          },
+          {
+            "from": "pump",
+            "kind": "flow",
+            "ratio": 1,
+            "to": "water"
+          }
+        ],
+        "modules": [
+          {
+            "effects": [
+              "current",
+              "field"
+            ],
+            "id": "motor",
+            "label": "电源与直流电机",
+            "params": {
+              "constant": 0.08,
+              "load": 0.04,
+              "resistance": 4,
+              "switch_closed": true,
+              "voltage": 12
+            },
+            "type": "motor"
+          },
+          {
+            "effects": [
+              "trace"
+            ],
+            "id": "gear",
+            "label": "一级减速传动",
+            "params": {
+              "rpm": 60,
+              "teeth_a": 18,
+              "teeth_b": 36
+            },
+            "type": "gear-pair"
+          },
+          {
+            "effects": [
+              "flow"
+            ],
+            "id": "pump",
+            "label": "离心叶轮与水流",
+            "params": {
+              "rpm": 600
+            },
+            "type": "pump"
+          },
+          {
+            "effects": [
+              "water"
+            ],
+            "id": "water",
+            "label": "被驱动水波槽",
+            "params": {
+              "amplitude": 0.025,
+              "depth": 0.5,
+              "interference": false,
+              "wavelength": 1.8
+            },
+            "type": "wave"
+          }
+        ],
+        "title": "电 → 机械 → 水波",
+        "unfulfilled": [],
+        "version": 1
+      },
+      "host_validation_sha256": {
+        "host/anatomy.py": "3c5531cb8e2b5bbeb24be09b33cbaa94d8891da905e46e64d743877fe169d1c4",
+        "host/anatomy_composer.py": "be6bea4a86dbd484413f407d9ef8fa341f13d98218c04e3ae786cd43a9d3d03b",
+        "host/anatomy_scene.py": "684983787c72f6ce2f98a76e217e246e7c4134ba322fef1724bd54141ba82fdf"
+      },
+      "id": "2a4a6ff0bc8b4261a2c474231abc4364",
+      "limits": "Bounded declarative teaching scenes; no CAD, combustion/CFD/FEA, circuit transient or hydraulic load solver. Field particles are qualitative.",
+      "mechanism": "studio",
+      "model_calls": 0,
+      "path": "D:\\Jarvis\\user-data\\diagnostics\\anatomy-structure-fixture\\artifacts\\anatomy\\2a4a6ff0bc8b4261a2c474231abc4364.html",
+      "renderer_sha256": {
+        "build.mjs": "93f0130f88c6ba1fee9b61e519b046e1b4d8d75f1e397b371c6951af667bf5b6",
+        "page.html": "eebf13ce0501fc39fe04c247d1ad3fcc1fa701311b1d749a0be3d66569611ce7",
+        "planetary-model.mjs": "8f323bb11485a666b89ddb1c4649b17962caf2e66a8adf39d932dd04503768ba",
+        "planetary-view.js": "53307d54f37b5d8c61bde91a6d2e5698b45ae53527915382124da6796169cf53",
+        "planetary.html": "faff47da6ddbb94792ffa2c64c7a136d9019a39a2349adbce67c7bcbdbca1f2b",
+        "scene-schema.json": "e5afa5b493b02d70f5dcf739fd30f0d13e88754c6bd60a96b5ada2a50661ff61",
+        "studio-model.mjs": "a45a3fa11fbf482724e74a67963b0bb8b65b5dd1c502fc2734fc4b978d2aaad0",
+        "studio-presets.json": "67b9ec07e5e70dfec218b8100ca6c83df9b49bab0729529b30eafbaded55c822",
+        "studio-view.js": "d4000fb5f7fc45a0cdbafbbe75861e245025b6369d8ea744ee8504a40e16cf5e",
+        "studio.html": "131397a60c368bd45211719d11b418185aafe34967443d1de32bb8b5649e1702"
+      },
+      "sha256": "bf32edac18cca4252f6e15b49ea6edeed017bdc2238c99b5640ee882002e7725",
+      "skill": "gears",
+      "source": {
+        "commit": "1482e8469b0a9e0d8cc18ea2740a01423d29ae80",
+        "copyright": "Copyright (c) 2026 Ryan",
+        "files": {
+          "LICENSE": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+          "SKILL.md.txt": "3423ada45a05033bb6e320dfc3b3ac832569969a5afb059bbfc9096c5cf0c71b",
+          "kit/iso-kit.mjs": "6d3ecc725d30c3b0346da309cf61dfa5a65017c23620bbd4093009d4fb104018",
+          "kit/iso.css": "ef19bac5a42ba9be42b56b2c1cf7fc7e21d332a8060765e9ca1d987b8ab23924",
+          "references/craft.md.txt": "38761fa9b81d66b30e50b05488501d4815830d3627f153d60f76ca783f598936",
+          "references/kit.md.txt": "684672e069fdb52735efabc3f4310dedd840d0c8066a8dc7784be2b7e656be71",
+          "references/motion.md.txt": "dda401ca1b4661a5f0b7c1e33dac6e7e4b8c13d51ca5d9312123a5c02dab320b",
+          "references/verify.md.txt": "fb81437fc5d75094a34432eb6f545644aa228e15173a27d08b3cace912033561"
+        },
+        "license": "MIT",
+        "note": "Markdown reference snapshots use .md.txt locally; bytes and original upstream paths/hashes are retained.",
+        "repository": "https://github.com/wheresryan22/anatomy",
+        "upstream_files": {
+          "LICENSE": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+          "SKILL.md": "3423ada45a05033bb6e320dfc3b3ac832569969a5afb059bbfc9096c5cf0c71b",
+          "kit/iso-kit.mjs": "6d3ecc725d30c3b0346da309cf61dfa5a65017c23620bbd4093009d4fb104018",
+          "kit/iso.css": "ef19bac5a42ba9be42b56b2c1cf7fc7e21d332a8060765e9ca1d987b8ab23924",
+          "references/craft.md": "38761fa9b81d66b30e50b05488501d4815830d3627f153d60f76ca783f598936",
+          "references/kit.md": "684672e069fdb52735efabc3f4310dedd840d0c8066a8dc7784be2b7e656be71",
+          "references/motion.md": "dda401ca1b4661a5f0b7c1e33dac6e7e4b8c13d51ca5d9312123a5c02dab320b",
+          "references/verify.md": "fb81437fc5d75094a34432eb6f545644aa228e15173a27d08b3cace912033561"
+        }
+      },
+      "url": "/api/anatomy/artifacts/2a4a6ff0bc8b4261a2c474231abc4364"
+    },
+    {
+      "adapter_version": "3.0.0",
+      "bytes": 123071,
+      "configuration": {
+        "description": "用有限水深色散关系计算角频率与相速度；叠加两个相反方向的小振幅波，观察驻波节点。",
+        "links": [],
+        "modules": [
+          {
+            "effects": [
+              "water"
+            ],
+            "id": "water",
+            "label": "水面干涉实验",
+            "params": {
+              "amplitude": 0.025,
+              "depth": 0.5,
+              "interference": true,
+              "wavelength": 1.8
+            },
+            "type": "wave"
+          }
+        ],
+        "title": "线性水波 · 双向干涉",
+        "unfulfilled": [],
+        "version": 1
+      },
+      "host_validation_sha256": {
+        "host/anatomy.py": "3c5531cb8e2b5bbeb24be09b33cbaa94d8891da905e46e64d743877fe169d1c4",
+        "host/anatomy_composer.py": "be6bea4a86dbd484413f407d9ef8fa341f13d98218c04e3ae786cd43a9d3d03b",
+        "host/anatomy_scene.py": "684983787c72f6ce2f98a76e217e246e7c4134ba322fef1724bd54141ba82fdf"
+      },
+      "id": "6aeb048b32ff4a97b944a528cf65531d",
+      "limits": "Bounded declarative teaching scenes; no CAD, combustion/CFD/FEA, circuit transient or hydraulic load solver. Field particles are qualitative.",
+      "mechanism": "studio",
+      "model_calls": 0,
+      "path": "D:\\Jarvis\\user-data\\diagnostics\\anatomy-structure-fixture\\artifacts\\anatomy\\6aeb048b32ff4a97b944a528cf65531d.html",
+      "renderer_sha256": {
+        "build.mjs": "93f0130f88c6ba1fee9b61e519b046e1b4d8d75f1e397b371c6951af667bf5b6",
+        "page.html": "eebf13ce0501fc39fe04c247d1ad3fcc1fa701311b1d749a0be3d66569611ce7",
+        "planetary-model.mjs": "8f323bb11485a666b89ddb1c4649b17962caf2e66a8adf39d932dd04503768ba",
+        "planetary-view.js": "53307d54f37b5d8c61bde91a6d2e5698b45ae53527915382124da6796169cf53",
+        "planetary.html": "faff47da6ddbb94792ffa2c64c7a136d9019a39a2349adbce67c7bcbdbca1f2b",
+        "scene-schema.json": "e5afa5b493b02d70f5dcf739fd30f0d13e88754c6bd60a96b5ada2a50661ff61",
+        "studio-model.mjs": "a45a3fa11fbf482724e74a67963b0bb8b65b5dd1c502fc2734fc4b978d2aaad0",
+        "studio-presets.json": "67b9ec07e5e70dfec218b8100ca6c83df9b49bab0729529b30eafbaded55c822",
+        "studio-view.js": "d4000fb5f7fc45a0cdbafbbe75861e245025b6369d8ea744ee8504a40e16cf5e",
+        "studio.html": "131397a60c368bd45211719d11b418185aafe34967443d1de32bb8b5649e1702"
+      },
+      "sha256": "8f854fa67618f2b3a3fdff8a0cd1f88d7a8940358e11223f6d99254db8bafd9f",
+      "skill": "gears",
+      "source": {
+        "commit": "1482e8469b0a9e0d8cc18ea2740a01423d29ae80",
+        "copyright": "Copyright (c) 2026 Ryan",
+        "files": {
+          "LICENSE": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+          "SKILL.md.txt": "3423ada45a05033bb6e320dfc3b3ac832569969a5afb059bbfc9096c5cf0c71b",
+          "kit/iso-kit.mjs": "6d3ecc725d30c3b0346da309cf61dfa5a65017c23620bbd4093009d4fb104018",
+          "kit/iso.css": "ef19bac5a42ba9be42b56b2c1cf7fc7e21d332a8060765e9ca1d987b8ab23924",
+          "references/craft.md.txt": "38761fa9b81d66b30e50b05488501d4815830d3627f153d60f76ca783f598936",
+          "references/kit.md.txt": "684672e069fdb52735efabc3f4310dedd840d0c8066a8dc7784be2b7e656be71",
+          "references/motion.md.txt": "dda401ca1b4661a5f0b7c1e33dac6e7e4b8c13d51ca5d9312123a5c02dab320b",
+          "references/verify.md.txt": "fb81437fc5d75094a34432eb6f545644aa228e15173a27d08b3cace912033561"
+        },
+        "license": "MIT",
+        "note": "Markdown reference snapshots use .md.txt locally; bytes and original upstream paths/hashes are retained.",
+        "repository": "https://github.com/wheresryan22/anatomy",
+        "upstream_files": {
+          "LICENSE": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+          "SKILL.md": "3423ada45a05033bb6e320dfc3b3ac832569969a5afb059bbfc9096c5cf0c71b",
+          "kit/iso-kit.mjs": "6d3ecc725d30c3b0346da309cf61dfa5a65017c23620bbd4093009d4fb104018",
+          "kit/iso.css": "ef19bac5a42ba9be42b56b2c1cf7fc7e21d332a8060765e9ca1d987b8ab23924",
+          "references/craft.md": "38761fa9b81d66b30e50b05488501d4815830d3627f153d60f76ca783f598936",
+          "references/kit.md": "684672e069fdb52735efabc3f4310dedd840d0c8066a8dc7784be2b7e656be71",
+          "references/motion.md": "dda401ca1b4661a5f0b7c1e33dac6e7e4b8c13d51ca5d9312123a5c02dab320b",
+          "references/verify.md": "fb81437fc5d75094a34432eb6f545644aa228e15173a27d08b3cace912033561"
+        }
+      },
+      "url": "/api/anatomy/artifacts/6aeb048b32ff4a97b944a528cf65531d"
+    },
+    {
+      "adapter_version": "3.0.0",
+      "bytes": 123618,
+      "configuration": {
+        "description": "四冲程发动机经减速传动驱动水泵和水波；联动只传递运动和示意激励，不计算扭矩负载、燃烧或液体压强。",
+        "links": [
+          {
+            "from": "engine",
+            "kind": "shaft",
+            "ratio": 1,
+            "to": "gear"
+          },
+          {
+            "from": "gear",
+            "kind": "shaft",
+            "ratio": 1,
+            "to": "pump"
+          },
+          {
+            "from": "pump",
+            "kind": "flow",
+            "ratio": 1,
+            "to": "water"
+          }
+        ],
+        "modules": [
+          {
+            "effects": [
+              "airflow",
+              "flame",
+              "spark",
+              "coolant"
+            ],
+            "id": "engine",
+            "label": "双缸动力源",
+            "params": {
+              "crank_mm": 40,
+              "cylinders": 2,
+              "rod_ratio": 3,
+              "rpm": 480
+            },
+            "type": "four-stroke"
+          },
+          {
+            "effects": [
+              "trace"
+            ],
+            "id": "gear",
+            "label": "减速齿轮",
+            "params": {
+              "rpm": 60,
+              "teeth_a": 20,
+              "teeth_b": 40
+            },
+            "type": "gear-pair"
+          },
+          {
+            "effects": [
+              "flow"
+            ],
+            "id": "pump",
+            "label": "水泵",
+            "params": {
+              "rpm": 600
+            },
+            "type": "pump"
+          },
+          {
+            "effects": [
+              "water"
+            ],
+            "id": "water",
+            "label": "水波",
+            "params": {
+              "amplitude": 0.025,
+              "depth": 0.5,
+              "interference": false,
+              "wavelength": 1.8
+            },
+            "type": "wave"
+          }
+        ],
+        "title": "发动机驱动水泵",
+        "unfulfilled": [],
+        "version": 1
+      },
+      "host_validation_sha256": {
+        "host/anatomy.py": "3c5531cb8e2b5bbeb24be09b33cbaa94d8891da905e46e64d743877fe169d1c4",
+        "host/anatomy_composer.py": "be6bea4a86dbd484413f407d9ef8fa341f13d98218c04e3ae786cd43a9d3d03b",
+        "host/anatomy_scene.py": "684983787c72f6ce2f98a76e217e246e7c4134ba322fef1724bd54141ba82fdf"
+      },
+      "id": "1f0f40b53799431b9a478e45ed8d7f69",
+      "limits": "Bounded declarative teaching scenes; no CAD, combustion/CFD/FEA, circuit transient or hydraulic load solver. Field particles are qualitative.",
+      "mechanism": "studio",
+      "model_calls": 0,
+      "path": "D:\\Jarvis\\user-data\\diagnostics\\anatomy-structure-fixture\\artifacts\\anatomy\\1f0f40b53799431b9a478e45ed8d7f69.html",
+      "renderer_sha256": {
+        "build.mjs": "93f0130f88c6ba1fee9b61e519b046e1b4d8d75f1e397b371c6951af667bf5b6",
+        "page.html": "eebf13ce0501fc39fe04c247d1ad3fcc1fa701311b1d749a0be3d66569611ce7",
+        "planetary-model.mjs": "8f323bb11485a666b89ddb1c4649b17962caf2e66a8adf39d932dd04503768ba",
+        "planetary-view.js": "53307d54f37b5d8c61bde91a6d2e5698b45ae53527915382124da6796169cf53",
+        "planetary.html": "faff47da6ddbb94792ffa2c64c7a136d9019a39a2349adbce67c7bcbdbca1f2b",
+        "scene-schema.json": "e5afa5b493b02d70f5dcf739fd30f0d13e88754c6bd60a96b5ada2a50661ff61",
+        "studio-model.mjs": "a45a3fa11fbf482724e74a67963b0bb8b65b5dd1c502fc2734fc4b978d2aaad0",
+        "studio-presets.json": "67b9ec07e5e70dfec218b8100ca6c83df9b49bab0729529b30eafbaded55c822",
+        "studio-view.js": "d4000fb5f7fc45a0cdbafbbe75861e245025b6369d8ea744ee8504a40e16cf5e",
+        "studio.html": "131397a60c368bd45211719d11b418185aafe34967443d1de32bb8b5649e1702"
+      },
+      "sha256": "58d59ad5ad536f9f4e19cecffc1d328c6027543d0e50fed60f78bac8723c9601",
+      "skill": "gears",
+      "source": {
+        "commit": "1482e8469b0a9e0d8cc18ea2740a01423d29ae80",
+        "copyright": "Copyright (c) 2026 Ryan",
+        "files": {
+          "LICENSE": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+          "SKILL.md.txt": "3423ada45a05033bb6e320dfc3b3ac832569969a5afb059bbfc9096c5cf0c71b",
+          "kit/iso-kit.mjs": "6d3ecc725d30c3b0346da309cf61dfa5a65017c23620bbd4093009d4fb104018",
+          "kit/iso.css": "ef19bac5a42ba9be42b56b2c1cf7fc7e21d332a8060765e9ca1d987b8ab23924",
+          "references/craft.md.txt": "38761fa9b81d66b30e50b05488501d4815830d3627f153d60f76ca783f598936",
+          "references/kit.md.txt": "684672e069fdb52735efabc3f4310dedd840d0c8066a8dc7784be2b7e656be71",
+          "references/motion.md.txt": "dda401ca1b4661a5f0b7c1e33dac6e7e4b8c13d51ca5d9312123a5c02dab320b",
+          "references/verify.md.txt": "fb81437fc5d75094a34432eb6f545644aa228e15173a27d08b3cace912033561"
+        },
+        "license": "MIT",
+        "note": "Markdown reference snapshots use .md.txt locally; bytes and original upstream paths/hashes are retained.",
+        "repository": "https://github.com/wheresryan22/anatomy",
+        "upstream_files": {
+          "LICENSE": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+          "SKILL.md": "3423ada45a05033bb6e320dfc3b3ac832569969a5afb059bbfc9096c5cf0c71b",
+          "kit/iso-kit.mjs": "6d3ecc725d30c3b0346da309cf61dfa5a65017c23620bbd4093009d4fb104018",
+          "kit/iso.css": "ef19bac5a42ba9be42b56b2c1cf7fc7e21d332a8060765e9ca1d987b8ab23924",
+          "references/craft.md": "38761fa9b81d66b30e50b05488501d4815830d3627f153d60f76ca783f598936",
+          "references/kit.md": "684672e069fdb52735efabc3f4310dedd840d0c8066a8dc7784be2b7e656be71",
+          "references/motion.md": "dda401ca1b4661a5f0b7c1e33dac6e7e4b8c13d51ca5d9312123a5c02dab320b",
+          "references/verify.md": "fb81437fc5d75094a34432eb6f545644aa228e15173a27d08b3cace912033561"
+        }
+      },
+      "url": "/api/anatomy/artifacts/1f0f40b53799431b9a478e45ed8d7f69"
+    },
+    {
+      "adapter_version": "3.0.0",
+      "bytes": 123896,
+      "configuration": {
+        "description": "用基础零件、父子关节与正弦驱动组合三维运动结构；支持转动和平移，不含逆运动学、闭环约束、碰撞或动力学。",
+        "links": [],
+        "modules": [
+          {
+            "effects": [
+              "trace"
+            ],
+            "id": "robot",
+            "label": "两转动 + 一移动关节",
+            "params": {
+              "parts": [
+                {
+                  "amplitude": 0,
+                  "axis": "z",
+                  "color": "steel",
+                  "frequency": 0,
+                  "id": "base",
+                  "joint": "fixed",
+                  "offset": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "parent": "",
+                  "phase": 0,
+                  "position": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "rotation": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "shape": "cylinder",
+                  "size": [
+                    45,
+                    45,
+                    12
+                  ]
+                },
+                {
+                  "amplitude": 60,
+                  "axis": "z",
+                  "color": "teal",
+                  "frequency": 0.25,
+                  "id": "shoulder",
+                  "joint": "revolute",
+                  "offset": [
+                    30,
+                    0,
+                    0
+                  ],
+                  "parent": "base",
+                  "phase": 0,
+                  "position": [
+                    0,
+                    0,
+                    15
+                  ],
+                  "rotation": [
+                    0,
+                    -35,
+                    0
+                  ],
+                  "shape": "box",
+                  "size": [
+                    60,
+                    10,
+                    12
+                  ]
+                },
+                {
+                  "amplitude": 50,
+                  "axis": "y",
+                  "color": "amber",
+                  "frequency": 0.4,
+                  "id": "elbow",
+                  "joint": "revolute",
+                  "offset": [
+                    25,
+                    0,
+                    0
+                  ],
+                  "parent": "shoulder",
+                  "phase": 60,
+                  "position": [
+                    60,
+                    0,
+                    0
+                  ],
+                  "rotation": [
+                    0,
+                    25,
+                    0
+                  ],
+                  "shape": "box",
+                  "size": [
+                    50,
+                    8,
+                    10
+                  ]
+                },
+                {
+                  "amplitude": 12,
+                  "axis": "x",
+                  "color": "blue",
+                  "frequency": 0.7,
+                  "id": "slider",
+                  "joint": "prismatic",
+                  "offset": [
+                    10,
+                    0,
+                    0
+                  ],
+                  "parent": "elbow",
+                  "phase": 90,
+                  "position": [
+                    50,
+                    0,
+                    0
+                  ],
+                  "rotation": [
+                    0,
+                    0,
+                    0
+                  ],
+                  "shape": "box",
+                  "size": [
+                    20,
+                    14,
+                    14
+                  ]
+                }
+              ]
+            },
+            "type": "assembly"
+          }
+        ],
+        "title": "自由机构 · 关节机械臂",
+        "unfulfilled": [],
+        "version": 1
+      },
+      "host_validation_sha256": {
+        "host/anatomy.py": "3c5531cb8e2b5bbeb24be09b33cbaa94d8891da905e46e64d743877fe169d1c4",
+        "host/anatomy_composer.py": "be6bea4a86dbd484413f407d9ef8fa341f13d98218c04e3ae786cd43a9d3d03b",
+        "host/anatomy_scene.py": "684983787c72f6ce2f98a76e217e246e7c4134ba322fef1724bd54141ba82fdf"
+      },
+      "id": "a7167a4364f94208a9dfebf0696dc38d",
+      "limits": "Bounded declarative teaching scenes; no CAD, combustion/CFD/FEA, circuit transient or hydraulic load solver. Field particles are qualitative.",
+      "mechanism": "studio",
+      "model_calls": 0,
+      "path": "D:\\Jarvis\\user-data\\diagnostics\\anatomy-structure-fixture\\artifacts\\anatomy\\a7167a4364f94208a9dfebf0696dc38d.html",
+      "renderer_sha256": {
+        "build.mjs": "93f0130f88c6ba1fee9b61e519b046e1b4d8d75f1e397b371c6951af667bf5b6",
+        "page.html": "eebf13ce0501fc39fe04c247d1ad3fcc1fa701311b1d749a0be3d66569611ce7",
+        "planetary-model.mjs": "8f323bb11485a666b89ddb1c4649b17962caf2e66a8adf39d932dd04503768ba",
+        "planetary-view.js": "53307d54f37b5d8c61bde91a6d2e5698b45ae53527915382124da6796169cf53",
+        "planetary.html": "faff47da6ddbb94792ffa2c64c7a136d9019a39a2349adbce67c7bcbdbca1f2b",
+        "scene-schema.json": "e5afa5b493b02d70f5dcf739fd30f0d13e88754c6bd60a96b5ada2a50661ff61",
+        "studio-model.mjs": "a45a3fa11fbf482724e74a67963b0bb8b65b5dd1c502fc2734fc4b978d2aaad0",
+        "studio-presets.json": "67b9ec07e5e70dfec218b8100ca6c83df9b49bab0729529b30eafbaded55c822",
+        "studio-view.js": "d4000fb5f7fc45a0cdbafbbe75861e245025b6369d8ea744ee8504a40e16cf5e",
+        "studio.html": "131397a60c368bd45211719d11b418185aafe34967443d1de32bb8b5649e1702"
+      },
+      "sha256": "364ddf999b542e5357d02a9374935e41d3309e594cee3f7c3c8e107acc762b75",
+      "skill": "gears",
+      "source": {
+        "commit": "1482e8469b0a9e0d8cc18ea2740a01423d29ae80",
+        "copyright": "Copyright (c) 2026 Ryan",
+        "files": {
+          "LICENSE": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+          "SKILL.md.txt": "3423ada45a05033bb6e320dfc3b3ac832569969a5afb059bbfc9096c5cf0c71b",
+          "kit/iso-kit.mjs": "6d3ecc725d30c3b0346da309cf61dfa5a65017c23620bbd4093009d4fb104018",
+          "kit/iso.css": "ef19bac5a42ba9be42b56b2c1cf7fc7e21d332a8060765e9ca1d987b8ab23924",
+          "references/craft.md.txt": "38761fa9b81d66b30e50b05488501d4815830d3627f153d60f76ca783f598936",
+          "references/kit.md.txt": "684672e069fdb52735efabc3f4310dedd840d0c8066a8dc7784be2b7e656be71",
+          "references/motion.md.txt": "dda401ca1b4661a5f0b7c1e33dac6e7e4b8c13d51ca5d9312123a5c02dab320b",
+          "references/verify.md.txt": "fb81437fc5d75094a34432eb6f545644aa228e15173a27d08b3cace912033561"
+        },
+        "license": "MIT",
+        "note": "Markdown reference snapshots use .md.txt locally; bytes and original upstream paths/hashes are retained.",
+        "repository": "https://github.com/wheresryan22/anatomy",
+        "upstream_files": {
+          "LICENSE": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+          "SKILL.md": "3423ada45a05033bb6e320dfc3b3ac832569969a5afb059bbfc9096c5cf0c71b",
+          "kit/iso-kit.mjs": "6d3ecc725d30c3b0346da309cf61dfa5a65017c23620bbd4093009d4fb104018",
+          "kit/iso.css": "ef19bac5a42ba9be42b56b2c1cf7fc7e21d332a8060765e9ca1d987b8ab23924",
+          "references/craft.md": "38761fa9b81d66b30e50b05488501d4815830d3627f153d60f76ca783f598936",
+          "references/kit.md": "684672e069fdb52735efabc3f4310dedd840d0c8066a8dc7784be2b7e656be71",
+          "references/motion.md": "dda401ca1b4661a5f0b7c1e33dac6e7e4b8c13d51ca5d9312123a5c02dab320b",
+          "references/verify.md": "fb81437fc5d75094a34432eb6f545644aa228e15173a27d08b3cace912033561"
+        }
+      },
+      "url": "/api/anatomy/artifacts/a7167a4364f94208a9dfebf0696dc38d"
+    },
+    {
+      "adapter_version": "3.0.0",
+      "bytes": 123047,
+      "configuration": {
+        "description": "电路驱动电机，经减速齿轮带动水泵，再驱动水槽。轴速按传动比联动，水泵到波幅为教学映射；没有求解水力负载反馈。",
+        "links": [],
+        "modules": [
+          {
+            "effects": [
+              "flow"
+            ],
+            "id": "pump",
+            "label": "离心叶轮与水流",
+            "params": {
+              "rpm": 600
+            },
+            "type": "pump"
+          }
+        ],
+        "title": "三维水泵内部",
+        "unfulfilled": [],
+        "version": 1
+      },
+      "host_validation_sha256": {
+        "host/anatomy.py": "3c5531cb8e2b5bbeb24be09b33cbaa94d8891da905e46e64d743877fe169d1c4",
+        "host/anatomy_composer.py": "be6bea4a86dbd484413f407d9ef8fa341f13d98218c04e3ae786cd43a9d3d03b",
+        "host/anatomy_scene.py": "684983787c72f6ce2f98a76e217e246e7c4134ba322fef1724bd54141ba82fdf"
+      },
+      "id": "b8089a8728f049e58dcfd68103f7c384",
+      "limits": "Bounded declarative teaching scenes; no CAD, combustion/CFD/FEA, circuit transient or hydraulic load solver. Field particles are qualitative.",
+      "mechanism": "studio",
+      "model_calls": 0,
+      "path": "D:\\Jarvis\\user-data\\diagnostics\\anatomy-structure-fixture\\artifacts\\anatomy\\b8089a8728f049e58dcfd68103f7c384.html",
+      "renderer_sha256": {
+        "build.mjs": "93f0130f88c6ba1fee9b61e519b046e1b4d8d75f1e397b371c6951af667bf5b6",
+        "page.html": "eebf13ce0501fc39fe04c247d1ad3fcc1fa701311b1d749a0be3d66569611ce7",
+        "planetary-model.mjs": "8f323bb11485a666b89ddb1c4649b17962caf2e66a8adf39d932dd04503768ba",
+        "planetary-view.js": "53307d54f37b5d8c61bde91a6d2e5698b45ae53527915382124da6796169cf53",
+        "planetary.html": "faff47da6ddbb94792ffa2c64c7a136d9019a39a2349adbce67c7bcbdbca1f2b",
+        "scene-schema.json": "e5afa5b493b02d70f5dcf739fd30f0d13e88754c6bd60a96b5ada2a50661ff61",
+        "studio-model.mjs": "a45a3fa11fbf482724e74a67963b0bb8b65b5dd1c502fc2734fc4b978d2aaad0",
+        "studio-presets.json": "67b9ec07e5e70dfec218b8100ca6c83df9b49bab0729529b30eafbaded55c822",
+        "studio-view.js": "d4000fb5f7fc45a0cdbafbbe75861e245025b6369d8ea744ee8504a40e16cf5e",
+        "studio.html": "131397a60c368bd45211719d11b418185aafe34967443d1de32bb8b5649e1702"
+      },
+      "sha256": "f9a9606effa11af5bded71af0bef275490816dfa17c5a2bc34ade52490d53e63",
+      "skill": "gears",
+      "source": {
+        "commit": "1482e8469b0a9e0d8cc18ea2740a01423d29ae80",
+        "copyright": "Copyright (c) 2026 Ryan",
+        "files": {
+          "LICENSE": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+          "SKILL.md.txt": "3423ada45a05033bb6e320dfc3b3ac832569969a5afb059bbfc9096c5cf0c71b",
+          "kit/iso-kit.mjs": "6d3ecc725d30c3b0346da309cf61dfa5a65017c23620bbd4093009d4fb104018",
+          "kit/iso.css": "ef19bac5a42ba9be42b56b2c1cf7fc7e21d332a8060765e9ca1d987b8ab23924",
+          "references/craft.md.txt": "38761fa9b81d66b30e50b05488501d4815830d3627f153d60f76ca783f598936",
+          "references/kit.md.txt": "684672e069fdb52735efabc3f4310dedd840d0c8066a8dc7784be2b7e656be71",
+          "references/motion.md.txt": "dda401ca1b4661a5f0b7c1e33dac6e7e4b8c13d51ca5d9312123a5c02dab320b",
+          "references/verify.md.txt": "fb81437fc5d75094a34432eb6f545644aa228e15173a27d08b3cace912033561"
+        },
+        "license": "MIT",
+        "note": "Markdown reference snapshots use .md.txt locally; bytes and original upstream paths/hashes are retained.",
+        "repository": "https://github.com/wheresryan22/anatomy",
+        "upstream_files": {
+          "LICENSE": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+          "SKILL.md": "3423ada45a05033bb6e320dfc3b3ac832569969a5afb059bbfc9096c5cf0c71b",
+          "kit/iso-kit.mjs": "6d3ecc725d30c3b0346da309cf61dfa5a65017c23620bbd4093009d4fb104018",
+          "kit/iso.css": "ef19bac5a42ba9be42b56b2c1cf7fc7e21d332a8060765e9ca1d987b8ab23924",
+          "references/craft.md": "38761fa9b81d66b30e50b05488501d4815830d3627f153d60f76ca783f598936",
+          "references/kit.md": "684672e069fdb52735efabc3f4310dedd840d0c8066a8dc7784be2b7e656be71",
+          "references/motion.md": "dda401ca1b4661a5f0b7c1e33dac6e7e4b8c13d51ca5d9312123a5c02dab320b",
+          "references/verify.md": "fb81437fc5d75094a34432eb6f545644aa228e15173a27d08b3cace912033561"
+        }
+      },
+      "url": "/api/anatomy/artifacts/b8089a8728f049e58dcfd68103f7c384"
+    }
+  ],
+  "url": "http://127.0.0.1:18283/api/anatomy/artifacts/7f56f469cef2470887c49ea2acc221c3",
+  "shell_closed": {
+    "faces": 3416,
+    "visibleFaces": 3416,
+    "clipped": 0,
+    "particles": 248,
+    "vertices": 9504
+  },
+  "shell_transparent": {
+    "faces": 3416,
+    "visibleFaces": 3416,
+    "clipped": 0,
+    "particles": 248,
+    "vertices": 9504
+  },
+  "shell_section": {
+    "faces": 3416,
+    "visibleFaces": 3139,
+    "clipped": 277,
+    "particles": 248,
+    "vertices": 9504
+  },
+  "shell_hidden": {
+    "faces": 3416,
+    "visibleFaces": 2810,
+    "clipped": 0,
+    "particles": 248,
+    "vertices": 9504
+  },
+  "animation_updates": 14
+}

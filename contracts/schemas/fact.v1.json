@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:jarvis:fact:v1",
+  "title": "Jarvis fact v1",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "jarvis.fact.v1"
+    },
+    "principal_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "[A-Za-z0-9][A-Za-z0-9._-]{0,79}"
+    },
+    "scope_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "[A-Za-z0-9][A-Za-z0-9._-]{0,79}"
+    },
+    "key": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "value": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4000
+    },
+    "source": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500
+    }
+  },
+  "required": [
+    "schema",
+    "principal_id",
+    "scope_id",
+    "key",
+    "value",
+    "source"
+  ],
+  "additionalProperties": false
+}

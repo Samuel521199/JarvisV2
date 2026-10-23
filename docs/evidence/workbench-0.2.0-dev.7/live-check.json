@@ -1,0 +1,120 @@
+{
+  "version": "0.2.0-dev.7",
+  "date": "2026-10-23",
+  "transport": "real local HTTP API, not browser UI",
+  "before_model_call_counts": {
+    "model_calls": 4,
+    "attempts": 7
+  },
+  "after_model_call_counts": {
+    "model_calls": 4,
+    "attempts": 7
+  },
+  "input": " 苹果 \n香蕉\n苹果\n\n orange \nOrange\norange\n",
+  "expected": "苹果\n香蕉\norange\nOrange",
+  "actual": "苹果\n香蕉\norange\nOrange",
+  "task_id": "task-6bf25386500c4e81b595a0736d14ef8d",
+  "task_status": "SUCCEEDED",
+  "package_id": "pkg-793f9b9165e576e38a34f95122af5c25cd61f6708e0ebec06a40875f4eb84baa",
+  "grant": {
+    "body": {
+      "capabilities": [
+        "plugin.migration-lines.v1",
+        "artifact.write.v1"
+      ],
+      "expires_at": 1792688044.2748814,
+      "grant_id": "tool-use-a5792a3093f2da75dfd5641717143faf",
+      "max_cost_units": 2,
+      "principal_id": "owner.local",
+      "schema": "jarvis.grant.v1",
+      "scope_id": "personal"
+    },
+    "revoked": 0,
+    "spent": 2
+  },
+  "actions": [
+    {
+      "arguments": {
+        "text": " 苹果 \n香蕉\n苹果\n\n orange \nOrange\norange\n"
+      },
+      "attempts": 1,
+      "capability": "plugin.migration-lines.v1",
+      "digest": "1d271a6b4404f82674eab08e4ce70f7db60fb000d4b67b56bb6c009a6fbd9014",
+      "error": null,
+      "id": "action-e5213cb2d27d3f8691dde8c95459b765",
+      "result": {
+        "package_id": "pkg-793f9b9165e576e38a34f95122af5c25cd61f6708e0ebec06a40875f4eb84baa",
+        "text": "苹果\n香蕉\norange\nOrange",
+        "worker": {
+          "active_process_limit": 1,
+          "appcontainer_verified": true,
+          "backend": "windows-lpac-job",
+          "capabilities": [
+            "registryRead"
+          ],
+          "cpu_limit_seconds": 3,
+          "elapsed_seconds": 0.3727,
+          "memory_limit_bytes": 268435456,
+          "network_capabilities": [],
+          "peak_memory_bytes": 13750272,
+          "wall_limit_seconds": 8
+        }
+      },
+      "status": "CONFIRMED",
+      "step_id": "use",
+      "task_id": "task-6bf25386500c4e81b595a0736d14ef8d"
+    },
+    {
+      "arguments": {
+        "content": "{\"package_id\":\"pkg-793f9b9165e576e38a34f95122af5c25cd61f6708e0ebec06a40875f4eb84baa\",\"text\":\"苹果\\n香蕉\\norange\\nOrange\",\"worker\":{\"active_process_limit\":1,\"appcontainer_verified\":true,\"backend\":\"windows-lpac-job\",\"capabilities\":[\"registryRead\"],\"cpu_limit_seconds\":3,\"elapsed_seconds\":0.3727,\"memory_limit_bytes\":268435456,\"network_capabilities\":[],\"peak_memory_bytes\":13750272,\"wall_limit_seconds\":8}}",
+        "name": "result.json"
+      },
+      "attempts": 1,
+      "capability": "artifact.write.v1",
+      "digest": "d80c9587a02db86301add0868a8a148eeda7068e12b9431e66eaa340ac41045b",
+      "error": null,
+      "id": "action-d8f4b775d89b120cfd03fdf1acb60fa2",
+      "result": {
+        "bytes": 407,
+        "relative_path": "artifacts/task-6bf25386500c4e81b595a0736d14ef8d/action-d8f4b775d89b120cfd03fdf1acb60fa2/result.json",
+        "sha256": "629eeaedd39cd1ea1b5af581a9a5bd7ea05c471bca3f00d421e48845251c575a",
+        "verified": true
+      },
+      "status": "CONFIRMED",
+      "step_id": "deliver",
+      "task_id": "task-6bf25386500c4e81b595a0736d14ef8d"
+    }
+  ],
+  "repeat_same_task": {
+    "existing": true,
+    "id": "task-6bf25386500c4e81b595a0736d14ef8d"
+  },
+  "health_while_waiting": [
+    "ready",
+    "ready",
+    "ready",
+    "ready",
+    "ready",
+    "ready"
+  ],
+  "final_tool": {
+    "active": "pkg-793f9b9165e576e38a34f95122af5c25cd61f6708e0ebec06a40875f4eb84baa",
+    "available": true,
+    "capability": "plugin.migration-lines.v1",
+    "description": "实现 run(text) -> str。逐行 strip，丢弃空行，保留第一次出现的完整行；大小写不同的行保留；结果用换行连接，不增加尾部换行。",
+    "enabled": 1,
+    "error": null,
+    "name": "dev.6 迁移验收 · 行清理工具",
+    "observations": 2,
+    "previous": null,
+    "recipe": "python313-pure-text.v1",
+    "revision": 1,
+    "sample_input": " apple \nbanana\napple\n",
+    "scope": "personal",
+    "status": "STABLE"
+  },
+  "artifact_verified_on_disk": {
+    "bytes": 407,
+    "sha256": "629eeaedd39cd1ea1b5af581a9a5bd7ea05c471bca3f00d421e48845251c575a"
+  }
+}

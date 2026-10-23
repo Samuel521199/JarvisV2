@@ -1,0 +1,311 @@
+{
+  "memory_chat": "chat-30bfcb09a4884c189f8a465040a61fac",
+  "memory_turns": [
+    {
+      "id": "f4a11611-8531-4cfb-8ee1-1af84c37524e",
+      "status": "SUCCEEDED",
+      "reply": "海盐",
+      "context_count": 1,
+      "memory_context": {
+        "enabled": true,
+        "epoch": 1,
+        "facts": [
+          {
+            "id": "fact-677b3294234c429181924caab4814c0d",
+            "revision": 1
+          }
+        ],
+        "provider": "vertex",
+        "scope": "personal"
+      },
+      "usage": {
+        "completion_tokens": 2,
+        "prompt_tokens": 190,
+        "total_tokens": 192
+      },
+      "provider": "vertex",
+      "model": "gemini-3.8-flash"
+    },
+    {
+      "id": "50671506-63ba-40a3-8ee7-e690eb654cb5",
+      "status": "SUCCEEDED",
+      "reply": "松果",
+      "context_count": 1,
+      "memory_context": {
+        "enabled": true,
+        "epoch": 2,
+        "facts": [
+          {
+            "id": "fact-677b3294234c429181924caab4814c0d",
+            "revision": 2
+          }
+        ],
+        "provider": "vertex",
+        "scope": "personal"
+      },
+      "usage": {
+        "completion_tokens": 2,
+        "prompt_tokens": 186,
+        "total_tokens": 188
+      },
+      "provider": "vertex",
+      "model": "gemini-3.8-flash"
+    },
+    {
+      "id": "77c23f1e-15b5-4c48-ab4f-dea8fce21e28",
+      "status": "SUCCEEDED",
+      "reply": "不知道",
+      "context_count": 1,
+      "memory_context": {
+        "enabled": true,
+        "epoch": 3,
+        "facts": [],
+        "provider": "vertex",
+        "scope": "personal"
+      },
+      "usage": {
+        "completion_tokens": 1,
+        "prompt_tokens": 65,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 155,
+        "total_tokens": 221
+      },
+      "provider": "vertex",
+      "model": "gemini-3.8-flash"
+    }
+  ],
+  "test_memory_forgotten": {
+    "candidates": [],
+    "epoch": 3,
+    "facts": [],
+    "withdrawn": [
+      {
+        "key": "dev.6 验收练习代号",
+        "revision": 3
+      }
+    ]
+  },
+  "development": {
+    "actions": [
+      {
+        "arguments": "{\"text\":\" apple \\nbanana\\napple\\n\"}",
+        "attempts": 1,
+        "capability": "plugin.migration-lines.v1",
+        "digest": "9a240d67d62646835ccbd7eb6971c0b01aad98d9d8efcce2467bb6d8745f3a54",
+        "error": null,
+        "id": "action-ee22db6256fffae955d8fee2a0787112",
+        "result": "{\"package_id\":\"pkg-793f9b9165e576e38a34f95122af5c25cd61f6708e0ebec06a40875f4eb84baa\",\"text\":\"apple\\nbanana\",\"worker\":{\"active_process_limit\":1,\"appcontainer_verified\":true,\"backend\":\"windows-lpac-job\",\"capabilities\":[\"registryRead\"],\"cpu_limit_seconds\":3,\"elapsed_seconds\":0.2697,\"memory_limit_bytes\":268435456,\"network_capabilities\":[],\"peak_memory_bytes\":13303808,\"wall_limit_seconds\":8}}",
+        "status": "CONFIRMED",
+        "step_id": "use",
+        "task_id": "task-c63452cfe76a4632afaa5908ac1b01ac"
+      },
+      {
+        "arguments": "{\"content\":\"{\\\"package_id\\\":\\\"pkg-793f9b9165e576e38a34f95122af5c25cd61f6708e0ebec06a40875f4eb84baa\\\",\\\"text\\\":\\\"apple\\\\nbanana\\\",\\\"worker\\\":{\\\"active_process_limit\\\":1,\\\"appcontainer_verified\\\":true,\\\"backend\\\":\\\"windows-lpac-job\\\",\\\"capabilities\\\":[\\\"registryRead\\\"],\\\"cpu_limit_seconds\\\":3,\\\"elapsed_seconds\\\":0.2697,\\\"memory_limit_bytes\\\":268435456,\\\"network_capabilities\\\":[],\\\"peak_memory_bytes\\\":13303808,\\\"wall_limit_seconds\\\":8}}\",\"name\":\"result.json\"}",
+        "attempts": 1,
+        "capability": "artifact.write.v1",
+        "digest": "c9b13023cd80a03cf5d20f756733aa87de460da7aa9dcd49ef9ea0af0b8adfe9",
+        "error": null,
+        "id": "action-e3200f03f6a2ffd9d7e14126616a4dff",
+        "result": "{\"bytes\":390,\"relative_path\":\"artifacts/task-c63452cfe76a4632afaa5908ac1b01ac/action-e3200f03f6a2ffd9d7e14126616a4dff/result.json\",\"sha256\":\"3a24c71969aeb28a9b691274b8b6471c20ab8bb46df5c3cc2b4a5d952c14052f\",\"verified\":true}",
+        "status": "CONFIRMED",
+        "step_id": "deliver",
+        "task_id": "task-c63452cfe76a4632afaa5908ac1b01ac"
+      }
+    ],
+    "approved_package": "pkg-793f9b9165e576e38a34f95122af5c25cd61f6708e0ebec06a40875f4eb84baa",
+    "grant": {
+      "body": {
+        "capabilities": [
+          "model.generate.v1",
+          "development.build.v1",
+          "release.activate.v1",
+          "artifact.write.v1",
+          "plugin.migration-lines.v1"
+        ],
+        "expires_at": 1792682421.6350741,
+        "grant_id": "workbench-9cafdc66a05286c0804e3bf3779c4cdb",
+        "max_cost_units": 10,
+        "principal_id": "owner.local",
+        "schema": "jarvis.grant.v1",
+        "scope_id": "personal"
+      },
+      "revoked": 0,
+      "spent": 5
+    },
+    "package": {
+      "bundle": {
+        "acceptance_digest": "1f1f8ca3e06f622b3fc467a17f70f3175b0dae73a3ee278506b5779035dc5b5e",
+        "capability": "plugin.migration-lines.v1",
+        "files": {
+          "main.py": "def run(text: str) -> str:\n    seen = set()\n    result = []\n    for line in text.splitlines():\n        cleaned = line.strip()\n        if cleaned and cleaned not in seen:\n            seen.add(cleaned)\n            result.append(cleaned)\n    return \"\\n\".join(result)\n"
+        },
+        "recipe": "python313-pure-text.v1",
+        "schema": "jarvis.pure-package.v1",
+        "state_schema": 0
+      },
+      "capability": "plugin.migration-lines.v1",
+      "created": 1792680647.0595355,
+      "id": "pkg-793f9b9165e576e38a34f95122af5c25cd61f6708e0ebec06a40875f4eb84baa",
+      "report": "{\"acceptance_digest\":\"1f1f8ca3e06f622b3fc467a17f70f3175b0dae73a3ee278506b5779035dc5b5e\",\"case_count\":4,\"independent_cases\":3,\"package_id\":\"pkg-793f9b9165e576e38a34f95122af5c25cd61f6708e0ebec06a40875f4eb84baa\",\"passed\":true,\"public_cases\":1,\"worker\":{\"active_process_limit\":1,\"appcontainer_verified\":true,\"backend\":\"windows-lpac-job\",\"capabilities\":[\"registryRead\"],\"cpu_limit_seconds\":3,\"elapsed_seconds\":0.2691,\"memory_limit_bytes\":268435456,\"network_capabilities\":[],\"peak_memory_bytes\":12906496,\"wall_limit_seconds\":8}}",
+      "spec": {
+        "capability": "plugin.migration-lines.v1",
+        "description": "实现 run(text) -> str。逐行 strip，丢弃空行，保留第一次出现的完整行；大小写不同的行保留；结果用换行连接，不增加尾部换行。",
+        "evaluation_cases": [
+          {
+            "expected": "甲\n乙",
+            "input": "甲\n 甲 \n乙\n\n"
+          },
+          {
+            "expected": "A\na",
+            "input": "A\na\nA"
+          },
+          {
+            "expected": "",
+            "input": ""
+          }
+        ],
+        "goal": "dev.6 迁移验收 · 行清理工具",
+        "grant_id": "workbench-9cafdc66a05286c0804e3bf3779c4cdb",
+        "limits": {
+          "max_attempts": 2,
+          "max_model_calls": 4,
+          "max_seconds": 1800
+        },
+        "principal_id": "owner.local",
+        "public_cases": [
+          {
+            "expected": "a\nb",
+            "input": " a \na\nb\n"
+          }
+        ],
+        "request_id": "cb62cb56-dcb5-4da0-942b-be42f4d7faa7",
+        "sample_input": " apple \nbanana\napple\n",
+        "schema": "jarvis.development.v1",
+        "scope_id": "personal"
+      },
+      "status": "CANARY"
+    },
+    "routes": {
+      "code": [
+        {
+          "id": "vertex",
+          "model": "gemini-3.8-flash",
+          "parameters": {
+            "max_output_tokens": 8192,
+            "thinking_level": "LOW"
+          }
+        }
+      ],
+      "plan": [
+        {
+          "id": "vertex",
+          "model": "gemini-3.8-flash",
+          "parameters": {
+            "max_output_tokens": 8192,
+            "thinking_level": "LOW"
+          }
+        }
+      ]
+    },
+    "run": {
+      "attempt": 0,
+      "cancel": 0,
+      "candidate": "{\"files\":[{\"content\":\"def run(text: str) -> str:\\n    seen = set()\\n    result = []\\n    for line in text.splitlines():\\n        cleaned = line.strip()\\n        if cleaned and cleaned not in seen:\\n            seen.add(cleaned)\\n            result.append(cleaned)\\n    return \\\"\\\\n\\\".join(result)\\n\",\"path\":\"main.py\"}],\"schema\":\"jarvis.code-candidate.v1\",\"summary\":\"实现 run(text) 函数：逐行拆分并 strip 去除空白，过滤空行，大小写敏感且保序去重，最后用换行符拼接返回。\"}",
+      "created": 1792680621.6430588,
+      "deadline": 1792682421.6430588,
+      "digest": "1f1f8ca3e06f622b3fc467a17f70f3175b0dae73a3ee278506b5779035dc5b5e",
+      "error": null,
+      "id": "dev-fc73b595fccc48f5b32b99110502cd53",
+      "phase": "delivered",
+      "plan": "{\"capability\":\"plugin.migration-lines.v1\",\"schema\":\"jarvis.development-plan.v1\",\"steps\":[\"解析输入字符串 text，使用 splitlines() 或 split('\\\\n') 逐行拆分。\",\"遍历每一行并调用 strip() 去除首尾空白字符。\",\"过滤掉 strip 后的空行。\",\"使用集合（Set）维护已见过的唯一行，保证大小写敏感，保留首次出现的行并按顺序存入结果列表。\",\"使用换行符 '\\\\n' 将结果列表拼接成最终字符串并返回，确保末尾不添加额外换行。\"],\"summary\":\"实现一个纯文本转换函数 run(text)，通过逐行去除首尾空白、过滤空行并进行大小写敏感的保序去重，最终用换行符连接生成干净文本。\"}",
+      "release_id": "pkg-793f9b9165e576e38a34f95122af5c25cd61f6708e0ebec06a40875f4eb84baa",
+      "request_id": "cb62cb56-dcb5-4da0-942b-be42f4d7faa7",
+      "spec": {
+        "capability": "plugin.migration-lines.v1",
+        "description": "实现 run(text) -> str。逐行 strip，丢弃空行，保留第一次出现的完整行；大小写不同的行保留；结果用换行连接，不增加尾部换行。",
+        "evaluation_cases": [
+          {
+            "expected": "甲\n乙",
+            "input": "甲\n 甲 \n乙\n\n"
+          },
+          {
+            "expected": "A\na",
+            "input": "A\na\nA"
+          },
+          {
+            "expected": "",
+            "input": ""
+          }
+        ],
+        "goal": "dev.6 迁移验收 · 行清理工具",
+        "grant_id": "workbench-9cafdc66a05286c0804e3bf3779c4cdb",
+        "limits": {
+          "max_attempts": 2,
+          "max_model_calls": 4,
+          "max_seconds": 1800
+        },
+        "principal_id": "owner.local",
+        "public_cases": [
+          {
+            "expected": "a\nb",
+            "input": " a \na\nb\n"
+          }
+        ],
+        "request_id": "cb62cb56-dcb5-4da0-942b-be42f4d7faa7",
+        "sample_input": " apple \nbanana\napple\n",
+        "schema": "jarvis.development.v1",
+        "scope_id": "personal"
+      },
+      "status": "SUCCEEDED",
+      "task_id": "task-c63452cfe76a4632afaa5908ac1b01ac"
+    },
+    "task": {
+      "bindings": {
+        "artifact.write.v1": "artifact.local.v1",
+        "plugin.migration-lines.v1": "pkg-793f9b9165e576e38a34f95122af5c25cd61f6708e0ebec06a40875f4eb84baa"
+      },
+      "body": {
+        "goal": "dev.6 迁移验收 · 行清理工具",
+        "grant_id": "workbench-9cafdc66a05286c0804e3bf3779c4cdb",
+        "limits": {
+          "max_attempts": 1,
+          "max_cost_units": 2,
+          "max_seconds": 1631,
+          "max_steps": 2
+        },
+        "principal_id": "owner.local",
+        "request_id": "dev-fc73b595fccc48f5b32b99110502cd53.delivery",
+        "schema": "jarvis.task.v1",
+        "scope_id": "personal",
+        "steps": [
+          {
+            "arguments": {
+              "text": " apple \nbanana\napple\n"
+            },
+            "capability": "plugin.migration-lines.v1",
+            "step_id": "use"
+          },
+          {
+            "arguments": {
+              "name": "result.json"
+            },
+            "capability": "artifact.write.v1",
+            "input_from": "use",
+            "step_id": "deliver"
+          }
+        ]
+      },
+      "cancel": 0,
+      "created": 1792680790.1936064,
+      "deadline": 1792682421.1936064,
+      "digest": "b9102e8e6f52f2b5fe5a110bd13dded3baabf86857a32d2f4f902af4f4845a35",
+      "error": null,
+      "id": "task-c63452cfe76a4632afaa5908ac1b01ac",
+      "next_step": 2,
+      "request_id": "dev-fc73b595fccc48f5b32b99110502cd53.delivery",
+      "revision": 7,
+      "spent": 2,
+      "status": "SUCCEEDED"
+    }
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "type": "object",
+  "properties": {
+    "description": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 4000
+    },
+    "public_cases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "input": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 4000
+          },
+          "expected": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 4000
+          }
+        },
+        "required": [
+          "input",
+          "expected"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0,
+      "maxItems": 6
+    },
+    "evaluation_cases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "input": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 4000
+          },
+          "expected": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 4000
+          }
+        },
+        "required": [
+          "input",
+          "expected"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 0,
+      "maxItems": 6
+    },
+    "schema": {
+      "type": "string",
+      "const": "jarvis.capability-draft.v1"
+    },
+    "supported": {
+      "type": "boolean"
+    },
+    "summary": {
+      "type": "string",
+      "maxLength": 2000
+    },
+    "questions": {
+      "type": "array",
+      "maxItems": 4,
+      "items": {
+        "type": "string",
+        "maxLength": 500
+      }
+    }
+  },
+  "required": [
+    "description",
+    "public_cases",
+    "evaluation_cases",
+    "schema",
+    "supported",
+    "summary",
+    "questions"
+  ],
+  "additionalProperties": false
+}

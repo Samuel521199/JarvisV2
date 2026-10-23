@@ -1,0 +1,36 @@
+flowchart TB
+  subgraph BEFORE["既有实现 · 0.1.106"]
+    direction LR
+    B1["个人核心与工作入口"]
+    B2["固定候选与领域受理<br/>技能 / 编码 / 计划 / 邮件"]
+    B3["各领域执行与恢复<br/>原任务、预算、去重与回执"]
+    B1 --> B2 --> B3
+  end
+  subgraph NOW["已落地桥接 · 0.1.107"]
+    direction LR
+    N1["原入口继续受理"]
+    N2["公共目录与 Composer<br/>3 个工作流 / 2 个蓝图"]
+    N3["不可变 RunSpec<br/>与原受理事务绑定"]
+    N4["原领域执行前复核<br/>产物任务 + 邮件 sync/read"]
+    N1 --> N2 --> N3 --> N4
+  end
+  subgraph TARGET["完整目标 · proposed"]
+    direction LR
+    T1["个人核心 / 可选 BotBinding"]
+    T2["能力发现与有界规划<br/>蓝图 + Skill + Tool 装配"]
+    T3["Task Runtime<br/>任务所有权 / 检查点 / 预算"]
+    T4["Agent Runtime 按需运行<br/>单实例多技能 / 隔离子任务"]
+    T5["统一动作准入<br/>原领域执行器及真实回执"]
+    T1 --> T2 --> T3
+    T3 -->|认知步骤| T4
+    T4 -->|下一步候选| T3
+    T3 -->|已准入动作| T5
+  end
+  BEFORE -.->|先接回原执行器| NOW
+  NOW -.->|再补可恢复实例| TARGET
+  classDef old fill:#f0f2f5,stroke:#6b7584,color:#253041;
+  classDef done fill:#e5f4eb,stroke:#397b55,color:#17472a;
+  classDef plan fill:#e9f0fc,stroke:#4c72aa,color:#183859;
+  class B1,B2,B3 old;
+  class N1,N2,N3,N4 done;
+  class T1,T2,T3,T4,T5 plan;

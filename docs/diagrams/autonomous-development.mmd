@@ -1,0 +1,44 @@
+%%{init: {"theme":"base","themeVariables":{"fontSize":"17px","primaryTextColor":"#19324f","lineColor":"#526b88","clusterBkg":"#f5f8fc","clusterBorder":"#c5d3e3","edgeLabelBackground":"#f5f8fc"},"flowchart":{"curve":"linear","nodeSpacing":35,"rankSpacing":45,"wrappingWidth":320}}}%%
+flowchart TB
+  subgraph A["01 目标与研发受理"]
+    direction LR
+    A1["主人目标 / 故障 / 技术机会<br/>查已有能力，优先复用组合"] --> A2["研发规格<br/>交付 / 验收 / 许可 / 预算"] --> A3["Development Orchestrator<br/>在原任务内选择渠道与分工"]
+  end
+  subgraph B["02 可选研发渠道"]
+    direction LR
+    B1["Codex / 其他编程工具接口<br/>固定候选工作区 / 事件 / 差异"]
+    B2["PC 桌面操作<br/>输入租约 / 窗口核对 / 结果收集"]
+    B3["直接调用模型或组合协作<br/>编写 / 审阅 / 有界修复"]
+    B1 ~~~ B2 ~~~ B3
+  end
+  subgraph C["03 候选与独立检查"]
+    direction LR
+    C1["CandidateBundle<br/>实现 / 清单 / 依赖 / 文档 / 恢复"] --> C2["隔离构建与独立验收<br/>行为 / 边界 / 兼容 / 资源 / 故障"] --> C3["结果判断<br/>通过 / 原任务有限修复 / 拒绝 / 等待"]
+  end
+  subgraph D["04 采用与真实使用"]
+    direction LR
+    D1["现行维护策略 + 发布控制<br/>满足条件自动准入"] --> D2["新任务灰度 / 收益观察<br/>登记可用能力，完成原目标"] -->|出现退化| D3["退化处理<br/>停用 / 兼容回退 / 必要恢复"]
+  end
+  subgraph E["05 积累与泛化"]
+    direction LR
+    E1["经验与知识<br/>来源 / 反例 / 纠错"]
+    E2["可复用能力<br/>Skill / Tool / 蓝图 / Workflow"]
+    E3["按引用完善与退役<br/>一次性成果不必永久安装"]
+    E1 --> E2 --> E3
+  end
+  A -->|仅使用当前可用且获准的渠道| B
+  B -->|任何渠道只返回候选| C
+  C -->|独立证据通过后| D
+  D -->|真实结果与使用反馈| E
+  NOTE["proposed · 2026-10-22<br/>提交未知先查询，不换渠道盲重试；本人验证等待不阻塞其他任务<br/>根规则 / 验收 / 发布权不交给候选"]
+  E ~~~ NOTE
+  classDef runtime fill:#eaf2fc,stroke:#8fa9c7,color:#19324f;
+  classDef growth fill:#eeebfa,stroke:#a29ac4,color:#19324f;
+  classDef control fill:#fff4df,stroke:#bfa578,color:#19324f;
+  classDef identity fill:#e5f4f4,stroke:#8aabba,color:#19324f;
+  classDef note fill:#fff,stroke:#fff,color:#526b88;
+  class A1,A2,A3,B1,B2,B3 runtime;
+  class C1,E1,E2,E3 growth;
+  class C2,C3,D1,D3 control;
+  class D2 identity;
+  class NOTE note;

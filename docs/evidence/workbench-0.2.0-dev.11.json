@@ -1,0 +1,93 @@
+{
+  "version": "0.2.0-dev.11",
+  "date": "2026-10-23",
+  "scope": "Bounded HTTP MCP integration with existing Registry, Ledger, goals and chat; no email/agenda account validation",
+  "validation": {
+    "python_regression": {
+      "passed": 206,
+      "seconds": 174.339,
+      "log": "workbench-0.2.0-dev.11/regression.txt",
+      "scope_note": "Before final raw-text MCP planning and memory-button refinements; subsequent focused checks below"
+    },
+    "focused_connectors": {
+      "passed": 18,
+      "seconds": 13.879
+    },
+    "focused_goals": {
+      "passed": 42,
+      "seconds": 66.667
+    },
+    "focused_assistant": {
+      "passed": 12,
+      "seconds": 21.274
+    },
+    "doc_tool_tests": {
+      "passed": 8
+    },
+    "architecture": {
+      "python_files": 81,
+      "errors": []
+    },
+    "javascript": {
+      "files": 20,
+      "failures": []
+    },
+    "csrf": [
+      403,
+      403
+    ],
+    "browser": "workbench-0.2.0-dev.11/browser.json"
+  },
+  "live": "workbench-0.2.0-dev.11/live-check.json",
+  "deployment": {
+    "main_feature_loaded_and_verified": true,
+    "last_host_refinements_loaded": false,
+    "reason": "Second restart rejected by automatic approval review: blocked by policy; no detailed reason supplied. No bypass attempted.",
+    "pending": [
+      "raw natural input -> reviewed JSON parameter planner rule",
+      "memory_candidate_available projection for external results"
+    ],
+    "dynamic_js_reload_verified": true
+  },
+  "cleanup": {
+    "fixture_registration": "retained disabled",
+    "fixture_process": 36332,
+    "fixture_listener_18383": "stopped; no listener after cleanup",
+    "user_data_removed": false
+  },
+  "limits": [
+    "No new third-party dependency",
+    "HTTP only; stdio and OAuth references are registration-only",
+    "No remote server integration or authentication test",
+    "No server-side cancellation or effect reconciliation guarantee",
+    "No low-memory PC/long-duration acceptance"
+  ],
+  "files_sha256": {
+    "adapters/mcp/http.py": "9f12c94825c59c51add1cfa400d4268403a5526e65ca1db5fc25dbc26c8f24ac",
+    "sdk/mcp_schema.py": "57ff0c39a668c47f0260fdb279ab8c2775103e98a4beba8fcc7d2c691c62a208",
+    "modules/registry_composer/connectors.py": "d9236d24242e4b71d229477b861dafe2490913c22c97d7ad42909f26b570e101",
+    "modules/registry_composer/extensions.py": "1cd3562db67e62f6e8dad301dc267107811f95cf7be1df5806faebe18cb16832",
+    "modules/registry_composer/registry.py": "6e595b8629f03fd393b8f51020caf57cfe7750bf4ecb0ad4cc1f847881862bff",
+    "modules/task_resource/ledger.py": "7eba293998403492bff0569181364bfaf6d86d1c5077a88d4f6d3d4beb159334",
+    "modules/task_resource/plans.py": "d513d089b18f73e6c7dbc69b61d2ca379a5af4fbdeddc5973ce4ac5d3a6b4f25",
+    "host/connectors.py": "b6b3678aa2a82c0cd3459b5ec98a5eaeff399d8a568f0d257cb6737cd4d42a87",
+    "host/capabilities.py": "d53d3a74983502d3dbb692ae669a7208c9a44d1203a8d629d96d9066e1b97895",
+    "host/core.py": "9c802b1dd08c3a2bc5983ff6340c55c0226d49c9428d5ec32b17d517d90cd2ec",
+    "host/goals.py": "7fb9b72b46eed4b503d04cd181d3386d0bf02ca3d1b9635f6d4b3b3343a6f4d7",
+    "host/goal_context.py": "eb30cf8052feeeff606e1426a48c7bcaf93d06ed1eee7e291b87cf60b08e8847",
+    "host/goal_growth.py": "1c005501b9ab1dafeef13f2e0646a3a348e282e03d761a5d0af256f01f7c9fdb",
+    "host/assistant.py": "64d89425d7169c566f4518532dd6dfad69a60bcc83f9f555319c8b4471684f1f",
+    "host/memory.py": "65fafb9a4ab186cd85859d789c20df169e52cc2cbe0704712323cff6f7af07ca",
+    "host/settings_operations.py": "877d6fbeb25e4d62fbae63afd55bf61831c48b6dfc5a3470d47c61ca1577484e",
+    "control/network.py": "fb292cae4417723a3f985994b46e64fc66f469dab3f40ce21e1bf30509a737a9",
+    "apps/workbench/server.py": "b8cf2e4f35bc301e6243734c04dc98c2ee93a65e69a3c4473663853498dcf606",
+    "apps/workbench/connectors.js": "9650bbe0ce6b5edc10ec924bd4df2e3c89a045d130658b7c577d2a859999c4a3",
+    "apps/workbench/settings-extensions.js": "cafa159f69f1e7a644a066d5a4b162f0253242caa9384068596f0394a47b9cee",
+    "apps/workbench/assistant-actions.js": "6c3a78a007a6fe4f1bb53ab68ce35127e4e6800ec78a2043da39b942fcf6dbea",
+    "apps/workbench/goals.js": "54df17ad6b92129ffd5fc58d9d1cd137b3e6d5d4e81fdf5440d52076809f2e08",
+    "apps/workbench/settings-runtime.js": "01d34f45ba388da8260e83d71a288daa4447b9a0e5cf863e79ff4c306da2b82c",
+    "apps/workbench/ui.js": "ff3d64c11e45c9d9922d274961f0dd91be061380a41e007a6f97981495269587",
+    "tests/test_connectors.py": "0a430da7bce929e7d557c1c63991f6220277ec0f5bfead472268bbf3a594e4bc",
+    "tests/mcp_fixture.py": "73666033685b3a3664f15556046894c97521e79b9fc0a95414f535869a5f8ca8"
+  }
+}

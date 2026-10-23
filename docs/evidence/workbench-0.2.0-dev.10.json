@@ -1,0 +1,264 @@
+{
+  "release": "0.2.0-dev.10",
+  "date": "2026-10-23",
+  "python_regression": {
+    "passed": 184,
+    "failed": 0,
+    "seconds": 186.509,
+    "log": "workbench-0.2.0-dev.10/python-tests.txt"
+  },
+  "post_regression_usage_normalization": {
+    "targeted_codex_tests": 7,
+    "http_usage_tokens": 12540,
+    "amount_unknown": true,
+    "coding_preference_js_check": "passed"
+  },
+  "doc_tools": {
+    "passed": 8
+  },
+  "rust": {
+    "passed": 2,
+    "release_build": "offline locked passed",
+    "fmt": "passed"
+  },
+  "architecture": {
+    "python_files": 75,
+    "errors": []
+  },
+  "javascript": {
+    "files": 19,
+    "errors": []
+  },
+  "http": {
+    "checks": [
+      {
+        "path": "/",
+        "status": 200
+      },
+      {
+        "path": "/settings",
+        "status": 200
+      },
+      {
+        "path": "/api/health",
+        "status": 200
+      },
+      {
+        "path": "/api/resources",
+        "status": 200
+      },
+      {
+        "path": "/api/snapshot",
+        "status": 200
+      },
+      {
+        "path": "/api/goals",
+        "status": 200
+      },
+      {
+        "path": "/api/tools",
+        "status": 200
+      },
+      {
+        "path": "/api/chats",
+        "status": 200
+      },
+      {
+        "path": "/api/developments",
+        "status": 200
+      },
+      {
+        "path": "/api/development-runner",
+        "status": 200
+      },
+      {
+        "path": "/api/task-runner",
+        "status": 200
+      },
+      {
+        "path": "/api/network",
+        "status": 200
+      },
+      {
+        "path": "/api/extensions",
+        "status": 200
+      }
+    ],
+    "assistant_nonce_required": true,
+    "assets_status_200": 19
+  },
+  "ui": {
+    "browser_verified": true,
+    "screenshots": [
+      "workbench-0.2.0-dev.10/conversation-delivery.png",
+      "workbench-0.2.0-dev.10/fresh-goal-delivery.png"
+    ],
+    "coverage": [
+      "natural chat submission",
+      "same-goal amendment confirmation",
+      "applied-operation receipt",
+      "confirmed output in original conversation",
+      "fresh natural request extracts input without manual correction and reuses new capability"
+    ],
+    "not_covered": [
+      "all themes and viewport sizes",
+      "arbitrary ambiguous intents"
+    ],
+    "console_errors": []
+  },
+  "database_schema": {
+    "from": 6,
+    "to": 7,
+    "older_host_compatible": false
+  },
+  "live": "workbench-0.2.0-dev.10/live-check.json",
+  "new_runtime_packages_this_bundle": [],
+  "new_thread_pools": 0,
+  "source_sha256": {
+    "host/anatomy.py": "10084255464c3f454d70ac88843db38e0ad6ee913866f7e7ca1c4101a9042f0e",
+    "host/assistant.py": "81675510d727b861e28fac8c6f77edf5f8e0db539f80e1d39daaec61deb10c29",
+    "host/background.py": "ef751572ed8228ebf0ecc1f1c62e76a7be602dbfc2de380023424a2c2f249a68",
+    "host/core.py": "62e777f7f5c44972d925b5e559a302d7d2f5223380981a4561e4a37fdcfd42ce",
+    "host/development.py": "77378168bcecb1a177f9a85758df3d24148ddbfc314a1eec06077816b988e98b",
+    "host/dialogue.py": "8077524e1e072d589de95d8fdee5e56265ee50e45cb03757d4854f90312acef0",
+    "host/goals.py": "ff193b7a038731e541fffa7888b813918157a72199ee5fd4b5418b5f769d1af9",
+    "host/goal_context.py": "6132acd8c118d33382907cf79c4e5a4c2556fb59b138c963a70c0999122aefaa",
+    "host/goal_growth.py": "fd7d6180c7dab57c7d4490189ffad28af2eeaced05933b952f2876d6d5dc682a",
+    "host/memory.py": "732e6c9e3ab4e1d312cdbec1ced6f5d51402e0151d9ce388a1e365a29159d356",
+    "host/settings_operations.py": "cb65ccd3c48ba0f9af2312f6e2230d6a5c7be207de8f84eed1842afef4a232b9",
+    "host/tools.py": "661fccf03bd1c05870146f6ea649265be1a4a92d93d908602f3b54446ef2ae03",
+    "host/workbench.py": "b44aadb89261a769bf8e628c5a8df8d155967f9d1c538e704454336dd7d25744",
+    "host/__init__.py": "2e4d2fd5d98460b3b77fb9b53610e7f6ac0b8e066e911c4069a8ed77d6f0edde",
+    "adapters/__init__.py": "670f50e6096046c3ec696d8dd23ae99b33bd8bddffa7548f57e6323153237cb9",
+    "adapters/desktop/folder_picker.py": "770f88f3c54ed8a1622a65205a66edfcd6c213b6cc9b1dbb897ff624b225ab12",
+    "adapters/desktop/resources.py": "7e2041471ebf890753a4934e85d38d1e1aa65f084e8cd7a7b2c8ccee2336d5a0",
+    "adapters/desktop/__init__.py": "32f1f9eea3233deb86a7fd495aef6bfa7c1fd71a750314cb5c3d5e71fc493532",
+    "adapters/models/codex_cli.py": "dd7f002984c221c8ebe9c0196fdf2d8a0fc0dc3cdaab42095eb12847873c58a6",
+    "adapters/models/http_client.py": "5ae1e694e4dabe4d39c0d5542d4d225612dce76249c5a4014acb01fdc45f9ed6",
+    "adapters/models/native.py": "36c10a09db99024de5062da6ccd5a2925948a6fee1a8b171a3d0267c84dc8dab",
+    "adapters/models/native_transport.py": "460cc35b1f3cf555437528166150a98945ceb4476c80727623c83263dce92530",
+    "adapters/models/transport.py": "c8d402c85177b88106015598339915707f4a1ad31ad105bfb09c3ecba36f2ce9",
+    "adapters/models/windows_signing.py": "1e5a189d495f699723e0e15a218caca009cba59454de3458963718ebd5cb6b06",
+    "adapters/models/__init__.py": "a24df97c3680d549067b480df1424cce0842256cd7fcab119fdfd2b8eeeb91d8",
+    "adapters/storage/sqlite.py": "9e4be13cc721eef9ec573ee502632eb0abe212bf8847dc5f268de45d44c3de6d",
+    "adapters/storage/__init__.py": "6175beb16001d75f7de9516003aae98f2922793a782437aab9e3059ae58ee582",
+    "modules/__init__.py": "7c0647e6f91eb29e419b8d39cc74b83fe9ca53b83f46811d39e8e1d55602f008",
+    "modules/autonomous_development/service.py": "b8f710729853ac63391a46ce26c87a416cc8aa8cc0eb752a50344783c6700af5",
+    "modules/autonomous_development/__init__.py": "474ad300ce3fef889e11a576a1d6442a470942d5397069ace6dbb687580e6544",
+    "modules/context_knowledge/memory.py": "bc00b1fb617b72693902fdf02bacaff547851b9f1fe6a1c4fbd637a6e3455a1a",
+    "modules/context_knowledge/__init__.py": "64a66f330751258b77f4578e901eddc0c3498df29dc115b153c6813057f1f731",
+    "modules/continuity/__init__.py": "50136b5f221f9b3556e6d7b61e2d2a27b34ed7871a92ac43369c04b304ed749e",
+    "modules/dialogue/store.py": "d0be31a19103b85bd5291df6fcf6a61f456d3d8ec809240286befbc79ebfd5e3",
+    "modules/dialogue/__init__.py": "be6c918930eb6416d9cf176d7d7364f9821b4f151e5c271922306dd245b27435",
+    "modules/model_gateway/routed.py": "7d196924fa2970bcb9112b89f9176265df269a223f0d8ea3c970772762b51527",
+    "modules/model_gateway/__init__.py": "621e67abb4d9b9c4c0d54d408dc2be57cb76b3f142ec50968597d185c923a1a0",
+    "modules/preferences/management.py": "cb8e7ade503a95c035307299afefdb7acd9f247eabeea1b37de86c645a94be0d",
+    "modules/preferences/store.py": "3866f151679e92294e68b6f5cedbd6f717ac5712d868074d9ab39b392784b5cc",
+    "modules/preferences/__init__.py": "48747470ff32060c4717be3f2bf216f8e4ac6f50f5c50eee4e3822800105dfc5",
+    "modules/registry_composer/builtins.py": "0e7319b39a70e2a77e80ed700432d3b4e5c710aa79bf46a77a7dfd74bb1aeb0f",
+    "modules/registry_composer/extensions.py": "3a9cd435321496726d483fa4724470bf7e56b067935006d60e5d2511c930f010",
+    "modules/registry_composer/registry.py": "4fe3964f3bab6f48f753e7bcb668645e98e3e46966484d6c02082cc8bfb66cd0",
+    "modules/registry_composer/__init__.py": "46702adcf9662a9140b8d8d448c51313663544bfa8b1b298a9ee831ccf0afbbb",
+    "modules/release_recovery/packages.py": "3dc928f401cc4f9c5bd0b50788e96fa7a1464d1bc75437e74f9cb48b75839533",
+    "modules/release_recovery/__init__.py": "2e34fa85eb0a6e3238087b7a7407850c53ebf66976cf4320fd32ff23c436f29a",
+    "modules/skills/catalog.py": "ce46802a92d234b3b27ba779cf942f6f2d122deeea9f0468947a5d32e129c47a",
+    "modules/skills/__init__.py": "eb017f27b29755d8ff3efd45961936248494a901fe8edfc3df6e8a19072238ac",
+    "modules/task_resource/growth.py": "37c782deeeb105311289a736328318b0f4f21419f113f275b97c48fb43a47bb5",
+    "modules/task_resource/ledger.py": "60d819c814c790ce4175f72c1bb92e265595008857b05d15fb1660cc447cd272",
+    "modules/task_resource/plans.py": "a2bdf72a089a2bfa85a994eee3f6a03c562e1a5013b3b4a7f8df111a8a594b8f",
+    "modules/task_resource/__init__.py": "a9264d8c3c4bff473efe344b336e1717090d81853a623bba56baddd4ac1b4fef",
+    "modules/workspace/store.py": "066e88ba03c35db51f044c713b11f682bdb1e0004269502b7597630d8a1f0fb5",
+    "modules/workspace/__init__.py": "f824eaecd46a31b92d879a6ceba256bb8cd732924893f7451c24ed4a9eac4360",
+    "modules/skills/anatomy/build.mjs": "c004b83ea6823d182eefec5c45ddd57505cdeebb4dea44af3aa3dfd223f0bb02",
+    "modules/skills/anatomy/page.html": "eebf13ce0501fc39fe04c247d1ad3fcc1fa701311b1d749a0be3d66569611ce7",
+    "modules/skills/anatomy/planetary-model.mjs": "8f323bb11485a666b89ddb1c4649b17962caf2e66a8adf39d932dd04503768ba",
+    "modules/skills/anatomy/planetary-view.js": "caf42b6a042051c081e022fa7fc05373a1359e133c48eb02079fbadaa5c827c8",
+    "modules/skills/anatomy/planetary.html": "d2f1d6fc12bf99c27c5217f08ec5906b25b49bcc42d362f0ee324450df270335",
+    "modules/registry_composer/manifests/artifact-writer.json": "96c2c759ab7db7c0605fe8ed0b037a67f3ef04c8f7f7c20ce2f4b488341b609c",
+    "modules/registry_composer/manifests/text-analyzer.json": "2f5d7b8fd56993aeaebd4ca2d0cb2a1ae61e02ac2b1b7f9f7fb11ec84ad7bd4c",
+    "control/atomic.py": "5cb49d6a06df897a3762e437465aa19e42d7f9762c97f1a3c5d6e49599bdd6b1",
+    "control/credentials.py": "1ce6400f23f2ddb468f77329ff73a30b77a25b9512c390e47cee4d3a9aebff2d",
+    "control/network.py": "9928663fb46eeb221c37d746382c1ab5de26cb0816b32e69fd3f835ea7991c16",
+    "control/paths.py": "3732eb3ecd6523fe60b32f8829524b4eca0f238576eb8dce0ca352a9da871017",
+    "control/receipts.py": "801d147cdb217e66b99128f0f0b57dbd2de9ea9a4481c0d8aa420b0c44f47867",
+    "control/__init__.py": "06dafaf3bb36e2dd221ee69d862315fb23a499f8efcd9350a9a7d7ce1270256c",
+    "control/bootstrap/Cargo.toml": "79c94132bb997665cb2cda0d1816d8513f44588daf6ca95fc33b33db3e7a5449",
+    "control/policy/grants.py": "400655358a9ccd70a1f45d61ccfa89bdfa34ea913e932ea08b6116163ec03e0f",
+    "control/policy/__init__.py": "be658f20f99206617f508b5e81eaa1a97b62bb95675dfea363b156f632e902d7",
+    "control/recovery/gate.py": "3a6e52a2ee0833179aee59d8da4d2fe931e19f4de0423fcc9764efb1944a0e9e",
+    "control/recovery/__init__.py": "f2bf3dde26e3e97746d06fff69f8990a6978510de5b6ea31e168aaba4fc62559",
+    "control/worker/entry.py": "347b97fb85cdd15567514ed9a083251e58ea753bf1b428ef57a575cae2f26b1d",
+    "control/worker/launcher.py": "6317f1835e97b7f481e07f3737eab420efca1f3756dfb7e8f89d0eea6714c5da",
+    "control/worker/runtime.py": "ae765936f98c008be7e8a4740abfa54bb8e623f71789a8308e789f642fdc287d",
+    "control/worker/win32.py": "897cf0b583082de1e3f6fc48fdcdc257920198a624d34c97300e9dc46b75076c",
+    "control/worker/__init__.py": "d5097ab8538bff57199f31edea5aacdbf93419011e8670b4db0c564d01b87540",
+    "control/bootstrap/src/main.rs": "bf77e1607c75dfe1aab097eb7a50b776e9d897f07895fc08e6acc3a24d5afc59",
+    "sdk/pricing.py": "4e0272c429834218c0aa49deaae23e3fbe92073339c3c78ee515c9c2b1d59ee3",
+    "sdk/protocol.py": "fa88353da6e3f72fd78e22ac185b239bc45e65a35f204424186c5908bf0f5f05",
+    "sdk/__init__.py": "a998ae057450955ec4a60453e77cee74c3a289e8de80a629453e059e102932d1",
+    "apps/migrate_settings.py": "925614ea29ff7ab7aad786c052b6777be270d30be988305a535cd6ed1d834089",
+    "apps/cli/main.py": "3e0616072badb9f6eeb1a271b7c479852ed8442e8725542c35fd8946f40f67a4",
+    "apps/workbench/app.js": "29a7437bae6c2df886addeca404fabe8912ddd4f8d257a9176131079537e187c",
+    "apps/workbench/assistant-actions.js": "b5fb81d1ec55ee2d77de9d2db0e940d51a39b3a15015dde3194b80f1744905b0",
+    "apps/workbench/brand-lifecycle.js": "e0441a263aac3d84280a382e671f71ec124bbfcdb18242dbb23be6c3b1a9dcbc",
+    "apps/workbench/brand-preview.css": "51f8ce20ace24fa534d2e0b9749be291571069121e5344a8142359ff20840956",
+    "apps/workbench/brand-preview.html": "42260ced7930c0a6095f2b96bd96d2b5b6511d2e43960616f2ebcf87f2b3af76",
+    "apps/workbench/brand-preview.js": "711a156fd1da84ec685fb6f30338430e082f009f5e191353f5820f1440609c2b",
+    "apps/workbench/brand-sound.js": "434cc5a61dc3215eef19ad465d525a560b39722da077a371a91df3ab9b8ff6d0",
+    "apps/workbench/brand-state.js": "cd49f3ce26f94c04f1b9194a495cfca0804afb16d09c29db04449fc8db2adc77",
+    "apps/workbench/brand.js": "4ca88b2b26f82bf7bd6276f476a149c79b95e0f34d14000e7b63ee49f9d917af",
+    "apps/workbench/development.js": "fa6008be0ad15fbdf5f2dc458f7081aeb64c0fdf6db52dd96ab06f769226de0c",
+    "apps/workbench/goal-growth.js": "84b62b819504679ceaf653cd746ed961786a2ad005cc69c92a41a7c911090d72",
+    "apps/workbench/goals.js": "9b5ac558e5f69edbc874dc399853cec4288d7e30fb5f29a68ac1edfdffca9a5b",
+    "apps/workbench/index.html": "5943650f34cf69c6575cc3f770c62f145b21f1d13d632bdd3518a2d2c1683186",
+    "apps/workbench/lifecycle.css": "3c8d7e784eb102f2f14d8dc63804eb62e44e1685030a68126fa612a1483eb2b7",
+    "apps/workbench/logo.css": "349f2bf7b40aaa9cf54b275947afc2682df71153fdca0a19380f933dd4226675",
+    "apps/workbench/memory.js": "7ee76bdbaaabff61f402634d29516c8e85f1d9f76adcb15d61588db3c56fbab2",
+    "apps/workbench/model-picker.js": "e1526dd53acdd57c6d061060f651722ad06c77810e552a57c280300ddffa8659",
+    "apps/workbench/projects.js": "4ab1884690b8201652f106b8a264b68226e610a6b446dea055be9be43504c6b7",
+    "apps/workbench/server.py": "fabd459986c3baa414d6537fd10fe38bc46365e22b133142c9fed86ebcf42364",
+    "apps/workbench/settings-extensions.js": "c169f4f62d05d2252656c2a16b2f568e9a2d9af1345ce411d733f2e5842466ac",
+    "apps/workbench/settings-models.js": "d03b8a0906e953ec818d2313e0a8655addc0ab9d01c89c239b5d253da737ff21",
+    "apps/workbench/settings-runtime.js": "4a5b6245b1fc0379d0f43c90f4c1a941b00294cd2b61d8e853d07e76f89015d1",
+    "apps/workbench/settings.html": "56735815ec001af4fce15da02b3dd34408582c4192c72411eb81d333ff8b7c67",
+    "apps/workbench/settings.js": "3ebaeb48a7d121786463c58b6b3a0c0da9e2b72da2d3921e2cafe2e52a6bb00a",
+    "apps/workbench/style.css": "36cca708e3c13f1363baed00c6fcc2aca434a02113f6d7d01acc273335508d93",
+    "apps/workbench/theme.css": "8d11aed299c3f9c71e429bbf414793a4beec70bd09707c564477934bab1728ba",
+    "apps/workbench/tools.js": "05c2dc2d9af5d3b0a6abdbaf63a82158c2a300b6645ff249bf0a8f6171f79c4d",
+    "apps/workbench/ui.js": "39f34c4a3e61da3d0c99b212e43b9064cfabb134dd3e1e121e82b2efc5b1d28d",
+    "contracts/examples/clean-list.development.json": "a759f6c7ea3e8830882fdc9e2446c6ec504a830d846880a9f877e0a514e4b78b",
+    "contracts/examples/text-report.task.json": "48032fc52be2457030c3b28acf2e94f97ddcd706268e9bf7dc3479f83e9b8f99",
+    "contracts/schemas/assistant-turn.v1.json": "106389f8215fbe84d02f3cdf4b21f9bebd000e6cf0227c019a8cf753cc865b6e",
+    "contracts/schemas/capability-draft.v1.json": "065dc54e0dce8e93cf6403ccffd1f92dbf382b4c48857a5972c0089f8c8029e1",
+    "contracts/schemas/code-candidate.v1.json": "c86af42637bac4dcd751a46e2ab0df7af387025fc8a285cde7ea4a6a5be882ac",
+    "contracts/schemas/development-plan.v1.json": "199e499e2c9e1c21f16795c1093dd8a9ad48aace479e212c3ab392085303a397",
+    "contracts/schemas/development.v1.json": "433a5e1f1108e68a21d258440a2d9a447e4611095117c3a8f1c9d1719c86ab5d",
+    "contracts/schemas/fact.v1.json": "cf5cd3b201f37a3e33e81286295b8e2250fe2a30d7c3686724d8ac71e7f986c2",
+    "contracts/schemas/goal-plan.v1.json": "10225a99dacd6737e340670fecec73c82ad8820410c3eaacfdd55bcd9a5f62b8",
+    "contracts/schemas/grant.v1.json": "d37d6062579be1dc12f7f362cf0b4439da398a820c8fb6bd60ff48ca42b3848b",
+    "contracts/schemas/module.v1.json": "870f60aa30dc3c1b051a9bdfa2ac85d229ad4c85b280a783eb7189bd993bd022",
+    "contracts/schemas/step-proposal.v1.json": "3d73265d9a949f71d9b1640a5788728e69090fc59f1592aa47b1b49730e81beb",
+    "contracts/schemas/task.v1.json": "741a87d6e4ffa8a435d3fc3abea55fb117670c75adcd6194a711cbada92f9d2b",
+    "packaging/reference-map.json": "7d2e9c4cf6628ae1b9b3c6128accd59d0bfda7721df615f6dbe0805e6f74221a",
+    "packaging/runtime-lock.json": "a47c1b2e365c7c98dde3ce5b1178e28bd452f7df6529fb761bea565af8ef5772"
+  },
+  "documentation_check": {
+    "documents": 25,
+    "chapters": 22,
+    "diagrams": 31,
+    "local_links": 1826,
+    "errors": 0
+  },
+  "codex_binary": {
+    "available": true,
+    "executable": "C:\\Users\\samuel\\AppData\\Local\\OpenAI\\Codex\\bin\\a96ca4c1eee0cf35\\codex.exe",
+    "sha256": "e757246b4de87359e660647fa9514955a0971ff6a30affdd8c145d1d5ece7b84",
+    "version": "codex-cli 0.163.0-alpha.11.1"
+  },
+  "concurrent_edits_after_recorded_baseline": {
+    "modules/skills/anatomy/planetary-view.js": "6834b39977bd388ace90c77c6d2b6c4ae98bf629188c74e38fcf3b413ffa4a68",
+    "modules/skills/anatomy/planetary.html": "f8ddb8ed390eac896670b18f43ce975dc166a6dde45bb8831bbc382ea8917103",
+    "apps/workbench/server.py": "164ecb021e7df0a80597de87e1ec671cfb8abd542f9795c1b0a3a09f8be2eb3e"
+  },
+  "concurrent_edit_scope_note": "Anatomy planetary renderer and shared server changed in parallel after the recorded regression baseline. These later unrelated changes are not included in the full-regression claim; baseline hashes retained. Current running conversation and usage endpoints were checked separately."
+}

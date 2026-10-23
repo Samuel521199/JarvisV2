@@ -1,0 +1,1236 @@
+{
+  "version": "0.2.0-dev.10",
+  "chat_id": "chat-30bfcb09a4884c189f8a465040a61fac",
+  "source_turn": {
+    "assistant_action": {
+      "goal": "按规则对合成测试清单进行名称合并数量统计并保存结果，以便后续重复处理同类清单",
+      "input_text": "每行格式为名称:非负整数（允许中文冒号与首尾空白，名称非空，仅接受ASCII数字，忽略错误行，空行不计入错误），按名称首次出现顺序输出紧凑JSON结果：{\"items\":[{\"name\":\"名称\",\"quantity\":数量}],\"total\":总数量,\"invalid\":错误非空行数}，保留中文字符且不加代码围栏。\n清单数据：\n苹果:2\n香蕉：3\n 苹果:4\n坏记录\n梨:-1",
+      "kind": "goal",
+      "target": ""
+    },
+    "cancel": 0,
+    "chat_id": "chat-30bfcb09a4884c189f8a465040a61fac",
+    "context_count": 1,
+    "created": 1792725080.996064,
+    "error": null,
+    "guidance": null,
+    "id": "194bc407-c5d3-498f-bfa9-7042888fb630",
+    "linked_goal": {
+      "error": null,
+      "id": "goal-33109195fcd34b6a94c772bbc695d025",
+      "output": null,
+      "revision": 2,
+      "status": "PLANNING",
+      "summary": ""
+    },
+    "memory_context": {
+      "enabled": true,
+      "epoch": 4,
+      "facts": [
+        {
+          "id": "fact-bd4c501bf7214d2581e44f44bad31fcd",
+          "revision": 1
+        }
+      ],
+      "provider": "vertex",
+      "scope": "personal"
+    },
+    "model": "gemini-3.8-flash",
+    "provider": "vertex",
+    "reply": "好的，我已为您梳理好该合成测试清单的统计规则与保存需求，接下来将按要求解析清单、汇总数据并保存处理流程。",
+    "request": {
+      "assistant_mode": true,
+      "attachments": [],
+      "chat_id": "chat-30bfcb09a4884c189f8a465040a61fac",
+      "memory_enabled": true,
+      "model": "",
+      "provider": "auto",
+      "reasoning": "default",
+      "request_id": "194bc407-c5d3-498f-bfa9-7042888fb630",
+      "requirements": "",
+      "skill": "auto",
+      "text": "请帮我把这份合成测试清单按名称合计数量并保存结果，以后还要反复处理同类清单。每行是名称:非负整数，允许中文冒号和首尾空白，名称不能为空；只接受 ASCII 数字，忽略格式错误的行；同名累加，按名称首次出现顺序输出 {\"items\":[{\"name\":\"名称\",\"quantity\":数量}],\"total\":总数量,\"invalid\":错误非空行数}，空行不计错误。格式遵照已保存的数量汇总约定。清单：\n苹果:2\n香蕉：3\n 苹果:4\n坏记录\n梨:-1\n"
+    },
+    "status": "SUCCEEDED",
+    "usage": {
+      "completion_tokens": 208,
+      "prompt_tokens": 690,
+      "reasoning_in_completion": false,
+      "reasoning_tokens": 488,
+      "total_tokens": 1386
+    }
+  },
+  "amended_plan": {
+    "actions": [],
+    "context": {
+      "enabled": 1,
+      "goal_id": "goal-33109195fcd34b6a94c772bbc695d025",
+      "history": [
+        {
+          "generation": 0,
+          "proposal": {
+            "input_text": "每行格式为名称:非负整数（允许中文冒号与首尾空白，名称非空，仅接受ASCII数字，忽略错误行，空行不计入错误），按名称首次出现顺序输出紧凑JSON结果：{\"items\":[{\"name\":\"名称\",\"quantity\":数量}],\"total\":总数量,\"invalid\":错误非空行数}，保留中文字符且不加代码围栏。\n清单数据：\n苹果:2\n香蕉：3\n 苹果:4\n坏记录\n梨:-1",
+            "questions": [
+              "现有工具库中缺少能够解析“名称:非负整数”、按名称合并累加数量并统计非法行数的专用工具能力。"
+            ],
+            "schema": "jarvis.goal-plan.v1",
+            "steps": [],
+            "summary": "当前工具库缺少解析名称与数值、合并同名数量及统计错误行的专用统计工具，无法完成目标。"
+          },
+          "request": {
+            "goal": "按规则对合成测试清单进行名称合并数量统计并保存结果，以便后续重复处理同类清单",
+            "input_text": "每行格式为名称:非负整数（允许中文冒号与首尾空白，名称非空，仅接受ASCII数字，忽略错误行，空行不计入错误），按名称首次出现顺序输出紧凑JSON结果：{\"items\":[{\"name\":\"名称\",\"quantity\":数量}],\"total\":总数量,\"invalid\":错误非空行数}，保留中文字符且不加代码围栏。\n清单数据：\n苹果:2\n香蕉：3\n 苹果:4\n坏记录\n梨:-1",
+            "model": "gemini-3.8-flash",
+            "provider": "vertex",
+            "reasoning": "default",
+            "request_id": "chat-goal-15816659b5f5a49785053afafa7482f12d24cd66"
+          }
+        }
+      ],
+      "scope": "personal",
+      "view": {
+        "facts": [
+          {
+            "id": "fact-bd4c501bf7214d2581e44f44bad31fcd",
+            "key": "验收统计约定-dev10",
+            "kind": "knowledge",
+            "revision": 1,
+            "value": "数量汇总的测试结果使用紧凑 JSON，保留中文字符，不加代码围栏。此条是软件合成验收资料。"
+          }
+        ],
+        "providers": [
+          "vertex"
+        ]
+      }
+    },
+    "growth": null,
+    "plan": {
+      "cancel": 0,
+      "catalog": [
+        {
+          "active": "pkg-d474d66a5f424536683552ed3fcabc96a450b04efa4e07c6f2778a2687f36414",
+          "capability": "plugin.clean-list.v1",
+          "description": "Input is newline separated text. Split with splitlines(); strip each line; discard blank lines; remove duplicates by casefold preserving first trimmed spelling and order. Return compact JSON using ensure_ascii=False and separators=(\",\",\":\") with keys exactly in this order: items (list), count (integer). Implement main.py and a separate reusable helper module; no file, process or network operations.",
+          "name": "为个人助手新增可复用的清单整理能力：编写多文件 Python 工具，去除空行、修剪首尾空格、按 Unicode casefold 忽略大小写去重，保留首次出现的文本及顺序，并交付整理后的清单。",
+          "revision": 1
+        },
+        {
+          "active": "pkg-f7e2e9121abed0d97ea951985735d2f4682c1eb66fd6d53d395f3108b7dc78a5",
+          "capability": "plugin.goal-49c3b6d512a24fc48239.v1",
+          "description": "实现函数 run(text: str) -> str。逐行处理输入文本：每行去除首尾空白字符；若去除空白后以 `- [x]` 或 `- [X]` 开头，则识别为已完成任务；若以 `- [ ]` 开头，则识别为未完成任务；提取标记后的内容作为标题，并去除标题首尾空白。若标题为空、行不符合待办标记格式或为空行，则直接忽略。统计有效任务数量：total 为全部有效待办数，done 为已完成数，pending 为未完成数；remaining 为所有未完成任务标题的列表（保持出现顺序，不去重）。若输入为空或无有效待办，各项数值为 0，remaining 为空列表。最终结果序列化为 JSON 字符串，键顺序固定为 total、done、pending、remaining，保留中文原样字符（ensure_ascii=False），且不包含多余空格（紧凑格式 separators=(',', ':')）。",
+          "name": "把待办文本整理成统计 JSON 并保存。逐行去首尾空白，识别 - [x] 和 - [X] 开头为已完成，- [ ] 开头为未完成；标记后是标题，标题去首尾空白，空标题、空行与其他备注忽略。输出键固定为 total、done、pending、remaining；remaining 按原顺序保留未完成标题，不去重。JSON 不带多余空格，中文原样保留。需要能反复处理不同清单的能力。",
+          "revision": 1
+        },
+        {
+          "active": "pkg-793f9b9165e576e38a34f95122af5c25cd61f6708e0ebec06a40875f4eb84baa",
+          "capability": "plugin.migration-lines.v1",
+          "description": "实现 run(text) -> str。逐行 strip，丢弃空行，保留第一次出现的完整行；大小写不同的行保留；结果用换行连接，不增加尾部换行。",
+          "name": "dev.6 迁移验收 · 行清理工具",
+          "revision": 1
+        }
+      ],
+      "created": 1792725091.8391628,
+      "deadline": 1792725833.8945613,
+      "digest": "f19c4967a744491e7abc51d3077e131ffeea486bd432160369e69d0055c002b6",
+      "error": null,
+      "generation": 1,
+      "id": "goal-33109195fcd34b6a94c772bbc695d025",
+      "planning_round": 0,
+      "proposal": {
+        "input_text": "苹果:2\n香蕉：3\n 苹果:4\n坏记录\n梨:-1",
+        "questions": [
+          "缺少能够按中英文冒号解析“名称:非负整数”、校验纯数字、同名项数量累加并输出包含 items、total、invalid 结构紧凑 JSON 的统计工具。"
+        ],
+        "schema": "jarvis.goal-plan.v1",
+        "steps": [],
+        "summary": "现有工具无法支持按中英文冒号解析“名称:非负整数”、累加同名数量并统计错误行数，因此无法生成执行步骤。"
+      },
+      "request": {
+        "goal": "将合成测试清单按名称合计数量并保存结果，以便后续反复处理同类清单。解析规则：每行格式为“名称:非负整数”，允许英文冒号“:”或中文冒号“：”及首尾空白，名称不能为空；数量仅接受纯 ASCII 数字，带正号（如“+2”）或负号（如“-1”）均视为错误；忽略格式错误的行；空行不计入错误；同名数量累加，按名称首次出现顺序输出紧凑 JSON 格式（保留中文字符，不加代码围栏），字段结构为：{\"items\":[{\"name\":\"名称\",\"quantity\":数量}],\"total\":总数量,\"invalid\":错误非空行数}。",
+        "input_text": "苹果:2\n香蕉：3\n 苹果:4\n坏记录\n梨:-1",
+        "model": "gemini-3.8-flash",
+        "provider": "vertex",
+        "reasoning": "default",
+        "request_id": "chat-goal-15816659b5f5a49785053afafa7482f12d24cd66"
+      },
+      "request_id": "chat-goal-15816659b5f5a49785053afafa7482f12d24cd66",
+      "revision": 6,
+      "routes": [
+        {
+          "id": "vertex",
+          "model": "gemini-3.8-flash",
+          "parameters": {
+            "max_output_tokens": 8192,
+            "thinking_level": "MEDIUM"
+          }
+        }
+      ],
+      "status": "NEEDS_INPUT",
+      "task_id": null
+    },
+    "task": null
+  },
+  "goal_id": "goal-33109195fcd34b6a94c772bbc695d025",
+  "reviewed_growth": {
+    "capability": "plugin.goal-33109195fcd34b6a94c7.v1",
+    "deadline": 1792725870.8181305,
+    "development": {
+      "cancel": 0,
+      "error": null,
+      "id": "dev-8a7dcce41043418e83a4e2ee6e1f437f",
+      "phase": "plan",
+      "release_id": null,
+      "status": "READY",
+      "task_id": null
+    },
+    "development_id": "dev-8a7dcce41043418e83a4e2ee6e1f437f",
+    "draft": {
+      "description": "实现函数 run(text: str) -> str。按行解析输入的清单文本：\n1. 逐行处理，首尾空白字符需去除；空行（无字符或仅含空白）直接忽略，不计入统计也不计入错误。\n2. 对非空行按第一个冒号（英文冒号“:”或中文冒号“：”）拆分为名称与数量两部分，并分别去除两端空白字符。\n3. 校验规则：若行中不存在冒号、去除空白后名称为空、或者数量不为纯 ASCII 数字串（例如含有“+”、“-”、字母或其它非数字字符），均判定为错误行，错误行计数 invalid 加 1，并忽略该行。\n4. 合法行的数量解析为非负整数，按名称首次出现的先后顺序记录条目；若出现相同名称，则数量累加。\n5. 统计所有合法条目的总数量 total，以及错误非空行数 invalid。\n6. 将结果序列化为紧凑 JSON 格式（使用 json.dumps(..., ensure_ascii=False, separators=(',', ':'))），键顺序为 items、total、invalid。每个 item 包含 name 与 quantity 两个字段。无有效记录时 items 为 []，total 为 0。输出不得包含代码围栏或多余外层空白。",
+      "evaluation_cases": [
+        {
+          "expected": "{\"items\":[{\"name\":\"A\",\"quantity\":15},{\"name\":\"B\",\"quantity\":20}],\"total\":35,\"invalid\":0}",
+          "input": "A:10\nB:20\nA:5"
+        },
+        {
+          "expected": "{\"items\":[],\"total\":0,\"invalid\":3}",
+          "input": "仅名称\n   \n:123\n错误：abc"
+        },
+        {
+          "expected": "{\"items\":[{\"name\":\"零\",\"quantity\":3},{\"name\":\"甲\",\"quantity\":2}],\"total\":5,\"invalid\":3}",
+          "input": "零:000\n甲:2\n零：3\n全角:１２\n正数:+1\n负数:-2"
+        },
+        {
+          "expected": "{\"items\":[{\"name\":\"名\",\"quantity\":7}],\"total\":7,\"invalid\":3}",
+          "input": "  :2\nA:1:2\n空:\n名：3\n名:4\n\n"
+        },
+        {
+          "expected": "{\"items\":[],\"total\":0,\"invalid\":0}",
+          "input": " \n\t\n"
+        }
+      ],
+      "public_cases": [
+        {
+          "expected": "{\"items\":[{\"name\":\"苹果\",\"quantity\":6},{\"name\":\"香蕉\",\"quantity\":3}],\"total\":9,\"invalid\":2}",
+          "input": "苹果:2\n香蕉：3\n 苹果:4\n坏记录\n梨:-1"
+        },
+        {
+          "expected": "{\"items\":[],\"total\":0,\"invalid\":0}",
+          "input": ""
+        },
+        {
+          "expected": "{\"items\":[{\"name\":\"测试\",\"quantity\":10}],\"total\":10,\"invalid\":2}",
+          "input": "  \n\n测试 : 0\n  测试：10\n:5\n非法+号: +2\n"
+        }
+      ],
+      "questions": [],
+      "schema": "jarvis.capability-draft.v1",
+      "summary": "提供一个纯文本清单解析与数量累计聚合工具，支持中英文冒号分隔、校验纯数字与非空名称、忽略空行并统计格式错误行，按首次出现顺序输出紧凑 JSON 统计结果。",
+      "supported": true
+    },
+    "error": null,
+    "goal_id": "goal-33109195fcd34b6a94c772bbc695d025",
+    "revision": 5,
+    "status": "DEVELOPING"
+  },
+  "development_id": "dev-8a7dcce41043418e83a4e2ee6e1f437f",
+  "verified_candidate": {
+    "parent_goal": "goal-33109195fcd34b6a94c772bbc695d025",
+    "run": {
+      "id": "dev-8a7dcce41043418e83a4e2ee6e1f437f",
+      "request_id": "goal-33109195fcd34b6a94c772bbc695d025.growth",
+      "digest": "edf7850e313bc98ffb3a2736c2c164c78007fd4488c23e2e3ff7b2514146546c",
+      "spec": {
+        "capability": "plugin.goal-33109195fcd34b6a94c7.v1",
+        "description": "实现函数 run(text: str) -> str。按行解析输入的清单文本：\n1. 逐行处理，首尾空白字符需去除；空行（无字符或仅含空白）直接忽略，不计入统计也不计入错误。\n2. 对非空行按第一个冒号（英文冒号“:”或中文冒号“：”）拆分为名称与数量两部分，并分别去除两端空白字符。\n3. 校验规则：若行中不存在冒号、去除空白后名称为空、或者数量不为纯 ASCII 数字串（例如含有“+”、“-”、字母或其它非数字字符），均判定为错误行，错误行计数 invalid 加 1，并忽略该行。\n4. 合法行的数量解析为非负整数，按名称首次出现的先后顺序记录条目；若出现相同名称，则数量累加。\n5. 统计所有合法条目的总数量 total，以及错误非空行数 invalid。\n6. 将结果序列化为紧凑 JSON 格式（使用 json.dumps(..., ensure_ascii=False, separators=(',', ':'))），键顺序为 items、total、invalid。每个 item 包含 name 与 quantity 两个字段。无有效记录时 items 为 []，total 为 0。输出不得包含代码围栏或多余外层空白。",
+        "evaluation_cases": [
+          {
+            "expected": "{\"items\":[{\"name\":\"A\",\"quantity\":15},{\"name\":\"B\",\"quantity\":20}],\"total\":35,\"invalid\":0}",
+            "input": "A:10\nB:20\nA:5"
+          },
+          {
+            "expected": "{\"items\":[],\"total\":0,\"invalid\":3}",
+            "input": "仅名称\n   \n:123\n错误：abc"
+          },
+          {
+            "expected": "{\"items\":[{\"name\":\"零\",\"quantity\":3},{\"name\":\"甲\",\"quantity\":2}],\"total\":5,\"invalid\":3}",
+            "input": "零:000\n甲:2\n零：3\n全角:１２\n正数:+1\n负数:-2"
+          },
+          {
+            "expected": "{\"items\":[{\"name\":\"名\",\"quantity\":7}],\"total\":7,\"invalid\":3}",
+            "input": "  :2\nA:1:2\n空:\n名：3\n名:4\n\n"
+          },
+          {
+            "expected": "{\"items\":[],\"total\":0,\"invalid\":0}",
+            "input": " \n\t\n"
+          }
+        ],
+        "goal": "将合成测试清单按名称合计数量并保存结果，以便后续反复处理同类清单。解析规则：每行格式为“名称:非负整数”，允许英文冒号“:”或中文冒号“：”及首尾空白，名称不能为空；数量仅接受纯 ASCII 数字，带正号（如“+2”）或负号（如“-1”）均视为错误；忽略格式错误的行；空行不计入错误；同名数量累加，按名称首次出现顺序输出紧凑 JSON 格式（保留中文字符，不加代码围栏），字段结构为：{\"items\":[{\"name\":\"名称\",\"quantity\":数量}],\"total\":总数量,\"invalid\":错误非空行数}。",
+        "grant_id": "goal-33109195fcd34b6a94c772bbc695d025-build",
+        "limits": {
+          "max_attempts": 2,
+          "max_model_calls": 5,
+          "max_seconds": 1800
+        },
+        "principal_id": "owner.local",
+        "public_cases": [
+          {
+            "expected": "{\"items\":[{\"name\":\"苹果\",\"quantity\":6},{\"name\":\"香蕉\",\"quantity\":3}],\"total\":9,\"invalid\":2}",
+            "input": "苹果:2\n香蕉：3\n 苹果:4\n坏记录\n梨:-1"
+          },
+          {
+            "expected": "{\"items\":[],\"total\":0,\"invalid\":0}",
+            "input": ""
+          },
+          {
+            "expected": "{\"items\":[{\"name\":\"测试\",\"quantity\":10}],\"total\":10,\"invalid\":2}",
+            "input": "  \n\n测试 : 0\n  测试：10\n:5\n非法+号: +2\n"
+          }
+        ],
+        "request_id": "goal-33109195fcd34b6a94c772bbc695d025.growth",
+        "sample_input": "苹果:2\n香蕉：3\n 苹果:4\n坏记录\n梨:-1",
+        "schema": "jarvis.development.v1",
+        "scope_id": "personal"
+      },
+      "status": "WAITING",
+      "phase": "verified",
+      "attempt": 0,
+      "created": 1792725325.0069592,
+      "deadline": 1792727125.0069592,
+      "cancel": 0,
+      "candidate": "{\"files\":[{\"content\":\"import json\\n\\n\\ndef run(text: str) -> str:\\n    quantities = {}\\n    total = 0\\n    invalid = 0\\n\\n    for raw_line in text.splitlines():\\n        line = raw_line.strip()\\n        if not line:\\n            continue\\n\\n        separator = next((i for i, char in enumerate(line) if char in ':：'), -1)\\n        if separator < 0:\\n            invalid += 1\\n            continue\\n\\n        name = line[:separator].strip()\\n        digits = line[separator + 1:].strip()\\n        if not name or not digits or not all('0' <= char <= '9' for char in digits):\\n            invalid += 1\\n            continue\\n\\n        quantity = int(digits)\\n        quantities[name] = quantities.get(name, 0) + quantity\\n        total += quantity\\n\\n    result = {\\n        'items': [{'name': name, 'quantity': quantity} for name, quantity in quantities.items()],\\n        'total': total,\\n        'invalid': invalid,\\n    }\\n    return json.dumps(result, ensure_ascii=False, separators=(',', ':'))\\n\",\"path\":\"main.py\"}],\"schema\":\"jarvis.code-candidate.v1\",\"summary\":\"实现按首个中英文冒号解析、严格校验 ASCII 数字、按首次出现顺序合并数量并返回紧凑 JSON 的 run 函数。\"}",
+      "release_id": "pkg-bc39897b094bd2980b982ccf9993a7d6f6eb1603deecda7abe4ba09688c1e1d8",
+      "task_id": null,
+      "error": "review_required",
+      "plan": "{\"capability\":\"plugin.goal-33109195fcd34b6a94c7.v1\",\"schema\":\"jarvis.development-plan.v1\",\"steps\":[\"初始化 items 有序字典（或记录顺序列表与映射字典）、总数量 total 计数器和非法行数 invalid 计数器。\",\"将输入字符串 text 按行分割并逐行遍历，对每行去除首尾空白字符；若为空行则跳过，不计入统计也不增加 invalid。\",\"寻找首个英文冒号':'或中文冒号'：'的位置；若未找到冒号，则 invalid 加 1 并跳过该行。\",\"按首个冒号位置切分为名称与数量两部分，分别去除首尾空白字符；校验名称是否非空且数量是否由纯 ASCII 数字组成（如 quantity.isascii() and quantity.isdigit()），若不符合则 invalid 加 1 并跳过。\",\"将合法行的数量转换为非负整数，累加至 total，并在有序条目映射中按名称记录或累加数量。\",\"构造包含 items（列表形态，每项含 name 和 quantity）、total、invalid 的字典，使用 json.dumps(..., ensure_ascii=False, separators=(',', ':')) 序列化并返回紧凑 JSON 字符串。\"],\"summary\":\"设计并实现 run(text: str) -> str 函数，按行解析清单文本。过滤空行后按首个中文或英文冒号拆分名称与数量，严格校验非空名称及纯 ASCII 数字数量，对格式错误的非空行计入 invalid；按出现顺序合并同名物品数量，计算总数 total，最终返回无代码围栏的紧凑 JSON 字符串。\"}"
+    },
+    "routes": {
+      "code": [
+        {
+          "id": "codex-cli",
+          "model": "gpt-6.1-sol",
+          "parameters": {
+            "reasoning": "medium"
+          }
+        }
+      ],
+      "plan": [
+        {
+          "id": "vertex",
+          "model": "gemini-3.8-flash",
+          "parameters": {
+            "max_output_tokens": 8192,
+            "thinking_level": "MEDIUM"
+          }
+        }
+      ]
+    },
+    "approved_package": null,
+    "grant": {
+      "spent": 6,
+      "revoked": 0,
+      "body": {
+        "capabilities": [
+          "model.generate.v1",
+          "development.build.v1",
+          "release.activate.v1",
+          "artifact.write.v1",
+          "plugin.goal-33109195fcd34b6a94c7.v1"
+        ],
+        "expires_at": 1792727125.0052311,
+        "grant_id": "goal-33109195fcd34b6a94c772bbc695d025-build",
+        "max_cost_units": 11,
+        "principal_id": "owner.local",
+        "schema": "jarvis.grant.v1",
+        "scope_id": "personal"
+      }
+    },
+    "package": {
+      "id": "pkg-bc39897b094bd2980b982ccf9993a7d6f6eb1603deecda7abe4ba09688c1e1d8",
+      "capability": "plugin.goal-33109195fcd34b6a94c7.v1",
+      "status": "VERIFIED",
+      "spec": {
+        "capability": "plugin.goal-33109195fcd34b6a94c7.v1",
+        "description": "实现函数 run(text: str) -> str。按行解析输入的清单文本：\n1. 逐行处理，首尾空白字符需去除；空行（无字符或仅含空白）直接忽略，不计入统计也不计入错误。\n2. 对非空行按第一个冒号（英文冒号“:”或中文冒号“：”）拆分为名称与数量两部分，并分别去除两端空白字符。\n3. 校验规则：若行中不存在冒号、去除空白后名称为空、或者数量不为纯 ASCII 数字串（例如含有“+”、“-”、字母或其它非数字字符），均判定为错误行，错误行计数 invalid 加 1，并忽略该行。\n4. 合法行的数量解析为非负整数，按名称首次出现的先后顺序记录条目；若出现相同名称，则数量累加。\n5. 统计所有合法条目的总数量 total，以及错误非空行数 invalid。\n6. 将结果序列化为紧凑 JSON 格式（使用 json.dumps(..., ensure_ascii=False, separators=(',', ':'))），键顺序为 items、total、invalid。每个 item 包含 name 与 quantity 两个字段。无有效记录时 items 为 []，total 为 0。输出不得包含代码围栏或多余外层空白。",
+        "evaluation_cases": [
+          {
+            "expected": "{\"items\":[{\"name\":\"A\",\"quantity\":15},{\"name\":\"B\",\"quantity\":20}],\"total\":35,\"invalid\":0}",
+            "input": "A:10\nB:20\nA:5"
+          },
+          {
+            "expected": "{\"items\":[],\"total\":0,\"invalid\":3}",
+            "input": "仅名称\n   \n:123\n错误：abc"
+          },
+          {
+            "expected": "{\"items\":[{\"name\":\"零\",\"quantity\":3},{\"name\":\"甲\",\"quantity\":2}],\"total\":5,\"invalid\":3}",
+            "input": "零:000\n甲:2\n零：3\n全角:１２\n正数:+1\n负数:-2"
+          },
+          {
+            "expected": "{\"items\":[{\"name\":\"名\",\"quantity\":7}],\"total\":7,\"invalid\":3}",
+            "input": "  :2\nA:1:2\n空:\n名：3\n名:4\n\n"
+          },
+          {
+            "expected": "{\"items\":[],\"total\":0,\"invalid\":0}",
+            "input": " \n\t\n"
+          }
+        ],
+        "goal": "将合成测试清单按名称合计数量并保存结果，以便后续反复处理同类清单。解析规则：每行格式为“名称:非负整数”，允许英文冒号“:”或中文冒号“：”及首尾空白，名称不能为空；数量仅接受纯 ASCII 数字，带正号（如“+2”）或负号（如“-1”）均视为错误；忽略格式错误的行；空行不计入错误；同名数量累加，按名称首次出现顺序输出紧凑 JSON 格式（保留中文字符，不加代码围栏），字段结构为：{\"items\":[{\"name\":\"名称\",\"quantity\":数量}],\"total\":总数量,\"invalid\":错误非空行数}。",
+        "grant_id": "goal-33109195fcd34b6a94c772bbc695d025-build",
+        "limits": {
+          "max_attempts": 2,
+          "max_model_calls": 5,
+          "max_seconds": 1800
+        },
+        "principal_id": "owner.local",
+        "public_cases": [
+          {
+            "expected": "{\"items\":[{\"name\":\"苹果\",\"quantity\":6},{\"name\":\"香蕉\",\"quantity\":3}],\"total\":9,\"invalid\":2}",
+            "input": "苹果:2\n香蕉：3\n 苹果:4\n坏记录\n梨:-1"
+          },
+          {
+            "expected": "{\"items\":[],\"total\":0,\"invalid\":0}",
+            "input": ""
+          },
+          {
+            "expected": "{\"items\":[{\"name\":\"测试\",\"quantity\":10}],\"total\":10,\"invalid\":2}",
+            "input": "  \n\n测试 : 0\n  测试：10\n:5\n非法+号: +2\n"
+          }
+        ],
+        "request_id": "goal-33109195fcd34b6a94c772bbc695d025.growth",
+        "sample_input": "苹果:2\n香蕉：3\n 苹果:4\n坏记录\n梨:-1",
+        "schema": "jarvis.development.v1",
+        "scope_id": "personal"
+      },
+      "report": "{\"acceptance_digest\":\"edf7850e313bc98ffb3a2736c2c164c78007fd4488c23e2e3ff7b2514146546c\",\"case_count\":8,\"independent_cases\":5,\"package_id\":\"pkg-bc39897b094bd2980b982ccf9993a7d6f6eb1603deecda7abe4ba09688c1e1d8\",\"passed\":true,\"public_cases\":3,\"worker\":{\"active_process_limit\":1,\"appcontainer_verified\":true,\"backend\":\"windows-lpac-job\",\"capabilities\":[\"registryRead\"],\"cpu_limit_seconds\":3,\"elapsed_seconds\":0.3066,\"memory_limit_bytes\":268435456,\"network_capabilities\":[],\"peak_memory_bytes\":13516800,\"wall_limit_seconds\":8}}",
+      "created": 1792725550.9916043,
+      "bundle": {
+        "acceptance_digest": "edf7850e313bc98ffb3a2736c2c164c78007fd4488c23e2e3ff7b2514146546c",
+        "capability": "plugin.goal-33109195fcd34b6a94c7.v1",
+        "files": {
+          "main.py": "import json\n\n\ndef run(text: str) -> str:\n    quantities = {}\n    total = 0\n    invalid = 0\n\n    for raw_line in text.splitlines():\n        line = raw_line.strip()\n        if not line:\n            continue\n\n        separator = next((i for i, char in enumerate(line) if char in ':：'), -1)\n        if separator < 0:\n            invalid += 1\n            continue\n\n        name = line[:separator].strip()\n        digits = line[separator + 1:].strip()\n        if not name or not digits or not all('0' <= char <= '9' for char in digits):\n            invalid += 1\n            continue\n\n        quantity = int(digits)\n        quantities[name] = quantities.get(name, 0) + quantity\n        total += quantity\n\n    result = {\n        'items': [{'name': name, 'quantity': quantity} for name, quantity in quantities.items()],\n        'total': total,\n        'invalid': invalid,\n    }\n    return json.dumps(result, ensure_ascii=False, separators=(',', ':'))\n"
+        },
+        "recipe": "python313-pure-text.v1",
+        "schema": "jarvis.pure-package.v1",
+        "state_schema": 0
+      }
+    },
+    "task": null,
+    "actions": []
+  },
+  "returned_plan": {
+    "actions": [],
+    "context": {
+      "enabled": 1,
+      "goal_id": "goal-33109195fcd34b6a94c772bbc695d025",
+      "history": [
+        {
+          "generation": 0,
+          "proposal": {
+            "input_text": "每行格式为名称:非负整数（允许中文冒号与首尾空白，名称非空，仅接受ASCII数字，忽略错误行，空行不计入错误），按名称首次出现顺序输出紧凑JSON结果：{\"items\":[{\"name\":\"名称\",\"quantity\":数量}],\"total\":总数量,\"invalid\":错误非空行数}，保留中文字符且不加代码围栏。\n清单数据：\n苹果:2\n香蕉：3\n 苹果:4\n坏记录\n梨:-1",
+            "questions": [
+              "现有工具库中缺少能够解析“名称:非负整数”、按名称合并累加数量并统计非法行数的专用工具能力。"
+            ],
+            "schema": "jarvis.goal-plan.v1",
+            "steps": [],
+            "summary": "当前工具库缺少解析名称与数值、合并同名数量及统计错误行的专用统计工具，无法完成目标。"
+          },
+          "request": {
+            "goal": "按规则对合成测试清单进行名称合并数量统计并保存结果，以便后续重复处理同类清单",
+            "input_text": "每行格式为名称:非负整数（允许中文冒号与首尾空白，名称非空，仅接受ASCII数字，忽略错误行，空行不计入错误），按名称首次出现顺序输出紧凑JSON结果：{\"items\":[{\"name\":\"名称\",\"quantity\":数量}],\"total\":总数量,\"invalid\":错误非空行数}，保留中文字符且不加代码围栏。\n清单数据：\n苹果:2\n香蕉：3\n 苹果:4\n坏记录\n梨:-1",
+            "model": "gemini-3.8-flash",
+            "provider": "vertex",
+            "reasoning": "default",
+            "request_id": "chat-goal-15816659b5f5a49785053afafa7482f12d24cd66"
+          }
+        }
+      ],
+      "scope": "personal",
+      "view": {
+        "facts": [
+          {
+            "id": "fact-bd4c501bf7214d2581e44f44bad31fcd",
+            "key": "验收统计约定-dev10",
+            "kind": "knowledge",
+            "revision": 1,
+            "value": "数量汇总的测试结果使用紧凑 JSON，保留中文字符，不加代码围栏。此条是软件合成验收资料。"
+          }
+        ],
+        "providers": [
+          "vertex"
+        ]
+      }
+    },
+    "growth": {
+      "capability": "plugin.goal-33109195fcd34b6a94c7.v1",
+      "deadline": 1792725870.8181305,
+      "development": {
+        "cancel": 0,
+        "error": null,
+        "id": "dev-8a7dcce41043418e83a4e2ee6e1f437f",
+        "phase": "delivered",
+        "release_id": "pkg-bc39897b094bd2980b982ccf9993a7d6f6eb1603deecda7abe4ba09688c1e1d8",
+        "status": "SUCCEEDED",
+        "task_id": "task-b88e9f0661944044bdb3de4c0bd31fe8"
+      },
+      "development_id": "dev-8a7dcce41043418e83a4e2ee6e1f437f",
+      "draft": {
+        "description": "实现函数 run(text: str) -> str。按行解析输入的清单文本：\n1. 逐行处理，首尾空白字符需去除；空行（无字符或仅含空白）直接忽略，不计入统计也不计入错误。\n2. 对非空行按第一个冒号（英文冒号“:”或中文冒号“：”）拆分为名称与数量两部分，并分别去除两端空白字符。\n3. 校验规则：若行中不存在冒号、去除空白后名称为空、或者数量不为纯 ASCII 数字串（例如含有“+”、“-”、字母或其它非数字字符），均判定为错误行，错误行计数 invalid 加 1，并忽略该行。\n4. 合法行的数量解析为非负整数，按名称首次出现的先后顺序记录条目；若出现相同名称，则数量累加。\n5. 统计所有合法条目的总数量 total，以及错误非空行数 invalid。\n6. 将结果序列化为紧凑 JSON 格式（使用 json.dumps(..., ensure_ascii=False, separators=(',', ':'))），键顺序为 items、total、invalid。每个 item 包含 name 与 quantity 两个字段。无有效记录时 items 为 []，total 为 0。输出不得包含代码围栏或多余外层空白。",
+        "evaluation_cases": [
+          {
+            "expected": "{\"items\":[{\"name\":\"A\",\"quantity\":15},{\"name\":\"B\",\"quantity\":20}],\"total\":35,\"invalid\":0}",
+            "input": "A:10\nB:20\nA:5"
+          },
+          {
+            "expected": "{\"items\":[],\"total\":0,\"invalid\":3}",
+            "input": "仅名称\n   \n:123\n错误：abc"
+          },
+          {
+            "expected": "{\"items\":[{\"name\":\"零\",\"quantity\":3},{\"name\":\"甲\",\"quantity\":2}],\"total\":5,\"invalid\":3}",
+            "input": "零:000\n甲:2\n零：3\n全角:１２\n正数:+1\n负数:-2"
+          },
+          {
+            "expected": "{\"items\":[{\"name\":\"名\",\"quantity\":7}],\"total\":7,\"invalid\":3}",
+            "input": "  :2\nA:1:2\n空:\n名：3\n名:4\n\n"
+          },
+          {
+            "expected": "{\"items\":[],\"total\":0,\"invalid\":0}",
+            "input": " \n\t\n"
+          }
+        ],
+        "public_cases": [
+          {
+            "expected": "{\"items\":[{\"name\":\"苹果\",\"quantity\":6},{\"name\":\"香蕉\",\"quantity\":3}],\"total\":9,\"invalid\":2}",
+            "input": "苹果:2\n香蕉：3\n 苹果:4\n坏记录\n梨:-1"
+          },
+          {
+            "expected": "{\"items\":[],\"total\":0,\"invalid\":0}",
+            "input": ""
+          },
+          {
+            "expected": "{\"items\":[{\"name\":\"测试\",\"quantity\":10}],\"total\":10,\"invalid\":2}",
+            "input": "  \n\n测试 : 0\n  测试：10\n:5\n非法+号: +2\n"
+          }
+        ],
+        "questions": [],
+        "schema": "jarvis.capability-draft.v1",
+        "summary": "提供一个纯文本清单解析与数量累计聚合工具，支持中英文冒号分隔、校验纯数字与非空名称、忽略空行并统计格式错误行，按首次出现顺序输出紧凑 JSON 统计结果。",
+        "supported": true
+      },
+      "error": null,
+      "goal_id": "goal-33109195fcd34b6a94c772bbc695d025",
+      "revision": 6,
+      "status": "REJOINED"
+    },
+    "plan": {
+      "cancel": 0,
+      "catalog": [
+        {
+          "active": "pkg-bc39897b094bd2980b982ccf9993a7d6f6eb1603deecda7abe4ba09688c1e1d8",
+          "capability": "plugin.goal-33109195fcd34b6a94c7.v1",
+          "description": "实现函数 run(text: str) -> str。按行解析输入的清单文本：\n1. 逐行处理，首尾空白字符需去除；空行（无字符或仅含空白）直接忽略，不计入统计也不计入错误。\n2. 对非空行按第一个冒号（英文冒号“:”或中文冒号“：”）拆分为名称与数量两部分，并分别去除两端空白字符。\n3. 校验规则：若行中不存在冒号、去除空白后名称为空、或者数量不为纯 ASCII 数字串（例如含有“+”、“-”、字母或其它非数字字符），均判定为错误行，错误行计数 invalid 加 1，并忽略该行。\n4. 合法行的数量解析为非负整数，按名称首次出现的先后顺序记录条目；若出现相同名称，则数量累加。\n5. 统计所有合法条目的总数量 total，以及错误非空行数 invalid。\n6. 将结果序列化为紧凑 JSON 格式（使用 json.dumps(..., ensure_ascii=False, separators=(',', ':'))），键顺序为 items、total、invalid。每个 item 包含 name 与 quantity 两个字段。无有效记录时 items 为 []，total 为 0。输出不得包含代码围栏或多余外层空白。",
+          "name": "将合成测试清单按名称合计数量并保存结果，以便后续反复处理同类清单。解析规则：每行格式为“名称:非负整数”，允许英文冒号“:”或中文冒号“：”及首尾空白，名称不能为空；数量仅接受纯 ASCII 数字，带正号（如“+2”）或负号（如“-1”）均视为错误；忽略格式错误的行；空行不计入错误；同名数量累加，按名称首次出现顺序输出紧凑 JSON 格式（保留中文字符，不加代码围栏），字段结构为：{\"items\":[{\"name\":\"名称\",\"quantity\":数量}],\"total\":总数量,\"invalid\":错误非空行数}。",
+          "revision": 1
+        },
+        {
+          "active": "pkg-d474d66a5f424536683552ed3fcabc96a450b04efa4e07c6f2778a2687f36414",
+          "capability": "plugin.clean-list.v1",
+          "description": "Input is newline separated text. Split with splitlines(); strip each line; discard blank lines; remove duplicates by casefold preserving first trimmed spelling and order. Return compact JSON using ensure_ascii=False and separators=(\",\",\":\") with keys exactly in this order: items (list), count (integer). Implement main.py and a separate reusable helper module; no file, process or network operations.",
+          "name": "为个人助手新增可复用的清单整理能力：编写多文件 Python 工具，去除空行、修剪首尾空格、按 Unicode casefold 忽略大小写去重，保留首次出现的文本及顺序，并交付整理后的清单。",
+          "revision": 1
+        },
+        {
+          "active": "pkg-f7e2e9121abed0d97ea951985735d2f4682c1eb66fd6d53d395f3108b7dc78a5",
+          "capability": "plugin.goal-49c3b6d512a24fc48239.v1",
+          "description": "实现函数 run(text: str) -> str。逐行处理输入文本：每行去除首尾空白字符；若去除空白后以 `- [x]` 或 `- [X]` 开头，则识别为已完成任务；若以 `- [ ]` 开头，则识别为未完成任务；提取标记后的内容作为标题，并去除标题首尾空白。若标题为空、行不符合待办标记格式或为空行，则直接忽略。统计有效任务数量：total 为全部有效待办数，done 为已完成数，pending 为未完成数；remaining 为所有未完成任务标题的列表（保持出现顺序，不去重）。若输入为空或无有效待办，各项数值为 0，remaining 为空列表。最终结果序列化为 JSON 字符串，键顺序固定为 total、done、pending、remaining，保留中文原样字符（ensure_ascii=False），且不包含多余空格（紧凑格式 separators=(',', ':')）。",
+          "name": "把待办文本整理成统计 JSON 并保存。逐行去首尾空白，识别 - [x] 和 - [X] 开头为已完成，- [ ] 开头为未完成；标记后是标题，标题去首尾空白，空标题、空行与其他备注忽略。输出键固定为 total、done、pending、remaining；remaining 按原顺序保留未完成标题，不去重。JSON 不带多余空格，中文原样保留。需要能反复处理不同清单的能力。",
+          "revision": 1
+        },
+        {
+          "active": "pkg-793f9b9165e576e38a34f95122af5c25cd61f6708e0ebec06a40875f4eb84baa",
+          "capability": "plugin.migration-lines.v1",
+          "description": "实现 run(text) -> str。逐行 strip，丢弃空行，保留第一次出现的完整行；大小写不同的行保留；结果用换行连接，不增加尾部换行。",
+          "name": "dev.6 迁移验收 · 行清理工具",
+          "revision": 1
+        }
+      ],
+      "created": 1792725091.8391628,
+      "deadline": 1792726329.9732308,
+      "digest": "f19c4967a744491e7abc51d3077e131ffeea486bd432160369e69d0055c002b6",
+      "error": null,
+      "generation": 1,
+      "id": "goal-33109195fcd34b6a94c772bbc695d025",
+      "planning_round": 1,
+      "proposal": {
+        "input_text": "苹果:2\n香蕉：3\n 苹果:4\n坏记录\n梨:-1",
+        "questions": [],
+        "schema": "jarvis.goal-plan.v1",
+        "steps": [
+          {
+            "capability": "plugin.goal-33109195fcd34b6a94c7.v1",
+            "expected": "输出包含 items（累计名称与数量）、total（总数量）以及 invalid（错误行数）的紧凑 JSON 字符串。",
+            "source": "input",
+            "title": "汇总清单数量与错误行数"
+          }
+        ],
+        "summary": "使用测试清单汇总工具按名称聚合数量并统计错误行数，生成紧凑格式的 JSON 统计结果。"
+      },
+      "request": {
+        "goal": "将合成测试清单按名称合计数量并保存结果，以便后续反复处理同类清单。解析规则：每行格式为“名称:非负整数”，允许英文冒号“:”或中文冒号“：”及首尾空白，名称不能为空；数量仅接受纯 ASCII 数字，带正号（如“+2”）或负号（如“-1”）均视为错误；忽略格式错误的行；空行不计入错误；同名数量累加，按名称首次出现顺序输出紧凑 JSON 格式（保留中文字符，不加代码围栏），字段结构为：{\"items\":[{\"name\":\"名称\",\"quantity\":数量}],\"total\":总数量,\"invalid\":错误非空行数}。",
+        "input_text": "苹果:2\n香蕉：3\n 苹果:4\n坏记录\n梨:-1",
+        "model": "gemini-3.8-flash",
+        "provider": "vertex",
+        "reasoning": "default",
+        "request_id": "chat-goal-15816659b5f5a49785053afafa7482f12d24cd66"
+      },
+      "request_id": "chat-goal-15816659b5f5a49785053afafa7482f12d24cd66",
+      "revision": 9,
+      "routes": [
+        {
+          "id": "vertex",
+          "model": "gemini-3.8-flash",
+          "parameters": {
+            "max_output_tokens": 8192,
+            "thinking_level": "MEDIUM"
+          }
+        }
+      ],
+      "status": "REVIEW",
+      "task_id": null
+    },
+    "task": null
+  },
+  "delivered": {
+    "actions": [
+      {
+        "arguments": {
+          "text": "苹果:2\n香蕉：3\n 苹果:4\n坏记录\n梨:-1"
+        },
+        "attempts": 1,
+        "capability": "plugin.goal-33109195fcd34b6a94c7.v1",
+        "digest": "8dc9a6c40fd4120ff2e4e61f99618f592a2106588458799e37a6a707fa3abd08",
+        "error": null,
+        "id": "action-861d748ed51e5b453e77740ca2db7c6c",
+        "result": {
+          "package_id": "pkg-bc39897b094bd2980b982ccf9993a7d6f6eb1603deecda7abe4ba09688c1e1d8",
+          "text": "{\"items\":[{\"name\":\"苹果\",\"quantity\":6},{\"name\":\"香蕉\",\"quantity\":3}],\"total\":9,\"invalid\":2}",
+          "worker": {
+            "active_process_limit": 1,
+            "appcontainer_verified": true,
+            "backend": "windows-lpac-job",
+            "capabilities": [
+              "registryRead"
+            ],
+            "cpu_limit_seconds": 3,
+            "elapsed_seconds": 0.286,
+            "memory_limit_bytes": 268435456,
+            "network_capabilities": [],
+            "peak_memory_bytes": 12828672,
+            "wall_limit_seconds": 8
+          }
+        },
+        "status": "CONFIRMED",
+        "step_id": "step-1",
+        "task_id": "task-11cd9030abf24939878446348205b8cf"
+      },
+      {
+        "arguments": {
+          "content": "{\"package_id\":\"pkg-bc39897b094bd2980b982ccf9993a7d6f6eb1603deecda7abe4ba09688c1e1d8\",\"text\":\"{\\\"items\\\":[{\\\"name\\\":\\\"苹果\\\",\\\"quantity\\\":6},{\\\"name\\\":\\\"香蕉\\\",\\\"quantity\\\":3}],\\\"total\\\":9,\\\"invalid\\\":2}\",\"worker\":{\"active_process_limit\":1,\"appcontainer_verified\":true,\"backend\":\"windows-lpac-job\",\"capabilities\":[\"registryRead\"],\"cpu_limit_seconds\":3,\"elapsed_seconds\":0.286,\"memory_limit_bytes\":268435456,\"network_capabilities\":[],\"peak_memory_bytes\":12828672,\"wall_limit_seconds\":8}}",
+          "name": "result.json"
+        },
+        "attempts": 1,
+        "capability": "artifact.write.v1",
+        "digest": "50bf1337fcffc506b694d76b503c777ae2035cad74e7147200a24181f838563c",
+        "error": null,
+        "id": "action-8d8ee915b473a1f55a38b6b037d758f4",
+        "result": {
+          "bytes": 489,
+          "relative_path": "artifacts/task-11cd9030abf24939878446348205b8cf/action-8d8ee915b473a1f55a38b6b037d758f4/result.json",
+          "sha256": "0b85893502ecea9fc0de8e10c98eacef787cb405870f516715b1c7a565b4be9e",
+          "verified": true
+        },
+        "status": "CONFIRMED",
+        "step_id": "deliver",
+        "task_id": "task-11cd9030abf24939878446348205b8cf"
+      }
+    ],
+    "context": {
+      "enabled": 1,
+      "goal_id": "goal-33109195fcd34b6a94c772bbc695d025",
+      "history": [
+        {
+          "generation": 0,
+          "proposal": {
+            "input_text": "每行格式为名称:非负整数（允许中文冒号与首尾空白，名称非空，仅接受ASCII数字，忽略错误行，空行不计入错误），按名称首次出现顺序输出紧凑JSON结果：{\"items\":[{\"name\":\"名称\",\"quantity\":数量}],\"total\":总数量,\"invalid\":错误非空行数}，保留中文字符且不加代码围栏。\n清单数据：\n苹果:2\n香蕉：3\n 苹果:4\n坏记录\n梨:-1",
+            "questions": [
+              "现有工具库中缺少能够解析“名称:非负整数”、按名称合并累加数量并统计非法行数的专用工具能力。"
+            ],
+            "schema": "jarvis.goal-plan.v1",
+            "steps": [],
+            "summary": "当前工具库缺少解析名称与数值、合并同名数量及统计错误行的专用统计工具，无法完成目标。"
+          },
+          "request": {
+            "goal": "按规则对合成测试清单进行名称合并数量统计并保存结果，以便后续重复处理同类清单",
+            "input_text": "每行格式为名称:非负整数（允许中文冒号与首尾空白，名称非空，仅接受ASCII数字，忽略错误行，空行不计入错误），按名称首次出现顺序输出紧凑JSON结果：{\"items\":[{\"name\":\"名称\",\"quantity\":数量}],\"total\":总数量,\"invalid\":错误非空行数}，保留中文字符且不加代码围栏。\n清单数据：\n苹果:2\n香蕉：3\n 苹果:4\n坏记录\n梨:-1",
+            "model": "gemini-3.8-flash",
+            "provider": "vertex",
+            "reasoning": "default",
+            "request_id": "chat-goal-15816659b5f5a49785053afafa7482f12d24cd66"
+          }
+        }
+      ],
+      "scope": "personal",
+      "view": {
+        "facts": [
+          {
+            "id": "fact-bd4c501bf7214d2581e44f44bad31fcd",
+            "key": "验收统计约定-dev10",
+            "kind": "knowledge",
+            "revision": 1,
+            "value": "数量汇总的测试结果使用紧凑 JSON，保留中文字符，不加代码围栏。此条是软件合成验收资料。"
+          }
+        ],
+        "providers": [
+          "vertex"
+        ]
+      }
+    },
+    "growth": {
+      "capability": "plugin.goal-33109195fcd34b6a94c7.v1",
+      "deadline": 1792725870.8181305,
+      "development": {
+        "cancel": 0,
+        "error": null,
+        "id": "dev-8a7dcce41043418e83a4e2ee6e1f437f",
+        "phase": "delivered",
+        "release_id": "pkg-bc39897b094bd2980b982ccf9993a7d6f6eb1603deecda7abe4ba09688c1e1d8",
+        "status": "SUCCEEDED",
+        "task_id": "task-b88e9f0661944044bdb3de4c0bd31fe8"
+      },
+      "development_id": "dev-8a7dcce41043418e83a4e2ee6e1f437f",
+      "draft": {
+        "description": "实现函数 run(text: str) -> str。按行解析输入的清单文本：\n1. 逐行处理，首尾空白字符需去除；空行（无字符或仅含空白）直接忽略，不计入统计也不计入错误。\n2. 对非空行按第一个冒号（英文冒号“:”或中文冒号“：”）拆分为名称与数量两部分，并分别去除两端空白字符。\n3. 校验规则：若行中不存在冒号、去除空白后名称为空、或者数量不为纯 ASCII 数字串（例如含有“+”、“-”、字母或其它非数字字符），均判定为错误行，错误行计数 invalid 加 1，并忽略该行。\n4. 合法行的数量解析为非负整数，按名称首次出现的先后顺序记录条目；若出现相同名称，则数量累加。\n5. 统计所有合法条目的总数量 total，以及错误非空行数 invalid。\n6. 将结果序列化为紧凑 JSON 格式（使用 json.dumps(..., ensure_ascii=False, separators=(',', ':'))），键顺序为 items、total、invalid。每个 item 包含 name 与 quantity 两个字段。无有效记录时 items 为 []，total 为 0。输出不得包含代码围栏或多余外层空白。",
+        "evaluation_cases": [
+          {
+            "expected": "{\"items\":[{\"name\":\"A\",\"quantity\":15},{\"name\":\"B\",\"quantity\":20}],\"total\":35,\"invalid\":0}",
+            "input": "A:10\nB:20\nA:5"
+          },
+          {
+            "expected": "{\"items\":[],\"total\":0,\"invalid\":3}",
+            "input": "仅名称\n   \n:123\n错误：abc"
+          },
+          {
+            "expected": "{\"items\":[{\"name\":\"零\",\"quantity\":3},{\"name\":\"甲\",\"quantity\":2}],\"total\":5,\"invalid\":3}",
+            "input": "零:000\n甲:2\n零：3\n全角:１２\n正数:+1\n负数:-2"
+          },
+          {
+            "expected": "{\"items\":[{\"name\":\"名\",\"quantity\":7}],\"total\":7,\"invalid\":3}",
+            "input": "  :2\nA:1:2\n空:\n名：3\n名:4\n\n"
+          },
+          {
+            "expected": "{\"items\":[],\"total\":0,\"invalid\":0}",
+            "input": " \n\t\n"
+          }
+        ],
+        "public_cases": [
+          {
+            "expected": "{\"items\":[{\"name\":\"苹果\",\"quantity\":6},{\"name\":\"香蕉\",\"quantity\":3}],\"total\":9,\"invalid\":2}",
+            "input": "苹果:2\n香蕉：3\n 苹果:4\n坏记录\n梨:-1"
+          },
+          {
+            "expected": "{\"items\":[],\"total\":0,\"invalid\":0}",
+            "input": ""
+          },
+          {
+            "expected": "{\"items\":[{\"name\":\"测试\",\"quantity\":10}],\"total\":10,\"invalid\":2}",
+            "input": "  \n\n测试 : 0\n  测试：10\n:5\n非法+号: +2\n"
+          }
+        ],
+        "questions": [],
+        "schema": "jarvis.capability-draft.v1",
+        "summary": "提供一个纯文本清单解析与数量累计聚合工具，支持中英文冒号分隔、校验纯数字与非空名称、忽略空行并统计格式错误行，按首次出现顺序输出紧凑 JSON 统计结果。",
+        "supported": true
+      },
+      "error": null,
+      "goal_id": "goal-33109195fcd34b6a94c772bbc695d025",
+      "revision": 6,
+      "status": "REJOINED"
+    },
+    "plan": {
+      "cancel": 0,
+      "catalog": [
+        {
+          "active": "pkg-bc39897b094bd2980b982ccf9993a7d6f6eb1603deecda7abe4ba09688c1e1d8",
+          "capability": "plugin.goal-33109195fcd34b6a94c7.v1",
+          "description": "实现函数 run(text: str) -> str。按行解析输入的清单文本：\n1. 逐行处理，首尾空白字符需去除；空行（无字符或仅含空白）直接忽略，不计入统计也不计入错误。\n2. 对非空行按第一个冒号（英文冒号“:”或中文冒号“：”）拆分为名称与数量两部分，并分别去除两端空白字符。\n3. 校验规则：若行中不存在冒号、去除空白后名称为空、或者数量不为纯 ASCII 数字串（例如含有“+”、“-”、字母或其它非数字字符），均判定为错误行，错误行计数 invalid 加 1，并忽略该行。\n4. 合法行的数量解析为非负整数，按名称首次出现的先后顺序记录条目；若出现相同名称，则数量累加。\n5. 统计所有合法条目的总数量 total，以及错误非空行数 invalid。\n6. 将结果序列化为紧凑 JSON 格式（使用 json.dumps(..., ensure_ascii=False, separators=(',', ':'))），键顺序为 items、total、invalid。每个 item 包含 name 与 quantity 两个字段。无有效记录时 items 为 []，total 为 0。输出不得包含代码围栏或多余外层空白。",
+          "name": "将合成测试清单按名称合计数量并保存结果，以便后续反复处理同类清单。解析规则：每行格式为“名称:非负整数”，允许英文冒号“:”或中文冒号“：”及首尾空白，名称不能为空；数量仅接受纯 ASCII 数字，带正号（如“+2”）或负号（如“-1”）均视为错误；忽略格式错误的行；空行不计入错误；同名数量累加，按名称首次出现顺序输出紧凑 JSON 格式（保留中文字符，不加代码围栏），字段结构为：{\"items\":[{\"name\":\"名称\",\"quantity\":数量}],\"total\":总数量,\"invalid\":错误非空行数}。",
+          "revision": 1
+        },
+        {
+          "active": "pkg-d474d66a5f424536683552ed3fcabc96a450b04efa4e07c6f2778a2687f36414",
+          "capability": "plugin.clean-list.v1",
+          "description": "Input is newline separated text. Split with splitlines(); strip each line; discard blank lines; remove duplicates by casefold preserving first trimmed spelling and order. Return compact JSON using ensure_ascii=False and separators=(\",\",\":\") with keys exactly in this order: items (list), count (integer). Implement main.py and a separate reusable helper module; no file, process or network operations.",
+          "name": "为个人助手新增可复用的清单整理能力：编写多文件 Python 工具，去除空行、修剪首尾空格、按 Unicode casefold 忽略大小写去重，保留首次出现的文本及顺序，并交付整理后的清单。",
+          "revision": 1
+        },
+        {
+          "active": "pkg-f7e2e9121abed0d97ea951985735d2f4682c1eb66fd6d53d395f3108b7dc78a5",
+          "capability": "plugin.goal-49c3b6d512a24fc48239.v1",
+          "description": "实现函数 run(text: str) -> str。逐行处理输入文本：每行去除首尾空白字符；若去除空白后以 `- [x]` 或 `- [X]` 开头，则识别为已完成任务；若以 `- [ ]` 开头，则识别为未完成任务；提取标记后的内容作为标题，并去除标题首尾空白。若标题为空、行不符合待办标记格式或为空行，则直接忽略。统计有效任务数量：total 为全部有效待办数，done 为已完成数，pending 为未完成数；remaining 为所有未完成任务标题的列表（保持出现顺序，不去重）。若输入为空或无有效待办，各项数值为 0，remaining 为空列表。最终结果序列化为 JSON 字符串，键顺序固定为 total、done、pending、remaining，保留中文原样字符（ensure_ascii=False），且不包含多余空格（紧凑格式 separators=(',', ':')）。",
+          "name": "把待办文本整理成统计 JSON 并保存。逐行去首尾空白，识别 - [x] 和 - [X] 开头为已完成，- [ ] 开头为未完成；标记后是标题，标题去首尾空白，空标题、空行与其他备注忽略。输出键固定为 total、done、pending、remaining；remaining 按原顺序保留未完成标题，不去重。JSON 不带多余空格，中文原样保留。需要能反复处理不同清单的能力。",
+          "revision": 1
+        },
+        {
+          "active": "pkg-793f9b9165e576e38a34f95122af5c25cd61f6708e0ebec06a40875f4eb84baa",
+          "capability": "plugin.migration-lines.v1",
+          "description": "实现 run(text) -> str。逐行 strip，丢弃空行，保留第一次出现的完整行；大小写不同的行保留；结果用换行连接，不增加尾部换行。",
+          "name": "dev.6 迁移验收 · 行清理工具",
+          "revision": 1
+        }
+      ],
+      "created": 1792725091.8391628,
+      "deadline": 1792726329.9732308,
+      "digest": "f19c4967a744491e7abc51d3077e131ffeea486bd432160369e69d0055c002b6",
+      "error": null,
+      "generation": 1,
+      "id": "goal-33109195fcd34b6a94c772bbc695d025",
+      "planning_round": 1,
+      "proposal": {
+        "input_text": "苹果:2\n香蕉：3\n 苹果:4\n坏记录\n梨:-1",
+        "questions": [],
+        "schema": "jarvis.goal-plan.v1",
+        "steps": [
+          {
+            "capability": "plugin.goal-33109195fcd34b6a94c7.v1",
+            "expected": "输出包含 items（累计名称与数量）、total（总数量）以及 invalid（错误行数）的紧凑 JSON 字符串。",
+            "source": "input",
+            "title": "汇总清单数量与错误行数"
+          }
+        ],
+        "summary": "使用测试清单汇总工具按名称聚合数量并统计错误行数，生成紧凑格式的 JSON 统计结果。"
+      },
+      "request": {
+        "goal": "将合成测试清单按名称合计数量并保存结果，以便后续反复处理同类清单。解析规则：每行格式为“名称:非负整数”，允许英文冒号“:”或中文冒号“：”及首尾空白，名称不能为空；数量仅接受纯 ASCII 数字，带正号（如“+2”）或负号（如“-1”）均视为错误；忽略格式错误的行；空行不计入错误；同名数量累加，按名称首次出现顺序输出紧凑 JSON 格式（保留中文字符，不加代码围栏），字段结构为：{\"items\":[{\"name\":\"名称\",\"quantity\":数量}],\"total\":总数量,\"invalid\":错误非空行数}。",
+        "input_text": "苹果:2\n香蕉：3\n 苹果:4\n坏记录\n梨:-1",
+        "model": "gemini-3.8-flash",
+        "provider": "vertex",
+        "reasoning": "default",
+        "request_id": "chat-goal-15816659b5f5a49785053afafa7482f12d24cd66"
+      },
+      "request_id": "chat-goal-15816659b5f5a49785053afafa7482f12d24cd66",
+      "revision": 10,
+      "routes": [
+        {
+          "id": "vertex",
+          "model": "gemini-3.8-flash",
+          "parameters": {
+            "max_output_tokens": 8192,
+            "thinking_level": "MEDIUM"
+          }
+        }
+      ],
+      "status": "ACCEPTED",
+      "task_id": "task-11cd9030abf24939878446348205b8cf"
+    },
+    "task": {
+      "bindings": {
+        "artifact.write.v1": "artifact.local.v1",
+        "plugin.goal-33109195fcd34b6a94c7.v1": "pkg-bc39897b094bd2980b982ccf9993a7d6f6eb1603deecda7abe4ba09688c1e1d8"
+      },
+      "body": {
+        "goal": "将合成测试清单按名称合计数量并保存结果，以便后续反复处理同类清单。解析规则：每行格式为“名称:非负整数”，允许英文冒号“:”或中文冒号“：”及首尾空白，名称不能为空；数量仅接受纯 ASCII 数字，带正号（如“+2”）或负号（如“-1”）均视为错误；忽略格式错误的行；空行不计入错误；同名数量累加，按名称首次出现顺序输出紧凑 JSON 格式（保留中文字符，不加代码围栏），字段结构为：{\"items\":[{\"name\":\"名称\",\"quantity\":数量}],\"total\":总数量,\"invalid\":错误非空行数}。",
+        "grant_id": "goal-33109195fcd34b6a94c772bbc695d025-execute",
+        "limits": {
+          "max_attempts": 1,
+          "max_cost_units": 2,
+          "max_seconds": 600,
+          "max_steps": 2
+        },
+        "principal_id": "owner.local",
+        "request_id": "goal-use.33109195fcd34b6a94c772bbc695d025",
+        "schema": "jarvis.task.v1",
+        "scope_id": "personal",
+        "steps": [
+          {
+            "arguments": {
+              "text": "苹果:2\n香蕉：3\n 苹果:4\n坏记录\n梨:-1"
+            },
+            "capability": "plugin.goal-33109195fcd34b6a94c7.v1",
+            "step_id": "step-1"
+          },
+          {
+            "arguments": {
+              "name": "result.json"
+            },
+            "capability": "artifact.write.v1",
+            "input_from": "step-1",
+            "step_id": "deliver"
+          }
+        ]
+      },
+      "cancel": 0,
+      "created": 1792725799.2371147,
+      "deadline": 1792726399.2371147,
+      "digest": "537557b00f6c1f801081996b08703a91fdade9cc7ddaadceef8cd266269713b3",
+      "error": null,
+      "id": "task-11cd9030abf24939878446348205b8cf",
+      "next_step": 2,
+      "request_id": "goal-use.33109195fcd34b6a94c772bbc695d025",
+      "revision": 7,
+      "spent": 2,
+      "status": "SUCCEEDED"
+    }
+  },
+  "conversation_receipt": {
+    "error": null,
+    "id": "goal-33109195fcd34b6a94c772bbc695d025",
+    "output": "{\"items\":[{\"name\":\"苹果\",\"quantity\":6},{\"name\":\"香蕉\",\"quantity\":3}],\"total\":9,\"invalid\":2}",
+    "revision": 10,
+    "status": "SUCCEEDED",
+    "summary": "使用测试清单汇总工具按名称聚合数量并统计错误行数，生成紧凑格式的 JSON 统计结果。"
+  },
+  "experience_candidate": {
+    "created": 1792725800.1831336,
+    "fact_id": null,
+    "id": "memory-6508024cc29b452fab2c0f8af5efaf62",
+    "key": "已通过实际执行完成：将合成测试清单按名称合计数量并保存结果，以便后续反复处理同类清单。解析规则：每行格式为“名称:非负整",
+    "revision": 1,
+    "scope": "personal",
+    "source_id": "goal:goal-33109195fcd34b6a94c772bbc695d025",
+    "source_revision": "f5e1359ebdfcad20d8a689620567d7ac208b3b9fd37de446ac8b827c0b9fa060",
+    "state": "PENDING",
+    "value": "已通过实际执行完成：将合成测试清单按名称合计数量并保存结果，以便后续反复处理同类清单。解析规则：每行格式为“名称:非负整数”，允许英文冒号“:”或中文冒号“：”及首尾空白，名称不能为空；数量仅接受纯 ASCII 数字，带正号（如“+2”）或负号（如“-1”）均视为错误；忽略格式错误的行；空行不计入错误；同名数量累加，按名称首次出现顺序输出紧凑 JSON 格式（保留中文字符，不加代码围栏），字段结构为：{\"items\":[{\"name\":\"名称\",\"quantity\":数量}],\"total\":总数量,\"invalid\":错误非空行数}。\n可复用能力：plugin.goal-33109195fcd34b6a94c7.v1\n适用条件以工具当前契约为准；其他输入仍需核对。"
+  },
+  "model_calls": [
+    {
+      "run_id": "goal-33109195fcd34b6a94c772bbc695d025",
+      "phase": "goal-plan",
+      "status": "SUCCEEDED",
+      "error": null,
+      "model": "gemini-3.8-flash",
+      "usage": "{\"completion_tokens\":200,\"prompt_tokens\":1101,\"reasoning_in_completion\":false,\"reasoning_tokens\":477,\"total_tokens\":1778}"
+    },
+    {
+      "run_id": "goal-33109195fcd34b6a94c772bbc695d025-g1",
+      "phase": "goal-plan",
+      "status": "SUCCEEDED",
+      "error": null,
+      "model": "gemini-3.8-flash",
+      "usage": "{\"completion_tokens\":127,\"prompt_tokens\":1140,\"reasoning_in_completion\":false,\"reasoning_tokens\":509,\"total_tokens\":1776}"
+    },
+    {
+      "run_id": "goal-33109195fcd34b6a94c772bbc695d025-draft",
+      "phase": "capability-draft",
+      "status": "SUCCEEDED",
+      "error": null,
+      "model": "gemini-3.8-flash",
+      "usage": "{\"completion_tokens\":606,\"prompt_tokens\":1147,\"reasoning_in_completion\":false,\"reasoning_tokens\":1332,\"total_tokens\":3085}"
+    },
+    {
+      "run_id": "dev-8a7dcce41043418e83a4e2ee6e1f437f",
+      "phase": "plan",
+      "status": "SUCCEEDED",
+      "error": null,
+      "model": "gemini-3.8-flash",
+      "usage": "{\"completion_tokens\":372,\"prompt_tokens\":845,\"reasoning_in_completion\":false,\"reasoning_tokens\":254,\"total_tokens\":1471}"
+    },
+    {
+      "run_id": "dev-8a7dcce41043418e83a4e2ee6e1f437f",
+      "phase": "code-0",
+      "status": "ACKNOWLEDGED",
+      "error": "codex_incomplete",
+      "model": "gpt-6.1-sol",
+      "usage": "{}"
+    },
+    {
+      "run_id": "dev-8a7dcce41043418e83a4e2ee6e1f437f",
+      "phase": "code-0",
+      "status": "ACKNOWLEDGED",
+      "error": "codex_incomplete",
+      "model": "gpt-6.1-sol",
+      "usage": "{}"
+    },
+    {
+      "run_id": "dev-8a7dcce41043418e83a4e2ee6e1f437f",
+      "phase": "code-0",
+      "status": "ACKNOWLEDGED",
+      "error": "codex_incomplete",
+      "model": "gpt-6.1-sol",
+      "usage": "{}"
+    },
+    {
+      "run_id": "dev-8a7dcce41043418e83a4e2ee6e1f437f",
+      "phase": "code-0",
+      "status": "SUCCEEDED",
+      "error": null,
+      "model": "gpt-6.1-sol",
+      "usage": "{\"cache_write_input_tokens\":0,\"cached_input_tokens\":0,\"input_tokens\":12172,\"output_tokens\":368,\"reasoning_output_tokens\":38}"
+    },
+    {
+      "run_id": "goal-33109195fcd34b6a94c772bbc695d025-return-g1",
+      "phase": "goal-plan",
+      "status": "SUCCEEDED",
+      "error": null,
+      "model": "gemini-3.8-flash",
+      "usage": "{\"completion_tokens\":150,\"prompt_tokens\":1573,\"reasoning_in_completion\":false,\"reasoning_tokens\":366,\"total_tokens\":2089}"
+    }
+  ],
+  "result_followup": {
+    "assistant_action": {
+      "goal": "",
+      "input_text": "",
+      "kind": "chat",
+      "target": ""
+    },
+    "cancel": 0,
+    "chat_id": "chat-30bfcb09a4884c189f8a465040a61fac",
+    "context_count": 5,
+    "created": 1792725992.5272686,
+    "error": null,
+    "guidance": null,
+    "id": "result-dev10-13a2275a586e4273a8f7e3ec9eb1b90d",
+    "memory_context": {
+      "enabled": true,
+      "epoch": 4,
+      "facts": [
+        {
+          "id": "fact-bd4c501bf7214d2581e44f44bad31fcd",
+          "revision": 1
+        }
+      ],
+      "provider": "vertex",
+      "scope": "personal"
+    },
+    "model": "gemini-3.8-flash",
+    "provider": "vertex",
+    "reply": "根据已完成的处理结果，该清单的最终总数量为 9，错误行数为 2。",
+    "request": {
+      "assistant_mode": true,
+      "chat_id": "chat-30bfcb09a4884c189f8a465040a61fac",
+      "model": "",
+      "provider": "auto",
+      "reasoning": "default",
+      "request_id": "result-dev10-13a2275a586e4273a8f7e3ec9eb1b90d",
+      "text": "刚才那份清单最终总数量、错误行数分别是多少？只根据已经完成的真实结果回答，不新建任务。"
+    },
+    "status": "SUCCEEDED",
+    "usage": {
+      "completion_tokens": 54,
+      "prompt_tokens": 1201,
+      "reasoning_in_completion": false,
+      "reasoning_tokens": 251,
+      "total_tokens": 1506
+    }
+  },
+  "restarted_goal_identity_preserved": true,
+  "memory_lifecycle": {
+    "accepted": true,
+    "visible_in_allowed_view": true,
+    "withdrawn_candidate_state": "WITHDRAWN",
+    "synthetic_facts_removed": true
+  },
+  "reuse": {
+    "task_id": "task-65058f49975146d6a103336588b463e8",
+    "result": "{\"items\":[{\"name\":\"书\",\"quantity\":3},{\"name\":\"笔\",\"quantity\":0}],\"total\":3,\"invalid\":0}",
+    "model_calls": 0,
+    "duplicate_submission_same_task": true,
+    "completed_task_not_replayed": true,
+    "actions": [
+      {
+        "id": "action-b9e2d35416c127c854437cd8c25e5c7f",
+        "task_id": "task-65058f49975146d6a103336588b463e8",
+        "step_id": "use",
+        "capability": "plugin.goal-33109195fcd34b6a94c7.v1",
+        "arguments": {
+          "text": "书:1\n书：2\n笔:0\n"
+        },
+        "digest": "49a3f49f0ba80ef8aba21bc63b6797c2c3e6dad13231f25d93c12c12f86c26c8",
+        "status": "CONFIRMED",
+        "attempts": 1,
+        "result": {
+          "package_id": "pkg-bc39897b094bd2980b982ccf9993a7d6f6eb1603deecda7abe4ba09688c1e1d8",
+          "text": "{\"items\":[{\"name\":\"书\",\"quantity\":3},{\"name\":\"笔\",\"quantity\":0}],\"total\":3,\"invalid\":0}",
+          "worker": {
+            "active_process_limit": 1,
+            "appcontainer_verified": true,
+            "backend": "windows-lpac-job",
+            "capabilities": [
+              "registryRead"
+            ],
+            "cpu_limit_seconds": 3,
+            "elapsed_seconds": 0.2635,
+            "memory_limit_bytes": 268435456,
+            "network_capabilities": [],
+            "peak_memory_bytes": 12947456,
+            "wall_limit_seconds": 8
+          }
+        },
+        "error": null
+      },
+      {
+        "id": "action-3d27922246a85adf0dd3e7c07093245b",
+        "task_id": "task-65058f49975146d6a103336588b463e8",
+        "step_id": "deliver",
+        "capability": "artifact.write.v1",
+        "arguments": {
+          "content": "{\"package_id\":\"pkg-bc39897b094bd2980b982ccf9993a7d6f6eb1603deecda7abe4ba09688c1e1d8\",\"text\":\"{\\\"items\\\":[{\\\"name\\\":\\\"书\\\",\\\"quantity\\\":3},{\\\"name\\\":\\\"笔\\\",\\\"quantity\\\":0}],\\\"total\\\":3,\\\"invalid\\\":0}\",\"worker\":{\"active_process_limit\":1,\"appcontainer_verified\":true,\"backend\":\"windows-lpac-job\",\"capabilities\":[\"registryRead\"],\"cpu_limit_seconds\":3,\"elapsed_seconds\":0.2635,\"memory_limit_bytes\":268435456,\"network_capabilities\":[],\"peak_memory_bytes\":12947456,\"wall_limit_seconds\":8}}",
+          "name": "result.json"
+        },
+        "digest": "9776923fb66a711b75ff6a50b204037f8a8bec2f44ba0d71458fff2fee4a7edb",
+        "status": "CONFIRMED",
+        "attempts": 1,
+        "result": {
+          "bytes": 484,
+          "relative_path": "artifacts/task-65058f49975146d6a103336588b463e8/action-3d27922246a85adf0dd3e7c07093245b/result.json",
+          "sha256": "e60e2c76f872ceb2026fb68d8d03540630c563e95bee3c832334a782776b6afb",
+          "verified": true
+        },
+        "error": null
+      }
+    ]
+  },
+  "fresh_goal_chat": "chat-f6cefcf45c164f05a2fcae34c8412f0f",
+  "fresh_goal_turn": "fresh-goal-dev10-a158053013f94455905cb913a4a5ce24",
+  "fresh_goal_plan": {
+    "actions": [],
+    "context": {
+      "enabled": 1,
+      "goal_id": "goal-e5fffcdc266a44d78a49bf332f7a8980",
+      "history": [],
+      "scope": "personal",
+      "view": {
+        "facts": [],
+        "providers": [
+          "vertex"
+        ]
+      }
+    },
+    "growth": null,
+    "plan": {
+      "cancel": 0,
+      "catalog": [
+        {
+          "active": "pkg-d474d66a5f424536683552ed3fcabc96a450b04efa4e07c6f2778a2687f36414",
+          "capability": "plugin.clean-list.v1",
+          "description": "Input is newline separated text. Split with splitlines(); strip each line; discard blank lines; remove duplicates by casefold preserving first trimmed spelling and order. Return compact JSON using ensure_ascii=False and separators=(\",\",\":\") with keys exactly in this order: items (list), count (integer). Implement main.py and a separate reusable helper module; no file, process or network operations.",
+          "name": "为个人助手新增可复用的清单整理能力：编写多文件 Python 工具，去除空行、修剪首尾空格、按 Unicode casefold 忽略大小写去重，保留首次出现的文本及顺序，并交付整理后的清单。",
+          "revision": 1
+        },
+        {
+          "active": "pkg-bc39897b094bd2980b982ccf9993a7d6f6eb1603deecda7abe4ba09688c1e1d8",
+          "capability": "plugin.goal-33109195fcd34b6a94c7.v1",
+          "description": "实现函数 run(text: str) -> str。按行解析输入的清单文本：\n1. 逐行处理，首尾空白字符需去除；空行（无字符或仅含空白）直接忽略，不计入统计也不计入错误。\n2. 对非空行按第一个冒号（英文冒号“:”或中文冒号“：”）拆分为名称与数量两部分，并分别去除两端空白字符。\n3. 校验规则：若行中不存在冒号、去除空白后名称为空、或者数量不为纯 ASCII 数字串（例如含有“+”、“-”、字母或其它非数字字符），均判定为错误行，错误行计数 invalid 加 1，并忽略该行。\n4. 合法行的数量解析为非负整数，按名称首次出现的先后顺序记录条目；若出现相同名称，则数量累加。\n5. 统计所有合法条目的总数量 total，以及错误非空行数 invalid。\n6. 将结果序列化为紧凑 JSON 格式（使用 json.dumps(..., ensure_ascii=False, separators=(',', ':'))），键顺序为 items、total、invalid。每个 item 包含 name 与 quantity 两个字段。无有效记录时 items 为 []，total 为 0。输出不得包含代码围栏或多余外层空白。",
+          "name": "将合成测试清单按名称合计数量并保存结果，以便后续反复处理同类清单。解析规则：每行格式为“名称:非负整数”，允许英文冒号“:”或中文冒号“：”及首尾空白，名称不能为空；数量仅接受纯 ASCII 数字，带正号（如“+2”）或负号（如“-1”）均视为错误；忽略格式错误的行；空行不计入错误；同名数量累加，按名称首次出现顺序输出紧凑 JSON 格式（保留中文字符，不加代码围栏），字段结构为：{\"items\":[{\"name\":\"名称\",\"quantity\":数量}],\"total\":总数量,\"invalid\":错误非空行数}。",
+          "revision": 1
+        },
+        {
+          "active": "pkg-f7e2e9121abed0d97ea951985735d2f4682c1eb66fd6d53d395f3108b7dc78a5",
+          "capability": "plugin.goal-49c3b6d512a24fc48239.v1",
+          "description": "实现函数 run(text: str) -> str。逐行处理输入文本：每行去除首尾空白字符；若去除空白后以 `- [x]` 或 `- [X]` 开头，则识别为已完成任务；若以 `- [ ]` 开头，则识别为未完成任务；提取标记后的内容作为标题，并去除标题首尾空白。若标题为空、行不符合待办标记格式或为空行，则直接忽略。统计有效任务数量：total 为全部有效待办数，done 为已完成数，pending 为未完成数；remaining 为所有未完成任务标题的列表（保持出现顺序，不去重）。若输入为空或无有效待办，各项数值为 0，remaining 为空列表。最终结果序列化为 JSON 字符串，键顺序固定为 total、done、pending、remaining，保留中文原样字符（ensure_ascii=False），且不包含多余空格（紧凑格式 separators=(',', ':')）。",
+          "name": "把待办文本整理成统计 JSON 并保存。逐行去首尾空白，识别 - [x] 和 - [X] 开头为已完成，- [ ] 开头为未完成；标记后是标题，标题去首尾空白，空标题、空行与其他备注忽略。输出键固定为 total、done、pending、remaining；remaining 按原顺序保留未完成标题，不去重。JSON 不带多余空格，中文原样保留。需要能反复处理不同清单的能力。",
+          "revision": 1
+        },
+        {
+          "active": "pkg-793f9b9165e576e38a34f95122af5c25cd61f6708e0ebec06a40875f4eb84baa",
+          "capability": "plugin.migration-lines.v1",
+          "description": "实现 run(text) -> str。逐行 strip，丢弃空行，保留第一次出现的完整行；大小写不同的行保留；结果用换行连接，不增加尾部换行。",
+          "name": "dev.6 迁移验收 · 行清理工具",
+          "revision": 1
+        }
+      ],
+      "created": 1792726683.0298648,
+      "deadline": 1792727283.0298648,
+      "digest": "a160b7eb810f43e5ee22cf7d5207ef73693a407a4a91bf67c7dc37729a0a1711",
+      "error": null,
+      "generation": 0,
+      "id": "goal-e5fffcdc266a44d78a49bf332f7a8980",
+      "planning_round": 0,
+      "proposal": {
+        "input_text": "纸:5\n纸:2",
+        "questions": [],
+        "schema": "jarvis.goal-plan.v1",
+        "steps": [
+          {
+            "capability": "plugin.goal-33109195fcd34b6a94c7.v1",
+            "expected": "输出包含 items、total、invalid 字段的紧凑 JSON 字符串，其中“纸”的数量累加为 7",
+            "source": "input",
+            "title": "汇总清单中的名称与数量"
+          }
+        ],
+        "summary": "调用数量汇总工具对输入的清单数据进行同名合并与数量累加，输出结构化统计结果并由系统自动保存。"
+      },
+      "request": {
+        "goal": "使用数量汇总工具处理输入数据并保存结果",
+        "input_text": "纸:5\n纸:2",
+        "model": "gemini-3.8-flash",
+        "provider": "vertex",
+        "reasoning": "default",
+        "request_id": "chat-goal-008827ef9b760374a029c26a4247d3166257736d"
+      },
+      "request_id": "chat-goal-008827ef9b760374a029c26a4247d3166257736d",
+      "revision": 3,
+      "routes": [
+        {
+          "id": "vertex",
+          "model": "gemini-3.8-flash",
+          "parameters": {
+            "max_output_tokens": 8192,
+            "thinking_level": "MEDIUM"
+          }
+        }
+      ],
+      "status": "REVIEW",
+      "task_id": null
+    },
+    "task": null
+  },
+  "fresh_goal_delivery": {
+    "assistant_action": {
+      "goal": "使用数量汇总工具处理输入数据并保存结果",
+      "input_text": "纸:5\n纸:2",
+      "kind": "goal",
+      "target": ""
+    },
+    "cancel": 0,
+    "chat_id": "chat-f6cefcf45c164f05a2fcae34c8412f0f",
+    "context_count": 1,
+    "created": 1792726674.6316643,
+    "error": null,
+    "guidance": null,
+    "id": "fresh-goal-dev10-a158053013f94455905cb913a4a5ce24",
+    "linked_goal": {
+      "error": null,
+      "id": "goal-e5fffcdc266a44d78a49bf332f7a8980",
+      "output": "{\"items\":[{\"name\":\"纸\",\"quantity\":7}],\"total\":7,\"invalid\":0}",
+      "revision": 4,
+      "status": "SUCCEEDED",
+      "summary": "调用数量汇总工具对输入的清单数据进行同名合并与数量累加，输出结构化统计结果并由系统自动保存。"
+    },
+    "memory_context": {
+      "enabled": true,
+      "epoch": 7,
+      "facts": [],
+      "provider": "vertex",
+      "scope": "personal"
+    },
+    "model": "gemini-3.8-flash",
+    "provider": "vertex",
+    "reply": "我已整理好这个目标，会先核对可用能力和行动计划。进度以目标卡片为准。",
+    "request": {
+      "assistant_mode": true,
+      "chat_id": "chat-f6cefcf45c164f05a2fcae34c8412f0f",
+      "model": "",
+      "provider": "auto",
+      "reasoning": "default",
+      "request_id": "fresh-goal-dev10-a158053013f94455905cb913a4a5ce24",
+      "text": "帮我用数量汇总工具处理下面两行并保存结果：\n纸:5\n纸:2"
+    },
+    "status": "SUCCEEDED",
+    "usage": {
+      "completion_tokens": 69,
+      "prompt_tokens": 510,
+      "reasoning_in_completion": false,
+      "reasoning_tokens": 139,
+      "total_tokens": 718
+    }
+  },
+  "fresh_goal_input_extraction_verified": true
+}

@@ -1,0 +1,501 @@
+{
+  "schema_version": 1,
+  "release": "0.2.0-dev.2",
+  "recorded_at": "2026-10-22T10:28:46.306463+00:00",
+  "scope": "Independently implemented bounded stateless text-tool development, restricted execution, package release recovery and read-only workbench",
+  "environment": {
+    "os": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.0",
+    "sqlite": "3.45.3",
+    "rust": "1.93.1",
+    "third_party_python_packages": [],
+    "third_party_rust_crates": []
+  },
+  "checks": {
+    "python_behaviour": {
+      "command": "python -X utf8 -I -B -m unittest discover -s tests -p test_*.py -v",
+      "passed": 65,
+      "failed": 0,
+      "skipped": 0,
+      "duration_seconds": 74.838,
+      "suites": [
+        {
+          "path": "tests/test_cli_native.py",
+          "count": 4,
+          "tests": [
+            "test_cli_init_submit_run_query_and_error_envelopes",
+            "test_native_stop_and_status_work_without_python_and_latch_survives",
+            "test_native_starts_real_host_and_delivers_report",
+            "test_native_stop_terminates_hung_direct_child"
+          ]
+        },
+        {
+          "path": "tests/test_core.py",
+          "count": 30,
+          "tests": [
+            "test_end_to_end_verified_report_and_no_duplicate_effect",
+            "test_request_key_conflicts_on_different_payload",
+            "test_contracts_reject_unknown_fields_versions_and_boolean_limits",
+            "test_json_duplicate_keys_nonfinite_and_size_rejected",
+            "test_family_and_group_cannot_use_owner_grant",
+            "test_explicit_member_grant_and_scope",
+            "test_revocation_between_admission_and_execution",
+            "test_revocation_between_steps_prevents_second_effect",
+            "test_shared_budget_cannot_be_reset_by_new_task",
+            "test_safe_retry_is_bounded_persistent_and_other_task_runs",
+            "test_known_safe_transient_failure_can_recover",
+            "test_late_or_duplicate_cancel_reports_no_new_change",
+            "test_deadline_survives_restart",
+            "test_cancel_before_run_and_during_confirmed_effect",
+            "test_stop_resume_generation_and_persistent_latch",
+            "test_stop_between_steps_keeps_checkpoint_and_other_state",
+            "test_process_crash_after_write_reconciles_without_duplicate",
+            "test_process_crash_before_write_remains_unknown",
+            "test_partial_existing_artifact_is_never_overwritten",
+            "test_execution_lock_is_cross_process_and_released_after_death",
+            "test_lifecycle_switch_rollback_preserves_identity_facts_and_queued_binding",
+            "test_disabled_module_waits_then_resumes",
+            "test_arbitrary_module_provider_and_manifest_tampering_rejected",
+            "test_facts_correction_deletion_scope_and_restart",
+            "test_path_traversal_windows_devices_and_unknown_capabilities",
+            "test_identity_missing_does_not_silently_create_new_assistant",
+            "test_incomplete_initialization_never_masquerades_as_ready",
+            "test_module_missing_does_not_block_an_unrelated_capability",
+            "test_proposal_kind_cannot_hide_effect_fields",
+            "test_model_fallback_is_only_proposal_and_never_expands_provider_list"
+          ]
+        },
+        {
+          "path": "tests/test_development.py",
+          "count": 20,
+          "tests": [
+            "test_real_worker_multi_file_closed_loop",
+            "test_bounded_failed_candidate_then_repair",
+            "test_no_grant_no_codegen_or_publication",
+            "test_offline_does_not_call_model_and_resume_keeps_budget",
+            "test_unknown_model_not_replayed_or_fallback_without_ack",
+            "test_definite_rejection_uses_configured_backup",
+            "test_cancel_leaves_other_tasks_available",
+            "test_waiting_for_model_does_not_occupy_executor_lane",
+            "test_missing_worker_stops_before_spending_model_tokens",
+            "test_release_rollback_preserves_identity_revocation_and_correction",
+            "test_corrupt_active_package_auto_recovers_previous",
+            "test_post_release_runtime_failure_quarantines_and_rolls_back",
+            "test_first_release_failure_disables_slot",
+            "test_canary_settles_only_after_successful_observations",
+            "test_release_generation_conflict_and_scope",
+            "test_retirement_preserves_recovery_package_and_blocks_execution",
+            "test_result_receipt_recovers_without_reexecuting_candidate",
+            "test_runtime_generation_is_reused_after_development_checkpoint_loss",
+            "test_no_candidate_import_or_path_escape",
+            "test_real_process_death_before_and_after_release_commit"
+          ]
+        },
+        {
+          "path": "tests/test_model_transport.py",
+          "count": 4,
+          "tests": [
+            "test_missing_key_never_starts_http_child",
+            "test_endpoint_cannot_select_plaintext_or_credentials",
+            "test_usage_completion_bounds_and_secret_environment",
+            "test_cancel_terminates_transport"
+          ]
+        },
+        {
+          "path": "tests/test_workbench.py",
+          "count": 1,
+          "tests": [
+            "test_local_read_only_api_rejects_cross_origin_host_and_mutation"
+          ]
+        },
+        {
+          "path": "tests/test_worker.py",
+          "count": 6,
+          "tests": [
+            "test_host_read_write_staging_write_and_environment_denied",
+            "test_lpac_excludes_all_application_packages",
+            "test_network_and_child_process_denied",
+            "test_wall_output_memory_and_stop_bounds",
+            "test_runtime_tamper_fails_closed",
+            "test_host_death_kills_worker_and_orphans_are_recovered"
+          ]
+        }
+      ]
+    },
+    "final_status_change_regression": {
+      "command": "python -X utf8 -I -B -m unittest discover -s tests -p test_workbench.py -v",
+      "passed": 1,
+      "duration_seconds": 0.574,
+      "note": "Full suite preceded final status metadata correction and docstring edit; HTTP regression and architecture check rerun afterwards."
+    },
+    "rust": {
+      "passed": 2,
+      "offline_locked_debug_build": "passed",
+      "offline_locked_release_build": "passed",
+      "fmt_check": "passed"
+    },
+    "architecture": {
+      "python_files": 39,
+      "errors": []
+    },
+    "documentation_tool_tests": {
+      "passed": 8
+    },
+    "javascript_syntax": "passed",
+    "documentation": {
+      "navigation_updated_files": 9,
+      "documents": 25,
+      "chapters": 22,
+      "diagrams": 31,
+      "local_links": 1650,
+      "errors": 0,
+      "commands": [
+        "python tools/sync_doc_navigation.py --root .",
+        "python tools/check_docs.py --root ."
+      ],
+      "diagrams_rerendered": false,
+      "note": "Existing diagrams unchanged; this check validates source/artifact hashes and navigation, not runtime semantics.",
+      "final_navigation_updated_files": 0
+    }
+  },
+  "real_model": {
+    "route_model": "qwen3.8-flash",
+    "calls": [
+      {
+        "run_id": "dev-997a24d69c304bb7a12d932c26e7897d",
+        "phase": "plan",
+        "provider": "qwen-primary",
+        "status": "SUCCEEDED",
+        "usage": {
+          "completion_tokens": 1361,
+          "prompt_tokens": 458,
+          "total_tokens": 1819
+        },
+        "error": null
+      },
+      {
+        "run_id": "dev-997a24d69c304bb7a12d932c26e7897d",
+        "phase": "code-0",
+        "provider": "qwen-primary",
+        "status": "SUCCEEDED",
+        "usage": {
+          "completion_tokens": 3357,
+          "prompt_tokens": 924,
+          "total_tokens": 4281
+        },
+        "error": null
+      }
+    ],
+    "total_tokens": 6100,
+    "credential_source": "Existing process DASHSCOPE_API_KEY environment; value not recorded",
+    "data": "Synthetic specification, recipe, public cases and bounded candidate only; no email, profile or private project source",
+    "fallback_live_tested": false
+  },
+  "development_runs": [
+    {
+      "id": "dev-997a24d69c304bb7a12d932c26e7897d",
+      "status": "SUCCEEDED",
+      "phase": "delivered",
+      "attempt": 0,
+      "release_id": "pkg-d474d66a5f424536683552ed3fcabc96a450b04efa4e07c6f2778a2687f36414",
+      "task_id": "task-5dc3e72a544546f6bbd3337000d718b1",
+      "request_id": "live-dedupe-20261022-1",
+      "scope_id": "personal",
+      "limits": {
+        "max_attempts": 2,
+        "max_model_calls": 6,
+        "max_seconds": 900
+      },
+      "public_cases": 2,
+      "independent_cases": 4
+    }
+  ],
+  "packages": [
+    {
+      "id": "pkg-d474d66a5f424536683552ed3fcabc96a450b04efa4e07c6f2778a2687f36414",
+      "capability": "plugin.clean-list.v1",
+      "status": "STABLE",
+      "report": {
+        "acceptance_digest": "9c1fe7386cad25eb49abdbf1edcfadd7419c8e64d69afcf5474c80c9c6375761",
+        "case_count": 6,
+        "independent_cases": 4,
+        "package_id": "pkg-d474d66a5f424536683552ed3fcabc96a450b04efa4e07c6f2778a2687f36414",
+        "passed": true,
+        "public_cases": 2,
+        "worker": {
+          "active_process_limit": 1,
+          "appcontainer_verified": true,
+          "backend": "windows-lpac-job",
+          "capabilities": [
+            "registryRead"
+          ],
+          "cpu_limit_seconds": 3,
+          "elapsed_seconds": 0.2736,
+          "memory_limit_bytes": 268435456,
+          "network_capabilities": [],
+          "peak_memory_bytes": 13213696,
+          "wall_limit_seconds": 8
+        }
+      },
+      "relative_path": "packages/pkg-d474d66a5f424536683552ed3fcabc96a450b04efa4e07c6f2778a2687f36414.json",
+      "sha256": "d474d66a5f424536683552ed3fcabc96a450b04efa4e07c6f2778a2687f36414",
+      "generated_files": {
+        "list_cleaner.py": "a80ff98494be0549a92581a3b0e1b724e37c57c82bd8332656ba3cf2e1e6a16b",
+        "main.py": "e141311165d9adf3031aa510ced52872acdf6487f82467174bb5aa85c456515c"
+      }
+    }
+  ],
+  "release_slots": [
+    {
+      "capability": "plugin.clean-list.v1",
+      "active": "pkg-d474d66a5f424536683552ed3fcabc96a450b04efa4e07c6f2778a2687f36414",
+      "previous": null,
+      "revision": 1,
+      "enabled": 1,
+      "observations": 2
+    }
+  ],
+  "delivery_tasks": [
+    {
+      "id": "task-5dc3e72a544546f6bbd3337000d718b1",
+      "status": "SUCCEEDED",
+      "error": null,
+      "actions": [
+        {
+          "capability": "artifact.write.v1",
+          "status": "CONFIRMED",
+          "result": {
+            "bytes": 457,
+            "relative_path": "artifacts/task-5dc3e72a544546f6bbd3337000d718b1/action-d1e6ab4eefd207903b5be9c18c4c4ed7/result.json",
+            "sha256": "cecaa7d4366b5a2ad1c1c1a8a9bcefb4cbffa8bb94541140786684b146962d39",
+            "verified": true
+          },
+          "artifact_digest_rechecked": true
+        },
+        {
+          "capability": "plugin.clean-list.v1",
+          "status": "CONFIRMED",
+          "result": {
+            "package_id": "pkg-d474d66a5f424536683552ed3fcabc96a450b04efa4e07c6f2778a2687f36414",
+            "text": "{\"items\":[\"学习 Python\",\"散步\",\"READ\",\"联系家人\"],\"count\":4}",
+            "worker": {
+              "active_process_limit": 1,
+              "appcontainer_verified": true,
+              "backend": "windows-lpac-job",
+              "capabilities": [
+                "registryRead"
+              ],
+              "cpu_limit_seconds": 3,
+              "elapsed_seconds": 0.2318,
+              "memory_limit_bytes": 268435456,
+              "network_capabilities": [],
+              "peak_memory_bytes": 13074432,
+              "wall_limit_seconds": 8
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "task-3d01619214e34306b926c4a54fa1d1f1",
+      "status": "SUCCEEDED",
+      "error": null,
+      "actions": [
+        {
+          "capability": "plugin.clean-list.v1",
+          "status": "CONFIRMED",
+          "result": {
+            "package_id": "pkg-d474d66a5f424536683552ed3fcabc96a450b04efa4e07c6f2778a2687f36414",
+            "text": "{\"items\":[\"学习\",\"运动\",\"RELAX\"],\"count\":3}",
+            "worker": {
+              "active_process_limit": 1,
+              "appcontainer_verified": true,
+              "backend": "windows-lpac-job",
+              "capabilities": [
+                "registryRead"
+              ],
+              "cpu_limit_seconds": 3,
+              "elapsed_seconds": 0.2858,
+              "memory_limit_bytes": 268435456,
+              "network_capabilities": [],
+              "peak_memory_bytes": 13041664,
+              "wall_limit_seconds": 8
+            }
+          }
+        },
+        {
+          "capability": "artifact.write.v1",
+          "status": "CONFIRMED",
+          "result": {
+            "bytes": 434,
+            "relative_path": "artifacts/task-3d01619214e34306b926c4a54fa1d1f1/action-60a0b3e8c669d8d8efcccde02c6be224/observation.json",
+            "sha256": "c603e1ac68ea37534812c43746b6a43638bd6b291305a237ca24433db5f21c23",
+            "verified": true
+          },
+          "artifact_digest_rechecked": true
+        }
+      ]
+    }
+  ],
+  "continuity": {
+    "identity": {
+      "assistant_id": "jarvis-7991cd96cd274618bb4449ffb5396af0",
+      "generation": 1,
+      "owner_id": "owner.local",
+      "schema": "jarvis.identity.v1"
+    },
+    "same_as_seed_release": true,
+    "database_schema": 2,
+    "integrity": "ok"
+  },
+  "worker_runtime": {
+    "ready": true,
+    "files": 42,
+    "bytes": 20112287,
+    "manifest_sha256": "3f4f2c6f283e5ed9cc58836c56d1eba073b435efb30d33ebdf01f174a1325170",
+    "recipe": "windows-cpython313-lpac-job",
+    "authenticode_checked": {
+      "pythonw.exe": "Valid",
+      "python313.dll": "Valid"
+    },
+    "production_patch_baseline_verified": false
+  },
+  "browser": {
+    "url": "http://127.0.0.1:18282/",
+    "read_only": true,
+    "verified": [
+      "overview with original logo",
+      "navigation",
+      "model call usage",
+      "evidence open and close",
+      "keyboard resize right pane 380 to 390",
+      "latest view shows 3 completed tasks and 1 capability"
+    ],
+    "screenshot": "docs/evidence/workbench-0.2.0-dev.2.png",
+    "screenshot_sha256": "93721a05dc470cce71f55785ba2759e5428df16f977618237c42c3f7d9601ade"
+  },
+  "source_sha256": {
+    "adapters/__init__.py": "670f50e6096046c3ec696d8dd23ae99b33bd8bddffa7548f57e6323153237cb9",
+    "adapters/models/__init__.py": "a24df97c3680d549067b480df1424cce0842256cd7fcab119fdfd2b8eeeb91d8",
+    "adapters/models/http_client.py": "5ae1e694e4dabe4d39c0d5542d4d225612dce76249c5a4014acb01fdc45f9ed6",
+    "adapters/models/transport.py": "c8d402c85177b88106015598339915707f4a1ad31ad105bfb09c3ecba36f2ce9",
+    "adapters/storage/__init__.py": "6175beb16001d75f7de9516003aae98f2922793a782437aab9e3059ae58ee582",
+    "adapters/storage/sqlite.py": "e27c03c015091d0e5211019219f489cc066a8ae7d9d4d36a5d93bc2936ea9d29",
+    "apps/cli/main.py": "3e0616072badb9f6eeb1a271b7c479852ed8442e8725542c35fd8946f40f67a4",
+    "apps/workbench/app.js": "84c7d6b5992fc5bebd7f8171c62cfd869b3c90dabd239366230622ff2a012b3f",
+    "apps/workbench/brand/core.png": "3d66ab1a1d125e12ef289eaca563e37bc12b762b0c9d135f5f5c42902f610e4a",
+    "apps/workbench/brand/icon.png": "727f3188b8121ece87fd31e7bc25bd68f8c1572c50c957f272bb429546a7e9d1",
+    "apps/workbench/index.html": "f28b26bccb8c938313b5e4c43392355bb8e45afce1338849a5acb17ed373d02c",
+    "apps/workbench/server.py": "1b9e2765ee4033c7ce983f0c3a6d30ff13f2f5798171a483deb57d482b9e018b",
+    "apps/workbench/style.css": "e0323675e406409ea9be3a2b39db80a770f122ca765094606c0d47419360c774",
+    "config/defaults.toml": "b95992e10c93d3df56c22a259fad5f46c8d2f43ea56b1136a1d4cf510be25e07",
+    "config/model-routes.json": "b023e1263d575ad6e45e1bc9dd91c502291d76aba3d239c3da9b6fcace05ca4b",
+    "contracts/examples/clean-list.development.json": "a759f6c7ea3e8830882fdc9e2446c6ec504a830d846880a9f877e0a514e4b78b",
+    "contracts/examples/text-report.task.json": "48032fc52be2457030c3b28acf2e94f97ddcd706268e9bf7dc3479f83e9b8f99",
+    "contracts/schemas/code-candidate.v1.json": "c86af42637bac4dcd751a46e2ab0df7af387025fc8a285cde7ea4a6a5be882ac",
+    "contracts/schemas/development-plan.v1.json": "199e499e2c9e1c21f16795c1093dd8a9ad48aace479e212c3ab392085303a397",
+    "contracts/schemas/development.v1.json": "433a5e1f1108e68a21d258440a2d9a447e4611095117c3a8f1c9d1719c86ab5d",
+    "contracts/schemas/fact.v1.json": "cf5cd3b201f37a3e33e81286295b8e2250fe2a30d7c3686724d8ac71e7f986c2",
+    "contracts/schemas/grant.v1.json": "d37d6062579be1dc12f7f362cf0b4439da398a820c8fb6bd60ff48ca42b3848b",
+    "contracts/schemas/module.v1.json": "870f60aa30dc3c1b051a9bdfa2ac85d229ad4c85b280a783eb7189bd993bd022",
+    "contracts/schemas/step-proposal.v1.json": "3d73265d9a949f71d9b1640a5788728e69090fc59f1592aa47b1b49730e81beb",
+    "contracts/schemas/task.v1.json": "741a87d6e4ffa8a435d3fc3abea55fb117670c75adcd6194a711cbada92f9d2b",
+    "control/__init__.py": "06dafaf3bb36e2dd221ee69d862315fb23a499f8efcd9350a9a7d7ce1270256c",
+    "control/atomic.py": "5cb49d6a06df897a3762e437465aa19e42d7f9762c97f1a3c5d6e49599bdd6b1",
+    "control/bootstrap/Cargo.lock": "f93b284f96a149dee3b39767df7a0848c10601b06fa9b4a7a4d162f7c4f3058b",
+    "control/bootstrap/Cargo.toml": "7c91780d25ab63f70c3408cc2383b227d8aaa1c0730b0817b160700432b1d010",
+    "control/bootstrap/src/main.rs": "bf77e1607c75dfe1aab097eb7a50b776e9d897f07895fc08e6acc3a24d5afc59",
+    "control/paths.py": "3732eb3ecd6523fe60b32f8829524b4eca0f238576eb8dce0ca352a9da871017",
+    "control/policy/__init__.py": "be658f20f99206617f508b5e81eaa1a97b62bb95675dfea363b156f632e902d7",
+    "control/policy/grants.py": "ab4a02b8974a3e890fe1f092a5ac977f0c507ba9b786223c6bab438f7cecafce",
+    "control/receipts.py": "801d147cdb217e66b99128f0f0b57dbd2de9ea9a4481c0d8aa420b0c44f47867",
+    "control/recovery/__init__.py": "f2bf3dde26e3e97746d06fff69f8990a6978510de5b6ea31e168aaba4fc62559",
+    "control/recovery/gate.py": "2290adcef38cd0f7eef1ffac928a9e5cee13443d5ca60e4c305bb7024dd1d2e8",
+    "control/worker/__init__.py": "d5097ab8538bff57199f31edea5aacdbf93419011e8670b4db0c564d01b87540",
+    "control/worker/entry.py": "347b97fb85cdd15567514ed9a083251e58ea753bf1b428ef57a575cae2f26b1d",
+    "control/worker/launcher.py": "6317f1835e97b7f481e07f3737eab420efca1f3756dfb7e8f89d0eea6714c5da",
+    "control/worker/runtime.py": "ae765936f98c008be7e8a4740abfa54bb8e623f71789a8308e789f642fdc287d",
+    "control/worker/win32.py": "897cf0b583082de1e3f6fc48fdcdc257920198a624d34c97300e9dc46b75076c",
+    "host/__init__.py": "2e4d2fd5d98460b3b77fb9b53610e7f6ac0b8e066e911c4069a8ed77d6f0edde",
+    "host/core.py": "0ef8f40ad7cc9884cd1bbea4c2c1c6e90e246f002d2d99c2e6c8a5b19c78f2ab",
+    "modules/__init__.py": "7c0647e6f91eb29e419b8d39cc74b83fe9ca53b83f46811d39e8e1d55602f008",
+    "modules/autonomous_development/__init__.py": "474ad300ce3fef889e11a576a1d6442a470942d5397069ace6dbb687580e6544",
+    "modules/autonomous_development/service.py": "fb677746389fbca87eb51a2ebf1189a14e313b8dca302850e436ead646ebdd8d",
+    "modules/context_knowledge/__init__.py": "6db76ff88c8017d9ea169786f31efccd4c99b851d84f1b4e7377cdd5486ab89a",
+    "modules/continuity/__init__.py": "50136b5f221f9b3556e6d7b61e2d2a27b34ed7871a92ac43369c04b304ed749e",
+    "modules/model_gateway/__init__.py": "621e67abb4d9b9c4c0d54d408dc2be57cb76b3f142ec50968597d185c923a1a0",
+    "modules/model_gateway/routed.py": "71d57d1e63dc23134bbeb1ab1000544017b96b75d8bef481f95131962020a1f1",
+    "modules/registry_composer/__init__.py": "46702adcf9662a9140b8d8d448c51313663544bfa8b1b298a9ee831ccf0afbbb",
+    "modules/registry_composer/builtins.py": "0e7319b39a70e2a77e80ed700432d3b4e5c710aa79bf46a77a7dfd74bb1aeb0f",
+    "modules/registry_composer/manifests/artifact-writer.json": "96c2c759ab7db7c0605fe8ed0b037a67f3ef04c8f7f7c20ce2f4b488341b609c",
+    "modules/registry_composer/manifests/text-analyzer.json": "2f5d7b8fd56993aeaebd4ca2d0cb2a1ae61e02ac2b1b7f9f7fb11ec84ad7bd4c",
+    "modules/registry_composer/registry.py": "4fe3964f3bab6f48f753e7bcb668645e98e3e46966484d6c02082cc8bfb66cd0",
+    "modules/release_recovery/__init__.py": "2e34fa85eb0a6e3238087b7a7407850c53ebf66976cf4320fd32ff23c436f29a",
+    "modules/release_recovery/packages.py": "c7687d636599ae157b5a5649a0a1f0442106dea8ebf2cd233333484de9d4eac0",
+    "modules/task_resource/__init__.py": "a9264d8c3c4bff473efe344b336e1717090d81853a623bba56baddd4ac1b4fef",
+    "modules/task_resource/ledger.py": "305a4f78f0375fd04bd8c9d9c6efdbbb2b911b97fd41aca68ce0d296b7d457c9",
+    "packaging/reference-map.json": "5fae463178ab48cbefc2d73d92bb1ba964f1766f7b127ab602a2e7ef3c60fe00",
+    "packaging/runtime-lock.json": "65ddc10f84edbf4364335c44cfc68496d5b6a9a4048dcd51d3c9f33db54de750",
+    "sdk/__init__.py": "a998ae057450955ec4a60453e77cee74c3a289e8de80a629453e059e102932d1",
+    "sdk/protocol.py": "e7450726155b1b313acd953513477d6a649d5accc96d931870390bb78050319a",
+    "seed/charter/baseline.json": "44d4a922f83a9f8660422b18773cb057d9c47f80990992404ef590e05793612b",
+    "seed/knowledge/runtime-boundary.json": "d027e6039757da5f8d8af8fb2601fb657837052328c2962261a36df17e3bfec8",
+    "seed/skills/pure-tool-development.json": "990befcdb94d9a1dc994041990f8f89e43f3945751c187bed1d8c2a522eac1d9",
+    "seed/skills/text-report.json": "ac59dd61dfb3faadac2ed3cab9c568bbaf668fa3d963ba754cd988d5d9ab247a",
+    "tests/crash_worker.py": "df7de03d0494e0dae6502392b0e2ecbe5773f4f8da7f98fc60adacf91bbcb791",
+    "tests/release_crash.py": "52be1f25f0546bda9beb55bc748f8feda5f5f648b229593d3f8aa88b154beca3",
+    "tests/test_cli_native.py": "212c24cfb947041c4f053ce3688a06d604acf1ae58c96c62cea5535cd286d93a",
+    "tests/test_core.py": "e9e95e1e79b3bafb592a2d9c4fa0985c8b8cb62e6d7d7ac9ebc0dedea481a451",
+    "tests/test_development.py": "4a5537ee01e6833a864cf9d93dafe4ee6d4bada65b66da5e6910bbb311710e6b",
+    "tests/test_model_transport.py": "0c61393caec5e2135d2383b20a69a0d494c871c3e1a4f47672db0de2af925de6",
+    "tests/test_workbench.py": "31980c31ac805f84cc32b55cd9450ce1bdee2004bc1527fbb21bb2ec03541ce9",
+    "tests/test_worker.py": "fbfe524308a3c102b52e685c90adddbf3751be648b8728275b0d65510423e066",
+    "tests/worker_crash.py": "fdd5f4eaebdf578448d4e67fa8da5856b43ef2a70304ea2ed67766d8b1b40748",
+    "tools/check_architecture.py": "5009ada69168b86e9ccf481c8f8765516c55c52f29d179fe699374d96480ddf2",
+    "VERSION": "38e90b6fb1e98cea11641aebf65c066635808b0b43a623c4abce4e062617b844"
+  },
+  "native_binary": {
+    "path": "control/bootstrap/target/release/jarvis-control.exe",
+    "sha256": "b70f69f11e0805a5c946c91b7e49d195451f1cf6af536b2028419cef048d3e80"
+  },
+  "limitations": [
+    "No arbitrary core or stateful database hot replacement",
+    "No real Codex CLI/desktop coding adapter",
+    "No autonomous general business acceptance generation",
+    "Model failure/fallback paths exercised with test doubles, live provider success tested separately",
+    "LPAC allows system-public resources and registryRead; no disk hard quota or VM isolation proof",
+    "Only bounded case checks, not independent semantic model review",
+    "Two successful observations are an initial canary, not long-term effectiveness evidence",
+    "No long-run, multi-device, ordinary low-memory PC, full conversation or family authentication acceptance",
+    "No cryptographic package trust root or production currency budget",
+    "No H: runtime, environment, database or credential imports; static brand assets only per user request"
+  ],
+  "documentation_sha256": {
+    "README.md": "b607de5cbe062f64e901659774e78f8f9a85833b7910f6ca1ad66223731c8cc5",
+    "AGENTS.md": "402ed412c50af227d29ebca39abc9963e533c2cf4850f89551c9c7281bd689c8",
+    "docs/manifest.json": "db4c85e5d86df9ce8eed8920b222ee9cdf65cb6d08e2a58f757130c017810411",
+    "docs/architecture-atlas.md": "dffdbc12ab832306063a7f335c46361e2d800825d150637b98b995af16a8ac9d",
+    "docs/architecture.md": "d6665bf2901db2e4920edf0671a28f84d648ded9db5246c458b18c4a54442fe7",
+    "docs/contracts.md": "f3b6f04966f8a464cec288345c3f8f09c87138e5c5d6dd32f0307df1e25f2f6f",
+    "docs/core-bootstrap.md": "28a6ad8546ba506f7fb7f581e1a1ba7e45ac8db8b7bee1ae358b53f4e98a8c09",
+    "docs/decisions-review.md": "ae91b516c112d66440154595af17c65b300df66d21f5d486b73d82069790cb53",
+    "docs/delivery-validation.md": "22ffee3d9f54122ce8d0a29472670445fe56d3c8a4d2618deafb1b9a7bb4d43f",
+    "docs/development-guide.md": "122a1a943ca19bef4131efb76bb3ad9c84cce4cd1770b8a6fb6955210bae2562",
+    "docs/evolution-release.md": "2417e20a3f31e125988aadc998bf1586a479566035d675e90a1c44a01922dae2",
+    "docs/federation.md": "f6f3129cad7db7217cf95461819504ad7d1a80da78dca3ea8da8a56fd368a63e",
+    "docs/health-maintenance.md": "0b65337ddf950cb1ea22982feb6c9808659f99510ea14450867d226955e6a49d",
+    "docs/interaction-persona.md": "5c698b3f20b39a06e6a1b2a58652584bd275db0b8b9ac1f18e18ae2981487f0c",
+    "docs/knowledge-learning.md": "6d25f8e83b194e21cadc7c20c6cf568362f68ed2e1752b29353f6f03d06613fd",
+    "docs/MAINTENANCE.md": "2a43b20f02045683f635ea2af2970be48799fb975b1c0ae654bcaeed8188e2da",
+    "docs/models-offline.md": "18a05e052823d077cdbd51d7938ef60b457a44fe700d65b17d759d0c0affa6b5",
+    "docs/product-requirements.md": "78cd42684db6ae2b10e25fe7750260f66869fac9393f6fc7f5aa04b86fb37d8c",
+    "docs/README.md": "294dd856c2bb79b559a9415aa7bfaf069fcea9817ebd3bf901472f72d4167cbf",
+    "docs/references.md": "1b5e6f1d6ea3f920404e8b6be1cfef16ededb2f096adf97c288a0f2ac7a40838",
+    "docs/security-sovereignty.md": "1b8ec067a2395c2a74ee753dd32e24b1c8dc045c30796b40234bc4537e4ae361",
+    "docs/self-model.md": "a2089906fb67aa664552ea660dfeda553a255e4267662dd2552e6e7666dfc669",
+    "docs/simulation.md": "2d98ccd372aabc0d7c958d491bfe78e419a9edd271a633e30f3fbbcbd7515763",
+    "docs/stack-project-layout.md": "3672bae8235855bbf22e113ff2fc5e5cbc06a43824a6898bea845ff39a5ac8ad",
+    "docs/tasks-agents.md": "a8cfd992400d3c90d6889b814b8bc735fef5f4fef95404683c597d6e1d9a9ac8",
+    "docs/toolchains.md": "1a6c30f4b762f3be39d16fae5fcdfb4c22746b5088f0a974f3280c339e93c1ed"
+  }
+}

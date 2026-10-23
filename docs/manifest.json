@@ -1,0 +1,2068 @@
+{
+  "schema_version": 1,
+  "design_status": "proposed",
+  "project_state": "modular-workbench-projects-text-skills-and-bounded-development-partially-implemented",
+  "runtime_version": "0.1.0",
+  "entry": "README.md",
+  "book": {
+    "parts": [
+      {
+        "id": "part-product",
+        "title": "第一篇 · 产品与体验",
+        "chapters": [
+          "docs-product-requirements",
+          "docs-interaction-persona",
+          "docs-simulation"
+        ]
+      },
+      {
+        "id": "part-foundation",
+        "title": "第二篇 · 核心与工程基础",
+        "chapters": [
+          "docs-core-bootstrap",
+          "docs-development-guide",
+          "docs-architecture",
+          "docs-security-sovereignty",
+          "docs-contracts",
+          "docs-stack-project-layout"
+        ]
+      },
+      {
+        "id": "part-runtime",
+        "title": "第三篇 · 智能运行与多设备协同",
+        "chapters": [
+          "docs-models-offline",
+          "docs-knowledge-learning",
+          "docs-memory-cognition-design",
+          "docs-tasks-agents",
+          "docs-federation"
+        ]
+      },
+      {
+        "id": "part-evolution",
+        "title": "第四篇 · 自主成长与维护",
+        "chapters": [
+          "docs-evolution-release",
+          "docs-toolchains",
+          "docs-health-maintenance",
+          "docs-self-model"
+        ]
+      },
+      {
+        "id": "part-evidence",
+        "title": "第五篇 · 验证与参考",
+        "chapters": [
+          "docs-delivery-validation",
+          "docs-decisions-review",
+          "docs-architecture-atlas",
+          "docs-references",
+          "docs-maintenance"
+        ]
+      }
+    ]
+  },
+  "documents": [
+    {
+      "id": "project-entry",
+      "path": "README.md",
+      "title": "JARVIS",
+      "owns": [
+        "project-entry-scope"
+      ],
+      "status": "proposed",
+      "kind": "entry",
+      "reader_summary": ""
+    },
+    {
+      "id": "collaboration-rules",
+      "path": "AGENTS.md",
+      "title": "AI 协作与文档维护约定",
+      "owns": [
+        "collaboration-rules-scope"
+      ],
+      "status": "proposed",
+      "kind": "entry",
+      "reader_summary": ""
+    },
+    {
+      "id": "docs-product-requirements",
+      "path": "docs/product-requirements.md",
+      "title": "产品定义、需求与能力边界",
+      "owns": [
+        "personal-companion-core",
+        "personal-service-scope",
+        "personal-life-capabilities",
+        "personal-life-autonomous-outcomes",
+        "autonomous-companion-baseline",
+        "autonomy-definition-index"
+      ],
+      "status": "proposed",
+      "kind": "chapter",
+      "reader_summary": "如何以个人为主、家庭与小团体为辅，自主工作并独立完成任务？"
+    },
+    {
+      "id": "docs-core-bootstrap",
+      "path": "docs/core-bootstrap.md",
+      "title": "最小核心、初始资产与开发路线",
+      "owns": [
+        "clean-project-bootstrap",
+        "core-seed-operation",
+        "growth-seed-operation",
+        "portable-settings-operation",
+        "workbench-parity-operation",
+        "settings-parity-operation",
+        "memory-development-operation",
+        "published-tool-operation",
+        "goal-planning-operation",
+        "goal-growth-operation",
+        "conversation-operation"
+      ],
+      "status": "proposed",
+      "kind": "chapter",
+      "reader_summary": "个人助手与自主成长核心从哪里开始，怎样沿 K0—K6 扩展？"
+    },
+    {
+      "id": "docs-development-guide",
+      "path": "docs/development-guide.md",
+      "title": "后续方向指南：现状、缺口与优化工作清单",
+      "owns": [
+        "docs-development-guide-scope"
+      ],
+      "status": "proposed",
+      "kind": "chapter",
+      "reader_summary": "当前版本还缺什么、先优化哪里，原方案的后续工作怎样落到代码与验收？"
+    },
+    {
+      "id": "docs-architecture",
+      "path": "docs/architecture.md",
+      "title": "系统架构、运行边界与模块职责",
+      "owns": [
+        "composable-agent-framework",
+        "composition-concepts",
+        "composition-ownership",
+        "composition-goal-coverage",
+        "composition-object-relations",
+        "composition-bot-agent-boundary",
+        "composition-bot-nesting",
+        "composition-deployment-cost",
+        "continuity-architecture",
+        "continuity-definition",
+        "continuity-facets",
+        "continuity-layered-view",
+        "continuity-genesis",
+        "clean-core-architecture"
+      ],
+      "status": "proposed",
+      "kind": "chapter",
+      "reader_summary": "个人助手核心如何连接记忆、模型、任务与可替换能力？"
+    },
+    {
+      "id": "docs-security-sovereignty",
+      "path": "docs/security-sovereignty.md",
+      "title": "主人利益原则、身份授权与停止控制",
+      "owns": [
+        "personal-life-security",
+        "continuity-control-boundary",
+        "loyalty-operating-rules",
+        "growth-worker-boundary",
+        "local-model-vault",
+        "workbench-file-boundary",
+        "anatomy-output-boundary",
+        "mcp-runtime-boundary",
+        "memory-private-storage",
+        "memory-contamination-defense"
+      ],
+      "status": "proposed",
+      "kind": "chapter",
+      "reader_summary": "当前个人使用边界是什么，哪些监督与认证设计已延期？"
+    },
+    {
+      "id": "docs-federation",
+      "path": "docs/federation.md",
+      "title": "离线自治、多设备共同体与重连",
+      "owns": [
+        "unified-intent-memory",
+        "memory-context-sharing"
+      ],
+      "status": "proposed",
+      "kind": "chapter",
+      "reader_summary": "断网怎样独立工作，重连怎样共享记忆与协同？"
+    },
+    {
+      "id": "docs-interaction-persona",
+      "path": "docs/interaction-persona.md",
+      "title": "个人助手体验、工作台与人格形态",
+      "owns": [
+        "workbench-settings",
+        "workbench-layout",
+        "evolution-settings-ui",
+        "personal-plan-ui",
+        "workbench-reference-implementation",
+        "workbench-settings-parity",
+        "memory-development-parity",
+        "published-tool-parity",
+        "goal-planning-parity",
+        "goal-growth-parity",
+        "conversation-action-interface",
+        "mcp-interface",
+        "companion-context-policy",
+        "session-folder-interface"
+      ],
+      "status": "proposed",
+      "kind": "chapter",
+      "reader_summary": "怎样自然交流、延续人格，并在需要时展开工作台？"
+    },
+    {
+      "id": "docs-tasks-agents",
+      "path": "docs/tasks-agents.md",
+      "title": "任务、动作、多 Agent 与资源调度",
+      "owns": [
+        "conversation-intent-routing",
+        "conversation-task-context-separation",
+        "conversation-resource-isolation",
+        "mail-management-plan",
+        "mail-learning-loop",
+        "composition-execution",
+        "composition-runtime-cycle",
+        "composition-recovery-flow",
+        "composition-scenario-assembly",
+        "continuity-operating-cycle",
+        "proactive-goal-cycle",
+        "published-tool-runtime",
+        "goal-planning-runtime",
+        "goal-growth-runtime",
+        "anatomy-runtime",
+        "conversation-action-runtime",
+        "mcp-runtime",
+        "context-aware-task-selection"
+      ],
+      "status": "proposed",
+      "kind": "chapter",
+      "reader_summary": "怎样一边交流一边执行任务，如何组织多 Agent？"
+    },
+    {
+      "id": "docs-models-offline",
+      "path": "docs/models-offline.md",
+      "title": "模型路由、本地模型与离线生存",
+      "owns": [
+        "growth-model-policy",
+        "growth-fallback-policy",
+        "growth-budget-policy",
+        "portable-model-settings",
+        "price-snapshot-runtime"
+      ],
+      "status": "proposed",
+      "kind": "chapter",
+      "reader_summary": "用哪些云端和本地模型，怎样切换与离线降级？"
+    },
+    {
+      "id": "docs-knowledge-learning",
+      "path": "docs/knowledge-learning.md",
+      "title": "记忆、知识库与持续学习",
+      "owns": [
+        "memory-scope-model",
+        "memory-human-continuity",
+        "project-knowledge-compilation",
+        "memory-operating-cycle",
+        "memory-domain-catalog",
+        "memory-profile-governance",
+        "memory-sharing-bridges",
+        "memory-use-boundary",
+        "personal-life-data-domains",
+        "person-permission-memory",
+        "correspondence-data",
+        "mail-management-data",
+        "mail-learning-data",
+        "continuity-state-lifecycle",
+        "goal-directed-understanding",
+        "memory-workbench-runtime",
+        "goal-memory-runtime",
+        "memory-context-design",
+        "memory-context-records",
+        "memory-branch-context",
+        "memory-context-retrieval",
+        "memory-knowledge-promotion",
+        "memory-lifecycle-completion"
+      ],
+      "status": "proposed",
+      "kind": "chapter",
+      "reader_summary": "记住什么，怎样检索、纠正、遗忘和持续学习？"
+    },
+    {
+      "id": "docs-memory-cognition-design",
+      "path": "docs/memory-cognition-design.md",
+      "title": "记忆与认知综合方案：架构、选型与场景图解",
+      "owns": [
+        "memory-cognition-integrated-guide",
+        "memory-cognition-scenario-explanations"
+      ],
+      "status": "proposed",
+      "kind": "chapter",
+      "reader_summary": "怎样把记忆、知识、聊天、工作、隐私与多设备组成完整方案，并处理特殊情况？"
+    },
+    {
+      "id": "docs-evolution-release",
+      "path": "docs/evolution-release.md",
+      "title": "自主进化、外部编码协作与版本发布",
+      "owns": [
+        "skill-admission-release",
+        "growth-governance",
+        "growth-learning-ledger",
+        "mail-capability-growth",
+        "composition-evolution",
+        "composition-change-recovery",
+        "continuity-upgrade-protocol",
+        "autonomous-evolution-policy",
+        "growth-release-runtime"
+      ],
+      "status": "proposed",
+      "kind": "chapter",
+      "reader_summary": "怎样自编工具、改进模块，并验证和回退？"
+    },
+    {
+      "id": "docs-toolchains",
+      "path": "docs/toolchains.md",
+      "title": "开发环境、多语言工具链与构建",
+      "owns": [
+        "bounded-python-dependencies",
+        "bounded-package-scene-recipes",
+        "autonomous-development-providers",
+        "development-channel-choice",
+        "development-desktop-protocol",
+        "development-capability-loop",
+        "growth-development-runtime",
+        "development-workbench-runtime",
+        "codex-candidate-runtime"
+      ],
+      "status": "proposed",
+      "kind": "chapter",
+      "reader_summary": "怎样准备编译环境，构建和测试不同语言的程序？"
+    },
+    {
+      "id": "docs-contracts",
+      "path": "docs/contracts.md",
+      "title": "公共接口与数据契约",
+      "owns": [
+        "memory-view-contract",
+        "personal-assistant-contracts",
+        "memory-extractor-adapter",
+        "personal-life-foundation",
+        "composition-contracts",
+        "composition-package-contract",
+        "composition-run-contract",
+        "composition-durability-contract",
+        "composition-step-contract",
+        "composition-state-ownership-details",
+        "continuity-contracts",
+        "goal-opportunity-contract",
+        "clean-module-contract",
+        "clean-module-manifest",
+        "development-work-contract",
+        "core-seed-wire-contracts",
+        "growth-seed-contracts",
+        "local-settings-chat-contracts",
+        "workbench-project-contracts",
+        "goal-plan-runtime-contract",
+        "goal-growth-contract",
+        "conversation-contracts",
+        "mcp-contracts",
+        "session-folder-contracts"
+      ],
+      "status": "proposed",
+      "kind": "chapter",
+      "reader_summary": "模块之间怎样交换任务、事件和记忆数据？"
+    },
+    {
+      "id": "docs-stack-project-layout",
+      "path": "docs/stack-project-layout.md",
+      "title": "技术栈、源码目录与运行数据",
+      "owns": [
+        "memory-integration-choice",
+        "openwiki-adoption",
+        "memory-dependency-audit",
+        "memory-candidate-identities",
+        "memory-module-adoption",
+        "memory-recommended-plan",
+        "memory-storage-partition-choice",
+        "clean-project-layout",
+        "clean-file-formats",
+        "growth-seed-layout",
+        "portable-data-runtime",
+        "conversation-layout",
+        "mcp-layout",
+        "memory-desktop-selection",
+        "memory-context-migration",
+        "session-folder-layout"
+      ],
+      "status": "proposed",
+      "kind": "chapter",
+      "reader_summary": "选哪些技术，代码放哪里，开源组件如何取舍？"
+    },
+    {
+      "id": "docs-health-maintenance",
+      "path": "docs/health-maintenance.md",
+      "title": "系统健康、防退化与自愈",
+      "owns": [
+        "machine-resource-usage",
+        "parallel-runtime-monitoring",
+        "inspection-scheduling",
+        "healing-incident-policy",
+        "dialogue-runtime-monitoring",
+        "self-observation",
+        "clean-module-governance"
+      ],
+      "status": "proposed",
+      "kind": "chapter",
+      "reader_summary": "怎样发现故障与结构退化，清理和修复隐患？"
+    },
+    {
+      "id": "docs-simulation",
+      "path": "docs/simulation.md",
+      "title": "NPC 小镇与虚拟世界",
+      "owns": [
+        "docs-simulation-scope"
+      ],
+      "status": "proposed",
+      "kind": "chapter",
+      "reader_summary": "怎样运行 NPC 小镇，并隔离虚拟与现实？"
+    },
+    {
+      "id": "docs-delivery-validation",
+      "path": "docs/delivery-validation.md",
+      "title": "能力验收、故障演练与评估证据",
+      "owns": [
+        "memory-resource-envelope",
+        "skill-selection-validation",
+        "anatomy-validation",
+        "growth-center-validation",
+        "personal-companion-validation",
+        "memory-comparison-tracks",
+        "memory-domain-validation",
+        "conversation-separation-validation",
+        "personal-life-acceptance",
+        "self-model-validation",
+        "composition-validation",
+        "composition-benefit-experiment",
+        "core-seed-evidence",
+        "growth-seed-evidence",
+        "portable-settings-evidence",
+        "workbench-parity-evidence",
+        "settings-parity-evidence",
+        "memory-development-evidence",
+        "published-tool-evidence",
+        "goal-planning-evidence",
+        "goal-growth-evidence",
+        "anatomy-evidence",
+        "conversation-evidence",
+        "anatomy-upgrade-evidence",
+        "anatomy-initial-evidence",
+        "mcp-evidence",
+        "memory-context-acceptance",
+        "anatomy-studio-evidence",
+        "session-folder-evidence"
+      ],
+      "status": "proposed",
+      "kind": "chapter",
+      "reader_summary": "哪些能力测过，证据在哪里，下一阶段怎样验收？"
+    },
+    {
+      "id": "docs-decisions-review",
+      "path": "docs/decisions-review.md",
+      "title": "架构决策、批判性评审与评分",
+      "owns": [
+        "adr-028",
+        "adr-029",
+        "renewal-strategy-review",
+        "renewal-three-options",
+        "renewal-reuse-boundaries",
+        "renewal-benefits",
+        "renewal-scope-decision"
+      ],
+      "status": "proposed",
+      "kind": "chapter",
+      "reader_summary": "当前实现离伙伴核心有多远，工程评分和架构取舍依据是什么？"
+    },
+    {
+      "id": "docs-references",
+      "path": "docs/references.md",
+      "title": "研究资料与证据边界",
+      "owns": [
+        "model-billing-sources",
+        "extension-interface-sources",
+        "workbench-layout-sources",
+        "anatomy-sources",
+        "mcp-server-sources",
+        "current-audit-sources",
+        "voice-selection-sources",
+        "memory-pattern-review-sources",
+        "rea-sources",
+        "conversation-isolation-sources",
+        "personal-life-sources",
+        "correspondence-sources",
+        "mail-account-sources",
+        "mail-management-sources",
+        "composition-sources",
+        "continuity-sources",
+        "autonomous-development-sources",
+        "native-model-sources",
+        "mcp-runtime-sources",
+        "memory-context-sources"
+      ],
+      "status": "proposed",
+      "kind": "chapter",
+      "reader_summary": "设计和选型参考了哪些论文与官方资料？"
+    },
+    {
+      "id": "docs-architecture-atlas",
+      "path": "docs/architecture-atlas.md",
+      "title": "架构与流程图册",
+      "owns": [
+        "docs-architecture-atlas-scope"
+      ],
+      "status": "proposed",
+      "kind": "chapter",
+      "reader_summary": "在哪里集中查看架构图和流程图？"
+    },
+    {
+      "id": "docs-maintenance",
+      "path": "docs/MAINTENANCE.md",
+      "title": "文档维护规范",
+      "owns": [
+        "docs-maintenance-scope"
+      ],
+      "status": "proposed",
+      "kind": "chapter",
+      "reader_summary": "以后怎样归类、更新、检查和清理文档？"
+    },
+    {
+      "id": "docs-self-model",
+      "path": "docs/self-model.md",
+      "title": "系统自身模型与能力认知",
+      "owns": [
+        "self-model-views",
+        "self-model-discovery",
+        "self-model-context-selection"
+      ],
+      "status": "proposed",
+      "kind": "chapter",
+      "reader_summary": "如何自动知道当前版本、结构、进程与能力，并为修复和改造提供可靠依据？"
+    },
+    {
+      "id": "docs-index",
+      "path": "docs/README.md",
+      "title": "Jarvis 文档目录",
+      "owns": [
+        "book-secondary-navigation"
+      ],
+      "kind": "entry",
+      "status": "accepted",
+      "reader_summary": "按篇查阅与常用专题"
+    }
+  ],
+  "generated_diagrams": [
+    {
+      "id": "diagram-federation-reconnect",
+      "source_document": "docs/diagrams/federation-reconnect.mmd",
+      "owner_document": "docs/federation.md",
+      "source_sha256": "a724de1993222fca9840c7b21bd81d70e5fa37280951e4bc7d44788b1a9ba16c",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/federation-reconnect.svg",
+          "sha256": "abc604642b2b1ca49669f7b358b973299f999b915553058c490b6b48e8bd8e9d"
+        },
+        {
+          "path": "docs/diagrams/federation-reconnect.png",
+          "sha256": "a75b431fa489e9e23d8cd21df24090298f87fc87d89ca93e129536af4de83cab"
+        }
+      ],
+      "status": "proposed",
+      "origin": "inherited-design-asset"
+    },
+    {
+      "id": "diagram-model-routing",
+      "source_document": "docs/diagrams/model-routing.mmd",
+      "owner_document": "docs/models-offline.md",
+      "source_sha256": "0ebd3d28dd12bdde1d31b4fc59522a718bfb5fd36f415bca00dcd09655d99422",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/model-routing.svg",
+          "sha256": "30beed471adba88b0fc5e5c8f56d430d5f7e16535f501e6c9c5f2bc4b1286ce1"
+        },
+        {
+          "path": "docs/diagrams/model-routing.png",
+          "sha256": "941c955ed5b55c94cf908ee1766b7782a9c3e50208a4c80bf7ab3f8dd3a01caa"
+        }
+      ],
+      "status": "proposed",
+      "origin": "inherited-design-asset"
+    },
+    {
+      "id": "diagram-task-lifecycle",
+      "source_document": "docs/diagrams/task-lifecycle.mmd",
+      "owner_document": "docs/tasks-agents.md",
+      "source_sha256": "f79667dc3676876ffebff4e4ba8b7ea8876fa6e9fe99cd4821cc284033230ff9",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/task-lifecycle.svg",
+          "sha256": "99292a5cae7d5fd2d32ac3dd0e7d327ccc73db1378e0064a5b24ed3362362fd5"
+        },
+        {
+          "path": "docs/diagrams/task-lifecycle.png",
+          "sha256": "87e5aa181ec7a9ec2fe54dc4dd7fdf2bd9430eef7eede33e7657ff27a544c937"
+        }
+      ],
+      "status": "proposed",
+      "origin": "inherited-design-asset"
+    },
+    {
+      "id": "diagram-evolution-pipeline",
+      "source_document": "docs/diagrams/evolution-pipeline.mmd",
+      "owner_document": "docs/evolution-release.md",
+      "source_sha256": "5259b413ecb4e88feb030a34ebf2aa5623b21825316593dc0269b75cc4c7be19",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/evolution-pipeline.svg",
+          "sha256": "5e6b40403d0c5db0a413345fb1acaf15e9601150cbdf675406923896b26af445"
+        },
+        {
+          "path": "docs/diagrams/evolution-pipeline.png",
+          "sha256": "1f17cd2a64b26321bf91cc7146ab01ff092a53a5e9987427f3a7a8d374fe79ae"
+        }
+      ],
+      "status": "proposed",
+      "origin": "inherited-design-asset"
+    },
+    {
+      "id": "diagram-parallel-dialogue-task",
+      "source_document": "docs/diagrams/parallel-dialogue-task.mmd",
+      "owner_document": "docs/tasks-agents.md",
+      "source_sha256": "9acd22bcfd82b203784c1c0247ce32e21cfb88f032866474fe68a89499afee44",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/parallel-dialogue-task.svg",
+          "sha256": "957a06a66cf46191586497f027836637070523aeaa1328bc3758ff6270667134"
+        },
+        {
+          "path": "docs/diagrams/parallel-dialogue-task.png",
+          "sha256": "b204027dbf55fee396ed00d14750138abdd3dcba42f2ddb44193ba0e52436a89"
+        }
+      ],
+      "status": "proposed",
+      "origin": "inherited-design-asset"
+    },
+    {
+      "id": "diagram-offline-task-flow",
+      "source_document": "docs/diagrams/offline-task-flow.mmd",
+      "owner_document": "docs/federation.md",
+      "source_sha256": "05c6ff7ec5e31b42c631065d0e13a7044eee6f9a88c3d2e814406997e5aa65a1",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/offline-task-flow.svg",
+          "sha256": "eb50c5e67da7f778c2995fcc81288bff3dd0bb5cd98c44ea425219c019d29924"
+        },
+        {
+          "path": "docs/diagrams/offline-task-flow.png",
+          "sha256": "4930429a9873237e7b0a380f7fe8a14c2e70231fd31ab0093a65973f8b5b4cef"
+        }
+      ],
+      "status": "proposed",
+      "origin": "inherited-design-asset"
+    },
+    {
+      "id": "diagram-agent-team-lifecycle",
+      "source_document": "docs/diagrams/agent-team-lifecycle.mmd",
+      "owner_document": "docs/tasks-agents.md",
+      "source_sha256": "541037c9ed2719b2a09303b87cb574848449c53521ac3e6f79f70a06953f98a8",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/agent-team-lifecycle.svg",
+          "sha256": "8d74097125948a775be4d19b95b4b426a4ac80586e9c046c5115b099fbe5b52c"
+        },
+        {
+          "path": "docs/diagrams/agent-team-lifecycle.png",
+          "sha256": "119782fcd3b4c04754923c21cc4478dada0b890a986e1d0fc47245422da4da49"
+        }
+      ],
+      "status": "proposed",
+      "origin": "inherited-design-asset"
+    },
+    {
+      "id": "diagram-knowledge-learning-flow",
+      "source_document": "docs/diagrams/knowledge-learning-flow.mmd",
+      "owner_document": "docs/knowledge-learning.md",
+      "source_sha256": "6876344105d8d116dadd7bad7b887605b3fc77f2b220906c3f76928b08dbcc96",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/knowledge-learning-flow.svg",
+          "sha256": "819878b2f6bf535e4ea0cbff98313a5670689bdaa950136ef144500cf5049090"
+        },
+        {
+          "path": "docs/diagrams/knowledge-learning-flow.png",
+          "sha256": "ad2b0fdf1c760485253becc41078c664ed82ca7d27591d2ba7774754d14f6e7c"
+        }
+      ],
+      "status": "proposed",
+      "origin": "inherited-design-asset"
+    },
+    {
+      "id": "diagram-network-recovery",
+      "source_document": "docs/diagrams/network-recovery.mmd",
+      "owner_document": "docs/models-offline.md",
+      "source_sha256": "1ddd2ce0c11674582a50ced4a93cf31a67cd84b65005d09d0e7d72c4f5480178",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/network-recovery.svg",
+          "sha256": "5d921fa7f07173b630de5f106d6be16545b49b8d636b604ec0e4e43c3b3e722c"
+        },
+        {
+          "path": "docs/diagrams/network-recovery.png",
+          "sha256": "71d61ddd8315d1c81b27f0603c7bcc145f46239c6623f37bdcc0aead2bf50f75"
+        }
+      ],
+      "status": "proposed",
+      "origin": "inherited-design-asset"
+    },
+    {
+      "id": "diagram-safety-shutdown",
+      "source_document": "docs/diagrams/safety-shutdown.mmd",
+      "owner_document": "docs/security-sovereignty.md",
+      "source_sha256": "4475dac219bb7dd273b6d022ce71c23d9b600c15d738047d7d03c142ea58f235",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/safety-shutdown.svg",
+          "sha256": "697bcf46453fb9f926384d184a3f2a84d4c90d4d4bedb6adc7cc6e4f094c39b1"
+        },
+        {
+          "path": "docs/diagrams/safety-shutdown.png",
+          "sha256": "10c9bd7b62f87423f82d04d43259a0faed0ec4c527058afb56996a66f46be5e3"
+        }
+      ],
+      "status": "proposed",
+      "origin": "inherited-design-asset"
+    },
+    {
+      "id": "diagram-build-and-release",
+      "source_document": "docs/diagrams/build-and-release.mmd",
+      "owner_document": "docs/toolchains.md",
+      "source_sha256": "bf09533ac39e15c4806f7e69e13c5140c331e2b79f4255527acf53517e599b93",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/build-and-release.svg",
+          "sha256": "1ad0aa8b05d3cc4c94fa1427e7fc7fd3473d5d03674f34d9fb46a0f498946f90"
+        },
+        {
+          "path": "docs/diagrams/build-and-release.png",
+          "sha256": "4e2e54780ce89f3620bc2807064540d815e1ab5c41dc5f499d38ae968c83ead8"
+        }
+      ],
+      "status": "proposed",
+      "origin": "inherited-design-asset"
+    },
+    {
+      "id": "diagram-health-and-repair",
+      "source_document": "docs/diagrams/health-and-repair.mmd",
+      "owner_document": "docs/health-maintenance.md",
+      "source_sha256": "5bbcdf77a3725f6d51cfe14bc59cbdd3f73337910808f147771da7137f6629d7",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/health-and-repair.svg",
+          "sha256": "f4b6c70708d45e3ce4a612fb22854e77e12c9360019ae08b854e00f4f34d8dcd"
+        },
+        {
+          "path": "docs/diagrams/health-and-repair.png",
+          "sha256": "3ea05854fcb6cb4076d96ef62cead1d6a91a60beb391b3d1a65e15f544deaca2"
+        }
+      ],
+      "status": "proposed",
+      "origin": "inherited-design-asset"
+    },
+    {
+      "id": "diagram-seed-core",
+      "source_document": "docs/diagrams/seed-core.mmd",
+      "owner_document": "docs/core-bootstrap.md",
+      "source_sha256": "29d0fc376e1db8a58319897c87267dd7fac26a4ed7e32b91accc13de42dca31f",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/seed-core.svg",
+          "sha256": "d003aefa15687c388fe4ed16725bbc5f79b45bed8922209256c5354492e84d98"
+        },
+        {
+          "path": "docs/diagrams/seed-core.png",
+          "sha256": "4d6f07b1dfc34ca051abb37da3a5a29ebda70d207be93b807f42f3c656502f02"
+        }
+      ],
+      "status": "proposed",
+      "origin": "inherited-design-asset"
+    },
+    {
+      "id": "diagram-memory-local-federation",
+      "source_document": "docs/diagrams/memory-local-federation.mmd",
+      "owner_document": "docs/knowledge-learning.md",
+      "source_sha256": "385fa286afffd7020a0c1bf05902c35d6fe197af0bfe857093561dc102abebf6",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/memory-local-federation.svg",
+          "sha256": "81a7a4a8db2949e0fa68a3c5ad90e75a2c1502d761718a18ba92a5b91ef91848"
+        },
+        {
+          "path": "docs/diagrams/memory-local-federation.png",
+          "sha256": "2e51090cd5df779bebe3b5a0d906b61ae6ec0b6dda13bfee341c4f249ebee505"
+        }
+      ],
+      "status": "proposed",
+      "origin": "inherited-design-asset"
+    },
+    {
+      "id": "diagram-pc-runtime-convergence",
+      "source_document": "docs/diagrams/pc-runtime-convergence.mmd",
+      "owner_document": "docs/architecture.md",
+      "source_sha256": "8b7f4188b1200a22cc24ddad164b1d76b18aa94b27ca81ebbca65a8da990cc28",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/pc-runtime-convergence.svg",
+          "sha256": "8b4ab8c9ca2724f780fa0aa62394105bbbc13cd204c637f5100db0c536851ba6"
+        },
+        {
+          "path": "docs/diagrams/pc-runtime-convergence.png",
+          "sha256": "6b5c0bbc6618f7a4252b5fb952c5b3f4973841e00fa5c67d4ddb0ad865a2e426"
+        }
+      ],
+      "status": "proposed",
+      "origin": "inherited-design-asset"
+    },
+    {
+      "id": "diagram-personal-work-memory",
+      "source_document": "docs/diagrams/personal-work-memory.mmd",
+      "owner_document": "docs/knowledge-learning.md",
+      "source_sha256": "14c2042d9715afd7d9ac2aec1ac038d40ce88b120122f417b9ce8112e8a22941",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/personal-work-memory.svg",
+          "sha256": "6fc2d01efb69946f3139a4443691ea5788dd48f705bb48387d0f0b70af1a4abf"
+        },
+        {
+          "path": "docs/diagrams/personal-work-memory.png",
+          "sha256": "68431bdb76ccd20eeb255b2ccafba2ba5df640bd3335fa38cc7c46fca241b135"
+        }
+      ],
+      "status": "proposed",
+      "origin": "inherited-design-asset"
+    },
+    {
+      "id": "diagram-composition-execution",
+      "source_document": "docs/diagrams/composition-execution.mmd",
+      "owner_document": "docs/tasks-agents.md",
+      "source_sha256": "59269f363b4c57329268c7926d2f58740f1b7f5f846fbef650b5e9a1ee60df18",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/composition-execution.svg",
+          "sha256": "9a71fb06ffaa51a378c99661961adf0883fce1e676706b7794ddb03912917da2"
+        },
+        {
+          "path": "docs/diagrams/composition-execution.png",
+          "sha256": "2a23cb2916186c70cb2fa8d38305045ea8ddae36bc3d49ecd512e7cd39b4385f"
+        }
+      ],
+      "status": "proposed",
+      "origin": "inherited-design-asset"
+    },
+    {
+      "id": "diagram-composition-recovery",
+      "source_document": "docs/diagrams/composition-recovery.mmd",
+      "owner_document": "docs/tasks-agents.md",
+      "source_sha256": "089658e0b67321ba6ac7596345c903d0c28e773ad4d20329e84a0297a3fa95a5",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/composition-recovery.svg",
+          "sha256": "6a57a9556bb50ac7c103163d9c5c2c4c5b962525b2a078474dbb4f30a990a9d9"
+        },
+        {
+          "path": "docs/diagrams/composition-recovery.png",
+          "sha256": "14567c4e9250a24d682c445aafaa9278dda5183564c8b5be03efaec42fcc0f85"
+        }
+      ],
+      "status": "proposed",
+      "origin": "inherited-design-asset"
+    },
+    {
+      "id": "diagram-composition-roles",
+      "source_document": "docs/diagrams/composition-roles.mmd",
+      "owner_document": "docs/architecture.md",
+      "source_sha256": "669a4936256cb81389bf969935c6052e860a2b5ec8e48718a5d0d7b126f48a94",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/composition-roles.svg",
+          "sha256": "ae19e3b305aaa8e9fef2c000cb144e299672c5160ec7eb99c7e77ba8880c04cc"
+        },
+        {
+          "path": "docs/diagrams/composition-roles.png",
+          "sha256": "4e5640c7664b2c898977ee9b23fb83f2cf99fa8e51832a225aff738cb198c755"
+        }
+      ],
+      "status": "proposed",
+      "origin": "inherited-design-asset"
+    },
+    {
+      "id": "diagram-continuity-architecture",
+      "source_document": "docs/diagrams/continuity-architecture.mmd",
+      "owner_document": "docs/architecture.md",
+      "source_sha256": "f72a8eea19345a46bd9dcce7754ebafbce670b1aa85199497f334c8300ee1793",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/continuity-architecture.svg",
+          "sha256": "39db98835af91a956252bf23dc81fe6ab67763dc43a4b5d1f033419d2007b07a"
+        },
+        {
+          "path": "docs/diagrams/continuity-architecture.png",
+          "sha256": "b1c04c5d664e671a5419bc9257b72a1e81aac760ae991704f1df7b98b33cb536"
+        }
+      ],
+      "status": "proposed",
+      "origin": "inherited-design-asset"
+    },
+    {
+      "id": "diagram-continuity-identity",
+      "source_document": "docs/diagrams/continuity-identity.mmd",
+      "owner_document": "docs/architecture.md",
+      "source_sha256": "3b51465cc6a50a7782c5bd005960bbdeb7d9d8cb4729363f6c0584e322d1786e",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/continuity-identity.svg",
+          "sha256": "dd7efb3193260951043402e5944329fe36f628f89b6d72972643e9b0baf02d71"
+        },
+        {
+          "path": "docs/diagrams/continuity-identity.png",
+          "sha256": "6060d2dec9ca8f3d6e8425adb7430165c6f6bf86db24933d056ab618d3b6c40f"
+        }
+      ],
+      "status": "proposed",
+      "origin": "inherited-design-asset"
+    },
+    {
+      "id": "diagram-continuity-upgrade",
+      "source_document": "docs/diagrams/continuity-upgrade.mmd",
+      "owner_document": "docs/evolution-release.md",
+      "source_sha256": "a6384e6dfde74f4054088d1a60d6f359640b7b01dfa06668508a11374054a3d8",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/continuity-upgrade.svg",
+          "sha256": "2a36cfe966a8cce2a507930a1c833a94fb8c6259eb5dcb40490066ac4520bd13"
+        },
+        {
+          "path": "docs/diagrams/continuity-upgrade.png",
+          "sha256": "7b8c6d8031d391690b187e791b54df623acc09bf5d3f8639e3e5d2b08d88ea49"
+        }
+      ],
+      "status": "proposed",
+      "origin": "inherited-design-asset"
+    },
+    {
+      "id": "diagram-continuity-work-cycle",
+      "source_document": "docs/diagrams/continuity-work-cycle.mmd",
+      "owner_document": "docs/tasks-agents.md",
+      "source_sha256": "96431543f8fa21bf60ff5d5c01c3e447962e0dc16df528a1bf723853eb64e212",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/continuity-work-cycle.svg",
+          "sha256": "6656f7a07f2f9aa467e68ab578146e0eded115574fb68fc4ff6c73fc4b925967"
+        },
+        {
+          "path": "docs/diagrams/continuity-work-cycle.png",
+          "sha256": "fc103924555435ce55c3339000531e5cef7e7dd3cf20958f28ed04130f7dc328"
+        }
+      ],
+      "status": "proposed",
+      "origin": "inherited-design-asset"
+    },
+    {
+      "id": "diagram-clean-core-architecture",
+      "source_document": "docs/diagrams/clean-core-architecture.mmd",
+      "owner_document": "docs/architecture.md",
+      "source_sha256": "bb4a0ace20a1191df51daa214261f9e736b561e58b9f5d06efe7c8dae22085bd",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/clean-core-architecture.svg",
+          "sha256": "472cec4e5174370b9901cdfec4afe50ecdeea56069c8489b9c3f544004e52caa"
+        },
+        {
+          "path": "docs/diagrams/clean-core-architecture.png",
+          "sha256": "0f2b066c23829156bf045bac246be193ce8ed30e0a0c0f465da3fbe6d3dea2d9"
+        }
+      ],
+      "status": "proposed",
+      "origin": "inherited-design-asset"
+    },
+    {
+      "id": "diagram-autonomous-development",
+      "source_document": "docs/diagrams/autonomous-development.mmd",
+      "owner_document": "docs/toolchains.md",
+      "source_sha256": "8eafd7514667dec53bd9d849b092f215239258e633eb94a7047870bf2a14f96e",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/autonomous-development.svg",
+          "sha256": "eb9627e5ad39f090b6a70a27ce34582dfe69d3f90bb88bc7057acd7d10d12356"
+        },
+        {
+          "path": "docs/diagrams/autonomous-development.png",
+          "sha256": "0f68833291468fc9c52de8e90838427c91e1aa39fa7ad89ee12c99b368387c14"
+        }
+      ],
+      "status": "proposed",
+      "origin": "inherited-design-asset"
+    },
+    {
+      "id": "diagram-overview",
+      "source_document": "docs/diagrams/overview.mmd",
+      "source_sha256": "9bc8b3a0113c14c5343d6e8097d15d1280a237a37f8bf13d6a72eb521b39fcd2",
+      "owner_document": "docs/architecture.md",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/overview.svg",
+          "sha256": "91ed0f18e5f7eb65b717be3471da18f3e00222b2b4cfbed430b17f922710d919"
+        },
+        {
+          "path": "docs/diagrams/overview.png",
+          "sha256": "3b2dbab258fd30056f8c6585e7d63db0580fdf930fdeb230d68eb6dc0d61eaf3"
+        }
+      ],
+      "status": "proposed",
+      "origin": "inherited-boundary-reference"
+    },
+    {
+      "id": "diagram-system-boundaries",
+      "source_document": "docs/diagrams/system-boundaries.mmd",
+      "source_sha256": "ec4313793831a464b9f2085d17b81d00e1ed54db4c330d6731a27cfcd5f840cf",
+      "owner_document": "docs/architecture.md",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/system-boundaries.svg",
+          "sha256": "64857bb3c817065868c661201a3e83ecee8bd456043a357cfd893a7ffa9789b9"
+        },
+        {
+          "path": "docs/diagrams/system-boundaries.png",
+          "sha256": "6123371cfd70de95657a638ae718c1e52a606aa447672ea8067b0ec2d623ef9b"
+        }
+      ],
+      "status": "proposed",
+      "origin": "inherited-boundary-reference"
+    },
+    {
+      "id": "diagram-windows-deployment",
+      "source_document": "docs/diagrams/windows-deployment.mmd",
+      "source_sha256": "c0944a76ba661adb3df5435c201548ac9f74c38030f8e42b8dd8bc71137978ca",
+      "owner_document": "docs/architecture.md",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/windows-deployment.svg",
+          "sha256": "883b302f1eeb400f3bc3e9119ba20f9d2052cfe67e343a469ec57653a950a905"
+        },
+        {
+          "path": "docs/diagrams/windows-deployment.png",
+          "sha256": "7f6f59ccf6275f040b00e20a76766023225b2ba317091f5275a0098f771e591a"
+        }
+      ],
+      "status": "proposed",
+      "origin": "inherited-boundary-reference"
+    },
+    {
+      "id": "diagram-federation-deployment",
+      "source_document": "docs/diagrams/federation-deployment.mmd",
+      "source_sha256": "91a023abfee7f071db3b8b3dae2abefc5abdb272b099edc37311a09bc2c3c447",
+      "owner_document": "docs/architecture.md",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/federation-deployment.svg",
+          "sha256": "3de0523cefa614ab85e2e1c17875f58ac121398d93160beef2709455567e278c"
+        },
+        {
+          "path": "docs/diagrams/federation-deployment.png",
+          "sha256": "41fabba8a413e1fbccbba42e561261f79d6d58b990928395bb7856e62db7275a"
+        }
+      ],
+      "status": "proposed",
+      "origin": "inherited-boundary-reference"
+    },
+    {
+      "id": "diagram-state-ownership",
+      "source_document": "docs/diagrams/state-ownership.mmd",
+      "source_sha256": "04d37ba640d45e3c31773185e7e1623a0d8b9bfe4ae6cd4b6c59b874a5f4b3e9",
+      "owner_document": "docs/architecture.md",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/state-ownership.svg",
+          "sha256": "db7f3ef7eaa8dcd8016afda7148768de6e7cd7f286b472687b56a6ba7319b24a"
+        },
+        {
+          "path": "docs/diagrams/state-ownership.png",
+          "sha256": "158526323702b8b191645083ef5a68658fdb9fc75193d379de189349e123ffca"
+        }
+      ],
+      "status": "proposed",
+      "origin": "inherited-boundary-reference"
+    },
+    {
+      "id": "diagram-composition-comparison",
+      "source_document": "docs/diagrams/composition-comparison.mmd",
+      "owner_document": "docs/decisions-review.md",
+      "source_sha256": "eecdee8a07d2824b721065f4796221866b3226177279c9bf01b2c55347ebcfc9",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/composition-comparison.svg",
+          "sha256": "526cd4612593e99c838da3ed84018bb59ce40899231b29cde551bddeb6b8ff26"
+        },
+        {
+          "path": "docs/diagrams/composition-comparison.png",
+          "sha256": "32e5e5324e8263f8950468527808b7aec14b2c674f32c9984f0a5cfb37c6a175"
+        }
+      ],
+      "status": "proposed",
+      "origin": "inherited-boundary-reference"
+    },
+    {
+      "id": "diagram-memory-context-architecture",
+      "source_document": "docs/diagrams/memory-context-architecture.mmd",
+      "owner_document": "docs/knowledge-learning.md",
+      "source_sha256": "2ceb9840493ef6aff5eefefc3c452fbcdb62cdbf9767d6256007bfecfac5a867",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/memory-context-architecture.svg",
+          "sha256": "39c5d77e2552a01c3b9df0efbe8fad082293adef804d7fb63295baf9f5353a29"
+        },
+        {
+          "path": "docs/diagrams/memory-context-architecture.png",
+          "sha256": "41c5990568844cc371436f410f483873f20197a48ed1252777e90584deaab937"
+        }
+      ],
+      "status": "proposed",
+      "origin": "memory-context-2026-10-23-r1"
+    },
+    {
+      "id": "diagram-memory-context-lifecycle",
+      "source_document": "docs/diagrams/memory-context-lifecycle.mmd",
+      "owner_document": "docs/knowledge-learning.md",
+      "source_sha256": "65d58b76bec703403a040113a9817f32d8b171138eea709d97709cf5017e16a7",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/memory-context-lifecycle.svg",
+          "sha256": "a442a2893a16b29d34c56c89be81618f29f9a54d9a99c4cf02138032bc7203cb"
+        },
+        {
+          "path": "docs/diagrams/memory-context-lifecycle.png",
+          "sha256": "73c8f3abaa118e4248672ecfd21cf999ca58f90e0d9cb3a0c9a1713462cac51a"
+        }
+      ],
+      "status": "proposed",
+      "origin": "memory-context-2026-10-23-r1"
+    },
+    {
+      "id": "diagram-memory-guide-data",
+      "source_document": "docs/diagrams/memory-guide-data.mmd",
+      "owner_document": "docs/memory-cognition-design.md",
+      "source_sha256": "2bb8a5913e8d2e0f184558d075284c2de6a626a10bd80db70a53685aba7dcdef",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/memory-guide-data.svg",
+          "sha256": "3e4aae81f6ef93de6ff92df33c5591c4c1f526ad1c382e13e649f487e8e84807"
+        },
+        {
+          "path": "docs/diagrams/memory-guide-data.png",
+          "sha256": "5276a1618dcbc21622426c8e256f2173c247ee6463d0049e4ebf3c08d1c5cfa6"
+        }
+      ],
+      "status": "proposed",
+      "origin": "memory-context-2026-10-23-r2"
+    },
+    {
+      "id": "diagram-memory-guide-parallel",
+      "source_document": "docs/diagrams/memory-guide-parallel.mmd",
+      "owner_document": "docs/memory-cognition-design.md",
+      "source_sha256": "ba3083012448076af3ad997d013061450eb6fa96d0aaf03fc3de02ca52a34eb3",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/memory-guide-parallel.svg",
+          "sha256": "f921e77237696e623ee08c2fa57491aeb7c01b2c427957da524249f962be453b"
+        },
+        {
+          "path": "docs/diagrams/memory-guide-parallel.png",
+          "sha256": "614a27575f4f395a2a707dc5668c0bdd8e6f0836b18d69ea9bda74711f39026a"
+        }
+      ],
+      "status": "proposed",
+      "origin": "memory-context-2026-10-23-r2"
+    },
+    {
+      "id": "diagram-memory-guide-branches",
+      "source_document": "docs/diagrams/memory-guide-branches.mmd",
+      "owner_document": "docs/memory-cognition-design.md",
+      "source_sha256": "d2ddffbc990c6e0aa71e97cf4f8d152fa0e99e7344f3980be770579cc72fda2f",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/memory-guide-branches.svg",
+          "sha256": "28f7e0a023e70ffaca440c50ac2788609403261b52a12ee4973afafed60dcb3c"
+        },
+        {
+          "path": "docs/diagrams/memory-guide-branches.png",
+          "sha256": "ef7a9f58f4462e7e6e9edbf6339e19956f79fc7feb207f6ee7b8db39be5bc34c"
+        }
+      ],
+      "status": "proposed",
+      "origin": "memory-context-2026-10-23-r2"
+    },
+    {
+      "id": "diagram-memory-guide-forget-race",
+      "source_document": "docs/diagrams/memory-guide-forget-race.mmd",
+      "owner_document": "docs/memory-cognition-design.md",
+      "source_sha256": "c29ea2d39f6f1d3e91be2c693a365da19b33d40ea1a114fd31e4f92f3b52307d",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/memory-guide-forget-race.svg",
+          "sha256": "0cf4c49f952dfa2fc14ff07b2e104df1f1854a01723fcb4fd729b75af7745ae7"
+        },
+        {
+          "path": "docs/diagrams/memory-guide-forget-race.png",
+          "sha256": "dc284e0880218ab676695db73470bc46c4f5e63dd6c79825a71156e3440f54e6"
+        }
+      ],
+      "status": "proposed",
+      "origin": "memory-context-2026-10-23-r2"
+    },
+    {
+      "id": "diagram-memory-guide-reconnect",
+      "source_document": "docs/diagrams/memory-guide-reconnect.mmd",
+      "owner_document": "docs/memory-cognition-design.md",
+      "source_sha256": "983d26c7823a4f8081261143db7c3c46d52729dae53826ec31038029511c2e27",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/memory-guide-reconnect.svg",
+          "sha256": "ada80904d48217b21e9d052491b3333476614e3f8a1ea0e1d6c094ed32917190"
+        },
+        {
+          "path": "docs/diagrams/memory-guide-reconnect.png",
+          "sha256": "35eacac4055d39dfe8e125b5efe9c696d9a1106a3cfaa16b2b3b81a980e59ee2"
+        }
+      ],
+      "status": "proposed",
+      "origin": "memory-context-2026-10-23-r2"
+    },
+    {
+      "id": "diagram-memory-guide-private-output",
+      "source_document": "docs/diagrams/memory-guide-private-output.mmd",
+      "owner_document": "docs/memory-cognition-design.md",
+      "source_sha256": "52498e2d80a07a668c0274f085be0c318535655cd5c276082b24a39e03dbe4e0",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/memory-guide-private-output.svg",
+          "sha256": "073e4107dc62df9366f7004b82709b27479bc145e9ea7f54436daf1f538261ec"
+        },
+        {
+          "path": "docs/diagrams/memory-guide-private-output.png",
+          "sha256": "c2235bd989921451f99510dcd6cab415c7dddd82b969a8bec950a9a83439a593"
+        }
+      ],
+      "status": "proposed",
+      "origin": "memory-context-2026-10-23-r2"
+    }
+  ],
+  "assets": [],
+  "required_anchors": {
+    "docs/product-requirements.md": [
+      "r01",
+      "r02",
+      "r03",
+      "r04",
+      "r05",
+      "r06",
+      "r07",
+      "r08",
+      "r09",
+      "r10",
+      "r11",
+      "r12",
+      "r13",
+      "r14",
+      "r15",
+      "r16",
+      "r17",
+      "r18",
+      "r19",
+      "r20",
+      "r21",
+      "r22",
+      "r23",
+      "r24",
+      "r25",
+      "r26",
+      "r27",
+      "r28",
+      "r29",
+      "r30",
+      "r31",
+      "r32",
+      "r33",
+      "r34",
+      "r35",
+      "r36",
+      "r37",
+      "r38",
+      "r39",
+      "n01",
+      "n02",
+      "n03",
+      "n04",
+      "n05",
+      "n06",
+      "n07",
+      "n08",
+      "n09",
+      "n10",
+      "n11",
+      "n12",
+      "n13"
+    ],
+    "docs/core-bootstrap.md": [],
+    "docs/development-guide.md": [],
+    "docs/architecture.md": [],
+    "docs/security-sovereignty.md": [],
+    "docs/federation.md": [],
+    "docs/interaction-persona.md": [],
+    "docs/tasks-agents.md": [],
+    "docs/models-offline.md": [],
+    "docs/knowledge-learning.md": [],
+    "docs/evolution-release.md": [],
+    "docs/toolchains.md": [],
+    "docs/contracts.md": [],
+    "docs/stack-project-layout.md": [],
+    "docs/health-maintenance.md": [],
+    "docs/simulation.md": [],
+    "docs/delivery-validation.md": [
+      "v-oss-01",
+      "v-oss-02",
+      "v-oss-03",
+      "v-oss-04",
+      "v-oss-05",
+      "v-oss-06",
+      "v-oss-07",
+      "v-oss-08",
+      "v-mem-01",
+      "v-mem-02",
+      "v-mem-03",
+      "v-mem-04",
+      "v-mem-05",
+      "v-mem-06",
+      "v-mem-07",
+      "v-mem-08",
+      "v-mem-09",
+      "v-mem-10",
+      "v-mem-11",
+      "v-mem-12",
+      "v-mem-13",
+      "v-pc-01",
+      "v-pc-02",
+      "v-pc-03",
+      "v-pc-04",
+      "v-ui-01",
+      "v-ui-02",
+      "v-ui-03",
+      "v-ui-04",
+      "v-ui-05",
+      "v-ui-06",
+      "v-ui-07",
+      "v-ui-08",
+      "v-ui-09",
+      "v-ui-10",
+      "v-ui-11",
+      "v-ui-12",
+      "v-ui-13",
+      "v-ui-14",
+      "v-ui-15",
+      "v-ui-16",
+      "v-r01",
+      "v-r02",
+      "v-r03",
+      "v-r04",
+      "v-r05",
+      "v-r06",
+      "v-r07",
+      "v-r08",
+      "v-r09",
+      "v-r10",
+      "v-r11",
+      "v-r12",
+      "v-r13",
+      "v-r14",
+      "v-r15",
+      "v-r16",
+      "v-r17",
+      "v-r18",
+      "v-r19",
+      "v-r20",
+      "v-r21",
+      "v-r22",
+      "v-r23",
+      "v-r24",
+      "v-r25",
+      "v-r26",
+      "v-r27",
+      "v-r28",
+      "v-r29",
+      "v-r30",
+      "v-r31",
+      "v-r32",
+      "v-r33",
+      "v-r34",
+      "v-r35",
+      "v-r36",
+      "v-r37",
+      "v-r38",
+      "v-r39",
+      "v-n01",
+      "v-n02",
+      "v-n03",
+      "v-n04",
+      "v-n05",
+      "v-n06",
+      "v-n07",
+      "v-n08",
+      "v-n09",
+      "v-n10",
+      "v-n11",
+      "v-n12",
+      "v-n13",
+      "v-comp-01",
+      "v-comp-02",
+      "v-comp-03",
+      "v-comp-04",
+      "v-comp-05",
+      "v-comp-06",
+      "v-comp-07",
+      "v-comp-08",
+      "v-comp-09",
+      "v-comp-10",
+      "v-comp-11",
+      "v-comp-12",
+      "v-comp-13",
+      "v-comp-14",
+      "v-comp-15",
+      "v-comp-16",
+      "v-comp-17",
+      "v-comp-18",
+      "v-comp-19",
+      "v-comp-20",
+      "v-comp-21",
+      "v-comp-22",
+      "v-comp-23",
+      "v-comp-24",
+      "v-comp-25",
+      "v-comp-26",
+      "v-comp-27",
+      "v-comp-28",
+      "v-comp-29",
+      "v-comp-30",
+      "v-comp-31",
+      "v-comp-32",
+      "v-comp-33",
+      "v-comp-34",
+      "v-comp-35",
+      "v-skl-01",
+      "v-skl-02",
+      "v-skl-03",
+      "v-skl-04",
+      "v-skl-05",
+      "v-skl-06",
+      "v-skl-07",
+      "v-skl-08",
+      "v-ani-01",
+      "v-ani-02",
+      "v-ani-03",
+      "v-ani-04",
+      "v-ani-05",
+      "v-ani-06",
+      "v-ani-07",
+      "v-desk-01",
+      "v-desk-02",
+      "v-desk-03",
+      "v-desk-04",
+      "v-desk-05",
+      "v-desk-06",
+      "v-desk-07",
+      "v-desk-08",
+      "v-desk-09",
+      "v-awb-01",
+      "v-awb-02",
+      "v-awb-03",
+      "v-awb-04",
+      "v-awb-05",
+      "v-awb-06",
+      "v-awb-07"
+    ],
+    "docs/decisions-review.md": [
+      "adr-023",
+      "adr-024",
+      "adr-025",
+      "adr-026",
+      "adr-027",
+      "adr-028",
+      "adr-029"
+    ],
+    "docs/references.md": [
+      "s01",
+      "s02",
+      "s03",
+      "s04",
+      "s05",
+      "s07",
+      "s08",
+      "s09",
+      "s10",
+      "s28",
+      "s31",
+      "s32",
+      "s34",
+      "s36",
+      "s06",
+      "s11",
+      "s12",
+      "s13",
+      "s14",
+      "s15",
+      "s16",
+      "s17",
+      "s18",
+      "s19",
+      "s20",
+      "s21",
+      "s22",
+      "s23",
+      "s24",
+      "s25",
+      "s26",
+      "s27",
+      "s29",
+      "s30",
+      "s33",
+      "s35",
+      "s37",
+      "s38",
+      "s39",
+      "s40",
+      "s41",
+      "s42",
+      "s43",
+      "s44",
+      "s45",
+      "s46",
+      "s47",
+      "s48",
+      "s49",
+      "s50",
+      "s51",
+      "s52",
+      "s53",
+      "s54",
+      "s55",
+      "s56",
+      "s57",
+      "s58",
+      "s59",
+      "s60",
+      "s61",
+      "s62",
+      "s63",
+      "s64",
+      "s65",
+      "s66",
+      "s67",
+      "s68",
+      "s69",
+      "s70",
+      "s71",
+      "s72",
+      "s73",
+      "s74",
+      "s75",
+      "s76",
+      "s77",
+      "s78",
+      "s79",
+      "s80",
+      "s81",
+      "s82",
+      "s83",
+      "s84",
+      "s85",
+      "s86",
+      "s87",
+      "s88",
+      "s89",
+      "s90",
+      "s91",
+      "s92",
+      "s93",
+      "s94",
+      "s95",
+      "s96",
+      "s97",
+      "s98",
+      "s99",
+      "s100",
+      "s101",
+      "s102",
+      "s103",
+      "s104",
+      "s105",
+      "s106",
+      "s107",
+      "s108",
+      "s109",
+      "s110",
+      "s111",
+      "s112",
+      "s113",
+      "s114",
+      "s115",
+      "s116",
+      "s117",
+      "s118",
+      "s128",
+      "s129",
+      "s130",
+      "s131",
+      "s132",
+      "s133",
+      "s134",
+      "s135",
+      "s136",
+      "s137",
+      "s138",
+      "s139",
+      "s140",
+      "s141",
+      "s142",
+      "s119",
+      "s120",
+      "s121",
+      "s122",
+      "s123",
+      "s124",
+      "s125",
+      "s126",
+      "s127",
+      "s143",
+      "s144",
+      "s145",
+      "s146",
+      "s147",
+      "s148",
+      "s149",
+      "s150",
+      "s151",
+      "s152",
+      "s153",
+      "s154",
+      "s155",
+      "s156",
+      "s157",
+      "s158",
+      "s159",
+      "s160",
+      "s161",
+      "s162",
+      "s163",
+      "s164",
+      "s165",
+      "s168",
+      "s169",
+      "s170",
+      "s166",
+      "s167",
+      "s171",
+      "s172",
+      "s173",
+      "s174",
+      "s175",
+      "s176",
+      "s177",
+      "s178",
+      "s179",
+      "s180",
+      "s181",
+      "s182",
+      "s183",
+      "s184",
+      "s185",
+      "s186",
+      "s187",
+      "s188",
+      "s189",
+      "s190",
+      "s191",
+      "s192",
+      "s193",
+      "s194",
+      "s195",
+      "s196",
+      "s197",
+      "s198",
+      "s199",
+      "s200",
+      "s201",
+      "s202",
+      "s203",
+      "s204",
+      "s205",
+      "s206",
+      "s207",
+      "s208",
+      "s209",
+      "s210",
+      "s211",
+      "s212",
+      "s213",
+      "s214",
+      "s215",
+      "s216",
+      "s217",
+      "s218",
+      "s219",
+      "s220",
+      "s221",
+      "s222",
+      "s223",
+      "s224",
+      "s225",
+      "s226",
+      "s227",
+      "s232",
+      "s233",
+      "s228",
+      "s229",
+      "s230",
+      "s231",
+      "s234",
+      "s235",
+      "s236",
+      "s237",
+      "s238",
+      "s239",
+      "s240",
+      "s241",
+      "s242",
+      "s243",
+      "s244",
+      "s245",
+      "s246",
+      "s247",
+      "s248",
+      "s249",
+      "s250",
+      "s251",
+      "s252",
+      "s253",
+      "s254",
+      "s255",
+      "s256",
+      "s257",
+      "s258",
+      "s259",
+      "s260",
+      "s261",
+      "s262",
+      "s263",
+      "s264",
+      "s265",
+      "s266",
+      "s267",
+      "s268",
+      "s269",
+      "s270",
+      "s271",
+      "s272",
+      "s273",
+      "s274",
+      "s275",
+      "s276",
+      "s277",
+      "s278",
+      "s279",
+      "s280",
+      "s281",
+      "s282",
+      "s283",
+      "s284"
+    ],
+    "docs/architecture-atlas.md": [],
+    "docs/MAINTENANCE.md": [],
+    "docs/self-model.md": [],
+    "docs/memory-cognition-design.md": [
+      "memory-guide-start",
+      "memory-guide-cases",
+      "memory-guide-maintenance"
+    ]
+  },
+  "required_identifiers": {
+    "docs/product-requirements.md": [
+      "N01",
+      "N02",
+      "N03",
+      "N04",
+      "N05",
+      "N06",
+      "N07",
+      "N08",
+      "N09",
+      "N10",
+      "N11",
+      "N12",
+      "N13",
+      "R01",
+      "R02",
+      "R03",
+      "R04",
+      "R05",
+      "R06",
+      "R07",
+      "R08",
+      "R09",
+      "R10",
+      "R11",
+      "R12",
+      "R13",
+      "R14",
+      "R15",
+      "R16",
+      "R17",
+      "R18",
+      "R19",
+      "R20",
+      "R21",
+      "R22",
+      "R23",
+      "R24",
+      "R25",
+      "R26",
+      "R27",
+      "R28",
+      "R29",
+      "R30",
+      "R31",
+      "R32",
+      "R33",
+      "R34",
+      "R35",
+      "R36",
+      "R37",
+      "R38",
+      "R39"
+    ],
+    "docs/delivery-validation.md": [
+      "H01",
+      "H02",
+      "H03",
+      "H04",
+      "H05",
+      "H06",
+      "H07",
+      "H08",
+      "H09",
+      "H10",
+      "H11",
+      "H12",
+      "N01",
+      "N02",
+      "N03",
+      "N04",
+      "N05",
+      "N06",
+      "N07",
+      "N08",
+      "N09",
+      "N10",
+      "N11",
+      "N12",
+      "N13",
+      "R01",
+      "R02",
+      "R03",
+      "R04",
+      "R05",
+      "R06",
+      "R07",
+      "R08",
+      "R09",
+      "R10",
+      "R11",
+      "R12",
+      "R13",
+      "R14",
+      "R15",
+      "R16",
+      "R17",
+      "R18",
+      "R19",
+      "R20",
+      "R21",
+      "R22",
+      "R23",
+      "R24",
+      "R25",
+      "R26",
+      "R27",
+      "R28",
+      "R29",
+      "R30",
+      "R31",
+      "R32",
+      "R33",
+      "R34",
+      "R35",
+      "R36",
+      "R37",
+      "R38",
+      "R39",
+      "V-ANI-01",
+      "V-ANI-02",
+      "V-ANI-03",
+      "V-ANI-04",
+      "V-ANI-05",
+      "V-ANI-06",
+      "V-ANI-07",
+      "V-AWB-01",
+      "V-AWB-02",
+      "V-AWB-03",
+      "V-AWB-04",
+      "V-AWB-05",
+      "V-AWB-06",
+      "V-AWB-07",
+      "V-COMP-01",
+      "V-COMP-02",
+      "V-COMP-03",
+      "V-COMP-04",
+      "V-COMP-05",
+      "V-COMP-06",
+      "V-COMP-07",
+      "V-COMP-08",
+      "V-COMP-09",
+      "V-COMP-10",
+      "V-COMP-11",
+      "V-COMP-12",
+      "V-COMP-13",
+      "V-COMP-14",
+      "V-COMP-15",
+      "V-COMP-16",
+      "V-COMP-17",
+      "V-COMP-18",
+      "V-COMP-19",
+      "V-COMP-20",
+      "V-COMP-21",
+      "V-COMP-22",
+      "V-COMP-23",
+      "V-COMP-24",
+      "V-COMP-25",
+      "V-COMP-26",
+      "V-COMP-27",
+      "V-COMP-28",
+      "V-COMP-29",
+      "V-COMP-30",
+      "V-COMP-31",
+      "V-COMP-32",
+      "V-COMP-33",
+      "V-COMP-34",
+      "V-COMP-35",
+      "V-DESK-01",
+      "V-DESK-02",
+      "V-DESK-03",
+      "V-DESK-04",
+      "V-DESK-05",
+      "V-DESK-06",
+      "V-DESK-07",
+      "V-DESK-08",
+      "V-DESK-09",
+      "V-DLG-01",
+      "V-DLG-02",
+      "V-DLG-03",
+      "V-DLG-04",
+      "V-DLG-05",
+      "V-DLG-06",
+      "V-DLG-07",
+      "V-DLG-08",
+      "V-GROW-01",
+      "V-GROW-02",
+      "V-GROW-03",
+      "V-GROW-04",
+      "V-GROW-05",
+      "V-GROW-06",
+      "V-GROW-07",
+      "V-GROW-08",
+      "V-GROW-09",
+      "V-GROW-10",
+      "V-MEM-01",
+      "V-MEM-02",
+      "V-MEM-03",
+      "V-MEM-04",
+      "V-MEM-05",
+      "V-MEM-06",
+      "V-MEM-07",
+      "V-MEM-08",
+      "V-MEM-09",
+      "V-MEM-10",
+      "V-MEM-11",
+      "V-MEM-12",
+      "V-MEM-13",
+      "V-OSS-01",
+      "V-OSS-02",
+      "V-OSS-03",
+      "V-OSS-04",
+      "V-OSS-05",
+      "V-OSS-06",
+      "V-OSS-07",
+      "V-OSS-08",
+      "V-PAL-01",
+      "V-PAL-02",
+      "V-PAL-03",
+      "V-PAL-04",
+      "V-PAL-05",
+      "V-PAL-06",
+      "V-PAL-07",
+      "V-PAL-08",
+      "V-PAL-09",
+      "V-PAL-10",
+      "V-PC-01",
+      "V-PC-02",
+      "V-PC-03",
+      "V-PC-04",
+      "V-SELF-01",
+      "V-SELF-02",
+      "V-SELF-03",
+      "V-SELF-04",
+      "V-SELF-05",
+      "V-SELF-06",
+      "V-SELF-07",
+      "V-SELF-08",
+      "V-SKL-01",
+      "V-SKL-02",
+      "V-SKL-03",
+      "V-SKL-04",
+      "V-SKL-05",
+      "V-SKL-06",
+      "V-SKL-07",
+      "V-SKL-08",
+      "V-UI-01",
+      "V-UI-02",
+      "V-UI-03",
+      "V-UI-04",
+      "V-UI-05",
+      "V-UI-06",
+      "V-UI-07",
+      "V-UI-08",
+      "V-UI-09",
+      "V-UI-10",
+      "V-UI-11",
+      "V-UI-12",
+      "V-UI-13",
+      "V-UI-14",
+      "V-UI-15",
+      "V-UI-16"
+    ],
+    "docs/health-maintenance.md": []
+  }
+}

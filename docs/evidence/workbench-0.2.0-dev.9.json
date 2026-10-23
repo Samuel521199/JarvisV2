@@ -1,0 +1,150 @@
+{
+  "release": "0.2.0-dev.9",
+  "date": "2026-10-23",
+  "python_regression": {
+    "passed": 162,
+    "failed": 0,
+    "seconds": 118.652,
+    "log": "workbench-0.2.0-dev.9/python-tests.txt",
+    "new_goal_growth_tests": 14
+  },
+  "doc_tools": {
+    "passed": 8
+  },
+  "rust": {
+    "passed": 2,
+    "release_build": "offline locked passed",
+    "fmt": "passed"
+  },
+  "architecture": {
+    "python_files": 71,
+    "errors": []
+  },
+  "javascript": {
+    "files": 18,
+    "errors": []
+  },
+  "http": {
+    "endpoints": 13,
+    "all_status_200": true
+  },
+  "live": "workbench-0.2.0-dev.9/live-check.json",
+  "ui": {
+    "implemented": true,
+    "browser_verified": false,
+    "reason": "Local browser use is disabled in Work settings",
+    "screenshots": []
+  },
+  "database_schema": {
+    "from": 5,
+    "to": 6,
+    "additive_tables": [
+      "goal_growth"
+    ],
+    "additive_columns": [
+      "goal_plans.planning_round"
+    ],
+    "older_host_compatible": false
+  },
+  "new_dependencies": [],
+  "new_thread_pools": 0,
+  "real_model_chain": {
+    "model_calls": 5,
+    "public_cases": 1,
+    "held_out_cases": 5,
+    "original_goal_completed": true,
+    "original_goal_preserved": true,
+    "artifact_bytes": 463,
+    "reuse_additional_model_calls": 0,
+    "reviewer": "Codex acting under user test authorization",
+    "acceptance_guaranteed_for_arbitrary_business": false
+  },
+  "limitations": [
+    "Personal pure-text capabilities only; one associated development per explicit goal",
+    "Specification/expected results, exact candidate publication and final plan require review",
+    "No mixed-intent chat dispatch, external Codex/MCP executor, mailbox/calendar, desktop, private identity or federation migration",
+    "No new sustained resource, low-memory PC or browser interaction benchmark"
+  ],
+  "files": {
+    "architecture.txt": {
+      "sha256": "bf2ad7008fe7f78ebf7c91fa7250678cfc29538c552c0b0a0b8baa48c20f819f",
+      "bytes": 36
+    },
+    "doc-tools.txt": {
+      "sha256": "8701141b5a7220618ce70dfc7bd33789689e3f20d37352ab17e30412e5bc7d73",
+      "bytes": 995
+    },
+    "http-assets.json": {
+      "sha256": "f6ac7cd87edd6781f57da17c870b115e7006548054f515832e5df23c05bc3365",
+      "bytes": 2822
+    },
+    "javascript-checks.json": {
+      "sha256": "fe1310661b3f0362c793b954b2665ab6298626a02e1a61f9b712204d7a821014",
+      "bytes": 1603
+    },
+    "live-check.json": {
+      "sha256": "1eb3ef8f1864e256d07e364a75c21767bbd05f502e2680e0ddd1952848b7f0a6",
+      "bytes": 22341
+    },
+    "python-tests.txt": {
+      "sha256": "7b080fed1cb2834d289fb410d230623849e8313255cd44edda91275bbc24d7e7",
+      "bytes": 24797
+    },
+    "rust-build.txt": {
+      "sha256": "4c43630fb5023ac0d43ad59b2c3306b08f8e1e78ac772a291dcf57b9ac1831c1",
+      "bytes": 133
+    },
+    "rust-fmt.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "rust-tests.txt": {
+      "sha256": "0993e6ac67477db4d4038298e56a204d1e18c53408fce892cdcf4da82f47138e",
+      "bytes": 482
+    },
+    "docs-check.txt": {
+      "sha256": "760ca8c87d6f118b01b570f6ab725e99aa811a8c3403d24b44adf164bec263c7",
+      "bytes": 67
+    }
+  },
+  "source_sha256": {
+    "host/goal_growth.py": "4adccd0038b96b82e04fc18b220dc03bab90eaeb07a05cc34aba71c0a3f31ba2",
+    "host/goals.py": "558593f50229dfc742d28829bd6b42d793cce8459790528d67e6698204ffdd4c",
+    "host/background.py": "ef751572ed8228ebf0ecc1f1c62e76a7be602dbfc2de380023424a2c2f249a68",
+    "host/development.py": "3687a3b2ec77d9ff25f823c5fcb28f6eb4aebe1cda68440891d320a1be0484bc",
+    "host/core.py": "bdddcb25a2d6da634ef730e2b910afd079ab10debf999c5416c940c3fb8e7d73",
+    "modules/task_resource/growth.py": "37c782deeeb105311289a736328318b0f4f21419f113f275b97c48fb43a47bb5",
+    "modules/task_resource/plans.py": "89ad75b48a6a600b748104aa6bacee756c070c962e10b5eeb9ddcc4080b5b69e",
+    "modules/autonomous_development/service.py": "b8f710729853ac63391a46ce26c87a416cc8aa8cc0eb752a50344783c6700af5",
+    "adapters/storage/sqlite.py": "50ef18f4b40a4685fcd4c7965bb1721f4c0b48d2c5d2fb68d9d010d0df8b3bd9",
+    "sdk/protocol.py": "4ae6656c4e47da105cc33614d4f2aab2a4438d41c5bc95708c962a9c78491ccf",
+    "contracts/schemas/capability-draft.v1.json": "065dc54e0dce8e93cf6403ccffd1f92dbf382b4c48857a5972c0089f8c8029e1",
+    "apps/workbench/server.py": "be8983bd58e753afc89c6cd9516d84603a0a4554002bb7e88fed0c955208f02c",
+    "apps/workbench/goal-growth.js": "84b62b819504679ceaf653cd746ed961786a2ad005cc69c92a41a7c911090d72",
+    "apps/workbench/goals.js": "2b1ab9d724f693ebdee0ed495b3f5cc59f8ef78b4f6d6537877be116509b70dd",
+    "apps/workbench/development.js": "87e98ff8e47dcfd4e905375c0260c05c775128bb126747c2a5b833ff1db2b69b",
+    "apps/workbench/ui.js": "f065368747cae926a79085bc20e774da1a9b9a358c160d0aaa558b9f3bcaf2bd",
+    "apps/workbench/style.css": "36cca708e3c13f1363baed00c6fcc2aca434a02113f6d7d01acc273335508d93",
+    "tests/test_goal_growth.py": "b2ceacb20ad1606ce76dd8ed18cff09f76a53b6a726190288618b8dd15b0e16f",
+    "tests/test_goal_plans.py": "4545e80f22015462eff51155b47c34cee5a91a0903208f34515d16d62d224ee7",
+    "tests/test_settings_management.py": "0913a7c0a171af8c11cda562a47756529279d81635da44a1354acf0081fac007",
+    "VERSION": "e1973779382bcc5930b41beb8ab244599c9f57c3b29ca4e8c202668a6adf3f72",
+    "control/bootstrap/Cargo.toml": "6a01516b9a15372c85be9889442fd4599a907c7ce5cefb78e58a8d69c3f94d12",
+    "control/bootstrap/Cargo.lock": "58ec61637853672da6fd92540a6114235a09c44ab922ea55851f8b86fea87f24",
+    "packaging/runtime-lock.json": "2ddec0be8ccf3e2a545144731cae6646df4a839916877237aa512becafec5f24",
+    "packaging/reference-map.json": "5d5418af14e04c6b49affc7993faafb23b59b9ca8494c5525f9d9d2e629d127b",
+    "README.md": "1873af1d0c06748d509ca41bdf1aa495a957c86ad8410c8d6f1914b89f411a43",
+    "AGENTS.md": "6cb2571546b0132dd18cacf378df11190ad7e78f7acc40b962f56a5c79032c04",
+    "docs/README.md": "223dbb5f0fd300d6d771bee52e3c04ca56642454cb55b971908eafdd1c9e6c87",
+    "docs/manifest.json": "fe7f9f3e643ce072dd6e83221c77f3c293e309f37ef5fd1569e154d23f67ff9b",
+    "docs/core-bootstrap.md": "bc1641c34230c2c712e3ac4d5116f4a42f1f110d7b0185951e8177acc952bda2",
+    "docs/tasks-agents.md": "4ec40c104f8837e51d417138eda53233517a3b2c0cb4342db98f38f080fbacfb",
+    "docs/contracts.md": "591f3cbce395450d3ded0d24f468a1d40a371a0af97ad76b545e69a17b575e91",
+    "docs/interaction-persona.md": "1690847dced1b94f10c8d41c429298cd58162b33c6dc0a05177a249041308016",
+    "docs/development-guide.md": "8af0b1d1c054ab56e172f5de43c9f99531c5692da0fda370fd5caf20dd115baf",
+    "docs/stack-project-layout.md": "641245e0612c1bfedb17c9b70b66c64e3690bbe3172865023a522b196a01c0f1",
+    "docs/delivery-validation.md": "319559e67bdc8998747ef7e07a006051434bbfe37e9160654002e1fa924008bc",
+    "docs/toolchains.md": "94fc24104ac0c8cc67a2fb006e51733a12ba4a5e54ae4f59e0a0795538144630"
+  },
+  "docs_check": "OK documents=25 chapters=22 diagrams=31 local_links=1787 errors=0"
+}

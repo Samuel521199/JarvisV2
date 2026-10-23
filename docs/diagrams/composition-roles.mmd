@@ -1,0 +1,38 @@
+flowchart TB
+  CORE["个人助手核心<br/>同一个 Jarvis 的身份与交流"]
+  BOT["BotBinding · 可选长期绑定<br/>入口 / 事件 / 安静时间 / 授权引用"]
+  BP["AgentBlueprint · 可复用角色配方<br/>目标 / 适用范围 / 验收 / 终止条件"]
+  SKILL["Skill · 方法包<br/>说明 / 例子 / 参考 / 脚本"]
+  TOOL["ToolDescriptor · 动作声明<br/>输入输出 / 效果 / 取消与查询"]
+  POLICY["Context 与模型策略引用<br/>用途 / 来源修订 / 主备选择"]
+  COMPOSE["Composer + Registry<br/>解析版本、兼容与能力前提"]
+  SPEC["RunSpec · 本次不可变装配<br/>原请求 / 包摘要 / 预算与许可引用"]
+  TASK["Task Runtime · 确定性控制<br/>唯一任务状态 / 动作回执 / 恢复"]
+  INSTANCE["AgentInstance · 逻辑工作身份<br/>任务引用 / 独立上下文 / 检查点"]
+  RUNTIME["Agent Runtime · 共用认知引擎<br/>装上下文 → 模型一步决策 → 候选"]
+  GATE["Action Gateway<br/>现行权限 / 取消 / 预算 / 去重"]
+  EXEC["Tool 实现 + Connector / Worker<br/>领域 API / 文件 / 网页 / 设备"]
+  MODEL["ModelGateway 与共享模型部署<br/>多个角色复用，不按角色复制权重"]
+  CORE -->|当前目标| COMPOSE
+  CORE -->|已有授权的长期职责| BOT
+  BOT -.->|选择| BP
+  BP -.-> SKILL
+  BP -.-> TOOL
+  BP -.-> POLICY
+  BP --> COMPOSE
+  COMPOSE --> SPEC --> TASK
+  TASK -->|需要认知时| INSTANCE --> RUNTIME
+  SKILL -.->|仅装载选定方法| RUNTIME
+  POLICY -.->|重查有效用途| RUNTIME
+  RUNTIME --> MODEL
+  RUNTIME -.->|类型化候选| TASK
+  TASK -->|确定性或已核对动作| GATE --> EXEC
+  EXEC -->|原动作编号和结果证据| TASK
+  classDef personal fill:#e5f5f9,stroke:#21869b,color:#123f4a;
+  classDef recipe fill:#f2edfb,stroke:#8262aa,color:#39274c;
+  classDef runtime fill:#e9f0fc,stroke:#4c72aa,color:#183859;
+  classDef action fill:#fff2e2,stroke:#a96d2d,color:#623b13;
+  class CORE,BOT personal;
+  class BP,SKILL,TOOL,POLICY,COMPOSE,SPEC recipe;
+  class TASK,INSTANCE,RUNTIME,MODEL runtime;
+  class GATE,EXEC action;

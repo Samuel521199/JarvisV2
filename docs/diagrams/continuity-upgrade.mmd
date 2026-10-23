@@ -1,0 +1,41 @@
+%%{init: {"theme":"base","themeVariables":{"fontSize":"17px","primaryTextColor":"#19324f","lineColor":"#526b88","clusterBkg":"#f5f8fc","clusterBorder":"#c5d3e3","edgeLabelBackground":"#f5f8fc"},"flowchart":{"curve":"linear","nodeSpacing":32,"rankSpacing":45,"wrappingWidth":320}}}%%
+flowchart TB
+  subgraph A["01 提议与候选"]
+    direction LR
+    A1["真实缺口 / 新技术候选<br/>收益目标 / 基线 / 授权范围"] --> A2["研发 Agent / 外部编码器<br/>新实现 / 适配器 / 迁移器"] --> A3["独立核验<br/>来源 / 测试 / 规则与兼容"]
+  end
+  subgraph B["02 连续性核验"]
+    direction LR
+    B1["身份与控制语义<br/>继承 / G0 / 撤销 / 停止"]
+    B2["记忆与承诺语义<br/>来源 / 纠正 / 遗忘 / 未结事项"]
+    B3["任务与效果语义<br/>原回执 / UNKNOWN / 无重复动作"]
+    B4["体验与资源语义<br/>质量 / 费用 / 延迟 / 内存"]
+    B1 ~~~ B2 ~~~ B3 ~~~ B4
+  end
+  subgraph C["03 试用与交接"]
+    direction LR
+    C1["只读影子对照<br/>不重复发邮件或改文件"] --> C2["新任务灰度<br/>旧任务固定原版本"] --> C3["排空 / 检查点交接<br/>固定水位 / 原代际切换"] --> C4["目标接管后观察<br/>业务结果 / 连续性 / 收益"]
+  end
+  subgraph D["04 结果分支"]
+    direction LR
+    D1["不通过 / 收益不足<br/>拒绝候选，保留原实现"]
+    D2["通过且稳定<br/>继续采用，旧包按引用退役"]
+    D3["退化且数据可兼容<br/>回退实现，保留较新事实"]
+    D4["不兼容 / 信任基础异常<br/>局部维护或原独立恢复"]
+    D1 ~~~ D2 ~~~ D3 ~~~ D4
+  end
+  A -->|通过继续；不通过保留原实现| B
+  B -->|通过继续；不通过保留原实现| C
+  C -->|按证据与兼容条件选择| D
+  NOTE["proposed · 2026-10-22<br/>实现回退，保留较新事实与撤权"]
+  D ~~~ NOTE
+  classDef growth fill:#eeebfa,stroke:#a29ac4,color:#19324f;
+  classDef identity fill:#e5f4f4,stroke:#8aabba,color:#19324f;
+  classDef runtime fill:#eaf2fc,stroke:#8fa9c7,color:#19324f;
+  classDef boundary fill:#fff4df,stroke:#bfa578,color:#19324f;
+  classDef note fill:#fff,stroke:#fff,color:#526b88;
+  class A1,A2,A3 growth;
+  class B1,B2,B3,B4,D2 identity;
+  class C1,C2,C3,C4 runtime;
+  class D1,D3,D4 boundary;
+  class NOTE note;

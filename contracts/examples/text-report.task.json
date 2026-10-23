@@ -1,0 +1,31 @@
+{
+  "schema": "jarvis.task.v1",
+  "request_id": "demo-text-report",
+  "principal_id": "owner.local",
+  "scope_id": "personal",
+  "goal": "分析一段文本并保存可核验报告",
+  "grant_id": "local-default",
+  "steps": [
+    {
+      "step_id": "analyze",
+      "capability": "text.analyze.v1",
+      "arguments": {
+        "text": "Jarvis 帮助个人，也能协助家庭和小团体。\n明确目标，独立完成，核验交付。"
+      }
+    },
+    {
+      "step_id": "deliver",
+      "capability": "artifact.write.v1",
+      "arguments": {
+        "name": "report.json"
+      },
+      "input_from": "analyze"
+    }
+  ],
+  "limits": {
+    "max_steps": 8,
+    "max_attempts": 2,
+    "max_seconds": 3600,
+    "max_cost_units": 8
+  }
+}

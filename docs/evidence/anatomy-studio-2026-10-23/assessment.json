@@ -1,0 +1,131 @@
+{
+  "status": "verified_with_limits",
+  "project": "0.2.0-dev.10",
+  "adapter": "3.0.0",
+  "source": {
+    "repository": "https://github.com/wheresryan22/anatomy",
+    "commit": "1482e8469b0a9e0d8cc18ea2740a01423d29ae80",
+    "license": "MIT",
+    "author": "Ryan",
+    "changes": "Jarvis independently authored composition, kinematic trees, teaching physics, effect views, integration and receipts; original iso kit preserved"
+  },
+  "files_sha256": {
+    "host/anatomy.py": "f436facd3c37ca7d513a092863ee0a2ee30912b631725fab1c41cf8db00c2b78",
+    "host/anatomy_scene.py": "684983787c72f6ce2f98a76e217e246e7c4134ba322fef1724bd54141ba82fdf",
+    "host/anatomy_composer.py": "8a8d5e52b55c879dce124ccc251c99379f613b8b48e7fb4332e62c74d0d71d15",
+    "modules/skills/anatomy/build.mjs": "2886f069dbfdb4e39b493e2a35ee1d79371df9997a98b6a866c410bcdcec3545",
+    "modules/skills/anatomy/scene-schema.json": "8a37ef9cac7fa26039b664f8f8ae0eedd4690ab8ee29084c8709b1c9a8bceabd",
+    "modules/skills/anatomy/studio-presets.json": "6764674393f9f2c642058ebd8e9fc0d16bc73cdb9b4b212556504c008cfb4e87",
+    "modules/skills/anatomy/studio-model.mjs": "a45a3fa11fbf482724e74a67963b0bb8b65b5dd1c502fc2734fc4b978d2aaad0",
+    "modules/skills/anatomy/studio-view.js": "6bd956139c87ab03637b6fbd6f80ba6173e44bda3628b517e3d2817d7dafcd1d",
+    "modules/skills/anatomy/studio.html": "0bab7b113972ca9c624a04b37e4ac792ccef9f952edc67a8395eebf81aaee070",
+    "apps/workbench/settings-anatomy.js": "e64cbfaa33863bfdea2a88a7f947a572c8bc2ee1fdb2826c7474cc1486c73b1e",
+    "apps/workbench/settings.js": "52993279443b397d17d8c68017e23f59e8604594be593df2e45cf60b1dbd501b",
+    "apps/workbench/server.py": "b8cf2e4f35bc301e6243734c04dc98c2ee93a65e69a3c4473663853498dcf606",
+    "apps/workbench/ui.js": "ff3d64c11e45c9d9922d274961f0dd91be061380a41e007a6f97981495269587",
+    "seed/skills/conversation.json": "d445985aaf4f494dfea90473c087550e42dd44b55627d2d028ba0d50bddf75ba",
+    "tests/test_anatomy.py": "910b5839ddfa15c9c336bea940afe7666e0166461a0241906f1c6671c6fa95f4",
+    "tests/test_anatomy_studio.py": "2744d617007bdbb895d67a0724b96ec785d9e380d94fc67e0efe8d30f6f7e3be",
+    "tests/anatomy_studio.mjs": "8a6887c13fd9f8973f7d0464e1171fa5b6a0f7d76f4681e6a726e325a4320776",
+    "tools/probe_anatomy_studio.cjs": "d27e49e772e149e6274b5bb3e5f90fa4d8b74ce540164acc9aa115cb1cc7ae0d",
+    "tools/probe_anatomy_composition.cjs": "4b2ee7e9e84c706027c995433c149647180fa2a181e04daa07ea8313f241493d"
+  },
+  "checks": {
+    "python_full_suite": {
+      "command": "python -m unittest discover -s tests",
+      "tests": 215,
+      "seconds": 171.202,
+      "status": "passed"
+    },
+    "python_final_anatomy": {
+      "tests": 15,
+      "status": "passed"
+    },
+    "studio_model": {
+      "cylinder_states": 45360,
+      "motor_cases": 216,
+      "water_cases": 3888,
+      "coupling_cases": 648,
+      "part_poses": 1292,
+      "presets": 6,
+      "status": "passed"
+    },
+    "planetary_regression": {
+      "motion_cases": 57327,
+      "poses": 732,
+      "vertex_checks": 780678,
+      "penetrations": 0,
+      "status": "passed"
+    },
+    "browser": {
+      "final": "deployed-4/browser.json",
+      "recovery": "recovered-2/browser.json",
+      "final_checks": 14,
+      "script_errors": 0,
+      "animation_updates_per_1300ms": 26,
+      "status": "passed"
+    }
+  },
+  "real_model": {
+    "provider": "vertex",
+    "model": "gemini-3.8-flash",
+    "calls": 2,
+    "composed_engine": "deployed-1/browser.json",
+    "assembly_initial_rejection": "deployed-2/browser.json",
+    "assembly_reused_after_audited_identifier_normalization": "recovered-2/browser.json",
+    "extra_calls_for_repair": 0,
+    "billing_estimate": {
+      "currency": "USD",
+      "amount": 0.0136395,
+      "basis": "Recorded usage including reasoning and local dated rates; not supplier invoices"
+    },
+    "generalization": "Two tasks on one route; no multi-model success-rate claim"
+  },
+  "final_renderer_hashes_match_final_preset_receipts": true,
+  "immutable_history": "Earlier artifacts keep their exact renderer hashes. Final generic renderer adds a prismatic guide line after the original model artifact. Failed reports and previous snapshots are not rewritten. Final browser covers final rendering resources.",
+  "rating": {
+    "score": 8.5,
+    "scale": 10,
+    "kind": "engineering self-assessment, not blind evaluation",
+    "criteria": [
+      {
+        "name": "kinematics",
+        "score": 9,
+        "weight": 0.3
+      },
+      {
+        "name": "visuals",
+        "score": 8,
+        "weight": 0.2
+      },
+      {
+        "name": "interaction",
+        "score": 9,
+        "weight": 0.2
+      },
+      {
+        "name": "integration",
+        "score": 8,
+        "weight": 0.2
+      },
+      {
+        "name": "mechanism_coverage",
+        "score": 8,
+        "weight": 0.1
+      }
+    ]
+  },
+  "limits": [
+    "Assembly: up to 16 box/cylinder bodies with prescribed tree joints; no closed-loop or inverse solver",
+    "Particles/flames/sparks/fields/pump flow are illustrative; no combustion/CFD/field solver",
+    "Motor steady state and 1D small-amplitude waves only; no circuit transient or fluid load feedback",
+    "No CAD/manufacturing, FEA, collision, video, low-end PC or long duration benchmark",
+    "Explicit generation in skill manager; ordinary chat does not start paid models or execute code"
+  ],
+  "demo_urls": {
+    "engine": "http://127.0.0.1:18282/api/anatomy/artifacts/f4723a3c9e6f4eaaabdd300ff9b1f7c9",
+    "jet": "http://127.0.0.1:18282/api/anatomy/artifacts/562f6df63bbc444db993edc413bd94b4",
+    "electromechanical_water": "http://127.0.0.1:18282/api/anatomy/artifacts/7b9ebdb197fd47178c85ed8239849f1f",
+    "free_assembly": "http://127.0.0.1:18282/api/anatomy/artifacts/c38e85b888f940568947a25b32ab80f2"
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "status": "verified_with_declared_platform_limits",
+  "code_frozen": true,
+  "date": "2026-10-23",
+  "increment": "0.2.0-dev.12",
+  "feature": "Conversation-owned folders and cross-platform project locations",
+  "runtime": "Windows / Python 3.13; other OS adapters simulated",
+  "full_regression": {
+    "tests": 226,
+    "passed": true,
+    "seconds": 162.293,
+    "log": "workbench-0.2.0-dev.12/regression.txt"
+  },
+  "focused": {
+    "tests": 12,
+    "passed": true,
+    "seconds": 1.592,
+    "log": "workbench-0.2.0-dev.12/session-folders.txt"
+  },
+  "architecture": {
+    "python_files": 85,
+    "errors": []
+  },
+  "javascript": {
+    "checked": [
+      "app.js",
+      "projects.js",
+      "session-folders.js"
+    ],
+    "errors": []
+  },
+  "browser": {
+    "ui_test_port": 18284,
+    "test_project": "D:/jarvisTest/会话目录验收-20261023",
+    "draft_reopened": true,
+    "project_folder_created": true,
+    "live_port": 18282,
+    "live_session_folder": true,
+    "live_existing_artifact_recovered": true,
+    "model_calls": 0,
+    "errors": [],
+    "screenshots": [
+      "workbench-0.2.0-dev.12/session-folder.png",
+      "workbench-0.2.0-dev.12/live-session-folder.png"
+    ]
+  },
+  "restart": {
+    "requested": true,
+    "executed": false,
+    "reason": "Automatic approval rejected stop/restart command: blocked by policy. No bypass performed. Existing running service independently already supports the verified new folder endpoints."
+  },
+  "limits": [
+    "macOS/Linux native desktop and full application not tested on real hardware",
+    "Worker and credentials still Windows-specific",
+    "Independent tools/development without a chat binding keep original central task storage",
+    "No physical deletion, relocation or automatic cross-machine path rebinding",
+    "Explicit reply backfill currently covers latest 100 conversation turns",
+    "Partial writes and changed files report conflicts; no silent overwrite"
+  ],
+  "source_sha256": {
+    "adapters/desktop/locations.py": "4afdf97fb6ec418177b6280da0a1463503ecc7df032f8532df117f7bc68d478c",
+    "adapters/desktop/folder_picker.py": "e8bc352845e26f77ef2d6271da8809186455544522bd0675828dba9ee76d6997",
+    "modules/workspace/store.py": "25d65bd893bd1ed087670bc742321c56e5f8aefadfb01acd16799fb2abc97e5f",
+    "modules/workspace/sessions.py": "08c84503c2de81d572c6326e3dc75ffc96e5914128ad48cee98e6661884ecab6",
+    "host/session_workspace.py": "0d10d714fb041549e1dab2539935d3d642e8c7c9b2860337a695468492580559",
+    "host/workbench.py": "d004d0464b791b12afa693500ae6089b8b840911d848b3008e593321b5be3ecf",
+    "host/assistant.py": "d46397a17c99e8fa46d03538f4f7ccfa6d98a5bf45f6905827e455d7c65e6253",
+    "host/dialogue.py": "2ded096c7365582fdf96700d50ba8a2d7ee1d9138981d2bcf2f25ab7557d72ea",
+    "host/core.py": "92d1391a5f6ae4af8a853bf33387044d753af79b7397e8f6fca721a1dbee40de",
+    "apps/workbench/server.py": "33c867cbb43f901b1c598037bf30b69e8450793d42735f027045292bf070a6d0",
+    "apps/workbench/session-folders.js": "8469e24e614f0ef02e2099b6e43867ceaa2dee72096424bc9a6ac7b3e0417a81",
+    "apps/workbench/projects.js": "5a7748253508379f5c5410123c4e28ec2d5f8c4bb8778daee33a0b4a8e940a48",
+    "apps/workbench/app.js": "0aa1ae94963a48c5ad0ce031b68da6e147e179e23b02809a6a7a4e6aab98d6cd",
+    "apps/workbench/index.html": "8172491ab98d1991c091cce39c82524df4421268807bb6208b7921bce25fc453",
+    "apps/workbench/ui.js": "4666b2f7da8c1e5035076680dfeb5d0d79ce541f99b32259241e0735cab61dde",
+    "tests/test_session_folders.py": "75da3079b699eccde128e1e6e8724d9abc8e1575ddb06ec3b015e002cf83dd0b",
+    "tests/test_assistant_goals.py": "3cd5efd1e43a82d7da659ca98db7c11ab38674ffc69a8b0c05cb57ccd96c5b1e"
+  },
+  "documentation": {
+    "documents": 26,
+    "chapters": 23,
+    "diagrams": 39,
+    "local_links": 2131,
+    "errors": 0,
+    "log": "workbench-0.2.0-dev.12/docs-check.txt"
+  },
+  "cleanup": {
+    "temporary_server_18284": "stopped",
+    "test_projects": "retained in jarvisTest; no user files deleted",
+    "production_18282": "left running; folder UI and recovery verified"
+  },
+  "handoff": {
+    "code_frozen": true,
+    "further_feature_edits_planned": false,
+    "remaining": "Real macOS/Linux platform acceptance and a normal full host restart remain outside verified scope; attempted restart was policy rejected."
+  }
+}

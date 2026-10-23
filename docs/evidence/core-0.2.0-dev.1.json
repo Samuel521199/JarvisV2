@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "release": "0.2.0-dev.1",
+  "date": "2026-10-22",
+  "timezone": "Asia/Shanghai",
+  "status": "verified-scoped",
+  "scope": "Independent deterministic core seed; partial K0/K1 and selected K2 interfaces. No complete stage certification.",
+  "environment": {
+    "os": "Windows 11 10.0.26200",
+    "python": "3.13.0",
+    "sqlite": "3.45.3",
+    "rust": "1.93.1",
+    "third_party_packages_installed": 0
+  },
+  "checks": [
+    {
+      "name": "python-runtime-and-cli",
+      "command": "python -X utf8 -I -B -m unittest discover -s tests -p \"test_*.py\" -v",
+      "exit_code": 0,
+      "tests": 34,
+      "failed": 0,
+      "skipped": 0,
+      "output": "test_cli_init_submit_run_query_and_error_envelopes (test_cli_native.CliNativeTests.test_cli_init_submit_run_query_and_error_envelopes) ... ok\r\ntest_native_starts_real_host_and_delivers_report (test_cli_native.CliNativeTests.test_native_starts_real_host_and_delivers_report) ... ok\r\ntest_native_stop_and_status_work_without_python_and_latch_survives (test_cli_native.CliNativeTests.test_native_stop_and_status_work_without_python_and_latch_survives) ... ok\r\ntest_native_stop_terminates_hung_direct_child (test_cli_native.CliNativeTests.test_native_stop_terminates_hung_direct_child) ... ok\r\ntest_arbitrary_module_provider_and_manifest_tampering_rejected (test_core.CoreCase.test_arbitrary_module_provider_and_manifest_tampering_rejected) ... ok\r\ntest_cancel_before_run_and_during_confirmed_effect (test_core.CoreCase.test_cancel_before_run_and_during_confirmed_effect) ... ok\r\ntest_contracts_reject_unknown_fields_versions_and_boolean_limits (test_core.CoreCase.test_contracts_reject_unknown_fields_versions_and_boolean_limits) ... ok\r\ntest_deadline_survives_restart (test_core.CoreCase.test_deadline_survives_restart) ... ok\r\ntest_disabled_module_waits_then_resumes (test_core.CoreCase.test_disabled_module_waits_then_resumes) ... ok\r\ntest_end_to_end_verified_report_and_no_duplicate_effect (test_core.CoreCase.test_end_to_end_verified_report_and_no_duplicate_effect) ... ok\r\ntest_execution_lock_is_cross_process_and_released_after_death (test_core.CoreCase.test_execution_lock_is_cross_process_and_released_after_death) ... ok\r\ntest_explicit_member_grant_and_scope (test_core.CoreCase.test_explicit_member_grant_and_scope) ... ok\r\ntest_facts_correction_deletion_scope_and_restart (test_core.CoreCase.test_facts_correction_deletion_scope_and_restart) ... ok\r\ntest_family_and_group_cannot_use_owner_grant (test_core.CoreCase.test_family_and_group_cannot_use_owner_grant) ... ok\r\ntest_identity_missing_does_not_silently_create_new_assistant (test_core.CoreCase.test_identity_missing_does_not_silently_create_new_assistant) ... ok\r\ntest_incomplete_initialization_never_masquerades_as_ready (test_core.CoreCase.test_incomplete_initialization_never_masquerades_as_ready) ... ok\r\ntest_json_duplicate_keys_nonfinite_and_size_rejected (test_core.CoreCase.test_json_duplicate_keys_nonfinite_and_size_rejected) ... ok\r\ntest_known_safe_transient_failure_can_recover (test_core.CoreCase.test_known_safe_transient_failure_can_recover) ... ok\r\ntest_late_or_duplicate_cancel_reports_no_new_change (test_core.CoreCase.test_late_or_duplicate_cancel_reports_no_new_change) ... ok\r\ntest_lifecycle_switch_rollback_preserves_identity_facts_and_queued_binding (test_core.CoreCase.test_lifecycle_switch_rollback_preserves_identity_facts_and_queued_binding) ... ok\r\ntest_model_fallback_is_only_proposal_and_never_expands_provider_list (test_core.CoreCase.test_model_fallback_is_only_proposal_and_never_expands_provider_list) ... ok\r\ntest_module_missing_does_not_block_an_unrelated_capability (test_core.CoreCase.test_module_missing_does_not_block_an_unrelated_capability) ... ok\r\ntest_partial_existing_artifact_is_never_overwritten (test_core.CoreCase.test_partial_existing_artifact_is_never_overwritten) ... ok\r\ntest_path_traversal_windows_devices_and_unknown_capabilities (test_core.CoreCase.test_path_traversal_windows_devices_and_unknown_capabilities) ... ok\r\ntest_process_crash_after_write_reconciles_without_duplicate (test_core.CoreCase.test_process_crash_after_write_reconciles_without_duplicate) ... ok\r\ntest_process_crash_before_write_remains_unknown (test_core.CoreCase.test_process_crash_before_write_remains_unknown) ... ok\r\ntest_proposal_kind_cannot_hide_effect_fields (test_core.CoreCase.test_proposal_kind_cannot_hide_effect_fields) ... ok\r\ntest_request_key_conflicts_on_different_payload (test_core.CoreCase.test_request_key_conflicts_on_different_payload) ... ok\r\ntest_revocation_between_admission_and_execution (test_core.CoreCase.test_revocation_between_admission_and_execution) ... ok\r\ntest_revocation_between_steps_prevents_second_effect (test_core.CoreCase.test_revocation_between_steps_prevents_second_effect) ... ok\r\ntest_safe_retry_is_bounded_persistent_and_other_task_runs (test_core.CoreCase.test_safe_retry_is_bounded_persistent_and_other_task_runs) ... ok\r\ntest_shared_budget_cannot_be_reset_by_new_task (test_core.CoreCase.test_shared_budget_cannot_be_reset_by_new_task) ... ok\r\ntest_stop_between_steps_keeps_checkpoint_and_other_state (test_core.CoreCase.test_stop_between_steps_keeps_checkpoint_and_other_state) ... ok\r\ntest_stop_resume_generation_and_persistent_latch (test_core.CoreCase.test_stop_resume_generation_and_persistent_latch) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 34 tests in 3.311s\r\n\r\nOK\r\n"
+    },
+    {
+      "name": "rust-unit-tests",
+      "command": "cargo test --offline --locked --manifest-path control/bootstrap/Cargo.toml",
+      "exit_code": 0,
+      "tests": 2,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "name": "rust-builds",
+      "profiles": [
+        "debug",
+        "release"
+      ],
+      "offline": true,
+      "locked": true,
+      "exit_code": 0
+    },
+    {
+      "name": "architecture-and-document-tool-tests",
+      "exit_code": 0,
+      "document_tool_tests": 8,
+      "output": "{\"python_files\": 23, \"errors\": []}\r\n........\r\n----------------------------------------------------------------------\r\nRan 8 tests in 0.071s\r\n\r\nOK\r\n"
+    }
+  ],
+  "demonstration": {
+    "request_id": "demo-text-report",
+    "task_id": "task-dbb22b5e443a4222a5ea12d07dd0dc06",
+    "status": "SUCCEEDED",
+    "actions": [
+      {
+        "id": "action-c1932d7982db343b06860e1d9f01ba59",
+        "capability": "text.analyze.v1",
+        "status": "CONFIRMED",
+        "attempts": 1
+      },
+      {
+        "id": "action-3a9a0baff1d651a27363d0a0c763e793",
+        "capability": "artifact.write.v1",
+        "status": "CONFIRMED",
+        "attempts": 1
+      }
+    ],
+    "local_cost_units": 2,
+    "report": {
+      "bytes": 54,
+      "relative_path": "user-data/artifacts/task-dbb22b5e443a4222a5ea12d07dd0dc06/action-3a9a0baff1d651a27363d0a0c763e793/report.json",
+      "sha256": "cf3b55d8219535721b1ef3c9c1a3abf772dddeef1349f8a73b8d7d6e5009b7a9",
+      "verified": true
+    },
+    "analysis": {
+      "characters": 39,
+      "lines": 2,
+      "utf8_bytes": 101,
+      "words": 3
+    },
+    "supervisor": "release native executable",
+    "data": "synthetic text only"
+  },
+  "limitations": [
+    "No live model calls or natural-language autonomous planning; gateway tests use doubles.",
+    "No external Codex integration, arbitrary candidate code, plugin execution, signing or autonomous release.",
+    "Local OS account is trusted; no strong multiuser authentication or OS sandbox.",
+    "Native supervisor stops its direct child only; not arbitrary process trees.",
+    "Stop/latch markers are not protected against malicious same-account writes; no semantic G0 detector or protected unlock.",
+    "Two trusted stateless text implementations demonstrate compatible replacement; no stateful core migration or complete binary-slot rollback.",
+    "Facts are explicit and scoped, stored unencrypted; no private credential storage, semantic retrieval or secure media erasure.",
+    "Task budgets count local attempts, not model tokens or money. No long-duration or low-memory hardware acceptance.",
+    "Python and Rust versions describe actual development environment, not a production security/patch certification."
+  ],
+  "initial_failures_repaired": [
+    "Closed SQLite connection when startup validation fails; Windows cleanup test exposed leaked handle.",
+    "Rust source formatted with rustfmt; final format check must pass."
+  ],
+  "documentation_check": {
+    "status": "passed",
+    "exit_code": 0,
+    "output": "OK documents=25 chapters=22 diagrams=31 local_links=1620 errors=0\r\n"
+  },
+  "formatted_native_integration": {
+    "exit_code": 0,
+    "tests": 4,
+    "output": "test_cli_init_submit_run_query_and_error_envelopes (test_cli_native.CliNativeTests.test_cli_init_submit_run_query_and_error_envelopes) ... ok\r\ntest_native_starts_real_host_and_delivers_report (test_cli_native.CliNativeTests.test_native_starts_real_host_and_delivers_report) ... ok\r\ntest_native_stop_and_status_work_without_python_and_latch_survives (test_cli_native.CliNativeTests.test_native_stop_and_status_work_without_python_and_latch_survives) ... ok\r\ntest_native_stop_terminates_hung_direct_child (test_cli_native.CliNativeTests.test_native_stop_terminates_hung_direct_child) ... ok\r\n\r\n----------------------------------------------------------------------\r\nRan 4 tests in 1.668s\r\n\r\nOK\r\n"
+  },
+  "format_and_architecture": {
+    "exit_code": 0,
+    "output": "{\"python_files\": 23, \"errors\": []}\r\n\r\nName               Length\r\n----               ------\r\njarvis-control.exe 252416\r\n\r\n"
+  },
+  "source_sha256": {
+    "adapters/__init__.py": "670f50e6096046c3ec696d8dd23ae99b33bd8bddffa7548f57e6323153237cb9",
+    "adapters/storage/__init__.py": "6175beb16001d75f7de9516003aae98f2922793a782437aab9e3059ae58ee582",
+    "adapters/storage/sqlite.py": "007a831f2000384c23282fbb4fe59dc2d026f56ef7d66b2f40c1e70836c6cc16",
+    "apps/cli/main.py": "965fd6541a403fdf3e2e50bb0c5610794477aedb55738750bb68aa9331bc76f8",
+    "config/defaults.toml": "b95992e10c93d3df56c22a259fad5f46c8d2f43ea56b1136a1d4cf510be25e07",
+    "contracts/examples/text-report.task.json": "48032fc52be2457030c3b28acf2e94f97ddcd706268e9bf7dc3479f83e9b8f99",
+    "contracts/schemas/fact.v1.json": "cf5cd3b201f37a3e33e81286295b8e2250fe2a30d7c3686724d8ac71e7f986c2",
+    "contracts/schemas/grant.v1.json": "d37d6062579be1dc12f7f362cf0b4439da398a820c8fb6bd60ff48ca42b3848b",
+    "contracts/schemas/module.v1.json": "870f60aa30dc3c1b051a9bdfa2ac85d229ad4c85b280a783eb7189bd993bd022",
+    "contracts/schemas/step-proposal.v1.json": "3d73265d9a949f71d9b1640a5788728e69090fc59f1592aa47b1b49730e81beb",
+    "contracts/schemas/task.v1.json": "741a87d6e4ffa8a435d3fc3abea55fb117670c75adcd6194a711cbada92f9d2b",
+    "control/__init__.py": "06dafaf3bb36e2dd221ee69d862315fb23a499f8efcd9350a9a7d7ce1270256c",
+    "control/bootstrap/Cargo.lock": "3aa0548ac8babfe144483d03397e8d25db85205e7ef74cf9252737c998faf992",
+    "control/bootstrap/Cargo.toml": "c9faced7d47860f285accb9a05bbf83f22791badacc99b20db56284e506a9224",
+    "control/bootstrap/src/main.rs": "bf77e1607c75dfe1aab097eb7a50b776e9d897f07895fc08e6acc3a24d5afc59",
+    "control/paths.py": "3732eb3ecd6523fe60b32f8829524b4eca0f238576eb8dce0ca352a9da871017",
+    "control/policy/__init__.py": "be658f20f99206617f508b5e81eaa1a97b62bb95675dfea363b156f632e902d7",
+    "control/policy/grants.py": "ab4a02b8974a3e890fe1f092a5ac977f0c507ba9b786223c6bab438f7cecafce",
+    "control/recovery/__init__.py": "f2bf3dde26e3e97746d06fff69f8990a6978510de5b6ea31e168aaba4fc62559",
+    "control/recovery/gate.py": "6f057ff3e0e70b2536d65ff095a099943de7a263deaa1a732648b66458339e75",
+    "evals/text-analyzer.json": "d6024cbb8ad1435631484dc9bb39d0df952d5f11356babaaa4d0b4ff3c9963a9",
+    "host/__init__.py": "2e4d2fd5d98460b3b77fb9b53610e7f6ac0b8e066e911c4069a8ed77d6f0edde",
+    "host/core.py": "664319bf74cce12a4995cbf878df2f8971c95e16a1e0fb00615841df3927afb0",
+    "modules/__init__.py": "7c0647e6f91eb29e419b8d39cc74b83fe9ca53b83f46811d39e8e1d55602f008",
+    "modules/context_knowledge/__init__.py": "6db76ff88c8017d9ea169786f31efccd4c99b851d84f1b4e7377cdd5486ab89a",
+    "modules/continuity/__init__.py": "50136b5f221f9b3556e6d7b61e2d2a27b34ed7871a92ac43369c04b304ed749e",
+    "modules/model_gateway/__init__.py": "621e67abb4d9b9c4c0d54d408dc2be57cb76b3f142ec50968597d185c923a1a0",
+    "modules/registry_composer/__init__.py": "46702adcf9662a9140b8d8d448c51313663544bfa8b1b298a9ee831ccf0afbbb",
+    "modules/registry_composer/builtins.py": "0e7319b39a70e2a77e80ed700432d3b4e5c710aa79bf46a77a7dfd74bb1aeb0f",
+    "modules/registry_composer/manifests/artifact-writer.json": "96c2c759ab7db7c0605fe8ed0b037a67f3ef04c8f7f7c20ce2f4b488341b609c",
+    "modules/registry_composer/manifests/text-analyzer.json": "2f5d7b8fd56993aeaebd4ca2d0cb2a1ae61e02ac2b1b7f9f7fb11ec84ad7bd4c",
+    "modules/registry_composer/registry.py": "541631e7a57e2a1ccb084ce9c50f5bf55242068a511ec95ef8d9ab927456ef17",
+    "modules/task_resource/__init__.py": "a9264d8c3c4bff473efe344b336e1717090d81853a623bba56baddd4ac1b4fef",
+    "modules/task_resource/ledger.py": "6478a01c6d96c0c2c1c7c82b44dd0ddf3315f17abda3dc2853d7d57f80ac5d6a",
+    "packaging/runtime-lock.json": "1eb5c90566d8645207184a3959f961db60ec98e691197e3938ebaf75d2820c27",
+    "sdk/__init__.py": "a998ae057450955ec4a60453e77cee74c3a289e8de80a629453e059e102932d1",
+    "sdk/protocol.py": "0e27659529802092ef0c5d915dcfe7e05a20d93f1d1f7dc9fbda8ca763a0b0dc",
+    "seed/charter/baseline.json": "44d4a922f83a9f8660422b18773cb057d9c47f80990992404ef590e05793612b",
+    "seed/knowledge/runtime-boundary.json": "d027e6039757da5f8d8af8fb2601fb657837052328c2962261a36df17e3bfec8",
+    "seed/skills/text-report.json": "ac59dd61dfb3faadac2ed3cab9c568bbaf668fa3d963ba754cd988d5d9ab247a",
+    "tests/crash_worker.py": "df7de03d0494e0dae6502392b0e2ecbe5773f4f8da7f98fc60adacf91bbcb791",
+    "tests/test_cli_native.py": "212c24cfb947041c4f053ce3688a06d604acf1ae58c96c62cea5535cd286d93a",
+    "tests/test_core.py": "e9e95e1e79b3bafb592a2d9c4fa0985c8b8cb62e6d7d7ac9ebc0dedea481a451",
+    "tools/check_architecture.py": "5009ada69168b86e9ccf481c8f8765516c55c52f29d179fe699374d96480ddf2",
+    "VERSION": "9b165e1a0cd8098ba8c54812af374beb509af90e04f90a87fc449ca671601e93"
+  },
+  "native_release": {
+    "path": "control/bootstrap/target/release/jarvis-control.exe",
+    "bytes": 252416,
+    "sha256": "2d0da2b645b8127637698ed887226f7ff8b346499a6b878d72a1a26e7197575e"
+  }
+}

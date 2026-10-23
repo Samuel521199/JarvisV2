@@ -1,0 +1,80 @@
+{
+  "design_revision": "memory-context-2026-10-23-r1",
+  "recorded_at": "2026-10-23T04:22:44.036824+00:00",
+  "design_status": "proposed",
+  "scope": "Documentation, fixed upstream metadata, renderer syntax and visual inspection only. No candidate framework installation or runtime benchmark.",
+  "audited_memory_baseline": "0.2.0-dev.10",
+  "concurrent_runtime_change": "0.2.0-dev.11 MCP delivery has separate evidence; not a validation of this design.",
+  "checks": [
+    {
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "tools/sync_doc_navigation.py",
+        "--root",
+        "."
+      ],
+      "exit_code": 0,
+      "stdout": "OK navigation: 0 updated",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "tools/check_docs.py",
+        "--root",
+        "."
+      ],
+      "exit_code": 0,
+      "stdout": "OK documents=25 chapters=22 diagrams=33 local_links=1959 errors=0",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "D:/soft/node/node.exe",
+        "--check",
+        "tools/render_memory_diagrams.cjs"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "visual_inspection": [
+    {
+      "path": "docs/diagrams/memory-context-architecture.png",
+      "result": "inspected: readable labels, no observed clipping or overlapping nodes; routes consistent with prose"
+    },
+    {
+      "path": "docs/diagrams/memory-context-lifecycle.png",
+      "result": "inspected: readable labels, no observed clipping or overlapping nodes; revocation and migration routes visible"
+    }
+  ],
+  "evidence_links": [
+    "memory-context-research-2026-10-23.json",
+    "memory-context-render-2026-10-23.json"
+  ],
+  "not_validated": [
+    "Third-party framework runtime quality and performance",
+    "Proposed recall and concurrency latency thresholds",
+    "Actual 8/16 GiB PCs and macOS packaging",
+    "Private database encryption implementation",
+    "Multi-node synchronization and revocation",
+    "End-to-end selective forgetting and migration rollback"
+  ],
+  "file_sha256_at_validation": {
+    "README.md": "a1c64931b32c637f75b1449c83574a355d1585d68f2e5604eb6499d089129fc5",
+    "docs/knowledge-learning.md": "b10ee87e7683bbe835b6a0c2aec7ad702d56b0905a58b4ec0a31ffe29100a86a",
+    "docs/stack-project-layout.md": "60d40764acf369e807d4a1777dd3c99996bef74ef5132e109ebab2805abce3dd",
+    "docs/security-sovereignty.md": "3fe2ef62c41290075c15f0dd344e8a9245505cc48dbb6029bc0686e979e023db",
+    "docs/interaction-persona.md": "bd1081af22a5479bce353b23081002c095fa7d472524e8d45d66d2949b7c685b",
+    "docs/tasks-agents.md": "49066666063c19197a7baca7078ecc425c4bf26a9efb89df5d35f7ec34f303fc",
+    "docs/self-model.md": "193fd59adf474449d9c513ac04362e36a315612c459d510bbcf7737adbefaff5",
+    "docs/federation.md": "406bb8d41b1b6112f98eadcd8551149e6135d63c9bb21b325f18112263820a76",
+    "docs/delivery-validation.md": "14cedabbd34576c6beb4512e8c2de389b17f0157d48a0b47c00c61b576ff4519",
+    "docs/references.md": "304904ca50ffb9201eccd07bfabc49759d5ffc61fd79a4acb4ff5e9b34e10f4c",
+    "docs/development-guide.md": "dfce53412a7eef9f8e67eb2385a2806a585d1d4a907ac931fa05130ed7d92c85",
+    "docs/architecture-atlas.md": "c81270fa56dbb235e06adaab04ee96858139ffdda6c5abb559b33c0fb98c14e5",
+    "docs/manifest.json": "e3c5d50da1fe650caecad98abf8e424e493b8023c570021849268ebbf68af5b8",
+    "tools/render_memory_diagrams.cjs": "00a120c05bafd69e16bd23445ee3d1fa1be3c5234cafbeee7a128d90a5e5f522"
+  }
+}

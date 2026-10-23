@@ -1,0 +1,21 @@
+sequenceDiagram
+  participant U as 用户
+  participant F as 前台交流
+  participant T as 任务执行
+  participant M as 记忆整理
+  U->>F: 今天很累，陪我聊聊；整理昨天材料
+  F-->>U: 回应感受，说明已受理工作
+  F->>T: 项目范围、目标与任务专属上下文
+  par 交流继续
+    U->>F: 继续聊天或补充要求
+    F-->>U: 及时回应；必要时只问关键缺口
+  and 独立任务
+    T->>T: 读取材料，选工具或 Skill，核验产物
+    T-->>F: 进度与实际结果
+  end
+  F-->>U: 在原会话交付结果
+  opt 允许长期保留
+    T-->>M: 来源引用与候选经验
+    M->>M: 低优先级核验、去重和提交
+  end
+  Note over F,M: 独立取消与有界预算；共享硬件仍需调度

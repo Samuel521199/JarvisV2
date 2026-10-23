@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "release": "0.2.0-dev.3",
+  "recorded_at": "2026-10-22T11:38:47.926017+00:00",
+  "scope": "Portable preferences, authorized model credential migration, native cloud adapters and persistent text workbench",
+  "environment": {
+    "os": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.0",
+    "sqlite": "3.45.3",
+    "rust": "1.93.1",
+    "third_party_runtime_dependencies_added": []
+  },
+  "migration": {
+    "catalog_equal": true,
+    "ciphertext_sha256": "0bee5b5e9282d5df5aad0b4053aee6ace36e686d8301411d121e752b72e06adb",
+    "credential_connections": [
+      "vertex",
+      "bailian",
+      "openai",
+      "xai",
+      "eachlabs"
+    ],
+    "default_model": "gemini-3.8-flash",
+    "default_provider": "vertex",
+    "encrypted_vault_equal": true,
+    "fallback_order": [
+      "vertex",
+      "bailian",
+      "openai",
+      "xai",
+      "local"
+    ],
+    "imported_business_databases": false,
+    "model_count": 20,
+    "provider_count": 6,
+    "runtime_legacy_dependency": false,
+    "schema": 1,
+    "source_revision": 22
+  },
+  "post_ui_save_comparison": {
+    "source_revision": 22,
+    "destination_revision": 4,
+    "catalog_equal": true,
+    "coding_equal": true,
+    "encrypted_bytes_equal": true,
+    "public_snapshot_secret_free": true
+  },
+  "model_probes": {
+    "checked_at": 1792667486.475819,
+    "results": [
+      {
+        "code": "transport_interrupted",
+        "elapsed_seconds": 92.79,
+        "marker_present": false,
+        "model": "gemini-3.8-flash",
+        "provider": "vertex",
+        "status": "UNKNOWN",
+        "usage": {}
+      },
+      {
+        "code": null,
+        "elapsed_seconds": 1.48,
+        "marker_present": true,
+        "model": "qwen3.8-flash",
+        "provider": "bailian",
+        "status": "SUCCEEDED",
+        "usage": {
+          "completion_tokens": 38,
+          "prompt_tokens": 113,
+          "total_tokens": 151
+        }
+      },
+      {
+        "code": null,
+        "elapsed_seconds": 4.3,
+        "marker_present": true,
+        "model": "gpt-6-luna",
+        "provider": "openai",
+        "status": "SUCCEEDED",
+        "usage": {
+          "completion_tokens": 8,
+          "prompt_tokens": 83,
+          "total_tokens": 91
+        }
+      },
+      {
+        "code": null,
+        "elapsed_seconds": 8.92,
+        "marker_present": true,
+        "model": "grok-4.7",
+        "provider": "xai",
+        "status": "SUCCEEDED",
+        "usage": {
+          "completion_tokens": 4,
+          "prompt_tokens": 1312,
+          "total_tokens": 2019
+        }
+      },
+      {
+        "code": null,
+        "elapsed_seconds": 3.03,
+        "marker_present": true,
+        "model": "anthropic/claude-sonnet-5.5",
+        "provider": "eachlabs",
+        "status": "SUCCEEDED",
+        "usage": {
+          "completion_tokens": 10,
+          "prompt_tokens": 125,
+          "total_tokens": 135
+        }
+      },
+      {
+        "code": null,
+        "elapsed_seconds": 11.98,
+        "marker_present": true,
+        "max_output_tokens": 8192,
+        "model": "gemini-3.8-flash",
+        "provider": "vertex",
+        "status": "SUCCEEDED",
+        "usage": {
+          "completion_tokens": 4,
+          "prompt_tokens": 54,
+          "total_tokens": 153
+        }
+      }
+    ],
+    "schema": 1
+  },
+  "known_connection_tokens": 2549,
+  "unknown_calls": 1,
+  "unknown_cost_included_as_zero": false,
+  "workbench_live": {
+    "url": "http://127.0.0.1:18282/",
+    "server_restarted_between_turns": true,
+    "default_vertex_preserved": true,
+    "explicit_provider_changed_by_model_selection": true,
+    "repeated_settings_save_success": true,
+    "conversation_restored_after_reload": true,
+    "restored_panel_width_css_and_aria": 390,
+    "stored_ui": {
+      "panel_width": 390
+    },
+    "synthetic_turns": [
+      {
+        "id": "turn-d446aa0f20c847c49a52e4d6e9bda28b",
+        "chat_id": "chat-237638a0bff746d39edeb745a6f57550",
+        "status": "SUCCEEDED",
+        "provider": "vertex",
+        "model": "gemini-3.8-flash",
+        "reply": "青鸟已记住",
+        "usage": {
+          "completion_tokens": 4,
+          "prompt_tokens": 71,
+          "total_tokens": 271
+        },
+        "context_count": 1
+      },
+      {
+        "id": "turn-b003322089bf489ebd4bd3e334d44edf",
+        "chat_id": "chat-237638a0bff746d39edeb745a6f57550",
+        "status": "SUCCEEDED",
+        "provider": "openai",
+        "model": "gpt-6-luna",
+        "reply": "青鸟",
+        "usage": {
+          "completion_tokens": 18,
+          "prompt_tokens": 122,
+          "total_tokens": 140
+        },
+        "context_count": 3
+      }
+    ],
+    "known_chat_tokens": 411,
+    "screenshot": "docs/evidence/workbench-0.2.0-dev.3.png",
+    "screenshot_sha256": "dd14d80b260c02b0f091363050ddfd30b9d31fbadf79fcb750f31e2fabfa50ed"
+  },
+  "checks": {
+    "python_full_regression": {
+      "passed": 82,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 63.088,
+      "log": "docs/evidence/runtime-0.2.0-dev.3-tests.txt",
+      "log_sha256": "482deb671234dc058b95683f29d37322041f73c0eae3ba7b39908661f361abb8"
+    },
+    "final_preferences_dialogue_regression": {
+      "passed": 17,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 1.068,
+      "includes_new_migration_case": true
+    },
+    "final_http_regression": {
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 1.125
+    },
+    "unique_python_cases_current_tree": 83,
+    "rust_tests": {
+      "passed": 2,
+      "failed": 0
+    },
+    "rust_locked_offline_debug_release_builds": "passed",
+    "rust_fmt": "passed",
+    "document_tool_tests": {
+      "passed": 8,
+      "failed": 0
+    },
+    "architecture": {
+      "python_files": 49,
+      "errors": []
+    },
+    "javascript_syntax": "passed",
+    "documentation": {
+      "navigation_outdated": 0,
+      "documents": 25,
+      "chapters": 22,
+      "diagrams": 31,
+      "local_links": 1683,
+      "errors": 0,
+      "checked_at": "2026-10-22T11:39:22.984193+00:00"
+    }
+  },
+  "findings_fixed": [
+    "Migration closes read-only SQLite handles explicitly after a Windows cleanup failure exposed the leak.",
+    "Restored splitter width updates both CSS size and accessibility value.",
+    "Repeated settings saves advance the expected revision."
+  ],
+  "limitations": [
+    "One default model per cloud connection live-tested, not all 20 models.",
+    "Local Qwen engine and external Codex execution adapter remain unprepared.",
+    "Conversation text is unencrypted, not automatically long-term memory.",
+    "Chat does not dispatch development or execute tools.",
+    "No independent penetration audit, same-user malware isolation, low-memory soak or full-core hot replacement proof.",
+    "DPAPI portability to another device or Windows user is not implemented."
+  ],
+  "source_sha256": {
+    "adapters/__init__.py": "670f50e6096046c3ec696d8dd23ae99b33bd8bddffa7548f57e6323153237cb9",
+    "adapters/models/__init__.py": "a24df97c3680d549067b480df1424cce0842256cd7fcab119fdfd2b8eeeb91d8",
+    "adapters/models/http_client.py": "5ae1e694e4dabe4d39c0d5542d4d225612dce76249c5a4014acb01fdc45f9ed6",
+    "adapters/models/native.py": "234f21eff3d3034753ddf2b75f0a55c043c25bc392c6a91538ef73deb56e71f2",
+    "adapters/models/native_transport.py": "263ed7d4dd8033c1602495dd9c31d74c2f9ccab9374cc0d6b8148aaa94f787f2",
+    "adapters/models/transport.py": "c8d402c85177b88106015598339915707f4a1ad31ad105bfb09c3ecba36f2ce9",
+    "adapters/models/windows_signing.py": "1e5a189d495f699723e0e15a218caca009cba59454de3458963718ebd5cb6b06",
+    "adapters/storage/__init__.py": "6175beb16001d75f7de9516003aae98f2922793a782437aab9e3059ae58ee582",
+    "adapters/storage/sqlite.py": "e27c03c015091d0e5211019219f489cc066a8ae7d9d4d36a5d93bc2936ea9d29",
+    "apps/cli/main.py": "3e0616072badb9f6eeb1a271b7c479852ed8442e8725542c35fd8946f40f67a4",
+    "apps/migrate_settings.py": "925614ea29ff7ab7aad786c052b6777be270d30be988305a535cd6ed1d834089",
+    "apps/workbench/app.js": "9f1705d8d50b74c221ffb88401b145f67fe00109d626ffd232172e825f311912",
+    "apps/workbench/index.html": "b42cc0b32dca2d514cf8bcb5496684d44fd72b0f0ee9e95c8c15e6452cd3f8be",
+    "apps/workbench/server.py": "a579b7894850f47e21f45cb69926b064fb3fbc57e78e2f25f01826cd4835621c",
+    "apps/workbench/style.css": "0707a084dfbfa38391401fd4b31c1b4dc7100f9740335474057c5f49bd68188c",
+    "control/__init__.py": "06dafaf3bb36e2dd221ee69d862315fb23a499f8efcd9350a9a7d7ce1270256c",
+    "control/atomic.py": "5cb49d6a06df897a3762e437465aa19e42d7f9762c97f1a3c5d6e49599bdd6b1",
+    "control/bootstrap/Cargo.lock": "21387c979286956341da8dd366450148bcab5f6fda850b76bfa11025e7d701cf",
+    "control/bootstrap/Cargo.toml": "40615263a0bff5acc632ec63357b693d06ecf976d4aebeb5e2c04320853c9600",
+    "control/bootstrap/src/main.rs": "bf77e1607c75dfe1aab097eb7a50b776e9d897f07895fc08e6acc3a24d5afc59",
+    "control/credentials.py": "490413f4d37a2a5b000cf359e02f8425749b236ae0a6c64e038dba053851818e",
+    "control/paths.py": "3732eb3ecd6523fe60b32f8829524b4eca0f238576eb8dce0ca352a9da871017",
+    "control/policy/__init__.py": "be658f20f99206617f508b5e81eaa1a97b62bb95675dfea363b156f632e902d7",
+    "control/policy/grants.py": "ab4a02b8974a3e890fe1f092a5ac977f0c507ba9b786223c6bab438f7cecafce",
+    "control/receipts.py": "801d147cdb217e66b99128f0f0b57dbd2de9ea9a4481c0d8aa420b0c44f47867",
+    "control/recovery/__init__.py": "f2bf3dde26e3e97746d06fff69f8990a6978510de5b6ea31e168aaba4fc62559",
+    "control/recovery/gate.py": "e68ba41b882aebaccd6c66e67261c20ce25a7ea81f0c72885123c260443fe345",
+    "control/worker/__init__.py": "d5097ab8538bff57199f31edea5aacdbf93419011e8670b4db0c564d01b87540",
+    "control/worker/entry.py": "347b97fb85cdd15567514ed9a083251e58ea753bf1b428ef57a575cae2f26b1d",
+    "control/worker/launcher.py": "6317f1835e97b7f481e07f3737eab420efca1f3756dfb7e8f89d0eea6714c5da",
+    "control/worker/runtime.py": "ae765936f98c008be7e8a4740abfa54bb8e623f71789a8308e789f642fdc287d",
+    "control/worker/win32.py": "897cf0b583082de1e3f6fc48fdcdc257920198a624d34c97300e9dc46b75076c",
+    "host/__init__.py": "2e4d2fd5d98460b3b77fb9b53610e7f6ac0b8e066e911c4069a8ed77d6f0edde",
+    "host/core.py": "39e6f70752c81271d7546e7fcc58ba1aef339b1a55661bc161435cf60b0dfa3e",
+    "host/dialogue.py": "c06b2256a8825f2ca8aacedc318221b7413f84e5061ec997bc569657df66fa1f",
+    "modules/__init__.py": "7c0647e6f91eb29e419b8d39cc74b83fe9ca53b83f46811d39e8e1d55602f008",
+    "modules/autonomous_development/__init__.py": "474ad300ce3fef889e11a576a1d6442a470942d5397069ace6dbb687580e6544",
+    "modules/autonomous_development/service.py": "fb677746389fbca87eb51a2ebf1189a14e313b8dca302850e436ead646ebdd8d",
+    "modules/context_knowledge/__init__.py": "6db76ff88c8017d9ea169786f31efccd4c99b851d84f1b4e7377cdd5486ab89a",
+    "modules/continuity/__init__.py": "50136b5f221f9b3556e6d7b61e2d2a27b34ed7871a92ac43369c04b304ed749e",
+    "modules/dialogue/__init__.py": "be6c918930eb6416d9cf176d7d7364f9821b4f151e5c271922306dd245b27435",
+    "modules/dialogue/store.py": "fda468a50aec7c153d8e12a6c1d7a6cd52c140dcd71e8939ba134ee33b498e83",
+    "modules/model_gateway/__init__.py": "621e67abb4d9b9c4c0d54d408dc2be57cb76b3f142ec50968597d185c923a1a0",
+    "modules/model_gateway/routed.py": "f42c109fb5e295da9f6de4c6fbd2078f6fb15b2db59723ac7dcadf1c26796b22",
+    "modules/preferences/__init__.py": "48747470ff32060c4717be3f2bf216f8e4ac6f50f5c50eee4e3822800105dfc5",
+    "modules/preferences/store.py": "5ad7d958a40c2ac65d98bcd49c13c1c69c9ce6c2614442d52fa74d1d74c22a08",
+    "modules/registry_composer/__init__.py": "46702adcf9662a9140b8d8d448c51313663544bfa8b1b298a9ee831ccf0afbbb",
+    "modules/registry_composer/builtins.py": "0e7319b39a70e2a77e80ed700432d3b4e5c710aa79bf46a77a7dfd74bb1aeb0f",
+    "modules/registry_composer/registry.py": "4fe3964f3bab6f48f753e7bcb668645e98e3e46966484d6c02082cc8bfb66cd0",
+    "modules/release_recovery/__init__.py": "2e34fa85eb0a6e3238087b7a7407850c53ebf66976cf4320fd32ff23c436f29a",
+    "modules/release_recovery/packages.py": "c7687d636599ae157b5a5649a0a1f0442106dea8ebf2cd233333484de9d4eac0",
+    "modules/task_resource/__init__.py": "a9264d8c3c4bff473efe344b336e1717090d81853a623bba56baddd4ac1b4fef",
+    "modules/task_resource/ledger.py": "305a4f78f0375fd04bd8c9d9c6efdbbb2b911b97fd41aca68ce0d296b7d457c9",
+    "packaging/runtime-lock.json": "eaf29259a59d83b9a2eabf6b1408edfb1f2d0b80c0ea7c5a7b4eb5527ab88190",
+    "sdk/__init__.py": "a998ae057450955ec4a60453e77cee74c3a289e8de80a629453e059e102932d1",
+    "sdk/protocol.py": "e7450726155b1b313acd953513477d6a649d5accc96d931870390bb78050319a",
+    "tests/crash_worker.py": "df7de03d0494e0dae6502392b0e2ecbe5773f4f8da7f98fc60adacf91bbcb791",
+    "tests/release_crash.py": "52be1f25f0546bda9beb55bc748f8feda5f5f648b229593d3f8aa88b154beca3",
+    "tests/test_cli_native.py": "212c24cfb947041c4f053ce3688a06d604acf1ae58c96c62cea5535cd286d93a",
+    "tests/test_core.py": "e9e95e1e79b3bafb592a2d9c4fa0985c8b8cb62e6d7d7ac9ebc0dedea481a451",
+    "tests/test_development.py": "4a5537ee01e6833a864cf9d93dafe4ee6d4bada65b66da5e6910bbb311710e6b",
+    "tests/test_model_transport.py": "0c61393caec5e2135d2383b20a69a0d494c871c3e1a4f47672db0de2af925de6",
+    "tests/test_preferences_dialogue.py": "276e8e758ba197819ac2580c32282d39262146f34ccd875b666dceb4b8d2beb2",
+    "tests/test_workbench.py": "f12eaa70cbe297fbe8e6fa0e51d127470dcf4da64b89fd2e023925a38892b540",
+    "tests/test_worker.py": "fbfe524308a3c102b52e685c90adddbf3751be648b8728275b0d65510423e066",
+    "tests/worker_crash.py": "fdd5f4eaebdf578448d4e67fa8da5856b43ef2a70304ea2ed67766d8b1b40748",
+    "VERSION": "567f66d27b284057b21c3fd348909dbdfb97c0373d43cd17301030db183d6eff"
+  }
+}

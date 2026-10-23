@@ -1,0 +1,13 @@
+flowchart TD
+  P["项目 A · 已知基线快照<br/>API v2"] --> M["main 当前快照<br/>API v2 · 已发布依据"]
+  P --> F["feature 实验快照<br/>API v3 · 未发布结论"]
+  M --> Q["询问 main<br/>只用对应版本的有效证据"]
+  M --> C["明确要求比较分支<br/>联合视图分别标注来源"]
+  F --> C
+  F --> G["代码合并后的知识审查<br/>核对目标代码、测试与冲突"]
+  M --> G
+  G --> N["目标分支新修订<br/>仅合入仍然适用的知识"]
+  classDef separate fill:#e7f2ff,stroke:#6089b3,color:#18334f;
+  classDef review fill:#fff3dd,stroke:#bb8c44,color:#543a19;
+  class M,F separate;
+  class C,G review;

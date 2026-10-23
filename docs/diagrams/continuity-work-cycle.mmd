@@ -1,0 +1,48 @@
+%%{init: {"theme":"base","themeVariables":{"fontSize":"17px","primaryTextColor":"#19324f","lineColor":"#526b88","clusterBkg":"#f5f8fc","clusterBorder":"#c5d3e3","edgeLabelBackground":"#f5f8fc"},"flowchart":{"curve":"linear","nodeSpacing":35,"rankSpacing":45,"wrappingWidth":320}}}%%
+flowchart TB
+  subgraph A["01 接收与接续"]
+    direction LR
+    A1["协作面<br/>主人话语 / 已授权事件"] --> A2["用途视图<br/>相关事实 / 承诺 / 原任务"] --> A3["请求分类<br/>闲聊 / 确定性工作 / 复杂目标"]
+  end
+  subgraph B["02 选择处理路径"]
+    direction LR
+    B1["普通交流<br/>直接回复，不建立业务任务"]
+    B2["已知工作流<br/>匹配原能力，固定输入与范围"]
+    B3["复杂需求 → 定向面<br/>计划 / 分工 / 验收候选"]
+    B1 ~~~ B2 ~~~ B3
+  end
+  subgraph C["03 受理与行动"]
+    direction LR
+    C1["Composer → Task Runtime<br/>规格 / 准入 / 原 task_id"] --> C2["确定性执行或 Agent Runtime<br/>按需角色 / Skill / StepProposal"] --> C3["Task Runtime → Action Gateway<br/>许可 / 停止 / 去重 / 资源"] --> C4["Tool / Connector / Worker<br/>真实效果与原 action_id"]
+  end
+  subgraph D["04 按回执继续"]
+    direction LR
+    D1["核验成功<br/>原领域提交回执 / 协作面交付"]
+    D2["可恢复失败<br/>原预算内重试或重规划"]
+    D3["授权 / 网络 / 资源等待<br/>释放槽，其他任务继续"]
+    D4["外部效果未知<br/>先查询对账，不盲目重发"]
+    D1 ~~~ D2 ~~~ D3 ~~~ D4
+  end
+  subgraph E["05 积累与改进"]
+    direction LR
+    E1["领域记录 / 记忆候选<br/>来源 / 用途 / 纠正与撤回"]
+    E2["观察成长面<br/>有据分析 / 缺口 / 改进候选"]
+    E3["原独立验收与发布<br/>通过后才能采用新能力"]
+    E1 -.-> E2 -.-> E3
+  end
+  A --> B
+  B -->|仅工作请求进入；闲聊在上层回复| C
+  C -->|按真实回执选择分支| D
+  D -->|状态留证；待继续仍沿原任务| E
+  NOTE["proposed · 2026-10-22<br/>所有路径受原规则与停止控制约束"]
+  E ~~~ NOTE
+  classDef personal fill:#e5f4f4,stroke:#8aabba,color:#19324f;
+  classDef runtime fill:#eaf2fc,stroke:#8fa9c7,color:#19324f;
+  classDef boundary fill:#fff4df,stroke:#bfa578,color:#19324f;
+  classDef growth fill:#eeebfa,stroke:#a29ac4,color:#19324f;
+  classDef note fill:#fff,stroke:#fff,color:#526b88;
+  class A1,A2,A3,B1,E1 personal;
+  class B2,B3,C1,C2,D1 runtime;
+  class C3,C4,D2,D3,D4 boundary;
+  class E2,E3 growth;
+  class NOTE note;

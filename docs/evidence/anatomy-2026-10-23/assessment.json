@@ -1,0 +1,135 @@
+{
+  "status": "verified_bounded_adapter",
+  "source_version": "0.2.0-dev.10",
+  "source": {
+    "repository": "https://github.com/wheresryan22/anatomy",
+    "commit": "1482e8469b0a9e0d8cc18ea2740a01423d29ae80",
+    "license": "MIT",
+    "copyright": "Copyright (c) 2026 Ryan",
+    "files": {
+      "SKILL.md.txt": "3423ada45a05033bb6e320dfc3b3ac832569969a5afb059bbfc9096c5cf0c71b",
+      "LICENSE": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+      "kit/iso-kit.mjs": "6d3ecc725d30c3b0346da309cf61dfa5a65017c23620bbd4093009d4fb104018",
+      "kit/iso.css": "ef19bac5a42ba9be42b56b2c1cf7fc7e21d332a8060765e9ca1d987b8ab23924",
+      "references/kit.md.txt": "684672e069fdb52735efabc3f4310dedd840d0c8066a8dc7784be2b7e656be71",
+      "references/craft.md.txt": "38761fa9b81d66b30e50b05488501d4815830d3627f153d60f76ca783f598936",
+      "references/motion.md.txt": "dda401ca1b4661a5f0b7c1e33dac6e7e4b8c13d51ca5d9312123a5c02dab320b",
+      "references/verify.md.txt": "fb81437fc5d75094a34432eb6f545644aa228e15173a27d08b3cace912033561"
+    },
+    "upstream_files": {
+      "SKILL.md": "3423ada45a05033bb6e320dfc3b3ac832569969a5afb059bbfc9096c5cf0c71b",
+      "LICENSE": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+      "kit/iso-kit.mjs": "6d3ecc725d30c3b0346da309cf61dfa5a65017c23620bbd4093009d4fb104018",
+      "kit/iso.css": "ef19bac5a42ba9be42b56b2c1cf7fc7e21d332a8060765e9ca1d987b8ab23924",
+      "references/kit.md": "684672e069fdb52735efabc3f4310dedd840d0c8066a8dc7784be2b7e656be71",
+      "references/craft.md": "38761fa9b81d66b30e50b05488501d4815830d3627f153d60f76ca783f598936",
+      "references/motion.md": "dda401ca1b4661a5f0b7c1e33dac6e7e4b8c13d51ca5d9312123a5c02dab320b",
+      "references/verify.md": "fb81437fc5d75094a34432eb6f545644aa228e15173a27d08b3cace912033561"
+    },
+    "note": "Markdown reference snapshots use .md.txt locally; bytes and original upstream paths/hashes are retained."
+  },
+  "actual_result": {
+    "status": "passed",
+    "url": "http://127.0.0.1:18282/api/anatomy/artifacts/d8aa667330354862a8f46ae965b4b4a8",
+    "model": {
+      "theta": 90,
+      "x": 113.13708498984761,
+      "parts": 54,
+      "apart": false,
+      "playing": false
+    },
+    "numerical": {
+      "worst": 2.842170943040401e-14,
+      "inner": 80,
+      "outer": 160
+    },
+    "page_errors": [],
+    "checks": [
+      "real Jarvis settings button",
+      "361 angle rod constraint",
+      "stroke 80mm",
+      "pause/speed and angle controls",
+      "explode",
+      "dark",
+      "390px mobile",
+      "missing nonce 403"
+    ],
+    "scope": "fixed slider crank; no CAD, geometry collision audit or independent blind reviewer",
+    "cloud_calls": 0
+  },
+  "rating": {
+    "score": 7.4,
+    "scale": 10,
+    "rubric": [
+      {
+        "dimension": "运动学与读数",
+        "weight": 0.3,
+        "score": 9,
+        "reason": "361角度约束、80mm行程及同模型读数通过；仅理想刚体"
+      },
+      {
+        "dimension": "视觉清晰度",
+        "weight": 0.2,
+        "score": 7,
+        "reason": "54部件、等轴测、明暗及手机截图；未完成上游全套几何审计和4倍细节检查"
+      },
+      {
+        "dimension": "交互",
+        "weight": 0.2,
+        "score": 8,
+        "reason": "暂停、调速、角度拖动、拆解及手机布局通过；非真实装配仿真"
+      },
+      {
+        "dimension": "Jarvis集成",
+        "weight": 0.2,
+        "score": 7,
+        "reason": "设置启停、真实按钮、来源许可、摘要交付、同源nonce与沙箱；尚无自然语言自动制作或任务账本目录"
+      },
+      {
+        "dimension": "机制覆盖",
+        "weight": 0.1,
+        "score": 3,
+        "reason": "只接通固定曲柄滑块，未覆盖齿轮箱、发动机、自由结构、CAD和视频"
+      }
+    ],
+    "method": "本轮实施Agent按公开权重进行工程评价，非独立盲评；评分针对Jarvis当前接入，不代表上游整体能力"
+  },
+  "tests": {
+    "anatomy": 2,
+    "workspace_skills": 13,
+    "status": "passed"
+  },
+  "review": {
+    "dependencies": "Node builtins only; no npm install, no upstream CLI executed",
+    "upstream_runtime": "iso-kit.mjs included in sandboxed artifact; original SKILL/references retained as byte-identical .md.txt provenance snapshots",
+    "not_performed": [
+      "full vulnerability scan",
+      "upstream geometry/clearance and line-end audits",
+      "4x complete junction inspection",
+      "physical hardware/CAD validation",
+      "generative arbitrary mechanism evaluation"
+    ]
+  },
+  "initial_findings": [
+    "Old running host did not include new render route; idle reload performed after checking active dialogue and runners",
+    "First screenshot clipped lower geometry and had poor dark contrast; projection and theme corrected and rechecked"
+  ],
+  "files": {
+    "host/anatomy.py": "1db5e5dc6c3ec3c6be356ca102b8608d598b6c642b5f1c51a405ab19b83b2fd3",
+    "modules/skills/anatomy/build.mjs": "ec669cd218ed8a5920106624ecffd8fdc3965d889e94fdc3025be3c9fd877bde",
+    "modules/skills/anatomy/page.html": "eebf13ce0501fc39fe04c247d1ad3fcc1fa701311b1d749a0be3d66569611ce7",
+    "seed/skills/conversation.json": "5a5d39a76af0f159b8772df9164831ff6bee79d7261ede43804929cb63daa023",
+    "apps/workbench/settings.js": "c11d7d3a690dd9274e8a2b069e5b83194fedbdfdd6f59c67ac3495c37fa88b8a",
+    "apps/workbench/server.py": "0f0f55986ad1dc88394a9f9b0db5becdba5fcd3f7fcdef75d647e7fa29a38aff"
+  },
+  "operational_notes": [
+    "An additional optional reload was blocked by tool policy with no specific reason. The unloaded exception-formatting change was withdrawn; the existing loaded renderer was rechecked through the real settings button successfully. No blocked action was retried."
+  ],
+  "documentation_check": {
+    "status": "failed",
+    "errors": [
+      "docs/core-bootstrap.md -> delivery-validation.md#conversation-evidence: missing anchor in another concurrently edited chapter"
+    ],
+    "scope": "Anatomy rule/evidence links resolve; global book check is not reported as passed."
+  }
+}

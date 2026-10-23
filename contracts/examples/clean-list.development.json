@@ -1,0 +1,44 @@
+{
+  "schema": "jarvis.development.v1",
+  "request_id": "live-dedupe-20261022-1",
+  "principal_id": "owner.local",
+  "scope_id": "personal",
+  "grant_id": "development-demo",
+  "goal": "为个人助手新增可复用的清单整理能力：编写多文件 Python 工具，去除空行、修剪首尾空格、按 Unicode casefold 忽略大小写去重，保留首次出现的文本及顺序，并交付整理后的清单。",
+  "capability": "plugin.clean-list.v1",
+  "description": "Input is newline separated text. Split with splitlines(); strip each line; discard blank lines; remove duplicates by casefold preserving first trimmed spelling and order. Return compact JSON using ensure_ascii=False and separators=(\",\",\":\") with keys exactly in this order: items (list), count (integer). Implement main.py and a separate reusable helper module; no file, process or network operations.",
+  "public_cases": [
+    {
+      "input": " milk \nMILK\n eggs\n\n",
+      "expected": "{\"items\":[\"milk\",\"eggs\"],\"count\":2}"
+    },
+    {
+      "input": "",
+      "expected": "{\"items\":[],\"count\":0}"
+    }
+  ],
+  "evaluation_cases": [
+    {
+      "input": "Straße\nSTRASSE\n朋友\n朋友\n",
+      "expected": "{\"items\":[\"Straße\",\"朋友\"],\"count\":2}"
+    },
+    {
+      "input": "  A \r\nb\r\n a\r\nC  ",
+      "expected": "{\"items\":[\"A\",\"b\",\"C\"],\"count\":3}"
+    },
+    {
+      "input": "   \n\t\n",
+      "expected": "{\"items\":[],\"count\":0}"
+    },
+    {
+      "input": "a,b\na,b\nA,B\nx",
+      "expected": "{\"items\":[\"a,b\",\"x\"],\"count\":2}"
+    }
+  ],
+  "sample_input": "学习 Python\n 散步 \n学习 Python\nREAD\nread\n联系家人",
+  "limits": {
+    "max_attempts": 2,
+    "max_model_calls": 6,
+    "max_seconds": 900
+  }
+}

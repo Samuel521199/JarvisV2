@@ -1,0 +1,62 @@
+%%{init: {"theme":"base","themeVariables":{"fontSize":"17px","primaryTextColor":"#19324f","lineColor":"#526b88","clusterBkg":"#f5f8fc","clusterBorder":"#c5d3e3","edgeLabelBackground":"#f5f8fc"},"flowchart":{"curve":"linear","nodeSpacing":35,"rankSpacing":45,"wrappingWidth":320}}}%%
+flowchart TB
+  subgraph A["00 主人与连续身份"]
+    direction LR
+    A1["主人 / 自然交流<br/>目标 / 长期职责 / 纠正"]
+    A2["Continuity + Context<br/>身份继承 / 分域经历 / 承诺"]
+    A3["G0 + 当前授权<br/>有效规则 / 预算 / 停止状态"]
+    A1 ~~~ A2 ~~~ A3
+  end
+  subgraph B["01 三个职能面"]
+    direction LR
+    B1["定向 Direction<br/>目标解释 / 机会 / 计划"]
+    B2["协作 Engagement<br/>交流 / 推进 / 交付"]
+    B3["观察成长 Reflection<br/>认识更新 / 故障 / 改进提案"]
+    B1 --> B2 --> B3
+  end
+  subgraph C["02 统一运行与准入"]
+    direction LR
+    C1["Goal / Task / Resource<br/>单一账本 / 预算 / 恢复"]
+    C2["Registry / Composer / Agent Runtime<br/>版本配方 / 逻辑实例 / 一步提案"]
+    C3["Policy / Action Gateway<br/>动作许可 / 资料用途 / 凭据代理"]
+    C2 --> C1 --> C3
+  end
+  subgraph D["03 自身管理与研发"]
+    direction LR
+    D1["SelfModel / Health<br/>结构 / 依赖 / 真实状态 / 故障"]
+    D2["Development Orchestrator<br/>选择渠道 / 隔离编写 / 修复"]
+    D3["独立 Evaluator / Lifecycle<br/>证据 / 发布 / 停用 / 恢复 / 退役"]
+    D1 -.-> D2 -.-> D3
+  end
+  subgraph E["04 可替换能力与数据"]
+    direction LR
+    E1["编码渠道 + Model Gateway<br/>Codex 接口 / 桌面 / 其他模型"]
+    E2["隔离 Tool / Worker<br/>构建 / 测试 / API / 设备 / 后续能力"]
+    E3["Domain State / Knowledge<br/>个人 / 项目 / 私密 / 来源与纠正"]
+    E1 ~~~ E2 ~~~ E3
+  end
+  subgraph F["05 最小恢复与本地基础"]
+    direction LR
+    F1["Bootstrap / Recovery<br/>固定停止 / 可用版本 / 独立恢复"]
+    F2["SQLite / 包 / 证据 / 检查点<br/>新工程独立数据 / 单一写入权威"]
+    F3["按需进程与模型<br/>普通 PC / 资源预留 / 离线分级"]
+    F1 ~~~ F2 ~~~ F3
+  end
+  A --> B
+  B -->|交流直接回复；工作进入受理| C
+  C -.->|需要观察或补齐能力时| D
+  C -->|真实动作统一准入| E
+  D -.->|研发仍经同一任务与许可| E
+  E -->|原始结果与恢复引用| F
+  NOTE["D 盘独立实现 proposed · 2026-10-22<br/>不调用 H 盘旧代码或服务；逻辑模块不等于独立常驻进程<br/>代码可替换，根宗旨与有效身份语义保持"]
+  F ~~~ NOTE
+  classDef identity fill:#e5f4f4,stroke:#8aabba,color:#19324f;
+  classDef runtime fill:#eaf2fc,stroke:#8fa9c7,color:#19324f;
+  classDef growth fill:#eeebfa,stroke:#a29ac4,color:#19324f;
+  classDef control fill:#fff4df,stroke:#bfa578,color:#19324f;
+  classDef note fill:#fff,stroke:#fff,color:#526b88;
+  class A1,A2,E3,F2 identity;
+  class B1,B2,C1,C2,E1,F3 runtime;
+  class B3,D1,D2,D3 growth;
+  class A3,C3,E2,F1 control;
+  class NOTE note;

@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:jarvis:grant:v1",
+  "title": "Jarvis grant v1",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "jarvis.grant.v1"
+    },
+    "grant_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "[A-Za-z0-9][A-Za-z0-9._-]{0,79}"
+    },
+    "principal_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "[A-Za-z0-9][A-Za-z0-9._-]{0,79}"
+    },
+    "scope_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "[A-Za-z0-9][A-Za-z0-9._-]{0,79}"
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 80,
+        "pattern": "[A-Za-z0-9][A-Za-z0-9._-]{0,79}"
+      },
+      "minItems": 1,
+      "maxItems": 32
+    },
+    "max_cost_units": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1000000
+    },
+    "expires_at": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 4102444800
+    }
+  },
+  "required": [
+    "schema",
+    "grant_id",
+    "principal_id",
+    "scope_id",
+    "capabilities",
+    "max_cost_units",
+    "expires_at"
+  ],
+  "additionalProperties": false
+}
