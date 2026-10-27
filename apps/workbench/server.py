@@ -190,7 +190,7 @@ class Handler(BaseHTTPRequestHandler):
             except (CoreError,OSError,ValueError):return self.json({'error':'studio3d_missing'},404)
         if route.path=='/api/anatomy/engineering':
             from host.anatomy_engineering import readiness,CONTRACT
-            return self.json({**readiness(data_root(self.server.data_root)),'contract':CONTRACT})
+            return self.json({**readiness(),'contract':CONTRACT})
         if route.path.startswith('/api/anatomy/exports/'):
             try:
                 from host.anatomy_engineering import exported

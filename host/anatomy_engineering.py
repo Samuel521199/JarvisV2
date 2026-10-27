@@ -13,11 +13,11 @@ CONTRACT=json.loads((HOME/'engineering-contract.json').read_text(encoding='utf-8
 from modules.skills.anatomy.engineering_model import validate_engineering,assembly_poses,ports,rotation
 
 def runtime_python():return ROOT/'.venv/anatomy'/('Scripts/python.exe' if __import__('os').name=='nt' else 'bin/python')
-def readiness(root=None):
-    """Prepared runtime record for this data root (default: <project>/user-data)."""
+def readiness():
+    # The engineering runtime (.venv/anatomy) belongs to this installation, not to a data root;
+    # tools/prepare_anatomy_runtime.py records it under <project>/user-data whatever --data-root is used.
     import hashlib
-    from control.paths import child,data_root
-    lock=child(data_root(root),'optional/anatomy/prepared.json') if root is not None else ROOT/'user-data/optional/anatomy/prepared.json';ready=False
+    lock=ROOT/'user-data/optional/anatomy/prepared.json';ready=False
     try:ready=runtime_python().is_file() and json.loads(lock.read_text(encoding='utf-8'))['lock_sha256']==hashlib.sha256((HOME/'runtime-lock.json').read_bytes()).hexdigest()
     except (OSError,ValueError,KeyError):pass
     return {'schema':CONTRACT['schema'],'native_runtime':ready,'assembly':ready,'cad':ready,'combustion':ready,'limits':'Trusted optional native code, not an LPAC sandbox. Static interference and explicitly listed numerical models only.'}
@@ -26,7 +26,7 @@ def render_engineering(root,scene,source):
     import contextlib,ctypes,hashlib,os,shutil,subprocess,tempfile,time,uuid
     from control.paths import child
     from control.recovery.gate import StopGate
-    if not readiness(root)['native_runtime']:raise CoreError('anatomy_native_missing','Prepare the pinned optional engineering runtime first')
+    if not readiness()['native_runtime']:raise CoreError('anatomy_native_missing','Prepare the pinned optional engineering runtime first')
     folder=child(root,'artifacts/anatomy');folder.mkdir(parents=True,exist_ok=True);ident=uuid.uuid4().hex
     final=folder/(ident+'-engineering')
     with tempfile.TemporaryDirectory(prefix='engineering-',dir=folder) as stage_name:

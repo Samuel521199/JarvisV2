@@ -73,7 +73,7 @@ def submit(root,body,dialogues):
     if 'revision_of' in body and (body.get('mode')!='engineering' or not isinstance(body['revision_of'],str) or not re.fullmatch('[a-f0-9]{32}',body['revision_of']) or body['revision_of']==body['id']):raise CoreError('anatomy_engineering_invalid','Expected a different delivered engineering source ID')
     if body.get('mode')=='engineering':
         from host.anatomy_engineering import readiness
-        if not readiness(root)['native_runtime']:raise CoreError('anatomy_native_missing','Prepare optional engineering runtime before paid generation')
+        if not readiness()['native_runtime']:raise CoreError('anatomy_native_missing','Prepare optional engineering runtime before paid generation')
     signature=digest(body);db=database(root);store=Dialogues(root)
     try:
         with LOCK:

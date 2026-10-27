@@ -2863,7 +2863,8 @@ JPF/r1 不改写；本轮是 V-TRI/V-CLC 的局部接线证据，完整场景仍
 
 | 项目 | 结果 |
 |---|---|
-| 全量回归 | 1,065 项；没有出现基线之外的新失败；24 项新增测试全部通过 |
+| 全量回归（Linux） | 1,065 项；没有出现基线之外的新失败；24 项新增测试全部通过 |
+| 全量回归（Windows） | 2026-10-28 本机 Windows 11、Python 3.13.0（`.venv`）：首轮 1,085 项 / 861 秒，10 项报错，全部来自本轮把 Anatomy 工程运行时检查改为按数据根查找（运行时 `.venv/anatomy` 属于安装本身，登记固定在 `<工程>/user-data`），已撤回；撤回后 `test_anatomy*` 41 项与 `test_local_access` 7 项（1 项 POSIX 权限用例按设计跳过）全部通过，其余 1,034 项首轮已通过 |
 | 访问钥匙 | `tests/test_local_access.py` 7 项：无会话时 `/api/session`、数据接口与 `/api/family/setup` 返回 401；钥匙交换得到 HttpOnly/SameSite=Strict Cookie；伪造 Cookie 被拒；解锁限流；其他本机程序写入的无法解析 Cookie 不影响读取；未处理异常返回 `internal_error` 并写日志 |
 | 执行锁 | `tests/test_admission.py` 5 项：本进程执行组持锁时受理立即通过且同进程受理互相串行，其他进程持锁时有界等待后报 busy |
 | 回复不被覆盖 | 已交付回复与已计费调用在后续失败路径中保持 SUCCEEDED |
@@ -2877,7 +2878,7 @@ JPF/r1 不改写；本轮是 V-TRI/V-CLC 的局部接线证据，完整场景仍
 <a id="maintenance-0-1-1-unverified"></a>
 ### 未验证与后续
 
-- Windows 上的全量回归（LPAC、DPAPI、msvcrt 文件锁、Blender 与工程 Worker）需在本机运行后补记。访问钥匙在 Windows 上以 DPAPI 保存，该路径只做了代码审查。
+- Windows 全量回归已在本机完成（见上表），包括 LPAC、DPAPI、文件锁、Blender 与工程 Worker 用例；访问钥匙的 DPAPI 保存路径由 `test_local_access` 在 Windows 上覆盖。
 - 浏览器端：访问钥匙解锁与“服务重启后自动重试”只做了 HTTP 层测试，未做浏览器探针；`tools/` 下依赖已运行服务的评估脚本需改为 `python -m tools.<名称>` 运行。
 - 未修复：Blender/工程 Worker 启动后才挂 Job、Codex 子进程无 Job；结果评价投影在读接口中写库；host 层导入环。原因与取舍见[当前真实状态](current-state.md#current-state-risks)。
 - 本轮没有真实模型调用，也没有部署到正在运行的服务。
