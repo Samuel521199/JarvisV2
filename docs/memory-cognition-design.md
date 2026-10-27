@@ -134,7 +134,7 @@ Jarvis 需要在普通 PC／Mac 上持续理解用户，同时处理聊天、情
 |---|---|---|---|
 | 事实与事务 | SQLite 与单一写入接口 | 完整框架替换也须保留等价语义 | 修订、来源、撤回、迁移和崩溃恢复 |
 | 词项检索 | FTS5＋中文预处理 | 短词／标识符补查 | 中文姓名、两字词、数字、代码和否定 |
-| 向量索引 | sqlite-vec 先试验 | LanceDB | 过滤准确性、安装负担、召回和重建成本 |
+| 向量索引 | sqlite-vec 先试验（当前实现为 SQLite BLOB + 内存缓存，见 [ADR-031](decisions-review.md#adr-031)） | LanceDB | 过滤准确性、安装负担、召回和重建成本 |
 | 本地编码器 | e5-small／BGE-small 作为小模型基线 | EmbeddingGemma-300m、Qwen3-Embedding-0.6B | 相同任务上的质量、CPU 延迟、全部进程内存与许可 |
 | 提取与整理 | 最小结构化提取基线 | LangMem、Mem0 | 有依据的候选、错误晋升率、费用和数据接管范围 |
 | 知识分层读取 | 可追溯章节与按需读取 | 借鉴 OpenViking／VikingRAG | 原件定位、层次读取、版本和许可 |

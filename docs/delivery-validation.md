@@ -131,6 +131,10 @@
 - [三领域对照 1.11.0：分开测质量、交付和代价](#workflow-trials-evidence)
 - [正文忠实性 1.12.0：从字段正确补到正文与计划一致](#workflow-fidelity-evidence)
 - [交付影子核对 1.13.0：先记录误判，再考虑自动化](#workflow-shadow-evidence)
+- [安全与可靠性修复 0.1.1：本轮验证与未验证范围](#maintenance-0-1-1-evidence)
+  - [环境与方法](#maintenance-0-1-1-environment)
+  - [结果](#maintenance-0-1-1-results)
+  - [未验证与后续](#maintenance-0-1-1-unverified)
 <!-- book-nav:end -->
 
 <a id="open-source-adoption-validation"></a>
@@ -1537,6 +1541,8 @@ Jarvis 正式 Google Vertex / Gemini 3.8 Flash 实际评审一次。[原始评�
 
 本节记录首发源码版本、文档检查和仓库发布回执；dev.10—dev.12 的运行证据仍保留原版本号。发布标为早期预览，不把历史开发版的部分验收升级成整体产品验收。
 
+发布回执：本地 Git 首个提交 `17b5240`（2026-10-23 14:24 +08:00，`release: publish Jarvis v0.1.0`），共 745 个跟踪文件，远端为 `github.com/Samuel521199/JarvisV2`。此后至 2026-10-27 的工作区改动在 v0.1.1 之前没有提交，见[版本记录](../CHANGELOG.md#v0-1-0-workspace)。
+
 <a id="settings-control-evidence"></a>
 ## 设置控制中心改版（2026-10-23）
 
@@ -2841,6 +2847,40 @@ JPF/r1 不改写；本轮是 V-TRI/V-CLC 的局部接线证据，完整场景仍
 本轮19个源码/测试输入变更，534个源码输入与55个支撑输入冻结；原三职能权责、Task许可、共享预算、知识晋升规则不扩大。原host/work_status.py与JPF预测摘要不变；观察结果不自动写正式知识或业务评分。未来精灵仍应复用原发送/投影，未验证实际精灵入口、多Bot及机器人。原观察器性能预算探针按[机器汇总](evidence/workflow-shadow-1.13.0/verification.json)登记，它不是新增聊天核对的专门延迟测量。[交付检查](evidence/workflow-shadow-1.13.0/delivery-checks.json)区分本轮选定改动与共享树3705条既存格式问题；未以修复无关文件扩大范围。
 
 后续顺序：先用保留集校准合理改写、遗漏、无依据新增和计划冲突；再做带来源位置、冲突及时间状态的自动依据候选；之后用三域独立真实请求接有限返工和结果回流；最后根据可靠验收扩大条件化经验、多Bot责任链与常设委托。当前仅建议保留可选非阻断观察，[采用判断](evidence/workflow-shadow-1.13.0/adoption-review.json)不授权自动改写、结案、评分、知识晋升或部署。
+
+<a id="maintenance-0-1-1-evidence"></a>
+## 安全与可靠性修复 0.1.1：本轮验证与未验证范围
+
+**implemented；Linux 容器内 verified 的限定范围如下，Windows 专属部分未验证。** 变更清单见[版本记录](../CHANGELOG.md#v0-1-1)，现状汇总见[当前真实状态](current-state.md)。
+
+<a id="maintenance-0-1-1-environment"></a>
+### 环境与方法
+
+2026-10-27，Linux 云端容器，Python 3.13.17、Node 22.23。先对未改动的工作区运行全量 `python -m unittest discover -s tests`：1,041 项，303 项失败或错误，原因全部是该环境缺少 Windows 专属条件（271 项缺 LPAC Worker 运行时 `user-data/worker-runtime`，20 项需要 DPAPI，其余为 Rust 原生控制未构建、浏览器或时序探针）。此后每完成一组修改都重跑全量，并与这 303 项逐名对比。
+
+<a id="maintenance-0-1-1-results"></a>
+### 结果
+
+| 项目 | 结果 |
+|---|---|
+| 全量回归 | 1,065 项；没有出现基线之外的新失败；24 项新增测试全部通过 |
+| 访问钥匙 | `tests/test_local_access.py` 7 项：无会话时 `/api/session`、数据接口与 `/api/family/setup` 返回 401；钥匙交换得到 HttpOnly/SameSite=Strict Cookie；伪造 Cookie 被拒；解锁限流；其他本机程序写入的无法解析 Cookie 不影响读取；未处理异常返回 `internal_error` 并写日志 |
+| 执行锁 | `tests/test_admission.py` 5 项：本进程执行组持锁时受理立即通过且同进程受理互相串行，其他进程持锁时有界等待后报 busy |
+| 回复不被覆盖 | 已交付回复与已计费调用在后续失败路径中保持 SUCCEEDED |
+| 自写工具检查 | 12 种已知取得 `os`/`sys` 的写法全部被拒，普通纯文本工具仍通过 |
+| 调度重启 | 首轮会话人为抛错后记录日志、自动重启并完成排队任务 |
+| 嵌入与检索 | 单次超时后模型保持加载；短事实向量缓存命中时只编码问题；15,194 个窗口语义检索 255 ms → 23 ms（numpy）/ 90 ms（标准库），首轮加载在后台完成 |
+| 长资料提取 | 约 65 KB 资料拆成多批，每批低于路由输入上限并各有调用记录；本地拒绝记为 REJECTED |
+| 独立复核 | 另一个未参与修改的审查代理复核全部差异，提出 4 项中等、若干低等问题，已全部处理：`string.Formatter` 子类钩子绕过、Cookie 解析被其他本机 Cookie 阻断、向量缓存换载时元数据与向量错配、同进程受理失去串行；以及嵌入 Worker 连续 3 次超时后重启、短事实缓存淘汰时丢失本轮命中、长资料按所在分批匹配引文并如实记录已提交数、会话按使用顺延 12 小时且过期时保留页面草稿 |
+| 静态检查 | `tools/check_architecture.py` 0 错误（host 导入环 20 个模块，与基线一致）；`tools/check_docs.py` 0 错误 |
+
+<a id="maintenance-0-1-1-unverified"></a>
+### 未验证与后续
+
+- Windows 上的全量回归（LPAC、DPAPI、msvcrt 文件锁、Blender 与工程 Worker）需在本机运行后补记。访问钥匙在 Windows 上以 DPAPI 保存，该路径只做了代码审查。
+- 浏览器端：访问钥匙解锁与“服务重启后自动重试”只做了 HTTP 层测试，未做浏览器探针；`tools/` 下依赖已运行服务的评估脚本需改为 `python -m tools.<名称>` 运行。
+- 未修复：Blender/工程 Worker 启动后才挂 Job、Codex 子进程无 Job；结果评价投影在读接口中写库；host 层导入环。原因与取舍见[当前真实状态](current-state.md#current-state-risks)。
+- 本轮没有真实模型调用，也没有部署到正在运行的服务。
 
 <!-- book-footer:start -->
 [返回工程主入口](../README.md) · [全书目录](../README.md#book-tree) · [上一章：系统自身模型与能力认知](self-model.md) · [下一章：架构决策、批判性评审与评分](decisions-review.md)

@@ -1,7 +1,6 @@
 """Opt-in local household authentication; identity is never supplied by a model."""
 import base64
 import hashlib
-from http.cookies import SimpleCookie
 import re
 import secrets
 import threading
@@ -135,8 +134,5 @@ class FamilyIdentity:
 
 
 def cookie_token(header, port):
-    try:
-        cookie = SimpleCookie(); cookie.load(header or '')
-        item = cookie.get('jarvis_family_' + str(port))
-        return item.value if item else ''
-    except (ValueError, TypeError): return ''
+    from control.local_access import cookie_get
+    return cookie_get(header, 'jarvis_family_' + str(port))

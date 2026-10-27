@@ -99,7 +99,7 @@
 <a id="clean-core-architecture"></a>
 ## D 盘独立工程：先建可管理、可研发、可恢复的核心
 
-**路线 accepted，完整架构 proposed；新工程已交付[确定性核心与受限自主研发的局部实现](core-bootstrap.md#growth-seed-operation)。** 与上文 H 盘渐进接入建议的区别是：保留概念和功能目标，第一方实现重新编写，不复制、导入或调用旧模块；按主人要求沿用静态品牌图像，来源归[工作台实现](interaction-persona.md#workbench-reference-implementation)。下表是新工程核心职责的唯一总表，旧源码映射仅作研究材料。新工程内部同样只有一套身份、任务、权限、包和预算权威。
+**路线 accepted，完整架构 proposed；新工程已交付[确定性核心与受限自主研发的局部实现](core-bootstrap.md#growth-seed-operation)。** 与旧 H 盘工程渐进接入方案（见[旧工程交接说明](references.md#legacy-project)）的区别是：保留概念和功能目标，第一方实现重新编写，不复制、导入或调用旧模块；按主人要求沿用静态品牌图像，来源归[工作台实现](interaction-persona.md#workbench-reference-implementation)。下表是新工程核心职责的唯一总表，旧源码映射仅作研究材料。新工程内部同样只有一套身份、任务、权限、包和预算权威。
 
 此核心服务于[个人为主、家庭与小团体为辅](product-requirements.md#personal-service-scope)的定位：家庭与小团体通过现有身份、上下文视图、任务和长期职责端口接入，不另建核心。三职能共同支持[自主工作与独立交付](product-requirements.md#personal-life-autonomous-outcomes)：定向面维护目标和约束，协作面组织实际执行与交付，观察成长面核对结果、发现问题并推动改进；主体、共享范围与实际授权贯穿全程。
 

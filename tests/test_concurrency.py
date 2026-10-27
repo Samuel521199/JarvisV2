@@ -141,6 +141,24 @@ class ConcurrencyCase(unittest.TestCase):
             self.assertEqual(order, [high, low])
         finally: pressure.set(); runner.close()
 
+    def test_scheduler_session_crash_is_logged_restarted_and_keeps_dispatching(self):
+        ident, = self.submit('after-crash'); calls = []
+        import host.outcomes as outcomes
+        original = outcomes.observe
+        def flaky(core, *args, **kwargs):
+            calls.append(1)
+            if len(calls) == 1: raise RuntimeError('synthetic loop failure')
+            return original(core, *args, **kwargs)
+        with patch.object(outcomes, 'observe', flaky), self.assertLogs('jarvis.scheduler', 'ERROR') as logged:
+            runner = TaskRunner(self.root, resource_sample=memory_ok)
+            try:
+                runner.start({'max_tasks': 1})
+                until(lambda: self.read(ident)['status'] == 'SUCCEEDED', 10)
+                until(lambda: runner.state()['error'] is None, 5)
+                self.assertTrue(runner.thread.is_alive())
+            finally: runner.close()
+        self.assertIn('restart 1/', logged.output[0])
+
     def test_resource_pressure_keeps_queue_durable_across_restart(self):
         ident, = self.submit('recover-queue')
         runner = TaskRunner(self.root, resource_sample=lambda: {**memory_ok(), 'memory_used': 15*1024**3})

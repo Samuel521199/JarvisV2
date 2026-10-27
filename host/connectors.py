@@ -3,6 +3,7 @@ import re
 import time
 
 from control.recovery.gate import RunLock
+from control.execution import admission
 from host.core import Core
 from sdk.protocol import CoreError, canonical, decode, digest
 
@@ -42,7 +43,7 @@ def command(root, value):
                     or not isinstance(value['implementation'], str) or type(value['revision']) is not int):
                 raise CoreError('mcp_invalid', 'Invalid connector call')
             request_id = 'mcp-use.' + value['request_id']; grant = 'mcp-use-' + digest(value)[:32]
-            with RunLock(core.root):
+            with admission(core.root):
                 old = core.db.one('SELECT id,body FROM tasks WHERE request_id=?', (request_id,))
                 if old:
                     if decode(old['body'])['grant_id'] != grant: raise CoreError('conflict', 'Request input changed')

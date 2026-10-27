@@ -7,6 +7,9 @@ def main():
     if not re.fullmatch(r'http://127\.0\.0\.1:[0-9]{4,5}',a.origin) or not re.fullmatch('[a-z0-9-]{1,60}',a.label):p.error('Local origin and safe label required')
     folder=Path(__file__).resolve().parents[1]/'docs/evidence/studio3d-production-2026-10-24'/a.label;folder.mkdir(parents=True,exist_ok=False)
     def get(path):return json.load(urllib.request.urlopen(a.origin+path,timeout=25))
+    # Key-protected workbench: run as `python -m tools.eval_studio3d_production` from the project root.
+    try:from control.local_access import install_client;install_client(a.origin)
+    except ImportError:pass
     token=get('/api/session')['token']
     def post(path,value):return json.load(urllib.request.urlopen(urllib.request.Request(a.origin+path,data=json.dumps(value).encode(),headers={'Origin':a.origin,'X-Jarvis-Token':token,'Content-Type':'application/json'}),timeout=30))
     body={'id':uuid.uuid4().hex}

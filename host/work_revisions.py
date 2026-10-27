@@ -4,6 +4,7 @@ import re
 from control import receipts
 from control.paths import child
 from control.recovery.gate import RunLock
+from control.execution import admission
 from host import goal_context, capabilities
 from modules.task_resource.plans import Plans, validate_proposal, planning_key
 from modules.task_resource.work_budgets import WorkBudgets
@@ -110,7 +111,7 @@ def create(core, value):
             or not isinstance(value['note'],str) or not 1<=len(value['note'].strip())<=1000):
         raise CoreError('rework_invalid', 'Describe the full revised goal and why it changes')
     request_digest = digest(value); plans = Plans(core.db)
-    with RunLock(core.root), goal_context.LOCK, core.db.transaction() as tx:
+    with admission(core.root), goal_context.LOCK, core.db.transaction() as tx:
         old = core.db.one('SELECT goal_id,request_digest FROM work_revisions WHERE request_id=?',(value['request_id'],))
         if old:
             if old['request_digest'] != request_digest: raise CoreError('conflict','Rework request ID changed')
@@ -187,7 +188,7 @@ def review_source(core, value):
     if (type(value['revision']) is not int or type(value['work_revision']) is not int
             or not isinstance(value['note'],str) or not 1<=len(value['note'].strip())<=1000):
         raise CoreError('rework_invalid','Describe why the prefix is still applicable')
-    with RunLock(core.root), goal_context.LOCK, core.db.transaction() as tx:
+    with admission(core.root), goal_context.LOCK, core.db.transaction() as tx:
         core.gate.require_running();p=Plans(core.db).get(value['id']);link=core.works.link(p['id']);owner=core.works.owner(p['id'])
         if (not link or not link['parent_goal'] or not owner or owner['cancelled'] or owner['current_goal']!=p['id']
                 or owner['revision']!=value['work_revision'] or p['revision']!=value['revision']

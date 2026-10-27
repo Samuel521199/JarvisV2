@@ -36,6 +36,10 @@ from control.recovery.gate import StopGate
 from sdk.protocol import CoreError, canonical, decode, read_json
 from sdk.pricing import estimate
 from apps.workbench import family_http,mail_http
+from control import logs
+import logging
+
+LOG = logs.get('http')
 
 ASSETS = {"/": ("index.html", "text/html"), "/app.js": ("app.js", "text/javascript"),
           "/style.css": ("style.css", "text/css"), "/brand/core.png": ("brand/core.png", "image/png"),
@@ -80,7 +84,33 @@ def snapshot(root):
 
 
 class Handler(BaseHTTPRequestHandler):
-    def log_message(self, *args): pass
+    # Per-operation socket timeout: a stalled client cannot hold a handler thread forever.
+    timeout = 30
+
+    def log_message(self, format, *args):
+        LOG.warning('HTTP %s', format % args)
+
+    def log_request(self, code='-', size='-'):
+        # Polling GETs stay out of the INFO log; writes and errors are kept. No query, body or cookies.
+        status = int(code) if str(code).isdigit() else 0
+        level = logging.INFO if self.command != 'GET' or status >= 400 else logging.DEBUG
+        LOG.log(level, '%s %s %s', self.command, urlsplit(self.path).path, code)
+
+    def do_GET(self):
+        self._guarded(self._do_GET)
+
+    def do_POST(self):
+        self._guarded(self._do_POST)
+
+    def _guarded(self, handler):
+        try:
+            handler()
+        except (BrokenPipeError, ConnectionResetError, ConnectionAbortedError, TimeoutError):
+            pass  # client went away; nothing to answer
+        except Exception:
+            LOG.exception('Unhandled error in %s %s', self.command, urlsplit(self.path).path)
+            try: self.json({'error': 'internal_error'}, 500)
+            except OSError: pass
 
     def origin_allowed(self, write=False):
         origin = "http://127.0.0.1:" + str(self.server.server_port)
@@ -98,7 +128,7 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header('Content-Length', '0')
         self.end_headers()
 
-    def do_GET(self):
+    def _do_GET(self):
         if not self.origin_allowed():
             return self.reply(403, b"Forbidden", "text/plain")
         route = urlsplit(self.path)
@@ -160,7 +190,7 @@ class Handler(BaseHTTPRequestHandler):
             except (CoreError,OSError,ValueError):return self.json({'error':'studio3d_missing'},404)
         if route.path=='/api/anatomy/engineering':
             from host.anatomy_engineering import readiness,CONTRACT
-            return self.json({**readiness(),'contract':CONTRACT})
+            return self.json({**readiness(data_root(self.server.data_root)),'contract':CONTRACT})
         if route.path.startswith('/api/anatomy/exports/'):
             try:
                 from host.anatomy_engineering import exported
@@ -224,10 +254,10 @@ class Handler(BaseHTTPRequestHandler):
         filename, mime = ASSETS[route.path]
         self.reply(200, (Path(__file__).parent / filename).read_bytes(), mime)
 
-    def do_POST(self):
+    def _do_POST(self):
         route = urlsplit(self.path)
         token = self.headers.get('X-Jarvis-Token', '')
-        if (not self.origin_allowed(write=True) or (route.path != '/api/family/login' and (not token or not token.isascii()
+        if (not self.origin_allowed(write=True) or (route.path not in {'/api/family/login', '/api/local-access'} and (not token or not token.isascii()
             or not getattr(self.server, 'nonce', '') or not secrets.compare_digest(token, self.server.nonce)))):
             return self.json({'error': 'page_session'}, 403)
         if route.query or self.headers.get('Transfer-Encoding') or self.headers.get('Content-Type') != 'application/json':
@@ -239,10 +269,11 @@ class Handler(BaseHTTPRequestHandler):
                 from modules.skills.studio3d.assets import MAX_GLB_UPLOAD_BYTES
                 limit=MAX_GLB_UPLOAD_BYTES
             if not 0 < size <= limit: return self.json({'error': 'request_size'}, 413)
+            # Authorize before accepting up to 40 MB from the client.
+            if not family_http.gate(self, route.path, write=True): return
             self.connection.settimeout(10)
             raw = self.rfile.read(size)
             if len(raw) != size: return self.json({'error': 'request_size'}, 400)
-            if not family_http.gate(self, route.path, write=True): return
             if route.path in ('/api/studio3d/assets','/api/studio3d/references','/api/image-studio/references'):
                 from modules.skills.studio3d.assets import decode_upload
                 body=decode_upload(raw,max_bytes=limit)
@@ -369,7 +400,7 @@ class Handler(BaseHTTPRequestHandler):
                     return self.json({'cancel_requested': store.cancel(body['request_id'])})
                 finally: store.close()
             return self.json({'error': 'not_found'}, 404)
-        except CoreError as exc: return self.json({'error': exc.code}, 401 if exc.code=='family_session' else 403 if exc.code=='family_forbidden' else 429 if exc.code=='family_rate' else 409 if exc.code in {'conflict','chat_busy','chat_capacity'} else 400)
+        except CoreError as exc: return self.json({'error': exc.code}, 401 if exc.code in {'family_session','local_access'} else 403 if exc.code=='family_forbidden' else 429 if exc.code in {'family_rate','local_access_rate'} else 409 if exc.code in {'conflict','chat_busy','chat_capacity'} else 400)
         except (OSError, ValueError, TypeError, sqlite3.Error): return self.json({'error': 'local_io_or_config'}, 400)
 
     def reply(self, status, body, mime, anatomy=False,download=None,viewer=False):
@@ -383,6 +414,10 @@ class Handler(BaseHTTPRequestHandler):
             value = self.family_cookie
             self.send_header('Set-Cookie', 'jarvis_family_'+str(self.server.server_port)+'='+value+'; Path=/; HttpOnly; SameSite=Strict'+('' if value else '; Max-Age=0'))
             del self.family_cookie
+        if hasattr(self, 'local_cookie'):
+            from control.local_access import cookie_name
+            self.send_header('Set-Cookie', cookie_name(self.server.server_port)+'='+self.local_cookie+'; Path=/; HttpOnly; SameSite=Strict')
+            del self.local_cookie
         if download:self.send_header('Content-Disposition','attachment; filename="'+download+'"')
         if viewer:
             from host.studio3d_viewer import CSP
@@ -395,19 +430,29 @@ class Handler(BaseHTTPRequestHandler):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--data-root", default=str(ROOT / "user-data")); parser.add_argument("--port", type=int, default=18282)
+    parser.add_argument("--insecure-no-access-key", action="store_true", help="Only for disposable test data roots: rely on Host/Origin/nonce checks alone, as before 0.1.1.")
     args = parser.parse_args()
     if not 1024 <= args.port <= 65535: parser.error("port out of range")
     snapshot(args.data_root)
     server = ThreadingHTTPServer(("127.0.0.1", args.port), Handler)
     server.data_root = data_root(args.data_root)
+    print("Diagnostic log: " + str(logs.configure(server.data_root)), flush=True)
     server.nonce = secrets.token_urlsafe(32)
     server.boot_id = secrets.token_hex(12)
+    if not args.insecure_no_access_key:
+        from control.local_access import LocalAccess
+        server.access = LocalAccess(server.data_root)
     try:
         from host.family import FamilyHost
         server.dialogues = DialogueHost(server.data_root)
         server.family = FamilyHost(server.data_root)
         from host.knowledge_extraction import recover as recover_extraction
         recover_extraction(server.data_root)
+        try:
+            from host.studio3d import recover as recover_studio3d
+            recover_studio3d(server.data_root)
+        except (ImportError, CoreError, OSError, sqlite3.Error):
+            pass  # optional skill; its own readiness endpoint reports the problem
         server.local_models = create_manager(server.data_root)
         server.task_runner = TaskRunner(server.data_root, foreground_pending=lambda: any(r["lane"] == "foreground" for r in server.dialogues.state()["queued"]))
         server.background_lane = BackgroundLane()
@@ -416,7 +461,11 @@ def main():
         server.growth_runner = GrowthRunner(server.data_root,server.background_lane)
         server.dialogues.on_goal=lambda ident:server.goal_runner.start({'id':ident,'retry_unknown':False})
     except BaseException: server.server_close(); raise
-    print("Jarvis core workbench: http://127.0.0.1:" + str(server.server_port), flush=True)
+    if hasattr(server, 'access'):
+        print("Jarvis core workbench: http://127.0.0.1:" + str(server.server_port) + "/#access=" + server.access.key, flush=True)
+        print("Keep this link private: it unlocks the workbench for this OS user.", flush=True)
+    else:
+        print("Jarvis core workbench (test mode, no access key): http://127.0.0.1:" + str(server.server_port), flush=True)
     try: server.serve_forever()
     except KeyboardInterrupt: pass
     finally:

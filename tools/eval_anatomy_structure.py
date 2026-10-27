@@ -17,6 +17,9 @@ def main():
         (folder/'evaluation.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     def get(path):
         with urllib.request.urlopen(a.origin+path,timeout=10) as r:return json.load(r)
+    # Key-protected workbench: run as `python -m tools.eval_anatomy_structure` from the project root.
+    try:from control.local_access import install_client;install_client(a.origin)
+    except ImportError:pass
     token=get('/api/session')['token']
     def post(path,value):
         req=urllib.request.Request(a.origin+path,data=json.dumps(value,ensure_ascii=False).encode(),headers={'Origin':a.origin,'X-Jarvis-Token':token,'Content-Type':'application/json'},method='POST')

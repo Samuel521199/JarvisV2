@@ -39,8 +39,9 @@ def main():
     tokenizer=Tokenizer.from_file(str(root/'tokenizer.json'));tokenizer.enable_padding()
     send({'ready':True,'dimension':384,'runtime':{'onnxruntime':ort.__version__,'numpy':np.__version__},'memory':memory()})
     for line in sys.stdin:
+        ident=None
         try:
-            body=json.loads(line);texts=body['texts'];role=body['role']
+            body=json.loads(line);texts=body['texts'];role=body['role'];ident=body.get('id')
             if role not in ('query','passage') or not isinstance(texts,list) or not 1<=len(texts)<=8 or any(not isinstance(x,str) or not x.strip() or len(x)>8000 for x in texts):raise ValueError('input')
             start=time.monotonic();encoded=tokenizer.encode_batch([role+': '+x for x in texts])
             if any(len(e.ids)>512 for e in encoded):raise ValueError('split_long_input')
@@ -48,9 +49,9 @@ def main():
             output=session.run(None,{i.name:arrays[i.name] for i in session.get_inputs()})[0]
             mask=arrays['attention_mask'][...,None];vectors=(output*mask).sum(axis=1)/mask.sum(axis=1)
             vectors=vectors/np.linalg.norm(vectors,axis=1,keepdims=True)
-            send({'vectors':vectors.tolist(),'dimension':384,'elapsed_seconds':time.monotonic()-start,'memory':memory(),
+            send({'id':ident,'vectors':vectors.tolist(),'dimension':384,'elapsed_seconds':time.monotonic()-start,'memory':memory(),
                   'workload':{'batch':len(texts),'max_tokens':max(sum(e.attention_mask) for e in encoded)}})
-        except Exception as exc:send({'error':str(exc)[:120]})
+        except Exception as exc:send({'id':ident,'error':str(exc)[:120]})
 
 
 if __name__=='__main__':main()

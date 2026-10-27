@@ -50,3 +50,22 @@ class ArchitectureBoundaries(unittest.TestCase):
         failed,errors=self.check();self.assertTrue(failed)
         self.assertTrue(any('SDK depends on implementation' in e for e in errors))
         self.assertTrue(any('Cross-domain implementation import' in e for e in errors))
+
+    def test_host_cannot_import_apps_and_new_host_cycles_fail(self):
+        self.write('host/alpha.py','def f():\n    from host import beta\n')
+        self.write('host/beta.py','import host.alpha\n')
+        failed,errors=self.check();self.assertTrue(failed)
+        self.assertTrue(any('New or grown host import cycle' in e and 'host.alpha' in e for e in errors))
+        (self.root/'host/beta.py').unlink()
+        self.write('host/gamma.py','from apps.workbench import server\n')
+        failed,errors=self.check();self.assertTrue(failed)
+        self.assertTrue(any('Runtime dependency cycle: apps.workbench' in e for e in errors))
+
+    def test_numpy_only_as_guarded_optional_accelerator_in_vector_index(self):
+        self.write('modules/context_knowledge/vectors.py','try:\n    import numpy\nexcept ImportError:\n    numpy=None\n')
+        self.assertEqual(self.check(),(False,[]))
+        self.write('modules/context_knowledge/vectors.py','import numpy\n')
+        failed,errors=self.check();self.assertTrue(failed)
+        self.write('modules/context_knowledge/vectors.py','')
+        self.write('modules/context_knowledge/other.py','try:\n    import numpy\nexcept ImportError:\n    pass\n')
+        failed,errors=self.check();self.assertTrue(failed)

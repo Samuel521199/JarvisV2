@@ -16,7 +16,6 @@ from control.worker.runtime import RestrictedWorker
 from control import receipts
 from modules.continuity import Continuity
 from modules.context_knowledge import Facts
-from modules.model_gateway import ModelGateway
 from modules.model_gateway.routed import RoutedModels
 from modules.preferences.store import Preferences, resolve
 from modules.release_recovery.packages import Packages
@@ -44,20 +43,20 @@ class Core:
             self.identity.describe()
             if not self.db.one("SELECT value FROM meta WHERE key='initialization_complete'"):
                 raise CoreError("initialization_incomplete", "Initialization did not finish; preserve state for recovery")
+            self.grants = GrantStore(self.db)
+            self.worker = RestrictedWorker(self.root)
+            self.packages = Packages(self.db, self.root, self.worker, self.gate)
+            self.connectors = Connectors(self.root)
+            self.registry = Registry(self.db, plugins=self.packages, connectors=self.connectors)
+            self.tasks = Ledger(self.db, self.gate, self.registry)
+            self.works = Works(self.db)
+            self.facts = Facts(self.db)
+            self.preferences = Preferences(self.root)
+            self.credentials = Credentials(self.root)
         except BaseException:
-            self.db.close()
+            # Schema checks and stores above may fail; never leak the open connections.
+            self.close()
             raise
-        self.grants = GrantStore(self.db)
-        self.worker = RestrictedWorker(self.root)
-        self.packages = Packages(self.db, self.root, self.worker, self.gate)
-        self.connectors = Connectors(self.root)
-        self.registry = Registry(self.db, plugins=self.packages, connectors=self.connectors)
-        self.tasks = Ledger(self.db, self.gate, self.registry)
-        self.works = Works(self.db)
-        self.facts = Facts(self.db)
-        self.models = ModelGateway()
-        self.preferences = Preferences(self.root)
-        self.credentials = Credentials(self.root)
         try:
             selected = self.preferences.read()
             if selected:

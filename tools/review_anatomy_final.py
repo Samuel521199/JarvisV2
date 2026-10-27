@@ -7,6 +7,9 @@ def main():
     def save():(folder/'evaluation.json').write_text(json.dumps(record,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     def get(path):
         with urllib.request.urlopen(ORIGIN+path,timeout=15) as r:return json.load(r)
+    # Key-protected workbench: run as `python -m tools.review_anatomy_final` from the project root.
+    try:from control.local_access import install_client;install_client(ORIGIN)
+    except ImportError:pass
     token=get('/api/session')['token']
     def post(path,value):
         q=urllib.request.Request(ORIGIN+path,data=json.dumps(value,ensure_ascii=False).encode(),headers={'Origin':ORIGIN,'X-Jarvis-Token':token,'Content-Type':'application/json'},method='POST')

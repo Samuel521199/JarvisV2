@@ -57,6 +57,8 @@ G0 高于普通任务、人格、可用性、学习收益和系统自身延续�
 
 一旦独立监督发现系统自身生成的可观察真实行动候选计划、实际行为或控制机制完整性明确违反 G0，必须立即阻断新动作、锁存停止状态并同步显示告警，随后关闭全部 Jarvis 自主工作负载。停止优先于自动修复、故障切换和持续运行。只保留固定功能的告警、审计、设备安全停止与主人解锁验证；具体流程见[主人利益最高原则、独立监督与锁存关停](security-sovereignty.md#sovereignty-shutdown)。
 
+**执行现状（2026-10-27 核对代码）：** G0 目前没有自动判定器或独立监督进程；上段描述的是目标设计。停机锁存只能通过 `apps/cli/main.py --latch` 手动设置，写在数据根 `state/LATCH`（工作负载仍可写，不满足[锁存持久状态](#sovereignty-shutdown-6)的受保护要求），解除尚未实现。`seed/charter/baseline.json` 的 `enforcement_status: bounded-builtins-only` 与此一致。是否投入受保护存放位置列为[待主人决定](current-state.md#current-state-owner-decisions)。
+
 这是项目最高规范，不是已经证明的绝对安全结论。现有技术不能读取和证明所有模型的全部内部计算，也不能保证任意环境永无漏检；可强制检查的是目标、候选计划、结构化决策说明、代码、委派链、输出、工具参数和实际效果。不能用模型自述忠诚代替权限与验证。
 
 <a id="identity-authorization"></a>
@@ -364,6 +366,8 @@ AI 编写的程序同样是不可信候选，复用原 K3/K4/K5 检查；任务�
 受信任 Host 按 connection/credential_id 绑定选取一份凭据，经匿名 stdin 交给短命 HTTP 子进程；参数、网页响应、日志、审计及候选源码不包含明文 Key。Vertex 使用 Windows CNG 临时导入 PKCS#8 签名，固定官方令牌地址和 scope，拒绝由凭据元数据改写目的地；无持久 CNG 私钥名称。生成候选仍运行于原 LPAC Worker，不在持有模型凭据的 HTTP 进程运行。
 
 工作台仅监听本机回环，验证 Host/Origin/Sec-Fetch-Site；写请求还要求本次服务随机 nonce、JSON 类型、尺寸上限，设置修改使用预期修订。dev.4 仅新增已登记项目下的有界文本读写；没有读取凭据库、任意 shell、执行文件或直接激活候选的入口。网络页面不能通过跨站 POST 修改设置；这些检查不能抵御已控制同一 OS 用户的程序，也不是家庭成员身份认证。明文会话与设置数据库的保护依赖本机账户/文件权限，整库加密未实现。
+
+**本机访问钥匙（0.1.1，implemented）：** 回环地址对本机所有进程和所有 Windows 账户开放，非浏览器程序也能伪造 Host/Origin。因此未启用家庭登录时，数据与控制接口还要求本机会话：每个数据根一把随机钥匙，Windows 上以 DPAPI 按当前用户加密保存（其他平台为 0600 文件）；启动器把钥匙放在网址片段交给浏览器，页面一次性换取 HttpOnly、SameSite=Strict 的会话 Cookie，钥匙不经网络发送、也不写入日志。没有会话时 `/api/session` 不再下发 nonce，`/api/family/setup` 等写入口返回 401；静态页面、`/api/instance` 与 `/api/family/status` 仍公开以便页面加载。解锁每分钟最多 20 次。残余风险：浏览器 Cookie 不按端口隔离，主人在同一浏览器访问本机其他恶意服务时会话可能外泄；家庭登录 Cookie 有同样限制。实现见 `control/local_access.py`，测试见 `tests/test_local_access.py`。
 
 停止/取消在模型等待中检查并终止本地子进程，但已抵达供应商的请求仍可能处理或计费。重启后在途结果标为 UNKNOWN，不自动重复发送。DPAPI 可移植性和保存位置归[数据布局](stack-project-layout.md#portable-data-runtime)；本轮没有下载未知组件或安装第三方运行依赖，有限测试也不是全项目无漏洞证明。
 

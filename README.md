@@ -6,90 +6,38 @@
 <p align="center"><strong>与你交流 · 为你办事 · 与你一同成长</strong></p>
 <p align="center">A personal AI companion, built around your computer and your context.</p>
 <p align="center">
-  <img src="https://img.shields.io/badge/release-v0.1.0-38bdf8?style=for-the-badge" alt="Release v0.1.0">
+  <img src="https://img.shields.io/badge/release-v0.1.1-38bdf8?style=for-the-badge" alt="Release v0.1.1">
   <img src="https://img.shields.io/badge/Local_First-0f172a?style=for-the-badge" alt="Local first">
   <img src="https://img.shields.io/badge/Python-3.13-3776AB?style=for-the-badge" alt="Python 3.13">
   <img src="https://img.shields.io/badge/Stage-Early_Preview-8b5cf6?style=for-the-badge" alt="Early preview">
 </p>
-<p align="center"><a href="#desktop-companion-overview">桌面精灵设计</a> · <a href="#quick-start">开始使用</a> · <a href="docs/memory-cognition-design.md#memory-guide-start">记忆与认知</a> · <a href="#book-tree">完整文档</a> · <a href="docs/architecture-atlas.md#diagram-index">架构图册</a> · <a href="docs/delivery-validation.md#github-v0-1-0">版本与验证</a></p>
+<p align="center"><a href="#desktop-companion-overview">桌面精灵设计</a> · <a href="#quick-start">开始使用</a> · <a href="docs/memory-cognition-design.md#memory-guide-start">记忆与认知</a> · <a href="#book-tree">完整文档</a> · <a href="docs/architecture-atlas.md#diagram-index">架构图册</a> · <a href="docs/current-state.md">当前状态</a> · <a href="CHANGELOG.md">版本记录</a></p>
 
 ---
 
 一个以普通 PC 为主要载体、以个人为主、以其家庭或以其为中心的小团体为辅，能够长期相处、自主工作并持续成长的 AI 助手与伙伴。最终目标是在明确目标与有效授权内独立完成任务、验证结果并交付。
 
-**这里是工程与文档的主入口。** 首个 GitHub 发布版本为 **v0.1.0 · 早期预览**，汇集当前源码及此前 dev.12 等开发证据，历史证据保持原编号。本版把自然聊天、分域记忆、目标计划、受限自主编程和原会话交付串联起来；缺少能力时可拟订规格、生成候选，经独立检查与审阅后回到原目标。[受控 MCP 接入](docs/tasks-agents.md#mcp-runtime)复用原任务体系。当前自主研发仍受限于纯文本能力，完整助手与 K0—K6 按分项证据判断。
+**这里是工程与文档的主入口。** 当前版本 **v0.1.1 · 早期预览**（首个 GitHub 发布为 v0.1.0），历史开发证据保持原编号，版本号规则见 [CHANGELOG](CHANGELOG.md#changelog-rules)。本版把自然聊天、分域记忆、目标计划、受限自主编程和原会话交付串联起来；缺少能力时可拟订规格、生成候选，经独立检查与审阅后回到原目标。[受控 MCP 接入](docs/tasks-agents.md#mcp-runtime)复用原任务体系。当前自主研发仍受限于纯文本能力，完整助手与 K0—K6 按分项证据判断。
 
-**现在可以运行：[聊天到交付](docs/core-bootstrap.md#conversation-operation) · [当前验收与限制](docs/delivery-validation.md#conversation-evidence) · [目标关联研发](docs/core-bootstrap.md#goal-growth-operation) · [Codex 候选端口](docs/toolchains.md#codex-candidate-runtime) · [记忆与经验](docs/knowledge-learning.md#goal-memory-runtime) · [数据位置](docs/stack-project-layout.md#portable-data-runtime) · [后续工作](docs/development-guide.md#direction-start)。**
+**先读这一页：[当前真实状态](docs/current-state.md)**：能运行什么、哪些只是设计、证据边界与已知风险都在一页内。按版本的变更流水见 [CHANGELOG](CHANGELOG.md)。
 
 **项目级准则：精灵与工作台是同一个 Jarvis 的两种表现和工作形式。** 精灵侧重自动化、简洁和低打扰，工作台侧重任务的详细展示、设置与控制；共用能力、配置、任务及成果，避免重复实现。这也是未来跨平台入口和远程机器人执行的桌面雏形。[架构准则](docs/architecture.md#unified-system-principle) · [透明精灵、场景呼出与预览图](#desktop-companion-overview)。准则已采纳，原生桌面与跨平台完整闭环仍待实现。
 
-**会话目录与跨平台项目创建：**每个项目会话有专属目录，独立会话留在 Jarvis 数据根；新增项目位置窗口、集中测试目录、配置/草稿保存和交付补齐。[目录与平台策略](docs/stack-project-layout.md#session-folder-layout) · [交互入口](docs/interaction-persona.md#session-folder-interface) · [验收范围](docs/delivery-validation.md#session-folder-evidence)。
-
-**机械科普与参数化组装：**Anatomy 5.2.0 增加 72 件赛车的两级传动、分件车壳和本地 GPU 检视；保留 32 件电动车的单件/子总成/分批同步组装、装后理想运动学运转；保留实体零件/端口约束、19 件轴系示例、真实剖面、静态与插入采样干涉、装配步骤建议及 STEP/STL/DXF/BOM；提供限定机电、热力、化学与流动计算，保留 4.0 发动机/引擎等教学组合。来源和许可随产物保存；源码、实际进程加载和未验证范围分别记录。[使用与边界](docs/tasks-agents.md#anatomy-engineering-runtime) · [检查与模型评分](docs/delivery-validation.md#anatomy-engineering-evidence)。
-
-**3D 工作室 1.6.0：**增加果皮底色贴图、旋转曲面UV和逐级独立烘焙；苹果高模120148三角面，低模990/472/228三角面，主低模采用规则环网格，修复本轮观察到的漏射黑斑和果窝暗缝。参考还原与AAA美术验收仍未通过。[识图与贴图](docs/tasks-agents.md#studio3d-image-workflow) · [苹果实测](docs/delivery-validation.md#studio3d-apple-evidence) · [生产流程](docs/tasks-agents.md#studio3d-production-workflow)。
-
-**英语与日志工作流 1.0.0：**文字英语练习、纠错和学习卡；生活/学习/研发日志整理、纠正与复盘。默认可用，实际测试覆盖短文本场景，定时提醒与自动新闻订阅未接入。[使用方式](docs/tasks-agents.md#personal-workflows-runtime) · [真实对话验收](docs/delivery-validation.md#personal-workflows-evidence)。
-
-**图片与图形设计 1.1.0：**六类设计流程、最高4K规格、持久模型切换/启停、分项费用估算、手工账单对账、人工清单验收与父图编辑链。已有1K真实出图；本轮2K/4K受Google网络超时阻塞，主服务仍待正常重启加载。[版本与费用](docs/models-offline.md#nano-banana-models) · [使用流程](docs/tasks-agents.md#image-studio-workflow) · [实际验收](docs/delivery-validation.md#nano-banana-evidence)。
-
-**综合记忆与认知方案 · r5：**[单篇完整阅读：架构、选型与场景图解](docs/memory-cognition-design.md#memory-guide-start)。包含 8 张架构／流程／时序示意图，以及分支冲突、遗忘竞态、离线重连、家庭隐私和抗污染等案例；[详细技术选型](docs/stack-project-layout.md#memory-desktop-selection) · [验收与实施次序](docs/delivery-validation.md#memory-context-acceptance)。方案为 proposed；记忆缺口依据 dev.10 核查基线，后续运行版本按各自验收记录判断。
-
-**记忆检索 1.0.0：**已核对记忆可按当前问题召回，支持本地 E5 有界补充、关键词降级，以及聊天/任务的引用依赖失效；工作台记忆面板可预览实际检索结果。[使用与边界](docs/knowledge-learning.md#memory-retrieval-runtime) · [验证证据](docs/delivery-validation.md#memory-retrieval-evidence)。[本地资料库 1.2.0](docs/knowledge-learning.md#knowledge-cycle-runtime) 接通原文导入、持久全文/语义检索、来源知识审阅、资料包恢复，以及失效记忆的聊天/终态任务/受管文件清理。[记忆连续性 1.0.0](docs/knowledge-learning.md#memory-continuity-runtime) 增加修订、生效条件、分支快照、显式事实合并、联合检索、模型引用候选、整组迁移、健康检查和明确“记住”请求的本地候选保存，正在集成验收。[家庭私密空间 1.0.0](docs/knowledge-learning.md#family-private-runtime) 已实现可选登录、加密资料/聊天与成员隔离。完整语义编纂、私密跨机恢复、多设备和质量达标仍按缺口清单推进。
-
 [阅读起点](#start-here) · [全部章节](#book-tree) · [图表预览](#architecture-preview) · [维护方法](#maintaining)
-
-**Gmail 邮件助手 1.0.0：**已有连接可迁入，支持自动续期、失效重连、有限读信、分类规则、加密草稿和审阅后的发送/整理；未知写入先核对。[运行能力](docs/tasks-agents.md#gmail-runtime) · [界面入口](docs/interaction-persona.md#gmail-workbench) · [验收边界](docs/delivery-validation.md#gmail-evidence)。
-
-**Grok Bot 对比研究 · 2026-10-26：**[功能、界面、运行机制与 Jarvis 深度比较](docs/grok-bot-comparison.md#grok-comparison-scope)，含当前源码/验收边界、双方取舍与借鉴建议；研究建议为 proposed。
-
-**自主助手设计深化：**[先看结论、改进效果图与预测／实测看板](docs/grok-bot-comparison.md#grok-research-recommendation)，再查多 Bot、任务评分、经验成长、Harness² 和多机器人方案。新增[怎样越用越聪明、处理改造退化与发挥知识库价值](docs/grok-bot-comparison.md#jarvis-learning-deepening)。主人目标 accepted，新增机制和效果 proposed；[实测登记](docs/delivery-validation.md#forecast-actual-register)保留原预测与以后验证的差距。
-
-**具体改造与原目标保持：**[从现有源码到实施工作包](docs/core-bootstrap.md#core-modernization-plan)，补三位一体、自愈、自评估、自改造、模块独立和持续成长的接线、迁移及退出；[逐目标影响评估与 V-TRI 验收](docs/delivery-validation.md#trinity-preservation-validation)区分设计兼容与尚待证明的运行结果。
-
-**闭环审查：**[主链、十个交接缺口与源码依据](docs/decisions-review.md#closed-loop-audit)。重点补目标结案、持久唤醒、迟到纠正、业务补救、自愈回接和累计退化；规则补齐不等于运行闭环通过，[V-CLC 状态](docs/delivery-validation.md#closure-validation-register)保留未测边界。
-
-**结果评价 1.0.0：**已为原任务增加独立的结果核对、持久评价、重复事件去重、故障降级及旧依据失效；原会话、目标详情和工作状态共用同一结果。综合质量缺证据时不生成总分。[运行与开关](docs/core-bootstrap.md#outcome-observer-runtime) · [功能、性能和界面实测](docs/delivery-validation.md#outcome-observer-evidence)。
-
-**本地文本闭环 1.0.0：**已接通事前验收条件、迟到反馈、条件方法的实际采用与暂停、新证据复核，以及模块恢复后按原申请接续任务。158 项相关回归及实际界面流程通过；通用多 Bot、自改造和长期学习收益仍待验证。[如何使用](docs/core-bootstrap.md#completion-loop-runtime) · [实测、预测差距与剩余边界](docs/delivery-validation.md#completion-loop-evidence)。本轮源码尚未部署到正在运行的生产服务。
-
-**怎样验收：**[可重复运行的验收入口、真实任务对照与逐目标签收条件](docs/delivery-validation.md#completion-acceptance-runbook)。[首轮报告](docs/evidence/completion-acceptance-v1/2026-10-26-r1/report.html)中 170 项测试、界面及原开销门槛通过；缺测、跳过、源码变化或失败均不放行，实际收益与完整产品另列证据。
-
-**验收后深查：**[结论、改进效果及原设计相容性](docs/decisions-review.md#real-work-deep-audit)。12 项离线观察暴露了要求覆盖、批准到入队、局部返工和报告方法复用的交接缺口；已整理[具体实施切面](docs/core-bootstrap.md#modernization-next-implementation)及[复现和后续验收](docs/delivery-validation.md#real-work-diagnostic-evidence)。本轮交付诊断与方案，运行改造和真实业务收益待验证。
-
-**目标要求 1.6.0：**增加当前目标原文的有限表达提取、输入对照和未覆盖内容保留；冲突或未支持的控制表达阻止受理，部分成功不能自动结案。382项不同用例、八条浏览器流程和22道验收门通过。[结论与预测对照](docs/evidence/workflow-requirements-1.6.0/report.html) · [使用与边界](docs/core-bootstrap.md#workflow-requirements-runtime) · [验收](docs/delivery-validation.md#workflow-requirements-evidence)。该方式只核对保存的Goal，聊天来源核对见后续1.7。
-
-**聊天来源 1.7.0：**新增原话、会话要求、Goal与附件传入一致性对账；漏项保持待核验，明确冲突拒绝受理，来源变化会停止后续动作或使旧结论失效。414项不同用例、九条浏览器流程及24道验收门通过。[结论、流程与实测](docs/evidence/workflow-sources-1.7.0/report.html) · [实施与三职能边界](docs/core-bootstrap.md#workflow-sources-runtime) · [验收与失败记录](docs/delivery-validation.md#workflow-sources-evidence)。只适用于新核验方式；前文/修订语义、真实工作收益、长期成长与生产部署仍未验证。
-
-**明确变更 1.8.0：**新增按已接受原话重放要求的新增、替换与撤销；保留历史去向和未被点名的有效条件，模型漏项或擅改报价资料阻止受理。451项不同用例、十条浏览器流程和26道验收门通过。[结论、变更图与实测](docs/evidence/workflow-changes-1.8.0/report.html) · [实施与边界](docs/core-bootstrap.md#workflow-changes-runtime) · [验收记录](docs/delivery-validation.md#workflow-changes-evidence)。限于执行前原始聊天Goal及严格引用式变更；执行后返工、自由语言、真实收益与生产部署仍未验证。
-
-**交付影子核对 1.13.0：**显式事实/计划、依据版本、原回复观察与工作台修订已接通。591项回归、13条浏览器流程、32道门通过；三域24次模型调用完成。15条反例仍有3误报、3漏报，保持可选非阻断，不自动评分或结案。[结论与图表](docs/evidence/workflow-shadow-1.13.0/report.html) · [实施与用法](docs/core-bootstrap.md#workflow-shadow-runtime) · [实测与限制](docs/delivery-validation.md#workflow-shadow-evidence)。尚未证明自动可信提取、真实质量增益或全功能优秀，生产未部署。
-
-**正文忠实性 1.12.0：**新增来源摘录正文与计划一致性核验，更新原助手事实/推断/建议及计划保留提示。561项不同用例、12条浏览器流程、30道门通过；候选v2共36轮，36通过、0失败、0待测。但旧Markdown回放仍复现日志工作流中的扩写与计划遗漏，通用提示修复未达预期。[结论与图表](docs/evidence/workflow-fidelity-1.12.0/report.html) · [实施边界](docs/core-bootstrap.md#workflow-fidelity-runtime) · [实测和未闭合项](docs/delivery-validation.md#workflow-fidelity-evidence)。限定摘录协议不等于通用语义核验，未部署，完整助手与真实净收益未签收。
-
-**三领域对照 1.11.0：**报价、资料整理/Markdown交付、学习练习/复盘全部实测；修正助手协议与仅回复路由提示。538项不同用例、12条浏览器流程、30道验收门通过；修复后两轮48次调用，47轮冻结硬条件通过、1轮超时待测。正文补审仍发现无依据扩写及计划保留缺口，不能将字段通过率当作全文质量。[结论、图表与逐轮证据](docs/evidence/workflow-trials-1.11.0/report.html) · [实施](docs/core-bootstrap.md#workflow-trials-runtime) · [实测与缺口](docs/delivery-validation.md#workflow-trials-evidence)。仍仅6个合成任务，完整助手、真实净收益未签收，未部署。
-
-**来源恢复 1.10.0：**已受理版本仅因祖先反馈变化失效时，可保留全部要求和旧事实，建立同一Work恢复草案；累计预算、版本上限及原权限继续有效。510项不同用例、12条浏览器流程及30道验收门全部通过。[结论、流程与实测分数](docs/evidence/workflow-recovery-1.10.0/report.html) · [实施与边界](docs/core-bootstrap.md#workflow-recovery-runtime) · [预测、失败记录与验收](docs/delivery-validation.md#workflow-recovery-evidence)。未部署，真实净收益未测。
-
-**返工继承 1.9.0：**已执行版本可保留全部有效要求，按明确指令变更；纠错保持标准，新结果独立验收。原451项与新增29项、11条浏览器流程及28道验收门通过。[结论、流程与实测分数](docs/evidence/workflow-inheritance-1.9.0/report.html) · [实施与边界](docs/core-bootstrap.md#workflow-inheritance-runtime) · [验收记录](docs/delivery-validation.md#workflow-inheritance-evidence)。限于有限报价的全量返工；原回执、预算及取消机制保持，真实收益和自动改造未签收，未部署。
-
-**领域核验 1.5.0：**已接通结构化报价的独立预算、交期、最低价与来源引用核对；工具执行成功但结果错误仍需纠正。344项不同用例、七条浏览器流程及20道验收门通过。[结论与预测对照](docs/evidence/workflow-domain-1.5.0/report.html) · [使用与边界](docs/core-bootstrap.md#workflow-domain-runtime) · [联合验收](docs/delivery-validation.md#workflow-domain-evidence)。自然语言理解、真实资料可信性、长期成长和生产部署仍待后续验证。
-
-**工作闭环 1.4.0：**保守返工分析、当前版结案与聊天版本一致性已接通；316个不同用例、六条浏览器流程及原开销门在冻结候选中全部通过。[结论与图表](docs/evidence/workflow-closure-1.4.0/report.html) · [使用方式](docs/core-bootstrap.md#workflow-closure-runtime) · [联合验收](docs/delivery-validation.md#workflow-closure-evidence)。生产未部署，完整助手与长期收益未签收。
-
-**闭环之后的实施优先级：**[顺序、预期效果与采用条件](docs/decisions-review.md#real-work-followup-analysis)。先核对交付版本，再验证真实需求和质量、降低日常打扰，按净收益扩大知识复用与多 Bot；陪伴和学习同步完善。该分析为 proposed，不改写既有实测成绩。
-
-**工作额度 1.3.0：**同一工作及关联返工共享工具动作总额，受理先预留、原账本扣费，未知效果不释放未核清占用。281个不同用例、288次执行通过，生产未部署。[使用与边界](docs/core-bootstrap.md#workflow-budget-runtime) · [配对任务与验收](docs/delivery-validation.md#workflow-budget-evidence)。
 
 ## 产品一览
 
-**工作交接 1.1.0：**已实现一次请求保存批准与执行意图、满队列等待及要求覆盖核对；检查通过不再自动等同于业务目标完整正确。保留原任务、权限、反馈和核对历史。[使用与边界](docs/core-bootstrap.md#workflow-handoff-runtime) · [本轮验证](docs/delivery-validation.md#workflow-handoff-evidence)。源码尚未部署到当前生产服务。
-
-| 💬 交流 | 🧠 理解与记忆 | 🛠️ 行动与成长 |
+| 能力 | 状态 | 说明 |
 |---|---|---|
-| 文字会话、项目上下文、模型选择与路由 | 可查看、纠正、撤回的分域事实与来源候选 | 目标计划、现有技能与受控 MCP 工具 |
-| 在原会话查看任务进度与产物 | 记忆、知识、分支和多设备的完整设计 | 受限代码候选、检查、审阅、发布与恢复 |
-| 独立管理会话与工作任务 | 主体、范围、用途和渠道可追溯 | 可视化机械与场实验台及交互产物 |
+| 💬 聊天与会话 | 可用 | 多模型、持久会话、项目目录与原会话交付；[使用](docs/core-bootstrap.md#conversation-operation) |
+| 🧠 记忆与资料库 | 可用（质量未达自定门槛） | 分域事实、按问题检索、全文与语义资料库、纠正与撤回；[使用](docs/knowledge-learning.md#memory-retrieval-runtime) |
+| 🛠️ 目标与执行 | 可用（文本任务） | 一句话目标 → 计划 → 审批 → 受限执行，两路并行；[使用](docs/core-bootstrap.md#goal-growth-operation) |
+| 🧩 自写工具 | 受限可用 | 纯文本 Python 工具候选、独立检查、审阅后发布与回退；[使用](docs/toolchains.md#codex-candidate-runtime) |
+| 🔌 MCP / Gmail | 可用（验证有限） | [MCP](docs/tasks-agents.md#mcp-runtime) · [Gmail](docs/tasks-agents.md#gmail-runtime) |
+| 📚 英语练习、日志复盘 | 可用 | [使用](docs/tasks-agents.md#personal-workflows-runtime) |
+| 🎨 出图 · 3D · 机械科普 | 专业侧线 | [出图](docs/tasks-agents.md#image-studio-workflow) · [3D](docs/tasks-agents.md#studio3d-production-workflow) · [机械](docs/tasks-agents.md#anatomy-engineering-runtime) |
+| 👪 家庭私密空间 | 可用（Windows） | 可选登录、加密资料与成员隔离；[规则](docs/knowledge-learning.md#family-private-runtime) |
+| 🤖 桌面精灵、语音、多设备、自愈 | 设计中 | 见下方[桌面精灵设计](#desktop-companion-overview)与[路线](docs/core-bootstrap.md#bootstrap-5) |
 
 本版以 Windows 为主，尚属早期预览。完整语音伙伴、家庭私密跨机恢复、多设备共同体和自主进化能力仍按路线逐步实现。仓库不包含使用者的模型凭据、聊天内容、个人记忆或本地模型权重。第一方主体尚未声明统一开源许可；Blender Worker 按文件声明采用 GPL-2.0-or-later，附完整许可。第三方材料保留各自许可和出处。
 
@@ -105,7 +53,7 @@
 <a id="desktop-companion-transparent"></a>
 ### 透明地出现在桌面上
 
-- **纯头部形象。** 使用[当前圆润头部方案](docs/interaction-persona.md#desktop-robot-form)，不叠加 J 标记；默认约 64–80 个逻辑像素，状态由电子面罩表达。
+- **纯头部形象。** 使用[当前圆润头部方案](docs/interaction-persona.md#desktop-robot-form)，不叠加 J 标记；默认约 64–96 个逻辑像素（[面罩规范](docs/interaction-persona.md#desktop-face-settings)），状态由电子面罩表达。
 - **背景真正透明。** 轮廓和局部光效之外能直接看见桌面及后方应用，没有矩形底板、标题栏或浏览器外框。技术上由透明无边框小窗口承载。
 - **空白不挡操作。** 轮廓外、光晕及卡片之间的空白处允许鼠标操作下方应用；精灵主体仍能点击、拖动和停靠。
 - **悬浮而不抢焦点。** 普通应用窗口前保持可见；全屏演示、游戏、免打扰及锁屏时按规则收起或隐藏，可通过托盘／快捷键找回。
@@ -197,7 +145,9 @@ python -I -B apps/cli/main.py init
 python -I -B apps/workbench/server.py --port 18282
 ```
 
-然后打开 [本机工作台](http://127.0.0.1:18282/)，在设置中配置自己的模型连接。默认数据保存在本工程的 `user-data/`；项目目录和跨平台边界见[运行说明](docs/stack-project-layout.md#portable-data-runtime)。macOS 和 Linux 的完整功能尚未验收。
+**本机访问钥匙（v0.1.1 起）：**工作台只监听本机，但同一台电脑上的其他程序也能连到它，所以未启用家庭登录时需要一把按当前系统用户加密保存的访问钥匙。`StartJarvis.bat` 打开的网址末尾带 `#access=…`，页面会自动换成本机会话并从地址栏去掉；直接运行 `server.py` 时，用窗口里打印的完整链接打开。看到“需要访问钥匙”时，从启动窗口重新打开即可。评估脚本请在工程根目录以 `python -m tools.<脚本名>` 运行，它们会自动解锁。
+
+在设置中配置自己的模型连接。默认数据保存在本工程的 `user-data/`，诊断日志在 `user-data/logs/jarvis.log`；项目目录和跨平台边界见[运行说明](docs/stack-project-layout.md#portable-data-runtime)。macOS 和 Linux 的完整功能尚未验收。
 
 <a id="start-here"></a>
 ## 建议阅读顺序
@@ -288,5 +238,7 @@ python -I -B apps/workbench/server.py --port 18282
 python tools/sync_doc_navigation.py --root .
 python tools/check_docs.py --root .
 ```
+
+提交到 GitHub 前运行 `python tools/check_repo_size.py`：它列出将被提交且超过 50 MB（警告）或 100 MB（GitHub 上限）的文件。3D 资产、压缩包和验收截图（`docs/evidence` 下的 PNG）已在 `.gitignore` 中排除，只保留在本机；从 GitHub 克隆的副本里这些截图链接会失效。
 
 设计状态与验收结果见[交付记录](docs/delivery-validation.md#documentation-handoff-evidence)。历史来源与未迁内容见[交接说明](docs/references.md#legacy-project)。不自动创建后台维护任务。

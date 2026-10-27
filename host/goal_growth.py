@@ -10,6 +10,7 @@ from control.network import NetworkGate
 from control.paths import child
 from control.policy.grants import GrantStore
 from control.recovery.gate import RunLock
+from control.execution import admission
 from host.core import Core
 from host.development import admit, resolve_routes
 from modules.model_gateway.routed import RoutedModels
@@ -144,7 +145,7 @@ def draft(root,ident,retry_unknown=False):
 def rejoin(root,ident):
     core=Core(root)
     try:
-        with RunLock(core.root), core.db.transaction() as tx:
+        with admission(core.root), core.db.transaction() as tx:
             plan=parent(core,ident);row=growth.get(core.db,ident)
             if not row or not row['development_id']:raise CoreError('invalid_state','No linked development')
             if row['status']=='REJOINED':return plan

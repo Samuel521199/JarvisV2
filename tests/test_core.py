@@ -368,8 +368,9 @@ class CoreCase(unittest.TestCase):
         result = gateway.propose(context, ["forbidden", "bad", "good"], {"bad", "good"})
         self.assertEqual(result["provider"], "good")
         self.assertEqual(called, ["bad", "good"]); self.assertEqual(context, {"x": 1})
-        self.assertFalse(self.core.models.describe()["configured"])
-        self.assertCode("model_unavailable", self.core.models.propose, {}, ["good"], {"good"})
+        empty = ModelGateway()
+        self.assertFalse(empty.describe()["configured"])
+        self.assertCode("model_unavailable", empty.propose, {}, ["good"], {"good"})
 
 
 if __name__ == "__main__":

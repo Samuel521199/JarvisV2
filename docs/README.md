@@ -4,6 +4,8 @@
 
 [主文档中的桌面精灵设计](../README.md#desktop-companion-overview)已合并透明行为、场景呼出、状态动效、参考图和与现有系统的衔接；各章继续维护对应工程细节。
 
+**先读：[当前真实状态](current-state.md)**（一页说明能运行什么、只有设计的部分、证据边界与已知风险）· [版本记录](../CHANGELOG.md)。
+
 当前可运行范围：[模型设置与持久对话](core-bootstrap.md#portable-settings-operation) · [本地数据位置](stack-project-layout.md#portable-data-runtime) · [本工程实际验收](delivery-validation.md#portable-settings-evidence) · [自主研发种子操作](core-bootstrap.md#growth-seed-operation)。
 
 <a id="book-tree"></a>

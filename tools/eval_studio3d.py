@@ -9,6 +9,9 @@ def main():
     folder=ROOT/'docs/evidence/studio3d-2026-10-23'/a.label;folder.mkdir(parents=True,exist_ok=False);output=folder/'result.json';record={'status':'running','origin':a.origin,'id':uuid.uuid4().hex,'paid_model_calls_requested':1 if a.prompt else 0}
     def save():output.write_text(json.dumps(record,ensure_ascii=False,indent=2),encoding='utf-8')
     def get(path):return json.load(urllib.request.urlopen(a.origin+path,timeout=15))
+    # Key-protected workbench: run as `python -m tools.eval_studio3d` from the project root.
+    try:from control.local_access import install_client;install_client(a.origin)
+    except ImportError:pass
     token=get('/api/session')['token']
     def post(path,value):return json.load(urllib.request.urlopen(urllib.request.Request(a.origin+path,data=json.dumps(value,ensure_ascii=False).encode(),headers={'Origin':a.origin,'X-Jarvis-Token':token,'Content-Type':'application/json'}),timeout=25))
     try:

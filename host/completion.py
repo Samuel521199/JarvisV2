@@ -1,5 +1,6 @@
 """Compose acceptance, current evidence and conditional knowledge through ports."""
 from contextlib import nullcontext
+import sys
 import time
 
 from host.outcomes import service as outcome_service
@@ -37,7 +38,11 @@ def refresh(core, task_id, *, transaction=None):
 
 def projection(core, task_id):
     try:return refresh(core,task_id,transaction=core.db.connection if core.db.connection.in_transaction else None)
-    except Exception:return {'state':'UNAVAILABLE','task_id':task_id,'condition_score':None}
+    except Exception:
+        # The projection degrades to UNAVAILABLE by design; keep the cause for diagnosis.
+        from control import logs
+        logs.throttled(logs.get('completion'),'projection:'+type(sys.exc_info()[1]).__name__,'Completion projection unavailable for %s',task_id)
+        return {'state':'UNAVAILABLE','task_id':task_id,'condition_score':None}
 
 
 def check_use(core, task_id):

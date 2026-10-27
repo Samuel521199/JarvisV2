@@ -10,6 +10,49 @@ from control.paths import child
 from sdk.protocol import CoreError, canonical, contract, decode, digest, read_json
 
 SAFE_IMPORTS = {"json", "re", "math", "statistics", "decimal", "datetime", "collections", "itertools", "functools", "string", "csv", "io"}
+# Harmless dead-end module reachable as io.abc / collections.abc.
+_HARMLESS_MODULES = {"abc"}
+BLOCKED_NAMES = {"eval", "exec", "compile", "open", "globals", "locals", "vars", "dir", "getattr", "setattr", "delattr",
+                 "input", "breakpoint", "help", "exit", "quit", "license", "credits", "copyright"}
+# string.Formatter resolves "{0.attr}" lookups from a runtime string and hands the
+# resulting object to overridable hooks (get_field, get_value, format_field,
+# convert_field), so the class itself is outside the recipe; str.format stays allowed.
+BLOCKED_ATTRIBUTES = {"open", "FileIO", "open_code", "Formatter", "get_field", "get_value", "format_field", "convert_field"}
+# namedtuple's public API uses a leading underscore; these return plain tuples/dicts.
+ALLOWED_PRIVATE = {"_asdict", "_replace", "_fields", "_make", "_field_defaults"}
+
+
+def _module_escape_names():
+    """Attribute names through which an allowed module exposes a module outside the recipe.
+
+    Computed from the running interpreter so new stdlib aliases are caught too,
+    e.g. statistics.sys, json.codecs.builtins, enum.bltns, csv.types.
+    """
+    import importlib
+    import types
+    allowed = SAFE_IMPORTS | _HARMLESS_MODULES
+    names, seen, stack = set(), set(), [importlib.import_module(n) for n in sorted(SAFE_IMPORTS)]
+    while stack:
+        module = stack.pop()
+        if module.__name__ in seen:
+            continue
+        seen.add(module.__name__)
+        for attribute in dir(module):
+            if attribute.startswith("_"):
+                continue
+            try:
+                value = getattr(module, attribute)
+            except Exception:
+                continue
+            if isinstance(value, types.ModuleType):
+                if value.__name__.split(".")[0] in allowed:
+                    stack.append(value)
+                else:
+                    names.add(attribute)
+    return frozenset(names)
+
+
+MODULE_ESCAPES = _module_escape_names()
 
 
 def validate_candidate(candidate):
@@ -35,10 +78,12 @@ def validate_candidate(candidate):
                 imports = [x.name for x in node.names] if isinstance(node, ast.Import) else [node.module or ""]
                 if getattr(node, "level", 0) or any(x.split(".")[0] not in SAFE_IMPORTS | local for x in imports):
                     raise CoreError("candidate_import", "Import is outside the pure-tool recipe")
-            if isinstance(node, ast.Name) and (node.id.startswith("__") or node.id in {"eval", "exec", "compile", "open", "globals", "locals", "getattr", "setattr", "delattr", "input", "breakpoint"}):
+                if isinstance(node, ast.ImportFrom) and any(x.name == "*" or x.name.startswith("_") or x.name in MODULE_ESCAPES | BLOCKED_NAMES | BLOCKED_ATTRIBUTES for x in node.names):
+                    raise CoreError("candidate_import", "Imported name is outside the pure-tool recipe")
+            if isinstance(node, ast.Name) and (node.id.startswith("__") or node.id in BLOCKED_NAMES):
                 raise CoreError("candidate_construct", "Dynamic host access is outside this recipe")
-            if isinstance(node, ast.Attribute) and (node.attr.startswith("__") or node.attr in {"open", "FileIO", "open_code"}):
-                raise CoreError("candidate_construct", "Dunder access is outside this recipe")
+            if isinstance(node, ast.Attribute) and ((node.attr.startswith("_") and node.attr not in ALLOWED_PRIVATE) or node.attr in BLOCKED_ATTRIBUTES | MODULE_ESCAPES):
+                raise CoreError("candidate_construct", "Private, module or file access is outside this recipe")
         if name == "main.py" and not any(isinstance(x, ast.FunctionDef) and x.name == "run" for x in tree.body):
             raise CoreError("candidate_contract", "main.py must define run(text) returning text")
     return files

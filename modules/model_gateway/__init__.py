@@ -4,7 +4,12 @@ from sdk.protocol import CoreError, ModelProvider, canonical, contract, decode
 
 
 class ModelGateway:
-    """Injectable proposal port. No configured cloud provider in this release."""
+    """Contract-checked step-proposal port (jarvis.step-proposal.v1).
+
+    Not wired into Core: production model calls go through ``routed.RoutedModels``,
+    whose fallback order comes from user settings. Kept as the reference port for
+    a future step-proposing agent runtime and covered by tests/test_core.py.
+    """
     def __init__(self, providers: dict[str, ModelProvider] | None = None):
         self.providers = dict(providers or {})
 

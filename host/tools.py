@@ -8,6 +8,7 @@ import time
 
 from host.core import Core
 from control.recovery.gate import RunLock
+from control.execution import admission
 from sdk.protocol import CoreError, decode, digest
 
 
@@ -51,7 +52,7 @@ def command(root, value):
                 raise CoreError('tool_invalid', 'Choose a published tool and bounded text')
             request_id = 'tool-use.' + value['request_id']
             grant_id = 'tool-use-' + digest(value)[:32]
-            with RunLock(core.root):
+            with admission(core.root):
                 # Lost HTTP responses can be recovered even after a release or grant changes.
                 old = core.db.one('SELECT id,body FROM tasks WHERE request_id=?', (request_id,))
                 if old:

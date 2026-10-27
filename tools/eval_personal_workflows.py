@@ -42,6 +42,9 @@ def main():
     def get(path):
         return json.load(urllib.request.urlopen(args.base + path, timeout=15))
 
+    # Key-protected workbench: run as `python -m tools.eval_personal_workflows` from the project root.
+    try:from control.local_access import install_client;install_client(args.base)
+    except ImportError:pass
     token = get('/api/session')['token']
 
     def post(path, value):

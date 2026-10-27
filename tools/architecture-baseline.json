@@ -1,0 +1,8 @@
+{
+  "schema": "jarvis.architecture-baseline.v1",
+  "note": "Known host-layer import cycles (function-level imports included) as of 2026-10-27. tools/check_architecture.py fails when a new cycle appears or an existing one grows. Remove modules from this list as cycles are broken; never add to it.",
+  "host_import_cycles": [
+    ["host.completion", "host.core", "host.development", "host.goal_context", "host.goal_growth", "host.goals", "host.memory", "host.memory_domains", "host.outcomes", "host.quote_rework", "host.quote_sources", "host.rework_impact", "host.session_workspace", "host.work_closure", "host.work_recovery", "host.work_revisions"],
+    ["host.studio3d", "host.studio3d_reference", "host.studio3d_refinement", "host.studio3d_viewer"]
+  ]
+}

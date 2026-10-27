@@ -640,7 +640,7 @@ core.sqlite3 schema 6 → 7：追加 goal_context、chat_goals、assistant_opera
 |---|---|---|
 | 事实、来源、修订与队列 | SQLite；普通资料沿现有库，私密域用独立加密库 | 保留事务与单一写入 API；后台短事务，容量与忙锁单独测；无 Docker/K8s/Redis 前置 |
 | 中文词项 | SQLite FTS5＋统一分词/词项预处理＋短词/标识符补查 [S87](references.md#s87) | 默认 unicode61 与 trigram 各有中文盲区；固定预处理版本，以姓名、两字词、代码、否定和数字对照 |
-| 小型语义检索 | sqlite-vec 首选试验；LanceDB 为主要替代 [S306](references.md#s306) | 前者纯 C、跨平台但 pre-v1；后者嵌入式并有混合检索，但增加原生包/存储格式；只管理可重建索引 |
+| 小型语义检索 | sqlite-vec 首选试验；LanceDB 为主要替代 [S306](references.md#s306) | 前者纯 C、跨平台但 pre-v1；后者嵌入式并有混合检索，但增加原生包/存储格式；只管理可重建索引。**当前实现**未引入两者，见 [ADR-031](decisions-review.md#adr-031) |
 | 本地 embedding | multilingual-e5-small 作为多语基线，中文专用 BGE-small 作为中文轨对照 [S303](references.md#s303) | 仅预选，不宣称最新最强；统一切片和维度比较。固定模型 revision，验证查询前缀/池化/量化；CPU 为共同基线，ONNX 可作为运行时候选 |
 | 提取/合并候选 | 最小结构化提取基线，对照 LangMem 0.0.30 与 Mem0 源码声明 2.2.1 [S307](references.md#s307) | LangMem 核心可独立于存储，但依赖 LangChain/LangGraph/模型 SDK；Mem0 整理流水线更完整，包含向量/历史管理。都须转成带原件引用候选，不直接接管事实 |
 | 知识章节与按需读 | 自有小型编纂器，借鉴既有 LLM Wiki/OpenWiki 与 OpenViking L0/L1/L2 [S305](references.md#s305) | 保留证据与版本；采用思想和正式引入代码分别审查。OpenViking 主项目 AGPLv3/部分组件不同，按拟采用文件与分发方式核对许可，不默认可整体复制 |

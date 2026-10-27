@@ -28,8 +28,12 @@ class Claims:
                 added+=1
             return {'added':added,'method':'extractive-v1','model_calls':0,'verified':False}
 
-    def model_candidates(self,scope,ident,revision,provider,output,job_id=None):
-        """Models only nominate exact evidence; no generated claim is trusted as fact."""
+    def model_candidates(self,scope,ident,revision,provider,output,job_id=None,window=None):
+        """Models only nominate exact evidence; no generated claim is trusted as fact.
+
+        window=(offset, length) limits matching to the part of a long source the model
+        actually saw; a quote must then be unique inside that part.
+        """
         if not isinstance(output,dict) or set(output)!={'claims'} or not isinstance(output['claims'],list) or len(output['claims'])>24:
             raise CoreError('knowledge_extraction_invalid','Expected at most 24 exact-source candidates')
         source=Knowledge(self.db).detail(scope,ident)
@@ -40,8 +44,9 @@ class Claims:
             if (not isinstance(value,dict) or set(value)!={'key','quote'} or not isinstance(value['key'],str)
                 or not 1<=len(value['key'].strip())<=120 or not isinstance(value['quote'],str) or not 8<=len(value['quote'])<=4000):
                 raise CoreError('knowledge_extraction_invalid','Invalid exact-source candidate')
-            start=source['text'].find(value['quote']);end=start+len(value['quote'])
-            if start<0 or source['text'].find(value['quote'],start+1)>=0 or (start,end) in seen:
+            low,high=(0,len(source['text'])) if window is None else (window[0],window[0]+window[1])
+            start=source['text'].find(value['quote'],low,high);end=start+len(value['quote'])
+            if start<0 or source['text'].find(value['quote'],start+1,high)>=0 or (start,end) in seen:
                 raise CoreError('knowledge_extraction_invalid','Candidate is fabricated, ambiguous or duplicated')
             seen.add((start,end));prepared.append((start,end,value['key'].strip(),value['quote']))
         with self.db.transaction() as tx:

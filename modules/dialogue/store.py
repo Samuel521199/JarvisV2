@@ -224,12 +224,14 @@ CREATE TABLE IF NOT EXISTS delivery_bases(chat_id TEXT PRIMARY KEY, snapshot TEX
                                (ident, config['id'], config['model'], time.time(),canonical(config.get('billing_profile')))).lastrowid
 
     def attempt_result(self, ident, result):
-        self.db.execute('UPDATE attempts SET status=?,usage=?,error=? WHERE id=?',
-                        (result['status'], canonical(result.get('usage', {})), result.get('code'), ident))
+        """Record the first outcome only; a later failure path cannot rewrite a billed result."""
+        return self.db.execute("UPDATE attempts SET status=?,usage=?,error=? WHERE id=? AND status='DISPATCHING'",
+                        (result['status'], canonical(result.get('usage', {})), result.get('code'), ident)).rowcount > 0
 
     def finish(self, ident, result):
-        self.db.execute('UPDATE turns SET status=?,reply=?,usage=?,error=?,provider=?,model=?,assistant_action=?,delivery_review=? WHERE id=?',
-            (result['status'], result.get('text'), canonical(result.get('usage', {})), result.get('code'), result.get('provider'), result.get('model'), canonical(result['assistant_action']) if result.get('assistant_action') is not None else None, canonical(result['delivery_review']) if result.get('delivery_review') is not None else None, ident))
+        """Finish an open turn once. A delivered reply is never overwritten by later cleanup errors."""
+        return self.db.execute("UPDATE turns SET status=?,reply=?,usage=?,error=?,provider=?,model=?,assistant_action=?,delivery_review=? WHERE id=? AND status IN ('READY','RUNNING')",
+            (result['status'], result.get('text'), canonical(result.get('usage', {})), result.get('code'), result.get('provider'), result.get('model'), canonical(result['assistant_action']) if result.get('assistant_action') is not None else None, canonical(result['delivery_review']) if result.get('delivery_review') is not None else None, ident)).rowcount > 0
 
     def recover(self, *, preserve_queued=False):
         self.db.execute('BEGIN IMMEDIATE')

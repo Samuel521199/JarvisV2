@@ -10,6 +10,48 @@ ROOT = Path(__file__).resolve().parents[1]
 LAYERS = {"sdk", "control", "adapters", "modules", "host", "apps"}
 
 
+def host_cycles(root):
+    """Strongly connected host modules, counting imports inside functions too."""
+    graph = {}
+    for path in (root / 'host').glob('*.py'):
+        deps = set()
+        for node in ast.walk(ast.parse(path.read_text(encoding='utf-8'), filename=str(path))):
+            if isinstance(node, ast.ImportFrom) and node.module == 'host':
+                deps |= {'host.' + alias.name for alias in node.names}
+            elif isinstance(node, ast.ImportFrom) and node.module and node.module.startswith('host.'):
+                deps.add(node.module)
+            elif isinstance(node, ast.Import):
+                deps |= {alias.name for alias in node.names if alias.name.startswith('host.')}
+        graph['host.' + path.stem] = deps - {'host.' + path.stem}
+    index, low, stack, on_stack, found, counter = {}, {}, [], set(), [], [0]
+    def visit(node):  # Tarjan; host has ~60 modules, recursion depth is small
+        index[node] = low[node] = counter[0]; counter[0] += 1; stack.append(node); on_stack.add(node)
+        for other in graph[node]:
+            if other not in graph: continue
+            if other not in index: visit(other); low[node] = min(low[node], low[other])
+            elif other in on_stack: low[node] = min(low[node], index[other])
+        if low[node] == index[node]:
+            component = []
+            while True:
+                item = stack.pop(); on_stack.discard(item); component.append(item)
+                if item == node: break
+            if len(component) > 1: found.append(sorted(component))
+    for node in sorted(graph):
+        if node not in index: visit(node)
+    return found
+
+
+def optional_import(tree, target):
+    """True when ``target`` sits in a try block that handles ImportError."""
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Try) and any(target is child for stmt in node.body for child in ast.walk(stmt)):
+            for handler in node.handlers:
+                names = [handler.type] if not isinstance(handler.type, ast.Tuple) else list(handler.type.elts)
+                if any(isinstance(n, ast.Name) and n.id in {'ImportError', 'ModuleNotFoundError'} for n in names):
+                    return True
+    return False
+
+
 def check():
     errors = []
     count = 0
@@ -41,6 +83,10 @@ def check():
     learning_allowed=set(learning.get('dependencies',[]))
     if learning.get('worker')!=learning_worker or learning.get('bootstrap')!='apps/studio3d/learning_worker.py' or learning_allowed!={'bpy','mathutils','bmesh'}:
         errors.append('Invalid fixed Blender learning-runtime declaration');learning_allowed=set()
+    # The vector index may use numpy when present: the optional local-embedding
+    # runtime pins it in the same interpreter. The import must stay inside a
+    # try/except ImportError fallback so a stdlib-only install keeps working.
+    accelerated = {'modules/context_knowledge/vectors.py': {'numpy'} & allowed}
     for layer in sorted(LAYERS):
         for path in (ROOT / layer).rglob("*.py"):
             count += 1
@@ -50,13 +96,13 @@ def check():
                 for name in names:
                     top = name.split(".")[0]
                     relative = path.relative_to(ROOT).as_posix()
-                    if top not in sys.stdlib_module_names and top not in LAYERS and not (relative == worker and top in allowed) and not (relative == engineering_worker and top in engineering_allowed) and not (relative in {studio_worker,*studio_support} and top in studio_allowed) and not (relative == learning_worker and top in learning_allowed):
+                    if top not in sys.stdlib_module_names and top not in LAYERS and not (relative == worker and top in allowed) and not (relative == engineering_worker and top in engineering_allowed) and not (relative in {studio_worker,*studio_support} and top in studio_allowed) and not (relative == learning_worker and top in learning_allowed) and not (top in accelerated.get(relative, set()) and optional_import(tree, node)):
                         errors.append(f"Unapproved dependency: {path.relative_to(ROOT)} -> {name}")
                     if layer == "sdk" and top in LAYERS - {"sdk"}:
                         errors.append(f"SDK depends on implementation: {name}")
                     if layer == "control" and top in {"host", "modules", "adapters", "apps"}:
                         errors.append(f"Control depends on business runtime: {name}")
-                    if layer in {"modules", "adapters"} and top in {"host", "apps"}:
+                    if layer in {"modules", "adapters", "host"} and top == "apps" or layer in {"modules", "adapters"} and top == "host":
                         errors.append(f"Runtime dependency cycle: {name}")
                     if layer == "modules" and top == "modules":
                         own = path.relative_to(ROOT).parts[1]
@@ -65,7 +111,14 @@ def check():
             for node in ast.walk(tree):
                 if isinstance(node, ast.Constant) and isinstance(node.value, str) and re.match(r"^[A-Za-z]:[/\\]", node.value):
                     errors.append(f"Hardcoded machine runtime path: {path.relative_to(ROOT)}")
-    print(json.dumps({"python_files": count, "errors": errors}, ensure_ascii=False))
+    # Ratchet: known host import cycles may shrink, never grow or multiply.
+    baseline_path = ROOT / 'tools/architecture-baseline.json'
+    known = [set(c) for c in json.loads(baseline_path.read_text(encoding='utf-8'))['host_import_cycles']] if baseline_path.exists() else []
+    cycles = host_cycles(ROOT) if (ROOT / 'host').is_dir() else []
+    for cycle in cycles:
+        if not any(set(cycle) <= allowed for allowed in known):
+            errors.append('New or grown host import cycle: ' + ', '.join(cycle))
+    print(json.dumps({"python_files": count, "host_cycle_modules": sum(len(c) for c in cycles), "errors": errors}, ensure_ascii=False))
     return bool(errors)
 
 

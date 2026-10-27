@@ -9,7 +9,7 @@ from adapters.models.native import NativeModel
 from control.paths import child
 from control.recovery.gate import StopGate, RunLock
 from control.credentials import Credentials
-from modules.preferences.store import Preferences, resolve
+from modules.preferences.store import Preferences, fallback_routes, resolve
 from modules.dialogue.store import Dialogues
 from modules.skills.catalog import Skills
 from sdk.protocol import CoreError, decode
@@ -65,9 +65,7 @@ class DialogueHost:
                 validate_encoded([encode_png(record(self.root,i)[1]) for i in ids])
                 if selected=='auto' or route['adapter'] not in {'vertex','gemini'} or command.get('assistant_mode',False):raise CoreError('model_vision_unsupported','Select an explicit Gemini image route')
             routes = [route]
-            if selected == 'auto' and cfg['automatic_fallback']:
-                for name in cfg['fallback_order']:
-                    if name != route['id'] and cfg['providers'][name].get('enabled', True): routes.append(resolve(cfg, name))
+            if selected == 'auto': routes.extend(fallback_routes(cfg, route))
             with self.lock:
                 if self.closing.is_set(): raise CoreError('chat_capacity', 'Dialogue host is closing')
                 existing = store.db.execute('SELECT 1 FROM turns WHERE id=?', (command.get('request_id'),)).fetchone()

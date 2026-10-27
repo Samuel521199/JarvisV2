@@ -7,6 +7,7 @@
 
 **本章导航**
 
+- [实现状态索引（先看这里）](#contracts-implementation-index)
 - [个人助手核心接口（设计）](#personal-assistant-contracts)
   - [身份、个人上下文与行动意图的边界](#personal-context-contract)
 - [记忆组件的替换契约（proposed）](#memory-provider-contracts)
@@ -64,6 +65,19 @@
 - [正文忠实性 1.12.0 的实际契约](#workflow-fidelity-contract)
 - [交付影子核对 1.13.0 的实际契约](#workflow-shadow-contract)
 <!-- book-nav:end -->
+
+<a id="contracts-implementation-index"></a>
+## 实现状态索引（先看这里）
+
+本章前半部分是设计中的概念契约，后半部分是已经有代码的运行子集，两类交错排列。下表按 2026-10-27 的代码核对结果分开列出；“已实现”指仓库里存在对应 schema、接口或校验代码，不代表该能力已在真实使用中验收。
+
+| 状态 | 章节 |
+|---|---|
+| **已实现（有代码）** | [研发、候选与包](#growth-seed-contracts) · [本地设置与对话](#local-settings-chat-contracts) · [项目与文字技能](#workbench-project-contracts) · [目标计划](#goal-plan-runtime-contract) · [目标关联研发](#goal-growth-contract) · [聊天行动与目标上下文](#conversation-contracts) · [MCP](#mcp-contracts) · [会话目录](#session-folder-contracts) · [本地资料库](#knowledge-library-contract) · [记忆连续性](#memory-continuity-contract) · [Gmail](#gmail-contracts) · [结果评价](#outcome-observer-contract) · [文本验收与反馈](#completion-loop-contract) |
+| **已实现，限合成“结构化报价”领域** | 工作流 [1.1 交接](#workflow-handoff-runtime-contract) · [1.2 接续](#workflow-rework-contract) · [1.3 额度](#workflow-budget-contract) · [1.4 闭环](#workflow-closure-contract) · [1.5 领域核验](#workflow-domain-contract) · [1.6 目标要求](#workflow-requirements-contract) · [1.7 聊天来源](#workflow-sources-contract) · [1.8 明确变更](#workflow-changes-contract) · [1.9 返工继承](#workflow-inheritance-contract) · [1.10 来源恢复](#workflow-recovery-contract) · [1.11 三领域对照](#workflow-trials-contract) · [1.12 正文忠实性](#workflow-fidelity-contract) · [1.13 交付影子核对](#workflow-shadow-contract) |
+| **部分实现** | [模块包与管理端口](#clean-module-contract)：`module.v1` 等 schema 存在，`describe`/`probe`/`checkpoint` 零散实现，`drain`/`export_state`/`import_state` 尚无代码 |
+| **仅设计（代码中尚无对应对象）** | [个人助手核心接口](#personal-assistant-contracts) · [记忆组件替换](#memory-provider-contracts) · [接口与数据契约](#interfaces) · [资源租约与安全事件](#extensions-3) · [生活助手共用模块](#personal-life-foundation) · [组合能力与蓝图](#composition-contracts) · [连续身份](#continuity-contracts) · [任务负责与经验记录](#task-learning-records) · [三职能接入](#modernization-integration-contracts) · [闭环交接关联](#closure-handoff-records) |
+
 
 <a id="personal-assistant-contracts"></a>
 ## 个人助手核心接口（设计）

@@ -7,11 +7,16 @@ import time
 
 from adapters.desktop.resources import sample
 from control.execution import ExecutionCohort
+from control import logs
 from control.paths import data_root
 from control.recovery.gate import RunLock
 from host.core import Core
 from modules.task_resource.scheduling import Scheduling, resources, TERMINAL
 from sdk.protocol import CoreError, decode
+
+LOG = logs.get('scheduler')
+RESTART_LIMIT = 8          # failures tolerated within RESTART_WINDOW before giving up
+RESTART_WINDOW = 600.0
 
 
 class TaskRunner:
@@ -63,7 +68,9 @@ class TaskRunner:
         with self.lock:
             if self.closed: raise CoreError('task_busy', 'Task runner is closing')
             result = Scheduling(core.db).enqueue(ids)
-            self.cached = list(dict.fromkeys(self.cached + ids)); self.error = None
+            self.cached = list(dict.fromkeys(self.cached + ids))
+            # The queue is durable; after the supervisor gave up, keep showing why nothing runs.
+            if self.thread.is_alive(): self.error = None
             self.wake.set()
         return {'status': 'queued', **result}
 
@@ -118,6 +125,33 @@ class TaskRunner:
         core.tasks.recover(); core.worker.recover(); core.packages.recover()
 
     def _loop(self):
+        """Supervise the dispatch session: a crash is logged and the loop restarts with backoff.
+
+        Running tasks keep their pool threads and permits across a restart; the next
+        session collects their results. Only repeated failures stop the scheduler.
+        """
+        failures = []
+        try:
+            while True:
+                try:
+                    self._session()
+                    return
+                except Exception as exc:
+                    code = exc.code if isinstance(exc, CoreError) else 'scheduler_failed'
+                    now = time.monotonic(); failures = [t for t in failures if now - t < RESTART_WINDOW] + [now]
+                    with self.lock: self.error = code; self.crashed = True
+                    if self.closed or len(failures) > RESTART_LIMIT:
+                        LOG.exception('Task scheduler stopped after %d failures (%s)', len(failures), code)
+                        return
+                    LOG.exception('Task scheduler session failed (%s); restart %d/%d', code, len(failures), RESTART_LIMIT)
+                    self.wake.wait(min(30.0, 0.5 * 2 ** len(failures))); self.wake.clear()
+        finally:
+            self.pool.shutdown(wait=True)
+            with self.lock:
+                for entry in self.active.values(): entry['permit'].close()
+                self.active.clear()
+
+    def _session(self):
         core = None
         try:
             core = Core(self.root); store = Scheduling(core.db)
@@ -127,7 +161,8 @@ class TaskRunner:
                 observe(core, limit=32)
                 from host.completion import pump
                 try:pump(core)
-                except Exception:pass  # Optional reconciliation cannot stop the execution scheduler.
+                except Exception:  # Optional reconciliation cannot stop the execution scheduler.
+                    logs.throttled(LOG, 'completion-pump', 'Completion reconciliation failed; dispatch continues')
                 with self.lock:
                     for ident, entry in list(self.active.items()):
                         if not entry['future'].done(): continue
@@ -183,14 +218,9 @@ class TaskRunner:
                         # Pressure-blocked work remains durably queued for the next Host.
                         break
                     pending = bool(rows or self.active)
+                    if getattr(self, 'crashed', False): self.error = None; self.crashed = False  # recovered after restart
                 self.wake.wait(.1 if pending else 2)
-        except BaseException as exc:
-            with self.lock: self.error = exc.code if isinstance(exc, CoreError) else 'scheduler_failed'
         finally:
-            self.pool.shutdown(wait=True)
-            with self.lock:
-                for entry in self.active.values(): entry['permit'].close()
-                self.active.clear()
             if core: core.close()
 
     def _run_tool(self, ident, permit):

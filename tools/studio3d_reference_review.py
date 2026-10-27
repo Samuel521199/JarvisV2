@@ -25,6 +25,9 @@ evidence=verify_manifest(json.loads(a.evidence.read_text(encoding='utf-8')),{vie
 if evidence and not focus and evidence['iteration']!=a.iteration:raise ValueError('Review iteration does not match the captured model')
 def get(path):return json.load(urllib.request.urlopen(a.origin+path,timeout=30))
 def post(path,body):
+    # Key-protected workbench: run as `python -m tools.studio3d_reference_review` from the project root.
+    try:from control.local_access import install_client;install_client(a.origin)
+    except ImportError:pass
     token=get('/api/session')['token'];req=urllib.request.Request(a.origin+path,data=json.dumps(body,ensure_ascii=False).encode(),headers={'Origin':a.origin,'X-Jarvis-Token':token,'Content-Type':'application/json'})
     return json.load(urllib.request.urlopen(req,timeout=60))
 def save(path,data):path.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')

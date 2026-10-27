@@ -2,6 +2,7 @@
 from concurrent.futures import ThreadPoolExecutor
 from email.utils import parseaddr
 import re
+import sqlite3
 import threading
 import time
 import uuid
@@ -13,6 +14,9 @@ from control.recovery.gate import StopGate,RunLock
 from modules.mail.store import MailStore
 from sdk.mail import CHANGES,LEVELS,address,capabilities,classify,client_configuration,draft,encoded_message,identifier
 from sdk.protocol import CoreError,digest
+from control import logs
+
+LOG=logs.get('mail')
 
 WRITES={'send','remote_draft','change','undo'}
 OPERATIONS={'check','list','read','analyze','send','remote_draft','change','undo','reconcile'}
@@ -194,7 +198,7 @@ class Mailbox:
             self.active.add(ident);self.pool.submit(self.run,ident)
 
     def run(self,ident):
-        store=MailStore(self.root)
+        store=MailStore(self.root);row=None
         try:
             row=store.get(ident)
             if row['status']!='READY' or row['cancel']:return
@@ -250,8 +254,12 @@ class Mailbox:
             guard();store.update(ident,status='SUCCEEDED',result=result,error=None)
             self.save_account(store,generation,health='connected',checked_at=time.time(),credentials=api.credentials)
         except Exception as exc:
-            code=exc.code if isinstance(exc,CoreError) else 'mail_operation_failed';current=store.get(ident)
-            rejected=code in {'mail_auth_required','mail_scope','mail_api_disabled','mail_rate_limit','mail_google_rejected'} and not (row['operation']=='undo' and current['effect_started'])
+            code=exc.code if isinstance(exc,CoreError) else 'mail_operation_failed'
+            if code=='mail_operation_failed':LOG.exception('Mail operation %s failed',ident)
+            try:current=store.get(ident)
+            except (CoreError,sqlite3.Error):
+                LOG.exception('Mail operation %s state unavailable after failure (%s)',ident,code);return
+            rejected=code in {'mail_auth_required','mail_scope','mail_api_disabled','mail_rate_limit','mail_google_rejected'} and not (row is not None and row['operation']=='undo' and current['effect_started'])
             if current['effect_started'] and not rejected:status='UNKNOWN'
             else:status={'mail_auth_required':'WAITING_AUTH','mail_scope':'WAITING_SCOPE','network_disabled':'WAITING_NETWORK','stopped':'WAITING','mail_cancelled':'CANCELLED'}.get(code,'FAILED')
             store.update(ident,status=status,error=code,effect_started=current['effect_started'] and not rejected)

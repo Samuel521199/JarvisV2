@@ -70,6 +70,21 @@ def validate_catalog(config):
     return config
 
 
+def fallback_routes(catalog, primary, *, limit=None):
+    """Enabled routes after ``primary`` in the owner's fallback order.
+
+    Single source for chat, planning and mail; only used when the request chose
+    provider 'auto'. ``limit`` bounds paid retries for a caller (planning uses 1).
+    """
+    routes = []
+    if catalog.get('automatic_fallback'):
+        for name in catalog.get('fallback_order', []):
+            if name != primary['id'] and catalog['providers'][name].get('enabled', True):
+                routes.append(resolve(catalog, name))
+                if limit and len(routes) >= limit: break
+    return routes
+
+
 def resolve(config, provider=None, model=None, reasoning='default'):
     provider = config['default_provider'] if provider in (None, 'auto') else provider
     item = config['providers'].get(provider)

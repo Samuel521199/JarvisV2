@@ -46,6 +46,17 @@ def running(port, data_root):
     finally: connection.close()
 
 
+def access_url(url, data_root):
+    """Attach this OS user's workbench access key in the fragment (never sent over HTTP)."""
+    if str(ROOT) not in sys.path: sys.path.insert(0, str(ROOT))
+    try:
+        from control.local_access import read_key
+        key = read_key(data_root)
+    except Exception:  # an unreadable key only means the page will ask to be reopened
+        key = None
+    return url + '#access=' + key if key else url
+
+
 def open_browser(url):
     try:
         if not webbrowser.open(url): print('[Jarvis] Open this address in your browser: ' + url, flush=True)
@@ -64,7 +75,7 @@ def main():
     root = args.data_root.resolve(); url = f'http://127.0.0.1:{args.port}/'
     if running(args.port, root):
         print('[Jarvis] Already running with this data folder: ' + url, flush=True)
-        if not args.no_browser and not args.check: open_browser(url)
+        if not args.no_browser and not args.check: open_browser(access_url(url, root))
         return 0
     if args.check:
         print('[Jarvis] No running service for this data folder.', flush=True)
@@ -86,7 +97,7 @@ def main():
             try:
                 if running(args.port, root):
                     print('[Jarvis] Ready: ' + url, flush=True)
-                    if not args.no_browser: open_browser(url)
+                    if not args.no_browser: open_browser(access_url(url, root))
                     return
             except RuntimeError: continue  # Socket may open before the HTTP handler is ready.
         if not done.is_set(): print('[Jarvis] Still starting; see this window for details: ' + url, flush=True)

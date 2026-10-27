@@ -44,7 +44,7 @@ def main():
             mem.save(item|{'scope':branch['id'],'purpose':'project','kind':'knowledge','key':'接口版本','value':'分支 Beta'},0)
             chats=Dialogues(root);chat=chats.create(p['id']);chats.update(chat,{'title':'分支上下文验收'});chats.close()
         finally:core.close()
-        process=subprocess.Popen([sys.executable,'-I','-B',str(ROOT/'apps/workbench/server.py'),'--data-root',str(root),'--port','18288'],
+        process=subprocess.Popen([sys.executable,'-I','-B',str(ROOT/'apps/workbench/server.py'),'--data-root',str(root),'--port','18288','--insecure-no-access-key'],
                                  stdout=(EVIDENCE/'ui-stdout.log').open('w',encoding='utf-8'),stderr=(EVIDENCE/'ui-stderr.log').open('w',encoding='utf-8'),
                                  creationflags=subprocess.CREATE_NO_WINDOW if os.name=='nt' else 0)
         stop=base/'stop-probe'

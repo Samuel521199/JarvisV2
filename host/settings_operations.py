@@ -2,6 +2,7 @@
 import sqlite3
 from host.core import Core
 from control.recovery.gate import RunLock
+from control.execution import admission
 from sdk.protocol import CoreError
 
 
@@ -39,7 +40,7 @@ def command(root, value):
         if action=='dev_cancel':return {'changed':core.development.cancel(ident)}
         if action=='task_reconcile':return core.reconcile(ident)
         if action=='task_resume':
-            with RunLock(core.root):
+            with admission(core.root):
                 core.gate.require_running();core.tasks.resume(ident)
             return {'task':core.tasks.get(ident)}
         if action=='release':

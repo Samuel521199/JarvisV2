@@ -9,11 +9,12 @@ from control.paths import child
 from control.policy.grants import GrantStore
 from control.network import NetworkGate
 from control.recovery.gate import RunLock
+from control.execution import admission
 from host.core import Core
 from host import goal_context
 from host import work_revisions
 from host import capabilities as capability_catalog
-from modules.preferences.store import resolve
+from modules.preferences.store import fallback_routes, resolve
 from modules.model_gateway.routed import RoutedModels
 from modules.task_resource.plans import Plans, validate_proposal, planning_key
 from modules.task_resource.scheduling import Scheduling
@@ -92,10 +93,8 @@ def command(root,value,receipt=None):
             core.gate.require_running();settings=core.preferences.read()
             if not settings:raise CoreError('settings_missing','Configure models first')
             cfg=settings['catalog'];routes=[resolve(cfg,req['provider'],req['model'] or None,req['reasoning'])]
-            if req['provider']=='auto' and cfg['automatic_fallback']:
-                for name in cfg['fallback_order']:
-                    if name!=routes[0]['id'] and cfg['providers'][name].get('enabled',True):
-                        routes.append(resolve(cfg,name));break
+            # Planning keeps one paid fallback at most (bounded cost); chat and mail use the full order.
+            if req['provider']=='auto':routes.extend(fallback_routes(cfg,routes[0],limit=1))
             catalog=capability_catalog.catalog(core, value.get('context', {}).get('scope', 'personal'))
             with goal_context.LOCK,core.db.transaction() as tx:
                 ident,fresh=plans.create(req,catalog,routes,tx)
@@ -173,7 +172,7 @@ def command(root,value,receipt=None):
             work_revisions.validate_edit(core,ident,value['proposal'])
             plans.edit(ident,value['revision'],value['proposal']);return detail(core,ident)
         schedule=Scheduling(core.db) if action=='approve_and_run' else None
-        with RunLock(core.root), goal_context.LOCK, core.db.transaction() as tx:
+        with admission(core.root), goal_context.LOCK, core.db.transaction() as tx:
             goal_context.check(core,ident)
             work_revisions.check(core,ident,execution=True)
             row=plans.get(ident)
@@ -286,7 +285,10 @@ def execute(root, ident, retry_unknown=False):
                 checkpoint();validate_proposal(proposal,row['catalog'])
                 return plans.finish(ident,'REVIEW' if proposal['steps'] and not proposal['questions'] else 'NEEDS_INPUT',proposal)
             except CoreError as exc:return plans.finish(ident,'WAITING',error=exc.code)
-            except Exception:return plans.finish(ident,'WAITING',error='planning_failed')
+            except Exception:
+                from control import logs
+                logs.get('goals').exception('Planning failed for goal %s',ident)
+                return plans.finish(ident,'WAITING',error='planning_failed')
     finally:core.close()
 
 

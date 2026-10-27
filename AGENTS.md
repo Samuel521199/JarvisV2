@@ -29,4 +29,6 @@ python tools/sync_doc_navigation.py --root .
 python tools/check_docs.py --root .
 ```
 
+提交 Git 前运行 `python tools/check_repo_size.py`，不提交超过 50 MB 的文件；3D 资产、压缩包和验收截图只留在本机（规则见 `.gitignore`）。当前真实能力以 [docs/current-state.md](docs/current-state.md) 为准，版本变更记入 [CHANGELOG.md](CHANGELOG.md)。
+
 检查失败应修复；不删验收或降低标准来过关。删除前核对内容去向、引用与资产，仅删除明确被替代的文档路径；用户数据、恢复材料与审计不在文档清理范围。交付说明变更、检查和仍未验证项。

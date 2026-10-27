@@ -47,6 +47,43 @@ class ExtractionTests(unittest.TestCase):
         call=self.core.db.one("SELECT * FROM model_calls WHERE phase='knowledge-extract'")
         self.assertIsNone(call['result']);self.assertNotIn(QUOTE,canonical(call))
 
+    def test_long_source_is_split_into_bounded_parts_with_one_receipt_each(self):
+        filler=''.join('第%d段：普通背景说明，没有需要记住的内容。\n\n'%i for i in range(1000))
+        text=filler+QUOTE+'\n结尾。';source=self.source(text)
+        self.assertGreater(len(text.encode()),49000)
+        sizes=[]
+        def answer(messages,checkpoint):
+            sizes.append(len(canonical(messages).encode()))
+            text=messages[0]['content']
+            claims=[{'key':'会议安排待确认','quote':QUOTE}] if QUOTE in text else []
+            return {'status':'SUCCEEDED','text':canonical({'claims':claims}),'usage':{'prompt_tokens':1}}
+        client=self.fake(answer)
+        with patch.object(extract,'NativeModel',client):
+            extract.command(self.root,self.command(source));self.finish()
+        job=self.jobs()[0];self.assertEqual((job['state'],job['added']),('succeeded',1))
+        from sdk.protocol import decode
+        limit=decode(self.core.db.one('SELECT route FROM knowledge_extractions')['route']).get('max_prompt_bytes',50000)
+        self.assertGreater(client.calls,1);self.assertTrue(all(size<=limit for size in sizes),(sizes,limit))
+        calls=self.core.db.all("SELECT status FROM model_calls WHERE phase='knowledge-extract'")
+        self.assertEqual([c['status'] for c in calls],['SUCCEEDED']*client.calls)
+
+    def test_segments_cover_text_in_order_at_natural_boundaries(self):
+        text=''.join('段落%d。内容内容内容。\n\n'%i for i in range(4000))
+        parts=extract.segments(text,'标题',20000)
+        self.assertEqual(''.join(p for _,p in parts),text)
+        self.assertEqual([o for o,_ in parts],[sum(len(p) for _,p in parts[:i]) for i in range(len(parts))])
+        self.assertTrue(all(p.endswith('\n\n') for _,p in parts[:-1]))
+        self.assertTrue(all(len(canonical([{'role':'user','content':extract.PROMPT+canonical({'title':'标题','text':p,'part':1,'parts':len(parts)})}]).encode())<=20000 for _,p in parts))
+        with self.assertRaises(CoreError):extract.segments(text,'标题',1500)
+
+    def test_local_input_rejection_is_not_recorded_as_possibly_billed(self):
+        source=self.source(QUOTE)
+        def reject(messages,checkpoint):raise CoreError('model_input_limit','too large')
+        with patch.object(extract,'NativeModel',self.fake(reject)):
+            extract.command(self.root,self.command(source));self.finish()
+        self.assertEqual(self.jobs()[0]['state'],'failed')
+        self.assertEqual(self.core.db.one("SELECT status FROM model_calls WHERE phase='knowledge-extract'")['status'],'REJECTED')
+
     def test_fabricated_ambiguous_or_partial_batch_has_no_candidates(self):
         source=self.source(QUOTE+'\n'+QUOTE);claims=Claims(self.core.db)
         for payload in ({'claims':[{'key':'编造','quote':'原文中不存在的内容。'}]},

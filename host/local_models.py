@@ -25,6 +25,7 @@ from adapters.desktop.resources import sample as resources
 from adapters.models.local_download import fetch, valid
 
 MANAGERS={}
+TIMEOUT_RESTART=3  # consecutive local timeouts before the worker is treated as hung
 
 
 class Worker:
@@ -34,33 +35,44 @@ class Worker:
         self.process=subprocess.Popen([sys.executable,'-I','-B',str(PROJECT/'adapters/models/local_embedding_worker.py'),str(folder)],
             stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.DEVNULL,text=True,encoding='utf-8',env=env,
             creationflags=subprocess.CREATE_NO_WINDOW if os.name=='nt' else 0)
-        self.queue=queue.Queue(maxsize=2)
+        self.queue=queue.Queue(maxsize=8)
+        self.sequence=0
         self.reader=threading.Thread(target=self._read,daemon=True);self.reader.start()
 
     def _read(self):
         try:
             for line in self.process.stdout:
                 if len(line)>512000:break
-                self.queue.put(json.loads(line),timeout=1)
+                value=json.loads(line)
+                while True:
+                    try:self.queue.put_nowait(value);break
+                    except queue.Full:
+                        # Unclaimed replies of timed-out requests must not stop the reader.
+                        try:self.queue.get_nowait()
+                        except queue.Empty:pass
         except Exception:pass
         finally:
             try:self.queue.put({'error':'worker_exited'},timeout=1)
             except queue.Full:pass
 
-    def wait(self, check, timeout=45):
+    def wait(self, check, timeout=45, expect=None):
         deadline=time.monotonic()+timeout
         while time.monotonic()<deadline:
             check()
             try:
                 value=self.queue.get(timeout=.1)
+                if value.get('error')=='worker_exited':raise CoreError('local_inference','worker_exited')
+                # A late answer to an earlier, timed-out request is discarded, never mis-assigned.
+                if expect is not None and value.get('id')!=expect:continue
                 if value.get('error'):raise CoreError('local_inference',value['error'])
                 return value
             except queue.Empty:pass
         raise CoreError('local_timeout','Local worker timed out')
 
     def request(self,texts,role,check):
-        self.process.stdin.write(canonical({'texts':texts,'role':role})+'\n');self.process.stdin.flush()
-        return self.wait(check)
+        self.sequence+=1;ident=self.sequence
+        self.process.stdin.write(canonical({'id':ident,'texts':texts,'role':role})+'\n');self.process.stdin.flush()
+        return self.wait(check,expect=ident)
 
     def close(self):
         if self.process.poll() is None:
@@ -81,6 +93,11 @@ class LocalModels:
         self.lock=threading.RLock();self.cancel=threading.Event();self.pool=ThreadPoolExecutor(max_workers=1,thread_name_prefix='local-models')
         self.future=None;self.worker=None;self.loaded=None;self.telemetry=None;self.worker_factory=worker_factory;self.closed=False
         self.recall_future=None
+        # Passage vectors of short facts, keyed by (model, text). Ranking 64 facts on every
+        # turn otherwise re-encodes all of them inside a 2 s foreground budget.
+        from collections import OrderedDict
+        self.passage_cache=OrderedDict();self.passage_cache_limit=4096
+        self.timeouts=0  # consecutive local timeouts; a hung worker is restarted after TIMEOUT_RESTART
         try:
             self.measurement_context=context(runtime_status());self.profiles=profiles()
             self.descriptor=read_json(PROJECT/'modules/local_models/descriptor.json')
@@ -213,6 +230,12 @@ class LocalModels:
 
     def _verify(self,item):
         return bool(item['files']) and all(valid(child(self.folder(item['id']),f['name']),f,self._check) for f in item['files'])
+
+    def _timed_out(self):
+        self.timeouts+=1
+        if self.timeouts>=TIMEOUT_RESTART:
+            self.timeouts=0;return True
+        return False
 
     def _stop(self):
         if self.worker:self.worker.close()
@@ -405,7 +428,14 @@ class LocalModels:
                 if time.monotonic()>deadline:raise CoreError('local_timeout','Embedding deadline')
             check();value=self.worker.request(texts,role,check)
             self._validate_vectors(item,value,len(texts));self.telemetry=value.get('memory')
+            self.timeouts=0
             return value['vectors']
+        except CoreError as exc:
+            # A slow answer is discarded by request ID; keep the model loaded for the next turn
+            # unless the worker keeps timing out (then it is probably hung).
+            if exc.code!='local_timeout' or self._timed_out():
+                with self.lock:self._stop()
+            raise
         except BaseException:
             with self.lock:self._stop()
             raise
@@ -420,13 +450,34 @@ class LocalModels:
             def encode(texts,role):
                 value=worker.request(texts,role,check);self._validate_vectors(item,value,len(texts))
                 self.telemetry=value.get('memory');return value['vectors']
-            q=encode([query],'query')[0];vectors=[]
-            for start in range(0,len(rows),4):
-                vectors.extend(encode([r['key']+' '+r['value'] for r in rows[start:start+4]],'passage'))
-            return {'status':'ready','model':item['id'],'space':space(item),'count':len(rows),
+            q=encode([query],'query')[0]
+            texts=[r['key']+' '+r['value'] for r in rows]
+            # Collect this call's vectors locally: inserting new entries may evict older hits.
+            local={}
+            for text in dict.fromkeys(texts):
+                key=(item['id'],text)
+                if key in self.passage_cache:
+                    self.passage_cache.move_to_end(key);local[text]=self.passage_cache[key]
+            missing=[t for t in dict.fromkeys(texts) if t not in local]
+            for start in range(0,len(missing),4):
+                batch=missing[start:start+4]
+                for text,vector in zip(batch,encode(batch,'passage')):
+                    local[text]=vector;self.passage_cache[(item['id'],text)]=vector
+                    while len(self.passage_cache)>self.passage_cache_limit:self.passage_cache.popitem(last=False)
+            vectors=[local[text] for text in texts]
+            self.timeouts=0
+            return {'status':'ready','model':item['id'],'space':space(item),'count':len(rows),'encoded':len(missing),
                     'scores':{r['id']:sum(a*b for a,b in zip(q,v)) for r,v in zip(rows,vectors)}}
+        except CoreError as exc:
+            if exc.code=='local_timeout':
+                # Late replies are discarded by request ID, so the model stays loaded
+                # unless repeated timeouts suggest the worker is hung.
+                if self._timed_out():
+                    with self.lock:self._stop()
+                return {'status':'timeout'}
+            with self.lock:self._stop()
+            return {'status':'worker_failed'}
         except Exception:
-            # Drop the transport on timeout/error so a late line cannot answer another request.
             with self.lock:self._stop()
             return {'status':'worker_failed'}
 

@@ -176,4 +176,29 @@ class EncoderLane(unittest.TestCase):
         self.assertEqual(self.run_command('start',id='a')['status'],'succeeded')
 
 
+    def test_deadline_timeout_keeps_model_loaded_and_caches_fact_vectors(self):
+        self.fixture('a');self.run_command('activate',id='a')
+        calls=[];original=self.m.worker.request
+        def counting(texts,role,check):calls.append((role,len(texts)));return original(texts,role,check)
+        self.m.worker.request=counting
+        rows=[{'id':'f%d'%i,'key':'k%d'%i,'value':'v'} for i in range(6)]
+        self.assertEqual(self.m.rank_memory(rows,'q1')['encoded'],6)
+        calls.clear();second=self.m.rank_memory(rows,'q2')
+        self.assertEqual((second['status'],second['encoded']),('ready',0))
+        self.assertEqual(calls,[('query',1)])  # cached passages are not re-encoded
+        def late(texts,role,check):raise CoreError('local_timeout','Memory encoding deadline')
+        self.m.worker.request=late
+        self.assertEqual(self.m.rank_memory(rows,'q3')['status'],'timeout')
+        self.assertIsNotNone(self.m.worker);self.assertEqual(self.m.loaded,'a')
+
+    def test_worker_discards_late_reply_to_timed_out_request(self):
+        from host.local_models import Worker
+        import queue
+        worker=Worker.__new__(Worker);worker.queue=queue.Queue()
+        worker.queue.put({'id':1,'vectors':[[0.0]]});worker.queue.put({'id':2,'vectors':[[1.0]]})
+        self.assertEqual(worker.wait(lambda:None,timeout=1,expect=2)['vectors'],[[1.0]])
+        worker.queue.put({'id':3,'error':'bad input'})
+        with self.assertRaises(CoreError):worker.wait(lambda:None,timeout=1,expect=3)
+
+
 if __name__=='__main__':unittest.main()

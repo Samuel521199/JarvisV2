@@ -14,6 +14,9 @@ ROOT=Path(__file__).resolve().parents[1]
 LOCK=threading.Lock()
 ACTIVE={}
 GUARD=threading.Lock()
+# Data roots whose 3D jobs this process owns (the workbench server). Other processes
+# (CLI tools, probes) may read job state but must not declare a live job dead.
+OWNERS=set()
 REQUIRED_FILES=('preview.png','model.blend','model.glb','scene.json','report.json')
 FILES={'preview.png':'image/png','model.blend':'application/octet-stream','model.glb':'model/gltf-binary','scene.json':'application/json','report.json':'application/json', 'model-lod1.glb':'model/gltf-binary','model-lod2.glb':'model/gltf-binary','basecolor.png':'image/png','normal.png':'image/png','orm.png':'image/png','ao.png':'image/png'}
 FILES.update({('view-'+v+'.png'):'image/png' for v in ('front','rear','left','right','top')});FILES['reference.png']='image/png'
@@ -51,9 +54,11 @@ def state(root,ident):
     finally:d.close()
     if not r:raise CoreError('studio3d_missing','Unknown 3D job')
     r=dict(r);r.pop('signature');r['receipt']=json.loads(r['receipt']) if r['receipt'] else None
-    with GUARD:live=(str(root),ident) in ACTIVE
+    with GUARD:live=(str(root),ident) in ACTIVE;owner=str(root) in OWNERS
     if r['status'] in ('QUEUED','PLANNING','BUILDING') and not live:
-        update(root,ident,status='UNKNOWN',phase='服务重启，未自动重放');r.update(status='UNKNOWN',phase='服务重启，未自动重放')
+        # Only the owning process persists the interruption; other readers just report it.
+        if owner:update(root,ident,status='UNKNOWN',phase='服务重启，未自动重放')
+        r.update(status='UNKNOWN',phase='服务重启，未自动重放')
     if r['turn_id'] and r['status'] not in ('QUEUED','PLANNING'):
         store=Dialogues(root)
         try:
@@ -64,6 +69,16 @@ def state(root,ident):
         except CoreError:pass
         finally:store.close()
     return r
+def recover(root):
+    """Claim job ownership for this process and mark jobs interrupted by a restart."""
+    with GUARD:
+        OWNERS.add(str(root));live={i for r,i in ACTIVE if r==str(root)}
+    d=db(root)
+    try:
+        stale=[r['id'] for r in d.execute("SELECT id FROM jobs WHERE status IN ('QUEUED','PLANNING','BUILDING')") if r['id'] not in live]
+        for ident in stale:d.execute("UPDATE jobs SET status='UNKNOWN',phase='服务重启，未自动重放' WHERE id=? AND status IN ('QUEUED','PLANNING','BUILDING')",(ident,))
+    finally:d.close()
+    return stale
 def listing(root):
     d=db(root)
     try:ids=[r['id'] for r in d.execute('SELECT id FROM jobs ORDER BY created DESC LIMIT 20')]

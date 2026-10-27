@@ -125,6 +125,20 @@ class PreferenceDialogueCase(unittest.TestCase):
             self.assertEqual(store.db.execute('SELECT status FROM attempts WHERE id=?',(attempt,)).fetchone()[0],'UNKNOWN')
         finally:store.close()
 
+    def test_delivered_reply_and_attempt_survive_a_later_failure_path(self):
+        store=Dialogues(self.root)
+        try:
+            chat=store.create();cmd={'chat_id':chat,'request_id':'kept','text':'hello','provider':'auto','model':'','reasoning':'default'}
+            routes=[resolve(fixture())];store.begin(cmd,routes);store.context('kept');attempt=store.start_attempt('kept',routes[0])
+            self.assertTrue(store.attempt_result(attempt,{'status':'SUCCEEDED','usage':{'prompt_tokens':3}}))
+            self.assertTrue(store.finish('kept',{'status':'SUCCEEDED','text':'paid answer'}))
+            # A crash after delivery (e.g. session folder publication) must not erase the answer or its billing record.
+            self.assertFalse(store.attempt_result(attempt,{'status':'UNKNOWN','code':'local_response_error'}))
+            self.assertFalse(store.finish('kept',{'status':'UNKNOWN','code':'local_response_error'}))
+            turn=store.turn('kept');self.assertEqual((turn['status'],turn['reply']),('SUCCEEDED','paid answer'))
+            self.assertEqual(store.db.execute('SELECT status FROM attempts WHERE id=?',(attempt,)).fetchone()[0],'SUCCEEDED')
+        finally:store.close()
+
     def test_history_contains_only_successful_turns_and_is_bounded(self):
         store=Dialogues(self.root)
         try:

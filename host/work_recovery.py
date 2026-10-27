@@ -9,6 +9,7 @@ from control import receipts
 from control.paths import child
 from control.policy.grants import GrantStore
 from control.recovery.gate import RunLock
+from control.execution import admission
 from host import goal_context, capabilities, work_revisions, quote_rework
 from modules.task_resource.plans import Plans, validate_proposal, planning_key
 from modules.task_resource import source_checks
@@ -182,7 +183,7 @@ def create(core,value):
             or value['keep_requirements'] is not True):
         raise CoreError('recovery_invalid','Explicitly retain all requirements and describe the recovery')
     fingerprint=digest(value);plans=Plans(core.db)
-    with RunLock(core.root),goal_context.LOCK,core.db.transaction() as tx:
+    with admission(core.root),goal_context.LOCK,core.db.transaction() as tx:
         old=core.db.one('SELECT goal_id,request_digest FROM work_revisions WHERE request_id=?',(value['request_id'],))
         if old:
             if old['request_digest']!=fingerprint:raise CoreError('conflict','Recovery request ID changed')

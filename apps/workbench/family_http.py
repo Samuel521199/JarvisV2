@@ -3,6 +3,7 @@ import threading
 import hashlib
 
 from control.family_identity import cookie_token, POLICY
+from control.local_access import cookie_value
 from host.family import FamilyHost
 from sdk.protocol import CoreError
 
@@ -11,6 +12,7 @@ PUBLIC = {'/login', '/family', '/login.js', '/family.js', '/family.css', '/ui.js
           '/style.css', '/theme.css', '/brand.js', '/brand.css', '/logo.css', '/brand/core.png', '/brand/icon.png', '/api/family/status', '/api/instance'}
 MEMBER_GET = {'/api/session', '/api/family/catalog'}
 MEMBER_POST = {'/api/family', '/api/family/logout'}
+LOCAL_PUBLIC_API = {'/api/instance', '/api/family/status'}
 
 
 def service(handler):
@@ -24,9 +26,24 @@ def actor(handler, touch=True):
     return service(handler).identity.principal(token, touch=touch), token
 
 
+def local_gate(handler, path, write=False):
+    """Without household login, require the launcher's per-user access session.
+
+    Servers embedded without an access key (unit tests, tools) keep the previous
+    Host/Origin/nonce-only behaviour; the real entry point always sets one.
+    """
+    access = getattr(handler.server, 'access', None)
+    if access is None: return True
+    if write and path == '/api/local-access': return True
+    if not write and (not path.startswith('/api/') or path in LOCAL_PUBLIC_API): return True
+    if access.valid(cookie_value(handler.headers.get('Cookie'), handler.server.server_port)): return True
+    handler.json({'error': 'local_access'}, 401)
+    return False
+
+
 def gate(handler, path, write=False):
     family = service(handler)
-    if not family.identity.enabled: return True
+    if not family.identity.enabled: return local_gate(handler, path, write)
     if not write and path in PUBLIC: return True
     if write and path == '/api/family/login': return True
     principal, _ = actor(handler)
@@ -61,6 +78,13 @@ def get(handler, path):
 
 
 def post(handler, path, value):
+    if path == '/api/local-access':
+        access = getattr(handler.server, 'access', None)
+        if access is None: raise CoreError('local_access', 'Local access keys are not enabled for this server')
+        if not isinstance(value, dict) or set(value) != {'key'}: raise CoreError('local_access', 'Invalid access request')
+        handler.local_cookie = access.unlock(value['key'])
+        handler.json({'ok': True})
+        return True
     if not path.startswith('/api/family'): return False
     family = service(handler)
     principal, token = actor(handler)

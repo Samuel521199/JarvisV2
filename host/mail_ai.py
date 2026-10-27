@@ -2,7 +2,7 @@
 from adapters.models.native import NativeModel
 from control.credentials import Credentials
 from control.paths import child
-from modules.preferences.store import Preferences,resolve
+from modules.preferences.store import Preferences,fallback_routes,resolve
 from sdk.protocol import CoreError,canonical
 
 
@@ -11,10 +11,7 @@ def analyze(root,message,instruction,guard):
     try:
         settings=prefs.read()
         if not settings:raise CoreError('settings_missing','Configure a model first')
-        catalog=settings['catalog'];routes=[resolve(catalog,'auto')]
-        if catalog.get('automatic_fallback'):
-            for name in catalog.get('fallback_order',[]):
-                if name!=routes[0]['id'] and catalog['providers'][name].get('enabled',True):routes.append(resolve(catalog,name))
+        catalog=settings['catalog'];routes=[resolve(catalog,'auto')];routes.extend(fallback_routes(catalog,routes[0]))
     finally:prefs.close()
     for route in routes:
         guard();client=NativeModel(route,Credentials(root).get,child(root,'temp'))
