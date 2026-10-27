@@ -1,0 +1,77 @@
+{
+  "version": "knowledge-library-1.0.0",
+  "date": "2026-10-23",
+  "tests": {
+    "full_regression": {
+      "count": 339,
+      "seconds": 205.064,
+      "passed": true
+    },
+    "final_targeted": {
+      "count": 21,
+      "seconds": 2.504,
+      "new_library_tests": 14,
+      "inherited_memory_tests": 7,
+      "passed": true
+    }
+  },
+  "architecture": {
+    "python_files": 112,
+    "errors": []
+  },
+  "javascript_syntax": [
+    "apps/workbench/knowledge.js",
+    "apps/workbench/memory.js"
+  ],
+  "browser": {
+    "port": 18287,
+    "synthetic_only": true,
+    "checks": [
+      "expand library",
+      "source title/body display",
+      "query by identifier",
+      "source line view",
+      "edit and revision increment",
+      "old preview cleared",
+      "new value recalled",
+      "create via paste",
+      "emoji and codepoint fragment offsets",
+      "index rebuild completion"
+    ],
+    "console_errors": []
+  },
+  "limits": [
+    "No paid LLM answer-quality evaluation",
+    "No PDF/OCR",
+    "No persistent vectors or no-overlap document cross-language recall",
+    "No original-history or historical-output erasure",
+    "No independent holdout, Mac, low-memory PC, long-term churn or two-node evidence"
+  ],
+  "source_sha256": {
+    "adapters/storage/sqlite.py": "ec2f58c12fc59ccf8af467c8b3265b8fb45dd0203908dd1a031f2c0fcde53013",
+    "adapters/storage/knowledge_schema.py": "6d6e88f53b41bec58611cfc70de3e69c49e1aaa059f413b7f3599a1565eb4b60",
+    "modules/context_knowledge/knowledge.py": "dfc6769b88b0be9d39e01cebc5b91f6a1089a6bb23f1609c4742f8a2979b89d1",
+    "modules/context_knowledge/memory.py": "81e8ea990905de1466f2f0e509a1ea8e83a2a25b4c731ccf47c3346722b533f4",
+    "modules/dialogue/store.py": "d06e9dad56b5265c36cd72e01b3d08d1f20159dbb7e49a2a9e528a6825f2472c",
+    "host/knowledge.py": "c0be78a9bab89a598354366717365d0ad7bdba74ca077617ff41a893ae89ed91",
+    "apps/workbench/knowledge.js": "5823681e02439c9004cc949dd445dc95b48106cd7d59e465c5acd2b523e4da1b",
+    "apps/workbench/memory.js": "47ab8e45ab02eee07d7791af4f2f2487fd4535008f5ec1c923a50cf1ebddc492",
+    "apps/workbench/server.py": "b3c1fafa99c7efe97fe76d03f0f97f6b35580ab3f9ec6210f2ac43ea5d1788f6",
+    "sdk/protocol.py": "90f11cd8bb0ac537a925090e6aaccefb85cf8cd5e1983a88226df70eb072c3db",
+    "contracts/schemas/knowledge-source.v1.json": "1d2bc58bc8f4d4990d5999826887d250586fb4222be29c0249b27775b1ad52e3",
+    "tests/test_knowledge.py": "ee945298b32f2ba4a78f215a8fe4ff6fd1d32f20e9196630cce44ee9da66353f",
+    "tools/probe_knowledge.py": "b61496664db23063609efb5fb2f0b5236d2868adcdefdec16df2898739448250"
+  },
+  "documents": {
+    "documents": 26,
+    "chapters": 23,
+    "diagrams": 39,
+    "local_links": 2326,
+    "errors": 0
+  },
+  "cleanup": {
+    "directory": "C:/Users/samuel/AppData/Local/Temp/jarvis-library-ui-ejt4wg0e",
+    "status": "retained",
+    "reason": "Automatic approval rejected recursive test-directory cleanup: blocked by policy; no retry or alternate deletion mechanism."
+  }
+}

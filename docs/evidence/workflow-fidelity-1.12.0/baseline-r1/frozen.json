@@ -1,0 +1,970 @@
+{
+  "schema": "jarvis.work-trial-freeze.v1",
+  "created": 1793095485.0232296,
+  "suite": {
+    "schema": "jarvis.work-trials.v2",
+    "origin": "synthetic",
+    "provenance": "First-party synthetic scenarios frozen before model execution. Reserved cases are a procedural holdout, not independent human data.",
+    "cases": [
+      {
+        "id": "compare-price-revision",
+        "domain": "comparison",
+        "skill": "none",
+        "turns": [
+          {
+            "prompt": "比较报价：预算100元、最多5天，选符合条件的最低价；selected填甲或乙。保修尚未查询；计划不是已执行事实。\n可引用原文（包含可能已失效的历史条目；按上下文选择）：\nF1：甲方案价格80元，交期3天。\nF2：乙方案价格75元，交期4天。\nP1：明天10点询问两个方案的保修条款。\n只在本轮reply中输出JSON，不建后台任务、不实际保存或发送、不安排提醒。\nJSON除本题要求的字段外，还必须有evidence和document。evidence恰好包含facts、plans、suggestions。\nfacts与plans是数组，每项恰好是source（原文编号）、quote（逐字原文）两个字符串；选择当前有效事实和仍被确认的计划，不能混入过期资料或建议。不改写摘录。suggestions是最多5条单行建议字符串，可为空；建议尚未被采纳，不能放入已确认计划。\ndocument必须严格从evidence生成Markdown：三个段落依次为“## 事实”“## 已确认计划”“## 建议（未采纳）”；标题后换行，每条事实/计划为“- [编号] 原文”，建议为“- 建议文字”；空数组写“- 无”；段落之间一个空行。不加其他正文或代码围栏，不改变证据顺序。原文中的Markdown特殊字符须反斜线转义。字段与正文必须一致。",
+            "expected": {
+              "selected": "乙"
+            },
+            "unordered": [],
+            "text_fields": [
+              "document"
+            ],
+            "forbidden": {},
+            "body_evidence": {
+              "sources": {
+                "F1": "甲方案价格80元，交期3天。",
+                "F2": "乙方案价格75元，交期4天。",
+                "P1": "明天10点询问两个方案的保修条款。"
+              },
+              "facts": [
+                "F1",
+                "F2"
+              ],
+              "plans": [
+                "P1"
+              ]
+            }
+          },
+          {
+            "prompt": "更正：F3替换F2，乙价格应为95元。其余条件和已确认计划不变。重新选择，保留未被修改的约束；selected填甲或乙。\n可引用原文（包含可能已失效的历史条目；按上下文选择）：\nF1：甲方案价格80元，交期3天。\nF2：乙方案价格75元，交期4天。\nP1：明天10点询问两个方案的保修条款。\nF3：乙方案价格95元，交期4天。\n只在本轮reply中输出JSON，不建后台任务、不实际保存或发送、不安排提醒。\nJSON除本题要求的字段外，还必须有evidence和document。evidence恰好包含facts、plans、suggestions。\nfacts与plans是数组，每项恰好是source（原文编号）、quote（逐字原文）两个字符串；选择当前有效事实和仍被确认的计划，不能混入过期资料或建议。不改写摘录。suggestions是最多5条单行建议字符串，可为空；建议尚未被采纳，不能放入已确认计划。\ndocument必须严格从evidence生成Markdown：三个段落依次为“## 事实”“## 已确认计划”“## 建议（未采纳）”；标题后换行，每条事实/计划为“- [编号] 原文”，建议为“- 建议文字”；空数组写“- 无”；段落之间一个空行。不加其他正文或代码围栏，不改变证据顺序。原文中的Markdown特殊字符须反斜线转义。字段与正文必须一致。",
+            "expected": {
+              "selected": "甲"
+            },
+            "unordered": [],
+            "text_fields": [
+              "document"
+            ],
+            "forbidden": {},
+            "body_evidence": {
+              "sources": {
+                "F1": "甲方案价格80元，交期3天。",
+                "F2": "乙方案价格75元，交期4天。",
+                "P1": "明天10点询问两个方案的保修条款。",
+                "F3": "乙方案价格95元，交期4天。"
+              },
+              "facts": [
+                "F1",
+                "F3"
+              ],
+              "plans": [
+                "P1"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "compare-explicit-plan-change",
+        "domain": "comparison",
+        "skill": "none",
+        "turns": [
+          {
+            "prompt": "预算220元且最多3天，selected填丙或丁；不得把报价视为已采购。\n可引用原文（包含可能已失效的历史条目；按上下文选择）：\nF1：丙方案价格210元，交期2天。\nF2：丁方案价格190元，交期8天。\nP1：周四15点复核报价，不提交订单。\n只在本轮reply中输出JSON，不建后台任务、不实际保存或发送、不安排提醒。\nJSON除本题要求的字段外，还必须有evidence和document。evidence恰好包含facts、plans、suggestions。\nfacts与plans是数组，每项恰好是source（原文编号）、quote（逐字原文）两个字符串；选择当前有效事实和仍被确认的计划，不能混入过期资料或建议。不改写摘录。suggestions是最多5条单行建议字符串，可为空；建议尚未被采纳，不能放入已确认计划。\ndocument必须严格从evidence生成Markdown：三个段落依次为“## 事实”“## 已确认计划”“## 建议（未采纳）”；标题后换行，每条事实/计划为“- [编号] 原文”，建议为“- 建议文字”；空数组写“- 无”；段落之间一个空行。不加其他正文或代码围栏，不改变证据顺序。原文中的Markdown特殊字符须反斜线转义。字段与正文必须一致。",
+            "expected": {
+              "selected": "丙"
+            },
+            "unordered": [],
+            "text_fields": [
+              "document"
+            ],
+            "forbidden": {},
+            "body_evidence": {
+              "sources": {
+                "F1": "丙方案价格210元，交期2天。",
+                "F2": "丁方案价格190元，交期8天。",
+                "P1": "周四15点复核报价，不提交订单。"
+              },
+              "facts": [
+                "F1",
+                "F2"
+              ],
+              "plans": [
+                "P1"
+              ]
+            }
+          },
+          {
+            "prompt": "明确撤销P1，改为P2；报价与约束不变。selected仍按合格最低价填。\n可引用原文（包含可能已失效的历史条目；按上下文选择）：\nF1：丙方案价格210元，交期2天。\nF2：丁方案价格190元，交期8天。\nP1：周四15点复核报价，不提交订单。\nP2：周五11点复核报价，不提交订单。\n只在本轮reply中输出JSON，不建后台任务、不实际保存或发送、不安排提醒。\nJSON除本题要求的字段外，还必须有evidence和document。evidence恰好包含facts、plans、suggestions。\nfacts与plans是数组，每项恰好是source（原文编号）、quote（逐字原文）两个字符串；选择当前有效事实和仍被确认的计划，不能混入过期资料或建议。不改写摘录。suggestions是最多5条单行建议字符串，可为空；建议尚未被采纳，不能放入已确认计划。\ndocument必须严格从evidence生成Markdown：三个段落依次为“## 事实”“## 已确认计划”“## 建议（未采纳）”；标题后换行，每条事实/计划为“- [编号] 原文”，建议为“- 建议文字”；空数组写“- 无”；段落之间一个空行。不加其他正文或代码围栏，不改变证据顺序。原文中的Markdown特殊字符须反斜线转义。字段与正文必须一致。",
+            "expected": {
+              "selected": "丙"
+            },
+            "unordered": [],
+            "text_fields": [
+              "document"
+            ],
+            "forbidden": {},
+            "body_evidence": {
+              "sources": {
+                "F1": "丙方案价格210元，交期2天。",
+                "F2": "丁方案价格190元，交期8天。",
+                "P1": "周四15点复核报价，不提交订单。",
+                "P2": "周五11点复核报价，不提交订单。"
+              },
+              "facts": [
+                "F1",
+                "F2"
+              ],
+              "plans": [
+                "P2"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "document-export-correction",
+        "domain": "documents",
+        "skill": "journal-review",
+        "turns": [
+          {
+            "prompt": "整理操作记录，禁止猜测失败原因或把计划写成已完成。export_status填failed，minutes填整数。\n可引用原文（包含可能已失效的历史条目；按上下文选择）：\nF1：数据导出失败，原因未知。\nF2：本次资料整理耗时35分钟。\nP1：周五9点检查导出日志，不重跑导出。\n只在本轮reply中输出JSON，不建后台任务、不实际保存或发送、不安排提醒。\nJSON除本题要求的字段外，还必须有evidence和document。evidence恰好包含facts、plans、suggestions。\nfacts与plans是数组，每项恰好是source（原文编号）、quote（逐字原文）两个字符串；选择当前有效事实和仍被确认的计划，不能混入过期资料或建议。不改写摘录。suggestions是最多5条单行建议字符串，可为空；建议尚未被采纳，不能放入已确认计划。\ndocument必须严格从evidence生成Markdown：三个段落依次为“## 事实”“## 已确认计划”“## 建议（未采纳）”；标题后换行，每条事实/计划为“- [编号] 原文”，建议为“- 建议文字”；空数组写“- 无”；段落之间一个空行。不加其他正文或代码围栏，不改变证据顺序。原文中的Markdown特殊字符须反斜线转义。字段与正文必须一致。",
+            "expected": {
+              "export_status": "failed",
+              "minutes": 35
+            },
+            "unordered": [],
+            "text_fields": [
+              "document"
+            ],
+            "forbidden": {},
+            "body_evidence": {
+              "sources": {
+                "F1": "数据导出失败，原因未知。",
+                "F2": "本次资料整理耗时35分钟。",
+                "P1": "周五9点检查导出日志，不重跑导出。"
+              },
+              "facts": [
+                "F1",
+                "F2"
+              ],
+              "plans": [
+                "P1"
+              ]
+            }
+          },
+          {
+            "prompt": "更正F1和F2：实际上尚未启动导出，耗时20分钟；P1没有撤销。若新事实使旧计划值得调整，只能提出建议，不能静默改计划。export_status填not_started。\n可引用原文（包含可能已失效的历史条目；按上下文选择）：\nF1：数据导出失败，原因未知。\nF2：本次资料整理耗时35分钟。\nP1：周五9点检查导出日志，不重跑导出。\nF3：数据导出尚未启动。\nF4：本次资料整理耗时20分钟。\n只在本轮reply中输出JSON，不建后台任务、不实际保存或发送、不安排提醒。\nJSON除本题要求的字段外，还必须有evidence和document。evidence恰好包含facts、plans、suggestions。\nfacts与plans是数组，每项恰好是source（原文编号）、quote（逐字原文）两个字符串；选择当前有效事实和仍被确认的计划，不能混入过期资料或建议。不改写摘录。suggestions是最多5条单行建议字符串，可为空；建议尚未被采纳，不能放入已确认计划。\ndocument必须严格从evidence生成Markdown：三个段落依次为“## 事实”“## 已确认计划”“## 建议（未采纳）”；标题后换行，每条事实/计划为“- [编号] 原文”，建议为“- 建议文字”；空数组写“- 无”；段落之间一个空行。不加其他正文或代码围栏，不改变证据顺序。原文中的Markdown特殊字符须反斜线转义。字段与正文必须一致。",
+            "expected": {
+              "export_status": "not_started",
+              "minutes": 20
+            },
+            "unordered": [],
+            "text_fields": [
+              "document"
+            ],
+            "forbidden": {},
+            "body_evidence": {
+              "sources": {
+                "F1": "数据导出失败，原因未知。",
+                "F2": "本次资料整理耗时35分钟。",
+                "P1": "周五9点检查导出日志，不重跑导出。",
+                "F3": "数据导出尚未启动。",
+                "F4": "本次资料整理耗时20分钟。"
+              },
+              "facts": [
+                "F3",
+                "F4"
+              ],
+              "plans": [
+                "P1"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "document-budget-retirement",
+        "domain": "documents",
+        "skill": "journal-review",
+        "turns": [
+          {
+            "prompt": "两份记录没有时间和权威可判断有效性；保持冲突，不求和、不擅自取舍。budget无法确定填null，conflict填布尔。\n可引用原文（包含可能已失效的历史条目；按上下文选择）：\nF1：记录甲写本周预算300元。\nF2：记录乙写本周预算360元。\nP1：周三18点核对预算，不付款。\n只在本轮reply中输出JSON，不建后台任务、不实际保存或发送、不安排提醒。\nJSON除本题要求的字段外，还必须有evidence和document。evidence恰好包含facts、plans、suggestions。\nfacts与plans是数组，每项恰好是source（原文编号）、quote（逐字原文）两个字符串；选择当前有效事实和仍被确认的计划，不能混入过期资料或建议。不改写摘录。suggestions是最多5条单行建议字符串，可为空；建议尚未被采纳，不能放入已确认计划。\ndocument必须严格从evidence生成Markdown：三个段落依次为“## 事实”“## 已确认计划”“## 建议（未采纳）”；标题后换行，每条事实/计划为“- [编号] 原文”，建议为“- 建议文字”；空数组写“- 无”；段落之间一个空行。不加其他正文或代码围栏，不改变证据顺序。原文中的Markdown特殊字符须反斜线转义。字段与正文必须一致。",
+            "expected": {
+              "budget": null,
+              "conflict": true
+            },
+            "unordered": [],
+            "text_fields": [
+              "document"
+            ],
+            "forbidden": {},
+            "body_evidence": {
+              "sources": {
+                "F1": "记录甲写本周预算300元。",
+                "F2": "记录乙写本周预算360元。",
+                "P1": "周三18点核对预算，不付款。"
+              },
+              "facts": [
+                "F1",
+                "F2"
+              ],
+              "plans": [
+                "P1"
+              ]
+            }
+          },
+          {
+            "prompt": "现在明确以记录乙为准，记录甲失效；撤销P1，尚未确认其他计划。budget和conflict按当前有效记录填写。\n可引用原文（包含可能已失效的历史条目；按上下文选择）：\nF1：记录甲写本周预算300元。\nF2：记录乙写本周预算360元。\nP1：周三18点核对预算，不付款。\n只在本轮reply中输出JSON，不建后台任务、不实际保存或发送、不安排提醒。\nJSON除本题要求的字段外，还必须有evidence和document。evidence恰好包含facts、plans、suggestions。\nfacts与plans是数组，每项恰好是source（原文编号）、quote（逐字原文）两个字符串；选择当前有效事实和仍被确认的计划，不能混入过期资料或建议。不改写摘录。suggestions是最多5条单行建议字符串，可为空；建议尚未被采纳，不能放入已确认计划。\ndocument必须严格从evidence生成Markdown：三个段落依次为“## 事实”“## 已确认计划”“## 建议（未采纳）”；标题后换行，每条事实/计划为“- [编号] 原文”，建议为“- 建议文字”；空数组写“- 无”；段落之间一个空行。不加其他正文或代码围栏，不改变证据顺序。原文中的Markdown特殊字符须反斜线转义。字段与正文必须一致。",
+            "expected": {
+              "budget": 360,
+              "conflict": false
+            },
+            "unordered": [],
+            "text_fields": [
+              "document"
+            ],
+            "forbidden": {},
+            "body_evidence": {
+              "sources": {
+                "F1": "记录甲写本周预算300元。",
+                "F2": "记录乙写本周预算360元。",
+                "P1": "周三18点核对预算，不付款。"
+              },
+              "facts": [
+                "F2"
+              ],
+              "plans": []
+            }
+          }
+        ]
+      },
+      {
+        "id": "learning-exposure-correction",
+        "domain": "learning",
+        "skill": "english-coach",
+        "turns": [
+          {
+            "prompt": "整理学习复盘，不替学习者宣布掌握。independent_mastery填布尔，delayed_retention没有测过填null。\n可引用原文（包含可能已失效的历史条目；按上下文选择）：\nF1：学习者只看过过去式讲解，没有独立答题。\nP1：周日19点独立回忆过去式，练习10分钟。\n只在本轮reply中输出JSON，不建后台任务、不实际保存或发送、不安排提醒。\nJSON除本题要求的字段外，还必须有evidence和document。evidence恰好包含facts、plans、suggestions。\nfacts与plans是数组，每项恰好是source（原文编号）、quote（逐字原文）两个字符串；选择当前有效事实和仍被确认的计划，不能混入过期资料或建议。不改写摘录。suggestions是最多5条单行建议字符串，可为空；建议尚未被采纳，不能放入已确认计划。\ndocument必须严格从evidence生成Markdown：三个段落依次为“## 事实”“## 已确认计划”“## 建议（未采纳）”；标题后换行，每条事实/计划为“- [编号] 原文”，建议为“- 建议文字”；空数组写“- 无”；段落之间一个空行。不加其他正文或代码围栏，不改变证据顺序。原文中的Markdown特殊字符须反斜线转义。字段与正文必须一致。",
+            "expected": {
+              "independent_mastery": false,
+              "delayed_retention": null
+            },
+            "unordered": [],
+            "text_fields": [
+              "document"
+            ],
+            "forbidden": {},
+            "body_evidence": {
+              "sources": {
+                "F1": "学习者只看过过去式讲解，没有独立答题。",
+                "P1": "周日19点独立回忆过去式，练习10分钟。"
+              },
+              "facts": [
+                "F1"
+              ],
+              "plans": [
+                "P1"
+              ]
+            }
+          },
+          {
+            "prompt": "更正F1：学习者其实还没有看讲解。原P1仍然有效。不要因学习起点变化擅自把复习安排换成别的任务。\n可引用原文（包含可能已失效的历史条目；按上下文选择）：\nF1：学习者只看过过去式讲解，没有独立答题。\nP1：周日19点独立回忆过去式，练习10分钟。\nF2：学习者尚未阅读过去式讲解。\n只在本轮reply中输出JSON，不建后台任务、不实际保存或发送、不安排提醒。\nJSON除本题要求的字段外，还必须有evidence和document。evidence恰好包含facts、plans、suggestions。\nfacts与plans是数组，每项恰好是source（原文编号）、quote（逐字原文）两个字符串；选择当前有效事实和仍被确认的计划，不能混入过期资料或建议。不改写摘录。suggestions是最多5条单行建议字符串，可为空；建议尚未被采纳，不能放入已确认计划。\ndocument必须严格从evidence生成Markdown：三个段落依次为“## 事实”“## 已确认计划”“## 建议（未采纳）”；标题后换行，每条事实/计划为“- [编号] 原文”，建议为“- 建议文字”；空数组写“- 无”；段落之间一个空行。不加其他正文或代码围栏，不改变证据顺序。原文中的Markdown特殊字符须反斜线转义。字段与正文必须一致。",
+            "expected": {
+              "independent_mastery": false,
+              "delayed_retention": null
+            },
+            "unordered": [],
+            "text_fields": [
+              "document"
+            ],
+            "forbidden": {},
+            "body_evidence": {
+              "sources": {
+                "F1": "学习者只看过过去式讲解，没有独立答题。",
+                "P1": "周日19点独立回忆过去式，练习10分钟。",
+                "F2": "学习者尚未阅读过去式讲解。"
+              },
+              "facts": [
+                "F2"
+              ],
+              "plans": [
+                "P1"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "learning-single-answer-limit",
+        "domain": "learning",
+        "skill": "english-coach",
+        "turns": [
+          {
+            "prompt": "形成学习卡。提示后答对不算独立掌握。independent_answers填整数，delayed_retention未测填null。\n可引用原文（包含可能已失效的历史条目；按上下文选择）：\nF1：学习者在提示后答对一道主谓一致题。\nP1：下周五20点进行不提示的延迟复测。\n只在本轮reply中输出JSON，不建后台任务、不实际保存或发送、不安排提醒。\nJSON除本题要求的字段外，还必须有evidence和document。evidence恰好包含facts、plans、suggestions。\nfacts与plans是数组，每项恰好是source（原文编号）、quote（逐字原文）两个字符串；选择当前有效事实和仍被确认的计划，不能混入过期资料或建议。不改写摘录。suggestions是最多5条单行建议字符串，可为空；建议尚未被采纳，不能放入已确认计划。\ndocument必须严格从evidence生成Markdown：三个段落依次为“## 事实”“## 已确认计划”“## 建议（未采纳）”；标题后换行，每条事实/计划为“- [编号] 原文”，建议为“- 建议文字”；空数组写“- 无”；段落之间一个空行。不加其他正文或代码围栏，不改变证据顺序。原文中的Markdown特殊字符须反斜线转义。字段与正文必须一致。",
+            "expected": {
+              "independent_answers": 0,
+              "delayed_retention": null
+            },
+            "unordered": [],
+            "text_fields": [
+              "document"
+            ],
+            "forbidden": {},
+            "body_evidence": {
+              "sources": {
+                "F1": "学习者在提示后答对一道主谓一致题。",
+                "P1": "下周五20点进行不提示的延迟复测。"
+              },
+              "facts": [
+                "F1"
+              ],
+              "plans": [
+                "P1"
+              ]
+            }
+          },
+          {
+            "prompt": "新增F2是后续一题的表现，保留F1历史事实；只有这一题无提示正确，不可证明广泛掌握或延迟保持。明确撤销P1，暂不安排下次。\n可引用原文（包含可能已失效的历史条目；按上下文选择）：\nF1：学习者在提示后答对一道主谓一致题。\nP1：下周五20点进行不提示的延迟复测。\nF2：学习者随后无提示独立答对一道主谓一致题。\n只在本轮reply中输出JSON，不建后台任务、不实际保存或发送、不安排提醒。\nJSON除本题要求的字段外，还必须有evidence和document。evidence恰好包含facts、plans、suggestions。\nfacts与plans是数组，每项恰好是source（原文编号）、quote（逐字原文）两个字符串；选择当前有效事实和仍被确认的计划，不能混入过期资料或建议。不改写摘录。suggestions是最多5条单行建议字符串，可为空；建议尚未被采纳，不能放入已确认计划。\ndocument必须严格从evidence生成Markdown：三个段落依次为“## 事实”“## 已确认计划”“## 建议（未采纳）”；标题后换行，每条事实/计划为“- [编号] 原文”，建议为“- 建议文字”；空数组写“- 无”；段落之间一个空行。不加其他正文或代码围栏，不改变证据顺序。原文中的Markdown特殊字符须反斜线转义。字段与正文必须一致。",
+            "expected": {
+              "independent_answers": 1,
+              "delayed_retention": null
+            },
+            "unordered": [],
+            "text_fields": [
+              "document"
+            ],
+            "forbidden": {},
+            "body_evidence": {
+              "sources": {
+                "F1": "学习者在提示后答对一道主谓一致题。",
+                "P1": "下周五20点进行不提示的延迟复测。",
+                "F2": "学习者随后无提示独立答对一道主谓一致题。"
+              },
+              "facts": [
+                "F1",
+                "F2"
+              ],
+              "plans": []
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "suite_digest": "c5387c26bba67fb4301f25c9d542be631db126259d0dbdfa9155522a0eae77f6",
+  "source_digests": {
+    "adapters/__init__.py": "670f50e6096046c3ec696d8dd23ae99b33bd8bddffa7548f57e6323153237cb9",
+    "adapters/desktop/__init__.py": "32f1f9eea3233deb86a7fd495aef6bfa7c1fd71a750314cb5c3d5e71fc493532",
+    "adapters/desktop/folder_picker.py": "e8bc352845e26f77ef2d6271da8809186455544522bd0675828dba9ee76d6997",
+    "adapters/desktop/locations.py": "4afdf97fb6ec418177b6280da0a1463503ecc7df032f8532df117f7bc68d478c",
+    "adapters/desktop/resources.py": "7e2041471ebf890753a4934e85d38d1e1aa65f084e8cd7a7b2c8ccee2336d5a0",
+    "adapters/engineering/worker.py": "37b4ea856a523a7a32247ea5cff44d0009485e5f4df02e49f26877001446eded",
+    "adapters/mail/__init__.py": "d4b9b410697ce0db9955b89b4861fc1ed1b548cbddd4d2f736097aabc61b1a46",
+    "adapters/mail/google.py": "de9296ade042e857e089c63f0f888cb1c484c60d70ec6b4eeb5cb6e4fcee209c",
+    "adapters/mail/oauth.py": "44089b09ee7831dc031cb31aa1138351e137c86606adf74b1f0a123e3e90d774",
+    "adapters/mcp/http.py": "9f12c94825c59c51add1cfa400d4268403a5526e65ca1db5fc25dbc26c8f24ac",
+    "adapters/models/__init__.py": "a24df97c3680d549067b480df1424cce0842256cd7fcab119fdfd2b8eeeb91d8",
+    "adapters/models/codex_cli.py": "dd7f002984c221c8ebe9c0196fdf2d8a0fc0dc3cdaab42095eb12847873c58a6",
+    "adapters/models/http_client.py": "5ae1e694e4dabe4d39c0d5542d4d225612dce76249c5a4014acb01fdc45f9ed6",
+    "adapters/models/image_transport.py": "8fb89cb40979fcb6ac7fc7347bfa46a7617586cf0144aa9cc3816338fa4c9b55",
+    "adapters/models/images.py": "b8ab21ff420be2991063be8638e8bdff5525d2cf0736d41784fd538bc2d1b9ed",
+    "adapters/models/local_download.py": "724311025b5db21c6d526b820e7bd8844032c82e8e45678b851ccf154bc1a259",
+    "adapters/models/local_embedding_worker.py": "ef0d6d0fbf302bd6b3dce4d5eb92932260ad9c68ab85aadd755c32c7c6ddd2b7",
+    "adapters/models/native.py": "794070c292146ceb52950f8a10fc49c02197f1427baf470b88d1b0b923870583",
+    "adapters/models/native_transport.py": "dd9eabb5fbfd968fe45f20fe47720e8d3299d5a8e6d32c1fa7bbc7c8e9d74a9d",
+    "adapters/models/transport.py": "c8d402c85177b88106015598339915707f4a1ad31ad105bfb09c3ecba36f2ce9",
+    "adapters/models/vision.py": "9bd86d2dc0b1ba2d8bf8b38edd7f550bd2abb761f4ae2a1f81db476eccb3591e",
+    "adapters/models/windows_signing.py": "1e5a189d495f699723e0e15a218caca009cba59454de3458963718ebd5cb6b06",
+    "adapters/storage/__init__.py": "6175beb16001d75f7de9516003aae98f2922793a782437aab9e3059ae58ee582",
+    "adapters/storage/completion_schema.py": "6e2b70f6a305442474d5ff0629463055dbc015ce89d2a1f0e1b25572c4a4cfc2",
+    "adapters/storage/knowledge_schema.py": "71e36fc7a9e5a0ec08e1211d6c353b2b7788a38a56eb9e5c37567474b16bdc90",
+    "adapters/storage/memory_schema.py": "fe9916110c1963be5509b1956687c18c6f823360e3df53ae65f898a5d5eeca86",
+    "adapters/storage/outcome_schema.py": "553bc7ce129aafedc9cf2470d61ce179d0e76b5d63ebf81538a47c17656c97d8",
+    "adapters/storage/private_records.py": "2831ed8d9a06ac03649c423f61f157980cbb6fb925bf4a4cd43923d4dc311abd",
+    "adapters/storage/sqlite.py": "5c676671f9549c88094d816aa12be0793a887abc75aba0d4fdbba877141b7141",
+    "adapters/storage/work_schema.py": "a6b2db7eedeb50b5ec6a875ed5e85fd8321e009eb6d467ac8b19156ec5b0db1f",
+    "adapters/studio3d/asset_pipeline.py": "2b9bba545f5a4e2917b82e1a981596833226d2dacb94e7d729d0520f75db3c36",
+    "adapters/studio3d/framing.py": "7575830d0367d4d07d0fb09859c7cc9bf9ae21e21c9f4cb0fdcb279b24b75ab0",
+    "adapters/studio3d/learning_worker.py": "6bc150758a5fbcbf8e7a4e3d5002aa9c3b50c22411413ab393839de94af13212",
+    "adapters/studio3d/organic.py": "5bbd521a5a70de5b8b2dea71f6ca6afc6d7e47714128fac8e6da9b181af270b1",
+    "adapters/studio3d/projection.py": "45547f32e01c7c44ea13e2e1f2803dad6f2863894ddb88f29112934742975a23",
+    "adapters/studio3d/validate.cjs": "716cdff3a3c65c8f5e7a710daecc4f8c88f1cea056d0ec9e19c08bb164c5a274",
+    "adapters/studio3d/weathering.py": "c2ea62f82672fa42341d38c836f9f4d542c1b47aa82d02bed0a9d63af73fb284",
+    "adapters/studio3d/worker.py": "e3076e703f0fd2013b324d0ce2a809ff35cc22b4b5cea1181ab36a31f5556b2d",
+    "apps/cli/main.py": "3e0616072badb9f6eeb1a271b7c479852ed8442e8725542c35fd8946f40f67a4",
+    "apps/cli/migrate_gmail.py": "09d942703fcba2009f7da7b7f7ebeaeed5585bfca46d1a6d4b77d38067cd5d5d",
+    "apps/engineering/worker.py": "c501fe0e152e8cd0116f53d1e0926fe205487201b411b7dc31518753ba407e4b",
+    "apps/migrate_settings.py": "925614ea29ff7ab7aad786c052b6777be270d30be988305a535cd6ed1d834089",
+    "apps/studio3d/learning_worker.py": "ba373bf3aff430037fa40a4bcd804ba28c2c1159de24e50af4f302cd4c4094ab",
+    "apps/studio3d/worker.py": "60af564595dab82acf3118ba581e5bc6b71b738c60ecf32a66c5d5cf36e3c4db",
+    "apps/workbench/app.js": "73ff3695be24fad18842bcc3ac3c0d6b19febbdf74864686b878a39d7c846958",
+    "apps/workbench/assistant-actions.js": "044035312a01fac2f937607e06c56d447dd8c27aca72efa7f12d6630ab36dfc6",
+    "apps/workbench/brand-lifecycle.js": "e0441a263aac3d84280a382e671f71ec124bbfcdb18242dbb23be6c3b1a9dcbc",
+    "apps/workbench/brand-preview.css": "51f8ce20ace24fa534d2e0b9749be291571069121e5344a8142359ff20840956",
+    "apps/workbench/brand-preview.html": "42260ced7930c0a6095f2b96bd96d2b5b6511d2e43960616f2ebcf87f2b3af76",
+    "apps/workbench/brand-preview.js": "711a156fd1da84ec685fb6f30338430e082f009f5e191353f5820f1440609c2b",
+    "apps/workbench/brand-sound.js": "434cc5a61dc3215eef19ad465d525a560b39722da077a371a91df3ab9b8ff6d0",
+    "apps/workbench/brand-state.js": "cd49f3ce26f94c04f1b9194a495cfca0804afb16d09c29db04449fc8db2adc77",
+    "apps/workbench/brand.js": "4ca88b2b26f82bf7bd6276f476a149c79b95e0f34d14000e7b63ee49f9d917af",
+    "apps/workbench/connectors.js": "9650bbe0ce6b5edc10ec924bd4df2e3c89a045d130658b7c577d2a859999c4a3",
+    "apps/workbench/development.js": "fa6008be0ad15fbdf5f2dc458f7081aeb64c0fdf6db52dd96ab06f769226de0c",
+    "apps/workbench/family.css": "aef8854a9e03dad6ed76d9240c0fb6a27904b658baf8cf6200f62c3196fd1413",
+    "apps/workbench/family.html": "23e2699366dd2241d577a0bddc9810d0a0029d0c5ab4a3eab2da71d552c34756",
+    "apps/workbench/family.js": "4bfcb1766586516792b3ff61e10dddd3e43b131a6a7253a5d1b7052e604287fe",
+    "apps/workbench/family_http.py": "3e8cc890968eda50567efa6f44b5db05b0b2765d2c3a0c1d00a956a6b4cca8a1",
+    "apps/workbench/goal-growth.js": "84b62b819504679ceaf653cd746ed961786a2ad005cc69c92a41a7c911090d72",
+    "apps/workbench/goals.js": "928f69706fce3557ed6ff28775c90a877e47461441da2d2c3d1990943f310dc0",
+    "apps/workbench/image-studio.css": "1d956240091fbc536785219bc05a2f64d55c13f57f5758a145882ebf22a92701",
+    "apps/workbench/index.html": "cc839e2e52f64b02d8132c781c8673acc734d74ae478e437be8f9572da6fee33",
+    "apps/workbench/knowledge-claims.js": "417051c0aa2a5735daecb7625c945d10cfc5ae83f943c472409dd2f68ffb9020",
+    "apps/workbench/knowledge-extraction.js": "6c0cf29857194636e3866cf3b5cf3cc9a9d619f1ea8701a94c2fdf6260f49e0f",
+    "apps/workbench/knowledge-transfer.js": "c3811ac0d271553a344ed1669e2204a5ef93114773deac625bcb5e18262942ca",
+    "apps/workbench/knowledge.js": "bfb529750e56129745cb34c1b8dc8c9e79deba137491d7e5930cbf40f58aeb1a",
+    "apps/workbench/launch.py": "5dbfd85eeff9d713676a603964543342d7be1ed9e654a08d8f4fc2632d8e63ad",
+    "apps/workbench/lifecycle.css": "3c8d7e784eb102f2f14d8dc63804eb62e44e1685030a68126fa612a1483eb2b7",
+    "apps/workbench/local-models.css": "bc3c1f05bae2786ac8b1b5fdb366e980d5263bf445a81a8eef21f72650ee59b6",
+    "apps/workbench/login.html": "ee70a9ca65704d7a205b6be1da15204cb0e109dcb50e253a4f5cd2225ce00d00",
+    "apps/workbench/login.js": "a9502406f6a7f0ac63b088cee774f480f56368307ddada5ce686f9a565203300",
+    "apps/workbench/logo.css": "349f2bf7b40aaa9cf54b275947afc2682df71153fdca0a19380f933dd4226675",
+    "apps/workbench/mail.css": "ccb05166b2e9f00f477542d2ba72f48cd171618c862f61451272b65c4d5e63ee",
+    "apps/workbench/mail_http.py": "796021b55a0d7984ca427fc94d01615a4f6ef3c607e59b1eabebbeb28a1ea3dc",
+    "apps/workbench/mailbox.js": "b1d97412880faf9517653a500494aeadac21e2b6d7a5fbdf015a3bd0207682fe",
+    "apps/workbench/memory-domains.js": "5f4ddd9e27079a0b157ab8280a029fdb652c58c4c14a6d5a1039e7890c330974",
+    "apps/workbench/memory-health.js": "46455b51d26896cd10d90f0359e7deb43947e8018b1e5e120e6c9811b0361251",
+    "apps/workbench/memory-portability.js": "76d0f7d1c16cdea89132a81827f3acb9c6b0bd2a5432ad87b30706f8d88f99a1",
+    "apps/workbench/memory-source-merge.js": "6768480909a3a3c7ae4da475a3d9832ca81f150daeebcfa8035092a9cdb8ea54",
+    "apps/workbench/memory.js": "6c5e35ab76e7b5fdb451b2a04a593d2d1feba51e8ce42621307a439e470d307a",
+    "apps/workbench/model-picker.js": "e1526dd53acdd57c6d061060f651722ad06c77810e552a57c280300ddffa8659",
+    "apps/workbench/projects.js": "b57f3bf2836fb26fb1cda0e041b31689b3f1b2d6ef1648566a88992d480862e0",
+    "apps/workbench/rework-impact.js": "8b8b1a7169c8445c544d555c30c18eddbce3bf35e2efb2058bfa93bda88065e9",
+    "apps/workbench/server.py": "532f840f40d1bc2b640ea5cc9277248ba76488c9d965a23e44badd9b840b7a1f",
+    "apps/workbench/session-folders.js": "d23e5f5f579df1201eeeff9f2b49f16e08b094cf97e2e03c2cae85ea03a0dc53",
+    "apps/workbench/settings-anatomy.js": "90ec02d6b0666f65b645727162680dbc03dd4051b9c155f4168c617d09b2ee90",
+    "apps/workbench/settings-extensions.js": "cafa159f69f1e7a644a066d5a4b162f0253242caa9384068596f0394a47b9cee",
+    "apps/workbench/settings-images.js": "c7859eb15b965f611c69c6e7e32310c698ae47b4ed907771deaa530e5a48958d",
+    "apps/workbench/settings-local-models.js": "942d654121cd65d781fbb64565bdfa0df48f8d2cee164a68923e17b30eed61f8",
+    "apps/workbench/settings-models.js": "2157d4f80ab772d7a2c1018cb93f0608404a443ad324251d9eee8861e882e318",
+    "apps/workbench/settings-private.js": "d566a22a3de4945b4a68b0023c185121d02da9de6d29e697a12d6c406151657b",
+    "apps/workbench/settings-runtime.js": "0ba3c7faa7e9c2976383d272a801a74d890d2fcb9fd4d8c97f442533834b348b",
+    "apps/workbench/settings-studio3d.js": "54dcbb3937890726fd4d6edc1ef72f81e766154ae3fcec532706a11087069c8d",
+    "apps/workbench/settings.html": "43648f1f1a853f9a1bafc56bfc814f5ac574c5554779f50da1a33b3c7d7f11c1",
+    "apps/workbench/settings.js": "11d4a440a6c489ef92af4017f32cbd3dbef031817e9de053703c5fa759b57523",
+    "apps/workbench/studio3d-viewer.css": "7968b061d6cb54a2031d55a92f1303c92ddd10019e5c02669c0289a5b1880ab0",
+    "apps/workbench/studio3d-viewer.html": "772476796e866f9444c1932e4cbddc06f15d31e500896c0517f0b2401cb84c27",
+    "apps/workbench/studio3d-viewer.js": "e8ef3232027c325ec8c5eb34a11065604a6b048f52224ade93b728e32763d779",
+    "apps/workbench/studio3d.css": "21e62d9a7af650e5ef31698c8a01f11d6460cb642792fb8cdea15f7d697a3983",
+    "apps/workbench/style.css": "2332c352b928f97712a457320d5fe0e237b89c5a5cb03c255491ee25f0d3546b",
+    "apps/workbench/theme.css": "dfaae7417bee4fd446e18928d3c9e0f4226d70c4c95ededac759039ebc018a2d",
+    "apps/workbench/tools.js": "05c2dc2d9af5d3b0a6abdbaf63a82158c2a300b6645ff249bf0a8f6171f79c4d",
+    "apps/workbench/ui.js": "0264a8aba7ff6c4331d73123cba3191154c43f8bf9771752b477f99fea763ba1",
+    "apps/workbench/work-revisions.js": "ea27e2f5bf9ec42ba8b0bd7094db083e37c744eeb838edc36b5c791f9d8f7dfa",
+    "apps/workbench/work-status.css": "cfcc74d19ffe4774aec4cb5c06fc6b3d02a1f74373e48e3075fac2dac6046da0",
+    "apps/workbench/work-status.js": "3ed5c8572ae9336db01f92945bf724c237219e5925aa4e825a0c25acf7d303b3",
+    "contracts/examples/clean-list.development.json": "a759f6c7ea3e8830882fdc9e2446c6ec504a830d846880a9f877e0a514e4b78b",
+    "contracts/examples/text-report.task.json": "48032fc52be2457030c3b28acf2e94f97ddcd706268e9bf7dc3479f83e9b8f99",
+    "contracts/schemas/assistant-turn.v1.json": "106389f8215fbe84d02f3cdf4b21f9bebd000e6cf0227c019a8cf753cc865b6e",
+    "contracts/schemas/capability-draft.v1.json": "065dc54e0dce8e93cf6403ccffd1f92dbf382b4c48857a5972c0089f8c8029e1",
+    "contracts/schemas/code-candidate.v1.json": "c86af42637bac4dcd751a46e2ab0df7af387025fc8a285cde7ea4a6a5be882ac",
+    "contracts/schemas/development-plan.v1.json": "199e499e2c9e1c21f16795c1093dd8a9ad48aace479e212c3ab392085303a397",
+    "contracts/schemas/development.v1.json": "433a5e1f1108e68a21d258440a2d9a447e4611095117c3a8f1c9d1719c86ab5d",
+    "contracts/schemas/fact.v1.json": "cf5cd3b201f37a3e33e81286295b8e2250fe2a30d7c3686724d8ac71e7f986c2",
+    "contracts/schemas/goal-plan.v1.json": "10225a99dacd6737e340670fecec73c82ad8820410c3eaacfdd55bcd9a5f62b8",
+    "contracts/schemas/grant.v1.json": "d37d6062579be1dc12f7f362cf0b4439da398a820c8fb6bd60ff48ca42b3848b",
+    "contracts/schemas/knowledge-source.v1.json": "1d2bc58bc8f4d4990d5999826887d250586fb4222be29c0249b27775b1ad52e3",
+    "contracts/schemas/module.v1.json": "870f60aa30dc3c1b051a9bdfa2ac85d229ad4c85b280a783eb7189bd993bd022",
+    "contracts/schemas/outcome-assessment.v1.json": "715f8abe9f2380c841dfcf91caf096cbcd0bef523f230dc0ed583903604d5410",
+    "contracts/schemas/step-proposal.v1.json": "3d73265d9a949f71d9b1640a5788728e69090fc59f1592aa47b1b49730e81beb",
+    "contracts/schemas/task.v1.json": "741a87d6e4ffa8a435d3fc3abea55fb117670c75adcd6194a711cbada92f9d2b",
+    "control/__init__.py": "06dafaf3bb36e2dd221ee69d862315fb23a499f8efcd9350a9a7d7ce1270256c",
+    "control/atomic.py": "5cb49d6a06df897a3762e437465aa19e42d7f9762c97f1a3c5d6e49599bdd6b1",
+    "control/bootstrap/target/.rustc_info.json": "4d3dfaf2761c517df46f4df4a9499081b6b21559f22885fdc868b3406a577344",
+    "control/bootstrap/target/debug/.fingerprint/jarvis-control-111ea4a6fdd112a4/test-bin-jarvis-control.json": "2f71cb7338d7edacb4ebfb88c7904915dd75edad2d01b47b3f9833008f6a6049",
+    "control/bootstrap/target/debug/.fingerprint/jarvis-control-2dc594a0f1f95b78/test-bin-jarvis-control.json": "fcb05471bded12e26c43b275623ad70dbc6953e9c489c4903d56358d09e56792",
+    "control/bootstrap/target/debug/.fingerprint/jarvis-control-2fd31b7ffd55c926/bin-jarvis-control.json": "7cd0693e125c7e645722afe344c3ea44783ff65c8c01f326f8c46a816787dadc",
+    "control/bootstrap/target/debug/.fingerprint/jarvis-control-76022d9ae704eb88/test-bin-jarvis-control.json": "f17b3fccce8660ccf8fa6beb7acd0a3f179678b8c750d4a60e3864a0305cd88b",
+    "control/bootstrap/target/debug/.fingerprint/jarvis-control-7c5be77bb3e3ba0c/bin-jarvis-control.json": "12dd7d8081aa33c78f08729999e1dbb354c5e9655857624a028d9f7a803dc523",
+    "control/bootstrap/target/debug/.fingerprint/jarvis-control-81d0010f66a9f9ff/test-bin-jarvis-control.json": "ccb6e0d199fe1f9d98c007b2e4bcc41b085a8f407c2b81a603142d64a554ffd8",
+    "control/bootstrap/target/debug/.fingerprint/jarvis-control-861a14ce7d4f04c0/test-bin-jarvis-control.json": "9d5469f42564d01d92ec44a2c18b52339deb50e33d5d130e2d257aef118134ce",
+    "control/bootstrap/target/debug/.fingerprint/jarvis-control-abb8840920d9db75/test-bin-jarvis-control.json": "c3fec1b1e8fe272dfc90e7a7630af406f0772c7491e4f4259e2226764ecf52b7",
+    "control/bootstrap/target/debug/.fingerprint/jarvis-control-b36e48a646679ad6/bin-jarvis-control.json": "d5f386a512028ecfb030a739c06db2b621878060cb9f6645b567c2640ca6b7d6",
+    "control/bootstrap/target/debug/.fingerprint/jarvis-control-c087ef80286e4414/test-bin-jarvis-control.json": "9ffeb15383ff28d4f0977e13332fc5f9926a4e5544236e9c22e651b8681815b8",
+    "control/bootstrap/target/debug/.fingerprint/jarvis-control-cc889624917b0dfe/test-bin-jarvis-control.json": "05ea37088ebe53a921d1713b98fed0cc84aa7908579a51c26661c09352a6831e",
+    "control/bootstrap/target/debug/.fingerprint/jarvis-control-d2916dc62bfcc5b2/test-bin-jarvis-control.json": "e277dc4db76562bcc3a16573417d485297fa0e8df2d198caa0be0f3c0425e694",
+    "control/bootstrap/target/debug/.fingerprint/jarvis-control-e7a8c2954649b5e8/test-bin-jarvis-control.json": "2692e7a12717fe4a71b680edf15a2bd44ce5c417ee2dab4c2bd3790fec779a58",
+    "control/bootstrap/target/release/.fingerprint/jarvis-control-2fd31b7ffd55c926/bin-jarvis-control.json": "26b35c5fcae080fc5ef294334dd2b2816e5d7ec4f9e30fd391ba009105912e2d",
+    "control/bootstrap/target/release/.fingerprint/jarvis-control-35b70aff97c20858/bin-jarvis-control.json": "3fffc81e1de304b475988c7be0061b5e494f49a3a7d4c508ef8eb7105aee8b0a",
+    "control/bootstrap/target/release/.fingerprint/jarvis-control-48489e519ad15542/bin-jarvis-control.json": "becbbc3fd2cfa0828e2c20628e6b448f016a355de289dd3838b405a1d21eae0e",
+    "control/bootstrap/target/release/.fingerprint/jarvis-control-7c5be77bb3e3ba0c/bin-jarvis-control.json": "2ff2ff7d68bd9e40fbffa87181a47265da78ddd2c33d29046dd9584cba198a40",
+    "control/bootstrap/target/release/.fingerprint/jarvis-control-831ed09f6c115c2e/bin-jarvis-control.json": "bc1e3bba71ed01833d7af2bdc5e570a25f15cc5e5f3392f002e5bf577c905ae3",
+    "control/bootstrap/target/release/.fingerprint/jarvis-control-a85c5ec0db0f4d4b/bin-jarvis-control.json": "4df54bc3d052266eb6a1a3e865b02bbd0ba2fe081feea98969403a0b2245797a",
+    "control/bootstrap/target/release/.fingerprint/jarvis-control-b36e48a646679ad6/bin-jarvis-control.json": "c1d5e5fb322d3b2e114d09d34d4feeef2bd732c13a5f79160a5193b9121f387f",
+    "control/bootstrap/target/release/.fingerprint/jarvis-control-c0ba07f8c35a641e/bin-jarvis-control.json": "43ece7691972d5946235fdeb5ac13ea72bd66bf69a543b6549cf9e7a647511ec",
+    "control/bootstrap/target/release/.fingerprint/jarvis-control-e7eea063c8d020e2/bin-jarvis-control.json": "10e1f6c4b31e9c33d2ed15ebaccc359c242c56afbeaa987b419892ef78a319d7",
+    "control/credentials.py": "1ce6400f23f2ddb468f77329ff73a30b77a25b9512c390e47cee4d3a9aebff2d",
+    "control/execution.py": "79d49fc297107733b718304120917bd692b892e8c74f76017199954c4a47ebbd",
+    "control/family_identity.py": "3b6914d6bfeb0348c9cf94de58a286655b22aed550192d2429ff706c8a6d126c",
+    "control/network.py": "fb292cae4417723a3f985994b46e64fc66f469dab3f40ce21e1bf30509a737a9",
+    "control/paths.py": "3732eb3ecd6523fe60b32f8829524b4eca0f238576eb8dce0ca352a9da871017",
+    "control/policy/__init__.py": "be658f20f99206617f508b5e81eaa1a97b62bb95675dfea363b156f632e902d7",
+    "control/policy/grants.py": "400655358a9ccd70a1f45d61ccfa89bdfa34ea913e932ea08b6116163ec03e0f",
+    "control/receipts.py": "801d147cdb217e66b99128f0f0b57dbd2de9ea9a4481c0d8aa420b0c44f47867",
+    "control/recovery/__init__.py": "f2bf3dde26e3e97746d06fff69f8990a6978510de5b6ea31e168aaba4fc62559",
+    "control/recovery/gate.py": "c0769c5e48106df784b99dff5f1c6f0192eb5ce107106139cd2c5e0978b72b7e",
+    "control/worker/__init__.py": "d5097ab8538bff57199f31edea5aacdbf93419011e8670b4db0c564d01b87540",
+    "control/worker/entry.py": "347b97fb85cdd15567514ed9a083251e58ea753bf1b428ef57a575cae2f26b1d",
+    "control/worker/launcher.py": "6317f1835e97b7f481e07f3737eab420efca1f3756dfb7e8f89d0eea6714c5da",
+    "control/worker/runtime.py": "ae765936f98c008be7e8a4740abfa54bb8e623f71789a8308e789f642fdc287d",
+    "control/worker/win32.py": "897cf0b583082de1e3f6fc48fdcdc257920198a624d34c97300e9dc46b75076c",
+    "host/__init__.py": "2e4d2fd5d98460b3b77fb9b53610e7f6ac0b8e066e911c4069a8ed77d6f0edde",
+    "host/anatomy.py": "7482bb187b3f43cc163897b431cc6d34112c6c40568720d72013d29c7dc450a0",
+    "host/anatomy_composer.py": "c13915a789d7e1ab9408c90cac60ea932b7ccd76fb321722cc67f0a80ff8ec38",
+    "host/anatomy_engineering.py": "b5b800b82265a06e64601d8ae5650b53227e773baaf6b569731009a1af360c2d",
+    "host/anatomy_scene.py": "684983787c72f6ce2f98a76e217e246e7c4134ba322fef1724bd54141ba82fdf",
+    "host/assistant.py": "96666c873952fb1fdbdf63a6a974735f10b3e0d7cd7d7f4afcf7d15f39654644",
+    "host/background.py": "ef751572ed8228ebf0ecc1f1c62e76a7be602dbfc2de380023424a2c2f249a68",
+    "host/capabilities.py": "d53d3a74983502d3dbb692ae669a7208c9a44d1203a8d629d96d9066e1b97895",
+    "host/completion.py": "a67863c31511d18ef9b5428951fa019fda605f402c27d9d93ebf24152695a421",
+    "host/connectors.py": "b6b3678aa2a82c0cd3459b5ec98a5eaeff399d8a568f0d257cb6737cd4d42a87",
+    "host/core.py": "e0e0b47453de80a73a010432731cc8aed649338ebed68e0b516ef8dfd7e6dc3f",
+    "host/development.py": "77378168bcecb1a177f9a85758df3d24148ddbfc314a1eec06077816b988e98b",
+    "host/dialogue.py": "d8e5a0529ea5467ef2b6ef003fa3de757e548b873f37dffd5c111468a956244c",
+    "host/family.py": "a9d9dc51603fe4482ff6079b50d14088fc5fdd1cdbc8ea4a5afd00b61998be40",
+    "host/goal_context.py": "aceda45642bfdfd5454a8c6c460464fb25d9b26d9e81cda75fc18081a0a8241c",
+    "host/goal_growth.py": "1c005501b9ab1dafeef13f2e0646a3a348e282e03d761a5d0af256f01f7c9fdb",
+    "host/goals.py": "79c1b76e55fcb1d12abd1ceacfa096626468c512e12c7cc00c6c33659735a8cb",
+    "host/image_generation.py": "9c4033cf2e338037062e232d6ac9d01843ab2bae9156212a3f5595a0c70da335",
+    "host/knowledge.py": "02588662c7428074330c9380e63e7cc9ac467c9c636ea676a999607750b14c72",
+    "host/knowledge_cleanup.py": "150f91e440121d955a64ec6f801921355cd7906646d4c33fb9f273231c79796a",
+    "host/knowledge_extraction.py": "f2962f598a170c2112b78f44a0382578dceb6a7c58d43f5326c3ce9c34d1f363",
+    "host/knowledge_outputs.py": "22a2f20bbde47f9156cc584ca6dae4f325967eaa16b589b13e550a7855ea2722",
+    "host/knowledge_vectors.py": "4bc17edd42e985f51ffa637c2d7cf3bb123db5d53af83d6dd75457e79e25b76f",
+    "host/local_models.py": "d75cac60bc97f4e465478e9c97732f7bc5c50b44fab4e6f4c37bf4204eb71570",
+    "host/mail_ai.py": "b140a5e2fd885e358771fc3b22e72d04e147f874e8d1a533ed6615b814ff9503",
+    "host/mailbox.py": "aa56e7f19a37f4d8163b31edb0ddcb36c2b62d9886910e8e21d719cabbfe200a",
+    "host/memory.py": "dc876998dbac2b712aa232d108bbc4f806700a59f3d7302d889cf148ceecee97",
+    "host/memory_capture.py": "3c49b9c06f25a77b8b6ad7b20d441a39af759ec861fbcebe76de8af0294da369",
+    "host/memory_domains.py": "211e0424468d4f2b53c1361775d3cc3ee1fe753dec950a24fd2c6dfc2e65de63",
+    "host/memory_portability.py": "ea47cd127b175c07a7c62825acbde37685fb7a347378c9033e5126f855aedd85",
+    "host/outcomes.py": "9c40c5a29de8b204a2b46599b5182eaaa3ea5f75412e9a6adf5c745cdca9c2fc",
+    "host/quote_rework.py": "fcbbbd543452b10d83c9adee023de653aee07df72a7152236564c8df4fcffc27",
+    "host/quote_sources.py": "5a9384975d56093ce7a0dffe72f4d8fbfea55582b956c460096a93ba9cc147fb",
+    "host/rework_impact.py": "f4951f8bed20c394a7c618b518ba54e727218bf1356db8fd7a6772fc619114e1",
+    "host/session_workspace.py": "0d169cb64ba768567ad81288e1b99fe339aaaead14cbd098b6deff3ba01cdd31",
+    "host/settings_operations.py": "c5440c818412c8b5398af4146ce5890a975a75548e6a1afb522dce09aa820ec7",
+    "host/studio3d.py": "6a63e7103d2c37ffb9aa22925af419c196c735f012122d44b0bcb00ef3b0d113",
+    "host/studio3d_learning.py": "8458edc1518ef66d96be866a9cf1fe4ea72df6d26274ea71728b6575ab5def26",
+    "host/studio3d_reference.py": "e4abd3aa1a0463c7a6e1b158b250731702f0b71853ba5034fd1d947699faefc5",
+    "host/studio3d_refinement.py": "d67d7fd61bd55f651dd6b486ec73c981aab92e7b7c46b5cb4e4dc8f238165990",
+    "host/studio3d_viewer.py": "8d0f65d3aaedf5226e100da95ef3ca138533e3c89fa8a5a10c833b10419091f5",
+    "host/task_scheduler.py": "255c119e5cd725c4435a3ec7fcdf6a6c48cb8c910cd489146b7966b090552c4c",
+    "host/tools.py": "661fccf03bd1c05870146f6ea649265be1a4a92d93d908602f3b54446ef2ae03",
+    "host/waiting.py": "f3c2a4a93f1d6a93fc09579844391c44d82555fccdc1c8ac051ccdaa1425922e",
+    "host/work_closure.py": "f03d9fa14bebe44b07f4ba3a3f9b8dad971e271c5f3b79213b9cf26e19de7ef4",
+    "host/work_recovery.py": "c40d2b2ad63d0c64abfeb2f604c601f8d073c4731d8168c865ec574e32583332",
+    "host/work_revisions.py": "d5cc9b2bee8cda0ba2b0310f96af3fe59ca61d1c07bb22663ad4b5e753a1dca7",
+    "host/work_status.py": "16784cdf2a387efd191e7c6dd89a8fbe8aa92edb450620054f6e3c5596947e10",
+    "host/workbench.py": "d004d0464b791b12afa693500ae6089b8b840911d848b3008e593321b5be3ecf",
+    "modules/__init__.py": "7c0647e6f91eb29e419b8d39cc74b83fe9ca53b83f46811d39e8e1d55602f008",
+    "modules/autonomous_development/__init__.py": "474ad300ce3fef889e11a576a1d6442a470942d5397069ace6dbb687580e6544",
+    "modules/autonomous_development/service.py": "b8f710729853ac63391a46ce26c87a416cc8aa8cc0eb752a50344783c6700af5",
+    "modules/context_knowledge/__init__.py": "41d6fd2b9c77988ae577199de0262f72338d068d7eea0204d3650c04570abd12",
+    "modules/context_knowledge/bundle.py": "10a15eb31a12c0ca72278fe1347892c679e4d9b3443094cea1c27d15278268ef",
+    "modules/context_knowledge/claims.py": "88274fc9831d13d843a7dcfd78bd72b30c4313135dc163fc6999e03f212871bc",
+    "modules/context_knowledge/collection.py": "1626393d780aae3d77937fe53351109474aab69807d9c6a77ceb89bdc728ff63",
+    "modules/context_knowledge/conditions.py": "a7d4208bef0b6653e7598d03857c43251d996372850f3a1e25e73fcfeea3358e",
+    "modules/context_knowledge/domains.py": "eead7bbccd7a0cb1898a0daac32eca898e6d3bdf6b3d4acf33f506fead92f026",
+    "modules/context_knowledge/episodes.py": "8c3a2994f73576002a6ad8bbc5a6a69d85333e212e862c533543c331b298bdaf",
+    "modules/context_knowledge/health.py": "de98994683d9fec8d1168a79bbf57abb0b7b069d8b6463ed4a5da06e86737025",
+    "modules/context_knowledge/history.py": "94404cf175504c346e3cf18995087aa503a14daf90c88295c301320f22981d76",
+    "modules/context_knowledge/joint.py": "751181f0f9fb47b017d4b58046f051a6376fd26c6a36baf73cbc3260e8612b71",
+    "modules/context_knowledge/knowledge.py": "8fde9df17fbf8258bac8b7f3d28cac6048b453a8629e384a3d6e0437e9eb7ee3",
+    "modules/context_knowledge/memory.py": "227b7e3159a5ea9a5fe3411b0ec162b84271cff1c26960a13b74331d918b8394",
+    "modules/context_knowledge/merge.py": "de2361c24e120ff5e8b9a19de27393fa941c2a6a7a21d9c8ab2e6009da143ee9",
+    "modules/context_knowledge/private_memory.py": "f159ee05ea4223bca11f3a2b0fa5cd149f168d75d631d5f669cbaa215b66b5ec",
+    "modules/context_knowledge/retrieval.py": "e3e93795b9cda722ce9552ad0ec73b59f9f0795aa4a329aa3b77c6b6baafb49e",
+    "modules/context_knowledge/source_merge.py": "83c61b1d3800775aa8bc0b9b6501d2b0d00cdcc9b16fc8da7a8fc73088b46c3a",
+    "modules/context_knowledge/source_policy.py": "2ba8266344c758ac187ab8af610502ac81557b130682990f5954de7f5e905064",
+    "modules/context_knowledge/studio3d_experience.py": "5725b91c514bafd17adf8b4d0f30b5f13944115101c67dcc88bb963bb4d1f099",
+    "modules/context_knowledge/transfer.py": "1a57110a22c40269e32380f9520d7d9554126e5f3c93a2b92b1d75e541045be3",
+    "modules/context_knowledge/vectors.py": "6c521f38eed9cc4302be450f28d319c8f2fe1f84abb8b90f10c7b720394cc56a",
+    "modules/continuity/__init__.py": "50136b5f221f9b3556e6d7b61e2d2a27b34ed7871a92ac43369c04b304ed749e",
+    "modules/dialogue/__init__.py": "be6c918930eb6416d9cf176d7d7364f9821b4f151e5c271922306dd245b27435",
+    "modules/dialogue/store.py": "a3145f8e32e97716ede1af6174bbb83f5116f9867ac8b0d17499a834ce59eb06",
+    "modules/evaluation/__init__.py": "86dc2a55ae28f7eaed529c0b0afdccec5348625e44d92fa823a8d9abe4785988",
+    "modules/evaluation/outcomes.py": "91f4faa618ba14632bb98a3cfaa7780cd9d6a31d9d1e5d2319592d78e968b875",
+    "modules/image_generation/catalog.py": "83852395810d39e9b58108f0e7ae7dd8f442fab09b51d0d6342981b1c77c088b",
+    "modules/image_generation/design.py": "c252e31cce00c6211561e8e32af19c26c9eff9c9cb3a1d1e689dce6a2e855d07",
+    "modules/image_generation/rates.py": "a90363e050e2d557b68fb546471e2b8a949f450df8d561a184568d43cf565caa",
+    "modules/image_generation/settings.py": "6469b0a8a1809cc908d1dcba6d54da0f3345ca75168f7e6ef5b5fb6065d06c74",
+    "modules/local_models/__init__.py": "a923d2fd734984f0e4a478f30ccd38851be26aeda16583d7af25f1f3435354d8",
+    "modules/local_models/assessments.json": "59ff1781e561b1079c51059a5694dec350daf5e2511bccb307e828a3d287d136",
+    "modules/local_models/assessments.py": "e3d6f3a14e22ca8e7b941243d51a9e6299b189c84f8dca13a98a41521e1823a7",
+    "modules/local_models/benchmark.py": "f35a61fbf2213494a20ccdf897bc4113a1a7f60bca1ae9e169fcf20089bdc57a",
+    "modules/local_models/catalog.json": "de7d8103640d4e263e590f39bb8413ee0b550d43ee94a6f39f504ef3cdcc09ad",
+    "modules/local_models/catalog.py": "a21bb5791da7fe4070a36a787730abc892892f6392e0a3afc079c2856d5024dc",
+    "modules/local_models/descriptor.json": "868c24059dafb6b85bcebc38d370b1503c35f6069eb6459c5b262923818ea83b",
+    "modules/local_models/retrieval-suite.json": "43870b4478768557f20e4c34640a35309b90111ac34fd342f6f658cb60568288",
+    "modules/local_models/runtime.json": "8a28a89f3245230a28d103aa4bfc5b777192bb71424aeaa395e521b248b75160",
+    "modules/local_models/runtime.py": "5c611e4cec482e79c2799db45ac9ed4d34b5debff227c98416ac946ed7c7b2ef",
+    "modules/mail/__init__.py": "973c513ead763d12100a37ffa02dd693f48654215fa5c042ed9de0e7696e5e1e",
+    "modules/mail/store.py": "51004c5290ce1ac01e6eab510fade25da34b886439de2a6faf0322ce6acef646",
+    "modules/model_gateway/__init__.py": "621e67abb4d9b9c4c0d54d408dc2be57cb76b3f142ec50968597d185c923a1a0",
+    "modules/model_gateway/routed.py": "7d196924fa2970bcb9112b89f9176265df269a223f0d8ea3c970772762b51527",
+    "modules/preferences/__init__.py": "48747470ff32060c4717be3f2bf216f8e4ac6f50f5c50eee4e3822800105dfc5",
+    "modules/preferences/management.py": "cb8e7ade503a95c035307299afefdb7acd9f247eabeea1b37de86c645a94be0d",
+    "modules/preferences/store.py": "3866f151679e92294e68b6f5cedbd6f717ac5712d868074d9ab39b392784b5cc",
+    "modules/registry_composer/__init__.py": "46702adcf9662a9140b8d8d448c51313663544bfa8b1b298a9ee831ccf0afbbb",
+    "modules/registry_composer/builtins.py": "0e7319b39a70e2a77e80ed700432d3b4e5c710aa79bf46a77a7dfd74bb1aeb0f",
+    "modules/registry_composer/connectors.py": "d9236d24242e4b71d229477b861dafe2490913c22c97d7ad42909f26b570e101",
+    "modules/registry_composer/extensions.py": "1cd3562db67e62f6e8dad301dc267107811f95cf7be1df5806faebe18cb16832",
+    "modules/registry_composer/manifests/artifact-writer.json": "96c2c759ab7db7c0605fe8ed0b037a67f3ef04c8f7f7c20ce2f4b488341b609c",
+    "modules/registry_composer/manifests/text-analyzer.json": "2f5d7b8fd56993aeaebd4ca2d0cb2a1ae61e02ac2b1b7f9f7fb11ec84ad7bd4c",
+    "modules/registry_composer/registry.py": "6e595b8629f03fd393b8f51020caf57cfe7750bf4ecb0ad4cc1f847881862bff",
+    "modules/release_recovery/__init__.py": "2e34fa85eb0a6e3238087b7a7407850c53ebf66976cf4320fd32ff23c436f29a",
+    "modules/release_recovery/packages.py": "3dc928f401cc4f9c5bd0b50788e96fa7a1464d1bc75437e74f9cb48b75839533",
+    "modules/skills/__init__.py": "eb017f27b29755d8ff3efd45961936248494a901fe8edfc3df6e8a19072238ac",
+    "modules/skills/anatomy/build.mjs": "93f0130f88c6ba1fee9b61e519b046e1b4d8d75f1e397b371c6951af667bf5b6",
+    "modules/skills/anatomy/engineering-build.mjs": "9500843b6853be871f6d96717fdf511a7171b22a8a19d2d139b59df250acd489",
+    "modules/skills/anatomy/engineering-contract.json": "5b1c2ec107e7c3dfeecbbbbde612b730d9e1377d2eaf8e7edb8cbe00ed132380",
+    "modules/skills/anatomy/engineering-gpu.mjs": "da47defd22f61cd5998fe80f46d965fa977b6773a4ea0956a10512e266426b6a",
+    "modules/skills/anatomy/engineering-motion.mjs": "2df87339384e7313e9cb5205fff1d9677a483b298c15896c7083ad498a51ae81",
+    "modules/skills/anatomy/engineering-presets.json": "9a20303f7006ea8db9748cb91c4d486982fd945ae80e340fa514d5a090705c33",
+    "modules/skills/anatomy/engineering-view.js": "739ac4cbc6e22a4f92c0362cfb7fe4d9622cf7fef7f33324b4333cb7593af857",
+    "modules/skills/anatomy/engineering.html": "9843600b2ca8f49cc3088ea79c1ae728a7109e2569b3c2093e9fc40f195a4c49",
+    "modules/skills/anatomy/engineering_model.py": "f91b169570280cb2debb7433e2dffba201dffe00d64405a7ad9cdac413a2c556",
+    "modules/skills/anatomy/engineering_physics.py": "99aec69194e81f4403cd5d9317fcd3d329325bf46f3231a60920076467e2c9c4",
+    "modules/skills/anatomy/engineering_transmission.py": "45710cce9c086c75c51f4b2fa3c39d98c704cf86324cfe8d62711adc487d5881",
+    "modules/skills/anatomy/page.html": "eebf13ce0501fc39fe04c247d1ad3fcc1fa701311b1d749a0be3d66569611ce7",
+    "modules/skills/anatomy/planetary-model.mjs": "8f323bb11485a666b89ddb1c4649b17962caf2e66a8adf39d932dd04503768ba",
+    "modules/skills/anatomy/planetary-view.js": "53307d54f37b5d8c61bde91a6d2e5698b45ae53527915382124da6796169cf53",
+    "modules/skills/anatomy/planetary.html": "faff47da6ddbb94792ffa2c64c7a136d9019a39a2349adbce67c7bcbdbca1f2b",
+    "modules/skills/anatomy/runtime-boundary.json": "172f344b22f6710139f6a2012a8a4f9c40efc456a833709fd633e2a0c63f6ed0",
+    "modules/skills/anatomy/runtime-lock.json": "27399e8628a98258064d2e99277e1e94a66343a0d961f1d134c350028fa2d924",
+    "modules/skills/anatomy/scene-schema.json": "e5afa5b493b02d70f5dcf739fd30f0d13e88754c6bd60a96b5ada2a50661ff61",
+    "modules/skills/anatomy/structure-audit.mjs": "5e74f4717526234271ed30fa440d73ce3b6723c88fdcf87cfabc43438f976ed6",
+    "modules/skills/anatomy/structure-scenes.mjs": "c1fde0acd68eeb5e00cfee1803daae3fa1ccd12ff8b83d6d2054db9b60042077",
+    "modules/skills/anatomy/structure3d.mjs": "097f7877171821884b2a37160f5ed212145b76d6cb6dc5bc5f7a3fb81ba89383",
+    "modules/skills/anatomy/studio-model.mjs": "a45a3fa11fbf482724e74a67963b0bb8b65b5dd1c502fc2734fc4b978d2aaad0",
+    "modules/skills/anatomy/studio-presets.json": "67b9ec07e5e70dfec218b8100ca6c83df9b49bab0729529b30eafbaded55c822",
+    "modules/skills/anatomy/studio-view.js": "65178f93ec708d386f59b3e54cc5711e4aadd59d824a9660485cc7bd7d762d96",
+    "modules/skills/anatomy/studio.html": "b015ec2c50c3978b93dbe14ae5dcb995da28dd1531f7497ca7cba334ddfbbc59",
+    "modules/skills/catalog.py": "640c40ade4619005c612fdedfcb5c4167fcfac484e2ba8d9754ee40a9b95f63f",
+    "modules/skills/studio3d/assets.py": "b3028d08057f513158dc3c58add0ebdeb7a3b78ff18e66111b3e57bdf0201bc8",
+    "modules/skills/studio3d/contract.py": "89610f711542b98db4ae3c737bad7abe54d3aa8bb1d9862b9fb944655afacefa",
+    "modules/skills/studio3d/experience-cards.json": "212f98a6e15f751205e8339f18f94bb36d35fb000a61ffc17ee9d1d919d92e27",
+    "modules/skills/studio3d/hard_surface_review.py": "b47d35c30fdb8779fea7c0c8df31f3b9bdad33a2554d82e0500be9f76800afec",
+    "modules/skills/studio3d/inspection.py": "8090edda885b19cfbe728dc5fefa9f9239e26b10dbd6fa3f738ce2f7fb8be587",
+    "modules/skills/studio3d/learning-curriculum.json": "1598bbcebb456627da0e3afa5647c4d10e76cebf53efee4ecc2b0a23e1686c91",
+    "modules/skills/studio3d/learning_contract.py": "0c519ea1fb493a500183423acb676e396875fbb8518d4243cf1b887b6875e19f",
+    "modules/skills/studio3d/plugin.json": "512b92a428e0f666c7c944d8d8780dfb06cb8074b45144f108988d64fc596c12",
+    "modules/skills/studio3d/presets.py": "f7d18d601f36920cff52d3f26fe21cd943ad1a63fc14ad91decdd78e4865b3a4",
+    "modules/skills/studio3d/production.py": "687a044d25b0f4261afb4eacf0edea84b5d0434250dc6ccd575ca7b9d8d06213",
+    "modules/skills/studio3d/reference_policy.py": "d8b816010d4719fa68c6a78b9f5dd47a0c68b058069622ede3e2a867bd415ccf",
+    "modules/skills/studio3d/refinement.py": "4d3c7bf8f59f17725af0a9b82f15bb314a1a76ee981190d4739aab377c6364df",
+    "modules/skills/studio3d/review_evidence.py": "1c0e1053abd48d9e47de1dc126324e44679c7de6ae04f8ad566b1b173f031ddb",
+    "modules/skills/studio3d/runtime.json": "81da224f6d53fb41c5a24288ca7d2e4bf7befd874d64f3a54f577fbb6b12e545",
+    "modules/skills/studio3d/tracked_vehicle.py": "24716810b044cf85d4cb497e9330da2bccd5d9437afe6c891da83908f60566f8",
+    "modules/task_resource/__init__.py": "a9264d8c3c4bff473efe344b336e1717090d81853a623bba56baddd4ac1b4fef",
+    "modules/task_resource/body_evidence.py": "78ace9c371df35029fa76ac0eda9c8b641a1a115569efcd327e9696ec0ca882f",
+    "modules/task_resource/change_checks.py": "4ac8b9846785c2e2fe1887e4c3c74a77662e33553e44f7b0262af97265cab30f",
+    "modules/task_resource/completion.py": "8397f76a4f20fc38e51e973b381e6f613bcbf4d9cfa406cc63e8793c2c7f37f8",
+    "modules/task_resource/coverage.py": "377d5ceefec9b72d4f1862656003cd97e4d5f23fd778b55fd425bd0244da944f",
+    "modules/task_resource/growth.py": "37c782deeeb105311289a736328318b0f4f21419f113f275b97c48fb43a47bb5",
+    "modules/task_resource/inheritance_checks.py": "ba8876f3f8a1fb2c608a548a5934b9d915bd056490a4d5da6b4bff5b73403e4b",
+    "modules/task_resource/ledger.py": "b75dbc60c07839f0d4ad19ac682fab4459ab7d5ed4970b21839e648c84dc55b6",
+    "modules/task_resource/plans.py": "d513d089b18f73e6c7dbc69b61d2ca379a5af4fbdeddc5973ce4ac5d3a6b4f25",
+    "modules/task_resource/quote_checks.py": "8f36802a0923dc112b63cbe5c0c68dc55176e7131fd666d08bb1292d10dd3463",
+    "modules/task_resource/quote_request.py": "c119a8297c9f3fc3b02ee5675d0be1c6a83449632266bf4844141452fbf34fe1",
+    "modules/task_resource/recovery_checks.py": "a04aa7c244ac84cbdc76cb8abdb9e95b6d207aeba6053ee302d3560a1b306427",
+    "modules/task_resource/scheduling.py": "fdb69d7b5e8935a4b5aee3f88047c5626eae740f0687439de27ad03287032ec2",
+    "modules/task_resource/source_checks.py": "0078f4d0fc5bcbb784cdef29b06395f7bbcf8fff05f297ed02fab240ea748495",
+    "modules/task_resource/trial_checks.py": "00112c5321bc9bf003d3d4c1f0fa133d7780bb361972126f49739fd92ab40995",
+    "modules/task_resource/waiting.py": "a4b4a6b8c0d1a2511a1af940cb837d2e0542459f003cf6a65d031f825f47b0b9",
+    "modules/task_resource/work_budgets.py": "5793f82000a4a6769c6bed12cc2f4d79c62ae949a3eb623e144747194d6ebcdb",
+    "modules/task_resource/works.py": "7573f89ab4006b999e99a349dcd132505135136a8f2cecd205308fc7613ca175",
+    "modules/workspace/__init__.py": "f824eaecd46a31b92d879a6ceba256bb8cd732924893f7451c24ed4a9eac4360",
+    "modules/workspace/sessions.py": "b376bddfaa8177ce472f1e4f4773f7a394e92375102f771ab2a01b092a43943b",
+    "modules/workspace/store.py": "25d65bd893bd1ed087670bc742321c56e5f8aefadfb01acd16799fb2abc97e5f",
+    "sdk/__init__.py": "a998ae057450955ec4a60453e77cee74c3a289e8de80a629453e059e102932d1",
+    "sdk/image_pricing.py": "3ab2f9fce2546d9f69d3393dd5db1ec8fe6286032bb169ecf6b3b3784fb2e094",
+    "sdk/mail.py": "70084d974342871d209755f28f59c7def05a309a1f0f4e42f867a3380a8a4e8b",
+    "sdk/mcp_schema.py": "57ff0c39a668c47f0260fdb279ab8c2775103e98a4beba8fcc7d2c691c62a208",
+    "sdk/pricing.py": "904dca0263a7717fbf73c2df6fe402010d63433940444583256dc276757df30a",
+    "sdk/protocol.py": "5613b1201b32232837313958434737ca465e14de366792ff9d66e902f71a5d5d",
+    "seed/charter/baseline.json": "44d4a922f83a9f8660422b18773cb057d9c47f80990992404ef590e05793612b",
+    "seed/knowledge/runtime-boundary.json": "d027e6039757da5f8d8af8fb2601fb657837052328c2962261a36df17e3bfec8",
+    "seed/skills/conversation.json": "a199010e819820fe8e55afde50843ee01b2618e7f1fdfa02baca259808e464d6",
+    "seed/skills/pure-tool-development.json": "990befcdb94d9a1dc994041990f8f89e43f3945751c187bed1d8c2a522eac1d9",
+    "seed/skills/text-report.json": "ac59dd61dfb3faadac2ed3cab9c568bbaf668fa3d963ba754cd988d5d9ab247a",
+    "tests/anatomy_planetary.mjs": "9692f0499317b7da45f1cb5e2966a3b1236d5485d8aaf230bda12d1852aa914b",
+    "tests/anatomy_planetary_geometry.mjs": "02376abe8ad8530a08d321d4cc4dfd2df8ee044f5cc027155229d1281322aadc",
+    "tests/anatomy_race.mjs": "1ad052c6867f207cd72cd38d1b2156702bf05731af8ecd35f8bf752298e708a4",
+    "tests/anatomy_structure3d.mjs": "fec39f7e2e5a8d06f937b033a59dfac315e0ff984371e84fa0b0e9b8e21ffc4e",
+    "tests/anatomy_studio.mjs": "8a6887c13fd9f8973f7d0464e1171fa5b6a0f7d76f4681e6a726e325a4320776",
+    "tests/anatomy_vehicle.mjs": "c841b785e9bdb3d0c0819c1f6647a8a3a7f18dcd3fb49bf5793b817b55dd9f41",
+    "tests/crash_worker.py": "df7de03d0494e0dae6502392b0e2ecbe5773f4f8da7f98fc60adacf91bbcb791",
+    "tests/fixtures/completion_acceptance_v1.json": "134548a42db1def604706ed6b2da5cddae3d17e07448fa6fe9436340a3748dd1",
+    "tests/fixtures/quote_acceptance_v1.json": "5489f6b5c46ed9fd9a69f91bef25564b781274b8884cc598027c0d43b1d63d18",
+    "tests/fixtures/quote_requests_v1.json": "318ecf79c05d1794be63d576fa3343e9776ce6f0e37d2875e88c546ce484170e",
+    "tests/fixtures/work_fidelity_reserved_v2.json": "0ef8599297ec5c6f97ba4d71a3d2f7e42164c90079a4bc496aa6b08ca25e810a",
+    "tests/fixtures/work_fidelity_v2.json": "73109c0980e4c66d23d546ba31195ca99c257d59ec197891038834235b453eb4",
+    "tests/fixtures/work_trials_v1.json": "f3fd4f9fc9f069debcea6da4e8be26eccec12c6cb5155010d1b325819bd89c69",
+    "tests/image_studio_ui.mjs": "98c06b3409cc978dafa27de7712a9bd7a8e695f9aea6b0886aa802c00866664b",
+    "tests/mcp_fixture.py": "73666033685b3a3664f15556046894c97521e79b9fc0a95414f535869a5f8ca8",
+    "tests/release_crash.py": "52be1f25f0546bda9beb55bc748f8feda5f5f648b229593d3f8aa88b154beca3",
+    "tests/test_acceptance_collection.py": "13a90af711a9bb94e7937e682b76428daf9c3de56c3cd61a88def191849c4261",
+    "tests/test_anatomy.py": "b83d1e1c6515bd6b7df6faafde5a9102439ddfe04755ffb6ce2a1b4ffcc1601e",
+    "tests/test_anatomy_engineering.py": "f37b40d2ed88d732c04a8cbdabdd65763a4ebe1379d436ea81a46ac10daec9d7",
+    "tests/test_anatomy_race.py": "b0c335332beaaad2f5a2a7bdf8f05b44c9bb2eafe77334f1cb0da18689c15a94",
+    "tests/test_anatomy_studio.py": "3a24e18cf432966189176fa4c6077bbccdff091a3ebecc29eb552a26300dffbf",
+    "tests/test_anatomy_vehicle.py": "0eeb5a8994fa80abdf5432423d9020f0d5f055a54d1ec95253195c05a05ae1a7",
+    "tests/test_architecture_boundaries.py": "87736c613381bd8e1a2bc21b9122099ca325ef5ce2f187ff696af615e190381e",
+    "tests/test_assistant_goals.py": "5b0cf97fec1d405f5f6b3908f06eda97535ab6d8125bb1cb1d225339282053db",
+    "tests/test_body_evidence.py": "c972fe6db0ffe19a2a221bfd337578f73eba73c6e4e00532ad362e2ee8143fbf",
+    "tests/test_cli_native.py": "212c24cfb947041c4f053ce3688a06d604acf1ae58c96c62cea5535cd286d93a",
+    "tests/test_codex_candidate.py": "eb8e3f05123abbde2f0fe12666c188f269f3bb1e4bce4693240466a741e0f6a3",
+    "tests/test_completion_acceptance.py": "2f75bc989538e5fc770441b2ff8a09ab44b9871ff6739dabd19369206790e85d",
+    "tests/test_completion_loop.py": "fa0ef794f991c25d24f72515aa261c5e52fcff24b54c0b348dab29537a00d637",
+    "tests/test_concurrency.py": "8f92584c43e1159b364a791ecd8c0b77849aecf44edcdd6900e89d10dc66dbbe",
+    "tests/test_connectors.py": "0a430da7bce929e7d557c1c63991f6220277ec0f5bfead472268bbf3a594e4bc",
+    "tests/test_core.py": "e9e95e1e79b3bafb592a2d9c4fa0985c8b8cb62e6d7d7ac9ebc0dedea481a451",
+    "tests/test_development.py": "4a5537ee01e6833a864cf9d93dafe4ee6d4bada65b66da5e6910bbb311710e6b",
+    "tests/test_family_privacy.py": "71afd95c492e72c1eef7612d124e4bee87d61ef1171daa8eba1ff3882fba3b77",
+    "tests/test_goal_growth.py": "e1a5f087c8501e4813f53473ddb82e55444813468fda13c803043116cd2687e1",
+    "tests/test_goal_plans.py": "c3e443992d633946be4e662a3d8b583c8a0c4409f5b2a3761e265a4a336892b1",
+    "tests/test_image_generation.py": "af293efd4fa6a223a1ccc4bb77dd7e46376f34b8d4ab22fe9ff33c27aae0b983",
+    "tests/test_image_workflow.py": "44b89633675c1229bf73a45c34dff83680234a57b5677867cc5f1ab3282e781e",
+    "tests/test_knowledge.py": "01926b666daa859f07c6af99c0fed5c8881aebc9dd0f8c91d89bd94cdee23bd1",
+    "tests/test_knowledge_cycle.py": "72e9a18ef8d6d8cf1b9b794f8a8529c84e3ab9f44ebecfb69d63f9f39a47b6f1",
+    "tests/test_knowledge_extraction.py": "7b95997125c1e5a68d5eb8da8cd23f71787ec417681cc879aedc7855889b6326",
+    "tests/test_knowledge_transfer.py": "833d07a22d699e7c75f5aafaed1d358fdb938cb9caa3f152d1aa3655c329d58f",
+    "tests/test_local_models.py": "3a02b6c5335f6f671fb93ef57f4c80a0a97c1f8c5ab195bfb905aff249e96356",
+    "tests/test_local_models_assessments.py": "e0a630f1f69892546b24a7bd315410b7154f8d23cfef193965f0cb77f6b8cf74",
+    "tests/test_local_models_http.py": "d3bb59ff41321b5c5a5a2e7ea8117b5777d00b9686a31422fe020795f60e1158",
+    "tests/test_mailbox.py": "d6c3946cae18bb7e5d1cf00ba1e3f36aae2d014223f5e3d65779051621d4c4e4",
+    "tests/test_memory_capture.py": "57c75ea479251bde5bb3b57c73a8911de4ea662bfc3a274987ff51e4e707b410",
+    "tests/test_memory_development_ui.py": "e5fec587b55440961ec4d37ff19e182f54a1102bfb2d9f2778288570de42d714",
+    "tests/test_memory_domains.py": "f4a4f5fc8faa5361756ed35c37d1dd06ff7f12d20362c08af06cb7f7b3129643",
+    "tests/test_memory_health.py": "fd7effb34ed4fc2af71e43e636571443b2f576eff2423b6685ad12f8e1a918f4",
+    "tests/test_memory_joint.py": "34312a5051d46e080e4a03c0a58c3b8d3a0db992a62c7c2d627bedd35b2c0e98",
+    "tests/test_memory_merge.py": "6d88e657cf0b19ade4f63e7addb7056e1af363f5f53ba6f0abb341697928116b",
+    "tests/test_memory_portability.py": "47c4ae6ce68e53f8731db8d013ce3e574bbb40ec5dd13d530db41e5aaf6616d3",
+    "tests/test_memory_retrieval.py": "d7f4c5ab0a49bf64644ba5051eb16e22d7fa79268f4a20138a4e37e21fce6aa8",
+    "tests/test_memory_source_merge.py": "93a32e35e29116491910e6f0ef1296796eb2196445444f30c734f17a6ab36ee7",
+    "tests/test_model_transport.py": "0c61393caec5e2135d2383b20a69a0d494c871c3e1a4f47672db0de2af925de6",
+    "tests/test_outcomes.py": "d93e5cfcf16e2a3c49094a6476afc8aa9edde89cb9346cb49a737969fcae703f",
+    "tests/test_personal_workflows.py": "e3ac4bbd98edad6d1a4ce068d1e78c0d91807afea11be2f1921120923416351e",
+    "tests/test_preferences_dialogue.py": "276e8e758ba197819ac2580c32282d39262146f34ccd875b666dceb4b8d2beb2",
+    "tests/test_quote_acceptance.py": "a7738f9e515532fea802eee79f2b7e1bf1f5385352b49f98dd7d05c553fb9e6b",
+    "tests/test_quote_changes.py": "1b0ee93643abe986f8b1f62757920cc8a0d6ac81bdd64d0341ba47302288bb3e",
+    "tests/test_quote_requests.py": "f7d7911d26454fe9c4d1bed08488afc641eab1ed8b238f4e336f7368d82cd2dc",
+    "tests/test_quote_rework.py": "0d7b4899a4928b328334fa1a82c78bef7d682856c76221e3eeac9a557984de0e",
+    "tests/test_quote_sources.py": "554e712d46e8b099b76e330233ef57da1654a37a09b12493e395b995bffed76b",
+    "tests/test_session_folder_queue.mjs": "d8dfabc7003430c5110b9e0006b48743a46c704ad8f7ee39ecefede223a93403",
+    "tests/test_session_folders.py": "75da3079b699eccde128e1e6e8724d9abc8e1575ddb06ec3b015e002cf83dd0b",
+    "tests/test_settings_management.py": "afa0df46e04906191c7951fada36eb941e67036eac3c5e7d7538051765be71e8",
+    "tests/test_studio3d.py": "9dbcfdce7ecaaf2531b0650ff1bec8563251003572c9dcc3b589e43857521d39",
+    "tests/test_studio3d_hard_surface_review.py": "e53597577cf9aa05cd581e9f30404193d90a9bfec2babd6bec7df7b182a499d3",
+    "tests/test_studio3d_high_review.py": "a16e309f8b4dc916a574e703ea12e33a873be32198a94ac9e7cd3e142121cb5b",
+    "tests/test_studio3d_learning.py": "2036364838be756c3d4fe7bd6dc83abc48358add4f1b93be0d203daa0d9dbb07",
+    "tests/test_studio3d_multiview.py": "1123d6c7116726ba3d61daff1ef7cacdf3ac5c7b517ad9da232bb1a7cc9a5a76",
+    "tests/test_studio3d_production.py": "f13b2b450689c9da3a1aaa71238dae1e1b033c2b24031844d1bdf44c7886bb95",
+    "tests/test_studio3d_refinement.py": "9b1a0bf0a3a8d9ff89d6feeace33b0a8a2612e7adbe598c325c321fdddee0f99",
+    "tests/test_studio3d_review_evidence.py": "aab35155d32138527cb9d90f7e29d064253fd8331bfa3a80a23cf4273c0c6506",
+    "tests/test_studio3d_textures.py": "fa6b224519189496147125918f3387fc1f3fa63d6e5745462a4c4cf3ebc1625b",
+    "tests/test_studio3d_viewer.py": "33b68457965c454ef8eee8b26620d5920087e669b2db9641280a1c44a1ca1317",
+    "tests/test_studio3d_vision.py": "5e97f2f22fd276e5a59589c8fb5c38fec8ce62cd5a6585988120ae13bcc5df71",
+    "tests/test_tool_use.py": "a3694f2dba4a72cfc898cba81f721f2a79bd3627b746ef04a3eef7b366e4afb8",
+    "tests/test_work_budgets.py": "0c96da36cbc650cb3b39403f58062e0ebfd6f92f39210dd341dca6690e4f4c81",
+    "tests/test_work_recovery.py": "c9015ef34116777fb9b29fbf2e35330dfa6e93b442f4d405952ee9b5b13ac941",
+    "tests/test_work_revisions.py": "ec1ed8d1804f6b1de6f15279a5bffee712d959ae5cbf20ba2c5789b9de03e1e3",
+    "tests/test_work_trials.py": "bbca3a9057139bb3cd6de0fb9f76c5578fc76b049c7c5c16c20331d8949ee0d4",
+    "tests/test_workbench.py": "f12eaa70cbe297fbe8e6fa0e51d127470dcf4da64b89fd2e023925a38892b540",
+    "tests/test_worker.py": "fbfe524308a3c102b52e685c90adddbf3751be648b8728275b0d65510423e066",
+    "tests/test_workflow_closure.py": "478b31708340e734b7bdece204cd4ceee6f6099f49a7eee95a4e0af9ad633503",
+    "tests/test_workflow_handoff.py": "984430f4b94b7d52c0269b0027f0556bae334ec65a922a7799f90432c2b06cdc",
+    "tests/test_workspace_skills.py": "6d34ad586036d9f3b364bad6542b4f832ef194f6af1917e9d903add3b18b6146",
+    "tests/worker_crash.py": "fdd5f4eaebdf578448d4e67fa8da5856b43ef2a70304ea2ed67766d8b1b40748",
+    "tools/accept_completion.py": "7096a3e5963fbeca5afa599db48eb8aa0ba41beeab145a0e96b827f71d221364",
+    "tools/accept_frozen.py": "ecfbe52fa13624fd9b1bef0ec03a44739d2422fc45c567ad448a0177de2299fa",
+    "tools/audit_anatomy_structure_run.py": "7c17e26088b37400eda69d2b427a26e76ce86431f613f53b0b678595a0b0625b",
+    "tools/audit_anatomy_studio.py": "7599d560b6ff658ee21f0326b0e661be7866972e8d8f8d07249dde0b6862451b",
+    "tools/check_architecture.py": "8ec1e70412d831a0f778581f4477910960e8cc0a1001f8ad080357db713fa687",
+    "tools/check_docs.py": "67b96869790c0b96af9edf64ad225d7fda3bbbbdf37ed528fbca111bfb6cb549",
+    "tools/completion_crash_worker.py": "53f3d52dfe2644857f6c06354b8b56c9c6c6369595dc989a9d22a53148467fdc",
+    "tools/create_studio3d_learning_fixtures.py": "155cc2cf407036db2c0aa1de76a6f859e8c9344163df1821bea2b098d7faa45e",
+    "tools/doclib.py": "143914f21d9e71c34b706f9482a62f7c91ce0c80f1353152758aff7518f90c26",
+    "tools/eval_anatomy_engineering.py": "6ec038018367311211d172aeded25cf6600cfca22ddba08018defa5fc91273e0",
+    "tools/eval_anatomy_structure.py": "0864029c718d930077e88257eb12e18a19837882a1a6b8a7bf78f519fb22ac9f",
+    "tools/eval_image_studio.py": "438723ed5c6431b58e405e3f8b6a23e1a0d77aab20bce00c2ff92f9c8bb5039e",
+    "tools/eval_memory_answers.py": "56d2a9fa3e70f04c313d12b329dd3cd273218fc3a812e23eda6ade31c1213552",
+    "tools/eval_memory_multilingual.py": "5e13af0462ae6b893b59d449e5390b9532727af2b9b1d5312046cd0f9e96d48a",
+    "tools/eval_memory_multilingual_answers.py": "864e1d03daeb5b9e78e59fa661aa918db114630e4b0b071c454779f0e3a06d30",
+    "tools/eval_memory_quality.py": "05ac349e1af19d822406498c8bb03ab226277058ce8728e7b524e7a471562455",
+    "tools/eval_personal_workflows.py": "7c0056b88571f43bd20195a015aa400afb8332b73a7df3fa91e124e7ce0b4529",
+    "tools/eval_studio3d.py": "30ea008257f044a05e5a6aa9de84d25fe11f29b1b8208b2fbf004010c472c6ba",
+    "tools/eval_studio3d_production.py": "ff2da08ce34094e28b2bef7e392bc3c8abc1a926d8c1831f7e12afb8b5baf087",
+    "tools/eval_studio3d_reference.py": "bbb05440dc27c24f416de71d39f5729b6eb6667936c53424834dac4263a1b2cf",
+    "tools/freeze_memory_multilingual.py": "e6318ac785923cecb11263d11d7b362b7edd13cb49a5b9e970f8f5861f3af264",
+    "tools/handoff_crash_worker.py": "f7ad388d29f3c64b21032add8ba26bff3381fa812bc1650bf7b375ccf8f7d07f",
+    "tools/local_models.py": "b4b792280433822f986d9b273d6b4485e4dba064badb622b7589fb2541b7b912",
+    "tools/prepare_anatomy_runtime.py": "0de640a67793348217c53f149cd60326022ca0b40accd957c510eacc42ea3be8",
+    "tools/prepare_studio3d.py": "2412c92d44e725d26fe83de06374986497ab9da894e87adbef0d864f0303129f",
+    "tools/probe_anatomy.cjs": "45ea18f77a5b200ddcc533dc3207bbc376e24aafa2b6a4de84160618d523bb64",
+    "tools/probe_anatomy_assembly_plan.cjs": "9e5d8fa4953a3d95a173e51eafb3689d79f5cfd8e3064a1fd86dba57d28146d2",
+    "tools/probe_anatomy_composition.cjs": "4b2ee7e9e84c706027c995433c149647180fa2a181e04daa07ea8313f241493d",
+    "tools/probe_anatomy_engineering.cjs": "a3c27365fe0235b280634e4dbcb42b9a2b47a64a1092bd738b94b870e9724486",
+    "tools/probe_anatomy_generated.cjs": "a1dc3a991bb41c8bb029732b34145e03f9c724de258d171ad5691ea0180671d9",
+    "tools/probe_anatomy_gpu.cjs": "0bd55bc47e0ce6be6b1d31f3e850515228db21e1a9e330ec5e3c84bf4e04efea",
+    "tools/probe_anatomy_preview.cjs": "34c13fa627e9b5305d7b6899c93fd3344bd26ec83c10178491e50e4ed537345b",
+    "tools/probe_anatomy_race.cjs": "4d3dcf63d72cb58a4985b7eb2ca795980eadfb72115221a7e74807bb3f5a8f5b",
+    "tools/probe_anatomy_structure.cjs": "a65816c86c9d8eba8d3c576b6fc1365a2f07a560d47c49954a24ef46155e0d11",
+    "tools/probe_anatomy_structure_soak.cjs": "592342b1df0ad22bc58eb94797e20c17be6dee5906f412db9ccc778aa1de9f4b",
+    "tools/probe_anatomy_studio.cjs": "d27e49e772e149e6274b5bb3e5f90fa4d8b74ce540164acc9aa115cb1cc7ae0d",
+    "tools/probe_anatomy_upgrade.cjs": "096291398ac1ff17d72810cf8ede0b9211fc2044cc463bedd143b46bb5bba145",
+    "tools/probe_anatomy_vehicle.cjs": "d027fab94bf7056978ee7b58d8e23e38f6005e092bd93b5fe8e882821315f95c",
+    "tools/probe_budget_ui.cjs": "940479377b176fec62c2453933aa19933f2d444f6ccff6cffc66388e875976b0",
+    "tools/probe_closure_ui.cjs": "97cb5b5e7e76ca55542d765dc41a51cc8e107fb1f4ffea9ed9cd533ee56cab92",
+    "tools/probe_completion_ui.cjs": "62c2741090ae4166b28b2e62a688e803bf23efe1e5f313b080295751d0f9162b",
+    "tools/probe_concurrency.py": "f4673a89c044e9f2b4d8727a71bd63509cefb2ad3dd3f15daa334ce8ec4cf6d9",
+    "tools/probe_concurrency_control.py": "11e11d2add3723e4fa8d311677dce309f8d6bd226cff9dc74bb92efce2ff108d",
+    "tools/probe_concurrency_ui.cjs": "629724355ca65b364f53b54fb6bfd782938608c0d2ed00465e3575807354c210",
+    "tools/probe_family_live.py": "3609ebdfccb17424d13dc8db31e1ac397a98a9a952028eaee0459eae36057cb5",
+    "tools/probe_family_privacy.py": "230e1530b999c0668fcea2382ee9890b3ce8cd94701765e8a47f57a2b8c4475b",
+    "tools/probe_handoff_ui.cjs": "e12b49bd0ad33cf8e6dabb344a546abbe31df4ce37b1f656f6090dd046a1b982",
+    "tools/probe_handoff_ui.py": "752f5e321087e411a4ebfe49ddca95954df6da8c9a77e935cf2646648c92fd6a",
+    "tools/probe_inheritance_ui.cjs": "10d01e22ec89eaa3494622eb73fd208e340e42f494503fc428753be61f7931b4",
+    "tools/probe_knowledge.py": "b61496664db23063609efb5fb2f0b5236d2868adcdefdec16df2898739448250",
+    "tools/probe_knowledge_cycle.py": "935c599700473ad95e896bbd9cb52e710c223a82f9fe7800dd5fe3b3a261e7d1",
+    "tools/probe_knowledge_extraction_live.py": "5ddae1d277a943174216adf7609c8ef7e88207e95b650d9d4ec7d340efa1e3dc",
+    "tools/probe_knowledge_vectors.py": "5be5b4d61ac6df143a4a705b49b42a20c0a5f2daf51e591225a1c24b9a5ee19a",
+    "tools/probe_local_model_assessments.py": "817b5b8ee146eb14848317456696c7d31f1cdfe89cf3b3894d3f926665b113a2",
+    "tools/probe_local_models.py": "a2b1070ef4b9bb9306d37ad4b851d77984486934e24956219bb99578c38ca17a",
+    "tools/probe_memory_continuity.py": "39c37726cb26637d3de13401ab6ecd0b84dc740697071fe32aef64ee6831e044",
+    "tools/probe_memory_fault.py": "eca763f1d67d79884f8da2cbf3e067262fd7e1da3c23e6c0083e4be7515c4c62",
+    "tools/probe_memory_retrieval.py": "a5e6e7ef1e175f780a40d25d29342305c718642e5a49812c62a38f292080a33f",
+    "tools/probe_outcomes.py": "ca266d9f4254d21232ebee2d0e03af6a8607a06043a1013fb20d7690b68a4329",
+    "tools/probe_outcomes_ui.cjs": "e10c5a71d57b07d3f5be1f951cf27a0ef9a14e417afebfd3e27ec7ce140b4fbf",
+    "tools/probe_personal_workflows.cjs": "9800d959b121becf4a25b76437417135edd1b31e8592c7be6b49b010a64a1095",
+    "tools/probe_quote_requests_ui.cjs": "6de5869bd280749f8c84d4046bbb43fd43eb5881ae082d894e52b884a74251f7",
+    "tools/probe_quote_ui.cjs": "71dc24cab8ae035dbb43fa0025d25277598905b927edbf3930fbe19f6f24d47c",
+    "tools/probe_quote_ui.py": "8bdb950d8202482eab3c7ee1b6b908f6be3825aff2e36c8fdad693198f084eda",
+    "tools/probe_recovery_ui.cjs": "618127551681dede30744e03f1344789298895cb5ede933b4c94d78b8937c0c7",
+    "tools/probe_rework_ui.cjs": "302d576ea8e630e85e717dda074c1e355396d31f416715ecc9a2af12fa476b42",
+    "tools/probe_rework_ui.py": "bac8776b041b53009bf8176543057e85c1f87671cb491e127c85dcd5fb8bca9e",
+    "tools/probe_studio3d.cjs": "c730011dc208c2901dce7cdd1f0ae8423f1d610f1b77650a61fb8fecd596c4dd",
+    "tools/probe_studio3d_learning.py": "933b9a3079920e4511cf55eac0aadafb4780725cc1957895b027f99b58d51902",
+    "tools/probe_studio3d_learning_http.py": "863e947ecbec61d1aa7909598d72b6e7ff15d1bd8bf53946bed761cb95f1a2c9",
+    "tools/probe_studio3d_viewer.cjs": "4dd4f3631f5e11247997de906d17cb8992d7feb732d108080364f0e0d0a7e5e4",
+    "tools/probe_work_budget.py": "2b244bb493a8ef3f4cb7347cf161fc8e5e2c93a3924b201e202353184b1cb93e",
+    "tools/probe_workflow_audit.py": "45f0af16f1632671433258ad611593178c1f8a35964877cc26bb5be7c6239d8c",
+    "tools/render_memory_diagrams.cjs": "e02b78ecd6445d657ba0fecdb69260b8835b09a775ec1d66c80902b4941b8d2c",
+    "tools/render_studio3d_lod_review.py": "00088d849f6a80ea79e59774e5eb4e55dfde7b12eb0e2c5b77931cac5aed90c4",
+    "tools/repair_anatomy_insertion.py": "3871016b59cdffb15d3922c6941f30037da0fa4e4937db7acc03bb613ce80b54",
+    "tools/report_concurrency.py": "d24b1df276041a4e24d3da92564603b6a5210711dd0c54f4a4cbf2e8cae543ec",
+    "tools/review_anatomy_final.py": "167f6b1eeabe457f1702cbeeadd1c9d310aac60a3fd0e9661770acc6cfa2490d",
+    "tools/review_anatomy_race.py": "de6931b14293d6a371e9550b1df99b56d9c82fc114a7e200aedf03398581b3eb",
+    "tools/review_anatomy_vehicle.py": "92766aa495bbfe6ee71544dad0718d1b868764cc78c5989a83d6aa5af03f4d5b",
+    "tools/run_studio3d_request.py": "4a219cf04ac84439fbd009bd90b52bb0546e0a7a6b8c660d695af52fcae13931",
+    "tools/studio3d_blender_finish_geometry.py": "10eccd541ca41c10e8df8ecdf8c5d2acc3cc536221a2858513af02dcde77ed22",
+    "tools/studio3d_blender_game_animation.py": "093480590a8686ae9ef445779f487d0e76c5bfd2656dc5f4a32abe296802538d",
+    "tools/studio3d_blender_material_projection.py": "d162beffdf58160d3113926204522ceccf13355621d4619228f4bd9c4d9339a5",
+    "tools/studio3d_blender_surface_audit.py": "e4c84464d4af5eccd5d44ec6edbaf4da7ba958b45f72e9f6aaae1d9dc5cf974b",
+    "tools/studio3d_learning.py": "05ae96b90155c679401e8aa11530a79bd7e0d33e56ec7bc4d2979ea7827c0cb3",
+    "tools/studio3d_reference_review.py": "06c88b091f6183a79bc5fe4d469856b16295a2b5e90f93c14855ef1cf9969205",
+    "tools/summarize_memory_quality.py": "f63dce8401107e45fe73d2beadd263bf9db20d9743b0e729685d2694bc0ca462",
+    "tools/sync_doc_navigation.py": "1febdd9e74b83819386826f1bdec323f12fd96dbaf8a7f65fb25fd5e44c3f1ea",
+    "tools/test_doc_tools.py": "079fa6c8fa4ac20c2d9256899f83a0df55fc6953eb2ab17bfb52a4810daa61d8",
+    "tools/work_trials.py": "54ab9c03f1c664f334437ba244866723c0fb19e945a6bd38ed850095d91cb490"
+  },
+  "verifier": "work-trials-3/body-evidence-1",
+  "execution": "live",
+  "route": {
+    "id": "vertex",
+    "adapter": "vertex",
+    "model": "gemini-3.8-flash",
+    "parameters": {
+      "max_output_tokens": 4096,
+      "thinking_level": "LOW"
+    },
+    "max_output_tokens": 4096,
+    "max_prompt_bytes": 50000,
+    "timeout_seconds": 60,
+    "billing_profile": {
+      "adapter": "vertex",
+      "connection_label": "Google Vertex",
+      "key_label": "原有凭据 · v1",
+      "price": {
+        "cache_read": 0.075,
+        "cache_write": null,
+        "checked_at": "2026-10-16",
+        "currency": "USD",
+        "fee_percent": 0,
+        "input": 0.75,
+        "max_input_tokens": 1000000,
+        "output": 3.75,
+        "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+        "valid_until": "2026-12-31"
+      }
+    }
+  },
+  "catalog_digest": "58b1c1c7acf7671204a6fbfe6cb6ae706fe69e82061f315b8f70e04822a0faa6",
+  "order": [
+    {
+      "case_id": "compare-price-revision",
+      "arm": "workflow_off"
+    },
+    {
+      "case_id": "compare-price-revision",
+      "arm": "workflow_on"
+    },
+    {
+      "case_id": "compare-explicit-plan-change",
+      "arm": "workflow_on"
+    },
+    {
+      "case_id": "compare-explicit-plan-change",
+      "arm": "workflow_off"
+    },
+    {
+      "case_id": "document-export-correction",
+      "arm": "workflow_off"
+    },
+    {
+      "case_id": "document-export-correction",
+      "arm": "workflow_on"
+    },
+    {
+      "case_id": "document-budget-retirement",
+      "arm": "workflow_on"
+    },
+    {
+      "case_id": "document-budget-retirement",
+      "arm": "workflow_off"
+    },
+    {
+      "case_id": "learning-exposure-correction",
+      "arm": "workflow_off"
+    },
+    {
+      "case_id": "learning-exposure-correction",
+      "arm": "workflow_on"
+    },
+    {
+      "case_id": "learning-single-answer-limit",
+      "arm": "workflow_on"
+    },
+    {
+      "case_id": "learning-single-answer-limit",
+      "arm": "workflow_off"
+    }
+  ],
+  "repetitions": 1,
+  "max_calls": 24,
+  "stop_after_consecutive_response_failures": 3,
+  "memory_enabled": false,
+  "fallback": false,
+  "comparison": "current runtime, identical model and limits, selected workflow guidance off/on; quotation is same-path control",
+  "decision": "descriptive technical screening only; never automatic adoption or all-domain excellence"
+}

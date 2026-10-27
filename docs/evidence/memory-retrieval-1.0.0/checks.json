@@ -1,0 +1,69 @@
+{
+  "version": "memory-retrieval-1.0.0",
+  "date": "2026-10-23",
+  "automated_tests": {
+    "count": 72,
+    "result": "passed",
+    "scope": [
+      "MemoryUI",
+      "Retrieval",
+      "EncoderLane",
+      "AssistantGoals",
+      "ModelsCase",
+      "AssessmentCase",
+      "LocalModelsHTTPCase",
+      "PreferencesDialogue",
+      "Workbench"
+    ],
+    "commands": [
+      "python -B -X utf8 -m unittest test_memory_development_ui.MemoryUI test_memory_retrieval.Retrieval test_memory_retrieval.EncoderLane test_assistant_goals test_local_models test_local_models_assessments test_local_models_http -q",
+      "python -B -X utf8 -m unittest test_preferences_dialogue test_workbench -q"
+    ]
+  },
+  "browser": {
+    "origin": "isolated temporary root, port 18287",
+    "checks": [
+      "recall panel visible",
+      "query retrieves meeting from 21 facts",
+      "unloaded encoder fallback visible",
+      "switch destination clears old result",
+      "disallowed destination returns zero facts",
+      "repeat retrieval enabled",
+      "expanded panel renders result",
+      "console errors empty"
+    ],
+    "result": "passed"
+  },
+  "not_verified": [
+    "large corpus",
+    "independent held-out retrieval quality",
+    "real Mac",
+    "low-memory physical PC",
+    "full document knowledge ingestion",
+    "derived-body physical cleanup",
+    "complete K2 or overall memory design"
+  ],
+  "cloud_calls": 0,
+  "checks": {
+    "docs": {
+      "documents": 26,
+      "chapters": 23,
+      "diagrams": 39,
+      "links": 2266,
+      "errors": 0
+    },
+    "architecture": {
+      "python_files": 101,
+      "errors": []
+    },
+    "javascript_syntax": "memory.js and app.js passed",
+    "changed_file_whitespace": "passed"
+  },
+  "cleanup": {
+    "temporary_server": "stopped",
+    "temporary_browser": "closed",
+    "temporary_data": "retained",
+    "path": "C:/Users/samuel/AppData/Local/Temp/jarvis-memory-ui-v1-_kydx7x7",
+    "reason": "Recursive directory cleanup rejected by automatic approval: blocked by policy"
+  }
+}

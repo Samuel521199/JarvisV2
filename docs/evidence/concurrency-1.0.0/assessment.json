@@ -1,0 +1,199 @@
+{
+  "checked_at": 1793001128.2955704,
+  "functional_regression": {
+    "count": 601,
+    "result": "passed",
+    "log": "regression-final.txt"
+  },
+  "latest_focused_tests": {
+    "count": 17,
+    "result": "passed",
+    "log": "targeted-final.txt"
+  },
+  "browser": {
+    "checks": [
+      "Workbench boots; icon, accessible name, three truthful summary groups and unstarted records",
+      "Priority editor persists revisioned priority and updates the projection",
+      "Settings save updates actual scheduler policy",
+      "Dark/light theme variables render without page overflow",
+      "Running reply keeps input/send usable; followup persists; stopping first reply lets followup finish"
+    ],
+    "errors": [],
+    "passed": true
+  },
+  "live_browser": {
+    "checked_at": "2026-10-26T07:51:14.506Z",
+    "passed": true,
+    "groups": 3,
+    "default_workers": "2",
+    "errors": [],
+    "scope": "Read-only main-service validation after final checkpoint optimization reload; no chat sent or settings changed"
+  },
+  "paid_model_calls": 0,
+  "performance": {
+    "result": "passed_declared_checks",
+    "checks": {
+      "two_background_executions_overlap": true,
+      "loaded_input_p95_le_200ms": true,
+      "loaded_input_p99_le_500ms": true,
+      "reply_p95_increase_le_10_percent": true,
+      "reply_p95_increase_le_100ms": true,
+      "foreground_dispatch_p95_le_100ms": true,
+      "foreground_dispatch_p99_le_250ms": true,
+      "soak_30_minutes": true,
+      "background_progress": true
+    },
+    "paired_p95_reply_change_ms": -8.555,
+    "paired_p95_reply_change_percent": -3.004,
+    "statistics_ms": {
+      "idle": {
+        "input_ms": {
+          "count": 200,
+          "p50": 23.631,
+          "p95": 45.574,
+          "p99": 47.332,
+          "max": 51.132
+        },
+        "reply_ms": {
+          "count": 200,
+          "p50": 261.348,
+          "p95": 284.832,
+          "p99": 288.12,
+          "max": 290.516
+        },
+        "dispatch_ms": {
+          "count": 200,
+          "p50": 10.201,
+          "p95": 17.44,
+          "p99": 19.302,
+          "max": 19.915
+        }
+      },
+      "loaded": {
+        "input_ms": {
+          "count": 200,
+          "p50": 21.8,
+          "p95": 42.884,
+          "p99": 47.61,
+          "max": 49.004
+        },
+        "reply_ms": {
+          "count": 200,
+          "p50": 255.397,
+          "p95": 276.277,
+          "p99": 281.462,
+          "max": 287.17
+        },
+        "dispatch_ms": {
+          "count": 200,
+          "p50": 2.544,
+          "p95": 3.446,
+          "p99": 3.817,
+          "max": 4.034
+        }
+      },
+      "soak": {
+        "input_ms": {
+          "count": 4609,
+          "p50": 28.72,
+          "p95": 85.807,
+          "p99": 100.91,
+          "max": 135.432
+        },
+        "reply_ms": {
+          "count": 4609,
+          "p50": 271.677,
+          "p95": 403.58,
+          "p99": 433.67,
+          "max": 493.501
+        },
+        "dispatch_ms": {
+          "count": 4609,
+          "p50": 3.262,
+          "p95": 9.845,
+          "p99": 12.623,
+          "max": 20.522
+        }
+      }
+    },
+    "soak_seconds": 1800.1804546999992,
+    "not_verified": [
+      "real cloud limits and latency",
+      "GPU-heavy rendering",
+      "8 GiB device",
+      "thermal/battery limits",
+      "arbitrary external tools",
+      "full V-DLG-01..14",
+      "memory-enabled retrieval and assistant action routing",
+      "project-scoped conversation performance"
+    ]
+  },
+  "cleanup": {
+    "owned_ui_test_processes": "stopped",
+    "temporary_directories": "preserved after automatic approval blocked recursive cleanup"
+  },
+  "controls": {
+    "200_commands": true,
+    "p95_le_200ms": true,
+    "p99_le_500ms": true,
+    "selected_cancel_recorded": true,
+    "other_work_continues": true,
+    "two_steps_overlap": true
+  },
+  "background_audit": {
+    "actual_successes": true,
+    "no_failed_tasks": true,
+    "no_unknown_effects": true,
+    "complete_receipts": true
+  },
+  "memory_regression": {
+    "count": 104,
+    "result": "passed",
+    "log": "memory-regression.txt"
+  },
+  "dialogue_regression": {
+    "count": 17,
+    "result": "passed",
+    "command": "python -m unittest discover -s tests -p test_preferences_dialogue.py -q"
+  },
+  "final_performance_file": "performance-optimized.json",
+  "final_benchmark_sources_match": true,
+  "initial_performance": {
+    "file": "performance.json",
+    "result": "failed_relative_reply_threshold",
+    "p95_reply_increase_percent": 14.073
+  },
+  "regression_coverage_note": "601 full tests before the checkpoint optimization; 104 memory, 17 dialogue and 17 concurrency tests after it.",
+  "deployment": {
+    "checked_at": 1793001066.563323,
+    "url": "http://127.0.0.1:18282",
+    "pid": 52836,
+    "work_status_http": 200,
+    "control": "ready",
+    "policy": {
+      "cpu_ceiling": 80,
+      "max_workers": 2,
+      "memory_reserve_mib": 2048,
+      "queue_limit": 32,
+      "revision": 1
+    },
+    "counts": {
+      "cancelled": 3,
+      "external": 0,
+      "failed": 7,
+      "finished": 47,
+      "needs_input": 0,
+      "queued": 0,
+      "running": 0,
+      "unknown": 0,
+      "waiting": 0
+    },
+    "boot_id": "73281bb2442a52a9c58ddc81",
+    "other_runtime_18283": "not_restarted",
+    "paid_model_calls": 0,
+    "final_projection_fix_loaded": true,
+    "final_checkpoint_optimization_loaded": true,
+    "benchmark_sources_match": true,
+    "data_root_preserved": true
+  }
+}

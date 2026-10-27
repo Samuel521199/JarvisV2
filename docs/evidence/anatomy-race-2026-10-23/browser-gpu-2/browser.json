@@ -1,0 +1,3084 @@
+{
+  "status": "passed",
+  "origin": "http://127.0.0.1:18283",
+  "checks": [
+    "real settings creates 72-part racecar with valid static/insertion/group/batch/30-pose motion checks",
+    "independent shell visibility/transparent inspection preserves physical assembled state",
+    "4:1 keyed two-stage reduction rotates actual gear CAD meshes with ratio residual checked",
+    "independent wheel phases and Ackermann steering remain linked to differential mean input",
+    "15-second motion observation advances and explicit pause freezes wheel state",
+    "shell-only explosion stops/resets operation and reassembly restores readiness",
+    "five shell pieces can be assembled individually at a dedicated work station",
+    "complex powertrain retains individual/parallel batch assembly",
+    "whole-car integration gates operation until all subassemblies are installed",
+    "sandboxed gzip-embedded STEP decompresses to exact verified export bytes",
+    "mobile view fits viewport"
+  ],
+  "errors": [],
+  "externalRequests": [],
+  "model_calls": 0,
+  "receipt": {
+    "adapter_version": "5.2.0",
+    "bytes": 9931233,
+    "checks": {
+      "collisions": [],
+      "groups": {
+        "hits": [],
+        "limits": "子总成以同一刚体平移，逐组检查已安装总成；内部零件相对位置不变。未检查连续扫掠路径。分组内部逐件装配另见 insertion。",
+        "narrow_phase_pairs": 49,
+        "parallel_internal": {
+          "hits": [],
+          "limits": "独立子总成工位内，每批次7时刻检查移动零件间及前序已装件；批内同时、批间顺序。不含其他总成或连续路径。",
+          "moving_pair_checks": 0,
+          "samples_per_batch": 7,
+          "status": "clear_at_sampled_poses"
+        },
+        "samples_per_group": 7,
+        "status": "clear_at_sampled_poses"
+      },
+      "insertion": {
+        "hits": [],
+        "limits": "按声明的直线插入方向、距离和父先子后步骤，在每步7个时刻检查已安装零件；离散采样可能漏过薄障碍物或采样间穿透，不是连续碰撞/扫掠体证明。",
+        "narrow_phase_pairs": 188,
+        "samples_per_step": 7,
+        "status": "clear_at_sampled_poses"
+      },
+      "interference_status": "clear_at_static_pose",
+      "limits": "静态装配姿态 B-rep 体积交集检查；不证明运动全过程或装配插入路径无碰撞。配合检查为名义尺寸，未含制造公差。轴承滚道/螺纹/预紧为简化。",
+      "narrow_phase_pairs": 128,
+      "operation": {
+        "hits": [],
+        "limits": "限定转向/车轮相位组合的 B-rep 离散采样，extended 含异相轮位；完全相同刚体变换复用静态/已算交集。未穷举独立相位、全转角域、连续轨迹、轮胎接触和动力学。",
+        "narrow_phase_pairs": 243,
+        "poses": 30,
+        "reused_identical_checks": 1519,
+        "status": "clear_at_sampled_poses"
+      },
+      "plan_candidate": null,
+      "step_roundtrip_bounds_error_mm": 5.000001124244591e-8,
+      "step_roundtrip_relative_volume_error": 5.924101445048252e-14,
+      "total_mass_kg": 1.7840688026299885,
+      "transmission": {
+        "limits": "20°直齿渐开线分段近似，直线简化齿根；未建模刀具根切/圆角、弹性接触、齿面应力、润滑与效率。差速内部仍为理想平均关系。",
+        "ratios_to_carrier": {
+          "input-shaft": 4,
+          "lay-gear": -2,
+          "lay-pinion": -2,
+          "lay-shaft": -2,
+          "output-gear": 1,
+          "pinion": 4
+        }
+      }
+    },
+    "configuration": {
+      "assembly_plan": [
+        {
+          "batches": [
+            [
+              "input-hanger"
+            ],
+            [
+              "input-block"
+            ],
+            [
+              "input-motor"
+            ],
+            [
+              "motor-cap-a"
+            ],
+            [
+              "motor-cap-b"
+            ],
+            [
+              "input-shaft"
+            ],
+            [
+              "pinion"
+            ],
+            [
+              "lay-gear"
+            ],
+            [
+              "lay-pinion"
+            ],
+            [
+              "output-gear"
+            ],
+            [
+              "lay-shaft"
+            ],
+            [
+              "lay-hanger-left"
+            ],
+            [
+              "lay-block-left"
+            ],
+            [
+              "lay-hanger-right"
+            ],
+            [
+              "lay-block-right"
+            ],
+            [
+              "rear-mount-left",
+              "rear-mount-right"
+            ],
+            [
+              "rear-block-left",
+              "rear-block-right"
+            ],
+            [
+              "motor-case"
+            ],
+            [
+              "motor-rotor"
+            ],
+            [
+              "coupling-left",
+              "coupling-right"
+            ],
+            [
+              "rear-bearing-left",
+              "rear-bearing-right"
+            ],
+            [
+              "halfshaft-left",
+              "halfshaft-right"
+            ],
+            [
+              "rear-disc-left"
+            ],
+            [
+              "rear-disc-right"
+            ],
+            [
+              "rear-hub-left",
+              "rear-hub-right"
+            ],
+            [
+              "rear-tire-left",
+              "rear-tire-right"
+            ]
+          ],
+          "direction": [
+            0,
+            0,
+            -1
+          ],
+          "distance": 100,
+          "id": "rear-drive",
+          "name": "电机—两级减速—后桥总成",
+          "parts": [
+            "rear-mount-left",
+            "rear-block-left",
+            "rear-bearing-left",
+            "rear-mount-right",
+            "rear-block-right",
+            "rear-bearing-right",
+            "motor-case",
+            "motor-rotor",
+            "coupling-left",
+            "halfshaft-left",
+            "rear-hub-left",
+            "rear-tire-left",
+            "coupling-right",
+            "halfshaft-right",
+            "rear-hub-right",
+            "rear-tire-right",
+            "rear-disc-left",
+            "rear-disc-right",
+            "pinion",
+            "lay-gear",
+            "lay-pinion",
+            "output-gear",
+            "lay-hanger-left",
+            "lay-block-left",
+            "lay-hanger-right",
+            "lay-block-right",
+            "lay-shaft",
+            "input-hanger",
+            "input-block",
+            "input-motor",
+            "motor-cap-a",
+            "motor-cap-b",
+            "input-shaft"
+          ]
+        },
+        {
+          "batches": [
+            [
+              "rail-left",
+              "rail-right"
+            ],
+            [
+              "cross-0",
+              "cross-1",
+              "cross-2"
+            ],
+            [
+              "cross-mount",
+              "nose-bridge"
+            ],
+            [
+              "battery-cross"
+            ]
+          ],
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 100,
+          "id": "frame",
+          "name": "承载车架",
+          "parts": [
+            "rail-left",
+            "rail-right",
+            "cross-0",
+            "cross-1",
+            "cross-2",
+            "cross-mount",
+            "nose-bridge",
+            "battery-cross"
+          ]
+        },
+        {
+          "batches": [
+            [
+              "front-mount-left"
+            ],
+            [
+              "knuckle-left"
+            ],
+            [
+              "spindle-left"
+            ],
+            [
+              "front-disc-left"
+            ],
+            [
+              "front-hub-left"
+            ],
+            [
+              "front-tire-left"
+            ]
+          ],
+          "direction": [
+            0,
+            0,
+            -1
+          ],
+          "distance": 100,
+          "id": "front-left",
+          "name": "前转向轮组 · left",
+          "parts": [
+            "front-mount-left",
+            "knuckle-left",
+            "spindle-left",
+            "front-hub-left",
+            "front-tire-left",
+            "front-disc-left"
+          ]
+        },
+        {
+          "batches": [
+            [
+              "front-mount-right"
+            ],
+            [
+              "knuckle-right"
+            ],
+            [
+              "spindle-right"
+            ],
+            [
+              "front-disc-right"
+            ],
+            [
+              "front-hub-right"
+            ],
+            [
+              "front-tire-right"
+            ]
+          ],
+          "direction": [
+            0,
+            0,
+            -1
+          ],
+          "distance": 100,
+          "id": "front-right",
+          "name": "前转向轮组 · right",
+          "parts": [
+            "front-mount-right",
+            "knuckle-right",
+            "spindle-right",
+            "front-hub-right",
+            "front-tire-right",
+            "front-disc-right"
+          ]
+        },
+        {
+          "batches": [
+            [
+              "battery"
+            ]
+          ],
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 100,
+          "id": "power",
+          "name": "动力电池",
+          "parts": [
+            "battery"
+          ]
+        },
+        {
+          "batches": [
+            [
+              "body-post-0"
+            ],
+            [
+              "body-post-1"
+            ],
+            [
+              "body-post-2"
+            ],
+            [
+              "body-post-3"
+            ]
+          ],
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 80,
+          "id": "body-mounts",
+          "name": "车壳定位柱",
+          "parts": [
+            "body-post-0",
+            "body-post-1",
+            "body-post-2",
+            "body-post-3"
+          ]
+        },
+        {
+          "batches": [
+            [
+              "cockpit"
+            ],
+            [
+              "nose"
+            ],
+            [
+              "tail"
+            ],
+            [
+              "pod-left"
+            ],
+            [
+              "pod-right"
+            ]
+          ],
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 110,
+          "id": "bodywork",
+          "name": "分件赛车外壳",
+          "parts": [
+            "cockpit",
+            "nose",
+            "tail",
+            "pod-left",
+            "pod-right"
+          ],
+          "type": "body"
+        },
+        {
+          "batches": [
+            [
+              "body-bolt-0"
+            ],
+            [
+              "body-bolt-1"
+            ],
+            [
+              "body-bolt-2"
+            ],
+            [
+              "body-bolt-3"
+            ]
+          ],
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 45,
+          "id": "body-fasteners",
+          "name": "车壳紧固件",
+          "parts": [
+            "body-bolt-0",
+            "body-bolt-1",
+            "body-bolt-2",
+            "body-bolt-3"
+          ],
+          "type": "body"
+        },
+        {
+          "batches": [
+            [
+              "wing-post-left"
+            ],
+            [
+              "wing-post-right"
+            ],
+            [
+              "rear-wing"
+            ],
+            [
+              "wing-end-left"
+            ],
+            [
+              "wing-end-right"
+            ]
+          ],
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 100,
+          "id": "rear-wing",
+          "name": "尾翼总成",
+          "parts": [
+            "wing-post-left",
+            "wing-post-right",
+            "rear-wing",
+            "wing-end-left",
+            "wing-end-right"
+          ],
+          "type": "body"
+        }
+      ],
+      "description": "承载车架、四轮/制动盘、两级直齿减速、左右半轴、独立可拆座舱/鼻锥/尾罩/侧舱和尾翼。名义CAD实体与离散装配/运动检查；差速内齿、拉杆、悬架受力、车壳空气动力学未求解。",
+      "experiments": [],
+      "mates": [],
+      "operation": {
+        "kind": "vehicle",
+        "max_steer": 20,
+        "pivot_track": 100,
+        "radius": 30,
+        "rear_rotating": [
+          "motor-rotor",
+          "motor-case"
+        ],
+        "steering_parts": {
+          "left": [
+            "knuckle-left"
+          ],
+          "right": [
+            "knuckle-right"
+          ]
+        },
+        "transmission": {
+          "output": "output-gear",
+          "shafts": [
+            {
+              "gear": "pinion",
+              "parts": [
+                "pinion",
+                "input-shaft"
+              ]
+            },
+            {
+              "gear": "lay-gear",
+              "parts": [
+                "lay-gear",
+                "lay-pinion",
+                "lay-shaft"
+              ]
+            },
+            {
+              "gear": "output-gear",
+              "parts": [
+                "output-gear"
+              ]
+            }
+          ],
+          "stages": [
+            {
+              "driven": "lay-gear",
+              "driver": "pinion"
+            },
+            {
+              "driven": "output-gear",
+              "driver": "lay-pinion"
+            }
+          ]
+        },
+        "verification": "extended",
+        "wheelbase": 180,
+        "wheels": [
+          {
+            "axle": "rear",
+            "center": [
+              -90,
+              68,
+              30
+            ],
+            "parts": [
+              "coupling-left",
+              "halfshaft-left",
+              "rear-hub-left",
+              "rear-tire-left",
+              "rear-disc-left"
+            ],
+            "pivot": [
+              -90,
+              68,
+              30
+            ],
+            "side": "left"
+          },
+          {
+            "axle": "rear",
+            "center": [
+              -90,
+              -68,
+              30
+            ],
+            "parts": [
+              "coupling-right",
+              "halfshaft-right",
+              "rear-hub-right",
+              "rear-tire-right",
+              "rear-disc-right"
+            ],
+            "pivot": [
+              -90,
+              -68,
+              30
+            ],
+            "side": "right"
+          },
+          {
+            "axle": "front",
+            "center": [
+              90,
+              68,
+              30
+            ],
+            "parts": [
+              "spindle-left",
+              "front-hub-left",
+              "front-tire-left",
+              "front-disc-left"
+            ],
+            "pivot": [
+              90,
+              50,
+              30
+            ],
+            "side": "left"
+          },
+          {
+            "axle": "front",
+            "center": [
+              90,
+              -68,
+              30
+            ],
+            "parts": [
+              "spindle-right",
+              "front-hub-right",
+              "front-tire-right",
+              "front-disc-right"
+            ],
+            "pivot": [
+              90,
+              -50,
+              30
+            ],
+            "side": "right"
+          }
+        ]
+      },
+      "parts": [
+        {
+          "id": "rail-left",
+          "kind": "box",
+          "material": "aluminum",
+          "name": "纵梁 · left",
+          "params": {
+            "bore": 0,
+            "depth": 10,
+            "height": 12,
+            "width": 250
+          },
+          "position": [
+            0,
+            32,
+            55
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "rail-right",
+          "kind": "box",
+          "material": "aluminum",
+          "name": "纵梁 · right",
+          "params": {
+            "bore": 0,
+            "depth": 10,
+            "height": 12,
+            "width": 250
+          },
+          "position": [
+            0,
+            -32,
+            55
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "cross-0",
+          "kind": "box",
+          "material": "aluminum",
+          "name": "横梁 1",
+          "params": {
+            "bore": 0,
+            "depth": 54,
+            "height": 12,
+            "width": 10
+          },
+          "position": [
+            -115,
+            0,
+            55
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "cross-1",
+          "kind": "box",
+          "material": "aluminum",
+          "name": "横梁 2",
+          "params": {
+            "bore": 0,
+            "depth": 54,
+            "height": 12,
+            "width": 10
+          },
+          "position": [
+            -60,
+            0,
+            55
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "cross-2",
+          "kind": "box",
+          "material": "aluminum",
+          "name": "横梁 3",
+          "params": {
+            "bore": 0,
+            "depth": 54,
+            "height": 12,
+            "width": 10
+          },
+          "position": [
+            100,
+            0,
+            55
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "rear-mount-left",
+          "kind": "box",
+          "material": "steel",
+          "name": "后桥吊架 · left",
+          "params": {
+            "bore": 0,
+            "depth": 16,
+            "height": 7,
+            "width": 24
+          },
+          "position": [
+            -90,
+            32,
+            45.5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "rear-block-left",
+          "kind": "box",
+          "material": "steel",
+          "name": "带孔轴承座 · left",
+          "params": {
+            "bore": 20.2,
+            "depth": 24,
+            "height": 16,
+            "width": 24
+          },
+          "position": [
+            -90,
+            32,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "rear-bearing-left",
+          "kind": "bearing",
+          "material": "steel",
+          "name": "后桥滚动轴承 · left",
+          "params": {
+            "inner": 8.2,
+            "length": 12,
+            "outer": 20
+          },
+          "position": [
+            -90,
+            32,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "rear-mount-right",
+          "kind": "box",
+          "material": "steel",
+          "name": "后桥吊架 · right",
+          "params": {
+            "bore": 0,
+            "depth": 16,
+            "height": 7,
+            "width": 24
+          },
+          "position": [
+            -90,
+            -32,
+            45.5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "rear-block-right",
+          "kind": "box",
+          "material": "steel",
+          "name": "带孔轴承座 · right",
+          "params": {
+            "bore": 20.2,
+            "depth": 24,
+            "height": 16,
+            "width": 24
+          },
+          "position": [
+            -90,
+            -32,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "rear-bearing-right",
+          "kind": "bearing",
+          "material": "steel",
+          "name": "后桥滚动轴承 · right",
+          "params": {
+            "inner": 8.2,
+            "length": 12,
+            "outer": 20
+          },
+          "position": [
+            -90,
+            -32,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "motor-case",
+          "kind": "tube",
+          "material": "aluminum",
+          "name": "差速载体套（内部啮合未建模）",
+          "params": {
+            "inner": 12.2,
+            "length": 8,
+            "outer": 24
+          },
+          "position": [
+            -90,
+            0,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "motor-rotor",
+          "kind": "shaft",
+          "material": "steel",
+          "name": "电机转子轴",
+          "params": {
+            "diameter": 8,
+            "length": 16
+          },
+          "position": [
+            -90,
+            0,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "coupling-left",
+          "kind": "tube",
+          "material": "bronze",
+          "name": "差速输出连接套 · left",
+          "params": {
+            "inner": 8.2,
+            "length": 8,
+            "outer": 12
+          },
+          "position": [
+            -90,
+            12,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "halfshaft-left",
+          "kind": "shaft",
+          "material": "steel",
+          "name": "独立半轴 · left",
+          "params": {
+            "diameter": 8,
+            "length": 60
+          },
+          "position": [
+            -90,
+            44,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "rear-hub-left",
+          "kind": "flange",
+          "material": "bronze",
+          "name": "后孔系轮毂 · left",
+          "params": {
+            "bolt_circle": 22,
+            "bolt_diameter": 3,
+            "bolts": 4,
+            "inner": 8.2,
+            "outer": 32,
+            "thickness": 12
+          },
+          "position": [
+            -90,
+            68,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "rear-tire-left",
+          "kind": "tube",
+          "material": "rubber",
+          "name": "后车轮 · left",
+          "params": {
+            "inner": 32.2,
+            "length": 18,
+            "outer": 60
+          },
+          "position": [
+            -90,
+            68,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "coupling-right",
+          "kind": "tube",
+          "material": "bronze",
+          "name": "差速输出连接套 · right",
+          "params": {
+            "inner": 8.2,
+            "length": 8,
+            "outer": 12
+          },
+          "position": [
+            -90,
+            -12,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "halfshaft-right",
+          "kind": "shaft",
+          "material": "steel",
+          "name": "独立半轴 · right",
+          "params": {
+            "diameter": 8,
+            "length": 60
+          },
+          "position": [
+            -90,
+            -44,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "rear-hub-right",
+          "kind": "flange",
+          "material": "bronze",
+          "name": "后孔系轮毂 · right",
+          "params": {
+            "bolt_circle": 22,
+            "bolt_diameter": 3,
+            "bolts": 4,
+            "inner": 8.2,
+            "outer": 32,
+            "thickness": 12
+          },
+          "position": [
+            -90,
+            -68,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "rear-tire-right",
+          "kind": "tube",
+          "material": "rubber",
+          "name": "后车轮 · right",
+          "params": {
+            "inner": 32.2,
+            "length": 18,
+            "outer": 60
+          },
+          "position": [
+            -90,
+            -68,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "front-mount-left",
+          "kind": "box",
+          "material": "steel",
+          "name": "转向上支座 · left",
+          "params": {
+            "bore": 0,
+            "depth": 26,
+            "height": 7,
+            "width": 20
+          },
+          "position": [
+            90,
+            38,
+            45.5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "knuckle-left",
+          "kind": "box",
+          "material": "steel",
+          "name": "前转向节 · left",
+          "params": {
+            "bore": 8.2,
+            "depth": 24,
+            "height": 20,
+            "width": 20
+          },
+          "position": [
+            90,
+            50,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "spindle-left",
+          "kind": "shaft",
+          "material": "steel",
+          "name": "前轮短轴 · left",
+          "params": {
+            "diameter": 8,
+            "length": 38
+          },
+          "position": [
+            90,
+            62,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "front-hub-left",
+          "kind": "flange",
+          "material": "bronze",
+          "name": "前孔系轮毂 · left",
+          "params": {
+            "bolt_circle": 22,
+            "bolt_diameter": 3,
+            "bolts": 4,
+            "inner": 8.2,
+            "outer": 32,
+            "thickness": 12
+          },
+          "position": [
+            90,
+            68,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "front-tire-left",
+          "kind": "tube",
+          "material": "rubber",
+          "name": "前车轮 · left",
+          "params": {
+            "inner": 32.2,
+            "length": 18,
+            "outer": 60
+          },
+          "position": [
+            90,
+            68,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "front-mount-right",
+          "kind": "box",
+          "material": "steel",
+          "name": "转向上支座 · right",
+          "params": {
+            "bore": 0,
+            "depth": 26,
+            "height": 7,
+            "width": 20
+          },
+          "position": [
+            90,
+            -38,
+            45.5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "knuckle-right",
+          "kind": "box",
+          "material": "steel",
+          "name": "前转向节 · right",
+          "params": {
+            "bore": 8.2,
+            "depth": 24,
+            "height": 20,
+            "width": 20
+          },
+          "position": [
+            90,
+            -50,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "spindle-right",
+          "kind": "shaft",
+          "material": "steel",
+          "name": "前轮短轴 · right",
+          "params": {
+            "diameter": 8,
+            "length": 38
+          },
+          "position": [
+            90,
+            -62,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "front-hub-right",
+          "kind": "flange",
+          "material": "bronze",
+          "name": "前孔系轮毂 · right",
+          "params": {
+            "bolt_circle": 22,
+            "bolt_diameter": 3,
+            "bolts": 4,
+            "inner": 8.2,
+            "outer": 32,
+            "thickness": 12
+          },
+          "position": [
+            90,
+            -68,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "front-tire-right",
+          "kind": "tube",
+          "material": "rubber",
+          "name": "前车轮 · right",
+          "params": {
+            "inner": 32.2,
+            "length": 18,
+            "outer": 60
+          },
+          "position": [
+            90,
+            -68,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "battery",
+          "kind": "box",
+          "material": "polymer",
+          "name": "动力电池箱",
+          "params": {
+            "bore": 0,
+            "depth": 45,
+            "height": 22,
+            "width": 75
+          },
+          "position": [
+            -15,
+            0,
+            72
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "cross-mount",
+          "kind": "box",
+          "material": "aluminum",
+          "name": "车壳支承横梁",
+          "params": {
+            "bore": 0,
+            "depth": 54,
+            "height": 12,
+            "width": 10
+          },
+          "position": [
+            30,
+            0,
+            55
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "nose-bridge",
+          "kind": "box",
+          "material": "aluminum",
+          "name": "车壳支承横梁",
+          "params": {
+            "bore": 0,
+            "depth": 54,
+            "height": 12,
+            "width": 10
+          },
+          "position": [
+            120,
+            0,
+            55
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "rear-disc-left",
+          "kind": "tube",
+          "material": "steel",
+          "name": "通风盘简化实体 · rearleft",
+          "params": {
+            "inner": 8.2,
+            "length": 2,
+            "outer": 25
+          },
+          "position": [
+            -90,
+            61,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "rear-disc-right",
+          "kind": "tube",
+          "material": "steel",
+          "name": "通风盘简化实体 · rearright",
+          "params": {
+            "inner": 8.2,
+            "length": 2,
+            "outer": 25
+          },
+          "position": [
+            -90,
+            -61,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "front-disc-left",
+          "kind": "tube",
+          "material": "steel",
+          "name": "通风盘简化实体 · frontleft",
+          "params": {
+            "inner": 8.2,
+            "length": 2,
+            "outer": 25
+          },
+          "position": [
+            90,
+            61,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "front-disc-right",
+          "kind": "tube",
+          "material": "steel",
+          "name": "通风盘简化实体 · frontright",
+          "params": {
+            "inner": 8.2,
+            "length": 2,
+            "outer": 25
+          },
+          "position": [
+            90,
+            -61,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "input-hanger",
+          "kind": "box",
+          "material": "steel",
+          "name": "电机吊架",
+          "params": {
+            "bore": 0,
+            "depth": 18,
+            "height": 4,
+            "width": 30
+          },
+          "position": [
+            -27,
+            -30,
+            47
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "input-block",
+          "kind": "box",
+          "material": "steel",
+          "name": "电机开孔支承座",
+          "params": {
+            "bore": 22.2,
+            "depth": 30,
+            "height": 18,
+            "width": 30
+          },
+          "position": [
+            -27,
+            -30,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "input-motor",
+          "kind": "tube",
+          "material": "aluminum",
+          "name": "电机定子机壳",
+          "params": {
+            "inner": 10.2,
+            "length": 16,
+            "outer": 22
+          },
+          "position": [
+            -27,
+            -30,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "motor-cap-a",
+          "kind": "flange",
+          "material": "aluminum",
+          "name": "电机端盖 a",
+          "params": {
+            "bolt_circle": 16,
+            "bolt_diameter": 2,
+            "bolts": 4,
+            "inner": 8.2,
+            "outer": 22,
+            "thickness": 3
+          },
+          "position": [
+            -27,
+            -39.5,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "motor-cap-b",
+          "kind": "flange",
+          "material": "aluminum",
+          "name": "电机端盖 b",
+          "params": {
+            "bolt_circle": 16,
+            "bolt_diameter": 2,
+            "bolts": 4,
+            "inner": 8.2,
+            "outer": 22,
+            "thickness": 3
+          },
+          "position": [
+            -27,
+            -20.5,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "input-shaft",
+          "kind": "shaft",
+          "material": "steel",
+          "name": "电机输入轴",
+          "params": {
+            "diameter": 8,
+            "length": 60
+          },
+          "position": [
+            -27,
+            -12,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "lay-hanger-left",
+          "kind": "box",
+          "material": "steel",
+          "name": "中间轴吊架 · left",
+          "params": {
+            "bore": 0,
+            "depth": 8,
+            "height": 9,
+            "width": 20
+          },
+          "position": [
+            -54,
+            14,
+            44.5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "lay-block-left",
+          "kind": "box",
+          "material": "steel",
+          "name": "中间轴支承 · left",
+          "params": {
+            "bore": 8.2,
+            "depth": 20,
+            "height": 8,
+            "width": 20
+          },
+          "position": [
+            -54,
+            14,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "lay-hanger-right",
+          "kind": "box",
+          "material": "steel",
+          "name": "中间轴吊架 · right",
+          "params": {
+            "bore": 0,
+            "depth": 8,
+            "height": 9,
+            "width": 20
+          },
+          "position": [
+            -54,
+            -14,
+            44.5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "lay-block-right",
+          "kind": "box",
+          "material": "steel",
+          "name": "中间轴支承 · right",
+          "params": {
+            "bore": 8.2,
+            "depth": 20,
+            "height": 8,
+            "width": 20
+          },
+          "position": [
+            -54,
+            -14,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "lay-shaft",
+          "kind": "shaft",
+          "material": "steel",
+          "name": "复合中间轴",
+          "params": {
+            "diameter": 8,
+            "length": 38
+          },
+          "position": [
+            -54,
+            0,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "pinion",
+          "kind": "gear",
+          "material": "bronze",
+          "name": "输入小齿轮",
+          "params": {
+            "backlash": 0.12,
+            "bore": 8.2,
+            "module": 1,
+            "teeth": 18,
+            "thickness": 4
+          },
+          "position": [
+            -27,
+            -6,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "lay-gear",
+          "kind": "gear",
+          "material": "bronze",
+          "name": "中间大齿轮",
+          "params": {
+            "backlash": 0.12,
+            "bore": 8.2,
+            "module": 1,
+            "teeth": 36,
+            "thickness": 4
+          },
+          "position": [
+            -54,
+            -6,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            5
+          ]
+        },
+        {
+          "id": "lay-pinion",
+          "kind": "gear",
+          "material": "bronze",
+          "name": "中间小齿轮",
+          "params": {
+            "backlash": 0.12,
+            "bore": 8.2,
+            "module": 1,
+            "teeth": 24,
+            "thickness": 4
+          },
+          "position": [
+            -54,
+            6,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "output-gear",
+          "kind": "gear",
+          "material": "bronze",
+          "name": "差速载体大齿轮",
+          "params": {
+            "backlash": 0.12,
+            "bore": 8.2,
+            "module": 1,
+            "teeth": 48,
+            "thickness": 4
+          },
+          "position": [
+            -90,
+            6,
+            30
+          ],
+          "rotation": [
+            90,
+            0,
+            3.75
+          ]
+        },
+        {
+          "id": "body-post-0",
+          "kind": "tube",
+          "material": "aluminum",
+          "name": "座舱安装柱 1",
+          "params": {
+            "inner": 3.4,
+            "length": 28,
+            "outer": 8
+          },
+          "position": [
+            -60,
+            -20,
+            75
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "body-post-1",
+          "kind": "tube",
+          "material": "aluminum",
+          "name": "座舱安装柱 2",
+          "params": {
+            "inner": 3.4,
+            "length": 28,
+            "outer": 8
+          },
+          "position": [
+            -60,
+            20,
+            75
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "body-post-2",
+          "kind": "tube",
+          "material": "aluminum",
+          "name": "座舱安装柱 3",
+          "params": {
+            "inner": 3.4,
+            "length": 28,
+            "outer": 8
+          },
+          "position": [
+            30,
+            -20,
+            75
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "body-post-3",
+          "kind": "tube",
+          "material": "aluminum",
+          "name": "座舱安装柱 4",
+          "params": {
+            "inner": 3.4,
+            "length": 28,
+            "outer": 8
+          },
+          "position": [
+            30,
+            20,
+            75
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "cockpit",
+          "kind": "shell",
+          "material": "composite",
+          "name": "带开口座舱壳",
+          "params": {
+            "front_width": 54,
+            "height": 30,
+            "length": 150,
+            "mount_span": 90,
+            "mount_width": 40,
+            "opening": 50,
+            "rear_width": 54,
+            "wall": 2
+          },
+          "position": [
+            -15,
+            0,
+            76
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "nose",
+          "kind": "shell",
+          "material": "composite",
+          "name": "渐缩鼻锥壳",
+          "params": {
+            "front_width": 16,
+            "height": 24,
+            "length": 90,
+            "mount_span": 0,
+            "mount_width": 0,
+            "opening": 0,
+            "rear_width": 54,
+            "wall": 2
+          },
+          "position": [
+            160,
+            0,
+            73
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "tail",
+          "kind": "shell",
+          "material": "composite",
+          "name": "电驱后舱罩",
+          "params": {
+            "front_width": 54,
+            "height": 16,
+            "length": 55,
+            "mount_span": 0,
+            "mount_width": 0,
+            "opening": 0,
+            "rear_width": 54,
+            "wall": 2
+          },
+          "position": [
+            -117.5,
+            0,
+            69
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "pod-left",
+          "kind": "shell",
+          "material": "composite",
+          "name": "左侧舱罩",
+          "params": {
+            "front_width": 20,
+            "height": 16,
+            "length": 110,
+            "mount_span": 0,
+            "mount_width": 0,
+            "opening": 0,
+            "rear_width": 24,
+            "wall": 2
+          },
+          "position": [
+            -10,
+            47,
+            69
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "pod-right",
+          "kind": "shell",
+          "material": "composite",
+          "name": "右侧舱罩",
+          "params": {
+            "front_width": 20,
+            "height": 16,
+            "length": 110,
+            "mount_span": 0,
+            "mount_width": 0,
+            "opening": 0,
+            "rear_width": 24,
+            "wall": 2
+          },
+          "position": [
+            -10,
+            -47,
+            69
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "body-bolt-0",
+          "kind": "bolt",
+          "material": "steel",
+          "name": "座舱盖固定螺钉 1",
+          "params": {
+            "diameter": 3,
+            "head_diameter": 6,
+            "head_height": 3,
+            "length": 6
+          },
+          "position": [
+            -60,
+            -20,
+            91
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "body-bolt-1",
+          "kind": "bolt",
+          "material": "steel",
+          "name": "座舱盖固定螺钉 2",
+          "params": {
+            "diameter": 3,
+            "head_diameter": 6,
+            "head_height": 3,
+            "length": 6
+          },
+          "position": [
+            -60,
+            20,
+            91
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "body-bolt-2",
+          "kind": "bolt",
+          "material": "steel",
+          "name": "座舱盖固定螺钉 3",
+          "params": {
+            "diameter": 3,
+            "head_diameter": 6,
+            "head_height": 3,
+            "length": 6
+          },
+          "position": [
+            30,
+            -20,
+            91
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "body-bolt-3",
+          "kind": "bolt",
+          "material": "steel",
+          "name": "座舱盖固定螺钉 4",
+          "params": {
+            "diameter": 3,
+            "head_diameter": 6,
+            "head_height": 3,
+            "length": 6
+          },
+          "position": [
+            30,
+            20,
+            91
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "wing-post-left",
+          "kind": "box",
+          "material": "aluminum",
+          "name": "尾翼支柱 · left",
+          "params": {
+            "bore": 0,
+            "depth": 6,
+            "height": 31,
+            "width": 6
+          },
+          "position": [
+            -140,
+            20,
+            92.5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "wing-post-right",
+          "kind": "box",
+          "material": "aluminum",
+          "name": "尾翼支柱 · right",
+          "params": {
+            "bore": 0,
+            "depth": 6,
+            "height": 31,
+            "width": 6
+          },
+          "position": [
+            -140,
+            -20,
+            92.5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "rear-wing",
+          "kind": "box",
+          "material": "composite",
+          "name": "可拆尾翼主片",
+          "params": {
+            "bore": 0,
+            "depth": 150,
+            "height": 3,
+            "width": 24
+          },
+          "position": [
+            -140,
+            0,
+            109.5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "wing-end-left",
+          "kind": "box",
+          "material": "composite",
+          "name": "尾翼端板 · left",
+          "params": {
+            "bore": 0,
+            "depth": 4,
+            "height": 20,
+            "width": 24
+          },
+          "position": [
+            -140,
+            77,
+            101
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "wing-end-right",
+          "kind": "box",
+          "material": "composite",
+          "name": "尾翼端板 · right",
+          "params": {
+            "bore": 0,
+            "depth": 4,
+            "height": 20,
+            "width": 24
+          },
+          "position": [
+            -140,
+            -77,
+            101
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "battery-cross",
+          "kind": "box",
+          "material": "aluminum",
+          "name": "电池安装横梁",
+          "params": {
+            "bore": 0,
+            "depth": 54,
+            "height": 12,
+            "width": 10
+          },
+          "position": [
+            -15,
+            0,
+            55
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "schema": "anatomy.engineering.v1",
+      "steps": [
+        {
+          "direction": [
+            0,
+            0,
+            -1
+          ],
+          "distance": 80,
+          "instruction": "定位并装入电机吊架；核对路径与名义接触面。",
+          "part": "input-hanger"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            -1
+          ],
+          "distance": 80,
+          "instruction": "定位并装入电机开孔支承座；核对路径与名义接触面。",
+          "part": "input-block"
+        },
+        {
+          "direction": [
+            0,
+            -1,
+            0
+          ],
+          "distance": 80,
+          "instruction": "定位并装入电机定子机壳；核对路径与名义接触面。",
+          "part": "input-motor"
+        },
+        {
+          "direction": [
+            0,
+            -1,
+            0
+          ],
+          "distance": 80,
+          "instruction": "定位并装入电机端盖 a；核对路径与名义接触面。",
+          "part": "motor-cap-a"
+        },
+        {
+          "direction": [
+            0,
+            1,
+            0
+          ],
+          "distance": 80,
+          "instruction": "定位并装入电机端盖 b；核对路径与名义接触面。",
+          "part": "motor-cap-b"
+        },
+        {
+          "direction": [
+            0,
+            -1,
+            0
+          ],
+          "distance": 80,
+          "instruction": "定位并装入电机输入轴；核对路径与名义接触面。",
+          "part": "input-shaft"
+        },
+        {
+          "direction": [
+            0,
+            1,
+            0
+          ],
+          "distance": 60,
+          "instruction": "定位并装入输入小齿轮；核对路径与名义接触面。",
+          "part": "pinion"
+        },
+        {
+          "direction": [
+            0,
+            1,
+            0
+          ],
+          "distance": 60,
+          "instruction": "定位并装入中间大齿轮；核对路径与名义接触面。",
+          "part": "lay-gear"
+        },
+        {
+          "direction": [
+            0,
+            1,
+            0
+          ],
+          "distance": 60,
+          "instruction": "定位并装入中间小齿轮；核对路径与名义接触面。",
+          "part": "lay-pinion"
+        },
+        {
+          "direction": [
+            0,
+            1,
+            0
+          ],
+          "distance": 60,
+          "instruction": "定位并装入差速载体大齿轮；核对路径与名义接触面。",
+          "part": "output-gear"
+        },
+        {
+          "direction": [
+            0,
+            1,
+            0
+          ],
+          "distance": 80,
+          "instruction": "定位并装入复合中间轴；核对路径与名义接触面。",
+          "part": "lay-shaft"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 80,
+          "instruction": "定位并装入中间轴吊架 · left；核对路径与名义接触面。",
+          "part": "lay-hanger-left"
+        },
+        {
+          "direction": [
+            0,
+            1,
+            0
+          ],
+          "distance": 80,
+          "instruction": "定位并装入中间轴支承 · left；核对路径与名义接触面。",
+          "part": "lay-block-left"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 80,
+          "instruction": "定位并装入中间轴吊架 · right；核对路径与名义接触面。",
+          "part": "lay-hanger-right"
+        },
+        {
+          "direction": [
+            0,
+            -1,
+            0
+          ],
+          "distance": 80,
+          "instruction": "定位并装入中间轴支承 · right；核对路径与名义接触面。",
+          "part": "lay-block-right"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            -1
+          ],
+          "distance": 80,
+          "instruction": "装入后桥吊架 · left，核对名义定位面；紧固/线束按教学简化。",
+          "part": "rear-mount-left"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            -1
+          ],
+          "distance": 80,
+          "instruction": "装入后桥吊架 · right，核对名义定位面；紧固/线束按教学简化。",
+          "part": "rear-mount-right"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            -1
+          ],
+          "distance": 80,
+          "instruction": "装入带孔轴承座 · left，核对名义定位面；紧固/线束按教学简化。",
+          "part": "rear-block-left"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            -1
+          ],
+          "distance": 80,
+          "instruction": "装入带孔轴承座 · right，核对名义定位面；紧固/线束按教学简化。",
+          "part": "rear-block-right"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            -1
+          ],
+          "distance": 80,
+          "instruction": "装入电驱动机壳（差速内部简化），核对名义定位面；紧固/线束按教学简化。",
+          "part": "motor-case"
+        },
+        {
+          "direction": [
+            0,
+            1,
+            0
+          ],
+          "distance": 80,
+          "instruction": "装入电机转子轴，核对名义定位面；紧固/线束按教学简化。",
+          "part": "motor-rotor"
+        },
+        {
+          "direction": [
+            0,
+            1,
+            0
+          ],
+          "distance": 80,
+          "instruction": "装入差速输出连接套 · left，核对名义定位面；紧固/线束按教学简化。",
+          "part": "coupling-left"
+        },
+        {
+          "direction": [
+            0,
+            -1,
+            0
+          ],
+          "distance": 80,
+          "instruction": "装入差速输出连接套 · right，核对名义定位面；紧固/线束按教学简化。",
+          "part": "coupling-right"
+        },
+        {
+          "direction": [
+            0,
+            1,
+            0
+          ],
+          "distance": 80,
+          "instruction": "装入后桥滚动轴承 · left，核对名义定位面；紧固/线束按教学简化。",
+          "part": "rear-bearing-left"
+        },
+        {
+          "direction": [
+            0,
+            -1,
+            0
+          ],
+          "distance": 80,
+          "instruction": "装入后桥滚动轴承 · right，核对名义定位面；紧固/线束按教学简化。",
+          "part": "rear-bearing-right"
+        },
+        {
+          "direction": [
+            0,
+            1,
+            0
+          ],
+          "distance": 80,
+          "instruction": "装入独立半轴 · left，核对名义定位面；紧固/线束按教学简化。",
+          "part": "halfshaft-left"
+        },
+        {
+          "direction": [
+            0,
+            -1,
+            0
+          ],
+          "distance": 80,
+          "instruction": "装入独立半轴 · right，核对名义定位面；紧固/线束按教学简化。",
+          "part": "halfshaft-right"
+        },
+        {
+          "direction": [
+            0,
+            1,
+            0
+          ],
+          "distance": 80,
+          "instruction": "定位并装入通风盘简化实体 · rearleft；核对路径与名义接触面。",
+          "part": "rear-disc-left"
+        },
+        {
+          "direction": [
+            0,
+            -1,
+            0
+          ],
+          "distance": 80,
+          "instruction": "定位并装入通风盘简化实体 · rearright；核对路径与名义接触面。",
+          "part": "rear-disc-right"
+        },
+        {
+          "direction": [
+            0,
+            1,
+            0
+          ],
+          "distance": 80,
+          "instruction": "装入后孔系轮毂 · left，核对名义定位面；紧固/线束按教学简化。",
+          "part": "rear-hub-left"
+        },
+        {
+          "direction": [
+            0,
+            -1,
+            0
+          ],
+          "distance": 80,
+          "instruction": "装入后孔系轮毂 · right，核对名义定位面；紧固/线束按教学简化。",
+          "part": "rear-hub-right"
+        },
+        {
+          "direction": [
+            0,
+            1,
+            0
+          ],
+          "distance": 80,
+          "instruction": "装入后车轮 · left，核对名义定位面；紧固/线束按教学简化。",
+          "part": "rear-tire-left"
+        },
+        {
+          "direction": [
+            0,
+            -1,
+            0
+          ],
+          "distance": 80,
+          "instruction": "装入后车轮 · right，核对名义定位面；紧固/线束按教学简化。",
+          "part": "rear-tire-right"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 80,
+          "instruction": "装入纵梁 · left，核对名义定位面；紧固/线束按教学简化。",
+          "part": "rail-left"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 80,
+          "instruction": "装入纵梁 · right，核对名义定位面；紧固/线束按教学简化。",
+          "part": "rail-right"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 80,
+          "instruction": "装入横梁 1，核对名义定位面；紧固/线束按教学简化。",
+          "part": "cross-0"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 80,
+          "instruction": "装入横梁 2，核对名义定位面；紧固/线束按教学简化。",
+          "part": "cross-1"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 80,
+          "instruction": "装入横梁 3，核对名义定位面；紧固/线束按教学简化。",
+          "part": "cross-2"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 80,
+          "instruction": "定位并装入车壳支承横梁；核对路径与名义接触面。",
+          "part": "cross-mount"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 80,
+          "instruction": "定位并装入车壳支承横梁；核对路径与名义接触面。",
+          "part": "nose-bridge"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 80,
+          "instruction": "装入电池安装横梁并核对承载接触面。",
+          "part": "battery-cross"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            -1
+          ],
+          "distance": 80,
+          "instruction": "装入转向上支座 · left，核对名义定位面；紧固/线束按教学简化。",
+          "part": "front-mount-left"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            -1
+          ],
+          "distance": 80,
+          "instruction": "装入前转向节 · left，核对名义定位面；紧固/线束按教学简化。",
+          "part": "knuckle-left"
+        },
+        {
+          "direction": [
+            0,
+            1,
+            0
+          ],
+          "distance": 80,
+          "instruction": "装入前轮短轴 · left，核对名义定位面；紧固/线束按教学简化。",
+          "part": "spindle-left"
+        },
+        {
+          "direction": [
+            0,
+            1,
+            0
+          ],
+          "distance": 80,
+          "instruction": "定位并装入通风盘简化实体 · frontleft；核对路径与名义接触面。",
+          "part": "front-disc-left"
+        },
+        {
+          "direction": [
+            0,
+            1,
+            0
+          ],
+          "distance": 80,
+          "instruction": "装入前孔系轮毂 · left，核对名义定位面；紧固/线束按教学简化。",
+          "part": "front-hub-left"
+        },
+        {
+          "direction": [
+            0,
+            1,
+            0
+          ],
+          "distance": 80,
+          "instruction": "装入前车轮 · left，核对名义定位面；紧固/线束按教学简化。",
+          "part": "front-tire-left"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            -1
+          ],
+          "distance": 80,
+          "instruction": "装入转向上支座 · right，核对名义定位面；紧固/线束按教学简化。",
+          "part": "front-mount-right"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            -1
+          ],
+          "distance": 80,
+          "instruction": "装入前转向节 · right，核对名义定位面；紧固/线束按教学简化。",
+          "part": "knuckle-right"
+        },
+        {
+          "direction": [
+            0,
+            -1,
+            0
+          ],
+          "distance": 80,
+          "instruction": "装入前轮短轴 · right，核对名义定位面；紧固/线束按教学简化。",
+          "part": "spindle-right"
+        },
+        {
+          "direction": [
+            0,
+            -1,
+            0
+          ],
+          "distance": 80,
+          "instruction": "定位并装入通风盘简化实体 · frontright；核对路径与名义接触面。",
+          "part": "front-disc-right"
+        },
+        {
+          "direction": [
+            0,
+            -1,
+            0
+          ],
+          "distance": 80,
+          "instruction": "装入前孔系轮毂 · right，核对名义定位面；紧固/线束按教学简化。",
+          "part": "front-hub-right"
+        },
+        {
+          "direction": [
+            0,
+            -1,
+            0
+          ],
+          "distance": 80,
+          "instruction": "装入前车轮 · right，核对名义定位面；紧固/线束按教学简化。",
+          "part": "front-tire-right"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 80,
+          "instruction": "装入动力电池箱，核对名义定位面；紧固/线束按教学简化。",
+          "part": "battery"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 80,
+          "instruction": "定位并装入座舱安装柱 1；核对路径与名义接触面。",
+          "part": "body-post-0"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 80,
+          "instruction": "定位并装入座舱安装柱 2；核对路径与名义接触面。",
+          "part": "body-post-1"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 80,
+          "instruction": "定位并装入座舱安装柱 3；核对路径与名义接触面。",
+          "part": "body-post-2"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 80,
+          "instruction": "定位并装入座舱安装柱 4；核对路径与名义接触面。",
+          "part": "body-post-3"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 110,
+          "instruction": "定位并装入带开口座舱壳；核对路径与名义接触面。",
+          "part": "cockpit"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 110,
+          "instruction": "定位并装入渐缩鼻锥壳；核对路径与名义接触面。",
+          "part": "nose"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 110,
+          "instruction": "定位并装入电驱后舱罩；核对路径与名义接触面。",
+          "part": "tail"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 110,
+          "instruction": "定位并装入左侧舱罩；核对路径与名义接触面。",
+          "part": "pod-left"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 110,
+          "instruction": "定位并装入右侧舱罩；核对路径与名义接触面。",
+          "part": "pod-right"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 45,
+          "instruction": "定位并装入座舱盖固定螺钉 1；核对路径与名义接触面。",
+          "part": "body-bolt-0"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 45,
+          "instruction": "定位并装入座舱盖固定螺钉 2；核对路径与名义接触面。",
+          "part": "body-bolt-1"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 45,
+          "instruction": "定位并装入座舱盖固定螺钉 3；核对路径与名义接触面。",
+          "part": "body-bolt-2"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 45,
+          "instruction": "定位并装入座舱盖固定螺钉 4；核对路径与名义接触面。",
+          "part": "body-bolt-3"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 80,
+          "instruction": "定位并装入尾翼支柱 · left；核对路径与名义接触面。",
+          "part": "wing-post-left"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 80,
+          "instruction": "定位并装入尾翼支柱 · right；核对路径与名义接触面。",
+          "part": "wing-post-right"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 80,
+          "instruction": "定位并装入可拆尾翼主片；核对路径与名义接触面。",
+          "part": "rear-wing"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 80,
+          "instruction": "定位并装入尾翼端板 · left；核对路径与名义接触面。",
+          "part": "wing-end-left"
+        },
+        {
+          "direction": [
+            0,
+            0,
+            1
+          ],
+          "distance": 80,
+          "instruction": "定位并装入尾翼端板 · right；核对路径与名义接触面。",
+          "part": "wing-end-right"
+        }
+      ],
+      "title": "电动方程式赛车 · 两级传动与分件外壳",
+      "unfulfilled": [
+        "差速内部锥齿轮、转向拉杆闭环与悬架受力未建模；采用理想速度关系。",
+        "20°渐开线齿形为分段轮廓，直线齿根未含刀具根切/圆角；未作齿面应力、疲劳或润滑计算。",
+        "车壳名义装配与安装柱/短螺钉定位，不含螺纹、预紧、材料应力、车壳气动或制造公差。",
+        "30个转向/独立轮位采样与插入离散采样不构成连续无碰撞证明。",
+        "车辆保持架空台架，未模拟赛道行驶、轮胎接触与真实赛车动力学。"
+      ],
+      "units": "mm"
+    },
+    "downloads": {
+      "assembly.step": {
+        "bytes": 6217616,
+        "sha256": "1adb20109fa28a1f6d9f59cbd5721b3e3b2b5c8b6cbf10a095f07fe145f96b19",
+        "url": "/api/anatomy/exports/89065e237fc04ed5b0da8fe7903e53b2/assembly.step"
+      },
+      "assembly.stl": {
+        "bytes": 3840484,
+        "sha256": "d358c215d387788bc0180e69e8ab6e4a5cd7348ba2c5f23ff1f0d4816820ff13",
+        "url": "/api/anatomy/exports/89065e237fc04ed5b0da8fe7903e53b2/assembly.stl"
+      },
+      "bom.csv": {
+        "bytes": 5487,
+        "sha256": "238a755cbf0fe59f299db346f8b8c7479b65c1f6fdd462463e01a175a5e2fa25",
+        "url": "/api/anatomy/exports/89065e237fc04ed5b0da8fe7903e53b2/bom.csv"
+      },
+      "cad-package.zip": {
+        "bytes": 3161974,
+        "sha256": "33569d667d2b49b040591c04c1982912ae722c1b190926d5e55c19309259c2c3",
+        "url": "/api/anatomy/exports/89065e237fc04ed5b0da8fe7903e53b2/cad-package.zip"
+      },
+      "configuration.json": {
+        "bytes": 56414,
+        "sha256": "41befd6ece4ea3f05c2abd6e3daab0e8e3eecb3f0632e3a9b2ed3d85f8026169",
+        "url": "/api/anatomy/exports/89065e237fc04ed5b0da8fe7903e53b2/configuration.json"
+      },
+      "flange-profile.dxf": {
+        "bytes": 461,
+        "sha256": "d1b901c43c79fa344a33bc90b4fd4cd7ae5e047f9a2cb4b505feee01ec3cd4ae",
+        "url": "/api/anatomy/exports/89065e237fc04ed5b0da8fe7903e53b2/flange-profile.dxf"
+      },
+      "report.json": {
+        "bytes": 96630,
+        "sha256": "a8b1e363b4ddbf207e8cd8389176dfcd7288793f1a0537e269d495ba87f2ef18",
+        "url": "/api/anatomy/exports/89065e237fc04ed5b0da8fe7903e53b2/report.json"
+      }
+    },
+    "host_validation_sha256": {
+      "adapters/engineering/worker.py": "f8aa94e2cb1f230220f6c1ce529c44714b05387532a96173977a3cd2cf300f85",
+      "apps/engineering/worker.py": "c501fe0e152e8cd0116f53d1e0926fe205487201b411b7dc31518753ba407e4b",
+      "host/anatomy_engineering.py": "b5b800b82265a06e64601d8ae5650b53227e773baaf6b569731009a1af360c2d",
+      "modules/skills/anatomy/engineering_model.py": "f91b169570280cb2debb7433e2dffba201dffe00d64405a7ad9cdac413a2c556"
+    },
+    "id": "89065e237fc04ed5b0da8fe7903e53b2",
+    "limits": [
+      "装配插入已作每步7时刻的离散实体采样检查，不能作为连续无碰撞路径证明。",
+      "剖面为原实体沿全局 Y=0 的真实布尔截面；展示拆解不改变检查几何。",
+      "CAD 有效性与 STEP 回读不等于制造认证。"
+    ],
+    "mechanism": "engineering",
+    "model_calls": 0,
+    "path": "D:\\Jarvis\\user-data\\diagnostics\\anatomy-race-test\\artifacts\\anatomy\\89065e237fc04ed5b0da8fe7903e53b2.html",
+    "quality": {
+      "status": "checked_scope_passed",
+      "unverified": [
+        "continuous_insertion_paths",
+        "full_motion_cycle_interference",
+        "manufacturing_tolerances",
+        "general_assembly_dynamics"
+      ]
+    },
+    "renderer_sha256": {
+      "engineering-build.mjs": "9500843b6853be871f6d96717fdf511a7171b22a8a19d2d139b59df250acd489",
+      "engineering-contract.json": "5b1c2ec107e7c3dfeecbbbbde612b730d9e1377d2eaf8e7edb8cbe00ed132380",
+      "engineering-gpu.mjs": "da47defd22f61cd5998fe80f46d965fa977b6773a4ea0956a10512e266426b6a",
+      "engineering-motion.mjs": "2df87339384e7313e9cb5205fff1d9677a483b298c15896c7083ad498a51ae81",
+      "engineering-presets.json": "4211118cf072a79bfbcbe7f47f85982f5fbf703144792b19f8075924bf2c0e24",
+      "engineering-view.js": "fe0c2a672f93076867bcd06b1694ddb50c0317acca10b98d755dee18c5542b83",
+      "engineering.html": "9843600b2ca8f49cc3088ea79c1ae728a7109e2569b3c2093e9fc40f195a4c49",
+      "engineering_model.py": "f91b169570280cb2debb7433e2dffba201dffe00d64405a7ad9cdac413a2c556",
+      "engineering_physics.py": "99aec69194e81f4403cd5d9317fcd3d329325bf46f3231a60920076467e2c9c4",
+      "engineering_transmission.py": "45710cce9c086c75c51f4b2fa3c39d98c704cf86324cfe8d62711adc487d5881",
+      "runtime-boundary.json": "172f344b22f6710139f6a2012a8a4f9c40efc456a833709fd633e2a0c63f6ed0",
+      "runtime-lock.json": "27399e8628a98258064d2e99277e1e94a66343a0d961f1d134c350028fa2d924",
+      "structure3d.mjs": "097f7877171821884b2a37160f5ed212145b76d6cb6dc5bc5f7a3fb81ba89383"
+    },
+    "resources": {
+      "active_process_limit": 2,
+      "elapsed_seconds": 26.619254400000045,
+      "isolation": "Trusted fixed native factories; resource job only, not LPAC security isolation",
+      "job_memory_limit_bytes": 1073741824,
+      "output_quota_bytes": 67108864,
+      "peak_job_memory_bytes": 259936256,
+      "peak_process_memory_bytes": 257921024,
+      "portable_embedded_bytes": 4934695,
+      "portable_encoding": {
+        "assembly.step": "gzip",
+        "assembly.stl": "gzip",
+        "bom.csv": "gzip",
+        "cad-package.zip": "gzip",
+        "configuration.json": "gzip",
+        "flange-profile.dxf": "gzip",
+        "report.json": "gzip"
+      },
+      "portable_expanded_bytes": 13379066,
+      "process_cpu_limit_seconds": 30,
+      "wall_limit_seconds": 45
+    },
+    "runtime_lock_sha256": "27399e8628a98258064d2e99277e1e94a66343a0d961f1d134c350028fa2d924",
+    "sha256": "51af449bd931145c2ba4fc68b1aafc63670595533a09755bca10d9a09894ca3e",
+    "skill": "gears",
+    "source": {
+      "commit": "1482e8469b0a9e0d8cc18ea2740a01423d29ae80",
+      "copyright": "Copyright (c) 2026 Ryan",
+      "files": {
+        "LICENSE": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+        "SKILL.md.txt": "3423ada45a05033bb6e320dfc3b3ac832569969a5afb059bbfc9096c5cf0c71b",
+        "kit/iso-kit.mjs": "6d3ecc725d30c3b0346da309cf61dfa5a65017c23620bbd4093009d4fb104018",
+        "kit/iso.css": "ef19bac5a42ba9be42b56b2c1cf7fc7e21d332a8060765e9ca1d987b8ab23924",
+        "references/craft.md.txt": "38761fa9b81d66b30e50b05488501d4815830d3627f153d60f76ca783f598936",
+        "references/kit.md.txt": "684672e069fdb52735efabc3f4310dedd840d0c8066a8dc7784be2b7e656be71",
+        "references/motion.md.txt": "dda401ca1b4661a5f0b7c1e33dac6e7e4b8c13d51ca5d9312123a5c02dab320b",
+        "references/verify.md.txt": "fb81437fc5d75094a34432eb6f545644aa228e15173a27d08b3cace912033561"
+      },
+      "license": "MIT",
+      "note": "Markdown reference snapshots use .md.txt locally; bytes and original upstream paths/hashes are retained.",
+      "repository": "https://github.com/wheresryan22/anatomy",
+      "upstream_files": {
+        "LICENSE": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+        "SKILL.md": "3423ada45a05033bb6e320dfc3b3ac832569969a5afb059bbfc9096c5cf0c71b",
+        "kit/iso-kit.mjs": "6d3ecc725d30c3b0346da309cf61dfa5a65017c23620bbd4093009d4fb104018",
+        "kit/iso.css": "ef19bac5a42ba9be42b56b2c1cf7fc7e21d332a8060765e9ca1d987b8ab23924",
+        "references/craft.md": "38761fa9b81d66b30e50b05488501d4815830d3627f153d60f76ca783f598936",
+        "references/kit.md": "684672e069fdb52735efabc3f4310dedd840d0c8066a8dc7784be2b7e656be71",
+        "references/motion.md": "dda401ca1b4661a5f0b7c1e33dac6e7e4b8c13d51ca5d9312123a5c02dab320b",
+        "references/verify.md": "fb81437fc5d75094a34432eb6f545644aa228e15173a27d08b3cace912033561"
+      }
+    },
+    "url": "/api/anatomy/artifacts/89065e237fc04ed5b0da8fe7903e53b2"
+  },
+  "mode": "existing immutable artifact",
+  "url": "http://127.0.0.1:18283/api/anatomy/artifacts/89065e237fc04ed5b0da8fe7903e53b2",
+  "performance": {
+    "elapsed_ms": 15007.600000000093,
+    "frames": 267,
+    "fps": 17.790985900476983,
+    "last_render_ms": 1.8000000000465661,
+    "js_heap_bytes": 29098103,
+    "stats": {
+      "faces": 56628,
+      "visibleFaces": 56628,
+      "clipped": 0,
+      "particles": 0,
+      "vertices": 169884
+    },
+    "scope": "Current PC, hidden shell, 72 CAD solids, first-party WebGL; no low-end or full-cycle certification"
+  }
+}

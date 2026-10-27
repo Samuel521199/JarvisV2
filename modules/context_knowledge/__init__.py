@@ -25,17 +25,21 @@ class Facts:
 
     @staticmethod
     def write(tx, fact, expected_revision):
+        from modules.context_knowledge.history import record, changed
         old = tx.execute("SELECT * FROM facts WHERE principal=? AND scope=? AND key=?",
                          (fact["principal_id"], fact["scope_id"], fact["key"])).fetchone()
         if (old["revision"] if old else 0) != expected_revision:
             raise CoreError("conflict", "Fact revision changed")
         if old:
+            if not old['deleted']:record(tx,'fact',old)
             tx.execute("UPDATE facts SET value=?,source=?,deleted=0,revision=revision+1 WHERE id=?",
                        (fact["value"], fact["source"], old["id"]))
+            changed(tx,'fact',old['id'])
             return old["id"]
         ident = "fact-" + uuid.uuid4().hex
         tx.execute("INSERT INTO facts(id,principal,scope,key,value,source) VALUES(?,?,?,?,?,?)",
                    (ident, fact["principal_id"], fact["scope_id"], fact["key"], fact["value"], fact["source"]))
+        changed(tx,'fact',ident)
         return ident
 
     def view(self, principal: str, scope: str):
@@ -52,4 +56,5 @@ class Facts:
             row = tx.execute('SELECT id FROM facts WHERE principal=? AND scope=? AND key=?', (principal, scope, key)).fetchone()
             tx.execute('DELETE FROM memory_usage WHERE fact_id=?', (row['id'],))
             tx.execute("UPDATE memory_candidates SET state='WITHDRAWN',value='',key='',revision=revision+1 WHERE fact_id=?", (row['id'],))
+            tx.execute("UPDATE knowledge_claims SET state='withdrawn',quote='',key='',revision=revision+1 WHERE fact_id=? AND state='accepted'",(row['id'],))
             self.bump(tx)

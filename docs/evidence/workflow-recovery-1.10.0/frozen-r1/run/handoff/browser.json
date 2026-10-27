@@ -1,0 +1,344 @@
+{
+  "checks": [
+    "One approval HTTP request persists execution; no second start request is needed",
+    "Weak passing check remains separate from two unverified business requirements"
+  ],
+  "errors": [],
+  "requests": [
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-20073b288cff40d28571dcd7d3c4f6f9"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "approve_and_run",
+        "id": "goal-20073b288cff40d28571dcd7d3c4f6f9",
+        "revision": 2,
+        "budget_limit": 8
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-20073b288cff40d28571dcd7d3c4f6f9"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-20073b288cff40d28571dcd7d3c4f6f9"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-20073b288cff40d28571dcd7d3c4f6f9"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-20073b288cff40d28571dcd7d3c4f6f9"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-20073b288cff40d28571dcd7d3c4f6f9"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-20073b288cff40d28571dcd7d3c4f6f9"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-20073b288cff40d28571dcd7d3c4f6f9"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-20073b288cff40d28571dcd7d3c4f6f9"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-20073b288cff40d28571dcd7d3c4f6f9"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-20073b288cff40d28571dcd7d3c4f6f9"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-20073b288cff40d28571dcd7d3c4f6f9"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-20073b288cff40d28571dcd7d3c4f6f9"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-a6ff6855f95e47bb90bcaf78d38e8b92"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "approve_and_run",
+        "id": "goal-a6ff6855f95e47bb90bcaf78d38e8b92",
+        "revision": 2,
+        "acceptance": {
+          "coverage": "complete",
+          "criteria": [
+            {
+              "id": "declared-result",
+              "step_id": "step-1",
+              "check": "text_contains",
+              "expected": "最低报价：B"
+            }
+          ],
+          "requirements": [
+            {
+              "id": "requirement-1",
+              "text": "预算最多100",
+              "kind": "semantic",
+              "criterion_ids": [
+                "declared-result"
+              ]
+            },
+            {
+              "id": "requirement-2",
+              "text": "交付不超过5天",
+              "kind": "semantic",
+              "criterion_ids": [
+                "declared-result"
+              ]
+            }
+          ]
+        },
+        "budget_limit": 8
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-a6ff6855f95e47bb90bcaf78d38e8b92"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-a6ff6855f95e47bb90bcaf78d38e8b92"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-a6ff6855f95e47bb90bcaf78d38e8b92"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-a6ff6855f95e47bb90bcaf78d38e8b92"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-a6ff6855f95e47bb90bcaf78d38e8b92"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-a6ff6855f95e47bb90bcaf78d38e8b92"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-a6ff6855f95e47bb90bcaf78d38e8b92"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-a6ff6855f95e47bb90bcaf78d38e8b92"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-a6ff6855f95e47bb90bcaf78d38e8b92"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-a6ff6855f95e47bb90bcaf78d38e8b92"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-a6ff6855f95e47bb90bcaf78d38e8b92"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-a6ff6855f95e47bb90bcaf78d38e8b92"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-a6ff6855f95e47bb90bcaf78d38e8b92"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-a6ff6855f95e47bb90bcaf78d38e8b92"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-a6ff6855f95e47bb90bcaf78d38e8b92"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-a6ff6855f95e47bb90bcaf78d38e8b92"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-a6ff6855f95e47bb90bcaf78d38e8b92"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-a6ff6855f95e47bb90bcaf78d38e8b92"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-a6ff6855f95e47bb90bcaf78d38e8b92"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-a6ff6855f95e47bb90bcaf78d38e8b92"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-a6ff6855f95e47bb90bcaf78d38e8b92"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-a6ff6855f95e47bb90bcaf78d38e8b92"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-a6ff6855f95e47bb90bcaf78d38e8b92"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-a6ff6855f95e47bb90bcaf78d38e8b92"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-a6ff6855f95e47bb90bcaf78d38e8b92"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-a6ff6855f95e47bb90bcaf78d38e8b92"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-a6ff6855f95e47bb90bcaf78d38e8b92"
+      }
+    }
+  ],
+  "passed": true
+}

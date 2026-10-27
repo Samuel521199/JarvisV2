@@ -1,0 +1,141 @@
+{
+  "date": "2026-10-26",
+  "version": "bounded-concurrency-1.0.0",
+  "scope": "real Host HTTP/SQLite/dispatch with deterministic model and bounded synthetic CPU/I/O tools",
+  "paid_model_calls": 0,
+  "model_delay_seconds": 0.2,
+  "pairs": 3,
+  "soak_seconds": 2.2871274999997695,
+  "checks": {
+    "two_background_executions_overlap": true,
+    "loaded_input_p95_le_200ms": true,
+    "loaded_input_p99_le_500ms": true,
+    "reply_p95_increase_le_10_percent": true,
+    "reply_p95_increase_le_100ms": true,
+    "soak_30_minutes": false,
+    "background_progress": true
+  },
+  "statistics_ms": {
+    "idle": {
+      "input_ms": {
+        "count": 3,
+        "p50": 15.216,
+        "p95": 22.702,
+        "p99": 22.702,
+        "max": 22.702
+      },
+      "reply_ms": {
+        "count": 3,
+        "p50": 262.313,
+        "p95": 267.054,
+        "p99": 267.054,
+        "max": 267.054
+      }
+    },
+    "loaded": {
+      "input_ms": {
+        "count": 3,
+        "p50": 14.263,
+        "p95": 29.448,
+        "p99": 29.448,
+        "max": 29.448
+      },
+      "reply_ms": {
+        "count": 3,
+        "p50": 264.539,
+        "p95": 274.351,
+        "p99": 274.351,
+        "max": 274.351
+      }
+    },
+    "soak": {
+      "input_ms": {
+        "count": 6,
+        "p50": 16.513,
+        "p95": 20.634,
+        "p99": 20.634,
+        "max": 20.634
+      },
+      "reply_ms": {
+        "count": 6,
+        "p50": 276.769,
+        "p95": 304.811,
+        "p99": 304.811,
+        "max": 304.811
+      }
+    }
+  },
+  "max_execution_overlap": 2,
+  "background_completed": 18,
+  "soak_background_completed": 12,
+  "elapsed_seconds": 4.974827699999878,
+  "raw_pairs": [
+    {
+      "pair": 1,
+      "idle": {
+        "input_ms": 22.70230000067386,
+        "reply_ms": 257.64429999981076
+      },
+      "loaded": {
+        "input_ms": 14.263299999583978,
+        "reply_ms": 259.1257999993104
+      }
+    },
+    {
+      "pair": 2,
+      "idle": {
+        "input_ms": 13.329400000657188,
+        "reply_ms": 267.0539999999164
+      },
+      "loaded": {
+        "input_ms": 29.448000001139008,
+        "reply_ms": 274.3508000003203
+      }
+    },
+    {
+      "pair": 3,
+      "idle": {
+        "input_ms": 15.215800000078161,
+        "reply_ms": 262.31300000108604
+      },
+      "loaded": {
+        "input_ms": 13.66280000002007,
+        "reply_ms": 264.5394999999553
+      }
+    }
+  ],
+  "soak_samples": [
+    {
+      "input_ms": 16.93140000134008,
+      "reply_ms": 276.76880000035453
+    },
+    {
+      "input_ms": 16.51330000095186,
+      "reply_ms": 277.9705000011745
+    },
+    {
+      "input_ms": 19.233099999837577,
+      "reply_ms": 274.16770000127144
+    },
+    {
+      "input_ms": 20.63379999890458,
+      "reply_ms": 284.023199999865
+    },
+    {
+      "input_ms": 16.39910000085365,
+      "reply_ms": 266.66020000084245
+    },
+    {
+      "input_ms": 14.64759999907983,
+      "reply_ms": 304.8111999996763
+    }
+  ],
+  "not_verified": [
+    "real cloud limits and latency",
+    "GPU-heavy rendering",
+    "8 GiB device",
+    "thermal/battery limits",
+    "arbitrary external tools",
+    "full V-DLG-01..14"
+  ]
+}

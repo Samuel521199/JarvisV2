@@ -1,0 +1,144 @@
+{
+  "component": "image-studio",
+  "version": "1.0.0",
+  "checked_at": "2026-10-25",
+  "official_routes": [
+    "Vertex service-account OAuth",
+    "Gemini Developer API API key"
+  ],
+  "real_route": "vertex",
+  "live_api_calls": 4,
+  "automatic_retries": 0,
+  "real_models": [
+    {
+      "evidence": "latest-live.json",
+      "id": "395ff4d463e34005b3cee2f736b88f25",
+      "model": "gemini-nano-banana-2.1",
+      "status": "SUCCEEDED",
+      "file": {
+        "bytes": 1176982,
+        "mime": "image/png",
+        "name": "image.png",
+        "resolution": [
+          1024,
+          1024
+        ],
+        "sha256": "d909b3eb99d43012eb7be6e82a37c64d1b344edc7ce310080762d829452e1604",
+        "url": "/api/image-studio/files/395ff4d463e34005b3cee2f736b88f25/image.png"
+      },
+      "elapsed_seconds": 39.93526960000054,
+      "usage": {
+        "completion_tokens": 1120,
+        "output_image_tokens": 1120,
+        "output_images": 1,
+        "prompt_tokens": 25,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 509,
+        "total_tokens": 1654
+      }
+    },
+    {
+      "evidence": "second-release-live.json",
+      "id": "64ba9874882742a28f940b50fb04734e",
+      "model": "gemini-3.1-flash-lite-image",
+      "status": "SUCCEEDED",
+      "file": {
+        "bytes": 127440,
+        "mime": "image/jpeg",
+        "name": "image.jpg",
+        "resolution": [
+          1024,
+          1024
+        ],
+        "sha256": "7afb34248dce655eb2fb2ac23c5d8029f157c0b68f185ccb49cee96879c02b2a",
+        "url": "/api/image-studio/files/64ba9874882742a28f940b50fb04734e/image.jpg"
+      },
+      "elapsed_seconds": 73.95730279999952,
+      "usage": {
+        "completion_tokens": 1120,
+        "output_image_tokens": 1120,
+        "output_images": 1,
+        "prompt_tokens": 25,
+        "reasoning_in_completion": false,
+        "total_tokens": 1145
+      }
+    },
+    {
+      "evidence": "previous-mainline-live.json",
+      "id": "5da3c959e9114caea3ea511f79bd68e3",
+      "model": "gemini-3.1-flash-image",
+      "status": "SUCCEEDED",
+      "file": {
+        "bytes": 1169976,
+        "mime": "image/png",
+        "name": "image.png",
+        "resolution": [
+          1024,
+          1024
+        ],
+        "sha256": "438a4bc39a953427d7172c603dcebbd2da8cbe62b0e1df54ddb33a6514ab1cf1",
+        "url": "/api/image-studio/files/5da3c959e9114caea3ea511f79bd68e3/image.png"
+      },
+      "elapsed_seconds": 33.01672030000009,
+      "usage": {
+        "completion_tokens": 1120,
+        "output_image_tokens": 1120,
+        "output_images": 1,
+        "prompt_tokens": 25,
+        "reasoning_in_completion": false,
+        "total_tokens": 1145
+      }
+    },
+    {
+      "evidence": "edit-live.json",
+      "id": "1974b0f569c44ba6bb93dac9a29641d6",
+      "model": "gemini-nano-banana-2.1",
+      "status": "SUCCEEDED",
+      "file": {
+        "bytes": 1185202,
+        "mime": "image/png",
+        "name": "image.png",
+        "resolution": [
+          1024,
+          1024
+        ],
+        "sha256": "d4a856a0411dbbcf4f3af1d26f4320fdab51eba542de8625aa296dfeb831a307",
+        "url": "/api/image-studio/files/1974b0f569c44ba6bb93dac9a29641d6/image.png"
+      },
+      "elapsed_seconds": 112.22237810000115,
+      "usage": {
+        "completion_tokens": 1120,
+        "output_image_tokens": 1120,
+        "output_images": 1,
+        "prompt_tokens": 1156,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 320,
+        "total_tokens": 2596
+      }
+    }
+  ],
+  "visual_review": {
+    "latest": "Viewed: blue metal housing, brass fittings, white background follow prompt.",
+    "edit": "Viewed: dark-red housing; main silhouette, camera and fittings retained. No pixel-identity or measured-geometry claim.",
+    "lite": "Viewed: plausible pump product image; no cross-scene quality score.",
+    "previous_mainline": "Binary receipt only; not individually visually scored."
+  },
+  "limitations": [
+    "2K not live-tested; 4K excluded",
+    "API-key route protocol-tested only",
+    "No browser UI click/layout acceptance",
+    "JPEG output not directly usable as PNG reference",
+    "Single-turn editing; no multi-turn thought signatures, grounding or video",
+    "No image-to-mesh, PBR map guarantee or AAA asset acceptance",
+    "Google billing amount unknown"
+  ],
+  "main_service": {
+    "port": 18282,
+    "image_api_http": 404,
+    "image_ui_module_http": 404,
+    "restarted": false,
+    "reason": "Prior automatic review denied stopping/restarting this service; not retried."
+  },
+  "temporary_root": "user-data/test-images-20261025",
+  "credentials": "Reused official Vertex credentials encrypted using DPAPI; no plaintext credential files or evidence."
+}

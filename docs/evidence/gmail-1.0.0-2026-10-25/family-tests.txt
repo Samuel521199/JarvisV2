@@ -1,0 +1,21 @@
+test_family_privacy (unittest.loader._FailedTest.test_family_privacy) ... ERROR
+
+======================================================================
+ERROR: test_family_privacy (unittest.loader._FailedTest.test_family_privacy)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_family_privacy
+Traceback (most recent call last):
+  File "D:\soft\Python313\Lib\unittest\loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "D:\soft\Python313\Lib\unittest\loader.py", line 339, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "D:\Jarvis\tests\test_family_privacy.py", line 11, in <module>
+    from apps.workbench.server import Handler
+ModuleNotFoundError: No module named 'apps'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)

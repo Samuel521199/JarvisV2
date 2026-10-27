@@ -1,0 +1,2805 @@
+{
+  "request": {
+    "id": "ea96d0135f634540a7e23f2e38817db5",
+    "prepare_asset": "bc4c82e5959f423cba4f69ad03c616f5",
+    "texture_size": 512,
+    "production": {
+      "category": "machine",
+      "triangle_budget": 10000,
+      "ray_distance": 0.04
+    },
+    "render": {
+      "engine": "CYCLES",
+      "quality": "preview",
+      "view": "front",
+      "five_views": false
+    }
+  },
+  "origin": "http://127.0.0.1:18283",
+  "paid_model_calls": 0,
+  "accepted": {
+    "existing": false,
+    "id": "ea96d0135f634540a7e23f2e38817db5"
+  },
+  "job": {
+    "cancel": 0,
+    "chat_id": null,
+    "created": 1792778012.5627224,
+    "error": null,
+    "id": "ea96d0135f634540a7e23f2e38817db5",
+    "phase": "已交付可编辑模型、渲染与检查回执",
+    "receipt": {
+      "adapter_version": "1.3.0",
+      "configuration": {
+        "asset_pipeline": {
+          "category": "machine",
+          "method": "project",
+          "ray_distance": 0.04,
+          "texture_size": 512,
+          "triangle_budget": 10000
+        },
+        "description": "独立制作的可编辑轮胎、轮圈、十辐条、紧固件、制动盘与卡钳。不是特定品牌或制造用 CAD。",
+        "master": "bc4c82e5959f423cba4f69ad03c616f5",
+        "materials": [
+          {
+            "coat": 0.85,
+            "color": "#135964",
+            "id": "paint",
+            "metallic": 0.65,
+            "roughness": 0.24,
+            "transmission": 0
+          },
+          {
+            "coat": 0,
+            "color": "#abb4c0",
+            "detail": "brushed",
+            "id": "alloy",
+            "metallic": 0.95,
+            "roughness": 0.22,
+            "transmission": 0
+          },
+          {
+            "coat": 0,
+            "color": "#111820",
+            "detail": "carbon",
+            "id": "dark",
+            "metallic": 0.45,
+            "roughness": 0.3,
+            "transmission": 0
+          },
+          {
+            "coat": 0,
+            "color": "#15181b",
+            "detail": "rubber",
+            "id": "rubber",
+            "metallic": 0,
+            "roughness": 0.7,
+            "transmission": 0
+          },
+          {
+            "coat": 0,
+            "color": "#172f3c",
+            "id": "glass",
+            "metallic": 0.1,
+            "roughness": 0.09,
+            "transmission": 0.65
+          },
+          {
+            "coat": 0,
+            "color": "#dc3829",
+            "id": "brake",
+            "metallic": 0.45,
+            "roughness": 0.32,
+            "transmission": 0
+          },
+          {
+            "coat": 0,
+            "color": "#e5f4ff",
+            "id": "light",
+            "metallic": 0.1,
+            "roughness": 0.12,
+            "transmission": 0
+          },
+          {
+            "coat": 0,
+            "color": "#a91220",
+            "id": "tail",
+            "metallic": 0.3,
+            "roughness": 0.18,
+            "transmission": 0
+          }
+        ],
+        "objects": [
+          {
+            "id": "wheel-tyre",
+            "kind": "lathe",
+            "material": "rubber",
+            "modifiers": {},
+            "params": {
+              "profile": [
+                [
+                  0.245,
+                  -0.155
+                ],
+                [
+                  0.292,
+                  -0.16
+                ],
+                [
+                  0.331,
+                  -0.135
+                ],
+                [
+                  0.35,
+                  -0.085
+                ],
+                [
+                  0.354,
+                  0
+                ],
+                [
+                  0.35,
+                  0.085
+                ],
+                [
+                  0.331,
+                  0.135
+                ],
+                [
+                  0.292,
+                  0.16
+                ],
+                [
+                  0.245,
+                  0.155
+                ],
+                [
+                  0.245,
+                  -0.155
+                ]
+              ],
+              "segments": 96
+            },
+            "position": [
+              0,
+              0,
+              0.36
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-rim",
+            "kind": "lathe",
+            "material": "alloy",
+            "modifiers": {},
+            "params": {
+              "profile": [
+                [
+                  0.245,
+                  -0.157
+                ],
+                [
+                  0.259,
+                  -0.152
+                ],
+                [
+                  0.266,
+                  -0.138
+                ],
+                [
+                  0.258,
+                  -0.12
+                ],
+                [
+                  0.254,
+                  0.12
+                ],
+                [
+                  0.267,
+                  0.142
+                ],
+                [
+                  0.265,
+                  0.155
+                ],
+                [
+                  0.248,
+                  0.159
+                ],
+                [
+                  0.242,
+                  0.14
+                ],
+                [
+                  0.242,
+                  -0.14
+                ],
+                [
+                  0.245,
+                  -0.157
+                ]
+              ],
+              "segments": 96
+            },
+            "position": [
+              0,
+              0,
+              0.36
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-rotor",
+            "kind": "lathe",
+            "material": "alloy",
+            "modifiers": {},
+            "params": {
+              "profile": [
+                [
+                  0.07,
+                  -0.07
+                ],
+                [
+                  0.211,
+                  -0.07
+                ],
+                [
+                  0.211,
+                  -0.05
+                ],
+                [
+                  0.07,
+                  -0.05
+                ],
+                [
+                  0.07,
+                  -0.07
+                ]
+              ],
+              "segments": 64
+            },
+            "position": [
+              0,
+              0,
+              0.36
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-hub",
+            "kind": "cylinder",
+            "material": "dark",
+            "modifiers": {},
+            "params": {
+              "depth": 0.22,
+              "radius": 0.065
+            },
+            "position": [
+              0,
+              0,
+              0.36
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-spoke-0",
+            "kind": "box",
+            "material": "alloy",
+            "modifiers": {
+              "bevel": 0.009
+            },
+            "params": {
+              "size": [
+                0.213,
+                0.034,
+                0.025
+              ]
+            },
+            "position": [
+              0.15,
+              0.124,
+              0.36
+            ],
+            "rotation": [
+              0,
+              -0.0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-spoke-1",
+            "kind": "box",
+            "material": "alloy",
+            "modifiers": {
+              "bevel": 0.009
+            },
+            "params": {
+              "size": [
+                0.213,
+                0.034,
+                0.025
+              ]
+            },
+            "position": [
+              0.1213525491562421,
+              0.124,
+              0.44816778784387096
+            ],
+            "rotation": [
+              0,
+              -36.0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-spoke-2",
+            "kind": "box",
+            "material": "alloy",
+            "modifiers": {
+              "bevel": 0.009
+            },
+            "params": {
+              "size": [
+                0.213,
+                0.034,
+                0.025
+              ]
+            },
+            "position": [
+              0.046352549156242116,
+              0.124,
+              0.502658477444273
+            ],
+            "rotation": [
+              0,
+              -72.0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-spoke-3",
+            "kind": "box",
+            "material": "alloy",
+            "modifiers": {
+              "bevel": 0.009
+            },
+            "params": {
+              "size": [
+                0.213,
+                0.034,
+                0.025
+              ]
+            },
+            "position": [
+              -0.0463525491562421,
+              0.124,
+              0.502658477444273
+            ],
+            "rotation": [
+              0,
+              -108.0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-spoke-4",
+            "kind": "box",
+            "material": "alloy",
+            "modifiers": {
+              "bevel": 0.009
+            },
+            "params": {
+              "size": [
+                0.213,
+                0.034,
+                0.025
+              ]
+            },
+            "position": [
+              -0.12135254915624209,
+              0.124,
+              0.44816778784387096
+            ],
+            "rotation": [
+              0,
+              -144.0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-spoke-5",
+            "kind": "box",
+            "material": "alloy",
+            "modifiers": {
+              "bevel": 0.009
+            },
+            "params": {
+              "size": [
+                0.213,
+                0.034,
+                0.025
+              ]
+            },
+            "position": [
+              -0.15,
+              0.124,
+              0.36
+            ],
+            "rotation": [
+              0,
+              -180.0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-spoke-6",
+            "kind": "box",
+            "material": "alloy",
+            "modifiers": {
+              "bevel": 0.009
+            },
+            "params": {
+              "size": [
+                0.213,
+                0.034,
+                0.025
+              ]
+            },
+            "position": [
+              -0.1213525491562421,
+              0.124,
+              0.271832212156129
+            ],
+            "rotation": [
+              0,
+              -216.0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-spoke-7",
+            "kind": "box",
+            "material": "alloy",
+            "modifiers": {
+              "bevel": 0.009
+            },
+            "params": {
+              "size": [
+                0.213,
+                0.034,
+                0.025
+              ]
+            },
+            "position": [
+              -0.04635254915624213,
+              0.124,
+              0.21734152255572697
+            ],
+            "rotation": [
+              0,
+              -252.0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-spoke-8",
+            "kind": "box",
+            "material": "alloy",
+            "modifiers": {
+              "bevel": 0.009
+            },
+            "params": {
+              "size": [
+                0.213,
+                0.034,
+                0.025
+              ]
+            },
+            "position": [
+              0.04635254915624208,
+              0.124,
+              0.21734152255572695
+            ],
+            "rotation": [
+              0,
+              -288.0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-spoke-9",
+            "kind": "box",
+            "material": "alloy",
+            "modifiers": {
+              "bevel": 0.009
+            },
+            "params": {
+              "size": [
+                0.213,
+                0.034,
+                0.025
+              ]
+            },
+            "position": [
+              0.12135254915624209,
+              0.124,
+              0.27183221215612896
+            ],
+            "rotation": [
+              0,
+              -324.0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-nut-0",
+            "kind": "cylinder",
+            "material": "alloy",
+            "modifiers": {},
+            "params": {
+              "depth": 0.025,
+              "radius": 0.012
+            },
+            "position": [
+              0.044,
+              0.14,
+              0.36
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-nut-1",
+            "kind": "cylinder",
+            "material": "alloy",
+            "modifiers": {},
+            "params": {
+              "depth": 0.025,
+              "radius": 0.012
+            },
+            "position": [
+              0.013596747752497687,
+              0.14,
+              0.40184648671698675
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-nut-2",
+            "kind": "cylinder",
+            "material": "alloy",
+            "modifiers": {},
+            "params": {
+              "depth": 0.025,
+              "radius": 0.012
+            },
+            "position": [
+              -0.03559674775249768,
+              0.14,
+              0.3858625511008688
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-nut-3",
+            "kind": "cylinder",
+            "material": "alloy",
+            "modifiers": {},
+            "params": {
+              "depth": 0.025,
+              "radius": 0.012
+            },
+            "position": [
+              -0.03559674775249769,
+              0.14,
+              0.33413744889913116
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-nut-4",
+            "kind": "cylinder",
+            "material": "alloy",
+            "modifiers": {},
+            "params": {
+              "depth": 0.025,
+              "radius": 0.012
+            },
+            "position": [
+              0.013596747752497678,
+              0.14,
+              0.3181535132830132
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-caliper",
+            "kind": "box",
+            "material": "brake",
+            "modifiers": {
+              "bevel": 0.022
+            },
+            "params": {
+              "size": [
+                0.075,
+                0.075,
+                0.18
+              ]
+            },
+            "position": [
+              0.17,
+              0,
+              0.39
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-rotor-hole-0",
+            "kind": "cylinder",
+            "material": "dark",
+            "modifiers": {},
+            "params": {
+              "depth": 0.022,
+              "radius": 0.005
+            },
+            "position": [
+              0.184,
+              0.06,
+              0.36
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-rotor-hole-1",
+            "kind": "cylinder",
+            "material": "dark",
+            "modifiers": {},
+            "params": {
+              "depth": 0.022,
+              "radius": 0.005
+            },
+            "position": [
+              0.17773035203718857,
+              0.06,
+              0.4076227042988638
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-rotor-hole-2",
+            "kind": "cylinder",
+            "material": "dark",
+            "modifiers": {},
+            "params": {
+              "depth": 0.022,
+              "radius": 0.005
+            },
+            "position": [
+              0.15934867429633673,
+              0.06,
+              0.45199999999999996
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-rotor-hole-3",
+            "kind": "cylinder",
+            "material": "dark",
+            "modifiers": {},
+            "params": {
+              "depth": 0.022,
+              "radius": 0.005
+            },
+            "position": [
+              0.13010764773832476,
+              0.06,
+              0.4901076477383247
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-rotor-hole-4",
+            "kind": "cylinder",
+            "material": "dark",
+            "modifiers": {},
+            "params": {
+              "depth": 0.022,
+              "radius": 0.005
+            },
+            "position": [
+              0.09200000000000001,
+              0.06,
+              0.5193486742963367
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-rotor-hole-5",
+            "kind": "cylinder",
+            "material": "dark",
+            "modifiers": {},
+            "params": {
+              "depth": 0.022,
+              "radius": 0.005
+            },
+            "position": [
+              0.04762270429886382,
+              0.06,
+              0.5377303520371886
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-rotor-hole-6",
+            "kind": "cylinder",
+            "material": "dark",
+            "modifiers": {},
+            "params": {
+              "depth": 0.022,
+              "radius": 0.005
+            },
+            "position": [
+              1.1266750552155649e-17,
+              0.06,
+              0.544
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-rotor-hole-7",
+            "kind": "cylinder",
+            "material": "dark",
+            "modifiers": {},
+            "params": {
+              "depth": 0.022,
+              "radius": 0.005
+            },
+            "position": [
+              -0.0476227042988638,
+              0.06,
+              0.5377303520371886
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-rotor-hole-8",
+            "kind": "cylinder",
+            "material": "dark",
+            "modifiers": {},
+            "params": {
+              "depth": 0.022,
+              "radius": 0.005
+            },
+            "position": [
+              -0.09199999999999996,
+              0.06,
+              0.5193486742963367
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-rotor-hole-9",
+            "kind": "cylinder",
+            "material": "dark",
+            "modifiers": {},
+            "params": {
+              "depth": 0.022,
+              "radius": 0.005
+            },
+            "position": [
+              -0.13010764773832473,
+              0.06,
+              0.4901076477383247
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-rotor-hole-10",
+            "kind": "cylinder",
+            "material": "dark",
+            "modifiers": {},
+            "params": {
+              "depth": 0.022,
+              "radius": 0.005
+            },
+            "position": [
+              -0.15934867429633673,
+              0.06,
+              0.45199999999999996
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-rotor-hole-11",
+            "kind": "cylinder",
+            "material": "dark",
+            "modifiers": {},
+            "params": {
+              "depth": 0.022,
+              "radius": 0.005
+            },
+            "position": [
+              -0.17773035203718854,
+              0.06,
+              0.4076227042988638
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-rotor-hole-12",
+            "kind": "cylinder",
+            "material": "dark",
+            "modifiers": {},
+            "params": {
+              "depth": 0.022,
+              "radius": 0.005
+            },
+            "position": [
+              -0.184,
+              0.06,
+              0.36
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-rotor-hole-13",
+            "kind": "cylinder",
+            "material": "dark",
+            "modifiers": {},
+            "params": {
+              "depth": 0.022,
+              "radius": 0.005
+            },
+            "position": [
+              -0.17773035203718857,
+              0.06,
+              0.31237729570113615
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-rotor-hole-14",
+            "kind": "cylinder",
+            "material": "dark",
+            "modifiers": {},
+            "params": {
+              "depth": 0.022,
+              "radius": 0.005
+            },
+            "position": [
+              -0.15934867429633673,
+              0.06,
+              0.268
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-rotor-hole-15",
+            "kind": "cylinder",
+            "material": "dark",
+            "modifiers": {},
+            "params": {
+              "depth": 0.022,
+              "radius": 0.005
+            },
+            "position": [
+              -0.1301076477383248,
+              0.06,
+              0.22989235226167531
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-rotor-hole-16",
+            "kind": "cylinder",
+            "material": "dark",
+            "modifiers": {},
+            "params": {
+              "depth": 0.022,
+              "radius": 0.005
+            },
+            "position": [
+              -0.09200000000000008,
+              0.06,
+              0.2006513257036633
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-rotor-hole-17",
+            "kind": "cylinder",
+            "material": "dark",
+            "modifiers": {},
+            "params": {
+              "depth": 0.022,
+              "radius": 0.005
+            },
+            "position": [
+              -0.0476227042988638,
+              0.06,
+              0.18226964796281142
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-rotor-hole-18",
+            "kind": "cylinder",
+            "material": "dark",
+            "modifiers": {},
+            "params": {
+              "depth": 0.022,
+              "radius": 0.005
+            },
+            "position": [
+              -3.380025165646695e-17,
+              0.06,
+              0.176
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-rotor-hole-19",
+            "kind": "cylinder",
+            "material": "dark",
+            "modifiers": {},
+            "params": {
+              "depth": 0.022,
+              "radius": 0.005
+            },
+            "position": [
+              0.047622704298863734,
+              0.06,
+              0.1822696479628114
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-rotor-hole-20",
+            "kind": "cylinder",
+            "material": "dark",
+            "modifiers": {},
+            "params": {
+              "depth": 0.022,
+              "radius": 0.005
+            },
+            "position": [
+              0.09200000000000001,
+              0.06,
+              0.20065132570366329
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-rotor-hole-21",
+            "kind": "cylinder",
+            "material": "dark",
+            "modifiers": {},
+            "params": {
+              "depth": 0.022,
+              "radius": 0.005
+            },
+            "position": [
+              0.1301076477383247,
+              0.06,
+              0.2298923522616752
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-rotor-hole-22",
+            "kind": "cylinder",
+            "material": "dark",
+            "modifiers": {},
+            "params": {
+              "depth": 0.022,
+              "radius": 0.005
+            },
+            "position": [
+              0.15934867429633665,
+              0.06,
+              0.2679999999999999
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "wheel-rotor-hole-23",
+            "kind": "cylinder",
+            "material": "dark",
+            "modifiers": {},
+            "params": {
+              "depth": 0.022,
+              "radius": 0.005
+            },
+            "position": [
+              0.17773035203718854,
+              0.06,
+              0.31237729570113604
+            ],
+            "rotation": [
+              90,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "render": {
+          "engine": "CYCLES",
+          "five_views": false,
+          "quality": "preview",
+          "view": "front"
+        },
+        "schema": "jarvis.studio3d.v1",
+        "title": "赛车锻造轮组 · 材质与细节研究 · 烘焙与LOD",
+        "unfulfilled": [
+          "制动孔为视觉嵌片，并非贯穿孔。",
+          "没有轮胎变形、制动力与疲劳验证。"
+        ],
+        "units": "m"
+      },
+      "derived_from": "bc4c82e5959f423cba4f69ad03c616f5",
+      "files": {
+        "ao.png": {
+          "bytes": 87456,
+          "sha256": "00ac56eee9c81e22fa020bf317e9c82973423bf7ee097cb6b776187d4db98121",
+          "url": "/api/studio3d/files/ea96d0135f634540a7e23f2e38817db5/ao.png"
+        },
+        "basecolor.png": {
+          "bytes": 36672,
+          "sha256": "758cb873f66293635b78dad36906f83c99797c7c97f1248b49f80fa2b391d8e7",
+          "url": "/api/studio3d/files/ea96d0135f634540a7e23f2e38817db5/basecolor.png"
+        },
+        "model-lod1.glb": {
+          "bytes": 795788,
+          "sha256": "7587c014247e922cd9fa2ca87945258d5bc3f06b66a36ee7fb6369ab22fcb7bb",
+          "url": "/api/studio3d/files/ea96d0135f634540a7e23f2e38817db5/model-lod1.glb"
+        },
+        "model-lod2.glb": {
+          "bytes": 581284,
+          "sha256": "934f04a6ba4696f2e461f3278f1b131e693fccd5c820db90c6b5621cc62c64c4",
+          "url": "/api/studio3d/files/ea96d0135f634540a7e23f2e38817db5/model-lod2.glb"
+        },
+        "model.blend": {
+          "bytes": 1723642,
+          "sha256": "1d15916fa07e8c3e7ad0de65a3d9fe18150e8c164a2c8154d9ee22a2758cc813",
+          "url": "/api/studio3d/files/ea96d0135f634540a7e23f2e38817db5/model.blend"
+        },
+        "model.glb": {
+          "bytes": 1068976,
+          "sha256": "b3be6e6fa41e525a9a7bb6c449d70e25c73c8e9283f29855329c1207f3691289",
+          "url": "/api/studio3d/files/ea96d0135f634540a7e23f2e38817db5/model.glb"
+        },
+        "normal.png": {
+          "bytes": 193175,
+          "sha256": "422e737256b43af702ece0d054829b629e1bcd9ade3dec6ad243136d8dbf5d0a",
+          "url": "/api/studio3d/files/ea96d0135f634540a7e23f2e38817db5/normal.png"
+        },
+        "orm.png": {
+          "bytes": 90856,
+          "sha256": "5beee1d418db0658b17a1b97f880fa6b1e12a0a00608d16db8d86218e96d19d4",
+          "url": "/api/studio3d/files/ea96d0135f634540a7e23f2e38817db5/orm.png"
+        },
+        "preview.png": {
+          "bytes": 612111,
+          "sha256": "382dd3e743d63158b4903ea1ea03e44c7e3b8ed0683e60e48b6f7372970efc45",
+          "url": "/api/studio3d/files/ea96d0135f634540a7e23f2e38817db5/preview.png"
+        },
+        "report.json": {
+          "bytes": 21219,
+          "sha256": "0dba62ed80cc93bd6e4f78b7ab223dbfa966dd3deb695d87652bebfa16c8b5d1",
+          "url": "/api/studio3d/files/ea96d0135f634540a7e23f2e38817db5/report.json"
+        },
+        "scene.json": {
+          "bytes": 10801,
+          "sha256": "b4293986605dcaa445bb9a42a5545ba5ccbc11fb00ae45fe3b8cf3a569562733",
+          "url": "/api/studio3d/files/ea96d0135f634540a7e23f2e38817db5/scene.json"
+        }
+      },
+      "frozen_master": {
+        "blend_sha256": "49c35725ff1f50c610b7815d820d669701b2ab42c4e1a60a347ebc2cf0018264",
+        "id": "bc4c82e5959f423cba4f69ad03c616f5",
+        "parts": [
+          "wheel-tyre",
+          "wheel-rim",
+          "wheel-rotor",
+          "wheel-hub",
+          "wheel-spoke-0",
+          "wheel-spoke-1",
+          "wheel-spoke-2",
+          "wheel-spoke-3",
+          "wheel-spoke-4",
+          "wheel-spoke-5",
+          "wheel-spoke-6",
+          "wheel-spoke-7",
+          "wheel-spoke-8",
+          "wheel-spoke-9",
+          "wheel-nut-0",
+          "wheel-nut-1",
+          "wheel-nut-2",
+          "wheel-nut-3",
+          "wheel-nut-4",
+          "wheel-caliper",
+          "wheel-rotor-hole-0",
+          "wheel-rotor-hole-1",
+          "wheel-rotor-hole-2",
+          "wheel-rotor-hole-3",
+          "wheel-rotor-hole-4",
+          "wheel-rotor-hole-5",
+          "wheel-rotor-hole-6",
+          "wheel-rotor-hole-7",
+          "wheel-rotor-hole-8",
+          "wheel-rotor-hole-9",
+          "wheel-rotor-hole-10",
+          "wheel-rotor-hole-11",
+          "wheel-rotor-hole-12",
+          "wheel-rotor-hole-13",
+          "wheel-rotor-hole-14",
+          "wheel-rotor-hole-15",
+          "wheel-rotor-hole-16",
+          "wheel-rotor-hole-17",
+          "wheel-rotor-hole-18",
+          "wheel-rotor-hole-19",
+          "wheel-rotor-hole-20",
+          "wheel-rotor-hole-21",
+          "wheel-rotor-hole-22",
+          "wheel-rotor-hole-23"
+        ],
+        "source": "SHA-verified first-party delivered blend; external blend upload unsupported"
+      },
+      "id": "ea96d0135f634540a7e23f2e38817db5",
+      "input_asset": null,
+      "model_receipt": null,
+      "quality": {
+        "AAA_certified": false,
+        "mechanical_validation": false,
+        "status": "visual_asset_export_checked",
+        "visual_score": null
+      },
+      "reference": null,
+      "report": {
+        "asset_pipeline": {
+          "AAA_certified": false,
+          "baking": {
+            "ao": {
+              "bake": "Cycles high master projected to reduced low mesh",
+              "file": "ao.png",
+              "pixel_max": 1.0,
+              "pixel_min": 0.0,
+              "resolution": [
+                512,
+                512
+              ]
+            },
+            "basecolor": {
+              "bake": "Cycles high master projected to reduced low mesh",
+              "file": "basecolor.png",
+              "pixel_max": 0.8627451658248901,
+              "pixel_min": 0.0,
+              "resolution": [
+                512,
+                512
+              ]
+            },
+            "normal": {
+              "bake": "Cycles high master projected to reduced low mesh",
+              "file": "normal.png",
+              "pixel_max": 0.9921569228172302,
+              "pixel_min": 0.007843137718737125,
+              "resolution": [
+                512,
+                512
+              ]
+            },
+            "orm": {
+              "bake": "Cycles high master projected to reduced low mesh",
+              "file": "orm.png",
+              "pixel_max": 1.0,
+              "pixel_min": 0.0,
+              "resolution": [
+                512,
+                512
+              ]
+            }
+          },
+          "checks": [
+            {
+              "id": "degenerate-faces",
+              "message": "0",
+              "status": "pass"
+            },
+            {
+              "id": "mesh-boundary",
+              "message": "243 boundary edges; 0 nonmanifold edges",
+              "status": "warn"
+            },
+            {
+              "id": "uv-atlas",
+              "message": "UV present and in 0..1; exact overlap and density unverified",
+              "status": "pass"
+            },
+            {
+              "id": "lod-reduction",
+              "message": "Actual triangle counts checked",
+              "status": "pass"
+            },
+            {
+              "id": "lod-sampled-distance",
+              "message": "Two-direction sampled distance; silhouette popping requires view check",
+              "status": "pass"
+            },
+            {
+              "id": "uv-area-utilization",
+              "message": "35.31% summed triangle UV area; not exact union area or density uniformity",
+              "status": "pass"
+            },
+            {
+              "id": "singular-uv-tangent",
+              "message": "3 singular UV tangent frames use orthogonal fallback; artist review required",
+              "status": "warn"
+            },
+            {
+              "id": "projection-coverage",
+              "message": "{'samples': 3313, 'misses': 7, 'miss_fraction': 0.002112888620585572, 'method': 'triangle-centre rays, max4096 samples; not per-texel proof'}",
+              "status": "warn"
+            },
+            {
+              "id": "game-budget",
+              "message": "9937 / 10000",
+              "status": "pass"
+            }
+          ],
+          "cleanup": {
+            "degenerate_distance_m": 1e-08,
+            "merge_distance_m": 1e-06,
+            "vertices_removed": 0
+          },
+          "elapsed_seconds": 2.2683543999992253,
+          "kind": "projected rigid parts",
+          "lods": [
+            {
+              "distance": {
+                "max_distance_m": 0,
+                "samples": 0
+              },
+              "file": "model.glb",
+              "level": 0,
+              "ratio_requested": 1,
+              "tangent_frames": {
+                "meaning": "Orthogonal fallback at singular UVs; UV quality still requires review",
+                "singular_tangent_frames": 1
+              },
+              "topology": {
+                "boundary_edges": 243,
+                "degenerate_faces": 0,
+                "edge_flow_artist_review": "required",
+                "loose_edges": 0,
+                "ngons": 0,
+                "nonmanifold_edges": 0,
+                "polygons": 9937,
+                "triangles": 9937,
+                "uv_outside_01_loops": 0,
+                "uv_overlap": "not exactly tested",
+                "uv_present": true,
+                "uv_triangle_area_sum": 0.35309678369491393,
+                "vertices": 5172
+              }
+            },
+            {
+              "distance": {
+                "max_distance_m": 0.0001229105400852859,
+                "method": "two-direction sampled vertex-to-triangle nearest distance; not continuous Hausdorff proof",
+                "samples": 3068
+              },
+              "file": "model-lod1.glb",
+              "level": 1,
+              "max_distance_fraction_of_diameter": 0.00011749827417551807,
+              "ratio_requested": 0.5,
+              "tangent_frames": {
+                "meaning": "Orthogonal fallback at singular UVs; UV quality still requires review",
+                "singular_tangent_frames": 1
+              },
+              "topology": {
+                "boundary_edges": 243,
+                "degenerate_faces": 0,
+                "edge_flow_artist_review": "required",
+                "loose_edges": 0,
+                "ngons": 0,
+                "nonmanifold_edges": 0,
+                "polygons": 4967,
+                "triangles": 4967,
+                "uv_outside_01_loops": 0,
+                "uv_overlap": "not exactly tested",
+                "uv_present": true,
+                "uv_triangle_area_sum": 0.35290022807840477,
+                "vertices": 2687
+              }
+            },
+            {
+              "distance": {
+                "max_distance_m": 0.0013405753998085856,
+                "method": "two-direction sampled vertex-to-triangle nearest distance; not continuous Hausdorff proof",
+                "samples": 3167
+              },
+              "file": "model-lod2.glb",
+              "level": 2,
+              "max_distance_fraction_of_diameter": 0.0012815442497475505,
+              "ratio_requested": 0.25,
+              "tangent_frames": {
+                "meaning": "Orthogonal fallback at singular UVs; UV quality still requires review",
+                "singular_tangent_frames": 1
+              },
+              "topology": {
+                "boundary_edges": 239,
+                "degenerate_faces": 0,
+                "edge_flow_artist_review": "required",
+                "loose_edges": 0,
+                "ngons": 0,
+                "nonmanifold_edges": 0,
+                "polygons": 2483,
+                "triangles": 2483,
+                "uv_outside_01_loops": 0,
+                "uv_overlap": "not exactly tested",
+                "uv_present": true,
+                "uv_triangle_area_sum": 0.3487459951400167,
+                "vertices": 1443
+              }
+            }
+          ],
+          "part_hierarchy_preserved": false,
+          "part_origins_preserved": true,
+          "projection": {
+            "category": "machine",
+            "coverage": {
+              "method": "triangle-centre rays, max4096 samples; not per-texel proof",
+              "miss_fraction": 0.002112888620585572,
+              "misses": 7,
+              "samples": 3313
+            },
+            "high_created_before_low": true,
+            "high_triangles": 21468,
+            "method": "Cycles selected-to-active, separated part bake positions",
+            "normal_convention": "glTF tangent +Y",
+            "origin_preserved": true,
+            "parts": [
+              {
+                "budget_group": "wheels",
+                "high_triangles": 1728,
+                "low_triangles": 420,
+                "name": "wheel-tyre",
+                "target_triangles": 421,
+                "weight": 41.569219381653056
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 1920,
+                "low_triangles": 443,
+                "name": "wheel-rim",
+                "target_triangles": 443,
+                "weight": 43.81780460041329
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 512,
+                "low_triangles": 240,
+                "name": "wheel-rotor",
+                "target_triangles": 240,
+                "weight": 22.627416997969522
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 508,
+                "low_triangles": 238,
+                "name": "wheel-hub",
+                "target_triangles": 239,
+                "weight": 22.538855339169288
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 188,
+                "low_triangles": 154,
+                "name": "wheel-spoke-0",
+                "target_triangles": 155,
+                "weight": 13.711309200802088
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 188,
+                "low_triangles": 154,
+                "name": "wheel-spoke-1",
+                "target_triangles": 155,
+                "weight": 13.711309200802088
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 188,
+                "low_triangles": 154,
+                "name": "wheel-spoke-2",
+                "target_triangles": 155,
+                "weight": 13.711309200802088
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 188,
+                "low_triangles": 154,
+                "name": "wheel-spoke-3",
+                "target_triangles": 155,
+                "weight": 13.711309200802088
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 188,
+                "low_triangles": 154,
+                "name": "wheel-spoke-4",
+                "target_triangles": 155,
+                "weight": 13.711309200802088
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 188,
+                "low_triangles": 154,
+                "name": "wheel-spoke-5",
+                "target_triangles": 155,
+                "weight": 13.711309200802088
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 188,
+                "low_triangles": 154,
+                "name": "wheel-spoke-6",
+                "target_triangles": 155,
+                "weight": 13.711309200802088
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 188,
+                "low_triangles": 154,
+                "name": "wheel-spoke-7",
+                "target_triangles": 155,
+                "weight": 13.711309200802088
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 188,
+                "low_triangles": 154,
+                "name": "wheel-spoke-8",
+                "target_triangles": 155,
+                "weight": 13.711309200802088
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 188,
+                "low_triangles": 154,
+                "name": "wheel-spoke-9",
+                "target_triangles": 155,
+                "weight": 13.711309200802088
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 508,
+                "low_triangles": 238,
+                "name": "wheel-nut-0",
+                "target_triangles": 239,
+                "weight": 22.538855339169288
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 508,
+                "low_triangles": 238,
+                "name": "wheel-nut-1",
+                "target_triangles": 239,
+                "weight": 22.538855339169288
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 508,
+                "low_triangles": 238,
+                "name": "wheel-nut-2",
+                "target_triangles": 239,
+                "weight": 22.538855339169288
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 508,
+                "low_triangles": 238,
+                "name": "wheel-nut-3",
+                "target_triangles": 239,
+                "weight": 22.538855339169288
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 508,
+                "low_triangles": 238,
+                "name": "wheel-nut-4",
+                "target_triangles": 239,
+                "weight": 22.538855339169288
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 188,
+                "low_triangles": 154,
+                "name": "wheel-caliper",
+                "target_triangles": 155,
+                "weight": 13.711309200802088
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 508,
+                "low_triangles": 238,
+                "name": "wheel-rotor-hole-0",
+                "target_triangles": 239,
+                "weight": 22.538855339169288
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 508,
+                "low_triangles": 238,
+                "name": "wheel-rotor-hole-1",
+                "target_triangles": 239,
+                "weight": 22.538855339169288
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 508,
+                "low_triangles": 238,
+                "name": "wheel-rotor-hole-2",
+                "target_triangles": 239,
+                "weight": 22.538855339169288
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 508,
+                "low_triangles": 238,
+                "name": "wheel-rotor-hole-3",
+                "target_triangles": 239,
+                "weight": 22.538855339169288
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 508,
+                "low_triangles": 238,
+                "name": "wheel-rotor-hole-4",
+                "target_triangles": 239,
+                "weight": 22.538855339169288
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 508,
+                "low_triangles": 238,
+                "name": "wheel-rotor-hole-5",
+                "target_triangles": 239,
+                "weight": 22.538855339169288
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 508,
+                "low_triangles": 238,
+                "name": "wheel-rotor-hole-6",
+                "target_triangles": 239,
+                "weight": 22.538855339169288
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 508,
+                "low_triangles": 238,
+                "name": "wheel-rotor-hole-7",
+                "target_triangles": 239,
+                "weight": 22.538855339169288
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 508,
+                "low_triangles": 238,
+                "name": "wheel-rotor-hole-8",
+                "target_triangles": 239,
+                "weight": 22.538855339169288
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 508,
+                "low_triangles": 238,
+                "name": "wheel-rotor-hole-9",
+                "target_triangles": 239,
+                "weight": 22.538855339169288
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 508,
+                "low_triangles": 238,
+                "name": "wheel-rotor-hole-10",
+                "target_triangles": 239,
+                "weight": 22.538855339169288
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 508,
+                "low_triangles": 238,
+                "name": "wheel-rotor-hole-11",
+                "target_triangles": 239,
+                "weight": 22.538855339169288
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 508,
+                "low_triangles": 238,
+                "name": "wheel-rotor-hole-12",
+                "target_triangles": 239,
+                "weight": 22.538855339169288
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 508,
+                "low_triangles": 238,
+                "name": "wheel-rotor-hole-13",
+                "target_triangles": 239,
+                "weight": 22.538855339169288
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 508,
+                "low_triangles": 238,
+                "name": "wheel-rotor-hole-14",
+                "target_triangles": 239,
+                "weight": 22.538855339169288
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 508,
+                "low_triangles": 238,
+                "name": "wheel-rotor-hole-15",
+                "target_triangles": 239,
+                "weight": 22.538855339169288
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 508,
+                "low_triangles": 238,
+                "name": "wheel-rotor-hole-16",
+                "target_triangles": 239,
+                "weight": 22.538855339169288
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 508,
+                "low_triangles": 238,
+                "name": "wheel-rotor-hole-17",
+                "target_triangles": 239,
+                "weight": 22.538855339169288
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 508,
+                "low_triangles": 238,
+                "name": "wheel-rotor-hole-18",
+                "target_triangles": 239,
+                "weight": 22.538855339169288
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 508,
+                "low_triangles": 238,
+                "name": "wheel-rotor-hole-19",
+                "target_triangles": 239,
+                "weight": 22.538855339169288
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 508,
+                "low_triangles": 238,
+                "name": "wheel-rotor-hole-20",
+                "target_triangles": 239,
+                "weight": 22.538855339169288
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 508,
+                "low_triangles": 238,
+                "name": "wheel-rotor-hole-21",
+                "target_triangles": 239,
+                "weight": 22.538855339169288
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 508,
+                "low_triangles": 238,
+                "name": "wheel-rotor-hole-22",
+                "target_triangles": 239,
+                "weight": 22.538855339169288
+              },
+              {
+                "budget_group": "wheels",
+                "high_triangles": 508,
+                "low_triangles": 238,
+                "name": "wheel-rotor-hole-23",
+                "target_triangles": 239,
+                "weight": 22.538855339169288
+              }
+            ],
+            "ray_distance_m": 0.04,
+            "reference_fidelity": "requires photo review; polygon count is not evidence",
+            "requested_low_budget": 10000,
+            "rig_or_animation_preserved": false
+          },
+          "schema": "jarvis.studio3d.asset-pipeline.v1",
+          "source_part_names": [
+            "wheel-tyre",
+            "wheel-rim",
+            "wheel-rotor",
+            "wheel-hub",
+            "wheel-spoke-0",
+            "wheel-spoke-1",
+            "wheel-spoke-2",
+            "wheel-spoke-3",
+            "wheel-spoke-4",
+            "wheel-spoke-5",
+            "wheel-spoke-6",
+            "wheel-spoke-7",
+            "wheel-spoke-8",
+            "wheel-spoke-9",
+            "wheel-nut-0",
+            "wheel-nut-1",
+            "wheel-nut-2",
+            "wheel-nut-3",
+            "wheel-nut-4",
+            "wheel-caliper",
+            "wheel-rotor-hole-0",
+            "wheel-rotor-hole-1",
+            "wheel-rotor-hole-2",
+            "wheel-rotor-hole-3",
+            "wheel-rotor-hole-4",
+            "wheel-rotor-hole-5",
+            "wheel-rotor-hole-6",
+            "wheel-rotor-hole-7",
+            "wheel-rotor-hole-8",
+            "wheel-rotor-hole-9",
+            "wheel-rotor-hole-10",
+            "wheel-rotor-hole-11",
+            "wheel-rotor-hole-12",
+            "wheel-rotor-hole-13",
+            "wheel-rotor-hole-14",
+            "wheel-rotor-hole-15",
+            "wheel-rotor-hole-16",
+            "wheel-rotor-hole-17",
+            "wheel-rotor-hole-18",
+            "wheel-rotor-hole-19",
+            "wheel-rotor-hole-20",
+            "wheel-rotor-hole-21",
+            "wheel-rotor-hole-22",
+            "wheel-rotor-hole-23"
+          ],
+          "topology_before": {
+            "boundary_edges": 243,
+            "degenerate_faces": 0,
+            "edge_flow_artist_review": "required",
+            "loose_edges": 0,
+            "ngons": 0,
+            "nonmanifold_edges": 0,
+            "polygons": 9937,
+            "triangles": 9937,
+            "uv_outside_01_loops": 0,
+            "uv_overlap": "not exactly tested",
+            "uv_present": true,
+            "uv_triangle_area_sum": 0.35309678369491393,
+            "vertices": 5172
+          },
+          "topology_raw": {
+            "boundary_edges": 243,
+            "degenerate_faces": 0,
+            "edge_flow_artist_review": "required",
+            "loose_edges": 0,
+            "ngons": 0,
+            "nonmanifold_edges": 0,
+            "polygons": 9937,
+            "triangles": 9937,
+            "uv_outside_01_loops": 0,
+            "uv_overlap": "not exactly tested",
+            "uv_present": true,
+            "uv_triangle_area_sum": 28.12244169436065,
+            "vertices": 5172
+          },
+          "unverified": [
+            "artist retopology and deformation edge flow",
+            "exact UV overlap/density",
+            "per-texel projection and photo fidelity",
+            "LOD silhouette popping",
+            "material coat/transmission and anisotropy preservation",
+            "full target-engine performance"
+          ]
+        },
+        "blender": "5.2.0 LTS",
+        "bounds_m": [
+          [
+            -0.3521043062210083,
+            -0.16001656651496887,
+            0.007895708084106445
+          ],
+          [
+            0.3521043062210083,
+            0.16002605855464935,
+            0.712104320526123
+          ]
+        ],
+        "elapsed_seconds": 12.757647700000234,
+        "glb_roundtrip": {
+          "bounds_m": [
+            [
+              -0.3521043062210083,
+              -0.16001655161380768,
+              0.007895678281784058
+            ],
+            [
+              0.3521043062210083,
+              0.16002602875232697,
+              0.7121043801307678
+            ]
+          ],
+          "max_bound_error_m": 5.960464477539063e-08,
+          "mesh_objects": 44,
+          "passed": true
+        },
+        "gltf_validation": {
+          "files": {
+            "model-lod1.glb": {
+              "info": {
+                "animationCount": 0,
+                "drawCallCount": 44,
+                "generator": "Khronos glTF Blender I/O v5.2.39",
+                "hasDefaultScene": true,
+                "hasMorphTargets": false,
+                "hasSkins": false,
+                "hasTextures": true,
+                "materialCount": 1,
+                "maxAttributes": 4,
+                "maxInfluences": 0,
+                "maxUVs": 1,
+                "resources": [
+                  {
+                    "byteLength": 745248,
+                    "mimeType": "application/gltf-buffer",
+                    "pointer": "/buffers/0",
+                    "storage": "glb"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 512,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 512
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/0",
+                    "storage": "buffer-view"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 512,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 512
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/1",
+                    "storage": "buffer-view"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 512,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 512
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/2",
+                    "storage": "buffer-view"
+                  }
+                ],
+                "totalTriangleCount": 4967,
+                "totalVertexCount": 8231,
+                "version": "2.0"
+              },
+              "issues": {
+                "messages": [],
+                "numErrors": 0,
+                "numHints": 0,
+                "numInfos": 0,
+                "numWarnings": 0,
+                "truncated": false
+              },
+              "mimeType": "model/gltf-binary",
+              "uri": "model-lod1.glb",
+              "validatedAt": "2026-10-23T17:53:46.544Z",
+              "validatorVersion": "2.0.0-dev.3.10"
+            },
+            "model-lod2.glb": {
+              "info": {
+                "animationCount": 0,
+                "drawCallCount": 44,
+                "generator": "Khronos glTF Blender I/O v5.2.39",
+                "hasDefaultScene": true,
+                "hasMorphTargets": false,
+                "hasSkins": false,
+                "hasTextures": true,
+                "materialCount": 1,
+                "maxAttributes": 4,
+                "maxInfluences": 0,
+                "maxUVs": 1,
+                "resources": [
+                  {
+                    "byteLength": 531912,
+                    "mimeType": "application/gltf-buffer",
+                    "pointer": "/buffers/0",
+                    "storage": "glb"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 512,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 512
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/0",
+                    "storage": "buffer-view"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 512,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 512
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/1",
+                    "storage": "buffer-view"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 512,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 512
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/2",
+                    "storage": "buffer-view"
+                  }
+                ],
+                "totalTriangleCount": 2483,
+                "totalVertexCount": 4141,
+                "version": "2.0"
+              },
+              "issues": {
+                "messages": [],
+                "numErrors": 0,
+                "numHints": 0,
+                "numInfos": 0,
+                "numWarnings": 0,
+                "truncated": false
+              },
+              "mimeType": "model/gltf-binary",
+              "uri": "model-lod2.glb",
+              "validatedAt": "2026-10-23T17:53:46.660Z",
+              "validatorVersion": "2.0.0-dev.3.10"
+            },
+            "model.glb": {
+              "info": {
+                "animationCount": 0,
+                "drawCallCount": 44,
+                "generator": "Khronos glTF Blender I/O v5.2.39",
+                "hasDefaultScene": true,
+                "hasMorphTargets": false,
+                "hasSkins": false,
+                "hasTextures": true,
+                "materialCount": 1,
+                "maxAttributes": 4,
+                "maxInfluences": 0,
+                "maxUVs": 1,
+                "resources": [
+                  {
+                    "byteLength": 1018704,
+                    "mimeType": "application/gltf-buffer",
+                    "pointer": "/buffers/0",
+                    "storage": "glb"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 512,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 512
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/0",
+                    "storage": "buffer-view"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 512,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 512
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/1",
+                    "storage": "buffer-view"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 512,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 512
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/2",
+                    "storage": "buffer-view"
+                  }
+                ],
+                "totalTriangleCount": 9937,
+                "totalVertexCount": 13359,
+                "version": "2.0"
+              },
+              "issues": {
+                "messages": [],
+                "numErrors": 0,
+                "numHints": 0,
+                "numInfos": 0,
+                "numWarnings": 0,
+                "truncated": false
+              },
+              "mimeType": "model/gltf-binary",
+              "uri": "model.glb",
+              "validatedAt": "2026-10-23T17:53:46.415Z",
+              "validatorVersion": "2.0.0-dev.3.10"
+            }
+          },
+          "implementation": "Khronos glTF-Validator",
+          "version": "2.0.0-dev.3.10"
+        },
+        "objects": [
+          {
+            "id": "wheel-tyre · game",
+            "triangles": 420,
+            "uv": true,
+            "vertices": 248,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-rim · game",
+            "triangles": 443,
+            "uv": true,
+            "vertices": 263,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-rotor · game",
+            "triangles": 240,
+            "uv": true,
+            "vertices": 162,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-hub · game",
+            "triangles": 238,
+            "uv": true,
+            "vertices": 121,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-spoke-0 · game",
+            "triangles": 154,
+            "uv": true,
+            "vertices": 79,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-spoke-1 · game",
+            "triangles": 154,
+            "uv": true,
+            "vertices": 79,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-spoke-2 · game",
+            "triangles": 154,
+            "uv": true,
+            "vertices": 79,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-spoke-3 · game",
+            "triangles": 154,
+            "uv": true,
+            "vertices": 79,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-spoke-4 · game",
+            "triangles": 154,
+            "uv": true,
+            "vertices": 79,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-spoke-5 · game",
+            "triangles": 154,
+            "uv": true,
+            "vertices": 79,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-spoke-6 · game",
+            "triangles": 154,
+            "uv": true,
+            "vertices": 79,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-spoke-7 · game",
+            "triangles": 154,
+            "uv": true,
+            "vertices": 79,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-spoke-8 · game",
+            "triangles": 154,
+            "uv": true,
+            "vertices": 79,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-spoke-9 · game",
+            "triangles": 154,
+            "uv": true,
+            "vertices": 79,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-nut-0 · game",
+            "triangles": 238,
+            "uv": true,
+            "vertices": 121,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-nut-1 · game",
+            "triangles": 238,
+            "uv": true,
+            "vertices": 121,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-nut-2 · game",
+            "triangles": 238,
+            "uv": true,
+            "vertices": 121,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-nut-3 · game",
+            "triangles": 238,
+            "uv": true,
+            "vertices": 121,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-nut-4 · game",
+            "triangles": 238,
+            "uv": true,
+            "vertices": 121,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-caliper · game",
+            "triangles": 154,
+            "uv": true,
+            "vertices": 79,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-rotor-hole-0 · game",
+            "triangles": 238,
+            "uv": true,
+            "vertices": 121,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-rotor-hole-1 · game",
+            "triangles": 238,
+            "uv": true,
+            "vertices": 121,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-rotor-hole-2 · game",
+            "triangles": 238,
+            "uv": true,
+            "vertices": 121,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-rotor-hole-3 · game",
+            "triangles": 238,
+            "uv": true,
+            "vertices": 121,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-rotor-hole-4 · game",
+            "triangles": 238,
+            "uv": true,
+            "vertices": 121,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-rotor-hole-5 · game",
+            "triangles": 238,
+            "uv": true,
+            "vertices": 121,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-rotor-hole-6 · game",
+            "triangles": 238,
+            "uv": true,
+            "vertices": 121,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-rotor-hole-7 · game",
+            "triangles": 238,
+            "uv": true,
+            "vertices": 121,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-rotor-hole-8 · game",
+            "triangles": 238,
+            "uv": true,
+            "vertices": 121,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-rotor-hole-9 · game",
+            "triangles": 238,
+            "uv": true,
+            "vertices": 121,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-rotor-hole-10 · game",
+            "triangles": 238,
+            "uv": true,
+            "vertices": 121,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-rotor-hole-11 · game",
+            "triangles": 238,
+            "uv": true,
+            "vertices": 121,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-rotor-hole-12 · game",
+            "triangles": 238,
+            "uv": true,
+            "vertices": 121,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-rotor-hole-13 · game",
+            "triangles": 238,
+            "uv": true,
+            "vertices": 121,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-rotor-hole-14 · game",
+            "triangles": 238,
+            "uv": true,
+            "vertices": 121,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-rotor-hole-15 · game",
+            "triangles": 238,
+            "uv": true,
+            "vertices": 121,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-rotor-hole-16 · game",
+            "triangles": 238,
+            "uv": true,
+            "vertices": 121,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-rotor-hole-17 · game",
+            "triangles": 238,
+            "uv": true,
+            "vertices": 121,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-rotor-hole-18 · game",
+            "triangles": 238,
+            "uv": true,
+            "vertices": 121,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-rotor-hole-19 · game",
+            "triangles": 238,
+            "uv": true,
+            "vertices": 121,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-rotor-hole-20 · game",
+            "triangles": 238,
+            "uv": true,
+            "vertices": 121,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-rotor-hole-21 · game",
+            "triangles": 238,
+            "uv": true,
+            "vertices": 121,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-rotor-hole-22 · game",
+            "triangles": 238,
+            "uv": true,
+            "vertices": 121,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "wheel-rotor-hole-23 · game",
+            "triangles": 238,
+            "uv": true,
+            "vertices": 121,
+            "zero_area_faces": 0
+          }
+        ],
+        "orthographic_views": [],
+        "render": {
+          "device": "CPU",
+          "engine": "CYCLES",
+          "requested_engine": "CYCLES",
+          "resolution": [
+            960,
+            640
+          ],
+          "samples": 24
+        },
+        "schema": "jarvis.studio3d.report.v1",
+        "triangles": 9937,
+        "unverified": [
+          "artist topology",
+          "exact UV quality",
+          "per-texel projection",
+          "photo fidelity",
+          "LOD silhouettes",
+          "target engine performance"
+        ],
+        "visible_objects": 44,
+        "warnings": [
+          "High master projected to reduced rigid parts; original part origins retained, no rig/animation preservation.",
+          "Photo fidelity, per-texel projection and target-engine performance require review."
+        ]
+      },
+      "resources": {
+        "cpu_seconds": 1200,
+        "elapsed_seconds": 13.644733500001166,
+        "exit_code": 0,
+        "isolation": "Trusted fixed first-party worker with resource Job; not an OS security sandbox. No model Python, external imports or external BLEND loading. Only host-hash-verified first-party masters load with scripts disabled.",
+        "memory_bytes": 4294967296,
+        "output_bytes": 268435456,
+        "peak_memory_bytes": 1114521600,
+        "threads": 4,
+        "wall_seconds": 300
+      },
+      "runtime": {
+        "executable_sha256": "e27fbfea8564aa645d4463cb0949695fd85562b9de6df9561b06859a1074adf7",
+        "license": "GPL-2.0-or-later",
+        "source": "https://www.blender.org/",
+        "version": "Blender 5.2.0 LTS"
+      },
+      "skill": "studio3d",
+      "source_sha256": {
+        "adapters/studio3d/asset_pipeline.py": "d41273f361c26f8fdc7da9b242ede1c46d51a05745e4efd5ff28630b268f22f1",
+        "adapters/studio3d/projection.py": "40c5c9b5e02e5c1f7183f5a6d42326f978673cf27dcaa94df08dd3a00f5b0328",
+        "adapters/studio3d/worker.py": "60487d9420df69ba9f10e1270b8bcf4ae6401f877ed90123bb4e0b935c17e294",
+        "apps/studio3d/worker.py": "60af564595dab82acf3118ba581e5bc6b71b738c60ecf32a66c5d5cf36e3c4db",
+        "host/studio3d.py": "21b156f40ca75084684dce6058acc875537fe27ae7b570f0c182d2930149e069",
+        "host/studio3d_reference.py": "43b915ff84901976001887365fff38c31a10d016c6cc6b5b9d28f3c63df9b2c0",
+        "modules/skills/studio3d/assets.py": "aab01d79fbbf94305054311c8ff1031a85dee37e64cd6e77c1d42d0bacfd6526",
+        "modules/skills/studio3d/contract.py": "987537dcc9eb5f7bde79a6e3b9493e9d9a4f2e2abac2aab20154d4a3e8da5d85",
+        "modules/skills/studio3d/presets.py": "f7d18d601f36920cff52d3f26fe21cd943ad1a63fc14ad91decdd78e4865b3a4",
+        "modules/skills/studio3d/production.py": "f65ef9295716013e1e9fd297b77f09e1b2d7f5d4aa8f000a3daecf804a28ac52",
+        "modules/skills/studio3d/runtime.json": "8f7b3ca4b97e82e9e11fb0064d984c9b0773b4b080e40e27d07fee15874f4ac2",
+        "modules/skills/studio3d/tracked_vehicle.py": "24716810b044cf85d4cb497e9330da2bccd5d9437afe6c891da83908f60566f8"
+      },
+      "title": "赛车锻造轮组 · 材质与细节研究 · 烘焙与LOD",
+      "unfulfilled": [
+        "制动孔为视觉嵌片，并非贯穿孔。",
+        "没有轮胎变形、制动力与疲劳验证。"
+      ],
+      "url": "/api/studio3d/view/ea96d0135f634540a7e23f2e38817db5"
+    },
+    "status": "DELIVERED",
+    "turn_id": null
+  }
+}

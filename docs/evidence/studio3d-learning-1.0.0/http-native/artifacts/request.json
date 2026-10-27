@@ -1,0 +1,51 @@
+{
+  "contract": {
+    "schema": "jarvis.studio3d.learning.v1",
+    "asset_id": "diagnostic-plate",
+    "family": "hard_surface",
+    "parts": [
+      {
+        "id": "support",
+        "node": "support",
+        "motion_owner": "support",
+        "motion": "fixed",
+        "closed_surface": true
+      },
+      {
+        "id": "attachment",
+        "node": "attachment",
+        "motion_owner": "support",
+        "motion": "coupled",
+        "closed_surface": true
+      }
+    ],
+    "attachments": [
+      {
+        "part": "attachment",
+        "support": "support",
+        "max_gap": 0.002,
+        "target_position": [
+          0.25,
+          0.2,
+          0.07
+        ]
+      }
+    ],
+    "rejected": [
+      "rejected-pod"
+    ],
+    "symptoms": [
+      "rejected_parts",
+      "floating_attachment"
+    ],
+    "reference_policy": {
+      "shield": "none"
+    }
+  },
+  "tools": [
+    "remove_rejected",
+    "seat_attachment"
+  ],
+  "render": true,
+  "source_sha256": "5d654702d00f21db5491bc782f6b1c1e8cf4f00cf1300b004d41b2a3e66cbab6"
+}

@@ -1,0 +1,78 @@
+{
+  "case_id": "learning-agreement",
+  "domain": "learning",
+  "arm": "workflow_off",
+  "turn": 0,
+  "freeze_digest": "58e89113b8e37c7cb0dbe11414bd8d9d7f403111ca74ceaf5d1fd9b9c9eba16e",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\"question\":\"The robot ___ (move/moves) forward.\",\"answer\":null,\"encouragement\":\"慢慢来，做练习是为了熟悉，做错了也没关系，我们一步步看。\"}",
+  "skill_id": null,
+  "skill_version": null,
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 4.3116,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 74,
+        "prompt_tokens": 964,
+        "total_tokens": 1038
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.0010005,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/learning-agreement-workflow_off-0.native.json",
+      "sha256": "8787299bfaddc0a1887d607f98c4ea1785cb59234d73a521a628d97d6603df52",
+      "kind": "native_protocol_response"
+    },
+    {
+      "file": "artifacts/learning-agreement-workflow_off-0.reply.md.txt",
+      "sha256": "f4107128f0258e3f3db61548112524d27f7ce7111debd752af3873da32357d76",
+      "kind": "original_session_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "question",
+        "status": "passed"
+      },
+      {
+        "id": "answer",
+        "status": "passed"
+      },
+      {
+        "id": "encouragement_present",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "record_digest": "b00710a9285ee279ed769716333f00b82db5df2e04defa9c41986eecb1ea2886"
+}

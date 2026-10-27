@@ -1,0 +1,96 @@
+{
+  "schema": "jarvis.work-trials.v1",
+  "origin": "synthetic",
+  "provenance": "Three first-party scenarios; same explicit user declarations in free-prose and source-excerpt formats. No automatic extraction or independent user data.",
+  "cases": [
+    {
+      "id": "shadow-quote",
+      "domain": "comparison",
+      "skill": "none",
+      "turns": [
+        {
+          "prompt": "比较两方案，预算最多100元、交期最多5天，选符合条件的最低价。文档保留两份原报价以说明排除原因，保留已确认计划，不把询问或下单写成已完成。JSON字段document、selected（甲或乙）。\n只在reply中输出JSON，不创建后台任务，不执行外部动作。document为Markdown正文。",
+          "expected": {
+            "selected": "甲"
+          },
+          "unordered": [],
+          "text_fields": [
+            "document"
+          ],
+          "forbidden": {}
+        },
+        {
+          "prompt": "乙报价被明确更正，重新按相同约束选择。其余资料和已确认计划保持。JSON字段document、selected（甲或乙）。\n只在reply中输出JSON，不创建后台任务，不执行外部动作。document为Markdown正文。",
+          "expected": {
+            "selected": "乙"
+          },
+          "unordered": [],
+          "text_fields": [
+            "document"
+          ],
+          "forbidden": {}
+        }
+      ]
+    },
+    {
+      "id": "shadow-journal",
+      "domain": "documents",
+      "skill": "journal-review",
+      "turns": [
+        {
+          "prompt": "整理操作日志，失败原因未确认，不能编造原因或效果。JSON字段document、status（failed）。\n只在reply中输出JSON，不创建后台任务，不执行外部动作。document为Markdown正文。",
+          "expected": {
+            "status": "failed"
+          },
+          "unordered": [],
+          "text_fields": [
+            "document"
+          ],
+          "forbidden": {}
+        },
+        {
+          "prompt": "更正操作状态，原来不是失败而是尚未开始；已确认计划没有撤销。若认为需要调整计划，只写未采纳建议。JSON字段document、status（not_started）。\n只在reply中输出JSON，不创建后台任务，不执行外部动作。document为Markdown正文。",
+          "expected": {
+            "status": "not_started"
+          },
+          "unordered": [],
+          "text_fields": [
+            "document"
+          ],
+          "forbidden": {}
+        }
+      ]
+    },
+    {
+      "id": "shadow-learning",
+      "domain": "learning",
+      "skill": "english-coach",
+      "turns": [
+        {
+          "prompt": "整理学习复盘；只看讲解不等于掌握，没有独立作答或延迟复测不能编造学习成效。JSON字段document、independent_mastery（布尔）、retention（未测填null）。\n只在reply中输出JSON，不创建后台任务，不执行外部动作。document为Markdown正文。",
+          "expected": {
+            "independent_mastery": false,
+            "retention": null
+          },
+          "unordered": [],
+          "text_fields": [
+            "document"
+          ],
+          "forbidden": {}
+        },
+        {
+          "prompt": "明确撤销旧时间并改期，学习事实不变；不要恢复旧计划，也不要提前声称完成。JSON字段document、independent_mastery、retention。\n只在reply中输出JSON，不创建后台任务，不执行外部动作。document为Markdown正文。",
+          "expected": {
+            "independent_mastery": false,
+            "retention": null
+          },
+          "unordered": [],
+          "text_fields": [
+            "document"
+          ],
+          "forbidden": {}
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "component": "image-studio",
+  "version": "1.1.0",
+  "date": "2026-10-25",
+  "implemented": [
+    "Six design recipes and explicit briefs",
+    "14 aspect ratios; 1K/2K/4K and previous mainline 512",
+    "Persistent Google provider/model/size/ratio/preset defaults and model enable policies",
+    "Revision-checked settings and per-request planning threshold",
+    "Immutable Standard/global per-modality rate snapshots in shared call ledger",
+    "Before-call quote, actual usage estimate, unknown amount preservation, all-history summary",
+    "Manual append-only invoice reconciliation; no provider billing API or balance access",
+    "Manual design acceptance gated by resolution and complete checklist",
+    "PNG revision lineage checked against parent SHA; existing 3D reference handoff",
+    "Independent transport watchdog and orphan job / call-ledger repair"
+  ],
+  "python_tests": 93,
+  "python_failed_suites": 0,
+  "browser_rendering_tested": false,
+  "ui_verification": "Node DOM-contract smoke only; no real browser screenshot or click acceptance",
+  "live_attempts": [
+    {
+      "evidence": "live-4k-poster.json",
+      "id": "8f04dd5dcd4542988f9f79d6285f1b90",
+      "status": "UNKNOWN",
+      "error": "image_network",
+      "size": "4K",
+      "model": "gemini-nano-banana-2.1",
+      "delivered": false
+    },
+    {
+      "evidence": "live-2k-product.json",
+      "id": "244da0f4625e43328eb66449fd552273",
+      "status": "UNKNOWN",
+      "error": "image_host_interrupted",
+      "size": "2K",
+      "model": "gemini-nano-banana-2.1",
+      "delivered": false
+    }
+  ],
+  "real_1k_history": "Previous release had three successful image models and one successful edit. Current pricing is recomputed from those real usage receipts in historical-usage-accounting.json; historical ledger was not rewritten.",
+  "network_probe": [
+    {
+      "endpoint": "https://aiplatform.googleapis.com/",
+      "error": "URLError/TimeoutError",
+      "auth": false
+    },
+    {
+      "endpoint": "https://generativelanguage.googleapis.com/",
+      "error": "URLError/TimeoutError",
+      "auth": false
+    }
+  ],
+  "cleanup": {
+    "orphan_image_worker": 40252,
+    "verified_parent": 40052,
+    "action": "terminated only the exact image_transport.py child of the ended evaluation process; no main service restart",
+    "followup": "Added independent watchdog, bounded reap, CLI cancellation grace, and real stalled-child test. No remaining image worker observed."
+  },
+  "limits": [
+    "2K and 4K integration implemented, real generation not verified due local Google network timeouts",
+    "512 and extreme ratios not live-tested",
+    "Design recipes are prompt guidance plus human acceptance; no autonomous vision score or demonstrated universal quality improvement",
+    "JPEG and over-budget PNG outputs require external conversion/resizing for editing or 3D input",
+    "No automatic Google invoice import, credits/balance query, or hard provider spend cap",
+    "Main 18282 service not restarted after earlier automatic approval rejection"
+  ],
+  "main_service_probe": {
+    "http": 404
+  }
+}

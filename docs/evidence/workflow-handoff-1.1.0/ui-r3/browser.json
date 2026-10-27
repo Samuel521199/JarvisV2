@@ -1,0 +1,111 @@
+{
+  "checks": [
+    "One approval HTTP request persists execution; no second start request is needed"
+  ],
+  "errors": [],
+  "requests": [
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-86e68fbaf6dc42da80852575754ea400"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "approve_and_run",
+        "id": "goal-86e68fbaf6dc42da80852575754ea400",
+        "revision": 2
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-86e68fbaf6dc42da80852575754ea400"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-86e68fbaf6dc42da80852575754ea400"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-3b92d5776526427e8ca8aee77c54665e"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "approve_and_run",
+        "id": "goal-3b92d5776526427e8ca8aee77c54665e",
+        "revision": 2,
+        "acceptance": {
+          "coverage": "complete",
+          "criteria": [
+            {
+              "id": "declared-result",
+              "step_id": "step-1",
+              "check": "text_contains",
+              "expected": "最低报价：B"
+            }
+          ],
+          "requirements": [
+            {
+              "id": "requirement-1",
+              "text": "预算最多100",
+              "kind": "semantic",
+              "criterion_ids": [
+                "declared-result"
+              ]
+            },
+            {
+              "id": "requirement-2",
+              "text": "交付不超过5天",
+              "kind": "semantic",
+              "criterion_ids": [
+                "declared-result"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-3b92d5776526427e8ca8aee77c54665e"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-3b92d5776526427e8ca8aee77c54665e"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-3b92d5776526427e8ca8aee77c54665e"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-3b92d5776526427e8ca8aee77c54665e"
+      }
+    }
+  ],
+  "passed": false,
+  "failure": "AssertionError [ERR_ASSERTION]: The input did not match the regular expression /约定检查通过率：100%/. Input:\n\n'等待执行结果\\n\\n目标覆盖尚未证实；检查通过或记录认可不等于全部业务要求正确。\\n\\n待核对 · 预算最多100\\n\\n待核对 · 交付不超过5天'\n\n    at D:\\Jarvis\\tools\\probe_handoff_ui.cjs:27:10"
+}

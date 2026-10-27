@@ -1,0 +1,169 @@
+{
+  "schema_version": 1,
+  "version": "outcome-observer-1.0.0",
+  "date": "2026-10-26",
+  "scope": "K0/K1/K2 deterministic result-observer slice",
+  "git_base": "17b5240c4fd3d05a63de5ef0b595e041dd23779d",
+  "dirty_tree": true,
+  "python": "3.13.0",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "tests": {
+    "modules": [
+      "test_core",
+      "test_outcomes",
+      "test_concurrency",
+      "test_assistant_goals",
+      "test_goal_plans",
+      "test_workbench"
+    ],
+    "run": 99,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 58.495,
+    "passed": true
+  },
+  "source_digests": [
+    {
+      "path": "adapters/storage/outcome_schema.py",
+      "sha256": "e7d9e2d58b753b3f443d42b52b58e31ad3b052dd7bd578310438836c7969a2bd"
+    },
+    {
+      "path": "modules/evaluation/__init__.py",
+      "sha256": "86dc2a55ae28f7eaed529c0b0afdccec5348625e44d92fa823a8d9abe4785988"
+    },
+    {
+      "path": "modules/evaluation/outcomes.py",
+      "sha256": "8e0c9d91d07c9dd6f9ea8932f1cd821033dc2300df5eb83fcf9d964d56f093fb"
+    },
+    {
+      "path": "contracts/schemas/outcome-assessment.v1.json",
+      "sha256": "715f8abe9f2380c841dfcf91caf096cbcd0bef523f230dc0ed583903604d5410"
+    },
+    {
+      "path": "sdk/protocol.py",
+      "sha256": "5613b1201b32232837313958434737ca465e14de366792ff9d66e902f71a5d5d"
+    },
+    {
+      "path": "host/outcomes.py",
+      "sha256": "38d7484ee6051300dc8612d380638f0a560bc368c30ab8d4c001757c70a4c6ef"
+    },
+    {
+      "path": "host/core.py",
+      "sha256": "412612ce73abca6988e691a9b3af56ca7d30fd70f0bb7a2b05265543a9787897"
+    },
+    {
+      "path": "host/task_scheduler.py",
+      "sha256": "0b032c2bd0058425d082986e6687a2acb5d4eddba9baba93e8ae48726933dc34"
+    },
+    {
+      "path": "host/assistant.py",
+      "sha256": "446ce83f888a1ab7cc158be6f454d6baecf76a4a64fa1f8f1956bd388eff73c8"
+    },
+    {
+      "path": "host/goals.py",
+      "sha256": "ecadc8847275456135ccdb46767ebae2783ae1cb1802274078900ea69874be23"
+    },
+    {
+      "path": "host/work_status.py",
+      "sha256": "6de04570521ec5e99de98e4cd327cb876403c3b7ea63bb6dba96c750861b9763"
+    },
+    {
+      "path": "host/settings_operations.py",
+      "sha256": "925a8382afea9361a0556422f1e5a6eb68bff7959a0cd1cec2680c7b446377a7"
+    },
+    {
+      "path": "apps/workbench/ui.js",
+      "sha256": "78f9259bafb1a1511a51aa44911d081ed5f8fa0c59c015620e02f77b0914e848"
+    },
+    {
+      "path": "apps/workbench/assistant-actions.js",
+      "sha256": "c18064168e19ce862bcf153b670f31c052b0f40d8148e9e8b0903bf6012f5051"
+    },
+    {
+      "path": "apps/workbench/work-status.js",
+      "sha256": "7d02e685c85123f6d0c6d0bbbb83dc19f5ea5fcc06862fc27afd0695366a7710"
+    },
+    {
+      "path": "apps/workbench/goals.js",
+      "sha256": "3cc4201161ab5e0fd4787db521bcad5be03fb4fd82a788a68d80ea2080f9f201"
+    },
+    {
+      "path": "tests/test_outcomes.py",
+      "sha256": "d93e5cfcf16e2a3c49094a6476afc8aa9edde89cb9346cb49a737969fcae703f"
+    },
+    {
+      "path": "tests/test_assistant_goals.py",
+      "sha256": "5b0cf97fec1d405f5f6b3908f06eda97535ab6d8125bb1cb1d225339282053db"
+    },
+    {
+      "path": "tools/probe_outcomes.py",
+      "sha256": "f0db51ccb37b6e6acbb46a15301ba183a777b0e0169238943d37c66031d4ab9b"
+    },
+    {
+      "path": "tools/probe_outcomes_ui.cjs",
+      "sha256": "e10c5a71d57b07d3f5be1f951cf27a0ef9a14e417afebfd3e27ec7ce140b4fbf"
+    }
+  ],
+  "performance": "performance.json",
+  "browser": "browser.json",
+  "forecast_r1_sha256": "035f34e43b8b1f7c974202c0820fef905abe86674c5089be6be28a44a76ef66f",
+  "paid_model_calls": 0,
+  "production_deployed": false,
+  "not_verified": [
+    "full GoalMandate semantic acceptance",
+    "general durable waiting",
+    "Bot ownership and delegation",
+    "learning utility or token savings",
+    "full healing and self-evolution",
+    "physical robots"
+  ],
+  "post_test_line_endings": {
+    "path": "host/goals.py",
+    "tested_sha256": "87b8b71361f4361e3d3be9460ac64746b73d959a7c25ba147750a2521f02a551",
+    "delivered_sha256": "ecadc8847275456135ccdb46767ebae2783ae1cb1802274078900ea69874be23",
+    "change": "CRLF to LF only; exact equivalence verified; no semantic change"
+  },
+  "post_suite_frontend_verification": {
+    "changes": [
+      {
+        "before_path": "apps/workbench/outcomes.js",
+        "delivered_path": "apps/workbench/ui.js",
+        "before_sha256": "32944c796a5228e0eb6084e54d721ec57f58be8a3a96532cd7c015615e3a8e16",
+        "delivered_sha256": "78f9259bafb1a1511a51aa44911d081ed5f8fa0c59c015620e02f77b0914e848"
+      },
+      {
+        "before_path": "apps/workbench/assistant-actions.js",
+        "delivered_path": "apps/workbench/assistant-actions.js",
+        "before_sha256": "b9a2283ad2dcf029749b901f7125368187fa350bed4ad78b3b02ad111675c846",
+        "delivered_sha256": "c18064168e19ce862bcf153b670f31c052b0f40d8148e9e8b0903bf6012f5051"
+      },
+      {
+        "before_path": "apps/workbench/work-status.js",
+        "delivered_path": "apps/workbench/work-status.js",
+        "before_sha256": "17f1f5d2010baeeaa40faa69434b22e7bc9ea69428c0bae7eaba657da0b648a5",
+        "delivered_sha256": "7d02e685c85123f6d0c6d0bbbb83dc19f5ea5fcc06862fc27afd0695366a7710"
+      },
+      {
+        "before_path": "apps/workbench/goals.js",
+        "delivered_path": "apps/workbench/goals.js",
+        "before_sha256": "fa8db8a8ed0281919192cb73bed0cdf3333844a09aea3a2aa29cf910ce939c5b",
+        "delivered_sha256": "3cc4201161ab5e0fd4787db521bcad5be03fb4fd82a788a68d80ea2080f9f201"
+      }
+    ],
+    "reason": "reuse existing UI asset for already running Host compatibility; disable configuration until supported",
+    "verification": "browser-only probe rerun successfully; Python runtime and tests unchanged"
+  },
+  "documentation_checks": {
+    "navigation": "OK 0 updated",
+    "documents": 28,
+    "chapters": 24,
+    "diagrams": 46,
+    "local_links": 3345,
+    "errors": 0
+  },
+  "architecture_check": {
+    "python_files": 177,
+    "errors": 0
+  }
+}

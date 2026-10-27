@@ -1,0 +1,240 @@
+{
+  "version": "memory-continuity-1.0.0",
+  "release": "0.1.0",
+  "generated_at": 1792784898.8723414,
+  "platform": "Windows-11-10.0.26200-SP0",
+  "status": "partial_implemented_not_closed",
+  "requested_scope": "Final memory and knowledge requirements except deferred macOS verification",
+  "checks": {
+    "full_regression": {
+      "passed": 479,
+      "seconds": 222.001,
+      "log": "regression-source-merge.txt",
+      "scope": "Snapshot before added process-fault/schema/v1-host-compatibility tests and title length guard"
+    },
+    "capture_latest": {
+      "passed": 6,
+      "seconds": 0.975,
+      "log": "capture-targeted.txt"
+    },
+    "architecture": {
+      "state": "passed",
+      "python_files": 138,
+      "errors": 0
+    },
+    "documents": {
+      "state": "passed",
+      "documents": 26,
+      "chapters": 23,
+      "diagrams": 39,
+      "local_links": 2454,
+      "errors": 0
+    },
+    "javascript": {
+      "state": "passed",
+      "files": [
+        {
+          "file": "apps/workbench/app.js",
+          "exit": 0
+        },
+        {
+          "file": "apps\\workbench\\memory-domains.js",
+          "exit": 0
+        },
+        {
+          "file": "apps\\workbench\\memory-health.js",
+          "exit": 0
+        },
+        {
+          "file": "apps\\workbench\\memory-portability.js",
+          "exit": 0
+        },
+        {
+          "file": "apps\\workbench\\memory-source-merge.js",
+          "exit": 0
+        },
+        {
+          "file": "apps\\workbench\\memory.js",
+          "exit": 0
+        },
+        {
+          "file": "apps\\workbench\\knowledge-claims.js",
+          "exit": 0
+        },
+        {
+          "file": "apps\\workbench\\knowledge-extraction.js",
+          "exit": 0
+        },
+        {
+          "file": "apps\\workbench\\knowledge-transfer.js",
+          "exit": 0
+        },
+        {
+          "file": "apps\\workbench\\knowledge.js",
+          "exit": 0
+        }
+      ]
+    },
+    "whitespace": {
+      "owned_exit": 0,
+      "repository_exit": 2,
+      "other_modified_files": [
+        "apps/workbench/settings-anatomy.js",
+        "apps/workbench/settings.html",
+        "apps/workbench/settings.js",
+        "apps/workbench/ui.js",
+        "docs/evidence/anatomy-structure-2026-10-23/handoff.json",
+        "host/anatomy.py",
+        "host/anatomy_composer.py",
+        "modules/skills/anatomy/structure3d.mjs",
+        "seed/skills/conversation.json",
+        "tools/check_architecture.py"
+      ]
+    },
+    "source_merge_latest": {
+      "passed": 15,
+      "seconds": 1.481,
+      "log": "source-merge-targeted.txt"
+    }
+  },
+  "quality": {
+    "longmemeval": {
+      "cases": 30,
+      "planned_judgments": 90,
+      "completed_judgments": 87,
+      "correct": 55,
+      "supported": 80,
+      "unknown": 2,
+      "invalid": 1,
+      "acceptance_passed": false
+    },
+    "xquad_retrieval": {
+      "development": {
+        "correct": 57,
+        "cases": 60
+      },
+      "article_disjoint_holdout": {
+        "correct": 28,
+        "cases": 30,
+        "p95_ms": 37.9056
+      },
+      "per_language_shortfall": [
+        "zh:4/5",
+        "ar:4/5"
+      ]
+    },
+    "xquad_answers": {
+      "correct": 79,
+      "supported": 89,
+      "judgments": 90,
+      "citation_schema_valid": 90,
+      "automatic_judge": true,
+      "acceptance_passed": false,
+      "no_answer_cases": 0,
+      "full_dialogue_host": false
+    }
+  },
+  "integration": {
+    "real_model_extraction": "real-extraction-1.json",
+    "health_browser": "health-ui.png",
+    "offline_capture": "capture-browser.json",
+    "browser_console_errors": 0,
+    "source_merge": "source-merge-browser.json"
+  },
+  "deployment": {
+    "main_port": 18282,
+    "last_observed_pid": 4360,
+    "loaded_new_code": false,
+    "restart": "Owner reported manual restart; read-only verification still observes PID 4360 started 2026-10-24 00:48:02 and no memory_schema. Actual stop and restart requested; no tool stop/reload retried.",
+    "backup_created": false
+  },
+  "external_blockers": [
+    "Main service manual restart pending after automatic approval denial",
+    "Only current large-memory Windows PC exists; no real 8 GiB or second physical device",
+    "Real power-loss and long-duration acceptance unavailable in this run"
+  ],
+  "remaining_implementation": [
+    "Full bitemporal and conditional reasoning",
+    "PDF/OCR/audio and original permission inheritance",
+    "Episodic people/events and dynamic user views",
+    "Semantic extraction, contradictions and maintained authoritative knowledge chapters",
+    "Semantic maintained authoritative chapter merge (deterministic text/chapter line merge implemented)",
+    "Unknown/external/shared/backup derivation cleanup",
+    "Experience applicability and task-benefit validation",
+    "Proactive learning budgets and quiet-time flow",
+    "Family identity, encryption and authenticated device sync",
+    "Alternative actual encoder backend migration, unattended indexing and 100K-fragment/30-day scale"
+  ],
+  "unchanged_acceptance_thresholds": true,
+  "unknown_paid_requests_retried": false,
+  "prior_blocked_cleanup_not_retried": true,
+  "source_hashes": {
+    "adapters/storage/memory_schema.py": "fe9916110c1963be5509b1956687c18c6f823360e3df53ae65f898a5d5eeca86",
+    "adapters/storage/sqlite.py": "5c676671f9549c88094d816aa12be0793a887abc75aba0d4fdbba877141b7141",
+    "apps/workbench/app.js": "e37a031d24896b7ac4ce9cd4a56df8319eafb344ee40c41565d65876630233ac",
+    "apps/workbench/knowledge-claims.js": "417051c0aa2a5735daecb7625c945d10cfc5ae83f943c472409dd2f68ffb9020",
+    "apps/workbench/knowledge-extraction.js": "6c0cf29857194636e3866cf3b5cf3cc9a9d619f1ea8701a94c2fdf6260f49e0f",
+    "apps/workbench/knowledge-transfer.js": "c3811ac0d271553a344ed1669e2204a5ef93114773deac625bcb5e18262942ca",
+    "apps/workbench/knowledge.js": "bfb529750e56129745cb34c1b8dc8c9e79deba137491d7e5930cbf40f58aeb1a",
+    "apps/workbench/memory-domains.js": "5f4ddd9e27079a0b157ab8280a029fdb652c58c4c14a6d5a1039e7890c330974",
+    "apps/workbench/memory-health.js": "46455b51d26896cd10d90f0359e7deb43947e8018b1e5e120e6c9811b0361251",
+    "apps/workbench/memory-portability.js": "76d0f7d1c16cdea89132a81827f3acb9c6b0bd2a5432ad87b30706f8d88f99a1",
+    "apps/workbench/memory.js": "6c5e35ab76e7b5fdb451b2a04a593d2d1feba51e8ce42621307a439e470d307a",
+    "apps/workbench/server.py": "dc3ca18cd039800b6ab61ec044b333f4dad5d678d4fde190e76d4b7830f487c6",
+    "apps/workbench/style.css": "221c4dfe1891a56e7c54847ae785239b5d388f481f565dcfd20257aa24549162",
+    "host/dialogue.py": "8e2e7157163f9a95f50948a18f3a1dc8cbf37c1828c32617b969f3bfc8efa53a",
+    "host/goal_context.py": "5f98fa1975cc6a4bcaf032055a5780c3d400976003683bb76a052173c132afc5",
+    "host/knowledge.py": "02588662c7428074330c9380e63e7cc9ac467c9c636ea676a999607750b14c72",
+    "host/knowledge_cleanup.py": "150f91e440121d955a64ec6f801921355cd7906646d4c33fb9f273231c79796a",
+    "host/knowledge_extraction.py": "f2962f598a170c2112b78f44a0382578dceb6a7c58d43f5326c3ce9c34d1f363",
+    "host/knowledge_vectors.py": "4bc17edd42e985f51ffa637c2d7cf3bb123db5d53af83d6dd75457e79e25b76f",
+    "host/memory.py": "700eef9cd976360fa8202fbbd8370a30c8866796561c6fe4ba73b81e5452f5ca",
+    "host/memory_capture.py": "3c49b9c06f25a77b8b6ad7b20d441a39af759ec861fbcebe76de8af0294da369",
+    "host/memory_domains.py": "fe3166cb949d6438526f98bd17c4f47161925eecf24eeefc0061e2f879de11cc",
+    "host/memory_portability.py": "ea47cd127b175c07a7c62825acbde37685fb7a347378c9033e5126f855aedd85",
+    "modules/context_knowledge/__init__.py": "41d6fd2b9c77988ae577199de0262f72338d068d7eea0204d3650c04570abd12",
+    "modules/context_knowledge/bundle.py": "10a15eb31a12c0ca72278fe1347892c679e4d9b3443094cea1c27d15278268ef",
+    "modules/context_knowledge/claims.py": "88274fc9831d13d843a7dcfd78bd72b30c4313135dc163fc6999e03f212871bc",
+    "modules/context_knowledge/collection.py": "1626393d780aae3d77937fe53351109474aab69807d9c6a77ceb89bdc728ff63",
+    "modules/context_knowledge/conditions.py": "a7d4208bef0b6653e7598d03857c43251d996372850f3a1e25e73fcfeea3358e",
+    "modules/context_knowledge/domains.py": "eead7bbccd7a0cb1898a0daac32eca898e6d3bdf6b3d4acf33f506fead92f026",
+    "modules/context_knowledge/health.py": "de98994683d9fec8d1168a79bbf57abb0b7b069d8b6463ed4a5da06e86737025",
+    "modules/context_knowledge/history.py": "94404cf175504c346e3cf18995087aa503a14daf90c88295c301320f22981d76",
+    "modules/context_knowledge/joint.py": "751181f0f9fb47b017d4b58046f051a6376fd26c6a36baf73cbc3260e8612b71",
+    "modules/context_knowledge/knowledge.py": "8fde9df17fbf8258bac8b7f3d28cac6048b453a8629e384a3d6e0437e9eb7ee3",
+    "modules/context_knowledge/memory.py": "941245a383f6634590d448e4fa35c2d0c79725957235a22b04c35707791e6d09",
+    "modules/context_knowledge/merge.py": "de2361c24e120ff5e8b9a19de27393fa941c2a6a7a21d9c8ab2e6009da143ee9",
+    "modules/context_knowledge/retrieval.py": "e3e93795b9cda722ce9552ad0ec73b59f9f0795aa4a329aa3b77c6b6baafb49e",
+    "modules/context_knowledge/transfer.py": "1a57110a22c40269e32380f9520d7d9554126e5f3c93a2b92b1d75e541045be3",
+    "modules/context_knowledge/vectors.py": "6c521f38eed9cc4302be450f28d319c8f2fe1f84abb8b90f10c7b720394cc56a",
+    "modules/dialogue/store.py": "e3b7d40408e30f1c70af9052ef78e28cbfdcd27aa8e4abed26f329773d4a350d",
+    "modules/context_knowledge/source_merge.py": "83c61b1d3800775aa8bc0b9b6501d2b0d00cdcc9b16fc8da7a8fc73088b46c3a",
+    "modules/context_knowledge/source_policy.py": "2ba8266344c758ac187ab8af610502ac81557b130682990f5954de7f5e905064",
+    "apps/workbench/memory-source-merge.js": "6768480909a3a3c7ae4da475a3d9832ca81f150daeebcfa8035092a9cdb8ea54",
+    "tests/test_memory_source_merge.py": "93a32e35e29116491910e6f0ef1296796eb2196445444f30c734f17a6ab36ee7",
+    "tools/probe_memory_fault.py": "eca763f1d67d79884f8da2cbf3e067262fd7e1da3c23e6c0083e4be7515c4c62",
+    "tools/probe_memory_continuity.py": "39c37726cb26637d3de13401ab6ecd0b84dc740697071fe32aef64ee6831e044",
+    "docs/contracts.md": "4f9c4f8a64f4d63e37b4049df00e372e04f8e7f1f010aca9646b88a0a797e134",
+    "docs/knowledge-learning.md": "f9642e6eb1513593b8ada2b2d0ed977f31df45beb8f5a661905fada4f47953df",
+    "docs/delivery-validation.md": "4d4a7809a458d049e9cb7b1f0677d695a0e6df74dffc0d7b1ac37b7adb355a0f"
+  },
+  "source_hash_verification": {
+    "mismatches": []
+  },
+  "synthetic_fixture_cleanup": {
+    "jarvis-memory-continuity-q8hemqn2": true,
+    "jarvis-memory-continuity-shpvs_03": true,
+    "jarvis-memory-continuity-flx1by15": true,
+    "jarvis-memory-continuity-5ocb6ef7": true
+  },
+  "schema": {
+    "core": 7,
+    "knowledge": 4,
+    "memory": 4
+  },
+  "family_policy": {
+    "status": "accepted",
+    "rule": "owner_all_member_own_and_explicit_shared_v1",
+    "implementation_evidence": "../family-private-1.0.0/checks.json"
+  }
+}

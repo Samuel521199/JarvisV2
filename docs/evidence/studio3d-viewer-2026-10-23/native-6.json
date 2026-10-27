@@ -1,0 +1,1736 @@
+{
+  "id": "c59a429edcdb44569c92dd2c22cdfa92",
+  "origin": "http://127.0.0.1:18283",
+  "job": {
+    "cancel": 0,
+    "chat_id": null,
+    "created": 1792769840.875154,
+    "error": null,
+    "id": "c59a429edcdb44569c92dd2c22cdfa92",
+    "phase": "已交付可编辑模型、渲染与检查回执",
+    "receipt": {
+      "adapter_version": "1.1.0",
+      "configuration": {
+        "asset_pipeline": {
+          "texture_size": 512
+        },
+        "description": "金属离心压气机叶轮视觉研究模型，直径约0.25米，轴线沿Z轴。包含圆滑背盘与流线型锥面轮毂、贯穿轴孔（由布尔切割生成）、鼻锥锁紧螺母特征，以及6片采用多截面放样（loft）构建的弯曲扭转薄叶片。不含蜗壳以清晰展示叶片空间曲率。",
+        "materials": [
+          {
+            "coat": 0.25,
+            "color": "#c8d0d8",
+            "detail": "brushed",
+            "id": "titanium-alloy",
+            "metallic": 0.92,
+            "roughness": 0.22,
+            "transmission": 0
+          },
+          {
+            "coat": 0.1,
+            "color": "#7a828a",
+            "detail": "brushed",
+            "id": "machined-steel",
+            "metallic": 0.88,
+            "roughness": 0.32,
+            "transmission": 0
+          },
+          {
+            "coat": 0.15,
+            "color": "#2b3036",
+            "detail": "none",
+            "id": "dark-anodized",
+            "metallic": 0.75,
+            "roughness": 0.28,
+            "transmission": 0
+          }
+        ],
+        "objects": [
+          {
+            "id": "bore-cutter",
+            "kind": "cylinder",
+            "material": "machined-steel",
+            "modifiers": {},
+            "params": {
+              "depth": 0.2,
+              "radius": 0.018
+            },
+            "position": [
+              0,
+              0,
+              0.05
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "visible": false
+          },
+          {
+            "id": "impeller-hub-disk",
+            "kind": "lathe",
+            "material": "titanium-alloy",
+            "modifiers": {
+              "bevel": 0.0015,
+              "difference": [
+                "bore-cutter"
+              ],
+              "subdivision": 1
+            },
+            "params": {
+              "profile": [
+                [
+                  0.016,
+                  0.0
+                ],
+                [
+                  0.125,
+                  0.0
+                ],
+                [
+                  0.125,
+                  0.008
+                ],
+                [
+                  0.118,
+                  0.011
+                ],
+                [
+                  0.095,
+                  0.014
+                ],
+                [
+                  0.072,
+                  0.022
+                ],
+                [
+                  0.052,
+                  0.038
+                ],
+                [
+                  0.038,
+                  0.062
+                ],
+                [
+                  0.03,
+                  0.09
+                ],
+                [
+                  0.028,
+                  0.105
+                ],
+                [
+                  0.016,
+                  0.105
+                ]
+              ],
+              "segments": 96
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "backface-boss",
+            "kind": "lathe",
+            "material": "machined-steel",
+            "modifiers": {
+              "bevel": 0.001,
+              "difference": [
+                "bore-cutter"
+              ]
+            },
+            "params": {
+              "profile": [
+                [
+                  0.016,
+                  -0.012
+                ],
+                [
+                  0.042,
+                  -0.012
+                ],
+                [
+                  0.048,
+                  0.0
+                ],
+                [
+                  0.016,
+                  0.0
+                ]
+              ],
+              "segments": 64
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "nose-locknut",
+            "kind": "lathe",
+            "material": "dark-anodized",
+            "modifiers": {
+              "bevel": 0.001,
+              "difference": [
+                "bore-cutter"
+              ]
+            },
+            "params": {
+              "profile": [
+                [
+                  0.016,
+                  0.105
+                ],
+                [
+                  0.028,
+                  0.105
+                ],
+                [
+                  0.025,
+                  0.118
+                ],
+                [
+                  0.019,
+                  0.124
+                ],
+                [
+                  0.016,
+                  0.124
+                ]
+              ],
+              "segments": 64
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "main-blade-1",
+            "kind": "loft",
+            "material": "titanium-alloy",
+            "modifiers": {
+              "bevel": 0.0008,
+              "subdivision": 1
+            },
+            "params": {
+              "caps": true,
+              "closed": true,
+              "rings": [
+                [
+                  [
+                    0.027,
+                    0.002,
+                    0.096
+                  ],
+                  [
+                    0.056,
+                    0.003,
+                    0.096
+                  ],
+                  [
+                    0.057,
+                    -0.001,
+                    0.095
+                  ],
+                  [
+                    0.027,
+                    -0.002,
+                    0.095
+                  ]
+                ],
+                [
+                  [
+                    0.034,
+                    -0.014,
+                    0.064
+                  ],
+                  [
+                    0.073,
+                    -0.019,
+                    0.067
+                  ],
+                  [
+                    0.071,
+                    -0.024,
+                    0.065
+                  ],
+                  [
+                    0.032,
+                    -0.018,
+                    0.063
+                  ]
+                ],
+                [
+                  [
+                    0.046,
+                    -0.037,
+                    0.032
+                  ],
+                  [
+                    0.082,
+                    -0.056,
+                    0.044
+                  ],
+                  [
+                    0.079,
+                    -0.06,
+                    0.041
+                  ],
+                  [
+                    0.043,
+                    -0.041,
+                    0.03
+                  ]
+                ],
+                [
+                  [
+                    0.059,
+                    -0.068,
+                    0.013
+                  ],
+                  [
+                    0.065,
+                    -0.075,
+                    0.027
+                  ],
+                  [
+                    0.061,
+                    -0.078,
+                    0.025
+                  ],
+                  [
+                    0.055,
+                    -0.071,
+                    0.012
+                  ]
+                ],
+                [
+                  [
+                    0.062,
+                    -0.108,
+                    0.007
+                  ],
+                  [
+                    0.062,
+                    -0.108,
+                    0.023
+                  ],
+                  [
+                    0.058,
+                    -0.111,
+                    0.023
+                  ],
+                  [
+                    0.058,
+                    -0.111,
+                    0.007
+                  ]
+                ]
+              ]
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "main-blade-2",
+            "kind": "loft",
+            "material": "titanium-alloy",
+            "modifiers": {
+              "bevel": 0.0008,
+              "subdivision": 1
+            },
+            "params": {
+              "caps": true,
+              "closed": true,
+              "rings": [
+                [
+                  [
+                    0.027,
+                    0.002,
+                    0.096
+                  ],
+                  [
+                    0.056,
+                    0.003,
+                    0.096
+                  ],
+                  [
+                    0.057,
+                    -0.001,
+                    0.095
+                  ],
+                  [
+                    0.027,
+                    -0.002,
+                    0.095
+                  ]
+                ],
+                [
+                  [
+                    0.034,
+                    -0.014,
+                    0.064
+                  ],
+                  [
+                    0.073,
+                    -0.019,
+                    0.067
+                  ],
+                  [
+                    0.071,
+                    -0.024,
+                    0.065
+                  ],
+                  [
+                    0.032,
+                    -0.018,
+                    0.063
+                  ]
+                ],
+                [
+                  [
+                    0.046,
+                    -0.037,
+                    0.032
+                  ],
+                  [
+                    0.082,
+                    -0.056,
+                    0.044
+                  ],
+                  [
+                    0.079,
+                    -0.06,
+                    0.041
+                  ],
+                  [
+                    0.043,
+                    -0.041,
+                    0.03
+                  ]
+                ],
+                [
+                  [
+                    0.059,
+                    -0.068,
+                    0.013
+                  ],
+                  [
+                    0.065,
+                    -0.075,
+                    0.027
+                  ],
+                  [
+                    0.061,
+                    -0.078,
+                    0.025
+                  ],
+                  [
+                    0.055,
+                    -0.071,
+                    0.012
+                  ]
+                ],
+                [
+                  [
+                    0.062,
+                    -0.108,
+                    0.007
+                  ],
+                  [
+                    0.062,
+                    -0.108,
+                    0.023
+                  ],
+                  [
+                    0.058,
+                    -0.111,
+                    0.023
+                  ],
+                  [
+                    0.058,
+                    -0.111,
+                    0.007
+                  ]
+                ]
+              ]
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              60
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "main-blade-3",
+            "kind": "loft",
+            "material": "titanium-alloy",
+            "modifiers": {
+              "bevel": 0.0008,
+              "subdivision": 1
+            },
+            "params": {
+              "caps": true,
+              "closed": true,
+              "rings": [
+                [
+                  [
+                    0.027,
+                    0.002,
+                    0.096
+                  ],
+                  [
+                    0.056,
+                    0.003,
+                    0.096
+                  ],
+                  [
+                    0.057,
+                    -0.001,
+                    0.095
+                  ],
+                  [
+                    0.027,
+                    -0.002,
+                    0.095
+                  ]
+                ],
+                [
+                  [
+                    0.034,
+                    -0.014,
+                    0.064
+                  ],
+                  [
+                    0.073,
+                    -0.019,
+                    0.067
+                  ],
+                  [
+                    0.071,
+                    -0.024,
+                    0.065
+                  ],
+                  [
+                    0.032,
+                    -0.018,
+                    0.063
+                  ]
+                ],
+                [
+                  [
+                    0.046,
+                    -0.037,
+                    0.032
+                  ],
+                  [
+                    0.082,
+                    -0.056,
+                    0.044
+                  ],
+                  [
+                    0.079,
+                    -0.06,
+                    0.041
+                  ],
+                  [
+                    0.043,
+                    -0.041,
+                    0.03
+                  ]
+                ],
+                [
+                  [
+                    0.059,
+                    -0.068,
+                    0.013
+                  ],
+                  [
+                    0.065,
+                    -0.075,
+                    0.027
+                  ],
+                  [
+                    0.061,
+                    -0.078,
+                    0.025
+                  ],
+                  [
+                    0.055,
+                    -0.071,
+                    0.012
+                  ]
+                ],
+                [
+                  [
+                    0.062,
+                    -0.108,
+                    0.007
+                  ],
+                  [
+                    0.062,
+                    -0.108,
+                    0.023
+                  ],
+                  [
+                    0.058,
+                    -0.111,
+                    0.023
+                  ],
+                  [
+                    0.058,
+                    -0.111,
+                    0.007
+                  ]
+                ]
+              ]
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              120
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "main-blade-4",
+            "kind": "loft",
+            "material": "titanium-alloy",
+            "modifiers": {
+              "bevel": 0.0008,
+              "subdivision": 1
+            },
+            "params": {
+              "caps": true,
+              "closed": true,
+              "rings": [
+                [
+                  [
+                    0.027,
+                    0.002,
+                    0.096
+                  ],
+                  [
+                    0.056,
+                    0.003,
+                    0.096
+                  ],
+                  [
+                    0.057,
+                    -0.001,
+                    0.095
+                  ],
+                  [
+                    0.027,
+                    -0.002,
+                    0.095
+                  ]
+                ],
+                [
+                  [
+                    0.034,
+                    -0.014,
+                    0.064
+                  ],
+                  [
+                    0.073,
+                    -0.019,
+                    0.067
+                  ],
+                  [
+                    0.071,
+                    -0.024,
+                    0.065
+                  ],
+                  [
+                    0.032,
+                    -0.018,
+                    0.063
+                  ]
+                ],
+                [
+                  [
+                    0.046,
+                    -0.037,
+                    0.032
+                  ],
+                  [
+                    0.082,
+                    -0.056,
+                    0.044
+                  ],
+                  [
+                    0.079,
+                    -0.06,
+                    0.041
+                  ],
+                  [
+                    0.043,
+                    -0.041,
+                    0.03
+                  ]
+                ],
+                [
+                  [
+                    0.059,
+                    -0.068,
+                    0.013
+                  ],
+                  [
+                    0.065,
+                    -0.075,
+                    0.027
+                  ],
+                  [
+                    0.061,
+                    -0.078,
+                    0.025
+                  ],
+                  [
+                    0.055,
+                    -0.071,
+                    0.012
+                  ]
+                ],
+                [
+                  [
+                    0.062,
+                    -0.108,
+                    0.007
+                  ],
+                  [
+                    0.062,
+                    -0.108,
+                    0.023
+                  ],
+                  [
+                    0.058,
+                    -0.111,
+                    0.023
+                  ],
+                  [
+                    0.058,
+                    -0.111,
+                    0.007
+                  ]
+                ]
+              ]
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              180
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "main-blade-5",
+            "kind": "loft",
+            "material": "titanium-alloy",
+            "modifiers": {
+              "bevel": 0.0008,
+              "subdivision": 1
+            },
+            "params": {
+              "caps": true,
+              "closed": true,
+              "rings": [
+                [
+                  [
+                    0.027,
+                    0.002,
+                    0.096
+                  ],
+                  [
+                    0.056,
+                    0.003,
+                    0.096
+                  ],
+                  [
+                    0.057,
+                    -0.001,
+                    0.095
+                  ],
+                  [
+                    0.027,
+                    -0.002,
+                    0.095
+                  ]
+                ],
+                [
+                  [
+                    0.034,
+                    -0.014,
+                    0.064
+                  ],
+                  [
+                    0.073,
+                    -0.019,
+                    0.067
+                  ],
+                  [
+                    0.071,
+                    -0.024,
+                    0.065
+                  ],
+                  [
+                    0.032,
+                    -0.018,
+                    0.063
+                  ]
+                ],
+                [
+                  [
+                    0.046,
+                    -0.037,
+                    0.032
+                  ],
+                  [
+                    0.082,
+                    -0.056,
+                    0.044
+                  ],
+                  [
+                    0.079,
+                    -0.06,
+                    0.041
+                  ],
+                  [
+                    0.043,
+                    -0.041,
+                    0.03
+                  ]
+                ],
+                [
+                  [
+                    0.059,
+                    -0.068,
+                    0.013
+                  ],
+                  [
+                    0.065,
+                    -0.075,
+                    0.027
+                  ],
+                  [
+                    0.061,
+                    -0.078,
+                    0.025
+                  ],
+                  [
+                    0.055,
+                    -0.071,
+                    0.012
+                  ]
+                ],
+                [
+                  [
+                    0.062,
+                    -0.108,
+                    0.007
+                  ],
+                  [
+                    0.062,
+                    -0.108,
+                    0.023
+                  ],
+                  [
+                    0.058,
+                    -0.111,
+                    0.023
+                  ],
+                  [
+                    0.058,
+                    -0.111,
+                    0.007
+                  ]
+                ]
+              ]
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              240
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "main-blade-6",
+            "kind": "loft",
+            "material": "titanium-alloy",
+            "modifiers": {
+              "bevel": 0.0008,
+              "subdivision": 1
+            },
+            "params": {
+              "caps": true,
+              "closed": true,
+              "rings": [
+                [
+                  [
+                    0.027,
+                    0.002,
+                    0.096
+                  ],
+                  [
+                    0.056,
+                    0.003,
+                    0.096
+                  ],
+                  [
+                    0.057,
+                    -0.001,
+                    0.095
+                  ],
+                  [
+                    0.027,
+                    -0.002,
+                    0.095
+                  ]
+                ],
+                [
+                  [
+                    0.034,
+                    -0.014,
+                    0.064
+                  ],
+                  [
+                    0.073,
+                    -0.019,
+                    0.067
+                  ],
+                  [
+                    0.071,
+                    -0.024,
+                    0.065
+                  ],
+                  [
+                    0.032,
+                    -0.018,
+                    0.063
+                  ]
+                ],
+                [
+                  [
+                    0.046,
+                    -0.037,
+                    0.032
+                  ],
+                  [
+                    0.082,
+                    -0.056,
+                    0.044
+                  ],
+                  [
+                    0.079,
+                    -0.06,
+                    0.041
+                  ],
+                  [
+                    0.043,
+                    -0.041,
+                    0.03
+                  ]
+                ],
+                [
+                  [
+                    0.059,
+                    -0.068,
+                    0.013
+                  ],
+                  [
+                    0.065,
+                    -0.075,
+                    0.027
+                  ],
+                  [
+                    0.061,
+                    -0.078,
+                    0.025
+                  ],
+                  [
+                    0.055,
+                    -0.071,
+                    0.012
+                  ]
+                ],
+                [
+                  [
+                    0.062,
+                    -0.108,
+                    0.007
+                  ],
+                  [
+                    0.062,
+                    -0.108,
+                    0.023
+                  ],
+                  [
+                    0.058,
+                    -0.111,
+                    0.023
+                  ],
+                  [
+                    0.058,
+                    -0.111,
+                    0.007
+                  ]
+                ]
+              ]
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              300
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "render": {
+          "engine": "CYCLES",
+          "quality": "preview",
+          "view": "front"
+        },
+        "schema": "jarvis.studio3d.v1",
+        "title": "叶轮 · 材质贴图与LOD验收",
+        "unfulfilled": [
+          "叶型曲面与流道几何仅供产品级视觉研究，未经气动CFD、结构强度、模态共振或五轴加工刀路工程校验。",
+          "未包含压气机蜗壳、扩压器、分流叶片（splitter blades）及轴系内部键槽/花键公差配合细节。"
+        ],
+        "units": "m"
+      },
+      "files": {
+        "ao.png": {
+          "bytes": 134336,
+          "sha256": "ed8c6969e724e595f0898194b5fe61661ae522aec1dcba41c62169645575f467",
+          "url": "/api/studio3d/files/c59a429edcdb44569c92dd2c22cdfa92/ao.png"
+        },
+        "basecolor.png": {
+          "bytes": 49888,
+          "sha256": "8d78174a22f4cfb1a7c3e962fa4f393d38cc0f8615ec610087cce7f5e1c3d846",
+          "url": "/api/studio3d/files/c59a429edcdb44569c92dd2c22cdfa92/basecolor.png"
+        },
+        "model-lod1.glb": {
+          "bytes": 1051648,
+          "sha256": "67fe873c53516fa3c4b4bdec22833fa15803779ca259d4250f28c0e47a48f205",
+          "url": "/api/studio3d/files/c59a429edcdb44569c92dd2c22cdfa92/model-lod1.glb"
+        },
+        "model-lod2.glb": {
+          "bytes": 750492,
+          "sha256": "8dd8478b26d2757947d6eef25b5a37b8c602c2b3ffa3d839effba546f39f7ac9",
+          "url": "/api/studio3d/files/c59a429edcdb44569c92dd2c22cdfa92/model-lod2.glb"
+        },
+        "model.blend": {
+          "bytes": 2047534,
+          "sha256": "4ecb33e216c9ae6d8088831d48a01534d32c3ddd6cb56763f55f53a3b33cfc11",
+          "url": "/api/studio3d/files/c59a429edcdb44569c92dd2c22cdfa92/model.blend"
+        },
+        "model.glb": {
+          "bytes": 1536344,
+          "sha256": "4e68aebea3306bd8d4d30755d9fcc92d06d0e58a7478670cb524691d2a6a41fb",
+          "url": "/api/studio3d/files/c59a429edcdb44569c92dd2c22cdfa92/model.glb"
+        },
+        "normal.png": {
+          "bytes": 127040,
+          "sha256": "678860356af3d87b28911158fd8727abf542df101eb09e67ed8f72f2040592bb",
+          "url": "/api/studio3d/files/c59a429edcdb44569c92dd2c22cdfa92/normal.png"
+        },
+        "orm.png": {
+          "bytes": 156258,
+          "sha256": "1594ca65618458a4cf10e2e16a4baf48e8c72630b9cba1b9624d9ad4d5a386f8",
+          "url": "/api/studio3d/files/c59a429edcdb44569c92dd2c22cdfa92/orm.png"
+        },
+        "preview.png": {
+          "bytes": 580647,
+          "sha256": "8a389360b877109871ac282e2dbd921a6bcd667fd0ffbd12ad4bcd066e35cdae",
+          "url": "/api/studio3d/files/c59a429edcdb44569c92dd2c22cdfa92/preview.png"
+        },
+        "report.json": {
+          "bytes": 9234,
+          "sha256": "772d97e39fcd740751f84c0620b731a942899c9b7f2f9053f79241bb739c2143",
+          "url": "/api/studio3d/files/c59a429edcdb44569c92dd2c22cdfa92/report.json"
+        },
+        "scene.json": {
+          "bytes": 6148,
+          "sha256": "3bcf6c0d6369f523f603d703c6af3cbb374f862aba699f1e53ff26aac67a10b3",
+          "url": "/api/studio3d/files/c59a429edcdb44569c92dd2c22cdfa92/scene.json"
+        }
+      },
+      "id": "c59a429edcdb44569c92dd2c22cdfa92",
+      "input_asset": null,
+      "model_receipt": null,
+      "quality": {
+        "AAA_certified": false,
+        "mechanical_validation": false,
+        "status": "visual_asset_export_checked",
+        "visual_score": null
+      },
+      "report": {
+        "asset_pipeline": {
+          "AAA_certified": false,
+          "baking": {
+            "ao": {
+              "bake": "Cycles material surface, no high-to-low geometric projection",
+              "file": "ao.png",
+              "pixel_max": 1.0,
+              "pixel_min": 0.0,
+              "resolution": [
+                512,
+                512
+              ]
+            },
+            "basecolor": {
+              "bake": "Cycles material surface, no high-to-low geometric projection",
+              "file": "basecolor.png",
+              "pixel_max": 0.7843137979507446,
+              "pixel_min": 0.0,
+              "resolution": [
+                512,
+                512
+              ]
+            },
+            "normal": {
+              "bake": "Cycles material surface, no high-to-low geometric projection",
+              "file": "normal.png",
+              "pixel_max": 0.6666666865348816,
+              "pixel_min": 0.29019609093666077,
+              "resolution": [
+                512,
+                512
+              ]
+            },
+            "orm": {
+              "bake": "Cycles material surface, no high-to-low geometric projection",
+              "file": "orm.png",
+              "pixel_max": 1.0,
+              "pixel_min": 0.0,
+              "resolution": [
+                512,
+                512
+              ]
+            }
+          },
+          "checks": [
+            {
+              "id": "degenerate-faces",
+              "message": "0",
+              "status": "pass"
+            },
+            {
+              "id": "mesh-boundary",
+              "message": "564 boundary edges; 0 nonmanifold edges",
+              "status": "warn"
+            },
+            {
+              "id": "uv-atlas",
+              "message": "UV present and in 0..1; exact overlap and density unverified",
+              "status": "pass"
+            },
+            {
+              "id": "lod-reduction",
+              "message": "Actual triangle counts checked",
+              "status": "pass"
+            },
+            {
+              "id": "lod-sampled-distance",
+              "message": "Two-direction sampled distance; silhouette popping requires view check",
+              "status": "pass"
+            },
+            {
+              "id": "singular-uv-tangent",
+              "message": "4 singular UV tangent frames use orthogonal fallback; artist review required",
+              "status": "warn"
+            }
+          ],
+          "cleanup": {
+            "degenerate_distance_m": 1e-08,
+            "merge_distance_m": 1e-06,
+            "vertices_removed": 229
+          },
+          "elapsed_seconds": 2.910065300000497,
+          "kind": "static merged review asset",
+          "lods": [
+            {
+              "distance": {
+                "max_distance_m": 0,
+                "samples": 0
+              },
+              "file": "model.glb",
+              "level": 0,
+              "ratio_requested": 1,
+              "tangent_frames": {
+                "meaning": "Orthogonal fallback at singular UVs; UV quality still requires review",
+                "singular_tangent_frames": 0
+              },
+              "topology": {
+                "boundary_edges": 564,
+                "degenerate_faces": 0,
+                "edge_flow_artist_review": "required",
+                "loose_edges": 0,
+                "ngons": 0,
+                "nonmanifold_edges": 0,
+                "polygons": 26140,
+                "triangles": 26140,
+                "uv_outside_01_loops": 0,
+                "uv_overlap": "not exactly tested",
+                "uv_present": true,
+                "uv_triangle_area_sum": 0.21623864727544964,
+                "vertices": 13031
+              }
+            },
+            {
+              "distance": {
+                "max_distance_m": 3.7627942219842225e-05,
+                "method": "two-direction sampled vertex-to-triangle nearest distance; not continuous Hausdorff proof",
+                "samples": 3486
+              },
+              "file": "model-lod1.glb",
+              "level": 1,
+              "max_distance_fraction_of_diameter": 0.00010027794909990566,
+              "ratio_requested": 0.5,
+              "tangent_frames": {
+                "meaning": "Orthogonal fallback at singular UVs; UV quality still requires review",
+                "singular_tangent_frames": 4
+              },
+              "topology": {
+                "boundary_edges": 564,
+                "degenerate_faces": 0,
+                "edge_flow_artist_review": "required",
+                "loose_edges": 0,
+                "ngons": 0,
+                "nonmanifold_edges": 0,
+                "polygons": 13070,
+                "triangles": 13070,
+                "uv_outside_01_loops": 0,
+                "uv_overlap": "not exactly tested",
+                "uv_present": true,
+                "uv_triangle_area_sum": 0.21515400566562387,
+                "vertices": 6496
+              }
+            },
+            {
+              "distance": {
+                "max_distance_m": 0.0003599255287554115,
+                "method": "two-direction sampled vertex-to-triangle nearest distance; not continuous Hausdorff proof",
+                "samples": 3476
+              },
+              "file": "model-lod2.glb",
+              "level": 2,
+              "max_distance_fraction_of_diameter": 0.0009591965896359645,
+              "ratio_requested": 0.25,
+              "tangent_frames": {
+                "meaning": "Orthogonal fallback at singular UVs; UV quality still requires review",
+                "singular_tangent_frames": 0
+              },
+              "topology": {
+                "boundary_edges": 563,
+                "degenerate_faces": 0,
+                "edge_flow_artist_review": "required",
+                "loose_edges": 0,
+                "ngons": 0,
+                "nonmanifold_edges": 0,
+                "polygons": 6535,
+                "triangles": 6535,
+                "uv_outside_01_loops": 0,
+                "uv_overlap": "not exactly tested",
+                "uv_present": true,
+                "uv_triangle_area_sum": 0.21282665414587307,
+                "vertices": 3228
+              }
+            }
+          ],
+          "part_hierarchy_preserved": false,
+          "schema": "jarvis.studio3d.asset-pipeline.v1",
+          "source_part_names": [
+            "impeller-hub-disk",
+            "backface-boss",
+            "nose-locknut",
+            "main-blade-1",
+            "main-blade-2",
+            "main-blade-3",
+            "main-blade-4",
+            "main-blade-5",
+            "main-blade-6"
+          ],
+          "topology_before": {
+            "boundary_edges": 564,
+            "degenerate_faces": 0,
+            "edge_flow_artist_review": "required",
+            "loose_edges": 0,
+            "ngons": 0,
+            "nonmanifold_edges": 0,
+            "polygons": 26140,
+            "triangles": 26140,
+            "uv_outside_01_loops": 0,
+            "uv_overlap": "not exactly tested",
+            "uv_present": true,
+            "uv_triangle_area_sum": 0.21623864727544964,
+            "vertices": 13031
+          },
+          "topology_raw": {
+            "boundary_edges": 0,
+            "degenerate_faces": 141,
+            "edge_flow_artist_review": "required",
+            "loose_edges": 0,
+            "ngons": 824,
+            "nonmanifold_edges": 0,
+            "polygons": 12568,
+            "triangles": 26496,
+            "uv_outside_01_loops": 0,
+            "uv_overlap": "not exactly tested",
+            "uv_present": true,
+            "uv_triangle_area_sum": 3.9401183029225706,
+            "vertices": 13260
+          },
+          "unverified": [
+            "artist retopology and deformation edge flow",
+            "exact UV overlap/density",
+            "high-to-low detail projection",
+            "LOD silhouette popping",
+            "material coat/transmission and anisotropy preservation",
+            "full target-engine performance"
+          ]
+        },
+        "blender": "5.2.0 LTS",
+        "bounds_m": [
+          [
+            -0.12364586442708969,
+            -0.12364586442708969,
+            -0.012000000104308128
+          ],
+          [
+            0.12364586442708969,
+            0.12364586442708969,
+            0.12399999797344208
+          ]
+        ],
+        "elapsed_seconds": 12.384544799999276,
+        "glb_roundtrip": {
+          "bounds_m": [
+            [
+              -0.12364586442708969,
+              -0.12364586442708969,
+              -0.012000000104308128
+            ],
+            [
+              0.12364586442708969,
+              0.12364586442708969,
+              0.12399999797344208
+            ]
+          ],
+          "max_bound_error_m": 0.0,
+          "mesh_objects": 1,
+          "passed": true
+        },
+        "gltf_validation": {
+          "files": {
+            "model-lod1.glb": {
+              "info": {
+                "animationCount": 0,
+                "drawCallCount": 1,
+                "generator": "Khronos glTF Blender I/O v5.2.39",
+                "hasDefaultScene": true,
+                "hasMorphTargets": false,
+                "hasSkins": false,
+                "hasTextures": true,
+                "materialCount": 1,
+                "maxAttributes": 4,
+                "maxInfluences": 0,
+                "maxUVs": 1,
+                "resources": [
+                  {
+                    "byteLength": 1049720,
+                    "mimeType": "application/gltf-buffer",
+                    "pointer": "/buffers/0",
+                    "storage": "glb"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 512,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 512
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/0",
+                    "storage": "buffer-view"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 512,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 512
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/1",
+                    "storage": "buffer-view"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 512,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 512
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/2",
+                    "storage": "buffer-view"
+                  }
+                ],
+                "totalTriangleCount": 13070,
+                "totalVertexCount": 13294,
+                "version": "2.0"
+              },
+              "issues": {
+                "messages": [],
+                "numErrors": 0,
+                "numHints": 0,
+                "numInfos": 0,
+                "numWarnings": 0,
+                "truncated": false
+              },
+              "mimeType": "model/gltf-binary",
+              "uri": "model-lod1.glb",
+              "validatedAt": "2026-10-23T15:37:34.396Z",
+              "validatorVersion": "2.0.0-dev.3.10"
+            },
+            "model-lod2.glb": {
+              "info": {
+                "animationCount": 0,
+                "drawCallCount": 1,
+                "generator": "Khronos glTF Blender I/O v5.2.39",
+                "hasDefaultScene": true,
+                "hasMorphTargets": false,
+                "hasSkins": false,
+                "hasTextures": true,
+                "materialCount": 1,
+                "maxAttributes": 4,
+                "maxInfluences": 0,
+                "maxUVs": 1,
+                "resources": [
+                  {
+                    "byteLength": 748576,
+                    "mimeType": "application/gltf-buffer",
+                    "pointer": "/buffers/0",
+                    "storage": "glb"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 512,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 512
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/0",
+                    "storage": "buffer-view"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 512,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 512
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/1",
+                    "storage": "buffer-view"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 512,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 512
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/2",
+                    "storage": "buffer-view"
+                  }
+                ],
+                "totalTriangleCount": 6535,
+                "totalVertexCount": 7837,
+                "version": "2.0"
+              },
+              "issues": {
+                "messages": [],
+                "numErrors": 0,
+                "numHints": 0,
+                "numInfos": 0,
+                "numWarnings": 0,
+                "truncated": false
+              },
+              "mimeType": "model/gltf-binary",
+              "uri": "model-lod2.glb",
+              "validatedAt": "2026-10-23T15:37:34.508Z",
+              "validatorVersion": "2.0.0-dev.3.10"
+            },
+            "model.glb": {
+              "info": {
+                "animationCount": 0,
+                "drawCallCount": 1,
+                "generator": "Khronos glTF Blender I/O v5.2.39",
+                "hasDefaultScene": true,
+                "hasMorphTargets": false,
+                "hasSkins": false,
+                "hasTextures": true,
+                "materialCount": 1,
+                "maxAttributes": 4,
+                "maxInfluences": 0,
+                "maxUVs": 1,
+                "resources": [
+                  {
+                    "byteLength": 1534412,
+                    "mimeType": "application/gltf-buffer",
+                    "pointer": "/buffers/0",
+                    "storage": "glb"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 512,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 512
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/0",
+                    "storage": "buffer-view"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 512,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 512
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/1",
+                    "storage": "buffer-view"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 512,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 512
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/2",
+                    "storage": "buffer-view"
+                  }
+                ],
+                "totalTriangleCount": 26140,
+                "totalVertexCount": 21758,
+                "version": "2.0"
+              },
+              "issues": {
+                "messages": [],
+                "numErrors": 0,
+                "numHints": 0,
+                "numInfos": 0,
+                "numWarnings": 0,
+                "truncated": false
+              },
+              "mimeType": "model/gltf-binary",
+              "uri": "model.glb",
+              "validatedAt": "2026-10-23T15:37:34.288Z",
+              "validatorVersion": "2.0.0-dev.3.10"
+            }
+          },
+          "implementation": "Khronos glTF-Validator",
+          "version": "2.0.0-dev.3.10"
+        },
+        "objects": [
+          {
+            "id": "Static asset LOD0",
+            "triangles": 26140,
+            "uv": true,
+            "vertices": 13031,
+            "zero_area_faces": 0
+          }
+        ],
+        "render": {
+          "device": "CPU",
+          "engine": "CYCLES",
+          "requested_engine": "CYCLES",
+          "resolution": [
+            960,
+            640
+          ],
+          "samples": 24
+        },
+        "schema": "jarvis.studio3d.report.v1",
+        "triangles": 26140,
+        "unverified": [
+          "artist topology",
+          "UV quality",
+          "high-to-low projection",
+          "LOD silhouettes",
+          "target engine performance",
+          "manufacturing"
+        ],
+        "visible_objects": 1,
+        "warnings": [
+          "Static atlas preparation merges object hierarchy; no articulated motion or AAA certification.",
+          "Baked base color, normal and ORM are embedded. Coat/transmission and anisotropy are not preserved."
+        ]
+      },
+      "resources": {
+        "cpu_seconds": 1200,
+        "elapsed_seconds": 13.204096299999946,
+        "exit_code": 0,
+        "isolation": "Trusted fixed first-party worker with resource Job; not an OS security sandbox. No model Python, external imports or blend loading.",
+        "memory_bytes": 4294967296,
+        "output_bytes": 268435456,
+        "peak_memory_bytes": 1163071488,
+        "threads": 4,
+        "wall_seconds": 300
+      },
+      "runtime": {
+        "executable_sha256": "e27fbfea8564aa645d4463cb0949695fd85562b9de6df9561b06859a1074adf7",
+        "license": "GPL-2.0-or-later",
+        "source": "https://www.blender.org/",
+        "version": "Blender 5.2.0 LTS"
+      },
+      "skill": "studio3d",
+      "source_sha256": {
+        "adapters/studio3d/asset_pipeline.py": "447cfee1d938493c7cc75e892ee5ab3f31870b3e3808f41610e135ca37d15653",
+        "adapters/studio3d/worker.py": "9b58585a48a534727119639bd31a49894f899a82dff60370a4672a46973c70a6",
+        "apps/studio3d/worker.py": "60af564595dab82acf3118ba581e5bc6b71b738c60ecf32a66c5d5cf36e3c4db",
+        "host/studio3d.py": "06d3a6957f80ab0a58bd2dcb82429d3ecc7841a0fb08ccaf2081eeaa2201546f",
+        "modules/skills/studio3d/assets.py": "7b31df1df844bb3afca0093ccd15c592b380c3944f998cc616b27db4f5bdf205",
+        "modules/skills/studio3d/contract.py": "e902e999c80f87c0ca767a69a79617a0d9d28bd420526862cbe9d729d33b463f",
+        "modules/skills/studio3d/presets.py": "29ddf0e4183014d4104f848f61152643afa8def26e5440a51e3430705217fccc",
+        "modules/skills/studio3d/runtime.json": "5d3ed948b88543c4048841528fde371c9be13216753224f128685659c707b8f5"
+      },
+      "title": "叶轮 · 材质贴图与LOD验收",
+      "unfulfilled": [
+        "叶型曲面与流道几何仅供产品级视觉研究，未经气动CFD、结构强度、模态共振或五轴加工刀路工程校验。",
+        "未包含压气机蜗壳、扩压器、分流叶片（splitter blades）及轴系内部键槽/花键公差配合细节。"
+      ],
+      "url": "/api/studio3d/view/c59a429edcdb44569c92dd2c22cdfa92"
+    },
+    "status": "DELIVERED",
+    "turn_id": null
+  },
+  "new_model_calls": 0
+}

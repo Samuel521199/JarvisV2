@@ -48,6 +48,14 @@ class Ledger:
                        (task_id, body["request_id"], body_digest, canonical(body), canonical(bindings), now,
                         now + body["limits"]["max_seconds"]))
             self.db.event(tx, task_id, "task.accepted", {"request_id": body["request_id"], "steps": len(body["steps"])})
+            from modules.task_resource.completion import Completion
+            tx.execute('SAVEPOINT acceptance_default')
+            try:
+                Completion(self.db).default(task_id, body, tx)
+                tx.execute('RELEASE acceptance_default')
+            except Exception:
+                tx.execute('ROLLBACK TO acceptance_default');tx.execute('RELEASE acceptance_default')
+                self.db.event(tx,task_id,'acceptance.unavailable',{})
         return task_id
 
     def get(self, task_id):
@@ -121,6 +129,8 @@ class Ledger:
                 raise CoreError("invalid_state", "Action is not dispatchable")
             if action["attempts"] >= body["limits"]["max_attempts"] or task["spent"] >= body["limits"]["max_cost_units"]:
                 raise CoreError("budget_exhausted", "Task attempt or cost budget exhausted")
+            from modules.task_resource.work_budgets import WorkBudgets
+            WorkBudgets(self.db).check_dispatch(task_id)
             GrantStore.authorize(tx, body, action["capability"], charge=1)
             tx.execute("UPDATE tasks SET spent=spent+1,revision=revision+1 WHERE id=?", (task_id,))
             tx.execute("UPDATE actions SET status='DISPATCHING',attempts=attempts+1 WHERE id=?", (action_id,))

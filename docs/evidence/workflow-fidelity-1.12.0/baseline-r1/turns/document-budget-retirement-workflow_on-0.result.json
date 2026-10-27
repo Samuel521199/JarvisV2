@@ -1,0 +1,107 @@
+{
+  "case_id": "document-budget-retirement",
+  "domain": "documents",
+  "arm": "workflow_on",
+  "turn": 0,
+  "freeze_digest": "a52aaec59d40f9e1f3c82f05a3bd88696e584a44414e87baa4ea158c77826424",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\"budget\":null,\"conflict\":true,\"evidence\":{\"facts\":[{\"source\":\"F1\",\"quote\":\"记录甲写本周预算300元。\"},{\"source\":\"F2\",\"quote\":\"记录乙写本周预算360元。\"}],\"plans\":[{\"source\":\"P1\",\"quote\":\"周三18点核对预算，不付款。\"}],\"suggestions\":[]},\"document\":\"## 事实\\n- [F1] 记录甲写本周预算300元。\\n- [F2] 记录乙写本周预算360元。\\n\\n## 已确认计划\\n- [P1] 周三18点核对预算，不付款。\\n\\n## 建议（未采纳）\\n- 无\"}",
+  "skill_id": "journal-review",
+  "skill_version": "1.0.0",
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 4.9103,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 209,
+        "prompt_tokens": 1465,
+        "total_tokens": 1674
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.0018825,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/document-budget-retirement-workflow_on-0.native.json",
+      "sha256": "5e1d843f3b123cac8f3738d1ee9ab22c751b1eca634c7966241317b6a886ba23",
+      "kind": "native_protocol_response"
+    },
+    {
+      "file": "artifacts/document-budget-retirement-workflow_on-0.reply.md.txt",
+      "sha256": "0f684dcc1a51285f5f8000e32944b0fce52de60a9ab54f3b19ab35432c769edf",
+      "kind": "original_session_reply"
+    },
+    {
+      "file": "artifacts/document-budget-retirement-workflow_on-0.document.md.txt",
+      "sha256": "b8a4b7b317ed32d7d7536d45403ddd8d91311797ca599501f7c952f7352e190c",
+      "kind": "verbatim_document_field_from_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "budget",
+        "status": "passed"
+      },
+      {
+        "id": "conflict",
+        "status": "passed"
+      },
+      {
+        "id": "document_present",
+        "status": "passed"
+      },
+      {
+        "id": "body_shape",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_document_parity",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "record_digest": "f931cfdcb25913d3d7a63e2542dc3263a505bb13b1f2483706f2d7062ffefe97"
+}

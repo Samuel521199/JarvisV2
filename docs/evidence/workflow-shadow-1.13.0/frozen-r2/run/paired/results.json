@@ -1,0 +1,1059 @@
+{
+  "passed": true,
+  "pairs": [
+    {
+      "case": 1,
+      "input": " A | 120 | 5 | source-A \n B | 90 | 8 | source-B ",
+      "expected": "无符合条件报价",
+      "strategies": {
+        "full": {
+          "goal_id": "goal-85becd82bd7e47b387ad0d60d5f6a6d0",
+          "task_id": "task-e675cd030162475b8fcb4e270692f391",
+          "start_step": 1,
+          "output": "无符合条件报价",
+          "oracle_pass": true,
+          "repair_cost_units": 3,
+          "work_cost_units": 6,
+          "available_units": 0,
+          "condition_score": 100.0,
+          "prefix_replayed": 1,
+          "local_seconds": 1.7006,
+          "original_actions_unchanged": true,
+          "actions": [
+            {
+              "id": "action-dafe53635289b6cd1affc2a1bae03b86",
+              "task_id": "task-e675cd030162475b8fcb4e270692f391",
+              "step_id": "step-1",
+              "capability": "plugin.budget-normalize.v1",
+              "arguments": {
+                "text": " A | 120 | 5 | source-A \n B | 90 | 8 | source-B "
+              },
+              "digest": "9632ffd3f8a1e40a24944639ea6ed68219f36e4388323ea229cb429bd83037e9",
+              "status": "CONFIRMED",
+              "attempts": 1,
+              "result": {
+                "package_id": "pkg-901f35f832a9e045fd4752b84f93ee9336faaf3bf1789061987797604950ba71",
+                "text": "A|120|5|source-A\nB|90|8|source-B",
+                "worker": {
+                  "active_process_limit": 1,
+                  "appcontainer_verified": true,
+                  "backend": "windows-lpac-job",
+                  "capabilities": [
+                    "registryRead"
+                  ],
+                  "cpu_limit_seconds": 3,
+                  "elapsed_seconds": 0.3068,
+                  "memory_limit_bytes": 268435456,
+                  "network_capabilities": [],
+                  "peak_memory_bytes": 12521472,
+                  "wall_limit_seconds": 8
+                }
+              },
+              "error": null
+            },
+            {
+              "id": "action-f7bbf446974f9b562869917314585f32",
+              "task_id": "task-e675cd030162475b8fcb4e270692f391",
+              "step_id": "step-2",
+              "capability": "plugin.budget-both.v1",
+              "arguments": {
+                "text": "A|120|5|source-A\nB|90|8|source-B"
+              },
+              "digest": "3d833c1759c0085a828dc18cad5aab93a042b985bd1280313d46cc1976766a0e",
+              "status": "CONFIRMED",
+              "attempts": 1,
+              "result": {
+                "package_id": "pkg-d85dbf687001a4ce6886ac8cdd30db1bb9456558f2924bc4e2512ef29ff7b74b",
+                "text": "无符合条件报价",
+                "worker": {
+                  "active_process_limit": 1,
+                  "appcontainer_verified": true,
+                  "backend": "windows-lpac-job",
+                  "capabilities": [
+                    "registryRead"
+                  ],
+                  "cpu_limit_seconds": 3,
+                  "elapsed_seconds": 0.3064,
+                  "memory_limit_bytes": 268435456,
+                  "network_capabilities": [],
+                  "peak_memory_bytes": 12836864,
+                  "wall_limit_seconds": 8
+                }
+              },
+              "error": null
+            },
+            {
+              "id": "action-00eb311503515fa915f4f761a1ebee0e",
+              "task_id": "task-e675cd030162475b8fcb4e270692f391",
+              "step_id": "deliver",
+              "capability": "artifact.write.v1",
+              "arguments": {
+                "content": "{\"package_id\":\"pkg-d85dbf687001a4ce6886ac8cdd30db1bb9456558f2924bc4e2512ef29ff7b74b\",\"text\":\"无符合条件报价\",\"worker\":{\"active_process_limit\":1,\"appcontainer_verified\":true,\"backend\":\"windows-lpac-job\",\"capabilities\":[\"registryRead\"],\"cpu_limit_seconds\":3,\"elapsed_seconds\":0.3064,\"memory_limit_bytes\":268435456,\"network_capabilities\":[],\"peak_memory_bytes\":12836864,\"wall_limit_seconds\":8}}",
+                "name": "result.json"
+              },
+              "digest": "e26d24075a8f932262a4d092dd027295019024fccb06146384063a84a8273b6c",
+              "status": "CONFIRMED",
+              "attempts": 1,
+              "result": {
+                "bytes": 398,
+                "relative_path": "artifacts/task-e675cd030162475b8fcb4e270692f391/action-00eb311503515fa915f4f761a1ebee0e/result.json",
+                "sha256": "095cf66b4ad13f39b39317c4f6a5a2c6b6850efd92b595b90e13df98c311d2cb",
+                "verified": true
+              },
+              "error": null
+            }
+          ]
+        },
+        "suffix": {
+          "goal_id": "goal-7ccc3f6b2c684404ae98e1149d35d819",
+          "task_id": "task-907dc9c373b44ceaa8a9940a6ef85906",
+          "start_step": 2,
+          "output": "无符合条件报价",
+          "oracle_pass": true,
+          "repair_cost_units": 2,
+          "work_cost_units": 5,
+          "available_units": 1,
+          "condition_score": 100.0,
+          "prefix_replayed": 0,
+          "local_seconds": 1.2234,
+          "original_actions_unchanged": true,
+          "actions": [
+            {
+              "id": "action-621bedc841b018f3447b916ef6f55e3e",
+              "task_id": "task-907dc9c373b44ceaa8a9940a6ef85906",
+              "step_id": "step-1",
+              "capability": "plugin.budget-both.v1",
+              "arguments": {
+                "text": "A|120|5|source-A\nB|90|8|source-B"
+              },
+              "digest": "3d833c1759c0085a828dc18cad5aab93a042b985bd1280313d46cc1976766a0e",
+              "status": "CONFIRMED",
+              "attempts": 1,
+              "result": {
+                "package_id": "pkg-d85dbf687001a4ce6886ac8cdd30db1bb9456558f2924bc4e2512ef29ff7b74b",
+                "text": "无符合条件报价",
+                "worker": {
+                  "active_process_limit": 1,
+                  "appcontainer_verified": true,
+                  "backend": "windows-lpac-job",
+                  "capabilities": [
+                    "registryRead"
+                  ],
+                  "cpu_limit_seconds": 3,
+                  "elapsed_seconds": 0.33,
+                  "memory_limit_bytes": 268435456,
+                  "network_capabilities": [],
+                  "peak_memory_bytes": 13279232,
+                  "wall_limit_seconds": 8
+                }
+              },
+              "error": null
+            },
+            {
+              "id": "action-482393fed794b8b21c0e7b2d09127acf",
+              "task_id": "task-907dc9c373b44ceaa8a9940a6ef85906",
+              "step_id": "deliver",
+              "capability": "artifact.write.v1",
+              "arguments": {
+                "content": "{\"package_id\":\"pkg-d85dbf687001a4ce6886ac8cdd30db1bb9456558f2924bc4e2512ef29ff7b74b\",\"text\":\"无符合条件报价\",\"worker\":{\"active_process_limit\":1,\"appcontainer_verified\":true,\"backend\":\"windows-lpac-job\",\"capabilities\":[\"registryRead\"],\"cpu_limit_seconds\":3,\"elapsed_seconds\":0.33,\"memory_limit_bytes\":268435456,\"network_capabilities\":[],\"peak_memory_bytes\":13279232,\"wall_limit_seconds\":8}}",
+                "name": "result.json"
+              },
+              "digest": "e0cf94621f064a8c8cbdf9265bd617e28c400fb0ba62a2fa9d7c621a1ab0e3db",
+              "status": "CONFIRMED",
+              "attempts": 1,
+              "result": {
+                "bytes": 396,
+                "relative_path": "artifacts/task-907dc9c373b44ceaa8a9940a6ef85906/action-482393fed794b8b21c0e7b2d09127acf/result.json",
+                "sha256": "059900f72b41fdc6af8c6062b42d9a81951d71e2117a58de16dd73bde23d95e3",
+                "verified": true
+              },
+              "error": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "case": 2,
+      "input": " A | 80 | 6 | source-A \n B | 95 | 4 | source-B ",
+      "expected": "符合条件：B\n来源：source-B",
+      "strategies": {
+        "suffix": {
+          "goal_id": "goal-eba9b84810c542049c7de7b20f4f5e7f",
+          "task_id": "task-c9db072b0d3d40ea910f4a42640f5f6b",
+          "start_step": 2,
+          "output": "符合条件：B\n来源：source-B",
+          "oracle_pass": true,
+          "repair_cost_units": 2,
+          "work_cost_units": 5,
+          "available_units": 1,
+          "condition_score": 100.0,
+          "prefix_replayed": 0,
+          "local_seconds": 0.6892,
+          "original_actions_unchanged": true,
+          "actions": [
+            {
+              "id": "action-5f1a8b23f0b204c40d21f132bf6a3de0",
+              "task_id": "task-c9db072b0d3d40ea910f4a42640f5f6b",
+              "step_id": "step-1",
+              "capability": "plugin.budget-both.v1",
+              "arguments": {
+                "text": "A|80|6|source-A\nB|95|4|source-B"
+              },
+              "digest": "16ee83462be531b71a9d4fba1faec4b5797dca0bff7ff8e21158d2d785ca14b7",
+              "status": "CONFIRMED",
+              "attempts": 1,
+              "result": {
+                "package_id": "pkg-d85dbf687001a4ce6886ac8cdd30db1bb9456558f2924bc4e2512ef29ff7b74b",
+                "text": "符合条件：B\n来源：source-B",
+                "worker": {
+                  "active_process_limit": 1,
+                  "appcontainer_verified": true,
+                  "backend": "windows-lpac-job",
+                  "capabilities": [
+                    "registryRead"
+                  ],
+                  "cpu_limit_seconds": 3,
+                  "elapsed_seconds": 0.3205,
+                  "memory_limit_bytes": 268435456,
+                  "network_capabilities": [],
+                  "peak_memory_bytes": 12898304,
+                  "wall_limit_seconds": 8
+                }
+              },
+              "error": null
+            },
+            {
+              "id": "action-0a9ae542da2de9baef74332448554836",
+              "task_id": "task-c9db072b0d3d40ea910f4a42640f5f6b",
+              "step_id": "deliver",
+              "capability": "artifact.write.v1",
+              "arguments": {
+                "content": "{\"package_id\":\"pkg-d85dbf687001a4ce6886ac8cdd30db1bb9456558f2924bc4e2512ef29ff7b74b\",\"text\":\"符合条件：B\\n来源：source-B\",\"worker\":{\"active_process_limit\":1,\"appcontainer_verified\":true,\"backend\":\"windows-lpac-job\",\"capabilities\":[\"registryRead\"],\"cpu_limit_seconds\":3,\"elapsed_seconds\":0.3205,\"memory_limit_bytes\":268435456,\"network_capabilities\":[],\"peak_memory_bytes\":12898304,\"wall_limit_seconds\":8}}",
+                "name": "result.json"
+              },
+              "digest": "b52a8cab4783cd1019cc430543f59779dacf05812e689a61d0d94f58fb613396",
+              "status": "CONFIRMED",
+              "attempts": 1,
+              "result": {
+                "bytes": 412,
+                "relative_path": "artifacts/task-c9db072b0d3d40ea910f4a42640f5f6b/action-0a9ae542da2de9baef74332448554836/result.json",
+                "sha256": "f49f0c098b93803bd4706d97d743f7dad042dcb01394d6ca6d2c197032356283",
+                "verified": true
+              },
+              "error": null
+            }
+          ]
+        },
+        "full": {
+          "goal_id": "goal-50ce11057e374e298e5131a97c3ac911",
+          "task_id": "task-872c4a5ab93a46b79c3e1b51ed94fcc5",
+          "start_step": 1,
+          "output": "符合条件：B\n来源：source-B",
+          "oracle_pass": true,
+          "repair_cost_units": 3,
+          "work_cost_units": 6,
+          "available_units": 0,
+          "condition_score": 100.0,
+          "prefix_replayed": 1,
+          "local_seconds": 1.1472,
+          "original_actions_unchanged": true,
+          "actions": [
+            {
+              "id": "action-aaaeffc1d4669169f9e3d2ef10f0d8ab",
+              "task_id": "task-872c4a5ab93a46b79c3e1b51ed94fcc5",
+              "step_id": "step-1",
+              "capability": "plugin.budget-normalize.v1",
+              "arguments": {
+                "text": " A | 80 | 6 | source-A \n B | 95 | 4 | source-B "
+              },
+              "digest": "bce7634b53b5afb7a9010792e02c499392612feede16e13f8b4d933b196dddc0",
+              "status": "CONFIRMED",
+              "attempts": 1,
+              "result": {
+                "package_id": "pkg-901f35f832a9e045fd4752b84f93ee9336faaf3bf1789061987797604950ba71",
+                "text": "A|80|6|source-A\nB|95|4|source-B",
+                "worker": {
+                  "active_process_limit": 1,
+                  "appcontainer_verified": true,
+                  "backend": "windows-lpac-job",
+                  "capabilities": [
+                    "registryRead"
+                  ],
+                  "cpu_limit_seconds": 3,
+                  "elapsed_seconds": 0.2999,
+                  "memory_limit_bytes": 268435456,
+                  "network_capabilities": [],
+                  "peak_memory_bytes": 12881920,
+                  "wall_limit_seconds": 8
+                }
+              },
+              "error": null
+            },
+            {
+              "id": "action-b4a6deae3b27051bf0efa06c01dab206",
+              "task_id": "task-872c4a5ab93a46b79c3e1b51ed94fcc5",
+              "step_id": "step-2",
+              "capability": "plugin.budget-both.v1",
+              "arguments": {
+                "text": "A|80|6|source-A\nB|95|4|source-B"
+              },
+              "digest": "16ee83462be531b71a9d4fba1faec4b5797dca0bff7ff8e21158d2d785ca14b7",
+              "status": "CONFIRMED",
+              "attempts": 1,
+              "result": {
+                "package_id": "pkg-d85dbf687001a4ce6886ac8cdd30db1bb9456558f2924bc4e2512ef29ff7b74b",
+                "text": "符合条件：B\n来源：source-B",
+                "worker": {
+                  "active_process_limit": 1,
+                  "appcontainer_verified": true,
+                  "backend": "windows-lpac-job",
+                  "capabilities": [
+                    "registryRead"
+                  ],
+                  "cpu_limit_seconds": 3,
+                  "elapsed_seconds": 0.3056,
+                  "memory_limit_bytes": 268435456,
+                  "network_capabilities": [],
+                  "peak_memory_bytes": 13172736,
+                  "wall_limit_seconds": 8
+                }
+              },
+              "error": null
+            },
+            {
+              "id": "action-a755a00b8c854454e7b46db3a9586475",
+              "task_id": "task-872c4a5ab93a46b79c3e1b51ed94fcc5",
+              "step_id": "deliver",
+              "capability": "artifact.write.v1",
+              "arguments": {
+                "content": "{\"package_id\":\"pkg-d85dbf687001a4ce6886ac8cdd30db1bb9456558f2924bc4e2512ef29ff7b74b\",\"text\":\"符合条件：B\\n来源：source-B\",\"worker\":{\"active_process_limit\":1,\"appcontainer_verified\":true,\"backend\":\"windows-lpac-job\",\"capabilities\":[\"registryRead\"],\"cpu_limit_seconds\":3,\"elapsed_seconds\":0.3056,\"memory_limit_bytes\":268435456,\"network_capabilities\":[],\"peak_memory_bytes\":13172736,\"wall_limit_seconds\":8}}",
+                "name": "result.json"
+              },
+              "digest": "a96a656fb777661431d73ff720bbfb7307daffa7297fbf52fa731ff87e6b1eaf",
+              "status": "CONFIRMED",
+              "attempts": 1,
+              "result": {
+                "bytes": 412,
+                "relative_path": "artifacts/task-872c4a5ab93a46b79c3e1b51ed94fcc5/action-a755a00b8c854454e7b46db3a9586475/result.json",
+                "sha256": "82fca8ca15bc9996af04018650d5d545bdcfcea734e729b4504dd0a0ee272912",
+                "verified": true
+              },
+              "error": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "case": 3,
+      "input": " A | 50 | 3 | source-A \n B | 60 | 2 | source-B ",
+      "expected": "符合条件：A\n来源：source-A",
+      "strategies": {
+        "full": {
+          "goal_id": "goal-b2943fa1242943c9b285a82eff973c44",
+          "task_id": "task-ff3431be741d4396ba068d94c1f463c1",
+          "start_step": 1,
+          "output": "符合条件：A\n来源：source-A",
+          "oracle_pass": true,
+          "repair_cost_units": 3,
+          "work_cost_units": 6,
+          "available_units": 0,
+          "condition_score": 100.0,
+          "prefix_replayed": 1,
+          "local_seconds": 1.1626,
+          "original_actions_unchanged": true,
+          "actions": [
+            {
+              "id": "action-20c20667478c03c35bcd38c8b4e9ec49",
+              "task_id": "task-ff3431be741d4396ba068d94c1f463c1",
+              "step_id": "step-1",
+              "capability": "plugin.budget-normalize.v1",
+              "arguments": {
+                "text": " A | 50 | 3 | source-A \n B | 60 | 2 | source-B "
+              },
+              "digest": "6da2f57f2794a349d41df54950257f86830d55039ea7186a96da893246b48173",
+              "status": "CONFIRMED",
+              "attempts": 1,
+              "result": {
+                "package_id": "pkg-901f35f832a9e045fd4752b84f93ee9336faaf3bf1789061987797604950ba71",
+                "text": "A|50|3|source-A\nB|60|2|source-B",
+                "worker": {
+                  "active_process_limit": 1,
+                  "appcontainer_verified": true,
+                  "backend": "windows-lpac-job",
+                  "capabilities": [
+                    "registryRead"
+                  ],
+                  "cpu_limit_seconds": 3,
+                  "elapsed_seconds": 0.3036,
+                  "memory_limit_bytes": 268435456,
+                  "network_capabilities": [],
+                  "peak_memory_bytes": 13389824,
+                  "wall_limit_seconds": 8
+                }
+              },
+              "error": null
+            },
+            {
+              "id": "action-ee8488d7c2808c703bc7e5b060124af7",
+              "task_id": "task-ff3431be741d4396ba068d94c1f463c1",
+              "step_id": "step-2",
+              "capability": "plugin.budget-both.v1",
+              "arguments": {
+                "text": "A|50|3|source-A\nB|60|2|source-B"
+              },
+              "digest": "79f4f4ff95a020fb258e07d45ee212ab64776798cae75a429a13fc921e7aa8df",
+              "status": "CONFIRMED",
+              "attempts": 1,
+              "result": {
+                "package_id": "pkg-d85dbf687001a4ce6886ac8cdd30db1bb9456558f2924bc4e2512ef29ff7b74b",
+                "text": "符合条件：A\n来源：source-A",
+                "worker": {
+                  "active_process_limit": 1,
+                  "appcontainer_verified": true,
+                  "backend": "windows-lpac-job",
+                  "capabilities": [
+                    "registryRead"
+                  ],
+                  "cpu_limit_seconds": 3,
+                  "elapsed_seconds": 0.3146,
+                  "memory_limit_bytes": 268435456,
+                  "network_capabilities": [],
+                  "peak_memory_bytes": 12881920,
+                  "wall_limit_seconds": 8
+                }
+              },
+              "error": null
+            },
+            {
+              "id": "action-3c18d48579cb8941d0b385ade128fa85",
+              "task_id": "task-ff3431be741d4396ba068d94c1f463c1",
+              "step_id": "deliver",
+              "capability": "artifact.write.v1",
+              "arguments": {
+                "content": "{\"package_id\":\"pkg-d85dbf687001a4ce6886ac8cdd30db1bb9456558f2924bc4e2512ef29ff7b74b\",\"text\":\"符合条件：A\\n来源：source-A\",\"worker\":{\"active_process_limit\":1,\"appcontainer_verified\":true,\"backend\":\"windows-lpac-job\",\"capabilities\":[\"registryRead\"],\"cpu_limit_seconds\":3,\"elapsed_seconds\":0.3146,\"memory_limit_bytes\":268435456,\"network_capabilities\":[],\"peak_memory_bytes\":12881920,\"wall_limit_seconds\":8}}",
+                "name": "result.json"
+              },
+              "digest": "af4e7bb94730e53fcce1f8399be056271291642580c4f9e74e4a16daae07214b",
+              "status": "CONFIRMED",
+              "attempts": 1,
+              "result": {
+                "bytes": 412,
+                "relative_path": "artifacts/task-ff3431be741d4396ba068d94c1f463c1/action-3c18d48579cb8941d0b385ade128fa85/result.json",
+                "sha256": "b52bd5a80fa31690fde153bd9076bbf547d26a2500d2352368c83a760e762cd3",
+                "verified": true
+              },
+              "error": null
+            }
+          ]
+        },
+        "suffix": {
+          "goal_id": "goal-af26403cb9d24227b4e4b687f9297a3c",
+          "task_id": "task-19672e1bf00b4d7ca184ce5d2fa95494",
+          "start_step": 2,
+          "output": "符合条件：A\n来源：source-A",
+          "oracle_pass": true,
+          "repair_cost_units": 2,
+          "work_cost_units": 5,
+          "available_units": 1,
+          "condition_score": 100.0,
+          "prefix_replayed": 0,
+          "local_seconds": 0.6659,
+          "original_actions_unchanged": true,
+          "actions": [
+            {
+              "id": "action-22e190c709401286e5cb9340b944cb77",
+              "task_id": "task-19672e1bf00b4d7ca184ce5d2fa95494",
+              "step_id": "step-1",
+              "capability": "plugin.budget-both.v1",
+              "arguments": {
+                "text": "A|50|3|source-A\nB|60|2|source-B"
+              },
+              "digest": "79f4f4ff95a020fb258e07d45ee212ab64776798cae75a429a13fc921e7aa8df",
+              "status": "CONFIRMED",
+              "attempts": 1,
+              "result": {
+                "package_id": "pkg-d85dbf687001a4ce6886ac8cdd30db1bb9456558f2924bc4e2512ef29ff7b74b",
+                "text": "符合条件：A\n来源：source-A",
+                "worker": {
+                  "active_process_limit": 1,
+                  "appcontainer_verified": true,
+                  "backend": "windows-lpac-job",
+                  "capabilities": [
+                    "registryRead"
+                  ],
+                  "cpu_limit_seconds": 3,
+                  "elapsed_seconds": 0.3279,
+                  "memory_limit_bytes": 268435456,
+                  "network_capabilities": [],
+                  "peak_memory_bytes": 13422592,
+                  "wall_limit_seconds": 8
+                }
+              },
+              "error": null
+            },
+            {
+              "id": "action-70621a17b3624f6cdcae8f7e0babe0ae",
+              "task_id": "task-19672e1bf00b4d7ca184ce5d2fa95494",
+              "step_id": "deliver",
+              "capability": "artifact.write.v1",
+              "arguments": {
+                "content": "{\"package_id\":\"pkg-d85dbf687001a4ce6886ac8cdd30db1bb9456558f2924bc4e2512ef29ff7b74b\",\"text\":\"符合条件：A\\n来源：source-A\",\"worker\":{\"active_process_limit\":1,\"appcontainer_verified\":true,\"backend\":\"windows-lpac-job\",\"capabilities\":[\"registryRead\"],\"cpu_limit_seconds\":3,\"elapsed_seconds\":0.3279,\"memory_limit_bytes\":268435456,\"network_capabilities\":[],\"peak_memory_bytes\":13422592,\"wall_limit_seconds\":8}}",
+                "name": "result.json"
+              },
+              "digest": "b63e28fcda8f6d623c8ac4068dd8bf0ffd913899835eb9f8d968fd95be9c6ac6",
+              "status": "CONFIRMED",
+              "attempts": 1,
+              "result": {
+                "bytes": 412,
+                "relative_path": "artifacts/task-19672e1bf00b4d7ca184ce5d2fa95494/action-70621a17b3624f6cdcae8f7e0babe0ae/result.json",
+                "sha256": "f237bccabba2360fd17bca350dddc55cc56532f01e1aa3babf8478a836469d90",
+                "verified": true
+              },
+              "error": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "case": 4,
+      "input": " A | 100 | 5 | source-A \n B | 90 | 10 | source-B ",
+      "expected": "符合条件：A\n来源：source-A",
+      "strategies": {
+        "suffix": {
+          "goal_id": "goal-454b0221146641dfaafb7b983567b849",
+          "task_id": "task-b8a227fb4a3a4b9d858a1b9f10e75d42",
+          "start_step": 2,
+          "output": "符合条件：A\n来源：source-A",
+          "oracle_pass": true,
+          "repair_cost_units": 2,
+          "work_cost_units": 5,
+          "available_units": 1,
+          "condition_score": 100.0,
+          "prefix_replayed": 0,
+          "local_seconds": 0.6944,
+          "original_actions_unchanged": true,
+          "actions": [
+            {
+              "id": "action-db1bac3d39a94fa6a29fb54734b43613",
+              "task_id": "task-b8a227fb4a3a4b9d858a1b9f10e75d42",
+              "step_id": "step-1",
+              "capability": "plugin.budget-both.v1",
+              "arguments": {
+                "text": "A|100|5|source-A\nB|90|10|source-B"
+              },
+              "digest": "5010aca49b1d34f5537685de783806ddfb1429f5934d742647b134c79cbed5f0",
+              "status": "CONFIRMED",
+              "attempts": 1,
+              "result": {
+                "package_id": "pkg-d85dbf687001a4ce6886ac8cdd30db1bb9456558f2924bc4e2512ef29ff7b74b",
+                "text": "符合条件：A\n来源：source-A",
+                "worker": {
+                  "active_process_limit": 1,
+                  "appcontainer_verified": true,
+                  "backend": "windows-lpac-job",
+                  "capabilities": [
+                    "registryRead"
+                  ],
+                  "cpu_limit_seconds": 3,
+                  "elapsed_seconds": 0.3364,
+                  "memory_limit_bytes": 268435456,
+                  "network_capabilities": [],
+                  "peak_memory_bytes": 12775424,
+                  "wall_limit_seconds": 8
+                }
+              },
+              "error": null
+            },
+            {
+              "id": "action-1b87f128ced025a148eb7da0c06557dd",
+              "task_id": "task-b8a227fb4a3a4b9d858a1b9f10e75d42",
+              "step_id": "deliver",
+              "capability": "artifact.write.v1",
+              "arguments": {
+                "content": "{\"package_id\":\"pkg-d85dbf687001a4ce6886ac8cdd30db1bb9456558f2924bc4e2512ef29ff7b74b\",\"text\":\"符合条件：A\\n来源：source-A\",\"worker\":{\"active_process_limit\":1,\"appcontainer_verified\":true,\"backend\":\"windows-lpac-job\",\"capabilities\":[\"registryRead\"],\"cpu_limit_seconds\":3,\"elapsed_seconds\":0.3364,\"memory_limit_bytes\":268435456,\"network_capabilities\":[],\"peak_memory_bytes\":12775424,\"wall_limit_seconds\":8}}",
+                "name": "result.json"
+              },
+              "digest": "4856a624ef4b946f24f3f7bfde5ae9feb374e46e4e5838750fa6ef8540adede1",
+              "status": "CONFIRMED",
+              "attempts": 1,
+              "result": {
+                "bytes": 412,
+                "relative_path": "artifacts/task-b8a227fb4a3a4b9d858a1b9f10e75d42/action-1b87f128ced025a148eb7da0c06557dd/result.json",
+                "sha256": "15532d8496afa9f6b2b10805c70c7e0c5c770bfada54e84a30ee3d2a465806e1",
+                "verified": true
+              },
+              "error": null
+            }
+          ]
+        },
+        "full": {
+          "goal_id": "goal-6509197297ca48df8edca8c5e780d7f2",
+          "task_id": "task-81870bc49ff24e1e8f7bb6ba3ce08896",
+          "start_step": 1,
+          "output": "符合条件：A\n来源：source-A",
+          "oracle_pass": true,
+          "repair_cost_units": 3,
+          "work_cost_units": 6,
+          "available_units": 0,
+          "condition_score": 100.0,
+          "prefix_replayed": 1,
+          "local_seconds": 1.233,
+          "original_actions_unchanged": true,
+          "actions": [
+            {
+              "id": "action-bd1ea765971d81920620e646e0d1696e",
+              "task_id": "task-81870bc49ff24e1e8f7bb6ba3ce08896",
+              "step_id": "step-1",
+              "capability": "plugin.budget-normalize.v1",
+              "arguments": {
+                "text": " A | 100 | 5 | source-A \n B | 90 | 10 | source-B "
+              },
+              "digest": "afacf198dda99dc6d72c753a978148170df107f0c87febbf00a28d232d2772fe",
+              "status": "CONFIRMED",
+              "attempts": 1,
+              "result": {
+                "package_id": "pkg-901f35f832a9e045fd4752b84f93ee9336faaf3bf1789061987797604950ba71",
+                "text": "A|100|5|source-A\nB|90|10|source-B",
+                "worker": {
+                  "active_process_limit": 1,
+                  "appcontainer_verified": true,
+                  "backend": "windows-lpac-job",
+                  "capabilities": [
+                    "registryRead"
+                  ],
+                  "cpu_limit_seconds": 3,
+                  "elapsed_seconds": 0.3344,
+                  "memory_limit_bytes": 268435456,
+                  "network_capabilities": [],
+                  "peak_memory_bytes": 13357056,
+                  "wall_limit_seconds": 8
+                }
+              },
+              "error": null
+            },
+            {
+              "id": "action-b40ba99372fd5dc04f91389d7cab19f3",
+              "task_id": "task-81870bc49ff24e1e8f7bb6ba3ce08896",
+              "step_id": "step-2",
+              "capability": "plugin.budget-both.v1",
+              "arguments": {
+                "text": "A|100|5|source-A\nB|90|10|source-B"
+              },
+              "digest": "5010aca49b1d34f5537685de783806ddfb1429f5934d742647b134c79cbed5f0",
+              "status": "CONFIRMED",
+              "attempts": 1,
+              "result": {
+                "package_id": "pkg-d85dbf687001a4ce6886ac8cdd30db1bb9456558f2924bc4e2512ef29ff7b74b",
+                "text": "符合条件：A\n来源：source-A",
+                "worker": {
+                  "active_process_limit": 1,
+                  "appcontainer_verified": true,
+                  "backend": "windows-lpac-job",
+                  "capabilities": [
+                    "registryRead"
+                  ],
+                  "cpu_limit_seconds": 3,
+                  "elapsed_seconds": 0.3072,
+                  "memory_limit_bytes": 268435456,
+                  "network_capabilities": [],
+                  "peak_memory_bytes": 12914688,
+                  "wall_limit_seconds": 8
+                }
+              },
+              "error": null
+            },
+            {
+              "id": "action-a98183497802adf0ffa0ddf34da538d1",
+              "task_id": "task-81870bc49ff24e1e8f7bb6ba3ce08896",
+              "step_id": "deliver",
+              "capability": "artifact.write.v1",
+              "arguments": {
+                "content": "{\"package_id\":\"pkg-d85dbf687001a4ce6886ac8cdd30db1bb9456558f2924bc4e2512ef29ff7b74b\",\"text\":\"符合条件：A\\n来源：source-A\",\"worker\":{\"active_process_limit\":1,\"appcontainer_verified\":true,\"backend\":\"windows-lpac-job\",\"capabilities\":[\"registryRead\"],\"cpu_limit_seconds\":3,\"elapsed_seconds\":0.3072,\"memory_limit_bytes\":268435456,\"network_capabilities\":[],\"peak_memory_bytes\":12914688,\"wall_limit_seconds\":8}}",
+                "name": "result.json"
+              },
+              "digest": "79d0be2fe2ff04df2d1a7d15a905c844aa912df18895687451f0dd49e4cc5329",
+              "status": "CONFIRMED",
+              "attempts": 1,
+              "result": {
+                "bytes": 412,
+                "relative_path": "artifacts/task-81870bc49ff24e1e8f7bb6ba3ce08896/action-a98183497802adf0ffa0ddf34da538d1/result.json",
+                "sha256": "7e84f53f270695356ef92e8bd356fd206d46b7ea84f981642dd697f7be0080a7",
+                "verified": true
+              },
+              "error": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "case": 5,
+      "input": " A | 110 | 2 | source-A \n B | 120 | 1 | source-B ",
+      "expected": "无符合条件报价",
+      "strategies": {
+        "full": {
+          "goal_id": "goal-2c7d5bc20db2415da033c939ce966cc6",
+          "task_id": "task-0d3ae1f470854de2985b3e793e1d11ef",
+          "start_step": 1,
+          "output": "无符合条件报价",
+          "oracle_pass": true,
+          "repair_cost_units": 3,
+          "work_cost_units": 6,
+          "available_units": 0,
+          "condition_score": 100.0,
+          "prefix_replayed": 1,
+          "local_seconds": 1.1398,
+          "original_actions_unchanged": true,
+          "actions": [
+            {
+              "id": "action-047420d5266ba61dcdd57f92cbc5bf1c",
+              "task_id": "task-0d3ae1f470854de2985b3e793e1d11ef",
+              "step_id": "step-1",
+              "capability": "plugin.budget-normalize.v1",
+              "arguments": {
+                "text": " A | 110 | 2 | source-A \n B | 120 | 1 | source-B "
+              },
+              "digest": "130de77eb9c1090c9d1a791f3a3576f7278d3296d44b2514c2c048b3587e6fe6",
+              "status": "CONFIRMED",
+              "attempts": 1,
+              "result": {
+                "package_id": "pkg-901f35f832a9e045fd4752b84f93ee9336faaf3bf1789061987797604950ba71",
+                "text": "A|110|2|source-A\nB|120|1|source-B",
+                "worker": {
+                  "active_process_limit": 1,
+                  "appcontainer_verified": true,
+                  "backend": "windows-lpac-job",
+                  "capabilities": [
+                    "registryRead"
+                  ],
+                  "cpu_limit_seconds": 3,
+                  "elapsed_seconds": 0.3019,
+                  "memory_limit_bytes": 268435456,
+                  "network_capabilities": [],
+                  "peak_memory_bytes": 13410304,
+                  "wall_limit_seconds": 8
+                }
+              },
+              "error": null
+            },
+            {
+              "id": "action-812b2654b0f37b4ccc30d663d5980925",
+              "task_id": "task-0d3ae1f470854de2985b3e793e1d11ef",
+              "step_id": "step-2",
+              "capability": "plugin.budget-both.v1",
+              "arguments": {
+                "text": "A|110|2|source-A\nB|120|1|source-B"
+              },
+              "digest": "b009b8c5dfd4eb88181d00c5bf30c33a5dbcf8c0f5c2645870c2780789cccf26",
+              "status": "CONFIRMED",
+              "attempts": 1,
+              "result": {
+                "package_id": "pkg-d85dbf687001a4ce6886ac8cdd30db1bb9456558f2924bc4e2512ef29ff7b74b",
+                "text": "无符合条件报价",
+                "worker": {
+                  "active_process_limit": 1,
+                  "appcontainer_verified": true,
+                  "backend": "windows-lpac-job",
+                  "capabilities": [
+                    "registryRead"
+                  ],
+                  "cpu_limit_seconds": 3,
+                  "elapsed_seconds": 0.3036,
+                  "memory_limit_bytes": 268435456,
+                  "network_capabilities": [],
+                  "peak_memory_bytes": 13324288,
+                  "wall_limit_seconds": 8
+                }
+              },
+              "error": null
+            },
+            {
+              "id": "action-93190af2180c556291fcbc234406ce6a",
+              "task_id": "task-0d3ae1f470854de2985b3e793e1d11ef",
+              "step_id": "deliver",
+              "capability": "artifact.write.v1",
+              "arguments": {
+                "content": "{\"package_id\":\"pkg-d85dbf687001a4ce6886ac8cdd30db1bb9456558f2924bc4e2512ef29ff7b74b\",\"text\":\"无符合条件报价\",\"worker\":{\"active_process_limit\":1,\"appcontainer_verified\":true,\"backend\":\"windows-lpac-job\",\"capabilities\":[\"registryRead\"],\"cpu_limit_seconds\":3,\"elapsed_seconds\":0.3036,\"memory_limit_bytes\":268435456,\"network_capabilities\":[],\"peak_memory_bytes\":13324288,\"wall_limit_seconds\":8}}",
+                "name": "result.json"
+              },
+              "digest": "9ec88fe9bb345e9c95049befd223d4ace8f50321734b43e7aa98852fe3539f59",
+              "status": "CONFIRMED",
+              "attempts": 1,
+              "result": {
+                "bytes": 398,
+                "relative_path": "artifacts/task-0d3ae1f470854de2985b3e793e1d11ef/action-93190af2180c556291fcbc234406ce6a/result.json",
+                "sha256": "ecf549fb8f669f80b51867c3a2103e7f8446f3b8f7e6cbb3a18afe139a889c6e",
+                "verified": true
+              },
+              "error": null
+            }
+          ]
+        },
+        "suffix": {
+          "goal_id": "goal-8c3faf09217843c1aa39864b4e458113",
+          "task_id": "task-25c68a1be3744c6baf3101ece5bb5f71",
+          "start_step": 2,
+          "output": "无符合条件报价",
+          "oracle_pass": true,
+          "repair_cost_units": 2,
+          "work_cost_units": 5,
+          "available_units": 1,
+          "condition_score": 100.0,
+          "prefix_replayed": 0,
+          "local_seconds": 0.6532,
+          "original_actions_unchanged": true,
+          "actions": [
+            {
+              "id": "action-a0bfd5997e43076c7050b3fe0aead2cb",
+              "task_id": "task-25c68a1be3744c6baf3101ece5bb5f71",
+              "step_id": "step-1",
+              "capability": "plugin.budget-both.v1",
+              "arguments": {
+                "text": "A|110|2|source-A\nB|120|1|source-B"
+              },
+              "digest": "b009b8c5dfd4eb88181d00c5bf30c33a5dbcf8c0f5c2645870c2780789cccf26",
+              "status": "CONFIRMED",
+              "attempts": 1,
+              "result": {
+                "package_id": "pkg-d85dbf687001a4ce6886ac8cdd30db1bb9456558f2924bc4e2512ef29ff7b74b",
+                "text": "无符合条件报价",
+                "worker": {
+                  "active_process_limit": 1,
+                  "appcontainer_verified": true,
+                  "backend": "windows-lpac-job",
+                  "capabilities": [
+                    "registryRead"
+                  ],
+                  "cpu_limit_seconds": 3,
+                  "elapsed_seconds": 0.322,
+                  "memory_limit_bytes": 268435456,
+                  "network_capabilities": [],
+                  "peak_memory_bytes": 13402112,
+                  "wall_limit_seconds": 8
+                }
+              },
+              "error": null
+            },
+            {
+              "id": "action-28c937bc9a6b3638deb31e00b4b711f2",
+              "task_id": "task-25c68a1be3744c6baf3101ece5bb5f71",
+              "step_id": "deliver",
+              "capability": "artifact.write.v1",
+              "arguments": {
+                "content": "{\"package_id\":\"pkg-d85dbf687001a4ce6886ac8cdd30db1bb9456558f2924bc4e2512ef29ff7b74b\",\"text\":\"无符合条件报价\",\"worker\":{\"active_process_limit\":1,\"appcontainer_verified\":true,\"backend\":\"windows-lpac-job\",\"capabilities\":[\"registryRead\"],\"cpu_limit_seconds\":3,\"elapsed_seconds\":0.322,\"memory_limit_bytes\":268435456,\"network_capabilities\":[],\"peak_memory_bytes\":13402112,\"wall_limit_seconds\":8}}",
+                "name": "result.json"
+              },
+              "digest": "14fee76b98ef10312efca48f7a224bf95411c329ac1b2d4eb4119a76de474496",
+              "status": "CONFIRMED",
+              "attempts": 1,
+              "result": {
+                "bytes": 397,
+                "relative_path": "artifacts/task-25c68a1be3744c6baf3101ece5bb5f71/action-28c937bc9a6b3638deb31e00b4b711f2/result.json",
+                "sha256": "a0a44fbdcc0d1b799c053a26f48324d0ea51a2d615b15e3d61f16648d0089f17",
+                "verified": true
+              },
+              "error": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "case": 6,
+      "input": " 甲 | 90 | 4 | source-first \n 乙 | 90 | 4 | source-second ",
+      "expected": "符合条件：甲\n来源：source-first",
+      "strategies": {
+        "suffix": {
+          "goal_id": "goal-092438e2260c4b6e877cf486bfb0aa51",
+          "task_id": "task-083987577a2a4824a3b2c633f96be64c",
+          "start_step": 2,
+          "output": "符合条件：甲\n来源：source-first",
+          "oracle_pass": true,
+          "repair_cost_units": 2,
+          "work_cost_units": 5,
+          "available_units": 1,
+          "condition_score": 100.0,
+          "prefix_replayed": 0,
+          "local_seconds": 0.6495,
+          "original_actions_unchanged": true,
+          "actions": [
+            {
+              "id": "action-9308633c678291cc2afbc64b547c5ce5",
+              "task_id": "task-083987577a2a4824a3b2c633f96be64c",
+              "step_id": "step-1",
+              "capability": "plugin.budget-both.v1",
+              "arguments": {
+                "text": "甲|90|4|source-first\n乙|90|4|source-second"
+              },
+              "digest": "722f9b5cc445275b75497e6df6afdb470ef8c6d1ba3558c75c92d56bbfa3ca6f",
+              "status": "CONFIRMED",
+              "attempts": 1,
+              "result": {
+                "package_id": "pkg-d85dbf687001a4ce6886ac8cdd30db1bb9456558f2924bc4e2512ef29ff7b74b",
+                "text": "符合条件：甲\n来源：source-first",
+                "worker": {
+                  "active_process_limit": 1,
+                  "appcontainer_verified": true,
+                  "backend": "windows-lpac-job",
+                  "capabilities": [
+                    "registryRead"
+                  ],
+                  "cpu_limit_seconds": 3,
+                  "elapsed_seconds": 0.3109,
+                  "memory_limit_bytes": 268435456,
+                  "network_capabilities": [],
+                  "peak_memory_bytes": 12959744,
+                  "wall_limit_seconds": 8
+                }
+              },
+              "error": null
+            },
+            {
+              "id": "action-e98232c9715f6ab7560d320d0dc22d04",
+              "task_id": "task-083987577a2a4824a3b2c633f96be64c",
+              "step_id": "deliver",
+              "capability": "artifact.write.v1",
+              "arguments": {
+                "content": "{\"package_id\":\"pkg-d85dbf687001a4ce6886ac8cdd30db1bb9456558f2924bc4e2512ef29ff7b74b\",\"text\":\"符合条件：甲\\n来源：source-first\",\"worker\":{\"active_process_limit\":1,\"appcontainer_verified\":true,\"backend\":\"windows-lpac-job\",\"capabilities\":[\"registryRead\"],\"cpu_limit_seconds\":3,\"elapsed_seconds\":0.3109,\"memory_limit_bytes\":268435456,\"network_capabilities\":[],\"peak_memory_bytes\":12959744,\"wall_limit_seconds\":8}}",
+                "name": "result.json"
+              },
+              "digest": "8f8eafb2b0125314b48f810f7965a48070b53b873be6052624318a63800d3711",
+              "status": "CONFIRMED",
+              "attempts": 1,
+              "result": {
+                "bytes": 418,
+                "relative_path": "artifacts/task-083987577a2a4824a3b2c633f96be64c/action-e98232c9715f6ab7560d320d0dc22d04/result.json",
+                "sha256": "595627e404b4c32fa09f6f892d7591d8bccac00a1334cc25a3620e1678466804",
+                "verified": true
+              },
+              "error": null
+            }
+          ]
+        },
+        "full": {
+          "goal_id": "goal-507ce6518da140b48b0d5eec6bdd8dc4",
+          "task_id": "task-d7b69f4038344e0e8fd0839c3340857e",
+          "start_step": 1,
+          "output": "符合条件：甲\n来源：source-first",
+          "oracle_pass": true,
+          "repair_cost_units": 3,
+          "work_cost_units": 6,
+          "available_units": 0,
+          "condition_score": 100.0,
+          "prefix_replayed": 1,
+          "local_seconds": 1.2162,
+          "original_actions_unchanged": true,
+          "actions": [
+            {
+              "id": "action-52d12becd4066020ce34724f8dff59be",
+              "task_id": "task-d7b69f4038344e0e8fd0839c3340857e",
+              "step_id": "step-1",
+              "capability": "plugin.budget-normalize.v1",
+              "arguments": {
+                "text": " 甲 | 90 | 4 | source-first \n 乙 | 90 | 4 | source-second "
+              },
+              "digest": "b47c600616f7fe38841e3f290ab8cc8763109dad86726b7c1f008d5063292365",
+              "status": "CONFIRMED",
+              "attempts": 1,
+              "result": {
+                "package_id": "pkg-901f35f832a9e045fd4752b84f93ee9336faaf3bf1789061987797604950ba71",
+                "text": "甲|90|4|source-first\n乙|90|4|source-second",
+                "worker": {
+                  "active_process_limit": 1,
+                  "appcontainer_verified": true,
+                  "backend": "windows-lpac-job",
+                  "capabilities": [
+                    "registryRead"
+                  ],
+                  "cpu_limit_seconds": 3,
+                  "elapsed_seconds": 0.3026,
+                  "memory_limit_bytes": 268435456,
+                  "network_capabilities": [],
+                  "peak_memory_bytes": 13619200,
+                  "wall_limit_seconds": 8
+                }
+              },
+              "error": null
+            },
+            {
+              "id": "action-7cd93f8c819ea955ddf854e091c9a983",
+              "task_id": "task-d7b69f4038344e0e8fd0839c3340857e",
+              "step_id": "step-2",
+              "capability": "plugin.budget-both.v1",
+              "arguments": {
+                "text": "甲|90|4|source-first\n乙|90|4|source-second"
+              },
+              "digest": "722f9b5cc445275b75497e6df6afdb470ef8c6d1ba3558c75c92d56bbfa3ca6f",
+              "status": "CONFIRMED",
+              "attempts": 1,
+              "result": {
+                "package_id": "pkg-d85dbf687001a4ce6886ac8cdd30db1bb9456558f2924bc4e2512ef29ff7b74b",
+                "text": "符合条件：甲\n来源：source-first",
+                "worker": {
+                  "active_process_limit": 1,
+                  "appcontainer_verified": true,
+                  "backend": "windows-lpac-job",
+                  "capabilities": [
+                    "registryRead"
+                  ],
+                  "cpu_limit_seconds": 3,
+                  "elapsed_seconds": 0.3295,
+                  "memory_limit_bytes": 268435456,
+                  "network_capabilities": [],
+                  "peak_memory_bytes": 13156352,
+                  "wall_limit_seconds": 8
+                }
+              },
+              "error": null
+            },
+            {
+              "id": "action-3df8c035166415749e8ee96046d2d622",
+              "task_id": "task-d7b69f4038344e0e8fd0839c3340857e",
+              "step_id": "deliver",
+              "capability": "artifact.write.v1",
+              "arguments": {
+                "content": "{\"package_id\":\"pkg-d85dbf687001a4ce6886ac8cdd30db1bb9456558f2924bc4e2512ef29ff7b74b\",\"text\":\"符合条件：甲\\n来源：source-first\",\"worker\":{\"active_process_limit\":1,\"appcontainer_verified\":true,\"backend\":\"windows-lpac-job\",\"capabilities\":[\"registryRead\"],\"cpu_limit_seconds\":3,\"elapsed_seconds\":0.3295,\"memory_limit_bytes\":268435456,\"network_capabilities\":[],\"peak_memory_bytes\":13156352,\"wall_limit_seconds\":8}}",
+                "name": "result.json"
+              },
+              "digest": "f58d1716a419775b0b21f32731d6c1fc1d8cfe1a1346a16dd64322d82fe40c33",
+              "status": "CONFIRMED",
+              "attempts": 1,
+              "result": {
+                "bytes": 418,
+                "relative_path": "artifacts/task-d7b69f4038344e0e8fd0839c3340857e/action-3df8c035166415749e8ee96046d2d622/result.json",
+                "sha256": "07070e0675d6ceaa0b54542ad7cc063ba8d8fa4f0574d645f47fff1c0c3cd864",
+                "verified": true
+              },
+              "error": null
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "summary": {
+    "full": {
+      "oracle_passes": 6,
+      "repair_units": 18,
+      "total_work_units": 36,
+      "prefix_executions_during_repair": 6
+    },
+    "suffix": {
+      "oracle_passes": 6,
+      "repair_units": 12,
+      "total_work_units": 30,
+      "prefix_executions_during_repair": 0
+    }
+  },
+  "counterexample": {
+    "changed_input_while_reusing_prefix": "rework_invalid",
+    "full_rework_new_input": "符合条件：NEW\n来源：new-source",
+    "full_rework_new_input_pass": true
+  },
+  "model_calls": 0,
+  "production_deployed": false,
+  "limitations": "Synthetic structured report strategy comparison under the same 1.3.0 runtime; not real user work or a prior binary benchmark"
+}

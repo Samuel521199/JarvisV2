@@ -1,0 +1,18 @@
+{
+  "worker": "adapters/engineering/worker.py",
+  "bootstrap": "apps/engineering/worker.py",
+  "dependencies": [
+    {
+      "import": "OCP",
+      "distribution": "cadquery-ocp",
+      "version": "7.8.1.1.post1"
+    },
+    {
+      "import": "cantera",
+      "distribution": "cantera",
+      "version": "3.2.0"
+    }
+  ],
+  "lock": "modules/skills/anatomy/runtime-lock.json",
+  "scope": "Native imports only in the fixed optional subprocess worker; pure models and Host have no third-party imports."
+}

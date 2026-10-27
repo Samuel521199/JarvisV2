@@ -1,0 +1,59 @@
+"""Render measured explicit-change results, retaining missing real-world evidence."""
+from pathlib import Path
+import hashlib
+import html
+import json
+import re
+
+HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[2]
+read=lambda name:json.loads((HERE/name).read_text('utf-8'))
+write=lambda name,value:(HERE/name).write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n',encoding='utf-8',newline='\n')
+r=read('frozen-r3/run/report.json');t=read('frozen-r3/run/tests.json');snapshot=read('frozen-r3/snapshot.json');wrapper=read('frozen-r3/result.json')
+assert r['local_verdict']==wrapper['local_verdict']=='PASS' and t['passed']
+baseline=json.loads((HERE.parent/'workflow-changes-1.8.0/frozen-r1/run/plan.json').read_text('utf-8'))['test_ids']
+current=read('frozen-r3/run/plan.json')['test_ids'];missing=sorted(set(baseline)-set(current));assert not missing
+runtime=read('frozen-r3/run/quote_rework/runtime.json');perf=read('frozen-r3/run/performance.json')
+off=perf['task_ms']['False']['p95'];on=perf['task_ms']['True']['p95'];added=round(on-off,3)
+value={'version':'workflow-inheritance-1.9.0','local_verdict':'PASS','tests':t['run'],'baseline_retained':len(baseline),
+       'new_cases':len(set(current)-set(baseline)),'missing_baseline':missing,'browser_workflows':11,'gates':len(r['checks']),
+       'source_count':snapshot['source_count'],'supporting_count':len(snapshot['supporting_input_digests']),
+       'original_observer_p95_ms':{'off':off,'on':on,'added':added,'budget':25},'real_user_accuracy':None,
+       'unnecessary_rejection_rate':None,'quality_gain':None,'token_savings':None,'learning_gain':None,'production_deployed':False}
+write('verification.json',value)
+before=read('plan.json')['source_before'];after=snapshot['source_digests']
+changes=[{'path':p,'before':before.get(p),'candidate':after.get(p),'created':p not in before} for p in sorted(before.keys()|after.keys()) if before.get(p)!=after.get(p)]
+forecast=hashlib.sha256((HERE.parent/'assistant-forecast-r1-2026-10-26.json').read_bytes()).hexdigest()
+assert forecast=='035f34e43b8b1f7c974202c0820fef905abe86674c5089be6be28a44a76ef66f'
+assert hashlib.sha256((ROOT/'host/work_status.py').read_bytes()).hexdigest()=='16784cdf2a387efd191e7c6dd89a8fbe8aa92edb450620054f6e3c5596947e10'
+write('candidate-audit.json',{'changed_sources':changes,'original_forecast_preserved':True,'old_work_status_preserved':True,'frozen_result':wrapper,'production_deployed':False})
+css='''*{box-sizing:border-box}body{margin:0;background:#0b1220;color:#e8eef8;font:17px/1.7 system-ui,sans-serif}main{max-width:1120px;margin:auto;padding:48px 28px}h1{font-size:42px;line-height:1.2;margin:16px 0}h2{font-size:25px;margin-top:40px}p{color:#c3cfdf}a{color:#78cbff}strong,.pass{color:#77e1bb}.tag{letter-spacing:2px;font-size:13px;color:#78cbff}.cards,.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.card,.flow>div{background:#142239;border:1px solid #2c415e;border-radius:14px;padding:18px}.number{display:block;font-size:30px;color:#77e1bb}.flow>div{font-size:15px}.scroll{overflow:auto}table{width:100%;border-collapse:collapse;background:#101c30;font-size:15px}th,td{text-align:left;vertical-align:top;border-bottom:1px solid #2c415e;padding:14px;min-width:100px}th{color:#78cbff}details{border:1px solid #2c415e;border-radius:12px;padding:16px;margin:24px 0}summary{cursor:pointer}img{max-width:100%;display:block;margin:18px auto;border-radius:10px}code{color:#f8d190;overflow-wrap:anywhere}.note{border-left:3px solid #78cbff;padding-left:16px}@media(max-width:700px){main{padding:28px 16px}h1{font-size:30px}.cards,.flow{grid-template-columns:repeat(2,1fr)}.number{font-size:25px}table{font-size:14px}}'''
+rows=''
+for label,task in zip(['明确把预算100改为90；其他条件继承','纠错保持全部要求；未知保修继续保留','新版遗漏原来的来源引用条件'],runtime['tasks']):
+    rows+=f'<tr><td>{label}</td><td>{task["status"] if task else "未受理"}</td><td>{task["completion"]["state"] if task else "无Task"}</td><td>{task["closure"]["state"] if task else "待修订"}</td><td>{task["completion"].get("condition_score") if task and task["completion"].get("condition_score") is not None else "未评分"}</td><td>{task["spent"] if task else 0}</td></tr>'
+gates=''.join(f'<tr><td>{html.escape(c["id"])}</td><td class="pass">{html.escape(c["status"])}</td></tr>' for c in r['checks'])
+page=f'''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Jarvis · 返工继承 1.9.0</title><style>{css}</style><main>
+<div class="tag">JARVIS / WORK REQUIREMENT INHERITANCE / 1.9.0</div><h1>返工记得旧要求，<br>修好后重新验收</h1>
+<p>2026-10-27 · 结论、改进、预测对照与实际证据</p>
+<p class="note"><strong>有限报价返工的条件继承已通过本地技术验收。</strong>新版本保留未改要求，明确记录新增、替换与撤销；纠错保持标准，结果由独立规则重新核对。旧动作和旧交付保持事实。尚未部署，尚无真实工作收益评分。</p>
+<div class="cards"><div class="card"><span class="number">{t['run']}/{t['run']}</span>不同用例通过</div><div class="card"><span class="number">451 + {value['new_cases']}</span>旧例保留＋新例</div><div class="card"><span class="number">11 / {len(r['checks'])}</span>浏览器流程／验收门</div><div class="card"><span class="number">未测</span>业务Q与长期成长</div></div>
+<h2>改了哪些，会带来什么</h2><div class="scroll"><table><tr><th>问题</th><th>本轮改进</th><th>现在可以观察到的效果</th></tr>
+<tr><td>返工容易只记住最新一句</td><td>继承全部有效条件，再应用明确变更</td><td>预算改为90元，来源引用等旧条件仍须满足；漏项阻止受理</td></tr>
+<tr><td>纠错可能顺便降低验收标准</td><td>纠错明确“保持全部要求”</td><td>可以修正错误工具；原失败记录保留，新结果重新核对</td></tr>
+<tr><td>旧版未知条件可能被遗忘</td><td>保留未知要求与来源不确定性</td><td>保修不能凭本次执行成功而自动通过；明确撤销后才重新计算剩余要求</td></tr>
+<tr><td>旧来源变化后仍沿用通过结论</td><td>绑定祖先来源、回执、反馈与冻结验收</td><td>变化使旧审阅失效；动作间发现变化则停止后续交付</td></tr><tr><td>详情把旧动作与新完成状态混在一起</td><td>同一账本事务读取任务、动作、预算和评价</td><td>不会因刷新时刻不同误报回执已改变；原预算断言通过</td></tr></table></div>
+<h2>闭环怎样接起来</h2><div class="flow"><div>① 旧版已执行<br>回执、条件、反馈可追溯</div><div>② 逐条接续要求<br>保持或明确增删改</div><div>③ 原机制受理执行<br>预算、授权、取消仍生效</div><div>④ 独立验收本版<br>结案／待证据／纠错</div></div>
+<p>需要纠正时，再从当前版本接续，最多3次。旧版通过不能关闭新版本；“任务执行成功”与“结果达到要求”分别记录。本轮从第1步完整重做，不签收部分前缀复用的语义正确性。只有尚未受理的草案可重审来源；已受理版本来源失效后不可就地改签，自动建立恢复版本仍是缺口。</p>
+<h2>真实浏览器与临时运行的结果</h2><div class="scroll"><table><tr><th>合成场景</th><th>执行</th><th>独立验收</th><th>当前工作</th><th>受支持条件分</th><th>本版成本单位</th></tr>{rows}</table></div>
+<p>100分只表示本版已声明、受支持的条件通过，不是业务Q、整体助手评分或成长分；未知项不填0分，也不沿用父版100分。</p><p>浏览器实际创建关联版本、修改输入、审阅继承链并排队执行；两个执行场景各累计4单位（父版2＋子版2），冲突场景没有子任务。另有专项测试验证三次接续累计8单位、故障工具纠正、文件和反馈变化、取消与预算不足。模型调用为0，不能推算模型成本或token节省。</p>
+<h2>预测与实测：哪些符合，哪些还不知道</h2><div class="scroll"><table><tr><th>实施前预测</th><th>本轮证据</th><th>判断</th></tr>
+<tr><td>保留未改条件，拒绝静默遗漏</td><td>逐项继承、未知项保留、三版接续与遗漏反例</td><td>有限工程范围符合预测</td></tr><tr><td>纠错不降低标准</td><td>错误输出判需要纠正；替换为正确工具后新版本通过，旧记录保留</td><td>符合；自动诊断及修码未实现</td></tr><tr><td>来源变化阻止后续效果</td><td>原话、反馈、交付、继承绑定及两个动作间的变化反例</td><td>符合有限来源范围</td></tr><tr><td>原机制无回归</td><td>原451项、原10条流程及原预算门保留</td><td>最终候选通过；曾暴露的竞态及修复保留在失败记录中，不代表真实任务均无退化</td></tr><tr><td>真实工作更省心、更省成本、越用越聪明</td><td>没有独立真实请求集、完整费用与长期观测</td><td>未测，不判命中、落后或超预期</td></tr></table></div>
+<p>原观察器P95：关闭{off:.3f}ms → 开启{on:.3f}ms，增加{added:.3f}ms，低于原25ms门槛。只代表原观察器门通过；没有测本轮继承核验器在大工作集上的性能。</p>
+<h2>对三位一体和“越用越聪明”的实际作用</h2><p>Direction保留完整条件及版本；Engagement沿原身份、授权、共享额度和事实账执行；Reflection独立评分并接收迟到反证。接线复用现有服务，没有第二执行器或新权限来源。</p><p>知识库应保存带来源与适用条件的候选经验，而不是把“这次通过”直接当成通用规则。本轮只补齐可追溯的要求和反馈基础，不自动晋升报价经验。下一阶段需以近似新任务、反例和延迟复测证明质量不退化，同时计算检索与执行的完整费用；有反例时暂停采用，保留研发分支继续改进。后续按<a href="../../evolution-release.md#growth-regression-policy">研发与生产采用分开判断的退化规则（proposed）</a>验收，不能拿结构潜力抵销实际退化。</p>
+<h2>接下来按什么顺序推进</h2><div class="scroll"><table><tr><th>顺序</th><th>下一步</th><th>出口条件</th></tr><tr><td>1</td><td>先补已受理来源失效后的新版本恢复；同步收集独立真实请求，再成对评测</td><td>评测输入先冻结；恢复须保留旧证据、重新判据与授权，不得改写已发生效果</td></tr><tr><td>2</td><td>完整费用账与有限常设委托</td><td>低影响工作减少重复确认；每次自主决策有范围、费用和停止证据</td></tr><tr><td>3</td><td>条件化经验候选与反例回退</td><td>相似新问题更省成本且质量无退化；过期、冲突与新反例能暂停旧方法</td></tr><tr><td>4</td><td>单工作负责人及多Bot委派、租约与接管</td><td>同一责任链、总预算、重复执行及故障接管通过演练</td></tr></table></div>
+<details><summary>完整门、失败记录与证据链接</summary><div class="scroll"><table><tr><th>验收门</th><th>结果</th></tr>{gates}</table></div>
+<p>冻结{snapshot['source_count']}个源码输入、{len(snapshot['supporting_input_digests'])}个支持输入。专项首轮21项通过；扩充到28项时，取消用例误以为已取消任务仍可再次启动，触发原invalid_state。修正预期为拒绝启动，并继续断言CANCELLED及零动作；执行逻辑不改。首轮冻结联合验收通过后，格式检查发现三个文件被编辑器写为CRLF；仅恢复原LF后再次冻结，第二轮479项通过但预算浏览器门发现详情读取竞态。旧读取顺序稳定复现矛盾响应；修复为同一核心账本事务并新增1项回归，第三轮重新验收。各轮均保留，原预算断言与门槛未改。最终冻结运行包含全部新旧用例，迭代次数不计为新增用例。</p>
+<p><a href="plan.json">实施前预测</a> · <a href="format-normalization.json">仅换行格式修正</a> · <a href="frozen-r1/result.json">首轮冻结结果</a> · <a href="frozen-r2/result.json">第二轮失败</a> · <a href="plan-amendment-r1.json">竞态修复范围冻结</a> · <a href="consistency-reproduction.json">稳定复现与修复证据</a> · <a href="narrow-r2.log">保留的失败轮</a> · <a href="cancel-r3.log">取消边界复验</a> · <a href="frozen-r3/run/report.html">联合验收</a> · <a href="frozen-r3/run/tests.json">逐项测试</a> · <a href="candidate-audit.json">候选审计</a> · <a href="delivery-checks.json">交付检查</a> · <a href="frozen-r3/run/real-task-trial-template.json">真实试验模板：未运行</a></p></details>
+<p><a href="../../core-bootstrap.md#workflow-inheritance-runtime">Markdown：实施与机制保持</a> · <a href="../../contracts.md#workflow-inheritance-contract">契约</a> · <a href="../../delivery-validation.md#workflow-inheritance-evidence">预测与实测权威页</a></p>
+<details><summary>实际界面：继承链、有效条件与未知要求</summary><img src="frozen-r3/run/quote_rework/review-desktop.png" alt="返工条件继承与逐条状态"><img src="frozen-r3/run/quote_rework/uncovered-review.png" alt="继承的未知要求仍待证据"><img src="frozen-r3/run/quote_rework/conflict.png" alt="遗漏旧条件阻止受理"></details></main></html>'''
+(HERE/'report.html').write_text(page,encoding='utf-8',newline='\n')
+print(json.dumps(value,ensure_ascii=False))

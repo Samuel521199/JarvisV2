@@ -1,0 +1,39 @@
+{
+  "version": "workflow-handoff-1.1.0",
+  "created": 1793023635.2716303,
+  "baseline": {
+    "host/goals.py": "7cc72de7fe1061a814b10d4bab9152f98698aeeb8694f4aa5ecdfdea20608db3",
+    "host/task_scheduler.py": "36bddc0f487da395bc8e879f18fd5364b33bd3be0fce199e7cacdf621feb3c81",
+    "host/memory.py": "51bec513ee02f09ef3124f9911d772cb94aa487eacae59007cee750d10284a14",
+    "modules/task_resource/scheduling.py": "3b9a29bbfdc787486621cb0a1c1a5a6ab0ac3e1a47b29ff1498feb3c26188b92",
+    "modules/task_resource/completion.py": "189a66193011d25d608a8d29373379f3d82586f00b08ceef03725cbb16b19ab2",
+    "adapters/storage/completion_schema.py": "55b5080c3c3d72116f15e885010c233576c029f9ff658ebe2672217beb807242",
+    "apps/workbench/goals.js": "69b96706ef98b5e655638448c2871d829066c5c36f761dd1565a34eb826c5916",
+    "apps/workbench/ui.js": "1575c638a79066466584b570688ee8c01d8c9e7236b571f18a416073fb202357",
+    "tests/test_goal_plans.py": "d3f85fe9f425f25d5ac39d9ad7e6212851de3431f6bd61ffea2b9e0c1e5b052c",
+    "tests/test_completion_loop.py": "e609823cd8c8c4b7c111bb933c13035d2a6e920961ef32d1c6fe70f5d64f6982"
+  },
+  "scope": [
+    "atomic approve-and-run intent; bounded queue-capacity waiting",
+    "frozen explicit requirement coverage; unsupported semantic checks remain unknown",
+    "historical completion preservation and qualified memory candidates"
+  ],
+  "required_checks": [
+    "old approve-only semantics",
+    "crash before and after commit",
+    "retry after lost response",
+    "capacity wait and promotion",
+    "cancel and revoke before execution",
+    "missing coverage does not verify goal",
+    "unsupported or missing mappings remain unknown",
+    "literal and statistics requirements pass only with supported checks",
+    "late feedback and source invalidation",
+    "old completion preserved on migration",
+    "workbench presentation",
+    "affected regression and docs/architecture"
+  ],
+  "model_calls_planned": 0,
+  "production_deployment": false,
+  "quality_gain_prediction": null,
+  "forecast_r1_unchanged": true
+}

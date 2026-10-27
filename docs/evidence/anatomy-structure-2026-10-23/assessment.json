@@ -1,0 +1,140 @@
+{
+  "adapter_version": "4.0.0",
+  "status": "verified_with_limits",
+  "project_file_version_at_close": "0.1.0",
+  "runtime_version": "0.1.0",
+  "source": {
+    "commit": "1482e8469b0a9e0d8cc18ea2740a01423d29ae80",
+    "copyright": "Copyright (c) 2026 Ryan",
+    "files": {
+      "LICENSE": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+      "SKILL.md.txt": "3423ada45a05033bb6e320dfc3b3ac832569969a5afb059bbfc9096c5cf0c71b",
+      "kit/iso-kit.mjs": "6d3ecc725d30c3b0346da309cf61dfa5a65017c23620bbd4093009d4fb104018",
+      "kit/iso.css": "ef19bac5a42ba9be42b56b2c1cf7fc7e21d332a8060765e9ca1d987b8ab23924",
+      "references/craft.md.txt": "38761fa9b81d66b30e50b05488501d4815830d3627f153d60f76ca783f598936",
+      "references/kit.md.txt": "684672e069fdb52735efabc3f4310dedd840d0c8066a8dc7784be2b7e656be71",
+      "references/motion.md.txt": "dda401ca1b4661a5f0b7c1e33dac6e7e4b8c13d51ca5d9312123a5c02dab320b",
+      "references/verify.md.txt": "fb81437fc5d75094a34432eb6f545644aa228e15173a27d08b3cace912033561"
+    },
+    "license": "MIT",
+    "note": "Markdown reference snapshots use .md.txt locally; bytes and original upstream paths/hashes are retained.",
+    "repository": "https://github.com/wheresryan22/anatomy",
+    "upstream_files": {
+      "LICENSE": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+      "SKILL.md": "3423ada45a05033bb6e320dfc3b3ac832569969a5afb059bbfc9096c5cf0c71b",
+      "kit/iso-kit.mjs": "6d3ecc725d30c3b0346da309cf61dfa5a65017c23620bbd4093009d4fb104018",
+      "kit/iso.css": "ef19bac5a42ba9be42b56b2c1cf7fc7e21d332a8060765e9ca1d987b8ab23924",
+      "references/craft.md": "38761fa9b81d66b30e50b05488501d4815830d3627f153d60f76ca783f598936",
+      "references/kit.md": "684672e069fdb52735efabc3f4310dedd840d0c8066a8dc7784be2b7e656be71",
+      "references/motion.md": "dda401ca1b4661a5f0b7c1e33dac6e7e4b8c13d51ca5d9312123a5c02dab320b",
+      "references/verify.md": "fb81437fc5d75094a34432eb6f545644aa228e15173a27d08b3cace912033561"
+    }
+  },
+  "files_sha256": {
+    "host/anatomy.py": "3c5531cb8e2b5bbeb24be09b33cbaa94d8891da905e46e64d743877fe169d1c4",
+    "host/anatomy_scene.py": "684983787c72f6ce2f98a76e217e246e7c4134ba322fef1724bd54141ba82fdf",
+    "host/anatomy_composer.py": "be6bea4a86dbd484413f407d9ef8fa341f13d98218c04e3ae786cd43a9d3d03b",
+    "modules/skills/anatomy/build.mjs": "93f0130f88c6ba1fee9b61e519b046e1b4d8d75f1e397b371c6951af667bf5b6",
+    "modules/skills/anatomy/studio.html": "b015ec2c50c3978b93dbe14ae5dcb995da28dd1531f7497ca7cba334ddfbbc59",
+    "modules/skills/anatomy/studio-view.js": "65178f93ec708d386f59b3e54cc5711e4aadd59d824a9660485cc7bd7d762d96",
+    "modules/skills/anatomy/structure3d.mjs": "53d0194117a82ffb587b6c1cda7d1407a8e3fecea0f492acfa27f70067365904",
+    "modules/skills/anatomy/structure-scenes.mjs": "c1fde0acd68eeb5e00cfee1803daae3fa1ccd12ff8b83d6d2054db9b60042077",
+    "modules/skills/anatomy/structure-audit.mjs": "5e74f4717526234271ed30fa440d73ce3b6723c88fdcf87cfabc43438f976ed6",
+    "modules/skills/anatomy/scene-schema.json": "e5afa5b493b02d70f5dcf739fd30f0d13e88754c6bd60a96b5ada2a50661ff61",
+    "modules/skills/anatomy/studio-presets.json": "67b9ec07e5e70dfec218b8100ca6c83df9b49bab0729529b30eafbaded55c822",
+    "seed/skills/conversation.json": "63b55f4268abafa51bce530fb06109f8f87038c8c45b29c707b1a80d9e10e88a",
+    "tests/anatomy_structure3d.mjs": "fec39f7e2e5a8d06f937b033a59dfac315e0ff984371e84fa0b0e9b8e21ffc4e",
+    "tools/probe_anatomy_structure.cjs": "a65816c86c9d8eba8d3c576b6fc1365a2f07a560d47c49954a24ef46155e0d11",
+    "tools/probe_anatomy_generated.cjs": "a1dc3a991bb41c8bb029732b34145e03f9c724de258d171ad5691ea0180671d9",
+    "tools/probe_anatomy_structure_soak.cjs": "592342b1df0ad22bc58eb94797e20c17be6dee5906f412db9ccc778aa1de9f4b",
+    "tools/eval_anatomy_structure.py": "0864029c718d930077e88257eb12e18a19837882a1a6b8a7bf78f519fb22ac9f"
+  },
+  "final_renderer_matches_receipt": true,
+  "tests": {
+    "python_full": {
+      "tests": 226,
+      "seconds": 170.1,
+      "status": "passed"
+    },
+    "anatomy_final": {
+      "tests": 15,
+      "status": "passed"
+    },
+    "structure_geometry": {
+      "status": "passed",
+      "scenes": 48,
+      "faces": 55232,
+      "vertices": 229472,
+      "particles": 6172,
+      "checks": [
+        "finite meshes",
+        "camera parallax",
+        "cut clipping",
+        "internal inventories",
+        "flame containment",
+        "off state stops particles"
+      ]
+    },
+    "original_teaching_models": {
+      "cylinder_states": 45360,
+      "motor_cases": 216,
+      "wave_cases": 3888,
+      "coupling_cases": 648,
+      "part_poses": 1292,
+      "status": "passed"
+    },
+    "browser": "deployed-2/browser.json",
+    "generated_scene": "generated-1/browser.json"
+  },
+  "model_evaluation": {
+    "route": "vertex",
+    "model": "gemini-3.8-flash",
+    "generation_calls": 1,
+    "review_calls": 2,
+    "initial_score": 8.3,
+    "final_score": 8.28,
+    "final_scores": {
+      "structure": 8.5,
+      "motion_consistency": 8.2,
+      "effect_consistency": 7.8,
+      "inspectability": 8.8
+    },
+    "weights": {
+      "structure": 0.3,
+      "motion_consistency": 0.3,
+      "effect_consistency": 0.25,
+      "inspectability": 0.15
+    },
+    "visual_score": null,
+    "scope": "data-only technical model review; no screenshot vision, independent certification or success-rate estimate",
+    "review_correction": "Initial review incorrectly described one 20:40 gear pair as two-stage. Actual configuration has one stage; final prompt made this explicit. Raw review preserved.",
+    "cost_estimate_usd": 0.02390625,
+    "billing": "Actual recorded usage including reasoning at dated local prices; not supplier invoices"
+  },
+  "improvements": {
+    "animation": "Added 10/20/30 FPS targets, default20; one-pump1300ms observed updates14 ->25",
+    "section": "Highlighted cut boundaries; exact solid caps remain unavailable",
+    "scope_notice": "Prominent teaching-flow disclaimer"
+  },
+  "observed_performance": {
+    "one_pump_updates_per_1300ms": 25,
+    "five_component_updates_per_1500ms": 16,
+    "extended_seconds": 31.220900000000373,
+    "extended_updates": 471,
+    "extended_updates_per_second": 15.086048128016628,
+    "limits": "This PC, five-component scene, first two visible; browser-reported JS heap only; not low-end PC, process RSS, GPU or leak certification"
+  },
+  "limits": [
+    "复杂遮挡关系在多边形软件深度排序下的完全正确性",
+    "低配终端长时运行帧率稳定性与内存泄漏表现",
+    "齿轮副齿廓渐开线实际啮合接触力学与齿侧间隙精度",
+    "真实工况下流道压降、质量流量及燃烧室热力学平衡数据",
+    "No exact section caps, per-pixel depth buffer or exact transparent ordering",
+    "No CFD, combustion, heat transfer, load feedback, manufacturing CAD or video export",
+    "Original artifact URLs remain immutable; use the new artifact for structure4.0"
+  ],
+  "demo_url": "http://127.0.0.1:18282/api/anatomy/artifacts/7857c37ee8254881b6e53548ed0ca5f0",
+  "engine_url": "http://127.0.0.1:18282/api/anatomy/artifacts/45b2f60eb03f47bca8a0a9d83eb2c0c8",
+  "jet_url": "http://127.0.0.1:18282/api/anatomy/artifacts/283ec050d1e04a1ab76ff6cba082ec5c",
+  "pump_url": "http://127.0.0.1:18282/api/anatomy/artifacts/7a885c2c0f1f4aa2a4b1b9d5eedc59f6"
+}

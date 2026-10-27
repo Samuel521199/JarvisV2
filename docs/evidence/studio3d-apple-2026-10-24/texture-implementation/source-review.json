@@ -1,0 +1,37 @@
+{
+  "origin": "First-party implementation authored during this task; no new package or downloaded source code",
+  "dependencies": "Existing Blender 5.2, Python 3.13, fixed Three.js/glTF validator retained",
+  "checks": [
+    "Strict local UUID/material/mapping binding; model-supplied private resource denied",
+    "SHA verified on intake resolution and build; fixed local PNG only",
+    "No model scripts, shader code, arbitrary file paths or external texture URLs",
+    "Independent LOD data inside existing 4GiB/300s/256MiB worker limits",
+    "PNG header/intake limits retained; full decoder security not audited",
+    "GLB and artifact bytes immutable; failures retained"
+  ],
+  "not_verified": [
+    "OS sandbox security",
+    "full vulnerability audit of Blender image decoder",
+    "target-engine GPU performance",
+    "new browser visual interactions"
+  ],
+  "sources": {
+    "adapters/studio3d/asset_pipeline.py": "22e236d5bad5707174eaac4ad65e31cc51fed714aed1a3cee181d4d5f9e46fff",
+    "adapters/studio3d/projection.py": "45547f32e01c7c44ea13e2e1f2803dad6f2863894ddb88f29112934742975a23",
+    "adapters/studio3d/organic.py": "5bbd521a5a70de5b8b2dea71f6ca6afc6d7e47714128fac8e6da9b181af270b1",
+    "adapters/studio3d/worker.py": "9493b470b8e90d11dc57395a485b733ed77b2b8e6b4751d514a2b457f412311e",
+    "host/studio3d.py": "387a95082335bba88f12f16492fe3124b8951b2681183664dab1f1e672241860",
+    "host/studio3d_refinement.py": "dd54003dccc9eb87d44e11b21a78ffde17a215f0aa8bffd7df66f6a99423a69b",
+    "host/studio3d_viewer.py": "8d0f65d3aaedf5226e100da95ef3ca138533e3c89fa8a5a10c833b10419091f5",
+    "modules/skills/studio3d/contract.py": "91f084b3732cd2160372685388571b93cdcc89616d0dea12f0b2bcdd4fb3b98a",
+    "modules/skills/studio3d/refinement.py": "4d3c7bf8f59f17725af0a9b82f15bb314a1a76ee981190d4739aab377c6364df",
+    "modules/skills/studio3d/runtime.json": "b2b1dba880e6541e4f052b31ce1920c4e58e58240f1c25c41c2476b5dc102518",
+    "apps/workbench/settings-studio3d.js": "0a55cad04af029fc6dc42d4eb06310b2e8b875e0c51713e275f84eaa81713eb6",
+    "apps/workbench/studio3d-viewer.js": "bfa2dd0a66712777bb8ac391980e39c649093c97fefd617c5010dee0eec03678",
+    "seed/skills/conversation.json": "0a87df6e60995468c6104182ccd1624acb8cc89898bd20845eaf19cc9bd7a64d",
+    "tests/test_studio3d_textures.py": "fa6b224519189496147125918f3387fc1f3fa63d6e5745462a4c4cf3ebc1625b",
+    "tools/render_studio3d_lod_review.py": "00088d849f6a80ea79e59774e5eb4e55dfde7b12eb0e2c5b77931cac5aed90c4"
+  },
+  "imagegen_request": "imagegen-request.json",
+  "assessment": "assessment.json"
+}

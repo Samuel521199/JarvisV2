@@ -1,0 +1,331 @@
+{
+  "version": "completion-acceptance-v1",
+  "run_id": "20261027T131648Z-5fb07b0d",
+  "created_at": "2026-10-27T13:16:48.334944+00:00",
+  "plan_sha256": "e266b507b25a3c373265c96dedf0692360774825e0e3fae927bf4fccdcc5b9a8",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.13.0",
+  "source_unchanged": true,
+  "changed_sources": [],
+  "checks": [
+    {
+      "id": "regression",
+      "status": "PASS",
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "-m",
+        "tools.accept_completion",
+        "--test-report",
+        "D:\\Jarvis\\docs\\evidence\\workflow-shadow-1.13.0\\frozen-r2\\run\\tests.json"
+      ],
+      "log": "regression.log",
+      "returncode": 0,
+      "seconds": 861.112
+    },
+    {
+      "id": "frozen_test_set",
+      "status": "PASS",
+      "reason": "No missing, skipped or substituted tests"
+    },
+    {
+      "id": "architecture",
+      "status": "PASS",
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "tools/check_architecture.py"
+      ],
+      "log": "architecture.log",
+      "returncode": 0,
+      "seconds": 0.541
+    },
+    {
+      "id": "documentation",
+      "status": "PASS",
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "tools/check_docs.py",
+        "--root",
+        "."
+      ],
+      "log": "documentation.log",
+      "returncode": 0,
+      "seconds": 3.633
+    },
+    {
+      "id": "paired_rework_tasks",
+      "status": "PASS",
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "-m",
+        "tools.probe_work_budget",
+        "--output",
+        "D:\\Jarvis\\docs\\evidence\\workflow-shadow-1.13.0\\frozen-r2\\run\\paired"
+      ],
+      "log": "paired_rework_tasks.log",
+      "returncode": 0,
+      "seconds": 36.692
+    },
+    {
+      "id": "performance_and_observer_ui",
+      "status": "PASS",
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "-m",
+        "tools.probe_outcomes",
+        "--output",
+        "D:\\Jarvis\\docs\\evidence\\workflow-shadow-1.13.0\\frozen-r2\\run",
+        "--browser"
+      ],
+      "log": "performance_and_observer_ui.log",
+      "returncode": 0,
+      "seconds": 12.885
+    },
+    {
+      "id": "completion_ui",
+      "status": "PASS",
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "-m",
+        "tools.probe_outcomes",
+        "--output",
+        "D:\\Jarvis\\docs\\evidence\\workflow-shadow-1.13.0\\frozen-r2\\run",
+        "--browser-only",
+        "--completion-ui"
+      ],
+      "log": "completion_ui.log",
+      "returncode": 0,
+      "seconds": 4.119
+    },
+    {
+      "id": "browser.json",
+      "status": "PASS"
+    },
+    {
+      "id": "completion-browser.json",
+      "status": "PASS"
+    },
+    {
+      "id": "handoff_ui",
+      "status": "PASS",
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "-m",
+        "tools.probe_handoff_ui",
+        "--output",
+        "D:\\Jarvis\\docs\\evidence\\workflow-shadow-1.13.0\\frozen-r2\\run\\handoff"
+      ],
+      "log": "handoff_ui.log",
+      "returncode": 0,
+      "seconds": 14.618
+    },
+    {
+      "id": "handoff_browser_evidence",
+      "status": "PASS"
+    },
+    {
+      "id": "rework_ui",
+      "status": "PASS",
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "-m",
+        "tools.probe_rework_ui",
+        "--output",
+        "D:\\Jarvis\\docs\\evidence\\workflow-shadow-1.13.0\\frozen-r2\\run\\rework"
+      ],
+      "log": "rework_ui.log",
+      "returncode": 0,
+      "seconds": 11.006
+    },
+    {
+      "id": "rework_browser_evidence",
+      "status": "PASS"
+    },
+    {
+      "id": "budget_ui",
+      "status": "PASS",
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "-m",
+        "tools.probe_rework_ui",
+        "--output",
+        "D:\\Jarvis\\docs\\evidence\\workflow-shadow-1.13.0\\frozen-r2\\run\\budget",
+        "--budget"
+      ],
+      "log": "budget_ui.log",
+      "returncode": 0,
+      "seconds": 7.546
+    },
+    {
+      "id": "budget_browser_evidence",
+      "status": "PASS"
+    },
+    {
+      "id": "closure_ui",
+      "status": "PASS",
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "-m",
+        "tools.probe_rework_ui",
+        "--output",
+        "D:\\Jarvis\\docs\\evidence\\workflow-shadow-1.13.0\\frozen-r2\\run\\closure",
+        "--closure"
+      ],
+      "log": "closure_ui.log",
+      "returncode": 0,
+      "seconds": 12.011
+    },
+    {
+      "id": "closure_browser_evidence",
+      "status": "PASS"
+    },
+    {
+      "id": "quote_ui",
+      "status": "PASS",
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "-m",
+        "tools.probe_quote_ui",
+        "--output",
+        "D:\\Jarvis\\docs\\evidence\\workflow-shadow-1.13.0\\frozen-r2\\run\\quote"
+      ],
+      "log": "quote_ui.log",
+      "returncode": 0,
+      "seconds": 15.252
+    },
+    {
+      "id": "quote_browser_evidence",
+      "status": "PASS"
+    },
+    {
+      "id": "quote_request_ui",
+      "status": "PASS",
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "-m",
+        "tools.probe_quote_ui",
+        "--output",
+        "D:\\Jarvis\\docs\\evidence\\workflow-shadow-1.13.0\\frozen-r2\\run\\quote_request",
+        "--requests"
+      ],
+      "log": "quote_request_ui.log",
+      "returncode": 0,
+      "seconds": 11.735
+    },
+    {
+      "id": "quote_request_browser_evidence",
+      "status": "PASS"
+    },
+    {
+      "id": "quote_sources_ui",
+      "status": "PASS",
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "-m",
+        "tools.probe_quote_ui",
+        "--output",
+        "D:\\Jarvis\\docs\\evidence\\workflow-shadow-1.13.0\\frozen-r2\\run\\quote_sources",
+        "--sources"
+      ],
+      "log": "quote_sources_ui.log",
+      "returncode": 0,
+      "seconds": 13.3
+    },
+    {
+      "id": "quote_sources_browser_evidence",
+      "status": "PASS"
+    },
+    {
+      "id": "quote_changes_ui",
+      "status": "PASS",
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "-m",
+        "tools.probe_quote_ui",
+        "--output",
+        "D:\\Jarvis\\docs\\evidence\\workflow-shadow-1.13.0\\frozen-r2\\run\\quote_changes",
+        "--changes"
+      ],
+      "log": "quote_changes_ui.log",
+      "returncode": 0,
+      "seconds": 13.078
+    },
+    {
+      "id": "quote_changes_browser_evidence",
+      "status": "PASS"
+    },
+    {
+      "id": "quote_rework_ui",
+      "status": "PASS",
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "-m",
+        "tools.probe_quote_ui",
+        "--output",
+        "D:\\Jarvis\\docs\\evidence\\workflow-shadow-1.13.0\\frozen-r2\\run\\quote_rework",
+        "--inheritance"
+      ],
+      "log": "quote_rework_ui.log",
+      "returncode": 0,
+      "seconds": 16.889
+    },
+    {
+      "id": "quote_rework_browser_evidence",
+      "status": "PASS"
+    },
+    {
+      "id": "recovery_ui",
+      "status": "PASS",
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "-m",
+        "tools.probe_quote_ui",
+        "--output",
+        "D:\\Jarvis\\docs\\evidence\\workflow-shadow-1.13.0\\frozen-r2\\run\\recovery",
+        "--recovery"
+      ],
+      "log": "recovery_ui.log",
+      "returncode": 0,
+      "seconds": 16.796
+    },
+    {
+      "id": "recovery_browser_evidence",
+      "status": "PASS"
+    },
+    {
+      "id": "delivery_shadow_ui",
+      "status": "PASS",
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "-m",
+        "tools.probe_delivery_shadow_ui",
+        "--output",
+        "D:\\Jarvis\\docs\\evidence\\workflow-shadow-1.13.0\\frozen-r2\\run\\delivery_shadow"
+      ],
+      "log": "delivery_shadow_ui.log",
+      "returncode": 0,
+      "seconds": 15.741
+    },
+    {
+      "id": "delivery_shadow_browser_evidence",
+      "status": "PASS"
+    },
+    {
+      "id": "source_unchanged",
+      "status": "PASS"
+    }
+  ],
+  "tests_run": 591,
+  "local_verdict": "PASS",
+  "full_product_verdict": "NOT_ACCEPTED",
+  "pending": {
+    "生产版本": "本轮只启动临时测试实例；实际服务加载版本及真实数据迁移仍需另行核对。",
+    "真实工作收益": "尚无匹配旧版与候选版的真实任务对照；质量、人工介入、成本与 JPF 差距仍未测。",
+    "通用多 Bot": "关联工作的工具动作额度已接通；负责人任期、委派、接管和完整费用预算仍未实现，不能借用线程并发测试签收。",
+    "通用自愈与自改造": "模块恢复接续不代表自动诊断修码；通用候选发布、恢复和累计非退化仍需验收。",
+    "长期成长与陪伴": "需要真实使用反馈、延迟复测、跨任务迁移和错误复发记录；加速时钟不能替代长期效果。",
+    "多机器人": "需要设备、控制适配器及真实停止/断连证据；仿真通过不等于物理验收。"
+  },
+  "quality_score": null,
+  "learning_gain": null,
+  "production_deployed": false
+}

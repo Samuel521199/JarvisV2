@@ -1,0 +1,100 @@
+{
+  "version": "workflow-handoff-1.1.0",
+  "status": "LOCAL_SLICE_PASS",
+  "production_deployed": false,
+  "full_product_accepted": false,
+  "quality_gain": null,
+  "prediction_delta": null,
+  "tests": {
+    "reports": [
+      "regression-r1.json",
+      "memory-growth-regression.json",
+      "candidate-boundary-regression-r2.json"
+    ],
+    "executions": 216,
+    "unique_tests": 208,
+    "all_passed": true,
+    "current_acceptance_suite_size": 190,
+    "current_suite_missing_test_ids": []
+  },
+  "checks": [
+    {
+      "name": "navigation",
+      "exit_code": 0,
+      "output": "OK navigation: 0 outdated\n"
+    },
+    {
+      "name": "documentation",
+      "exit_code": 0,
+      "output": "OK documents=28 chapters=24 diagrams=46 local_links=3505 errors=0\n"
+    },
+    {
+      "name": "architecture",
+      "exit_code": 0,
+      "output": "{\"python_files\": 184, \"errors\": []}\n"
+    },
+    {
+      "name": "diff",
+      "exit_code": 0,
+      "output": ""
+    }
+  ],
+  "browser_reports": [
+    "ui-r4/browser.json",
+    "completion-ui/completion-browser.json",
+    "performance/browser.json"
+  ],
+  "browser_passed": true,
+  "performance_report": "performance/performance.json",
+  "performance_gates": {
+    "task_added_p95_budget": true,
+    "foreground_input_budget": true,
+    "foreground_reply_added_budget": true,
+    "model_calls_zero": true,
+    "server_errors_zero": true
+  },
+  "source_digests": {
+    "host/goals.py": "c74a16cdce23c48f8f7913e40a2f00e3333981eb9012f4e3bcbbf58a6237b609",
+    "host/task_scheduler.py": "255c119e5cd725c4435a3ec7fcdf6a6c48cb8c910cd489146b7966b090552c4c",
+    "host/completion.py": "7efd92411c557f2ad7e242cc2f99234ae99bb3f55285600370add1711f6d476b",
+    "host/memory.py": "dc876998dbac2b712aa232d108bbc4f806700a59f3d7302d889cf148ceecee97",
+    "modules/task_resource/scheduling.py": "fdb69d7b5e8935a4b5aee3f88047c5626eae740f0687439de27ad03287032ec2",
+    "modules/task_resource/completion.py": "5ea4db5317dfad6175d82b0e2676684b7ec9d9adfafe9eaf0e60b8f0b12c459f",
+    "modules/task_resource/coverage.py": "3a911fe895fba7c8a55121ad9ea8d8b7518ac24c9a4e641f217c665d78536de0",
+    "adapters/storage/completion_schema.py": "6e2b70f6a305442474d5ff0629463055dbc015ce89d2a1f0e1b25572c4a4cfc2",
+    "apps/workbench/goals.js": "cc9772cc1938991c4134dd50d41ee9c0b814d4f2da49de6d11dffad3965c990f",
+    "apps/workbench/ui.js": "f8b713dace75cf6062e49e03cac47524b39194a5b34432a5f061a8c091ca5680",
+    "tests/test_goal_plans.py": "c3e443992d633946be4e662a3d8b583c8a0c4409f5b2a3761e265a4a336892b1",
+    "tests/test_completion_loop.py": "fa0ef794f991c25d24f72515aa261c5e52fcff24b54c0b348dab29537a00d637",
+    "tests/test_workflow_handoff.py": "984430f4b94b7d52c0269b0027f0556bae334ec65a922a7799f90432c2b06cdc",
+    "tools/accept_completion.py": "243b53f24c545f919e0382215797a0141227133513ea7c7fe86472382fdd999c",
+    "tools/handoff_crash_worker.py": "c81e0f9a2824ea1d47e3c3ef4337460b26d4af07840bbd60ed31d2db6bea7732",
+    "tools/probe_handoff_ui.py": "752f5e321087e411a4ebfe49ddca95954df6da8c9a77e935cf2646648c92fd6a",
+    "tools/probe_handoff_ui.cjs": "b15cf93ec5bb35500115abc3ef95a7c940aa0309c833f4388cb0c9fab80f9180"
+  },
+  "digest_timing": "Final code digests recorded after test execution; this is not a claim that a whole-worktree snapshot was frozen before all tests",
+  "changed_during_final_checks": [],
+  "forecast_r1_sha256": "035f34e43b8b1f7c974202c0820fef905abe86674c5089be6be28a44a76ef66f",
+  "document_digests": {
+    "README.md": "bcc6c2664d2015db1b640f62786d753d750ef396cf8bf8c82ce69ffa7221a56e",
+    "docs/README.md": "394caff58408f6834ee1c27f00fbf20f209b401a5f680b36e2399e12234c279b",
+    "docs/core-bootstrap.md": "7e4ad7a7116b1bb4c6b5409131d2a197c27febe12c1fc6021345de12e56faf16",
+    "docs/contracts.md": "ee6419e382c30c0f80baf2542c4009de7cc96b85b0579055d614b0794f2c0cfe",
+    "docs/tasks-agents.md": "61292e129b00b3534c924ca6539b237c41d3dda54d7932b72135b8ea7538a79b",
+    "docs/knowledge-learning.md": "6d69ef5e1d76696ed5faf156deb699c5d1d8158b763b04428a6a453c6f68b147",
+    "docs/decisions-review.md": "8d1d72e937bccc3a0b9bda87a43ca9699d45b06db7729b1cfb4cede5fc463317",
+    "docs/grok-bot-comparison.md": "8cd611f222851a5621400df5da154de5ca1da0ca3d2b188257a2fca081103b8c",
+    "docs/delivery-validation.md": "e7b2c29de72d9beaccae112095372ce79d59b14b4d0e3c6ba4569be6113141de",
+    "docs/manifest.json": "56b517817267ab0059cf0b6bdc824fe66421503406fca4fff8e95dd68328b55a"
+  },
+  "unverified": [
+    "production data migration and actual loaded version",
+    "automatic natural-language requirement extraction",
+    "semantic goal correctness",
+    "standing mandate automation",
+    "selective linked repair",
+    "Bot ownership and transfer",
+    "general report-method learning",
+    "long-term quality/cost gains"
+  ]
+}

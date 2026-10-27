@@ -1,0 +1,354 @@
+{
+  "adapter_version": "1.0.0",
+  "project_version": "0.1.0",
+  "status": "verified_with_deployment_and_quality_limits",
+  "date": "2026-10-23",
+  "implementation": "Jarvis first-party bounded JSON modeller + installed Blender subprocess, single composite skill.",
+  "main_service": {
+    "origin": "http://127.0.0.1:18282",
+    "pid": 5956,
+    "verified": [
+      "skill directory and conditions",
+      "native presets",
+      "explicit Argon planning through existing ledger",
+      "candidate re-use without new model call",
+      "Cycles rendering",
+      "bounded exports and download hash",
+      "cancellation and request deduplication"
+    ],
+    "pending": "20MiB dedicated GLB upload parser needs normal service restart. Automatic approval rejected restart; current UI reports 128KiB temporary limit."
+  },
+  "isolated_service": {
+    "origin": "http://127.0.0.1:18283",
+    "own_data_root": true,
+    "credentials_copied": false,
+    "verified": [
+      "2MiB GLB file upload with declared provenance",
+      "EEVEE rendering of imported meshes/materials",
+      "browser upload/accept/cancel"
+    ],
+    "cleaned_up": true,
+    "max_20MiB_boundary": "declared and validated by size checks, not a 20MiB end-to-end stress test"
+  },
+  "cases": {
+    "gt-final-2": {
+      "status": "passed",
+      "id": "8956ac6ea25a4aa4ac9a3bd287ef7697",
+      "origin": "http://127.0.0.1:18282",
+      "visible_objects": 107,
+      "triangles": 60414,
+      "render": {
+        "device": "CPU",
+        "engine": "CYCLES",
+        "resolution": [
+          1280,
+          854
+        ],
+        "samples": 64
+      },
+      "glb_roundtrip": {
+        "bounds_m": [
+          [
+            -2.2580511569976807,
+            -1.1200000047683716,
+            0.00599996093660593
+          ],
+          [
+            2.2799999713897705,
+            1.1200000047683716,
+            1.2313282489776611
+          ]
+        ],
+        "max_bound_error_m": 0.0006237030029296875,
+        "mesh_objects": 107,
+        "passed": true
+      },
+      "resources": {
+        "cpu_seconds": 1200,
+        "elapsed_seconds": 101.36503970000012,
+        "exit_code": 0,
+        "isolation": "Trusted fixed first-party worker with resource Job; not an OS security sandbox. No model Python, external imports or blend loading.",
+        "memory_bytes": 4294967296,
+        "output_bytes": 268435456,
+        "peak_memory_bytes": 1513623552,
+        "threads": 4,
+        "wall_seconds": 300
+      },
+      "record": "gt-final-2/result.json"
+    },
+    "gt-current-3": {
+      "status": "passed",
+      "id": "34f02c130d83439583b4f2b6628282f6",
+      "origin": "http://127.0.0.1:18282",
+      "visible_objects": 107,
+      "triangles": 60414,
+      "render": {
+        "device": "CPU",
+        "engine": "CYCLES",
+        "requested_engine": "CYCLES",
+        "resolution": [
+          960,
+          640
+        ],
+        "samples": 24
+      },
+      "glb_roundtrip": {
+        "bounds_m": [
+          [
+            -2.257427453994751,
+            -1.1200000047683716,
+            0.0059999823570251465
+          ],
+          [
+            2.2799999713897705,
+            1.1200000047683716,
+            1.2313282489776611
+          ]
+        ],
+        "max_bound_error_m": 2.9802322387695312e-08,
+        "mesh_objects": 107,
+        "passed": true
+      },
+      "resources": {
+        "cpu_seconds": 1200,
+        "elapsed_seconds": 27.93715929999962,
+        "exit_code": 0,
+        "isolation": "Trusted fixed first-party worker with resource Job; not an OS security sandbox. No model Python, external imports or blend loading.",
+        "memory_bytes": 4294967296,
+        "output_bytes": 268435456,
+        "peak_memory_bytes": 1068167168,
+        "threads": 4,
+        "wall_seconds": 300
+      },
+      "record": "gt-current-3/result.json"
+    },
+    "argon-reuse-2": {
+      "status": "passed",
+      "id": "9126fb320f8c4fd692e6e0deebf05586",
+      "origin": "http://127.0.0.1:18282",
+      "visible_objects": 9,
+      "triangles": 26496,
+      "render": {
+        "device": "CPU",
+        "engine": "CYCLES",
+        "resolution": [
+          960,
+          640
+        ],
+        "samples": 24
+      },
+      "glb_roundtrip": {
+        "bounds_m": [
+          [
+            -0.12364586442708969,
+            -0.12364586442708969,
+            -0.012000000104308128
+          ],
+          [
+            0.12364586442708969,
+            0.12364586442708969,
+            0.12399999797344208
+          ]
+        ],
+        "max_bound_error_m": 0.0,
+        "mesh_objects": 9,
+        "passed": true
+      },
+      "resources": {
+        "cpu_seconds": 1200,
+        "elapsed_seconds": 30.081036100000347,
+        "exit_code": 0,
+        "isolation": "Trusted fixed first-party worker with resource Job; not an OS security sandbox. No model Python, external imports or blend loading.",
+        "memory_bytes": 4294967296,
+        "output_bytes": 268435456,
+        "peak_memory_bytes": 1111019520,
+        "threads": 4,
+        "wall_seconds": 300
+      },
+      "record": "argon-reuse-2/result.json"
+    },
+    "import-eevee-3": {
+      "status": "passed",
+      "id": "cdaa8be45ecf4c4e9753b51a8095a093",
+      "origin": "http://127.0.0.1:18283",
+      "visible_objects": 107,
+      "triangles": 60414,
+      "render": {
+        "device": "AUTO",
+        "engine": "BLENDER_EEVEE",
+        "requested_engine": "BLENDER_EEVEE_NEXT",
+        "resolution": [
+          960,
+          640
+        ],
+        "samples": null
+      },
+      "glb_roundtrip": {
+        "bounds_m": [
+          [
+            -2.257427453994751,
+            -1.1200000047683716,
+            0.006000041961669922
+          ],
+          [
+            2.2799999713897705,
+            1.1200000047683716,
+            1.2313282489776611
+          ]
+        ],
+        "max_bound_error_m": 5.960464477539063e-08,
+        "mesh_objects": 107,
+        "passed": true
+      },
+      "resources": {
+        "cpu_seconds": 1200,
+        "elapsed_seconds": 51.43581240000003,
+        "exit_code": 0,
+        "isolation": "Trusted fixed first-party worker with resource Job; not an OS security sandbox. No model Python, external imports or blend loading.",
+        "memory_bytes": 4294967296,
+        "output_bytes": 268435456,
+        "peak_memory_bytes": 3202699264,
+        "threads": 4,
+        "wall_seconds": 300
+      },
+      "record": "import-eevee-3/result.json"
+    }
+  },
+  "unit_tests": {
+    "passed": 15,
+    "record": "unit-delivery.txt",
+    "scope": "Latest plugin source including strict duplicate-key rejection, pre-model executable pin, exception lock cleanup and case-insensitive skill trigger."
+  },
+  "http_checks": [
+    "invalid schema and identifiers rejected before native work",
+    "nonce enforced",
+    "single job rejects concurrent native build",
+    "same request ID returns existing task",
+    "cancel stops own native task without delivery",
+    "cancelled file cannot be retrieved"
+  ],
+  "browser": {
+    "settings": "browser-final/result.json",
+    "import": "import-ui.json",
+    "js_errors": []
+  },
+  "regression": {
+    "initial": {
+      "passed": 316,
+      "record": "regression.txt"
+    },
+    "second": {
+      "total": 317,
+      "errors": 1,
+      "failed_case": "test_anatomy_race.RaceNative.test_real_race_geometry_paths_motion_and_export",
+      "record": "regression-final.txt"
+    },
+    "failed_case_serial_repeat": {
+      "passed": 5,
+      "record": "race-repeat.txt"
+    },
+    "final_serial": {
+      "status": "passed",
+      "tests": 318,
+      "seconds": 420.019,
+      "record": "regression-serial.txt",
+      "scope": "Serial test snapshot begun before last preflight, exception cleanup, upload duplicate-key and skill-trigger hardening. Those final changes separately passed the latest 15-case suite."
+    },
+    "interpretation": "An existing native CAD race case failed once during combined verification and passed isolated repeat. Exact transient cause not established; no budget or assertion relaxed."
+  },
+  "model_review": {
+    "model": "gemini-3.8-flash",
+    "evidence_mode": "data-only",
+    "scores": {
+      "execution_closure": 8.5,
+      "geometry_flexibility": 7.0,
+      "production_readiness": 3.0
+    },
+    "visual_score": null,
+    "record": "model-review.json",
+    "corrections": [
+      "模型称宿主自愈不准确：两次回读检查修复由本次开发完成，未实现Jarvis自动修改自身代码。",
+      "缺少蜗壳和分流叶片是本案例需求中主动省略或已声明简化，不作为未交付所需部件。",
+      "CFD/制造不是视觉资产的必要条件；生产3A缺口主要是拓扑、UV质量、烘焙贴图、LOD和引擎验收。",
+      "本轮没有把图像提供给评审模型；视觉评分保持null。"
+    ]
+  },
+  "failures_preserved": [
+    "gt-final-1/result.json",
+    "argon-impeller-1/result.json",
+    "import-eevee-1/result.json",
+    "import-eevee-2/result.json"
+  ],
+  "unverified": [
+    "AAA production acceptance",
+    "specific OEM racing car fidelity",
+    "general model-generation success rate",
+    "production topology/UV quality",
+    "baked PBR texture maps",
+    "LOD and game engine performance",
+    "mechanical manufacturing or CFD",
+    "GPU device identity and throughput ceiling",
+    "security sandbox for hostile native asset decoders"
+  ],
+  "next_priority": [
+    "use a licensed part-separated real vehicle asset and references",
+    "PBR baking plus topology/UV checks",
+    "LODs and a specified game-engine asset budget",
+    "visual model review with actual images, plus correction iteration"
+  ],
+  "deployment_note": "Latest host preflight/exception-path hardening and dedicated large-upload parser are verified in source tests; main process reload request was rejected. Main capabilities enumerated above were verified through actual API.",
+  "source_sha256": {
+    "host/studio3d.py": "edd3f3c3134a544603fa252193bee3c4c93156ab91b0c585ea2590fd58487635",
+    "modules/skills/studio3d/assets.py": "7b31df1df844bb3afca0093ccd15c592b380c3944f998cc616b27db4f5bdf205",
+    "modules/skills/studio3d/BLENDER-WORKER-LICENSE.txt": "92e8c0f0e4d0f8adc34eef4fa03da369aeb267a5a5f94473df138ff6645f30b9",
+    "modules/skills/studio3d/contract.py": "9434f1621dc2a3a2abde15fc195cf292881eabacbf89a6ffb28b4b773d862995",
+    "modules/skills/studio3d/plugin.json": "7a71fa153e4b84097739d74db0772f540530a2528cffaba664f0ad01aa52d260",
+    "modules/skills/studio3d/presets.py": "29ddf0e4183014d4104f848f61152643afa8def26e5440a51e3430705217fccc",
+    "modules/skills/studio3d/runtime.json": "bddad269e59546cd68be22e26bafd9a0201018e560856ef54efc853fc7c33356",
+    "adapters/studio3d/worker.py": "ca97bc6df662bf0da82450dbccc9397cd67c40dbf6264521b0ce0186e1bfd4e7",
+    "apps/studio3d/worker.py": "60af564595dab82acf3118ba581e5bc6b71b738c60ecf32a66c5d5cf36e3c4db",
+    "apps/workbench/settings-studio3d.js": "4df0738a140898abdbfb3e233f488da344a48d3410c9b8354e6bb0ef150e4655",
+    "apps/workbench/studio3d.css": "21e62d9a7af650e5ef31698c8a01f11d6460cb642792fb8cdea15f7d697a3983",
+    "seed/skills/conversation.json": "5206a71c6f4c62d69cbe6e70ad489cf08be7e54640e4474a83535509ff081917"
+  },
+  "paid_model_calls": {
+    "count": 3,
+    "calls": [
+      {
+        "case": "argon-probe.json",
+        "turn": "studio3d-argon-probe-ab1b4e46070e4661b7898db5b82416d4",
+        "model": "gemini-4-argon",
+        "amount": 0.001128,
+        "currency": "USD"
+      },
+      {
+        "case": "argon-impeller-1/result.json",
+        "turn": "studio3d-4696dd34aba04bd9b23e6f4d121277e0",
+        "model": "gemini-4-argon",
+        "amount": 0.07026,
+        "currency": "USD"
+      },
+      {
+        "case": "model-review.json",
+        "turn": "studio3d-review-fa0b879fcbc34c4f863fb175489caefb",
+        "model": "gemini-3.8-flash",
+        "amount": 0.0035535,
+        "currency": "USD"
+      }
+    ],
+    "estimated_total_usd": 0.07494150000000001,
+    "basis": "Existing Jarvis stored token rate table; not a provider invoice.",
+    "no_model_retry_for_native_fixes": true
+  },
+  "architecture": {
+    "python_files": 110,
+    "errors": 0,
+    "scope": "Shared workspace snapshot, other chats may add files after earlier regression snapshots."
+  },
+  "docs": {
+    "documents": 26,
+    "chapters": 23,
+    "diagrams": 39,
+    "errors": 0
+  }
+}

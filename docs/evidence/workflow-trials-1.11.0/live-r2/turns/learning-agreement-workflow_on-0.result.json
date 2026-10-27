@@ -1,0 +1,73 @@
+{
+  "case_id": "learning-agreement",
+  "domain": "learning",
+  "arm": "workflow_on",
+  "turn": 0,
+  "freeze_digest": "6cc071169f4fdcc13865485eb587313ffcbbefdc9dc6b35076d6390c18412b57",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\"question\": \"The robot ___ (move/moves) forward.\", \"answer\": null, \"encouragement\": \"没关系，慢慢来，相信自己的第一直觉试一下就好。\"}",
+  "skill_id": "english-coach",
+  "skill_version": "1.0.0",
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 3.9387,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 74,
+        "prompt_tokens": 1056,
+        "total_tokens": 1130
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.0010695,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/learning-agreement-workflow_on-0.reply.md",
+      "sha256": "e7121a60424349efc6b5f3341c144adb394bb0f4a4740a111517528df66b9358",
+      "kind": "original_session_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "question",
+        "status": "passed"
+      },
+      {
+        "id": "answer",
+        "status": "passed"
+      },
+      {
+        "id": "encouragement_present",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "record_digest": "39113cbaab695c10e594cd65873f8ca0021c6a620c07f16ff8357642248c4cfb"
+}

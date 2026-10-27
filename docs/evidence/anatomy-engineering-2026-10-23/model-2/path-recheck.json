@@ -1,0 +1,507 @@
+{
+  "id": "558b1e03f16245e2ba595daa831d2a87",
+  "skill": "gears",
+  "mechanism": "engineering",
+  "configuration": {
+    "description": "7件套参数化机械装配：包含主传动轴、深沟球轴承、前后定位隔套、带4孔端面法兰及两枚安装螺栓。依据实体几何校核，螺栓配合点设于法兰中面正向半厚度偏置（gap=5mm），使螺栓头肩面贴合法兰外端面，螺杆顺利穿入通孔并消除干涉。",
+    "experiments": [
+      {
+        "kind": "motor-pump",
+        "params": {
+          "voltage": 12,
+          "resistance": 2,
+          "inductance": 0.05,
+          "constant": 0.1,
+          "inertia": 0.002,
+          "friction": 0.0002,
+          "pump_coefficient": 1e-05,
+          "duration": 3
+        }
+      },
+      {
+        "kind": "otto",
+        "params": {
+          "compression": 8,
+          "gamma": 1.4,
+          "temperature": 300,
+          "pressure": 101325,
+          "heat_input": 800000,
+          "displacement_cc": 500
+        }
+      }
+    ],
+    "mates": [
+      {
+        "child_port": "axis",
+        "fit": "clearance",
+        "gap": -30,
+        "joint": "revolute",
+        "parent": "shaft",
+        "parent_port": "axis",
+        "part": "bearing",
+        "twist": 0
+      },
+      {
+        "child_port": "axis",
+        "fit": "clearance",
+        "gap": -50,
+        "joint": "fixed",
+        "parent": "shaft",
+        "parent_port": "axis",
+        "part": "spacer-a",
+        "twist": 0
+      },
+      {
+        "child_port": "axis",
+        "fit": "clearance",
+        "gap": -10,
+        "joint": "fixed",
+        "parent": "shaft",
+        "parent_port": "axis",
+        "part": "spacer-b",
+        "twist": 0
+      },
+      {
+        "child_port": "axis",
+        "fit": "clearance",
+        "gap": 40,
+        "joint": "fixed",
+        "parent": "shaft",
+        "parent_port": "axis",
+        "part": "flange",
+        "twist": 0
+      },
+      {
+        "child_port": "axis",
+        "fit": "clearance",
+        "gap": 5,
+        "joint": "fixed",
+        "parent": "flange",
+        "parent_port": "bolt-0",
+        "part": "bolt-a",
+        "twist": 0
+      },
+      {
+        "child_port": "axis",
+        "fit": "clearance",
+        "gap": 5,
+        "joint": "fixed",
+        "parent": "flange",
+        "parent_port": "bolt-2",
+        "part": "bolt-b",
+        "twist": 0
+      }
+    ],
+    "parts": [
+      {
+        "id": "shaft",
+        "kind": "shaft",
+        "material": "steel",
+        "name": "主传动轴",
+        "params": {
+          "diameter": 20,
+          "length": 180
+        },
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "id": "bearing",
+        "kind": "bearing",
+        "material": "steel",
+        "name": "支撑深沟球轴承",
+        "params": {
+          "outer": 47,
+          "inner": 20.2,
+          "length": 14
+        },
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "id": "spacer-a",
+        "kind": "tube",
+        "material": "bronze",
+        "name": "轴承后定位隔套",
+        "params": {
+          "outer": 28,
+          "inner": 20.4,
+          "length": 16
+        },
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "id": "spacer-b",
+        "kind": "tube",
+        "material": "bronze",
+        "name": "轴承前定位隔套",
+        "params": {
+          "outer": 28,
+          "inner": 20.4,
+          "length": 16
+        },
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "id": "flange",
+        "kind": "flange",
+        "material": "steel",
+        "name": "前端固定带孔法兰",
+        "params": {
+          "outer": 80,
+          "inner": 20.4,
+          "thickness": 10,
+          "bolt_circle": 50,
+          "bolt_diameter": 6.4,
+          "bolts": 4
+        },
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "id": "bolt-a",
+        "kind": "bolt",
+        "material": "steel",
+        "name": "法兰紧固螺栓-A",
+        "params": {
+          "diameter": 5.8,
+          "length": 25,
+          "head_diameter": 10,
+          "head_height": 5
+        },
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "id": "bolt-b",
+        "kind": "bolt",
+        "material": "steel",
+        "name": "法兰紧固螺栓-B",
+        "params": {
+          "diameter": 5.8,
+          "length": 25,
+          "head_diameter": 10,
+          "head_height": 5
+        },
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "schema": "anatomy.engineering.v1",
+    "steps": [
+      {
+        "direction": [
+          0,
+          0,
+          1
+        ],
+        "distance": 0,
+        "instruction": "将主传动轴基准固定于装配工位。",
+        "part": "shaft"
+      },
+      {
+        "direction": [
+          0,
+          0,
+          -1
+        ],
+        "distance": 80,
+        "instruction": "自轴端沿负Z向推入后定位隔套A至轴向预设位置。",
+        "part": "spacer-a"
+      },
+      {
+        "direction": [
+          0,
+          0,
+          -1
+        ],
+        "distance": 70,
+        "instruction": "自轴端沿负Z向安装深沟球轴承，贴靠隔套端面。",
+        "part": "bearing"
+      },
+      {
+        "direction": [
+          0,
+          0,
+          -1
+        ],
+        "distance": 60,
+        "instruction": "自轴端滑入前定位隔套B，完成轴承轴向夹持定位。",
+        "part": "spacer-b"
+      },
+      {
+        "direction": [
+          0,
+          0,
+          1
+        ],
+        "distance": 70,
+        "instruction": "自轴正向端推入法兰盘，对齐轴心并推至指定间隙位置。",
+        "part": "flange"
+      },
+      {
+        "direction": [
+          0,
+          0,
+          -1
+        ],
+        "distance": 40,
+        "instruction": "将螺栓A自正向插入法兰第0号螺栓孔，使螺栓头肩面贴合法兰外端面。",
+        "part": "bolt-a"
+      },
+      {
+        "direction": [
+          0,
+          0,
+          -1
+        ],
+        "distance": 40,
+        "instruction": "将螺栓B自正向插入法兰第2号螺栓孔，使螺栓头肩面贴合法兰外端面。",
+        "part": "bolt-b"
+      }
+    ],
+    "title": "传动轴轴承隔套与法兰螺栓装配",
+    "unfulfilled": [
+      "本导出CAD模型不包含真实螺纹几何、倒角与制造公差。",
+      "步骤指示仅用于装配展示，不构成无碰撞连续插入轨迹规划验证。",
+      "孔轴径向间隙属于配合尺寸检查，不作为空间实体碰撞检查指标。"
+    ],
+    "units": "mm"
+  },
+  "adapter_version": "5.0.0",
+  "source": {
+    "repository": "https://github.com/wheresryan22/anatomy",
+    "commit": "1482e8469b0a9e0d8cc18ea2740a01423d29ae80",
+    "license": "MIT",
+    "copyright": "Copyright (c) 2026 Ryan",
+    "files": {
+      "SKILL.md.txt": "3423ada45a05033bb6e320dfc3b3ac832569969a5afb059bbfc9096c5cf0c71b",
+      "LICENSE": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+      "kit/iso-kit.mjs": "6d3ecc725d30c3b0346da309cf61dfa5a65017c23620bbd4093009d4fb104018",
+      "kit/iso.css": "ef19bac5a42ba9be42b56b2c1cf7fc7e21d332a8060765e9ca1d987b8ab23924",
+      "references/kit.md.txt": "684672e069fdb52735efabc3f4310dedd840d0c8066a8dc7784be2b7e656be71",
+      "references/craft.md.txt": "38761fa9b81d66b30e50b05488501d4815830d3627f153d60f76ca783f598936",
+      "references/motion.md.txt": "dda401ca1b4661a5f0b7c1e33dac6e7e4b8c13d51ca5d9312123a5c02dab320b",
+      "references/verify.md.txt": "fb81437fc5d75094a34432eb6f545644aa228e15173a27d08b3cace912033561"
+    },
+    "upstream_files": {
+      "SKILL.md": "3423ada45a05033bb6e320dfc3b3ac832569969a5afb059bbfc9096c5cf0c71b",
+      "LICENSE": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+      "kit/iso-kit.mjs": "6d3ecc725d30c3b0346da309cf61dfa5a65017c23620bbd4093009d4fb104018",
+      "kit/iso.css": "ef19bac5a42ba9be42b56b2c1cf7fc7e21d332a8060765e9ca1d987b8ab23924",
+      "references/kit.md": "684672e069fdb52735efabc3f4310dedd840d0c8066a8dc7784be2b7e656be71",
+      "references/craft.md": "38761fa9b81d66b30e50b05488501d4815830d3627f153d60f76ca783f598936",
+      "references/motion.md": "dda401ca1b4661a5f0b7c1e33dac6e7e4b8c13d51ca5d9312123a5c02dab320b",
+      "references/verify.md": "fb81437fc5d75094a34432eb6f545644aa228e15173a27d08b3cace912033561"
+    },
+    "note": "Markdown reference snapshots use .md.txt locally; bytes and original upstream paths/hashes are retained."
+  },
+  "sha256": "dec54a93e6b9ad6cb117d40862a73b66e25070a238e72a2e670f340e5e353f0a",
+  "bytes": 1533301,
+  "url": "/api/anatomy/artifacts/558b1e03f16245e2ba595daa831d2a87",
+  "path": "user-data\\test-runs\\anatomy-engineering-host\\artifacts\\anatomy\\558b1e03f16245e2ba595daa831d2a87.html",
+  "model_calls": 0,
+  "downloads": {
+    "assembly.step": {
+      "sha256": "90dedce115e272a7946bcfe9cbe3c1a0e140bc4528a0ac7ffdc7bf3c2cecc113",
+      "bytes": 110012,
+      "url": "/api/anatomy/exports/558b1e03f16245e2ba595daa831d2a87/assembly.step"
+    },
+    "assembly.stl": {
+      "sha256": "f9b9ae46f1e5d0731493fcbedf1b88d80db57c57dea10eaf9b9124c5f2310ec7",
+      "bytes": 507084,
+      "url": "/api/anatomy/exports/558b1e03f16245e2ba595daa831d2a87/assembly.stl"
+    },
+    "cad-package.zip": {
+      "sha256": "27b206aaa6452aa3d04b2134c05f59b7ee5d4ef718c94411fe5e259828dd5b7d",
+      "bytes": 185192,
+      "url": "/api/anatomy/exports/558b1e03f16245e2ba595daa831d2a87/cad-package.zip"
+    },
+    "bom.csv": {
+      "sha256": "5a30c63f5b2e1489aa4605b937240d1350a0072109077c80166fcd62f69f5bfe",
+      "bytes": 564,
+      "url": "/api/anatomy/exports/558b1e03f16245e2ba595daa831d2a87/bom.csv"
+    },
+    "flange-profile.dxf": {
+      "sha256": "8498ea995963e5c611f2acd5d3d854330373252e6976ce5c29cfbc9a62abd908",
+      "bytes": 461,
+      "url": "/api/anatomy/exports/558b1e03f16245e2ba595daa831d2a87/flange-profile.dxf"
+    },
+    "configuration.json": {
+      "sha256": "aee24df9de0163894d881175bb436f23c024908ffbeede6b60b5d7d5e4e4edbd",
+      "bytes": 6890,
+      "url": "/api/anatomy/exports/558b1e03f16245e2ba595daa831d2a87/configuration.json"
+    },
+    "report.json": {
+      "sha256": "6393340d7329482b2cf04a9995cf437933a6a6d3de0f29f034494ec9f4ace478",
+      "bytes": 75478,
+      "url": "/api/anatomy/exports/558b1e03f16245e2ba595daa831d2a87/report.json"
+    }
+  },
+  "checks": {
+    "interference_status": "clear_at_static_pose",
+    "collisions": [],
+    "narrow_phase_pairs": 6,
+    "step_roundtrip_relative_volume_error": 1.759947800122333e-14,
+    "step_roundtrip_bounds_error_mm": 0.0,
+    "total_mass_kg": 1.0083469095050006,
+    "limits": "静态装配姿态 B-rep 体积交集检查；不证明运动全过程或装配插入路径无碰撞。配合检查为名义尺寸，未含制造公差。轴承滚道/螺纹/预紧为简化。",
+    "insertion": {
+      "status": "sampled_interference",
+      "samples_per_step": 7,
+      "narrow_phase_pairs": 37,
+      "hits": [
+        {
+          "part": "bearing",
+          "obstacle": "spacer-a",
+          "max_intersection_mm3": 3370.510038281369,
+          "remaining_fractions": [
+            0.333333,
+            0.166667
+          ]
+        },
+        {
+          "part": "spacer-b",
+          "obstacle": "spacer-a",
+          "max_intersection_mm3": 4622.4137667858795,
+          "remaining_fractions": [
+            0.833333,
+            0.666667,
+            0.5
+          ]
+        },
+        {
+          "part": "spacer-b",
+          "obstacle": "bearing",
+          "max_intersection_mm3": 4044.612045937646,
+          "remaining_fractions": [
+            0.5,
+            0.333333,
+            0.166667
+          ]
+        },
+        {
+          "part": "bolt-a",
+          "obstacle": "flange",
+          "max_intersection_mm3": 231.84953783492674,
+          "remaining_fractions": [
+            0.333333,
+            0.166667
+          ]
+        },
+        {
+          "part": "bolt-b",
+          "obstacle": "flange",
+          "max_intersection_mm3": 231.84953783492674,
+          "remaining_fractions": [
+            0.333333,
+            0.166667
+          ]
+        }
+      ],
+      "limits": "按声明的直线插入方向、距离和父先子后步骤，在每步7个时刻检查已安装零件；离散采样可能漏过薄障碍物或采样间穿透，不是连续碰撞/扫掠体证明。"
+    }
+  },
+  "renderer_sha256": {
+    "engineering-contract.json": "2dd6569a28a3f7875ab4eb1695d8581e394482cdfde765e69d359f1a39f384a7",
+    "engineering-presets.json": "08b680b76e568082cc70dc10c318e4969970d42c75c736cfbaa097e6379914d6",
+    "engineering-build.mjs": "2a9efbe0be1e8517a048086447fc90b8e0548b096e4d5d3ae2d25d20cae3bbe3",
+    "engineering.html": "a3860060c0fe25680057134ea6e9ed944de71f0c1c26977400ed5b4aad68107a",
+    "engineering-view.js": "c0d1317c22df1a84c4c637d6beb2f1e1c4e302f0b5558fb72b6b72b833d2bc6d",
+    "engineering_physics.py": "49f81adb0bf6f64939024925a54d49f9f1a4cd66d4c04bf52ddc4fa34ee5569e",
+    "engineering_model.py": "55636e5c84de0b0677d647a321a4caa7232539d00537dfeabc412aa82bbc4a0a",
+    "runtime-boundary.json": "172f344b22f6710139f6a2012a8a4f9c40efc456a833709fd633e2a0c63f6ed0",
+    "structure3d.mjs": "c66ea14a9e9c174bb586f6e76743d2613ac41b9c5fd16631fe8a78685e9dafb3",
+    "runtime-lock.json": "27399e8628a98258064d2e99277e1e94a66343a0d961f1d134c350028fa2d924"
+  },
+  "host_validation_sha256": {
+    "host/anatomy_engineering.py": "c1205a5a921dc35ce2cb0e7ca546393ed4765ee7315d7169005d42fa3e58092a",
+    "adapters/engineering/worker.py": "960c8d6211369098be47120625f6a6ecb9ccc08330435caa1e69072ac4469190",
+    "apps/engineering/worker.py": "c501fe0e152e8cd0116f53d1e0926fe205487201b411b7dc31518753ba407e4b",
+    "modules/skills/anatomy/engineering_model.py": "55636e5c84de0b0677d647a321a4caa7232539d00537dfeabc412aa82bbc4a0a"
+  },
+  "runtime_lock_sha256": "27399e8628a98258064d2e99277e1e94a66343a0d961f1d134c350028fa2d924",
+  "limits": [
+    "装配插入已作每步7时刻的离散实体采样检查，不能作为连续无碰撞路径证明。",
+    "剖面为原实体沿全局 Y=0 的真实布尔截面；展示拆解不改变检查几何。",
+    "CAD 有效性与 STEP 回读不等于制造认证。"
+  ],
+  "quality": {
+    "status": "needs_revision",
+    "unverified": [
+      "insertion_paths",
+      "motion_cycle_interference",
+      "manufacturing_tolerances",
+      "general_assembly_dynamics"
+    ]
+  },
+  "resources": {
+    "peak_process_memory_bytes": 140673024,
+    "peak_job_memory_bytes": 142688256,
+    "elapsed_seconds": 1.315657099999953,
+    "wall_limit_seconds": 45,
+    "process_cpu_limit_seconds": 30,
+    "job_memory_limit_bytes": 1073741824,
+    "active_process_limit": 2,
+    "output_quota_bytes": 67108864,
+    "isolation": "Trusted fixed native factories; resource job only, not LPAC security isolation"
+  }
+}

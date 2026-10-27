@@ -1,0 +1,715 @@
+{
+  "scope": "explicit synthetic chat additions, replacements and withdrawals",
+  "production_deployed": false,
+  "model_calls": 0,
+  "tasks": [
+    {
+      "id": "task-cf9655a242054d2ba6a12fcfd1aaa221",
+      "status": "SUCCEEDED",
+      "spent": 2,
+      "completion": {
+        "version": "completion-1.1.0",
+        "task_id": "task-cf9655a242054d2ba6a12fcfd1aaa221",
+        "state": "VERIFIED",
+        "fingerprint": "30aca5199f9d53982e28ce45a667cff5506b072eb82c7091deedd4c2c36170ca",
+        "acceptance": {
+          "revision": 1,
+          "rules": {
+            "coverage": "complete",
+            "criteria": [
+              {
+                "check": "quote_changes",
+                "expected": "e04c92fe109573666ad1d7a232cc8db104ef43268212d1821ee9241096d91be7",
+                "id": "quote-changes",
+                "step_id": "step-1"
+              }
+            ],
+            "requirements": [
+              {
+                "criterion_ids": [
+                  "quote-changes"
+                ],
+                "id": "change-domain",
+                "kind": "quote_changes",
+                "text": "按已接受原话的明确新增、替换和撤销重放要求，核对当前目标、输入与报价结果"
+              }
+            ]
+          }
+        },
+        "checks": [
+          {
+            "id": "quote-changes",
+            "step_id": "step-1",
+            "status": "passed",
+            "verifier": "quote-selection-1",
+            "source_digest": "3c1583db68de1a6ac4d1b55665b61e1019eb1a668d32fc441110988f316b8e24",
+            "reason": "quote_verified",
+            "request_verifier": "quote-request-1",
+            "request_binding": "b67894c77daba8c6ffe2dc66c2d0c4bebbf42e973f4290477e2c408e383644a5",
+            "request_goal_digest": "520e61c1327b150a6e4f4c37eadcf68afe4ddd00eb56123ff79accd51a124a43",
+            "unresolved_count": 0,
+            "semantic_goal_verified": false,
+            "request_scope": "stored_goal_only",
+            "change_verifier": "quote-changes-1",
+            "change_binding": "e04c92fe109573666ad1d7a232cc8db104ef43268212d1821ee9241096d91be7",
+            "source_scope": "explicit_chat_changes",
+            "source_count": 4,
+            "change_count": 2,
+            "active_count": 5
+          }
+        ],
+        "condition_score": 100.0,
+        "score_scope": "declared_conditions_only",
+        "outcome_id": "outcome-8bb30775c440cabf8386e83fa83eb8f1",
+        "requirement_coverage": {
+          "version": "declared-requirements-1",
+          "state": "SATISFIED",
+          "requirements": [
+            {
+              "criterion_ids": [
+                "quote-changes"
+              ],
+              "id": "change-domain",
+              "kind": "quote_changes",
+              "text": "按已接受原话的明确新增、替换和撤销重放要求，核对当前目标、输入与报价结果",
+              "status": "passed",
+              "reason": "linked_checks"
+            }
+          ],
+          "complete": true,
+          "scope": "explicitly_declared_requirements",
+          "semantic_goal_verified": false
+        },
+        "evidence_ready": true,
+        "feedback": null,
+        "method": null,
+        "method_available": false,
+        "feedback_history": [],
+        "assessment_history": [
+          {
+            "created": 1793082078.8355463,
+            "assessment": {
+              "acceptance": {
+                "revision": 1,
+                "rules": {
+                  "coverage": "complete",
+                  "criteria": [
+                    {
+                      "check": "quote_changes",
+                      "expected": "e04c92fe109573666ad1d7a232cc8db104ef43268212d1821ee9241096d91be7",
+                      "id": "quote-changes",
+                      "step_id": "step-1"
+                    }
+                  ],
+                  "requirements": [
+                    {
+                      "criterion_ids": [
+                        "quote-changes"
+                      ],
+                      "id": "change-domain",
+                      "kind": "quote_changes",
+                      "text": "按已接受原话的明确新增、替换和撤销重放要求，核对当前目标、输入与报价结果"
+                    }
+                  ]
+                }
+              },
+              "checks": [
+                {
+                  "id": "quote-changes",
+                  "status": "unknown",
+                  "step_id": "step-1"
+                }
+              ],
+              "condition_score": null,
+              "evidence_ready": false,
+              "feedback": null,
+              "fingerprint": "b2d59bea0bb434c0de96914dd9a570ec24c3f65800166729ee76647edb9058e4",
+              "outcome_id": null,
+              "requirement_coverage": {
+                "complete": false,
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "quote-changes"
+                    ],
+                    "id": "change-domain",
+                    "kind": "quote_changes",
+                    "reason": "linked_checks",
+                    "status": "unknown",
+                    "text": "按已接受原话的明确新增、替换和撤销重放要求，核对当前目标、输入与报价结果"
+                  }
+                ],
+                "scope": "explicitly_declared_requirements",
+                "semantic_goal_verified": false,
+                "state": "INCOMPLETE",
+                "version": "declared-requirements-1"
+              },
+              "score_scope": "declared_conditions_only",
+              "state": "WAITING",
+              "task_id": "task-cf9655a242054d2ba6a12fcfd1aaa221",
+              "version": "completion-1.1.0"
+            }
+          },
+          {
+            "created": 1793082077.8106663,
+            "assessment": {
+              "acceptance": {
+                "revision": 1,
+                "rules": {
+                  "coverage": "complete",
+                  "criteria": [
+                    {
+                      "check": "quote_changes",
+                      "expected": "e04c92fe109573666ad1d7a232cc8db104ef43268212d1821ee9241096d91be7",
+                      "id": "quote-changes",
+                      "step_id": "step-1"
+                    }
+                  ],
+                  "requirements": [
+                    {
+                      "criterion_ids": [
+                        "quote-changes"
+                      ],
+                      "id": "change-domain",
+                      "kind": "quote_changes",
+                      "text": "按已接受原话的明确新增、替换和撤销重放要求，核对当前目标、输入与报价结果"
+                    }
+                  ]
+                }
+              },
+              "checks": [
+                {
+                  "id": "quote-changes",
+                  "status": "unknown",
+                  "step_id": "step-1"
+                }
+              ],
+              "condition_score": null,
+              "evidence_ready": false,
+              "feedback": null,
+              "fingerprint": "e93141664328e5171d8e1f2c50ed11f2e7626da7fd8e6de32061da7367539d1b",
+              "outcome_id": null,
+              "requirement_coverage": {
+                "complete": false,
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "quote-changes"
+                    ],
+                    "id": "change-domain",
+                    "kind": "quote_changes",
+                    "reason": "linked_checks",
+                    "status": "unknown",
+                    "text": "按已接受原话的明确新增、替换和撤销重放要求，核对当前目标、输入与报价结果"
+                  }
+                ],
+                "scope": "explicitly_declared_requirements",
+                "semantic_goal_verified": false,
+                "state": "INCOMPLETE",
+                "version": "declared-requirements-1"
+              },
+              "score_scope": "declared_conditions_only",
+              "state": "WAITING",
+              "task_id": "task-cf9655a242054d2ba6a12fcfd1aaa221",
+              "version": "completion-1.1.0"
+            }
+          },
+          {
+            "created": 1793082077.721875,
+            "assessment": {
+              "acceptance": {
+                "revision": 1,
+                "rules": {
+                  "coverage": "complete",
+                  "criteria": [
+                    {
+                      "check": "quote_changes",
+                      "expected": "e04c92fe109573666ad1d7a232cc8db104ef43268212d1821ee9241096d91be7",
+                      "id": "quote-changes",
+                      "step_id": "step-1"
+                    }
+                  ],
+                  "requirements": [
+                    {
+                      "criterion_ids": [
+                        "quote-changes"
+                      ],
+                      "id": "change-domain",
+                      "kind": "quote_changes",
+                      "text": "按已接受原话的明确新增、替换和撤销重放要求，核对当前目标、输入与报价结果"
+                    }
+                  ]
+                }
+              },
+              "checks": [
+                {
+                  "id": "quote-changes",
+                  "status": "unknown",
+                  "step_id": "step-1"
+                }
+              ],
+              "condition_score": null,
+              "evidence_ready": false,
+              "feedback": null,
+              "fingerprint": "2153649557a7153717f1782442a4bfdec579faaf6f659ca5ee75b4d8a5c54a28",
+              "outcome_id": null,
+              "requirement_coverage": {
+                "complete": false,
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "quote-changes"
+                    ],
+                    "id": "change-domain",
+                    "kind": "quote_changes",
+                    "reason": "linked_checks",
+                    "status": "unknown",
+                    "text": "按已接受原话的明确新增、替换和撤销重放要求，核对当前目标、输入与报价结果"
+                  }
+                ],
+                "scope": "explicitly_declared_requirements",
+                "semantic_goal_verified": false,
+                "state": "INCOMPLETE",
+                "version": "declared-requirements-1"
+              },
+              "score_scope": "declared_conditions_only",
+              "state": "WAITING",
+              "task_id": "task-cf9655a242054d2ba6a12fcfd1aaa221",
+              "version": "completion-1.1.0"
+            }
+          }
+        ]
+      },
+      "closure": {
+        "version": "work-closure-1.4.0",
+        "root_goal": "goal-19ec23801a644d179510f612e19a691b",
+        "current_goal": "goal-19ec23801a644d179510f612e19a691b",
+        "current_task": "task-cf9655a242054d2ba6a12fcfd1aaa221",
+        "state": "COMPLETE",
+        "complete": true,
+        "reasons": [],
+        "completion_state": "VERIFIED",
+        "condition_score": 100.0,
+        "score_scope": "current_declared_conditions_only",
+        "quality_score": null,
+        "requirement_coverage": {
+          "version": "declared-requirements-1",
+          "state": "SATISFIED",
+          "requirements": [
+            {
+              "criterion_ids": [
+                "quote-changes"
+              ],
+              "id": "change-domain",
+              "kind": "quote_changes",
+              "text": "按已接受原话的明确新增、替换和撤销重放要求，核对当前目标、输入与报价结果",
+              "status": "passed",
+              "reason": "linked_checks"
+            }
+          ],
+          "complete": true,
+          "scope": "explicitly_declared_requirements",
+          "semantic_goal_verified": false
+        },
+        "assessment_fingerprint": "30aca5199f9d53982e28ce45a667cff5506b072eb82c7091deedd4c2c36170ca",
+        "spent_cost_units": 2,
+        "reserved_cost_units": 0
+      }
+    },
+    {
+      "id": "task-c6d9eab1786e46a390c88bcfa894c6ef",
+      "status": "SUCCEEDED",
+      "spent": 2,
+      "completion": {
+        "version": "completion-1.1.0",
+        "task_id": "task-c6d9eab1786e46a390c88bcfa894c6ef",
+        "state": "WAITING_EVIDENCE",
+        "fingerprint": "efd07b8e2992ad03f21b7ee21dce5a3350d7ecea6850b97c7f327958fcca1cea",
+        "acceptance": {
+          "revision": 1,
+          "rules": {
+            "coverage": "recipe",
+            "criteria": [
+              {
+                "check": "quote_changes",
+                "expected": "5164f0411c33302d7e6158fe34222042d16c9d43b63c8ba353327fce3451c82f",
+                "id": "quote-changes",
+                "step_id": "step-1"
+              }
+            ],
+            "requirements": [
+              {
+                "criterion_ids": [
+                  "quote-changes"
+                ],
+                "id": "change-domain",
+                "kind": "quote_changes",
+                "text": "按已接受原话的明确新增、替换和撤销重放要求，核对当前目标、输入与报价结果"
+              }
+            ]
+          }
+        },
+        "checks": [
+          {
+            "id": "quote-changes",
+            "step_id": "step-1",
+            "status": "unknown",
+            "verifier": "quote-selection-1",
+            "source_digest": "03e3cb460dbc962c6a571a29f10d370b1ba77a5109e3c26dac4cefd0aebdb382",
+            "reason": "quote_changes_unresolved",
+            "request_verifier": "quote-request-1",
+            "request_binding": "dd1236c5a99e3e9f768fc98eb4bc30757f566fc4c170b6b6f45c729af0da7754",
+            "request_goal_digest": "58ae436d7665ce31011bda2c15cd31a75c17e8632b6c5f0168afba9b4906ca65",
+            "unresolved_count": 1,
+            "semantic_goal_verified": false,
+            "request_scope": "stored_goal_only",
+            "change_verifier": "quote-changes-1",
+            "change_binding": "5164f0411c33302d7e6158fe34222042d16c9d43b63c8ba353327fce3451c82f",
+            "source_scope": "explicit_chat_changes",
+            "source_count": 3,
+            "change_count": 1,
+            "active_count": 6
+          }
+        ],
+        "condition_score": null,
+        "score_scope": "declared_conditions_only",
+        "outcome_id": "outcome-50d02acdb44ad6acc02c31411d324679",
+        "requirement_coverage": {
+          "version": "declared-requirements-1",
+          "state": "INCOMPLETE",
+          "requirements": [
+            {
+              "criterion_ids": [
+                "quote-changes"
+              ],
+              "id": "change-domain",
+              "kind": "quote_changes",
+              "text": "按已接受原话的明确新增、替换和撤销重放要求，核对当前目标、输入与报价结果",
+              "status": "unknown",
+              "reason": "linked_checks"
+            }
+          ],
+          "complete": false,
+          "scope": "explicitly_declared_requirements",
+          "semantic_goal_verified": false
+        },
+        "evidence_ready": false,
+        "feedback": null,
+        "method": null,
+        "method_available": false,
+        "feedback_history": [],
+        "assessment_history": [
+          {
+            "created": 1793082082.1529837,
+            "assessment": {
+              "acceptance": {
+                "revision": 1,
+                "rules": {
+                  "coverage": "recipe",
+                  "criteria": [
+                    {
+                      "check": "quote_changes",
+                      "expected": "5164f0411c33302d7e6158fe34222042d16c9d43b63c8ba353327fce3451c82f",
+                      "id": "quote-changes",
+                      "step_id": "step-1"
+                    }
+                  ],
+                  "requirements": [
+                    {
+                      "criterion_ids": [
+                        "quote-changes"
+                      ],
+                      "id": "change-domain",
+                      "kind": "quote_changes",
+                      "text": "按已接受原话的明确新增、替换和撤销重放要求，核对当前目标、输入与报价结果"
+                    }
+                  ]
+                }
+              },
+              "checks": [
+                {
+                  "active_count": 6,
+                  "change_binding": "5164f0411c33302d7e6158fe34222042d16c9d43b63c8ba353327fce3451c82f",
+                  "change_count": 1,
+                  "change_verifier": "quote-changes-1",
+                  "id": "quote-changes",
+                  "reason": "quote_changes_unresolved",
+                  "request_binding": "dd1236c5a99e3e9f768fc98eb4bc30757f566fc4c170b6b6f45c729af0da7754",
+                  "request_goal_digest": "58ae436d7665ce31011bda2c15cd31a75c17e8632b6c5f0168afba9b4906ca65",
+                  "request_scope": "stored_goal_only",
+                  "request_verifier": "quote-request-1",
+                  "semantic_goal_verified": false,
+                  "source_count": 3,
+                  "source_digest": "03e3cb460dbc962c6a571a29f10d370b1ba77a5109e3c26dac4cefd0aebdb382",
+                  "source_scope": "explicit_chat_changes",
+                  "status": "unknown",
+                  "step_id": "step-1",
+                  "unresolved_count": 1,
+                  "verifier": "quote-selection-1"
+                }
+              ],
+              "condition_score": null,
+              "evidence_ready": false,
+              "feedback": null,
+              "fingerprint": "f5b1a2590900f536b71e569ec7750dfd7fbf0256125783fc40ebb8ca6853d542",
+              "outcome_id": null,
+              "requirement_coverage": {
+                "complete": false,
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "quote-changes"
+                    ],
+                    "id": "change-domain",
+                    "kind": "quote_changes",
+                    "reason": "linked_checks",
+                    "status": "unknown",
+                    "text": "按已接受原话的明确新增、替换和撤销重放要求，核对当前目标、输入与报价结果"
+                  }
+                ],
+                "scope": "explicitly_declared_requirements",
+                "semantic_goal_verified": false,
+                "state": "INCOMPLETE",
+                "version": "declared-requirements-1"
+              },
+              "score_scope": "declared_conditions_only",
+              "state": "WAITING",
+              "task_id": "task-c6d9eab1786e46a390c88bcfa894c6ef",
+              "version": "completion-1.1.0"
+            }
+          },
+          {
+            "created": 1793082081.9892855,
+            "assessment": {
+              "acceptance": {
+                "revision": 1,
+                "rules": {
+                  "coverage": "recipe",
+                  "criteria": [
+                    {
+                      "check": "quote_changes",
+                      "expected": "5164f0411c33302d7e6158fe34222042d16c9d43b63c8ba353327fce3451c82f",
+                      "id": "quote-changes",
+                      "step_id": "step-1"
+                    }
+                  ],
+                  "requirements": [
+                    {
+                      "criterion_ids": [
+                        "quote-changes"
+                      ],
+                      "id": "change-domain",
+                      "kind": "quote_changes",
+                      "text": "按已接受原话的明确新增、替换和撤销重放要求，核对当前目标、输入与报价结果"
+                    }
+                  ]
+                }
+              },
+              "checks": [
+                {
+                  "id": "quote-changes",
+                  "status": "unknown",
+                  "step_id": "step-1"
+                }
+              ],
+              "condition_score": null,
+              "evidence_ready": false,
+              "feedback": null,
+              "fingerprint": "87a6514a8f9e1a39ae104cb53861eef700bd0667b6cce0d415ce1458ea634ed0",
+              "outcome_id": null,
+              "requirement_coverage": {
+                "complete": false,
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "quote-changes"
+                    ],
+                    "id": "change-domain",
+                    "kind": "quote_changes",
+                    "reason": "linked_checks",
+                    "status": "unknown",
+                    "text": "按已接受原话的明确新增、替换和撤销重放要求，核对当前目标、输入与报价结果"
+                  }
+                ],
+                "scope": "explicitly_declared_requirements",
+                "semantic_goal_verified": false,
+                "state": "INCOMPLETE",
+                "version": "declared-requirements-1"
+              },
+              "score_scope": "declared_conditions_only",
+              "state": "WAITING",
+              "task_id": "task-c6d9eab1786e46a390c88bcfa894c6ef",
+              "version": "completion-1.1.0"
+            }
+          },
+          {
+            "created": 1793082081.0612373,
+            "assessment": {
+              "acceptance": {
+                "revision": 1,
+                "rules": {
+                  "coverage": "recipe",
+                  "criteria": [
+                    {
+                      "check": "quote_changes",
+                      "expected": "5164f0411c33302d7e6158fe34222042d16c9d43b63c8ba353327fce3451c82f",
+                      "id": "quote-changes",
+                      "step_id": "step-1"
+                    }
+                  ],
+                  "requirements": [
+                    {
+                      "criterion_ids": [
+                        "quote-changes"
+                      ],
+                      "id": "change-domain",
+                      "kind": "quote_changes",
+                      "text": "按已接受原话的明确新增、替换和撤销重放要求，核对当前目标、输入与报价结果"
+                    }
+                  ]
+                }
+              },
+              "checks": [
+                {
+                  "id": "quote-changes",
+                  "status": "unknown",
+                  "step_id": "step-1"
+                }
+              ],
+              "condition_score": null,
+              "evidence_ready": false,
+              "feedback": null,
+              "fingerprint": "c099556f32b98ebebd57b8e6a86416509d8b80bfcd56da8e8dac8ac0bb117321",
+              "outcome_id": null,
+              "requirement_coverage": {
+                "complete": false,
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "quote-changes"
+                    ],
+                    "id": "change-domain",
+                    "kind": "quote_changes",
+                    "reason": "linked_checks",
+                    "status": "unknown",
+                    "text": "按已接受原话的明确新增、替换和撤销重放要求，核对当前目标、输入与报价结果"
+                  }
+                ],
+                "scope": "explicitly_declared_requirements",
+                "semantic_goal_verified": false,
+                "state": "INCOMPLETE",
+                "version": "declared-requirements-1"
+              },
+              "score_scope": "declared_conditions_only",
+              "state": "WAITING",
+              "task_id": "task-c6d9eab1786e46a390c88bcfa894c6ef",
+              "version": "completion-1.1.0"
+            }
+          },
+          {
+            "created": 1793082080.930731,
+            "assessment": {
+              "acceptance": {
+                "revision": 1,
+                "rules": {
+                  "coverage": "recipe",
+                  "criteria": [
+                    {
+                      "check": "quote_changes",
+                      "expected": "5164f0411c33302d7e6158fe34222042d16c9d43b63c8ba353327fce3451c82f",
+                      "id": "quote-changes",
+                      "step_id": "step-1"
+                    }
+                  ],
+                  "requirements": [
+                    {
+                      "criterion_ids": [
+                        "quote-changes"
+                      ],
+                      "id": "change-domain",
+                      "kind": "quote_changes",
+                      "text": "按已接受原话的明确新增、替换和撤销重放要求，核对当前目标、输入与报价结果"
+                    }
+                  ]
+                }
+              },
+              "checks": [
+                {
+                  "id": "quote-changes",
+                  "status": "unknown",
+                  "step_id": "step-1"
+                }
+              ],
+              "condition_score": null,
+              "evidence_ready": false,
+              "feedback": null,
+              "fingerprint": "9addc2c9d4dcd15893a2ed1f3ac6d9dd8e41027d0681a2a7f454c74c28e2c53b",
+              "outcome_id": null,
+              "requirement_coverage": {
+                "complete": false,
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "quote-changes"
+                    ],
+                    "id": "change-domain",
+                    "kind": "quote_changes",
+                    "reason": "linked_checks",
+                    "status": "unknown",
+                    "text": "按已接受原话的明确新增、替换和撤销重放要求，核对当前目标、输入与报价结果"
+                  }
+                ],
+                "scope": "explicitly_declared_requirements",
+                "semantic_goal_verified": false,
+                "state": "INCOMPLETE",
+                "version": "declared-requirements-1"
+              },
+              "score_scope": "declared_conditions_only",
+              "state": "WAITING",
+              "task_id": "task-c6d9eab1786e46a390c88bcfa894c6ef",
+              "version": "completion-1.1.0"
+            }
+          }
+        ]
+      },
+      "closure": {
+        "version": "work-closure-1.4.0",
+        "root_goal": "goal-5b365d2f13544815a5f41fd3dc1a011c",
+        "current_goal": "goal-5b365d2f13544815a5f41fd3dc1a011c",
+        "current_task": "task-c6d9eab1786e46a390c88bcfa894c6ef",
+        "state": "NEEDS_EVIDENCE",
+        "complete": false,
+        "reasons": [
+          "WAITING_EVIDENCE"
+        ],
+        "completion_state": "WAITING_EVIDENCE",
+        "condition_score": null,
+        "score_scope": "current_declared_conditions_only",
+        "quality_score": null,
+        "requirement_coverage": {
+          "version": "declared-requirements-1",
+          "state": "INCOMPLETE",
+          "requirements": [
+            {
+              "criterion_ids": [
+                "quote-changes"
+              ],
+              "id": "change-domain",
+              "kind": "quote_changes",
+              "text": "按已接受原话的明确新增、替换和撤销重放要求，核对当前目标、输入与报价结果",
+              "status": "unknown",
+              "reason": "linked_checks"
+            }
+          ],
+          "complete": false,
+          "scope": "explicitly_declared_requirements",
+          "semantic_goal_verified": false
+        },
+        "assessment_fingerprint": "efd07b8e2992ad03f21b7ee21dce5a3350d7ecea6850b97c7f327958fcca1cea",
+        "spent_cost_units": 2,
+        "reserved_cost_units": 0
+      }
+    },
+    null
+  ]
+}

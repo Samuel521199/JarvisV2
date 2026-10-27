@@ -1,0 +1,13 @@
+{
+  "schema": "jarvis.local-runtime.v1",
+  "runtime": "onnx-e5-v1",
+  "worker": "adapters/models/local_embedding_worker.py",
+  "python_tested": "3.13.0",
+  "dependencies": [
+    {"import": "numpy", "distribution": "numpy", "version": "2.4.6"},
+    {"import": "onnxruntime", "distribution": "onnxruntime", "version": "1.24.3"},
+    {"import": "tokenizers", "distribution": "tokenizers", "version": "0.22.2"}
+  ],
+  "install_policy": "optional_existing_environment_only",
+  "portability": "Windows CPU verified; macOS and clean installation pending"
+}

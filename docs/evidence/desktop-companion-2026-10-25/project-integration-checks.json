@@ -1,0 +1,136 @@
+{
+  "date": "2026-10-26",
+  "project_root": "D:/Jarvis",
+  "status": "accepted product direction; proposed native shell; verified documentation and asset inspections only",
+  "authority_map": {
+    "product_requirements": "docs/product-requirements.md#personal-companion-core",
+    "interaction_and_transparency": "docs/interaction-persona.md#desktop-presence-transparency",
+    "scenario_reference_images": "docs/interaction-persona.md#desktop-presence-previews",
+    "ownership_and_host_projection": "docs/architecture.md#desktop-presence-architecture",
+    "state_and_answer_contract": "docs/contracts.md#desktop-presence-contract",
+    "native_shell_and_source_layout": "docs/stack-project-layout.md#desktop-presence-shell",
+    "implementation_order": "docs/core-bootstrap.md#bootstrap-5",
+    "task_semantics": "docs/tasks-agents.md#interaction-tasks-3",
+    "work_index": "docs/development-guide.md#direction-work",
+    "acceptance": "docs/delivery-validation.md#desktop-presence-validation",
+    "resource_measurement": "docs/delivery-validation.md#pc-footprint",
+    "decision": "docs/decisions-review.md#adr-030"
+  },
+  "logo_inspection": {
+    "path": "apps/workbench/brand/core.png",
+    "sha256": "3d66ab1a1d125e12ef289eaca563e37bc12b762b0c9d135f5f5c42902f610e4a",
+    "unchanged": true,
+    "mode": "RGBA",
+    "width": 512,
+    "height": 512,
+    "fully_transparent": 115931,
+    "partially_transparent": 145151,
+    "fully_opaque": 1062
+  },
+  "source_inspection": {
+    "scope": "Read-only inspection of this D:/Jarvis checkout, not every installed program or any H:/Jarvis runtime",
+    "files": {
+      "apps/workbench/launch.py": "5dbfd85eeff9d713676a603964543342d7be1ed9e654a08d8f4fc2632d8e63ad",
+      "control/bootstrap/Cargo.toml": "0d010c9b5175d0f600b1bdf1703cb34efaa233fd0d3c23ec72626ddf98e08c15"
+    },
+    "apps_directories": [
+      "cli",
+      "engineering",
+      "studio3d",
+      "workbench"
+    ],
+    "companion_directory_exists": false,
+    "tracked_source_manifest_search": "rg --files -g Cargo.toml -g tauri.conf.* -g *.csproj -g package.json",
+    "found_manifests": [
+      "control/bootstrap/Cargo.toml",
+      "external/gltf-validator/package.json"
+    ],
+    "observation": "Inspected launcher starts or reuses a local web service and opens a browser unless --no-browser; no integrated native companion found. Rust bootstrap is a control CLI, not a desktop shell."
+  },
+  "diagram_review": {
+    "changed_sources": [],
+    "relevant_existing_labels": [
+      "continuity-architecture.mmd: owner/workbench/voice",
+      "windows-deployment.mmd: UI and audio IO",
+      "pc-runtime-convergence.mmd: text/voice/desktop",
+      "clean-core-architecture.mmd: owner/natural interaction"
+    ],
+    "interpretation": "These are logical entry surfaces, not default open windows. The existing graphs remain valid; precise presentation ownership and optional workbench behavior are now defined in the architecture chapter. No architecture diagram render claimed."
+  },
+  "semantic_changes": [
+    "One authoritative location per full rule; old interaction-level stack/contract/acceptance details replaced by links",
+    "Existing K0-K6 sequence retained; basic sprite and on-demand closed loop assigned to K2",
+    "Existing R/V/F identifiers retained; ADR-030 records the accepted direction",
+    "Resource CPU normalization aligned to existing V-PC single-logical-core convention; no measured result or weaker threshold claimed",
+    "Current browser launcher instructions retained as actual behavior; future sprite startup not presented as implemented"
+  ],
+  "not_performed": [
+    "Native alpha compositing test",
+    "Native transparent-region hit-testing",
+    "Always-on-top or focus integration test",
+    "Tray or global hotkey integration test",
+    "Native sleep/DPI/multi-monitor verification",
+    "Live task question-resume integration",
+    "Native footprint benchmark",
+    "Dependency installation or startup configuration change"
+  ],
+  "documentation_checks": {
+    "status": "passed",
+    "navigation": "synchronized; final check 0 updated",
+    "documents": 27,
+    "chapters": 23,
+    "diagrams": 39,
+    "local_links": 2649,
+    "errors": 0,
+    "git_diff_check": "passed for touched documentation paths",
+    "runtime_tests": "not performed; documentation integration only"
+  },
+  "documentation_snapshot": {
+    "README.md": "4914c67e6e0a7c5728f4e7b85bf21c05ad7f38e3848e723507e632e5d90d5c05",
+    "docs/README.md": "93a32914e914f83b192eebc81fbbedb75ca9090bd33cf8be5a0f6c991f5ecabd",
+    "docs/product-requirements.md": "a82544117f21128bcdc35a1a6007d4ce1660a193881cf2ccdd4a2c93b7bbc545",
+    "docs/interaction-persona.md": "e966925a7f2dbf97bc723dd88f228fbe163c4a27dfc588588420232bd464a8b4",
+    "docs/architecture.md": "afc29adb4ab9e7e534b40fff684e47209fcaff716cb866d90c69ec18140afc07",
+    "docs/contracts.md": "a16c5779d792da833f63ba9f937120dbeb5c74f1c271d05035e7b4083d43e832",
+    "docs/core-bootstrap.md": "83c368bd40b2b71fcf2a5d7cf78eff5771b638e8c7495bfe87b1d0a1d45a0f93",
+    "docs/stack-project-layout.md": "d5e3a3965f216ca8eebd246a186e4f25738aba48f9dde2a4c428571501ab401f",
+    "docs/tasks-agents.md": "48ebe652f1cf6351c1ed0235d8f35cb91b716d6bd5a427545cae27287d4cccc5",
+    "docs/development-guide.md": "6ecc028704814ed6b2657414c7e0796e71e87352830533f4bb4a1e7466e29859",
+    "docs/delivery-validation.md": "4e5fc130d7b22bc55907556cbde9cf4b98608fbc8375b9d227f7d2f326f0722f",
+    "docs/decisions-review.md": "0482608fa3dbad4d93ec09256408cd9e635872c7f62024b8c873649a13ef8043",
+    "docs/manifest.json": "3aca1b2cf2f8c2342c1b6a3c46734e9a05f63967437b4c72f24baab1c4c106a2"
+  },
+  "main_document_merge": {
+    "date": "2026-10-26",
+    "status": "completed main-document content merge; repository-wide check has one unrelated tool error",
+    "entry": "README.md#desktop-companion-overview",
+    "contents": [
+      "Transparent desktop behavior",
+      "Context-triggered surfaces",
+      "Logo state effects",
+      "Two embedded scenario reference sheets",
+      "Light-theme and motion-source links",
+      "Shared Host integration and implementation status"
+    ],
+    "files": {
+      "README.md": "f0d44082d3001bf5ff6559a92381888a977f58763c0e62158b9da8cf3bebf901",
+      "docs/README.md": "f504785a56c9aa6d0f8b029084a7e5d2e2bbe32e99bb108c7fcef98848f5209e",
+      "docs/manifest.json": "7ddba8e3896d273bbd3ffd6a5137f2b20fe387e489385609e8e7087e49f86aaa"
+    },
+    "checks": {
+      "navigation": "passed, 0 updates needed",
+      "git_diff_check": "passed for modified documentation paths",
+      "reference_assets": "all four exist",
+      "document_checker": {
+        "documents": 27,
+        "chapters": 23,
+        "diagrams": 39,
+        "local_links": 2676,
+        "errors": 1,
+        "error": "Legacy/external code dependency: studio3d_reference_review.py",
+        "cause": "tools/studio3d_reference_review.py uses sys.path.insert, which the existing checker rejects",
+        "scope": "This Python file was not changed in the main-document merge; no link, image, anchor, or navigation error was reported"
+      }
+    }
+  }
+}

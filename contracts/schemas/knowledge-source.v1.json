@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "jarvis.knowledge-source.v1",
+  "title": "Owner imported source edit",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "scope", "title", "text", "providers", "paused"],
+  "properties": {
+    "id": {"type": "string", "maxLength": 80, "pattern": "(?:source-[a-f0-9]{32})?"},
+    "scope": {"type": "string", "minLength": 1, "maxLength": 120},
+    "title": {"type": "string", "minLength": 1, "maxLength": 160},
+    "text": {"type": "string", "minLength": 1, "maxLength": 80000},
+    "providers": {"type": "array", "maxItems": 32, "items": {"type": "string", "pattern": "[A-Za-z0-9_-]{1,80}"}},
+    "paused": {"type": "boolean"}
+  }
+}

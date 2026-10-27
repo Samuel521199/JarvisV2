@@ -123,6 +123,8 @@ class WorkspaceSkillsCase(unittest.TestCase):
             self.assertEqual(skills.select('auto', '请做代码审阅')['id'], 'review')
             skills.enable('review', False)
             self.assertIsNone(skills.select('auto', '代码审阅'))
+            self.assertEqual(skills.select('gmail','配置 Gmail')['id'],'gmail')
+            skills.enable('gmail',False)
             for value in ['review', 'gmail', 'unknown']:
                 with self.subTest(value=value), self.assertRaises(CoreError): skills.select(value, 'text')
             with self.assertRaises(CoreError): skills.select('auto', None)

@@ -1,0 +1,116 @@
+{
+  "passed": false,
+  "run": 20,
+  "failures": 1,
+  "errors": 0,
+  "skipped": 0,
+  "seconds": 70.92,
+  "cases": [
+    {
+      "id": "test_workflow_closure.WorkflowClosure.test_appending_and_removing_tail_remain_valid_and_bounded",
+      "status": "PASS",
+      "seconds": 3.5458
+    },
+    {
+      "id": "test_workflow_closure.WorkflowClosure.test_atomic_failure_before_append_leaves_no_draft_or_feedback",
+      "status": "PASS",
+      "seconds": 3.3458
+    },
+    {
+      "id": "test_workflow_closure.WorkflowClosure.test_competing_analysis_cannot_fork_current_work",
+      "status": "PASS",
+      "seconds": 3.2428
+    },
+    {
+      "id": "test_workflow_closure.WorkflowClosure.test_current_version_closes_and_late_feedback_reopens_all_entrypoints",
+      "status": "PASS",
+      "seconds": 3.9474
+    },
+    {
+      "id": "test_workflow_closure.WorkflowClosure.test_edited_candidate_cannot_use_old_analysis",
+      "status": "PASS",
+      "seconds": 3.2549
+    },
+    {
+      "id": "test_workflow_closure.WorkflowClosure.test_first_step_and_binding_changes_force_full_rework",
+      "status": "PASS",
+      "seconds": 3.9019
+    },
+    {
+      "id": "test_workflow_closure.WorkflowClosure.test_goal_text_change_conservatively_forces_full_rework",
+      "status": "PASS",
+      "seconds": 3.0994
+    },
+    {
+      "id": "test_workflow_closure.WorkflowClosure.test_late_feedback_and_tool_switch_invalidate_analysis",
+      "status": "PASS",
+      "seconds": 4.1508
+    },
+    {
+      "id": "test_workflow_closure.WorkflowClosure.test_missing_budget_allocation_cannot_close_work",
+      "status": "PASS",
+      "seconds": 3.7468
+    },
+    {
+      "id": "test_workflow_closure.WorkflowClosure.test_missing_source_artifact_rejects_analysis",
+      "status": "PASS",
+      "seconds": 3.138
+    },
+    {
+      "id": "test_workflow_closure.WorkflowClosure.test_new_input_forces_full_rework_and_is_actually_used",
+      "status": "FAIL",
+      "seconds": 4.0945
+    },
+    {
+      "id": "test_workflow_closure.WorkflowClosure.test_no_change_or_summary_only_does_not_create_another_version",
+      "status": "PASS",
+      "seconds": 3.0781
+    },
+    {
+      "id": "test_workflow_closure.WorkflowClosure.test_non_linear_or_unresolved_plan_rejected",
+      "status": "PASS",
+      "seconds": 3.1324
+    },
+    {
+      "id": "test_workflow_closure.WorkflowClosure.test_original_success_cannot_hide_draft_or_failed_acceptance",
+      "status": "PASS",
+      "seconds": 3.7402
+    },
+    {
+      "id": "test_workflow_closure.WorkflowClosure.test_partial_checks_do_not_close_work_even_at_one_hundred_percent",
+      "status": "PASS",
+      "seconds": 3.6899
+    },
+    {
+      "id": "test_workflow_closure.WorkflowClosure.test_retry_after_restart_returns_same_draft_without_extra_authority",
+      "status": "PASS",
+      "seconds": 3.2094
+    },
+    {
+      "id": "test_workflow_closure.WorkflowClosure.test_second_step_change_reuses_prefix_without_new_task_or_grant_during_analysis",
+      "status": "PASS",
+      "seconds": 3.7363
+    },
+    {
+      "id": "test_workflow_closure.WorkflowClosure.test_source_feedback_invalidates_completed_descendant",
+      "status": "PASS",
+      "seconds": 3.7953
+    },
+    {
+      "id": "test_workflow_closure.WorkflowClosure.test_unavailable_observer_cannot_keep_work_complete",
+      "status": "PASS",
+      "seconds": 3.8227
+    },
+    {
+      "id": "test_workflow_closure.WorkflowClosure.test_whole_work_stop_preserves_completed_task_and_prevents_auto_followup",
+      "status": "PASS",
+      "seconds": 3.1483
+    }
+  ],
+  "failure_details": [
+    {
+      "id": "test_workflow_closure.WorkflowClosure.test_new_input_forces_full_rework_and_is_actually_used",
+      "trace": "Traceback (most recent call last):\n  File \"D:\\Jarvis\\tests\\test_workflow_closure.py\", line 64, in test_new_input_forces_full_rework_and_is_actually_used\n    self.assertEqual(self.detail(child)['work_closure']['state'],'COMPLETE')\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'NEEDS_EVIDENCE' != 'COMPLETE'\n- NEEDS_EVIDENCE\n+ COMPLETE\n\n"
+    }
+  ]
+}

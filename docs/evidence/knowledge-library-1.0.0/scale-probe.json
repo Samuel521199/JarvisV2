@@ -1,0 +1,45 @@
+{
+  "version": "knowledge-library-1.0.0",
+  "cloud_calls": 0,
+  "environment": "Current Windows development PC; synthetic text, lexical retrieval, no models",
+  "scope": "10k-scale development probe, not held-out answer quality or 30-day/low-memory acceptance",
+  "ingest_ms": 708.8045999989845,
+  "chunks": 11200,
+  "build": {
+    "indexed_chunks": 11200,
+    "epoch": 100,
+    "mode": "fts5",
+    "version": "knowledge-library-1.0.0"
+  },
+  "build_ms": 5355.181799999627,
+  "first_after_build_ms": 42.06999999951222,
+  "warm": {
+    "n": 60,
+    "p50_ms": 9.389349999764818,
+    "p95_ms": 11.750599998777034,
+    "max_ms": 12.955800000781892
+  },
+  "targets_found": 60,
+  "rebuild_concurrent": {
+    "n": 60,
+    "p50_ms": 10.85504999900877,
+    "p95_ms": 13.657599998623482,
+    "max_ms": 15.01789999929315
+  },
+  "background": {
+    "result": {
+      "indexed_chunks": 11200,
+      "epoch": 100,
+      "mode": "fts5",
+      "version": "knowledge-library-1.0.0"
+    }
+  },
+  "core_database_bytes": 29110272,
+  "sqlite_files_bytes": 34321912,
+  "paired_query_sequence": "SPEC000..SPEC039 then SPEC000..SPEC019; warmup all 40 before baseline",
+  "passed": true,
+  "timing_targets": {
+    "lexical_warm_p95_100ms": true,
+    "foreground_p95_increase_20pct": true
+  }
+}

@@ -1,0 +1,86 @@
+{
+  "case_id": "learning-past",
+  "domain": "learning",
+  "arm": "workflow_on",
+  "turn": 2,
+  "freeze_digest": "cc702145676756cbfaa7cb3b0a06842f622595011a6ec056120028630ebc2879",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\"independent_mastery\": false, \"retry_completed\": false, \"delayed_test\": null, \"observed_error\": \"irregular_past\", \"next_step\": \"下一次从一般过去时中常见不规则动词变化开始复习，并完成重试题。\"}",
+  "skill_id": "english-coach",
+  "skill_version": "1.0.0",
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 6.3342,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 95,
+        "prompt_tokens": 1478,
+        "total_tokens": 1573
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.00146475,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/learning-past-workflow_on-2.native.json",
+      "sha256": "c86f0ec4540ac9d6733c295ab1c4265ac1a5b0f3c1d163642d1ebf667f1d9db7",
+      "kind": "native_protocol_response"
+    },
+    {
+      "file": "artifacts/learning-past-workflow_on-2.reply.md.txt",
+      "sha256": "5d0cedc9e89f334a9141fa5cb78e26d63b7612911dc37d25275bffb6dfd7e10a",
+      "kind": "original_session_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "independent_mastery",
+        "status": "passed"
+      },
+      {
+        "id": "retry_completed",
+        "status": "passed"
+      },
+      {
+        "id": "delayed_test",
+        "status": "passed"
+      },
+      {
+        "id": "observed_error",
+        "status": "passed"
+      },
+      {
+        "id": "next_step_present",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "record_digest": "a92f9e2db5e670b5c1123223d6849b8b27ba51de9a3492491f3c96b1e60d8bc9"
+}

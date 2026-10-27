@@ -1,0 +1,207 @@
+{
+  "model_calls": 0,
+  "tasks": [
+    {
+      "id": "task-1eee3d2e1e9e49aab1aeccafa6bcaa96",
+      "spent": 3,
+      "status": "SUCCEEDED"
+    },
+    {
+      "id": "task-1c49c78513b540dc841437a96f22fb01",
+      "spent": 2,
+      "status": "SUCCEEDED"
+    }
+  ],
+  "work": {
+    "root_goal": "goal-7eecea26e5df475996cd0000ca9111d0",
+    "current_goal": "goal-8425638d2e96424ba25e051ca0121c0b",
+    "assistant_id": "jarvis-9a0e66f4d24a44bfa88b8746280da630",
+    "owner_bot_id": "default",
+    "revision": 2,
+    "cancelled": 0,
+    "registration": "admission",
+    "created": 1793069580.1423137,
+    "schema": "jarvis.work.v1",
+    "ownership_mode": "default_projection",
+    "versions": [
+      {
+        "goal_id": "goal-7eecea26e5df475996cd0000ca9111d0",
+        "ordinal": 1,
+        "parent_goal": null,
+        "kind": "original",
+        "note": "",
+        "start_step": 1,
+        "task_id": "task-1eee3d2e1e9e49aab1aeccafa6bcaa96",
+        "status": "ACCEPTED",
+        "cancel": 0,
+        "task_status": "SUCCEEDED",
+        "spent": 3
+      },
+      {
+        "goal_id": "goal-8425638d2e96424ba25e051ca0121c0b",
+        "ordinal": 2,
+        "parent_goal": "goal-7eecea26e5df475996cd0000ca9111d0",
+        "kind": "new_requirement",
+        "note": "第二步追加要求，前段仍适用",
+        "start_step": 2,
+        "task_id": "task-1c49c78513b540dc841437a96f22fb01",
+        "status": "ACCEPTED",
+        "cancel": 0,
+        "task_status": "SUCCEEDED",
+        "spent": 2
+      }
+    ],
+    "spent_cost_units": 5,
+    "remaining_followups": 2,
+    "cumulative_budget_enforced": true,
+    "budget": {
+      "scope": "linked_task_action_units",
+      "enforced": true,
+      "limit_units": 5,
+      "revision": 2,
+      "spent_units": 5,
+      "reserved_units": 0,
+      "committed_units": 5,
+      "available_units": 0,
+      "unresolved_tasks": 0,
+      "integrity": "complete"
+    }
+  },
+  "actions": [
+    {
+      "id": "action-8873f408d5effd3665ecaed5131c084b",
+      "task_id": "task-1eee3d2e1e9e49aab1aeccafa6bcaa96",
+      "step_id": "step-1",
+      "capability": "plugin.rework-upper.v1",
+      "arguments": {
+        "text": "hello 中文"
+      },
+      "digest": "169d3b4296ba8e55ad43e1922911627c46ae93787ca30aeb4b2272f25162f5ef",
+      "status": "CONFIRMED",
+      "attempts": 1,
+      "result": {
+        "package_id": "pkg-ab4ee0280f2092c529bd0dcc71ce2a599751114b8df6c1fb79756c6336c543b5",
+        "text": "HELLO 中文",
+        "worker": {
+          "active_process_limit": 1,
+          "appcontainer_verified": true,
+          "backend": "windows-lpac-job",
+          "capabilities": [
+            "registryRead"
+          ],
+          "cpu_limit_seconds": 3,
+          "elapsed_seconds": 0.2545,
+          "memory_limit_bytes": 268435456,
+          "network_capabilities": [],
+          "peak_memory_bytes": 13221888,
+          "wall_limit_seconds": 8
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "action-a0f2c1b8184c66f24f80a789aceedbb8",
+      "task_id": "task-1eee3d2e1e9e49aab1aeccafa6bcaa96",
+      "step_id": "step-2",
+      "capability": "plugin.rework-upper.v1",
+      "arguments": {
+        "text": "HELLO 中文"
+      },
+      "digest": "e524fc639f18b049d0b768fd4ec25e065bdaf0e99efe7292513561be8b4f49ea",
+      "status": "CONFIRMED",
+      "attempts": 1,
+      "result": {
+        "package_id": "pkg-ab4ee0280f2092c529bd0dcc71ce2a599751114b8df6c1fb79756c6336c543b5",
+        "text": "HELLO 中文",
+        "worker": {
+          "active_process_limit": 1,
+          "appcontainer_verified": true,
+          "backend": "windows-lpac-job",
+          "capabilities": [
+            "registryRead"
+          ],
+          "cpu_limit_seconds": 3,
+          "elapsed_seconds": 0.2692,
+          "memory_limit_bytes": 268435456,
+          "network_capabilities": [],
+          "peak_memory_bytes": 12824576,
+          "wall_limit_seconds": 8
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "action-7b53f467b5fab2210c3393caff5d74f4",
+      "task_id": "task-1eee3d2e1e9e49aab1aeccafa6bcaa96",
+      "step_id": "deliver",
+      "capability": "artifact.write.v1",
+      "arguments": {
+        "content": "{\"package_id\":\"pkg-ab4ee0280f2092c529bd0dcc71ce2a599751114b8df6c1fb79756c6336c543b5\",\"text\":\"HELLO 中文\",\"worker\":{\"active_process_limit\":1,\"appcontainer_verified\":true,\"backend\":\"windows-lpac-job\",\"capabilities\":[\"registryRead\"],\"cpu_limit_seconds\":3,\"elapsed_seconds\":0.2692,\"memory_limit_bytes\":268435456,\"network_capabilities\":[],\"peak_memory_bytes\":12824576,\"wall_limit_seconds\":8}}",
+        "name": "result.json"
+      },
+      "digest": "5166d06954c56f048eb7d69bf632f859a69f30a63c1fb7a16324c181b3d2e8d0",
+      "status": "CONFIRMED",
+      "attempts": 1,
+      "result": {
+        "bytes": 389,
+        "relative_path": "artifacts/task-1eee3d2e1e9e49aab1aeccafa6bcaa96/action-7b53f467b5fab2210c3393caff5d74f4/result.json",
+        "sha256": "2c00ee151b0932cb3758247c5d8895f04d6687c61b44a2ea7adec594faacef19",
+        "verified": true
+      },
+      "error": null
+    },
+    {
+      "id": "action-85cea20b070de55e0eb2b70ebe3fce45",
+      "task_id": "task-1c49c78513b540dc841437a96f22fb01",
+      "step_id": "step-1",
+      "capability": "plugin.rework-upper.v1",
+      "arguments": {
+        "text": "HELLO 中文"
+      },
+      "digest": "e524fc639f18b049d0b768fd4ec25e065bdaf0e99efe7292513561be8b4f49ea",
+      "status": "CONFIRMED",
+      "attempts": 1,
+      "result": {
+        "package_id": "pkg-ab4ee0280f2092c529bd0dcc71ce2a599751114b8df6c1fb79756c6336c543b5",
+        "text": "HELLO 中文",
+        "worker": {
+          "active_process_limit": 1,
+          "appcontainer_verified": true,
+          "backend": "windows-lpac-job",
+          "capabilities": [
+            "registryRead"
+          ],
+          "cpu_limit_seconds": 3,
+          "elapsed_seconds": 0.2968,
+          "memory_limit_bytes": 268435456,
+          "network_capabilities": [],
+          "peak_memory_bytes": 13029376,
+          "wall_limit_seconds": 8
+        }
+      },
+      "error": null
+    },
+    {
+      "id": "action-3774c4658672a68afad36194eefc820f",
+      "task_id": "task-1c49c78513b540dc841437a96f22fb01",
+      "step_id": "deliver",
+      "capability": "artifact.write.v1",
+      "arguments": {
+        "content": "{\"package_id\":\"pkg-ab4ee0280f2092c529bd0dcc71ce2a599751114b8df6c1fb79756c6336c543b5\",\"text\":\"HELLO 中文\",\"worker\":{\"active_process_limit\":1,\"appcontainer_verified\":true,\"backend\":\"windows-lpac-job\",\"capabilities\":[\"registryRead\"],\"cpu_limit_seconds\":3,\"elapsed_seconds\":0.2968,\"memory_limit_bytes\":268435456,\"network_capabilities\":[],\"peak_memory_bytes\":13029376,\"wall_limit_seconds\":8}}",
+        "name": "result.json"
+      },
+      "digest": "54643c57adb5f86370b0b8452bc13f34b6428c8e3c367b9f52856593914007fd",
+      "status": "CONFIRMED",
+      "attempts": 1,
+      "result": {
+        "bytes": 389,
+        "relative_path": "artifacts/task-1c49c78513b540dc841437a96f22fb01/action-3774c4658672a68afad36194eefc820f/result.json",
+        "sha256": "27234576875e2a489b9263cfe333130ba9429bbe16b5466b12af517a4389974a",
+        "verified": true
+      },
+      "error": null
+    }
+  ],
+  "production_deployed": false,
+  "scope": "Synthetic two-step chain; explicitly chosen suffix; no semantic impact analysis"
+}

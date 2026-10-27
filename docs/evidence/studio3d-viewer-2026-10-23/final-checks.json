@@ -1,0 +1,136 @@
+{
+  "date_utc": "2026-10-23T15:53:40.286370+00:00",
+  "main_live_endpoints": {
+    "/api/studio3d": {
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 1864,
+      "readiness": {
+        "adapter_version": "1.1.0",
+        "contract": {
+          "evaluated_triangles_max": 1500000,
+          "limits": [
+            "Visual assets; not manufacturing CAD, contact dynamics, fluid or combustion simulation.",
+            "Automatic UV; optional static baking and LOD are reviewed separately. Production retopology and AAA quality are not certified.",
+            "Base export keeps procedural microdetail in BLEND/render. Explicit asset preparation bakes a static PBR atlas and merges hierarchy."
+          ],
+          "material": {
+            "color": "#RRGGBB",
+            "optional": {
+              "coat": "0..1",
+              "detail": "none/rubber/brushed/carbon",
+              "metallic": "0..1",
+              "roughness": "0.03..1",
+              "transmission": "0..1"
+            },
+            "required": [
+              "id",
+              "color"
+            ]
+          },
+          "object": {
+            "kinds": {
+              "box": "size[3]",
+              "curve": "points:[[x,y,z],...],radius,closed:boolean (smooth Bezier tube)",
+              "cylinder": "radius,depth",
+              "lathe": "profile:[[radius,z],...],segments:12..128 (local Z axis)",
+              "loft": "rings:[[[x,y,z],...],...] equal width; closed:boolean; caps:boolean",
+              "mesh": "vertices:[[x,y,z],...],faces:[[index,index,index,...],...]",
+              "sphere": "radius",
+              "torus": "radius,tube"
+            },
+            "modifiers": "bevel:0..0.1 metres; subdivision:0..2; thickness:0..0.05 metres; difference:[previous closed mesh IDs] max8",
+            "optional": [
+              "position",
+              "rotation",
+              "scale",
+              "params",
+              "modifiers",
+              "visible"
+            ],
+            "required": [
+              "id",
+              "kind",
+              "material"
+            ]
+          },
+          "objects_max": 128,
+          "optional": [
+            "description",
+            "render",
+            "asset",
+            "asset_pipeline"
+          ],
+          "render": {
+            "engine": [
+              "CYCLES",
+              "BLENDER_EEVEE_NEXT"
+            ],
+            "quality": [
+              "preview",
+              "final"
+            ],
+            "view": [
+              "front",
+              "rear",
+              "side"
+            ]
+          },
+          "required": [
+            "schema",
+            "units",
+            "title",
+            "objects",
+            "materials",
+            "unfulfilled"
+          ],
+          "schema": "jarvis.studio3d.v1",
+          "units": "m",
+          "vertices_max": 40000
+        },
+        "executable": "D:\\soft\\Blender Foundation\\Blender 5.2\\blender.exe",
+        "hash_check": "on every accepted build",
+        "limits": {
+          "cpu_seconds": 1200,
+          "memory_bytes": 4294967296,
+          "output_bytes": 268435456,
+          "threads": 4,
+          "wall_seconds": 300
+        },
+        "max_upload_bytes": 20971520,
+        "ready": true,
+        "version": "Blender 5.2.0 LTS"
+      }
+    },
+    "/api/studio3d/inspect/a843d2266d234c5296f604daf7e54eb0/model.glb": {
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 10434,
+      "sha256": "ecd6540fdc25060349ffc5046b23c32427a321593f03950c7204b8eac6dd0a78",
+      "triangles": 26140,
+      "textures": 3,
+      "formal_issues": {
+        "messages": [],
+        "numErrors": 0,
+        "numHints": 0,
+        "numInfos": 0,
+        "numWarnings": 0,
+        "truncated": false
+      }
+    },
+    "/api/studio3d/view/a843d2266d234c5296f604daf7e54eb0": {
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 4878,
+      "CSP": "default-src 'self'; script-src 'self' 'sha256-64/HFsZZChKzUemKNNbIkc/qjwcG6oWuZ8jgf5StD1E='; connect-src 'self' blob:; img-src 'self' blob: data:; style-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'"
+    }
+  },
+  "documentation": "OK documents=26 chapters=23 diagrams=39 local_links=2350 errors=0",
+  "architecture": {
+    "python_files": 115,
+    "errors": []
+  },
+  "test_server_cleanup": "Owned test PID28660 identity checked and stopped; test data and failures retained. Main service not stopped.",
+  "open_in_codex": "queued, not confirmed visible",
+  "note": "No new Core/Database constructor opened production data; unrelated concurrent knowledge schema migration remains the other task scope."
+}

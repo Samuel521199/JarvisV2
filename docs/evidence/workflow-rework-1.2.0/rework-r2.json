@@ -1,0 +1,129 @@
+{
+  "passed": false,
+  "run": 21,
+  "failures": 0,
+  "errors": 3,
+  "skipped": 0,
+  "seconds": 78.79,
+  "cases": [
+    {
+      "id": "test_work_revisions.WorkRevisions.test_competing_stale_revision_does_not_fork",
+      "status": "PASS",
+      "seconds": 3.0552
+    },
+    {
+      "id": "test_work_revisions.WorkRevisions.test_completed_child_is_invalidated_by_late_source_feedback",
+      "status": "PASS",
+      "seconds": 3.7283
+    },
+    {
+      "id": "test_work_revisions.WorkRevisions.test_context_revocation_propagates_to_child",
+      "status": "PASS",
+      "seconds": 3.8772
+    },
+    {
+      "id": "test_work_revisions.WorkRevisions.test_correction_records_negative_feedback_and_child_can_repair",
+      "status": "PASS",
+      "seconds": 3.7824
+    },
+    {
+      "id": "test_work_revisions.WorkRevisions.test_crash_before_and_after_commit_leave_one_link_and_no_new_grants",
+      "status": "PASS",
+      "seconds": 4.0421
+    },
+    {
+      "id": "test_work_revisions.WorkRevisions.test_followup_limit_is_shared_across_versions",
+      "status": "ERROR",
+      "seconds": 6.4532
+    },
+    {
+      "id": "test_work_revisions.WorkRevisions.test_full_rework_allows_new_input_but_keeps_original",
+      "status": "PASS",
+      "seconds": 4.2671
+    },
+    {
+      "id": "test_work_revisions.WorkRevisions.test_idempotent_request_survives_restart_and_changed_payload_conflicts",
+      "status": "PASS",
+      "seconds": 3.1701
+    },
+    {
+      "id": "test_work_revisions.WorkRevisions.test_late_feedback_blocks_admitted_child_before_effect",
+      "status": "PASS",
+      "seconds": 3.2293
+    },
+    {
+      "id": "test_work_revisions.WorkRevisions.test_late_feedback_blocks_unadmitted_child_without_grant",
+      "status": "PASS",
+      "seconds": 3.9052
+    },
+    {
+      "id": "test_work_revisions.WorkRevisions.test_legacy_work_adoption_does_not_fabricate_admission_history",
+      "status": "PASS",
+      "seconds": 3.286
+    },
+    {
+      "id": "test_work_revisions.WorkRevisions.test_new_requirement_preserves_parent_evaluation",
+      "status": "PASS",
+      "seconds": 3.2022
+    },
+    {
+      "id": "test_work_revisions.WorkRevisions.test_only_suffix_executes_and_original_actions_are_unchanged",
+      "status": "PASS",
+      "seconds": 3.9108
+    },
+    {
+      "id": "test_work_revisions.WorkRevisions.test_owner_identity_persists_and_no_extra_authority_on_draft",
+      "status": "PASS",
+      "seconds": 3.1714
+    },
+    {
+      "id": "test_work_revisions.WorkRevisions.test_pinned_input_cannot_be_edited_or_automatically_replanned",
+      "status": "PASS",
+      "seconds": 3.7777
+    },
+    {
+      "id": "test_work_revisions.WorkRevisions.test_rejection_at_effect_checkpoint_does_not_replay_or_confirm",
+      "status": "PASS",
+      "seconds": 3.3735
+    },
+    {
+      "id": "test_work_revisions.WorkRevisions.test_reused_capability_switch_invalidates_prefix",
+      "status": "PASS",
+      "seconds": 4.0849
+    },
+    {
+      "id": "test_work_revisions.WorkRevisions.test_source_file_change_blocks_before_effect",
+      "status": "PASS",
+      "seconds": 3.3574
+    },
+    {
+      "id": "test_work_revisions.WorkRevisions.test_unfinished_and_non_linear_sources_are_rejected",
+      "status": "PASS",
+      "seconds": 3.2043
+    },
+    {
+      "id": "test_work_revisions.WorkRevisions.test_whole_work_cancel_revokes_queued_child",
+      "status": "ERROR",
+      "seconds": 3.2414
+    },
+    {
+      "id": "test_work_revisions.WorkRevisions.test_whole_work_cancel_stops_draft_and_preserves_original_success",
+      "status": "ERROR",
+      "seconds": 4.5718
+    }
+  ],
+  "failure_details": [
+    {
+      "id": "test_work_revisions.WorkRevisions.test_followup_limit_is_shared_across_versions",
+      "trace": "Traceback (most recent call last):\n  File \"D:\\Jarvis\\tests\\test_work_revisions.py\", line 168, in test_followup_limit_is_shared_across_versions\n    self.code('work_limit',self.rework,ident,start_step=1,request_id='bounded-overflow')\n    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: GoalPlans.code() got an unexpected keyword argument 'start_step'\n"
+    },
+    {
+      "id": "test_work_revisions.WorkRevisions.test_whole_work_cancel_revokes_queued_child",
+      "trace": "Traceback (most recent call last):\n  File \"D:\\Jarvis\\tests\\test_work_revisions.py\", line 160, in test_whole_work_cancel_revokes_queued_child\n    self.assertEqual(self.core.run_task(new)['status'],'CANCELLED')\n                     ~~~~~~~~~~~~~~~~~~^^^^^\n  File \"D:\\Jarvis\\host\\core.py\", line 175, in run_task\n    elif task['status'] != 'READY': raise CoreError('invalid_state', 'Task cannot be started')\n                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nsdk.protocol.CoreError: Task cannot be started\n"
+    },
+    {
+      "id": "test_work_revisions.WorkRevisions.test_whole_work_cancel_stops_draft_and_preserves_original_success",
+      "trace": "Traceback (most recent call last):\n  File \"D:\\Jarvis\\tests\\test_work_revisions.py\", line 151, in test_whole_work_cancel_stops_draft_and_preserves_original_success\n    self.code('work_conflict',self.rework,ident,request_id='after-cancel-01')\n    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: GoalPlans.code() got an unexpected keyword argument 'request_id'\n"
+    }
+  ]
+}

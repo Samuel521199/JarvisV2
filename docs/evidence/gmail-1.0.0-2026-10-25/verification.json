@@ -1,0 +1,65 @@
+{
+  "status": "verified_with_declared_limits",
+  "date": "2026-10-25",
+  "component_version": "gmail-1.0.0",
+  "product_version": "0.1.0",
+  "targeted_tests": 21,
+  "related_regression": 44,
+  "skills_regression": 13,
+  "full_repository_regression_run": false,
+  "legacy_connection_migrated": true,
+  "scopes_preserved": true,
+  "old_mail_cache_migrated": false,
+  "real_profile": "SUCCEEDED",
+  "real_inbox_messages": 10,
+  "real_mail_write_operations": 0,
+  "real_mail_content_sent_to_models": false,
+  "private_data_in_public_evidence": false,
+  "latest_source_loaded": true,
+  "post_restart_profile": "SUCCEEDED",
+  "ui": {
+    "natural_language_opens_helper": true,
+    "foreground_model_dispatched": false,
+    "connected_icon_verified": true,
+    "local_draft_survives_restart": true,
+    "send_review_verified_without_confirming": true,
+    "chat_console_errors": 0,
+    "private_screenshots": "user-data/mail-proof (Git ignored)"
+  },
+  "checks": {
+    "documentation": {"documents": 27, "chapters": 23, "diagrams": 39, "local_links": 2571, "errors": 0},
+    "generated_navigation_current": true,
+    "architecture_python_files": 167,
+    "architecture_errors": 0,
+    "javascript_syntax": [
+      "mailbox.js",
+      "app.js",
+      "settings.js",
+      "settings-runtime.js",
+      "goals.js"
+    ]
+  },
+  "limitations": [
+    "No real remote write or undo performed; these use simulated adapter tests.",
+    "No real private email submitted to a model.",
+    "No scheduled inbox monitoring, QQ connector or autonomous new mailbox skills.",
+    "Windows DPAPI only; macOS/Linux not verified."
+  ],
+  "superseded_attempt": {
+    "file": "family-tests.txt",
+    "reason": "Isolated invocation lacked project import path; the corrected invocation passed all 44 related tests in regression.txt."
+  },
+  "source_sha256": {
+    "sdk/mail.py": "70084d974342871d209755f28f59c7def05a309a1f0f4e42f867a3380a8a4e8b",
+    "adapters/mail/google.py": "de9296ade042e857e089c63f0f888cb1c484c60d70ec6b4eeb5cb6e4fcee209c",
+    "adapters/mail/oauth.py": "44089b09ee7831dc031cb31aa1138351e137c86606adf74b1f0a123e3e90d774",
+    "modules/mail/store.py": "51004c5290ce1ac01e6eab510fade25da34b886439de2a6faf0322ce6acef646",
+    "host/mailbox.py": "aa56e7f19a37f4d8163b31edb0ddcb36c2b62d9886910e8e21d719cabbfe200a",
+    "host/mail_ai.py": "b140a5e2fd885e358771fc3b22e72d04e147f874e8d1a533ed6615b814ff9503",
+    "apps/cli/migrate_gmail.py": "09d942703fcba2009f7da7b7f7ebeaeed5585bfca46d1a6d4b77d38067cd5d5d",
+    "apps/workbench/mail_http.py": "796021b55a0d7984ca427fc94d01615a4f6ef3c607e59b1eabebbeb28a1ea3dc",
+    "apps/workbench/mailbox.js": "b1d97412880faf9517653a500494aeadac21e2b6d7a5fbdf015a3bd0207682fe",
+    "apps/workbench/mail.css": "ccb05166b2e9f00f477542d2ba72f48cd171618c862f61451272b65c4d5e63ee",
+    "tests/test_mailbox.py": "d6c3946cae18bb7e5d1cf00ba1e3f36aae2d014223f5e3d65779051621d4c4e4"
+  }
+}

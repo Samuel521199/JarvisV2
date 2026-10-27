@@ -1,0 +1,125 @@
+{
+  "adapter_version": "1.5.0",
+  "status": "implemented and scoped verified; reference/AAA art acceptance FAILED",
+  "reference": "ef4b78387783404ca25efc1bb839e4bb",
+  "high": {
+    "id": "ddeb08cea22e4b0baad76137efd6bf74",
+    "triangles": 120148,
+    "resources": {
+      "cpu_seconds": 1200,
+      "elapsed_seconds": 21.941682600001513,
+      "exit_code": 0,
+      "isolation": "Trusted fixed first-party worker with resource Job; not an OS security sandbox. No model Python, external imports or external BLEND loading. Only host-hash-verified first-party masters load with scripts disabled.",
+      "memory_bytes": 4294967296,
+      "output_bytes": 268435456,
+      "peak_memory_bytes": 1518870528,
+      "threads": 4,
+      "wall_seconds": 300
+    }
+  },
+  "low": {
+    "id": "b1805ee0ecf543e19c2a6a0d243d1da0",
+    "triangles": 998,
+    "parts": [
+      {
+        "id": "apple-body · game",
+        "triangles": 836,
+        "uv": true,
+        "vertices": 420,
+        "zero_area_faces": 0
+      },
+      {
+        "id": "apple-stem · game",
+        "triangles": 162,
+        "uv": true,
+        "vertices": 83,
+        "zero_area_faces": 0
+      }
+    ],
+    "resources": {
+      "cpu_seconds": 1200,
+      "elapsed_seconds": 33.99022409999452,
+      "exit_code": 0,
+      "isolation": "Trusted fixed first-party worker with resource Job; not an OS security sandbox. No model Python, external imports or external BLEND loading. Only host-hash-verified first-party masters load with scripts disabled.",
+      "memory_bytes": 4294967296,
+      "output_bytes": 268435456,
+      "peak_memory_bytes": 2257051648,
+      "threads": 4,
+      "wall_seconds": 300
+    },
+    "texture_size": 2048
+  },
+  "reduction_percent": 99.16935779205647,
+  "model_calls": 4,
+  "usage": {
+    "prompt_tokens": 16964,
+    "completion_tokens": 6270,
+    "total_tokens": 23234
+  },
+  "automatic_rounds": [
+    {
+      "job": "7d27dfca3f4d4f06968e8397316701f9",
+      "verdict": "needs_revision",
+      "issues": [
+        "marbled skin",
+        "short stem",
+        "dim studio"
+      ]
+    },
+    {
+      "job": "f1e7d4ef51c24c31b4a34fccb4255818",
+      "verdict": "needs_revision",
+      "issues": [
+        "pink washed-out skin",
+        "oversimplified stem cut",
+        "procedural lenticels"
+      ]
+    }
+  ],
+  "manual_intervention": {
+    "author": "Codex",
+    "source_job": "f1e7d4ef51c24c31b4a34fccb4255818",
+    "changes": [
+      "world strength 1.15 -> 0.10",
+      "light powers multiplied by 0.32",
+      "exposure 0.1 -> -0.3",
+      "skin base #b5151b -> #940c13",
+      "coat .26 -> .05",
+      "stem/basin pigment calibration",
+      "end_irregularity .12",
+      "preview render 960 square"
+    ],
+    "model_reverified_after_manual_changes": false
+  },
+  "visual_review": {
+    "reviewer": "Codex visual inspection",
+    "LOD0": "Main silhouette and stem preserved in observed native/front viewport; crown faceting/seam remains, not reference fidelity acceptance",
+    "LOD1": "FAIL: visible black triangular artifacts in realtime PBR",
+    "LOD2": "FAIL: visible black triangular artifacts and stronger faceting in realtime PBR",
+    "reference_fidelity": "FAIL: procedural streaks/pores, simplified cut wood and highlight distribution still differ; no AAA claim"
+  },
+  "remaining": [
+    "reference texture projection and de-lighting not implemented",
+    "single image back/bottom inferred",
+    "no numeric image similarity evaluation",
+    "no independent artist or target game engine acceptance",
+    "additional LOD UV/tangent/normal artifacts unresolved"
+  ],
+  "browser": {
+    "lighting_modes": [
+      "neutral single key",
+      "multi-light studio"
+    ],
+    "new_controls_visible": true,
+    "console_errors": [],
+    "delivered_url": "http://127.0.0.1:18282/api/studio3d/view/b1805ee0ecf543e19c2a6a0d243d1da0"
+  },
+  "evidence": [
+    "model-turns.json",
+    "checks.json",
+    "source-review.json",
+    "viewer-low.png",
+    "viewer-lod1-fail.png",
+    "viewer-lod2-fail.png"
+  ]
+}

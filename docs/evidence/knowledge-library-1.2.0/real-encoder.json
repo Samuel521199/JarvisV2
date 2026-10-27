@@ -1,0 +1,161 @@
+{
+  "version": "knowledge-library-1.2.0",
+  "model": "e5-multilingual-small-int8",
+  "cloud_calls": 0,
+  "scope": "Synthetic integration; Windows current PC; CPU 2 threads; application network blocked, not OS air gap",
+  "checks": [
+    {
+      "query": "What does the user like drinking?",
+      "expected_present": true,
+      "returned": [
+        "饮食"
+      ],
+      "retrieval": {
+        "version": "memory-retrieval-1.0.0",
+        "mode": "hybrid",
+        "eligible": 1,
+        "matched": 1,
+        "semantic": "persistent_ready",
+        "semantic_candidates": 1,
+        "model": "e5-multilingual-small-int8",
+        "vector_space": "5a96766bbb5291f3177690a61df4a16794ad7a9385211db50356904e205351a5",
+        "sources": {
+          "mode": "scan",
+          "candidates": 0,
+          "version": "knowledge-library-1.2.0",
+          "semantic": {
+            "status": "ready",
+            "space": "5a96766bbb5291f3177690a61df4a16794ad7a9385211db50356904e205351a5",
+            "scanned": 4,
+            "candidates": 1,
+            "stale": false,
+            "model": "e5-multilingual-small-int8"
+          }
+        },
+        "selected": 1,
+        "bytes": 355
+      },
+      "elapsed_ms": 12.349799999356037
+    },
+    {
+      "query": "汽车需要做什么保养？",
+      "expected_present": true,
+      "returned": [
+        "保养",
+        "时间",
+        "饮食"
+      ],
+      "retrieval": {
+        "version": "memory-retrieval-1.0.0",
+        "mode": "hybrid",
+        "eligible": 3,
+        "matched": 3,
+        "semantic": "persistent_ready",
+        "semantic_candidates": 3,
+        "model": "e5-multilingual-small-int8",
+        "vector_space": "5a96766bbb5291f3177690a61df4a16794ad7a9385211db50356904e205351a5",
+        "sources": {
+          "mode": "scan",
+          "candidates": 1,
+          "version": "knowledge-library-1.2.0",
+          "semantic": {
+            "status": "ready",
+            "space": "5a96766bbb5291f3177690a61df4a16794ad7a9385211db50356904e205351a5",
+            "scanned": 4,
+            "candidates": 3,
+            "stale": false,
+            "model": "e5-multilingual-small-int8"
+          }
+        },
+        "selected": 3,
+        "bytes": 1063
+      },
+      "elapsed_ms": 7.991200000105891
+    },
+    {
+      "query": "Where does the cat sleep?",
+      "expected_present": true,
+      "returned": [
+        "动物"
+      ],
+      "retrieval": {
+        "version": "memory-retrieval-1.0.0",
+        "mode": "hybrid",
+        "eligible": 1,
+        "matched": 1,
+        "semantic": "persistent_ready",
+        "semantic_candidates": 1,
+        "model": "e5-multilingual-small-int8",
+        "vector_space": "5a96766bbb5291f3177690a61df4a16794ad7a9385211db50356904e205351a5",
+        "sources": {
+          "mode": "scan",
+          "candidates": 0,
+          "version": "knowledge-library-1.2.0",
+          "semantic": {
+            "status": "ready",
+            "space": "5a96766bbb5291f3177690a61df4a16794ad7a9385211db50356904e205351a5",
+            "scanned": 4,
+            "candidates": 1,
+            "stale": false,
+            "model": "e5-multilingual-small-int8"
+          }
+        },
+        "selected": 1,
+        "bytes": 352
+      },
+      "elapsed_ms": 8.137099999657949
+    },
+    {
+      "query": "When is the project meeting?",
+      "expected_present": true,
+      "returned": [
+        "时间"
+      ],
+      "retrieval": {
+        "version": "memory-retrieval-1.0.0",
+        "mode": "hybrid",
+        "eligible": 1,
+        "matched": 1,
+        "semantic": "persistent_ready",
+        "semantic_candidates": 1,
+        "model": "e5-multilingual-small-int8",
+        "vector_space": "5a96766bbb5291f3177690a61df4a16794ad7a9385211db50356904e205351a5",
+        "sources": {
+          "mode": "scan",
+          "candidates": 0,
+          "version": "knowledge-library-1.2.0",
+          "semantic": {
+            "status": "ready",
+            "space": "5a96766bbb5291f3177690a61df4a16794ad7a9385211db50356904e205351a5",
+            "scanned": 4,
+            "candidates": 1,
+            "stale": false,
+            "model": "e5-multilingual-small-int8"
+          }
+        },
+        "selected": 1,
+        "bytes": 367
+      },
+      "elapsed_ms": 8.51890000012645
+    }
+  ],
+  "build_seconds": 0.07523740000033285,
+  "index": {
+    "active": {
+      "space": "5a96766bbb5291f3177690a61df4a16794ad7a9385211db50356904e205351a5",
+      "model_space": "1984ed1996abbfa1b5a86dc820cd44995ea49ade176ab2984be8b2c49c84a391",
+      "dimension": 384,
+      "epoch": 4,
+      "state": "ready",
+      "updated": 1792774152.453127
+    },
+    "vectors": 4,
+    "stale": false,
+    "staging": [],
+    "recipe": "unicode-window-120-overlap-20-f32le-sha256-v1"
+  },
+  "source_correction_withdraws_claim": true,
+  "restart_persistent_recall": true,
+  "standby_fallback": true,
+  "passed": true
+}

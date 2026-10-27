@@ -1,0 +1,33 @@
+flowchart TB
+  I["同一连续身份<br/>原目标、经历与承诺"]
+  subgraph F["同一身份的三个职能面"]
+    direction LR
+    D["定向<br/>目标与约束"]
+    E["协作<br/>交流与推进"]
+    R["观察成长<br/>证据与改进"]
+    D ~~~ E ~~~ R
+  end
+  I --> F
+  O["一项工作一个负责 Bot<br/>必要时有界委派"]
+  T["原任务账本与动作网关<br/>任期、权限、预算、取消"]
+  A["原工具与模块<br/>实际执行及回执"]
+  Q["任务结果评价<br/>目标、产物与真实证据"]
+  K["原知识服务的增量<br/>条件、反例、纠正与撤回"]
+  C["原自愈与研发通路<br/>恢复原契约 / 验证新能力"]
+  P["独立包检查与唯一发布<br/>灰度、回退、基线重核"]
+  F -->|定向计划，协作推进| O
+  O -->|动作或子任务提案| T
+  T --> A
+  A -->|结果引用| Q
+  Q -->|供观察成长核对| F
+  F -.->|观察成长提出经验候选| K
+  K -.->|按当前条件取用| F
+  F -.->|观察成长提出故障或改进| C
+  C -->|候选与证据| P
+  P -.->|受控版本更新| A
+  classDef core fill:#e8f0fc,stroke:#7394c7,color:#153952
+  classDef work fill:#e6f4ee,stroke:#79aa95,color:#143d43
+  classDef check fill:#fff3da,stroke:#c99648,color:#61451d
+  class I,D,E,R core
+  class O,T,A,K work
+  class Q,C,P check

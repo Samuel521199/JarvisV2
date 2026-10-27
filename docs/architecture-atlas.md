@@ -3,7 +3,7 @@
 > 本页管理图的阅读入口；完整规则归对应主题。所有图为目标设计，不证明新工程已实现。
 
 <!-- book-nav:start -->
-[工程主入口](../README.md) › [第五篇 · 验证与参考](../README.md#part-evidence) › 第 21 章
+[工程主入口](../README.md) › [第五篇 · 验证与参考](../README.md#part-evidence) › 第 23 章
 
 **本章导航**
 
@@ -48,6 +48,13 @@
 - [遗忘与迟到候选](#figure-memory-guide-forget-race)
 - [离线节点携带旧内容重连](#figure-memory-guide-reconnect)
 - [私密资料与输出渠道](#figure-memory-guide-private-output)
+- [助手结论与取舍](#figure-assistant-decision-map)
+- [助手改进到预期效果](#figure-assistant-improvement-effects)
+- [预测到实测与差距复盘](#figure-assistant-forecast-validation)
+- [结构潜力、评分退化与采用决定](#figure-assistant-growth-regression)
+- [条件化经验复用与持续纠正](#figure-assistant-knowledge-reuse)
+- [三位一体的增量接入](#figure-assistant-trinity-integration)
+- [闭环交接与反馈回流](#figure-assistant-loop-closure)
 <!-- book-nav:end -->
 
 <a id="diagram-index"></a>
@@ -55,6 +62,13 @@
 
 | 图 | 完整主题 |
 |---|---|
+| [助手结论与取舍](#figure-assistant-decision-map) | [Grok 对比：先读结论](grok-bot-comparison.md#grok-conclusion-map) |
+| [助手改进到预期效果](#figure-assistant-improvement-effects) | [改了什么，预计会怎样](grok-bot-comparison.md#grok-improvement-preview) |
+| [预测到实测与差距复盘](#figure-assistant-forecast-validation) | [报告图解](grok-bot-comparison.md#grok-prediction-review) · [验收协议](delivery-validation.md#forecast-validation-protocol) |
+| [结构潜力、评分退化与采用决定](#figure-assistant-growth-regression) | [改造低分时怎样继续](grok-bot-comparison.md#jarvis-regression-analysis) · [采用与恢复规则](evolution-release.md#growth-regression-policy) |
+| [条件化经验复用与持续纠正](#figure-assistant-knowledge-reuse) | [经验总结示例](grok-bot-comparison.md#jarvis-conditional-learning) · [知识库的持续收益](knowledge-learning.md#knowledge-compounding) |
+| [三位一体的增量接入](#figure-assistant-trinity-integration) | [核心语义保持](architecture.md#trinity-change-invariants) · [具体实施](core-bootstrap.md#core-modernization-plan) |
+| [闭环交接与反馈回流](#figure-assistant-loop-closure) | [闭环审查](decisions-review.md#closed-loop-audit) · [目标结案与等待](tasks-agents.md#goal-outcome-closure) |
 | [原件到记忆与知识](#figure-memory-guide-data) | [综合方案：数据组织](memory-cognition-design.md#memory-guide-data) |
 | [交流与工作的并行时序](#figure-memory-guide-parallel) | [综合方案：混合意图示例](memory-cognition-design.md#memory-guide-parallel) |
 | [项目分支的隔离与合并](#figure-memory-guide-branches) | [综合方案：分支冲突](memory-cognition-design.md#memory-guide-branch-case) |
@@ -391,6 +405,63 @@
 
 这六张图服务于 [r2 单篇方案](memory-cognition-design.md#memory-guide-start)，使用同一固定版本渲染器：`node tools/render_memory_diagrams.cjs --guide`。需要现有 Playwright/Edge 环境；实际输出与资源摘要见[渲染回执](evidence/memory-guide-render-2026-10-23.json)。无参数调用仍只渲染前两张综合图；每次改图后都要检查生成物并登记摘要。
 
+<a id="figure-assistant-decision-map"></a>
+## 助手结论与取舍
+
+![助手结论与取舍](diagrams/assistant-decision-map.png)
+
+[SVG](diagrams/assistant-decision-map.svg) · [唯一图源](diagrams/assistant-decision-map.mmd) · [结论与证据边界](grok-bot-comparison.md#grok-conclusion-map)。
+
+<a id="figure-assistant-improvement-effects"></a>
+## 助手改进到预期效果
+
+![助手改进到预期效果](diagrams/assistant-improvement-effects.png)
+
+[SVG](diagrams/assistant-improvement-effects.svg) · [唯一图源](diagrams/assistant-improvement-effects.mmd) · [改进条件与代价](grok-bot-comparison.md#grok-improvement-preview)。箭头表示待验证的因果假设，不是业务实测结果。
+
+<a id="figure-assistant-forecast-validation"></a>
+## 预测到实测与差距复盘
+
+![预测到实测与差距复盘](diagrams/assistant-forecast-validation.png)
+
+[SVG](diagrams/assistant-forecast-validation.svg) · [唯一图源](diagrams/assistant-forecast-validation.mmd) · [判定规则](delivery-validation.md#forecast-gap-judgement)。
+
+三张图使用已有固定版本 Mermaid 11.12.0、Playwright 与 Edge 渲染：`node tools/render_memory_diagrams.cjs --assistant-forecast`。未安装新的应用依赖；实际输出摘要见[渲染回执](evidence/assistant-forecast-render-2026-10-26.json)。渲染、目视核查和文档验证不代表图示功能已实现。
+
+<a id="figure-assistant-growth-regression"></a>
+## 结构潜力、评分退化与采用决定
+
+![分别判断继续研发与生产采用，保留稳定服务和有界实验](diagrams/assistant-growth-regression.png)
+
+[SVG](diagrams/assistant-growth-regression.svg) · [唯一图源](diagrams/assistant-growth-regression.mmd) · [退化分析](grok-bot-comparison.md#jarvis-regression-analysis) · [完整规则](evolution-release.md#growth-regression-policy)。
+
+<a id="figure-assistant-knowledge-reuse"></a>
+## 条件化经验复用与持续纠正
+
+![检查当前条件后复用或研究，只有有价值的增量进入经验整理](diagrams/assistant-knowledge-reuse.png)
+
+[SVG](diagrams/assistant-knowledge-reuse.svg) · [唯一图源](diagrams/assistant-knowledge-reuse.mmd) · [例子与解释](grok-bot-comparison.md#jarvis-conditional-learning) · [完整规则](knowledge-learning.md#knowledge-compounding)。
+
+两张图使用同一固定版本渲染器：`node tools/render_memory_diagrams.cjs --growth-learning`。实际渲染、资源和输出摘要见[渲染回执](evidence/learning-knowledge-render-2026-10-26.json)，研究和文档核查见[本轮记录](evidence/learning-knowledge-strategy-2026-10-26.json)。图示为 proposed，不表示实验隔离、持续学习或净收益已经验证。
+
+<a id="figure-assistant-trinity-integration"></a>
+## 三位一体的增量接入
+
+![同一身份的三职能与任务责任、评价、知识、自愈和进化的接线](diagrams/assistant-trinity-integration.png)
+
+[SVG](diagrams/assistant-trinity-integration.svg) · [唯一图源](diagrams/assistant-trinity-integration.mmd) · [权威约束](architecture.md#trinity-change-invariants) · [实施工作包](core-bootstrap.md#modernization-work-packages)。实线表示工作/证据流，虚线表示候选、按条件取用和受控更新，均不代表新增权限。
+
+使用已有 Mermaid 11.12.0 / Playwright / Edge：`node tools/render_memory_diagrams.cjs --trinity-integration`。输出和资源摘要见[渲染记录](evidence/trinity-implementation-render-2026-10-26.json)。实际检查图文与布局不等于对应运行能力已实现。
+
+<a id="figure-assistant-loop-closure"></a>
+## 闭环交接与反馈回流
+
+![任务闭环中的正常交付、等待、补救、退出和经验反馈](diagrams/assistant-loop-closure.png)
+
+[SVG](diagrams/assistant-loop-closure.svg) · [唯一图源](diagrams/assistant-loop-closure.mmd) · [审查结论](decisions-review.md#closed-loop-audit) · [联合验收](delivery-validation.md#closure-validation-protocol)。等待和退出不是自动失败，反馈也不能绕过原目标和效果核对。
+
+使用已有固定 Mermaid 11.12.0 / Playwright / Edge：`node tools/render_memory_diagrams.cjs --loop-closure`。实际渲染资源及输出摘要见[记录](evidence/closed-loop-render-2026-10-26.json)，不代表通用运行闭环已实现。
+
 <!-- book-footer:start -->
-[返回工程主入口](../README.md) · [全书目录](../README.md#book-tree) · [上一章：架构决策、批判性评审与评分](decisions-review.md) · [下一章：研究资料与证据边界](references.md)
+[返回工程主入口](../README.md) · [全书目录](../README.md#book-tree) · [上一章：Grok Bot 功能、界面与运行机制：Jarvis 对比研究（2026-10-26）](grok-bot-comparison.md) · [下一章：研究资料与证据边界](references.md)
 <!-- book-footer:end -->

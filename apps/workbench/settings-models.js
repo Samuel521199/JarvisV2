@@ -1,6 +1,6 @@
 import {el,button,field,input,select,modal,closeModal,post,notice,card,details,download,states} from './ui.js';
 const levelOptions={vertex:['minimal','low','medium','high'],gemini:['minimal','low','medium','high'],bailian:['off','on'],openai:['none','low','medium','high','xhigh','max'],xai:['low','medium','high','xhigh'],eachlabs:['low','medium','high','max'],compatible:['none','low','medium','high','xhigh','max'],local:[]};
-const priceReasons={token_rates:'按调用时单价估算',historical_no_price_snapshot:'历史记录无价格快照',missing_usage_or_price:'缺少价格或用量',missing_token_rate:'缺少对应单价',price_expired:'价格已过期',outside_price_tier:'超过价格适用档位',unreconciled_usage:'用量组成待核对',local_no_api_charge:'本地推理，无 API 费用'};
+const priceReasons={image_modality_rates:'按图片、文字及思考分项估算',image_usage_missing:'图片分项用量缺失',token_rates:'按调用时单价估算',historical_no_price_snapshot:'历史记录无价格快照',missing_usage_or_price:'缺少价格或用量',missing_token_rate:'缺少对应单价',price_expired:'价格已过期',outside_price_tier:'超过价格适用档位',unreconciled_usage:'用量组成待核对',local_no_api_charge:'本地推理，无 API 费用'};
 const number=(value,min=0,max=1000000)=>{const n=input(value??'');n.type='number';n.min=min;n.max=max;n.step='any';return n;};
 const check=value=>{const n=el('input');n.type='checkbox';n.checked=!!value;return n;};
 const money=(n,c='USD')=>n==null?'待核对':c+' '+Number(n).toLocaleString('zh-CN',{maximumFractionDigits:8});
@@ -30,6 +30,7 @@ export class ModelSettings {
       return {action:'model',connection:p.id,model:id.value,label:label.value,enabled:enabled.checked,default:primary.checked,parameters,reasoning_levels:options.filter(n=>n.checked).map(n=>n.value),price:pricing};};
   });}
   models(body){
+    const imageCard=card('Nano Banana · 图片模型','2.1最新主线、2 Lite轻量分支、2上一代主线；复用Google连接，在图片工作室管理与生成。');imageCard.append(button('打开图片模型目录',async()=>{try{const {imageStudio}=await import('./settings-images.js');await imageStudio(this.config);}catch(e){notice('新图片接口尚未加载，请正常重启Jarvis后使用。');}}));body.append(imageCard);
     const routing=card('自动路由',this.config.automatic_fallback?'首选失败时按所设顺序尝试备选；结果未知时不自动重发。':'只使用首选接入方。');routing.append(el('p',this.config.fallback_order.map(id=>this.config.connections.find(p=>p.id===id)?.label||id).join(' → '),'note'),button('配置顺序与级别',()=>this.routing()));body.append(routing);
     const provider=select([['','全部接入方'],...this.config.connections.map(p=>[p.id,p.label])]),search=input('','Claude、GPT、Gemini…'),toolbar=el('div',undefined,'model-toolbar'),list=el('div');search.type='search';search.setAttribute('aria-label','搜索模型');provider.setAttribute('aria-label','筛选接入方');
     toolbar.append(field('接入方',provider),field('搜索模型',search),button('+ 添加模型',()=>{const p=this.config.connections.find(x=>x.id===provider.value)||this.config.connections.find(x=>x.adapter!=='local');if(p)this.modelEditor(p);}),el('span','单价 / 100 万 Token','note'));body.append(toolbar,list);

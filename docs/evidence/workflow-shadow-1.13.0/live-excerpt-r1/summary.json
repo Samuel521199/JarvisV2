@@ -1,0 +1,154 @@
+{
+  "version": "work-trials-3/body-evidence-1",
+  "origin": "synthetic",
+  "independent_cases": 3,
+  "planned_turns": 12,
+  "recorded_turns": 12,
+  "complete_pairs": 3,
+  "cases": [
+    {
+      "id": "shadow-quote",
+      "domain": "comparison",
+      "arms": {
+        "workflow_off": {
+          "state": "PASS",
+          "turn_states": [
+            "PASS",
+            "PASS"
+          ]
+        },
+        "workflow_on": {
+          "state": "PASS",
+          "turn_states": [
+            "PASS",
+            "PASS"
+          ]
+        }
+      }
+    },
+    {
+      "id": "shadow-journal",
+      "domain": "documents",
+      "arms": {
+        "workflow_off": {
+          "state": "PASS",
+          "turn_states": [
+            "PASS",
+            "PASS"
+          ]
+        },
+        "workflow_on": {
+          "state": "PASS",
+          "turn_states": [
+            "PASS",
+            "PASS"
+          ]
+        }
+      }
+    },
+    {
+      "id": "shadow-learning",
+      "domain": "learning",
+      "arms": {
+        "workflow_off": {
+          "state": "PASS",
+          "turn_states": [
+            "PASS",
+            "PASS"
+          ]
+        },
+        "workflow_on": {
+          "state": "PASS",
+          "turn_states": [
+            "PASS",
+            "PASS"
+          ]
+        }
+      }
+    }
+  ],
+  "domains": {
+    "comparison": {
+      "workflow_off": {
+        "PASS": 1,
+        "FAIL": 0,
+        "UNMEASURED": 0
+      },
+      "workflow_on": {
+        "PASS": 1,
+        "FAIL": 0,
+        "UNMEASURED": 0
+      }
+    },
+    "documents": {
+      "workflow_off": {
+        "PASS": 1,
+        "FAIL": 0,
+        "UNMEASURED": 0
+      },
+      "workflow_on": {
+        "PASS": 1,
+        "FAIL": 0,
+        "UNMEASURED": 0
+      }
+    },
+    "learning": {
+      "workflow_off": {
+        "PASS": 1,
+        "FAIL": 0,
+        "UNMEASURED": 0
+      },
+      "workflow_on": {
+        "PASS": 1,
+        "FAIL": 0,
+        "UNMEASURED": 0
+      }
+    }
+  },
+  "descriptive_improved_pairs": 0,
+  "descriptive_regressed_pairs": 0,
+  "all_candidate_conditions_passed": true,
+  "comparison_complete": true,
+  "quality_gain": null,
+  "learning_gain": null,
+  "emotion_quality": null,
+  "real_work_gain": null,
+  "all_functional_excellence_verified": false,
+  "scope": "Current-runtime workflow guidance ablation on source-excerpt documents; exact current-source and confirmed-plan coverage plus body parity, not free prose semantic certification; no causal or population inference",
+  "execution": "live",
+  "costs": {
+    "attempts": 12,
+    "known_tokens": 23988,
+    "tokens_complete": true,
+    "total_tokens": 23988,
+    "known_api_estimates": {
+      "USD": 0.025085999999999997
+    },
+    "unpriced_attempts": 0,
+    "full_cost": null,
+    "missing": [
+      "human effort",
+      "local compute",
+      "supplier invoice reconciliation"
+    ],
+    "quality_cost_efficiency": null
+  },
+  "source_matches_freeze": true,
+  "production_deployed": false,
+  "forecast_delta": null,
+  "avoidable_interventions": null,
+  "required_decisions": null,
+  "unmeasured": [
+    "independent real requests",
+    "free-form semantic coverage",
+    "subjective document quality",
+    "human retention and transfer",
+    "emotional experience",
+    "full costs"
+  ],
+  "failure_details": [],
+  "shadow_states": {
+    "EXCERPT_MATCH": 12
+  },
+  "shadow_is_completion_gate": false
+}

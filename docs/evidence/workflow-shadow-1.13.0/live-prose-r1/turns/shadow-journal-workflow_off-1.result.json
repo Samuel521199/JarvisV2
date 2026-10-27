@@ -1,0 +1,128 @@
+{
+  "case_id": "shadow-journal",
+  "domain": "documents",
+  "arm": "workflow_off",
+  "turn": 1,
+  "freeze_digest": "71391b8d2bdd53f79c5f9c75120d927ef36530622746a92a132fdbe6134c3fc2",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\"document\":\"# 操作日志\\n\\n- **当前状态**：尚未开始\\n- **事实记录**：数据导出尚未开始。\\n- **已确认计划**：明天10点检查日志，不重跑导出（注：相对时间来源于记录，绝对日期及时区待核对）。\\n- **未采纳建议**：若因导出尚未开始而认为无需按原计划检查日志，鉴于原计划未明确撤销，建议先行复核是否需要调整检查时间或重置触发动作。\",\"status\":\"not_started\"}",
+  "skill_id": null,
+  "skill_version": null,
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 5.3017,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 185,
+        "prompt_tokens": 1470,
+        "total_tokens": 1655
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.00179625,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/shadow-journal-workflow_off-1.native.json",
+      "sha256": "7d393ff4d9869fafe1f366761cef0645f76ed3dfac4f13d89b27682cc6bd4b49",
+      "kind": "native_protocol_response"
+    },
+    {
+      "file": "artifacts/shadow-journal-workflow_off-1.reply.md.txt",
+      "sha256": "c8bac8076bf6eef58cd9b68864fe0b58c93f7d69c7e5ddf70151fa1e7f234ec5",
+      "kind": "original_session_reply"
+    },
+    {
+      "file": "artifacts/shadow-journal-workflow_off-1.document.md.txt",
+      "sha256": "b0cb5917336f24fff21638231d0b053b91fc82eb616d094bf55023a45c1d0a56",
+      "kind": "verbatim_document_field_from_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "status",
+        "status": "passed"
+      },
+      {
+        "id": "document_present",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "delivery_basis": {
+    "digest": "8b7869b6b84665fb615c94c20fa4646002742ef3588ccb931fa9919a1bfabeff",
+    "entries": [
+      {
+        "end": 181,
+        "id": "F1",
+        "kind": "facts",
+        "quote": "数据导出尚未开始。",
+        "source_turn": "trial-shadow-journal-workflow_off-1",
+        "start": 172
+      },
+      {
+        "end": 205,
+        "id": "P1",
+        "kind": "plans",
+        "quote": "明天10点检查日志，不重跑导出。",
+        "source_turn": "trial-shadow-journal-workflow_off-1",
+        "start": 189
+      }
+    ],
+    "relative_time_resolution": "UNVERIFIED",
+    "revision": 2,
+    "source_time_utc": "2026-10-27T11:01:38.567988+00:00",
+    "source_turn": "trial-shadow-journal-workflow_off-1"
+  },
+  "delivery_review": {
+    "basis_digest": "8b7869b6b84665fb615c94c20fa4646002742ef3588ccb931fa9919a1bfabeff",
+    "basis_revision": 2,
+    "checks": [
+      {
+        "id": "F1",
+        "kind": "facts",
+        "status": "literal_found"
+      },
+      {
+        "id": "P1",
+        "kind": "plans",
+        "status": "literal_not_found"
+      }
+    ],
+    "method": "literal_presence",
+    "mode": "shadow",
+    "quality_score": null,
+    "reason": "missing_quote_may_be_paraphrase_or_omission; additions_and_semantics_unverified",
+    "reply_digest": "9154c3ca9325522ffd47e2a39f5cb5c7b55b0d3fbca70b9583a5ade221392586",
+    "state": "REVIEW",
+    "version": "delivery-shadow-1",
+    "would_block": false
+  },
+  "record_digest": "f1cdb71a63b582a85a1ac19483b63bff9af3186230d61139fe44d4fc6a348ba2"
+}

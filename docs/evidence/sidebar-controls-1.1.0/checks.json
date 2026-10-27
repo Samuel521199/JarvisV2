@@ -1,0 +1,67 @@
+{
+  "component": "workbench-sidebar",
+  "version": "1.1.0",
+  "product_version": "0.1.0",
+  "checks": {
+    "browser": {
+      "passed": 29,
+      "failed": 0
+    },
+    "python_regressions": {
+      "workspace_skills": 13,
+      "session_folders": 12,
+      "settings_management": 16,
+      "workbench_http": 2,
+      "total": 43
+    },
+    "save_queue": {
+      "passed": true,
+      "command": "node tests/test_session_folder_queue.mjs"
+    },
+    "javascript_syntax": {
+      "passed": true,
+      "files": [
+        "apps/workbench/app.js",
+        "apps/workbench/projects.js",
+        "apps/workbench/ui.js",
+        "apps/workbench/session-folders.js"
+      ]
+    },
+    "documentation": {
+      "exit_code": 0,
+      "documents": 26,
+      "chapters": 23,
+      "diagrams": 39,
+      "local_links": 2244,
+      "errors": 0,
+      "navigation_updated": 2
+    },
+    "architecture": {
+      "exit_code": 0,
+      "python_files": 99,
+      "errors": []
+    },
+    "diff_whitespace": {
+      "exit_code": 0,
+      "initial_issue": "CRLF in two edited JS files; normalized only changed files to LF."
+    }
+  },
+  "initial_failure_fixed": "Pending draft save raced with archive; queue drained before hide; initial failure retained in browser-checks.json.",
+  "source_sha256": {
+    "apps/workbench/app.js": "8ae80ca875db6f4046c2156c5688aea0864e7791fb22d825e5240cd0f9c7bfd6",
+    "apps/workbench/projects.js": "b57f3bf2836fb26fb1cda0e041b31689b3f1b2d6ef1648566a88992d480862e0",
+    "apps/workbench/ui.js": "a4f3b22881f4d9c01e17ce3d573f18f7d3b43b2feb3dae4607f25b463ea87fd9",
+    "apps/workbench/session-folders.js": "d23e5f5f579df1201eeeff9f2b49f16e08b094cf97e2e03c2cae85ea03a0dc53",
+    "apps/workbench/style.css": "b17b4413866772dff9bc4ef081b3090ee60de802bf47f9f3a78d5ea2173512ed",
+    "apps/workbench/index.html": "eea68580be68e82b5a37862902df48cb564f80e250cfa2e7278eac416a4591d1",
+    "tests/test_session_folder_queue.mjs": "d8dfabc7003430c5110b9e0006b48743a46c704ad8f7ee39ecefede223a93403"
+  },
+  "test_fixture_cleaned": true,
+  "main_service_restarted": false,
+  "personal_data_mutated_for_testing": false,
+  "documents_sha256": {
+    "docs/interaction-persona.md": "6faf57010426d967cdd386e7bb2de92b89a9cb2b272168e76f510d96b5ada60b",
+    "docs/delivery-validation.md": "44ec7821481f487579074ebfbb92c53c85413cd754e990fc0387944ede680eb2",
+    "docs/manifest.json": "873584d6aba4e3beddda721393d7e5d86c4af73f6dd5b971bfd9876c104ebad1"
+  }
+}

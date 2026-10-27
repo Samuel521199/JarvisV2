@@ -1,0 +1,80 @@
+{
+  "date": "2026-10-25",
+  "scope": "Targeted integration and regression, not full-repository or browser visual acceptance",
+  "results": [
+    {
+      "name": "navigation",
+      "exit_code": 0,
+      "output": "OK navigation: 4 updated\n"
+    },
+    {
+      "name": "docs",
+      "exit_code": 0,
+      "output": "OK documents=27 chapters=23 diagrams=39 local_links=2529 errors=0\n"
+    },
+    {
+      "name": "architecture",
+      "exit_code": 0,
+      "output": "{\"python_files\": 153, \"errors\": []}\n"
+    },
+    {
+      "name": "js:apps/workbench/settings-images.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "name": "js:apps/workbench/settings.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "name": "js:apps/workbench/settings-models.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "name": "js:apps/workbench/settings-studio3d.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "name": "diff",
+      "exit_code": 0,
+      "output": ""
+    }
+  ],
+  "source_sha256": {
+    "adapters/models/image_transport.py": "e951f17483d26d9fab6f2bad55c9b399a90f2640b7c9b028384e4a75d3391eba",
+    "adapters/models/images.py": "7be603ae34c3d2fed9ab5610260cd6eaf0b28b39ab724e4bbd167a2d471b36e0",
+    "modules/image_generation/catalog.py": "75d7a3c9f956c302d8380b0fba2cffdb6d952330f78fee5b89a5d47ca2dec5ad",
+    "host/image_generation.py": "ef1e0ff75f95762dec62988a8eca8ac3200fb8c324d836e0d95bbc0f5d9d0398",
+    "host/studio3d_reference.py": "e4abd3aa1a0463c7a6e1b158b250731702f0b71853ba5034fd1d947699faefc5",
+    "apps/workbench/server.py": "40446b81fe383e810f61804acda924a5f2559d5190d575f51553c6d3d4117320",
+    "apps/workbench/settings-images.js": "f29583aeaf7bb2f456f6f4b84fc8c9db61ed9ad7121c0453dcd5fb17308bf66e",
+    "apps/workbench/settings.js": "56e219407d285615bc8e916045979668b5be30447b51fe2b2bd15d9d8e75126b",
+    "apps/workbench/settings-models.js": "2cf6a8bffe14b59e569fbec82f2bdd5f92d55da43ccb4155f8b13ea6c83e0c47",
+    "apps/workbench/settings-studio3d.js": "54dcbb3937890726fd4d6edc1ef72f81e766154ae3fcec532706a11087069c8d",
+    "tests/test_image_generation.py": "bd827fdaa4940c871ee8f2c1388033940cf2840095376dbc17c69c1bfcaa729e",
+    "tools/eval_image_studio.py": "bf4f67afc7e9060fb3bfb694f1898e6be94f1df184c4a56fb2817c3889e2a75a",
+    "seed/skills/conversation.json": "01e04f52e8bec5ab1aef9f3db8241f437f95ad614b69e4056a6e7eebc880e74f",
+    "tests/test_family_privacy.py": "753751fb00f0345073bdd1c26479d4fa447884ef5b2d8227253b2d201031c065"
+  },
+  "invocation_corrections": [
+    {
+      "name": "navigation",
+      "exit_code": 1,
+      "output": "Traceback (most recent call last):\n  File \"D:\\Jarvis\\tools\\sync_doc_navigation.py\", line 4, in <module>\n    from doclib import manifest, navigation, read, write\nModuleNotFoundError: No module named 'doclib'\n"
+    },
+    {
+      "name": "docs",
+      "exit_code": 1,
+      "output": "Traceback (most recent call last):\n  File \"D:\\Jarvis\\tools\\check_docs.py\", line 9, in <module>\n    from doclib import MARKDOWN_LINK, anchors, digest, headings, manifest, navigation, read, visible\nModuleNotFoundError: No module named 'doclib'\n"
+    }
+  ],
+  "regression": {
+    "total": 68,
+    "failed_suites": 0,
+    "details": "regression.json"
+  },
+  "source_changed_since_checks": []
+}

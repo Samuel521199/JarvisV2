@@ -1,0 +1,103 @@
+{
+  "case_id": "compare-price-revision",
+  "domain": "comparison",
+  "arm": "workflow_off",
+  "turn": 0,
+  "freeze_digest": "a52aaec59d40f9e1f3c82f05a3bd88696e584a44414e87baa4ea158c77826424",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\n  \"selected\": \"乙\",\n  \"evidence\": {\n    \"facts\": [\n      {\n        \"source\": \"F1\",\n        \"quote\": \"甲方案价格80元，交期3天。\"\n      },\n      {\n        \"source\": \"F2\",\n        \"quote\": \"乙方案价格75元，交期4天。\"\n      }\n    ],\n    \"plans\": [\n      {\n        \"source\": \"P1\",\n        \"quote\": \"明天10点询问两个方案的保修条款。\"\n      }\n    ],\n    \"suggestions\": []\n  },\n  \"document\": \"## 事实\\n- [F1] 甲方案价格80元，交期3天。\\n- [F2] 乙方案价格75元，交期4天。\\n\\n## 已确认计划\\n- [P1] 明天10点询问两个方案的保修条款。\\n\\n## 建议（未采纳）\\n- 无\"\n}",
+  "skill_id": null,
+  "skill_version": null,
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 6.1585,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 276,
+        "prompt_tokens": 1054,
+        "total_tokens": 1330
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.0018255,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/compare-price-revision-workflow_off-0.native.json",
+      "sha256": "5f5dde6303ef14e7c8ea5024bae084b4f49287b4436fdcc67901ac479cf558df",
+      "kind": "native_protocol_response"
+    },
+    {
+      "file": "artifacts/compare-price-revision-workflow_off-0.reply.md.txt",
+      "sha256": "4721ab517db536461ba4f8f54d14b76bf3b3b627f47d8adad9f2f730d2fa240f",
+      "kind": "original_session_reply"
+    },
+    {
+      "file": "artifacts/compare-price-revision-workflow_off-0.document.md.txt",
+      "sha256": "d3b9f911710f7a8df262996de8bce1204f3a2026d77df6e18fa239e52c7df5b7",
+      "kind": "verbatim_document_field_from_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "selected",
+        "status": "passed"
+      },
+      {
+        "id": "document_present",
+        "status": "passed"
+      },
+      {
+        "id": "body_shape",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_document_parity",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "record_digest": "47862f6b9008972633d103ef023846cb6a68c17fde33042a7f368b29dc20b1e4"
+}

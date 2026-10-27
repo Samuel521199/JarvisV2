@@ -12,5 +12,39 @@ target/
 *.key
 *.pem
 config/local-*.json
+*.log
 
-# docs/diagrams and docs/evidence are deliberately kept.
+# Model weights remain downloadable assets, never GitHub source payloads.
+*.onnx
+*.gguf
+*.safetensors
+*.pt
+*.pth
+*.part
+
+# Large binary assets stay on the local disk. GitHub rejects files over 100 MB,
+# warns above 50 MB, and every pushed binary stays in history forever.
+# Check before committing:  python tools/check_repo_size.py
+3DModels/
+*.blend
+*.blend1
+*.glb
+*.fbx
+*.zip
+*.7z
+*.rar
+*.exr
+*.hdr
+*.mp4
+*.mov
+
+# Evidence screenshots, renders, textures and CAD exports stay local (about 200 MB
+# of PNG by 2026-10-27). Reports (HTML/JSON/MD/TXT) under docs/evidence remain
+# tracked; PNGs committed before v0.1.1 stay in history. To publish screenshots,
+# attach them to a GitHub Release instead of committing them.
+docs/evidence/**/*.png
+docs/evidence/**/*.step
+docs/evidence/**/*.stp
+docs/evidence/**/*.stl
+
+# docs/diagrams and the remaining docs/evidence files are deliberately kept.

@@ -1,0 +1,103 @@
+{
+  "case_id": "compare-price-revision",
+  "domain": "comparison",
+  "arm": "workflow_on",
+  "turn": 0,
+  "freeze_digest": "ec010b94b1fadab51945c09363031d51bf804e0179d248577ddbcee1967da01d",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\"selected\":\"乙\",\"evidence\":{\"facts\":[{\"source\":\"F1\",\"quote\":\"甲方案价格80元，交期3天。\"},{\"source\":\"F2\",\"quote\":\"乙方案价格75元，交期4天。\"}],\"plans\":[{\"source\":\"P1\",\"quote\":\"明天10点询问两个方案的保修条款。\"}],\"suggestions\":[]},\"document\":\"## 事实\\n- [F1] 甲方案价格80元，交期3天。\\n- [F2] 乙方案价格75元，交期4天。\\n\\n## 已确认计划\\n- [P1] 明天10点询问两个方案的保修条款。\\n\\n## 建议（未采纳）\\n- 无\"}",
+  "skill_id": null,
+  "skill_version": null,
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 5.4873,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 209,
+        "prompt_tokens": 1215,
+        "total_tokens": 1424
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.001695,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/compare-price-revision-workflow_on-0.native.json",
+      "sha256": "ca359b02617630af7d2e6cb1bc85539aa2a7f80c35e09490d14a6d50014261c8",
+      "kind": "native_protocol_response"
+    },
+    {
+      "file": "artifacts/compare-price-revision-workflow_on-0.reply.md.txt",
+      "sha256": "e924e20ee33c23044da24aecac49448ab332f3843630ddd340cbde7e56874ee4",
+      "kind": "original_session_reply"
+    },
+    {
+      "file": "artifacts/compare-price-revision-workflow_on-0.document.md.txt",
+      "sha256": "d3b9f911710f7a8df262996de8bce1204f3a2026d77df6e18fa239e52c7df5b7",
+      "kind": "verbatim_document_field_from_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "selected",
+        "status": "passed"
+      },
+      {
+        "id": "document_present",
+        "status": "passed"
+      },
+      {
+        "id": "body_shape",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_document_parity",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "record_digest": "9a305288f2d622ff6dbcab6bc0b57582431886b13e138b4863179462e3c9d3ec"
+}

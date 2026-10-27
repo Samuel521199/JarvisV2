@@ -1,0 +1,33 @@
+{
+  "unit_smoke": {
+    "executions": 35,
+    "passed": true,
+    "collection_note": "Included 18 imported GoalPlans tests; final test module imports the helper module instead of exporting its TestCase class"
+  },
+  "browser_iterations": [
+    {
+      "id": "ui-r1",
+      "passed": false,
+      "reason": "Playwright module lookup not configured; fixed process NODE_PATH to existing bundled packages"
+    },
+    {
+      "id": "ui-r2",
+      "passed": false,
+      "report": "ui-r2/browser.json",
+      "reason": "Probe HTML omitted the modal container required by the actual UI component"
+    },
+    {
+      "id": "ui-r3",
+      "passed": false,
+      "report": "ui-r3/browser.json",
+      "reason": "Probe read the prior DOM before asynchronous refresh completed"
+    },
+    {
+      "id": "ui-r4",
+      "passed": true,
+      "report": "ui-r4/browser.json"
+    }
+  ],
+  "runtime_code_changed_to_pass_ui": false,
+  "dependencies_installed": false
+}

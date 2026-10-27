@@ -3,7 +3,7 @@
 > 文档组织规则 accepted；本文件约束文档维护，不意味着系统已开启自动维护。
 
 <!-- book-nav:start -->
-[工程主入口](../README.md) › [第五篇 · 验证与参考](../README.md#part-evidence) › 第 23 章
+[工程主入口](../README.md) › [第五篇 · 验证与参考](../README.md#part-evidence) › 第 25 章
 
 **本章导航**
 
@@ -14,6 +14,7 @@
 - [阶段、状态与证据](#roadmap-authority)
 - [图表、图源与生成物](#diagram-authority)
 - [一次变更的完成流程](#change-workflow)
+- [相关改进的预测与实测如何随实施更新](#forecast-followup-maintenance)
 - [历史与清理](#retirement-and-history)
 <!-- book-nav:end -->
 
@@ -63,7 +64,7 @@ accepted 表示目标/规则被采纳；proposed 是待实现设计；implemente
 ## 一次变更的完成流程
 
 1. 定位权威主题，核对最新用户要求、来源及影响范围。
-2. 修改正文和必要图源，新增内容登记唯一章节；保留稳定编号。
+2. 修改正文和必要图源，新增内容登记唯一章节；保留稳定编号。涉及新入口、能力或平台时核对[统一系统准则](architecture.md#unified-system-principle)，说明既有服务／设置／组件的复用位置和跨入口验收，不把精灵与工作台拆成重复业务方案。
 3. 改图则渲染与目视核查，修复入链及资产引用。
 4. 在工程根执行下面两条命令；第二条也检查导航是否过期。
 5. 记录实际通过/失败/未运行项和设计边界，再交付当前入口。
@@ -74,6 +75,19 @@ python tools/check_docs.py --root .
 ```
 
 两个脚本独立编写，仅使用 Python 标准库，不导入或执行旧工程工具。`--check` 可只检查导航；文档检查覆盖清单、章节层级、锚点、内部链接、图片与图源摘要、未登记文件及禁止的旧工程运行依赖。它不能替代设计审阅或业务测试。后续扩大文档格式时应同时扩展检查器，不能通过关闭检查放行坏链接。
+
+<a id="forecast-followup-maintenance"></a>
+## 相关改进的预测与实测如何随实施更新
+
+涉及 [JPF 改进看板](grok-bot-comparison.md#grok-forecast-dashboard)的后续实现，先引用预测 ID/版本并按[实验协议](delivery-validation.md#forecast-experiment-freeze)冻结比较条件；完成实际验证后，将评分、增益、成本、失败、预测差距和后续行动追加到[实测登记](delivery-validation.md#forecast-actual-register)，再更新报告开头的简明摘要与证据链接。没有匹配实测就保持“待验证”。
+
+修改预测时新增版本及理由，不覆盖原预测或失败记录；事后形成的新预测不能倒算成事前命中。只修改文档、图表或补齐设计，不给运行能力加分。此规则随正常实现/验收执行，不授权创建后台监控、计划任务或自动发布。
+
+涉及经验总结、知识检索或学习路由的实现，还应更新[持续学习专项登记](delivery-validation.md#learning-validation-cases)，留下知识/检索版本、适用与反例分组、完整成本及实际采用经验的证据。结构改进但任务成绩下降时，分别记录研发决定和生产采用决定；不得把尚未运行的 V-KLG 或知识贡献实验改成已通过。完整比较口径仍由该验收页维护。
+
+涉及三职能接线、负责人、评价、自愈或自主发布的改造，按[实施工作包](core-bootstrap.md#modernization-work-packages)注明实际修改面，并更新[V-TRI 证据登记](delivery-validation.md#trinity-implementation-evidence)。设计静态兼容、代码已实现、业务验证通过分别记录；只改文档不签收“不破坏原机制”。
+
+涉及等待唤醒、目标结案、交付反馈、故障回接或多轮自动更新的实现，同时核对[闭环缺口表](decisions-review.md#closure-gap-register)和[V-CLC 登记](delivery-validation.md#closure-validation-register)。已有原则缺少实现与新发现的设计缺口分开描述；保留失败、迟到反证和累计变化，不因某个模块通过就把整件工作标为闭环。
 
 <a id="retirement-and-history"></a>
 ## 历史与清理

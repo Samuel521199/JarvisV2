@@ -1,0 +1,80 @@
+{
+  "status": "normalized_read_only_review",
+  "derived_from": "google-review-compact.json",
+  "normalization": [
+    "Removed one enclosing JSON fence",
+    "Mapped $schema to schema only; no score/content changes"
+  ],
+  "execution_authorization": false,
+  "model_submissions": 1,
+  "provider": "vertex",
+  "model": "gemini-3.8-flash",
+  "review": {
+    "evidence_mode": "data-only",
+    "visual_score": null,
+    "scores": {
+      "structure": 7.5,
+      "assembly_correctness": 7.0,
+      "kinematics": 6.5,
+      "usability_evidence": 7.0
+    },
+    "issues": [
+      "装配插入路径仅按直线方向在7个离散时刻进行采样检查，未采用连续扫掠体（swept-volume）检测，存在漏检薄壁障碍物或步间干涉的风险。",
+      "动力学与传动模型经过高度理想化处理：差速器内部齿轮未建模（仅为理想平均转速约束），平键连接缺少实体键槽几何，齿轮齿根采用直线简化且未计入刀具根切、齿面弹性接触及应力分析。",
+      "机构学运动学检查仅覆盖30个离散转向/异相采样位姿，未对全转向角域、转向拉杆物理约束及轮胎变形接触动力学进行连续求解。",
+      "装配与干涉检查基于名义尺寸B-rep模型，未包含公差配合、螺纹紧固预紧力及轴承滚道接触应力等真实物理要素。",
+      "WebGL在隐藏外壳状态下运行帧率约为17.79 FPS，在复杂几何面数（56628面）下未达到常规流畅标准（>=30 FPS），且较早前SVG渲染模式曾出现0.92 FPS极低帧率。"
+    ],
+    "improvements": [
+      "在装配可行性验证中引入连续扫掠体碰撞检测（Continuous Collision Detection / Swept Volume），以彻底消除离散步长间穿透漏检问题。",
+      "补充实体键槽、差速器行星/半轴齿轮组以及转向拉杆等关键传动与导向零件的实际几何与约束定义。",
+      "引入包含公差带分析（GD&T）的静态配合验证机制，而非单纯依赖名义尺寸体积交集检测。",
+      "对前端渲染管线实施LOD（细节层次分级）或网格优化，以提升在完整装配体展示下的实时渲染性能与设备通用性。"
+    ],
+    "unverified": [
+      "未提供视觉截图或图像渲染结果，视觉与装配外观表现完全无法验证。",
+      "缺少物理样机可制造性（DFM/DFA）、材料应力承载、振动疲劳及制造公差累积验证。",
+      "连续扫掠路径下的全自由度动态装配避障过程未经穷举验证。",
+      "真实工况下的电机负载、路面接触反力、轮胎抓地力及动力学响应未经仿真验证。"
+    ],
+    "schema": "anatomy.race.review.v1"
+  },
+  "technical_score": 7.0,
+  "visual_score": null,
+  "usage": [
+    {
+      "billing": {
+        "amount": 0.003684,
+        "currency": "USD",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        },
+        "reason": "token_rates"
+      },
+      "connection_label": "Google Vertex",
+      "created": 1792760310.2907054,
+      "error": null,
+      "id": 26,
+      "key_label": "原有凭据 · v1",
+      "model": "gemini-3.8-flash",
+      "provider": "vertex",
+      "status": "SUCCEEDED",
+      "turn_id": "anatomy-race-review-15792d0f5b41407092e8498550c3d5d7",
+      "usage": {
+        "completion_tokens": 652,
+        "prompt_tokens": 1652,
+        "total_tokens": 2304
+      }
+    }
+  ],
+  "limits": "Display-only technical opinion from text evidence; original protocol rejection retained; not an executed mechanical candidate or quality certificate. Current viewer frame budget is20fps, so measured17.79fps is not the GPU hardware ceiling."
+}

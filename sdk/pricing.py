@@ -26,6 +26,9 @@ def validate_price(value):
 
 
 def estimate(profile, usage, created):
+    if profile and profile.get('image_price'):
+        from sdk.image_pricing import estimate_image
+        return estimate_image(profile['image_price'],usage,created)
     result={'amount':None,'currency':None,'reason':'historical_no_price_snapshot','price':None}
     if not profile: return result
     price=profile.get('price');result.update(price=price,reason='missing_usage_or_price')

@@ -1,0 +1,93 @@
+{
+  "created_at": "2026-10-27T10:20:15.880439+00:00",
+  "kind": "posthoc_assistant_prose_review",
+  "independent_human_reference": false,
+  "formal_quality_score": null,
+  "frozen_checks_changed": false,
+  "scope": "Read all eight v1 document replies and both workflow-on final learning cards; bounded qualitative review, not complete semantic certification.",
+  "findings": [
+    {
+      "id": "TRIAL-SEM-01",
+      "status": "OPEN：通用提示未解决日志工作流中的扩写",
+      "observation": "开启journal-review的首轮仍将“贴图烘焙失败”扩写为“贴图烘焙环节出现异常阻断”；来源没有确认阻断事件。关闭工作流时仅记录失败，未作此扩写。",
+      "evidence": [
+        {
+          "path": "v1-replay-r1/turns/document-correction-workflow_on-0.result.json",
+          "sha256": "9d0c343e629375bb36416acca976d8e16ec069e8e64b216f9007021cf1d64985"
+        },
+        {
+          "path": "v1-replay-r1/turns/document-correction-workflow_off-0.result.json",
+          "sha256": "4f41f3cd2b8026b26af3d3bab234bcb9f7c35c6563f6613f7a5345e2e41a1b68"
+        }
+      ]
+    },
+    {
+      "id": "TRIAL-SEM-02",
+      "status": "OPEN：关闭工作流有所改善，开启仍遗漏",
+      "observation": "关闭工作流的更正明确保留“原定明日排查”并标内容待复核；开启工作流的更正将下一步写为“复核并准备贴图烘焙工作”，未保留明天和原排查动作。",
+      "evidence": [
+        {
+          "path": "v1-replay-r1/turns/document-correction-workflow_off-1.result.json",
+          "sha256": "00381f629100d3800faf5b5773d3265a47a20aef68b3d32ce24fb98e215e2075"
+        },
+        {
+          "path": "v1-replay-r1/turns/document-correction-workflow_on-1.result.json",
+          "sha256": "fba965b9166fb353207fe89c15965ed48647591a1fe34787e44c5aabd446487f"
+        }
+      ]
+    },
+    {
+      "id": "TRIAL-PROSE-03",
+      "status": "OPEN：外部效果表述与建议边界仍含糊",
+      "observation": "预算更正关闭工作流写“已废弃归档”，开启工作流写“已做过期标注与追溯留存”，但这里只修改回复，没有真实文件归档回执；开启工作流还把执行项目支出列为下一步，未明确说明是尚未采纳的建议。不能据此证明已发生外部归档或已授权支出。",
+      "evidence": [
+        {
+          "path": "v1-replay-r1/turns/document-conflict-workflow_off-1.result.json",
+          "sha256": "c3d0aa8339d55c747493989b3a8f9e58ce42166749d10404f6cf49f42b2249a5"
+        },
+        {
+          "path": "v1-replay-r1/turns/document-conflict-workflow_on-1.result.json",
+          "sha256": "b898b9e7074208b0c169e32e7ededd9666c10fc855bbacc1c430e4b1197512ec"
+        }
+      ]
+    },
+    {
+      "id": "TRIAL-PROSE-04",
+      "status": "OBSERVED：有限事实更正正确",
+      "observation": "八份文档中的显式预算、阅读时间、渲染/烘焙状态与当前来源字段相符；文档更正也描述替换。此观察不能掩盖前述计划和措辞缺口。",
+      "evidence": [
+        {
+          "path": "v1-replay-r1/turns/document-correction-workflow_off-1.result.json",
+          "sha256": "00381f629100d3800faf5b5773d3265a47a20aef68b3d32ce24fb98e215e2075"
+        },
+        {
+          "path": "v1-replay-r1/turns/document-conflict-workflow_on-1.result.json",
+          "sha256": "b898b9e7074208b0c169e32e7ededd9666c10fc855bbacc1c430e4b1197512ec"
+        }
+      ]
+    },
+    {
+      "id": "TRIAL-PROSE-05",
+      "status": "OBSERVED：未虚构学习者已掌握",
+      "observation": "两份开启工作流的最终学习卡均保留independent_mastery=false、retry_completed=false和delayed_test=null；下一步仍要求完成重试。未取得真实学习者或延迟复测证据。",
+      "evidence": [
+        {
+          "path": "v1-replay-r1/turns/learning-agreement-workflow_on-2.result.json",
+          "sha256": "1db894e9fc06ef0cdef2faae61e72ecbf4544572966ed5d4ddb0f333b21b6fa2"
+        },
+        {
+          "path": "v1-replay-r1/turns/learning-past-workflow_on-2.result.json",
+          "sha256": "4f5fa87e7f155a5c0ee8693a788f095644054dfce6e4ea3b5ae601ff91b94a9a"
+        }
+      ]
+    }
+  ],
+  "interpretation": "All24 v1 turns passed frozen field checks, but free-prose review still finds issues. Prompt-only repair did not meet the full free-prose objective. V2 source-excerpt success must not substitute for v1 semantic quality.",
+  "root_cause_hypothesis": {
+    "evidence": "seed/skills/conversation.json journal-review guidance asks for observations and 1-3 next actions; possible pressure to fill a template and conflate proposed with confirmed plans",
+    "causal_validation": "NOT_TESTED; do not treat skill as proven sole cause"
+  },
+  "next_change": "Integrate a source/current-plan representation and visible correction review using the existing domain/host path; verify free-prose contradictions and reasonable summarization with independent examples before making it an automatic completion gate. Avoid another unmeasured prompt-only success claim.",
+  "automatic_knowledge_promotion": false,
+  "production_deployed": false
+}

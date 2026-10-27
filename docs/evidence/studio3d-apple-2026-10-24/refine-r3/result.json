@@ -1,0 +1,799 @@
+{
+  "origin": "http://127.0.0.1:18282",
+  "request": {
+    "id": "f1e7d4ef51c24c31b4a34fccb4255818",
+    "refine": "7d27dfca3f4d4f06968e8397316701f9",
+    "reference": "ef4b78387783404ca25efc1bb839e4bb",
+    "vision_reference": true,
+    "provider": "vertex",
+    "model": "gemini-4-argon",
+    "focus": "根据上轮实际复核纠正：现在果柄仍短粗并躲在果窝中，应从凹窝长出、上端向右倾，顶部约高于肩部5至10毫米；保持自然小幅弯曲。当前黄色纹是横向大理石，应改成纵向细碎黄红条纹，streak_scale可从[12,12,0.6]、distortion 0.06开始；speckle_size 0.12左右让皮孔可见，微凹凸0.00003米量级。环境和背景提亮为中性灰白，新world_color与format=square可用；灯在2至3跨度时power 50过暗，调整主灯强度与面积，恢复左上受控蜡质高光。果窝应黄绿褐而非乳白。保持高模面数和两部件ID。"
+  },
+  "accepted": {
+    "existing": false,
+    "id": "f1e7d4ef51c24c31b4a34fccb4255818"
+  },
+  "job": {
+    "cancel": 0,
+    "chat_id": "chat-d88eafefdc72426c9d51c7a40bf4cdcb",
+    "created": 1792803189.3507009,
+    "error": null,
+    "id": "f1e7d4ef51c24c31b4a34fccb4255818",
+    "phase": "已交付可编辑模型、渲染与检查回执",
+    "receipt": {
+      "adapter_version": "1.5.0",
+      "configuration": {
+        "description": "写实红苹果高模：修正为正方形构图与明亮灰白背景；果柄从深果窝内向右上弯曲探出并高于果肩约6毫米，具独立木质切面材质；果皮改为纵向细碎黄红条纹、自然黄绿褐果窝过渡、清晰可见的浅色皮孔与微米级果皮起伏，并恢复左上方通透受控的蜡质高光。",
+        "materials": [
+          {
+            "basin_color": "#948b42",
+            "basin_radius": 0.22,
+            "bump_distance": 3.5e-05,
+            "coat": 0.26,
+            "coat_roughness": 0.22,
+            "color": "#b5151b",
+            "detail": "fruit_skin",
+            "id": "apple-skin",
+            "metallic": 0.0,
+            "micro_scale": 380,
+            "mottle_contrast": 0.35,
+            "regions": [
+              {
+                "center": [
+                  0.58,
+                  0.34,
+                  0.82
+                ],
+                "color": "#e39632",
+                "opacity": 0.55,
+                "radius": [
+                  0.26,
+                  0.24,
+                  0.2
+                ],
+                "roughness": 0.3
+              },
+              {
+                "center": [
+                  0.34,
+                  0.38,
+                  0.86
+                ],
+                "color": "#de8b28",
+                "opacity": 0.48,
+                "radius": [
+                  0.24,
+                  0.22,
+                  0.18
+                ],
+                "roughness": 0.3
+              },
+              {
+                "center": [
+                  0.66,
+                  0.28,
+                  0.48
+                ],
+                "color": "#d16d22",
+                "opacity": 0.36,
+                "radius": [
+                  0.2,
+                  0.22,
+                  0.34
+                ],
+                "roughness": 0.32
+              },
+              {
+                "center": [
+                  0.24,
+                  0.44,
+                  0.52
+                ],
+                "color": "#8a0f14",
+                "opacity": 0.45,
+                "radius": [
+                  0.32,
+                  0.28,
+                  0.36
+                ],
+                "roughness": 0.28
+              },
+              {
+                "center": [
+                  0.5,
+                  0.5,
+                  0.9
+                ],
+                "color": "#887d38",
+                "opacity": 0.6,
+                "radius": [
+                  0.15,
+                  0.15,
+                  0.12
+                ],
+                "roughness": 0.42
+              }
+            ],
+            "roughness": 0.26,
+            "roughness_variation": 0.06,
+            "secondary_color": "#e69b35",
+            "speckle_color": "#dec385",
+            "speckle_density": 85,
+            "speckle_size": 0.12,
+            "speckle_strength": 0.72,
+            "streak_distortion": 0.07,
+            "streak_scale": [
+              14.0,
+              14.0,
+              0.65
+            ],
+            "streak_strength": 0.54,
+            "transmission": 0.0
+          },
+          {
+            "bump_distance": 0.0002,
+            "coat": 0.0,
+            "color": "#4d311c",
+            "detail": "bark",
+            "id": "apple-stem-bark",
+            "metallic": 0.0,
+            "micro_scale": 260,
+            "mottle_contrast": 0.5,
+            "roughness": 0.84,
+            "roughness_variation": 0.12,
+            "secondary_color": "#704e32",
+            "transmission": 0.0
+          },
+          {
+            "bump_distance": 0.0003,
+            "coat": 0.0,
+            "color": "#8c775a",
+            "detail": "bark",
+            "id": "apple-stem-cut",
+            "metallic": 0.0,
+            "micro_scale": 420,
+            "mottle_contrast": 0.65,
+            "roughness": 0.9,
+            "roughness_variation": 0.1,
+            "secondary_color": "#574530",
+            "transmission": 0.0
+          }
+        ],
+        "objects": [
+          {
+            "id": "apple-body",
+            "kind": "lathe",
+            "material": "apple-skin",
+            "modifiers": {
+              "subdivision": 2
+            },
+            "params": {
+              "asymmetry": 0.038,
+              "caps": true,
+              "lobe_depth": 0.028,
+              "lobes": 5,
+              "profile": [
+                [
+                  0.0012,
+                  0.0038
+                ],
+                [
+                  0.0038,
+                  0.0028
+                ],
+                [
+                  0.0072,
+                  0.0014
+                ],
+                [
+                  0.011,
+                  0.0004
+                ],
+                [
+                  0.0148,
+                  0.0
+                ],
+                [
+                  0.019,
+                  0.0008
+                ],
+                [
+                  0.0232,
+                  0.0028
+                ],
+                [
+                  0.0274,
+                  0.0062
+                ],
+                [
+                  0.0316,
+                  0.0108
+                ],
+                [
+                  0.0354,
+                  0.0165
+                ],
+                [
+                  0.0386,
+                  0.023
+                ],
+                [
+                  0.041,
+                  0.0302
+                ],
+                [
+                  0.0426,
+                  0.0378
+                ],
+                [
+                  0.0432,
+                  0.0452
+                ],
+                [
+                  0.0428,
+                  0.0522
+                ],
+                [
+                  0.0412,
+                  0.0588
+                ],
+                [
+                  0.0384,
+                  0.0648
+                ],
+                [
+                  0.0344,
+                  0.0698
+                ],
+                [
+                  0.0294,
+                  0.0736
+                ],
+                [
+                  0.0238,
+                  0.076
+                ],
+                [
+                  0.0182,
+                  0.0768
+                ],
+                [
+                  0.0134,
+                  0.0754
+                ],
+                [
+                  0.0096,
+                  0.0722
+                ],
+                [
+                  0.0068,
+                  0.068
+                ],
+                [
+                  0.0046,
+                  0.0636
+                ],
+                [
+                  0.003,
+                  0.0596
+                ],
+                [
+                  0.0018,
+                  0.0566
+                ],
+                [
+                  0.0009,
+                  0.0548
+                ]
+              ],
+              "segments": 128
+            },
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              12.0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "shading": "smooth"
+          },
+          {
+            "cap_material": "apple-stem-cut",
+            "id": "apple-stem",
+            "kind": "sweep",
+            "material": "apple-stem-bark",
+            "modifiers": {},
+            "params": {
+              "oval": 1.22,
+              "points": [
+                [
+                  0.0,
+                  0.0,
+                  0.054
+                ],
+                [
+                  0.0002,
+                  -0.0002,
+                  0.059
+                ],
+                [
+                  0.0008,
+                  -0.0006,
+                  0.0645
+                ],
+                [
+                  0.0018,
+                  -0.0012,
+                  0.07
+                ],
+                [
+                  0.0033,
+                  -0.002,
+                  0.0752
+                ],
+                [
+                  0.0052,
+                  -0.0028,
+                  0.0798
+                ],
+                [
+                  0.0068,
+                  -0.0034,
+                  0.083
+                ]
+              ],
+              "radii": [
+                0.0012,
+                0.0013,
+                0.0014,
+                0.0015,
+                0.0017,
+                0.0022,
+                0.0024
+              ],
+              "segments": 28,
+              "steps": 10
+            },
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "shading": "smooth"
+          }
+        ],
+        "reference": "ef4b78387783404ca25efc1bb839e4bb",
+        "render": {
+          "camera_direction": [
+            0.0,
+            -2.25,
+            1.18
+          ],
+          "engine": "CYCLES",
+          "exposure": 0.1,
+          "five_views": false,
+          "floor_color": "#dcdedf",
+          "format": "square",
+          "lens": 75,
+          "lights": [
+            {
+              "color": "#fffcf8",
+              "position": [
+                -1.4,
+                -1.3,
+                2.1
+              ],
+              "power": 220,
+              "size": 1.65
+            },
+            {
+              "color": "#f4f7fa",
+              "position": [
+                1.8,
+                -1.4,
+                1.5
+              ],
+              "power": 75,
+              "size": 2.4
+            },
+            {
+              "color": "#ffffff",
+              "position": [
+                0.0,
+                1.5,
+                1.9
+              ],
+              "power": 55,
+              "size": 2.0
+            }
+          ],
+          "quality": "final",
+          "view": "front",
+          "world_color": "#d8dadd",
+          "world_strength": 1.15
+        },
+        "schema": "jarvis.studio3d.v1",
+        "title": "写实红苹果高模母版",
+        "unfulfilled": [
+          "单张正面偏俯视参考图无法确定苹果背面、底部萼洼深处及被遮挡侧的精确色素斑块与果点位置，不可见区域按同品种自然规律连续推演。",
+          "果柄顶端断面的细微木质纤维裂纹与果皮局部微小的天然蜡质擦痕仅通过程序化微凹凸与粗糙度变化近似，未作照片级扫描雕刻。"
+        ],
+        "units": "m"
+      },
+      "derived_from": "7d27dfca3f4d4f06968e8397316701f9",
+      "files": {
+        "model.blend": {
+          "bytes": 330542,
+          "sha256": "9208c279fee2322eb65fbb3d4e5fef4413d834038a92211b2903d88889d48c2f",
+          "url": "/api/studio3d/files/f1e7d4ef51c24c31b4a34fccb4255818/model.blend"
+        },
+        "model.glb": {
+          "bytes": 3592664,
+          "sha256": "bcf6e1b41288a0cf3b28127f97af18b6f591c18751198006684c22696270635a",
+          "url": "/api/studio3d/files/f1e7d4ef51c24c31b4a34fccb4255818/model.glb"
+        },
+        "preview.png": {
+          "bytes": 1737221,
+          "sha256": "d4cb3042c54099d57b2d4a44f6a3f52a0acf87fe9d68b8ffdd250dedff66e406",
+          "url": "/api/studio3d/files/f1e7d4ef51c24c31b4a34fccb4255818/preview.png"
+        },
+        "reference.png": {
+          "bytes": 2457554,
+          "sha256": "35d9f97952e2d4046734c9511f1a9938f46300c879c180b548ec2919aaff3d8e",
+          "url": "/api/studio3d/files/f1e7d4ef51c24c31b4a34fccb4255818/reference.png"
+        },
+        "report.json": {
+          "bytes": 2299,
+          "sha256": "9909727f8b26cccd11e8ff6741ababe876386234bf4b567aef17377853c74db5",
+          "url": "/api/studio3d/files/f1e7d4ef51c24c31b4a34fccb4255818/report.json"
+        },
+        "review.json": {
+          "bytes": 5958,
+          "sha256": "f65b3ac18636b74ceea22db24338ad86a70d3e70287947ecef8e639c508d9ed8",
+          "url": "/api/studio3d/files/f1e7d4ef51c24c31b4a34fccb4255818/review.json"
+        },
+        "scene.json": {
+          "bytes": 3996,
+          "sha256": "07943ba6288c5bf45f580f8eb0e9d10b9b4d29b36a035dea7cf9a0c4d93d28e4",
+          "url": "/api/studio3d/files/f1e7d4ef51c24c31b4a34fccb4255818/scene.json"
+        }
+      },
+      "frozen_master": null,
+      "id": "f1e7d4ef51c24c31b4a34fccb4255818",
+      "input_asset": null,
+      "model_receipt": {
+        "chat_id": "chat-ac847961d3db4519887a7348cd172e30",
+        "model": "gemini-4-argon",
+        "provider": "vertex",
+        "reference_image_sent": true,
+        "reference_sha256": "35d9f97952e2d4046734c9511f1a9938f46300c879c180b548ec2919aaff3d8e",
+        "render_image_sent": true,
+        "source_job": "7d27dfca3f4d4f06968e8397316701f9",
+        "status": "SUCCEEDED",
+        "turn_id": "studio3d-f1e7d4ef51c24c31b4a34fccb4255818-compare",
+        "visual_review": true
+      },
+      "quality": {
+        "AAA_certified": false,
+        "mechanical_validation": false,
+        "reference_match": "needs_revision",
+        "status": "visual_asset_export_checked",
+        "visual_score": null
+      },
+      "reference": {
+        "bytes": 2457554,
+        "id": "ef4b78387783404ca25efc1bb839e4bb",
+        "license": "Owner-requested AI generated reference for this original asset study",
+        "mode": "Visual guidance; no automatic image-to-mesh or vision-model call",
+        "name": "apple-reference.png",
+        "provenance_verified": false,
+        "resolution": [
+          1254,
+          1254
+        ],
+        "sha256": "35d9f97952e2d4046734c9511f1a9938f46300c879c180b548ec2919aaff3d8e",
+        "source": "Codex built-in image_gen, owner requested 2026-10-24; generated reference, not real photo"
+      },
+      "refinement": {
+        "acceptance": "model visual opinion; not independent AAA certification",
+        "after": {
+          "AAA_certified": false,
+          "assessment": {
+            "observations": [
+              {
+                "area": "silhouette",
+                "change": "稍微收窄果体底部并增加底部细微的果瓣起伏，稍微调整相机仰角以露出更多果底暗影轮廓。",
+                "problem": "当前苹果整体轮廓比参考图略显圆胖，底部较为平滑，缺少参考图下部的收窄感和轻微不对称起伏。"
+              },
+              {
+                "area": "stem",
+                "change": "将果柄中部和底部进一步收细，顶部切口保持微扩但增加粗糙凹陷细节；加深果柄木质暗褐色素与纵向纤维凹凸。",
+                "problem": "果柄虽已伸出果窝并向右上弯曲，但整体呈均匀光滑的浅棕圆柱状，顶面切口过于平整，缺少参考图中下端纤细、上端深褐粗糙的木质感。"
+              },
+              {
+                "area": "skin",
+                "change": "大幅加深主红色与深红色素饱和度与明暗对比，去除果窝边缘的粉白过渡并改为黄绿至黄褐色放射状条纹；适度增大speckle_size使浅黄带褐晕的皮孔清晰可见，并将bump_distance提高到约0.00003至0.00005米以呈现果皮微凹凸。",
+                "problem": "果皮整体颜色严重发粉发白、饱和度过低；果窝周围有一圈明显的淡粉白色光晕而非参考图的黄绿褐色底；纵向条纹过于生硬均匀，皮孔极其细小几乎呈白点，表面过于平滑缺少微凹凸质感。"
+              },
+              {
+                "area": "highlight",
+                "change": "降低环境光漫射冲淡感，适度降低果皮roughness或增强清漆层反射，结合主灯与微凹凸生成左上肩部具有颗粒纹理感的明亮蜡质高光，并加深果窝内侧与底部接触阴影。",
+                "problem": "当前高光呈柔和雾状大白斑，缺少参考图果皮表面的蜡质光泽与微凹凸打碎的高光细节；同时环境光过强导致整体泛白，果窝深处和底部阴影过浅。"
+              }
+            ],
+            "scene": null,
+            "summary": "果柄姿态、纵向条纹方向与正方形灰白背景已显著改善，但果皮色彩严重偏粉白、果窝边缘泛白、果皮缺少微凹凸与清晰皮孔，且果柄材质过于光滑简单，仍需修订。",
+            "unverified": [
+              "苹果背面与底部的完整几何形态及条纹分布",
+              "单张参考图无法唯一确定真实光源的精确尺寸与距离参数"
+            ],
+            "verdict": "needs_revision"
+          },
+          "chat_id": "chat-d88eafefdc72426c9d51c7a40bf4cdcb",
+          "model": "gemini-4-argon",
+          "model_based": true,
+          "provider": "vertex",
+          "reference_sha256": "35d9f97952e2d4046734c9511f1a9938f46300c879c180b548ec2919aaff3d8e",
+          "render_job": "f1e7d4ef51c24c31b4a34fccb4255818",
+          "render_sha256": "d4cb3042c54099d57b2d4a44f6a3f52a0acf87fe9d68b8ffdd250dedff66e406",
+          "turn_id": "studio3d-f1e7d4ef51c24c31b4a34fccb4255818-verify"
+        },
+        "before": {
+          "AAA_certified": false,
+          "assessment": {
+            "observations": [
+              {
+                "area": "silhouette",
+                "change": "将渲染画幅改为square正方形构图，微调车削轮廓使顶部果窝开口收窄、肩部曲线更饱满，适度增加底部与侧面的分瓣深度（lobe_depth至0.028）与轻微不对称度（asymmetry至0.038），贴合参考图下收且略带棱感的轮廓。",
+                "problem": "当前渲染为横向宽画幅（landscape），顶部果窝开口偏宽圆钝，果体下半部轮廓过于平滑圆润，缺乏参考图底部微收的分瓣起伏。"
+              },
+              {
+                "area": "stem",
+                "change": "加长弯曲扫掠果柄（sweep），使其从果窝深处（z=0.054m）自然向上并向右上方弯曲探出，顶端延伸至z=0.083m（高出約0.0768m的果肩约6毫米），底部纤细（半径0.0012m）、顶端略微外扩（半径0.0024m），保留独立粗糙浅褐切面材质且不增加细分。",
+                "problem": "当前果柄过短（顶端z=0.0752m低于果肩z=0.0768m），几乎完全缩在果窝内部，未如参考图那样清晰探出果窝并向右上倾斜。"
+              },
+              {
+                "area": "skin",
+                "change": "将streak_scale改为[14.0,14.0,0.65]、streak_distortion降至0.07以生成纵向细碎黄红条纹；将speckle_size调至0.12、speckle_density调至85使浅色皮孔清晰可见；将bump_distance降至0.000035米消除过重橘皮感；调整果窝basin_color为黄绿褐色（#948b42）并配合局部色域过渡。",
+                "problem": "当前果皮因streak_scale为[1.2,1.2,4.8]且distortion高达0.58，呈现出错误的横向漩涡大理石花纹；speckle_size过小（0.028）导致皮孔几乎不可见；bump_distance过大（0.00018）使表面颗粒感过重。"
+              },
+              {
+                "area": "highlight",
+                "change": "启用world_color设为明亮中性灰白（#d8dadd）并提高world_strength至1.15、floor_color设为#dcdedf，曝光调至0.1；大幅提高左上方主光源power至220、辅助光至75与55，适度降低果皮roughness至0.26、coat至0.26，呈现清晰的左上果蜡柔光高光且避免果窝白环。",
+                "problem": "当前背景与环境光偏暗灰，主光功率（power 52）在远距离下严重不足，导致整体画面昏暗发闷，缺乏参考图左上方明亮通透的果皮蜡质高光。"
+              }
+            ],
+            "summary": "当前渲染在果柄外露高度、果皮纵向条纹方向、皮孔可见度以及环境与主光亮度上与参考图仍有明显差异；已针对性修正果柄长度与弯曲度、条纹缩放与低扭曲参数、皮孔尺寸及布光强度，判定为需要修正。",
+            "unverified": [
+              "苹果背面与底部萼洼的真实几何形态与色素分布",
+              "果窝最底部被遮挡处的果柄确切插入位置",
+              "单张照片下光源真实物理尺寸与环境反射的唯一解"
+            ],
+            "verdict": "needs_revision"
+          },
+          "candidate_sha256": "07943ba6288c5bf45f580f8eb0e9d10b9b4d29b36a035dea7cf9a0c4d93d28e4",
+          "chat_id": "chat-ac847961d3db4519887a7348cd172e30",
+          "model": "gemini-4-argon",
+          "model_based": true,
+          "provider": "vertex",
+          "reference_sha256": "35d9f97952e2d4046734c9511f1a9938f46300c879c180b548ec2919aaff3d8e",
+          "render_job": "7d27dfca3f4d4f06968e8397316701f9",
+          "render_sha256": "98cc0b3bad4fa92ae1bdc307343d12ec1aa0a90f1e5dc4ea7b660b60b2561c68",
+          "turn_id": "studio3d-f1e7d4ef51c24c31b4a34fccb4255818-compare"
+        },
+        "model_calls": 2,
+        "revision_limit": 1,
+        "source_job": "7d27dfca3f4d4f06968e8397316701f9"
+      },
+      "report": {
+        "blender": "5.2.0 LTS",
+        "bounds_m": [
+          [
+            -0.041455112397670746,
+            -0.04366055876016617,
+            0.0001830899273045361
+          ],
+          [
+            0.044587455689907074,
+            0.04252392798662186,
+            0.08436373621225357
+          ]
+        ],
+        "elapsed_seconds": 76.674156699999,
+        "glb_roundtrip": {
+          "bounds_m": [
+            [
+              -0.041455112397670746,
+              -0.04366055876016617,
+              0.0001830899273045361
+            ],
+            [
+              0.044587455689907074,
+              0.04252392798662186,
+              0.08436373621225357
+            ]
+          ],
+          "max_bound_error_m": 0.0,
+          "mesh_objects": 2,
+          "passed": true
+        },
+        "gltf_validation": {
+          "files": {
+            "model.glb": {
+              "info": {
+                "animationCount": 0,
+                "drawCallCount": 3,
+                "extensionsUsed": [
+                  "KHR_materials_clearcoat"
+                ],
+                "generator": "Khronos glTF Blender I/O v5.2.39",
+                "hasDefaultScene": true,
+                "hasMorphTargets": false,
+                "hasSkins": false,
+                "hasTextures": false,
+                "materialCount": 3,
+                "maxAttributes": 3,
+                "maxInfluences": 0,
+                "maxUVs": 1,
+                "resources": [
+                  {
+                    "byteLength": 3589336,
+                    "mimeType": "application/gltf-buffer",
+                    "pointer": "/buffers/0",
+                    "storage": "glb"
+                  }
+                ],
+                "totalTriangleCount": 120148,
+                "totalVertexCount": 67751,
+                "version": "2.0"
+              },
+              "issues": {
+                "messages": [
+                  {
+                    "code": "UNUSED_OBJECT",
+                    "message": "This object may be unused.",
+                    "pointer": "/meshes/0/primitives/0/attributes/TEXCOORD_0",
+                    "severity": 2
+                  },
+                  {
+                    "code": "UNUSED_OBJECT",
+                    "message": "This object may be unused.",
+                    "pointer": "/meshes/1/primitives/0/attributes/TEXCOORD_0",
+                    "severity": 2
+                  },
+                  {
+                    "code": "UNUSED_OBJECT",
+                    "message": "This object may be unused.",
+                    "pointer": "/meshes/1/primitives/1/attributes/TEXCOORD_0",
+                    "severity": 2
+                  }
+                ],
+                "numErrors": 0,
+                "numHints": 0,
+                "numInfos": 3,
+                "numWarnings": 0,
+                "truncated": false
+              },
+              "mimeType": "model/gltf-binary",
+              "uri": "model.glb",
+              "validatedAt": "2026-10-24T00:55:09.966Z",
+              "validatorVersion": "2.0.0-dev.3.10"
+            }
+          },
+          "implementation": "Khronos glTF-Validator",
+          "version": "2.0.0-dev.3.10"
+        },
+        "objects": [
+          {
+            "id": "apple-body",
+            "triangles": 116736,
+            "uv": true,
+            "vertices": 58370,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "apple-stem",
+            "triangles": 3412,
+            "uv": true,
+            "vertices": 1708,
+            "zero_area_faces": 0
+          }
+        ],
+        "orthographic_views": [],
+        "render": {
+          "device": "CPU",
+          "engine": "CYCLES",
+          "requested_engine": "CYCLES",
+          "resolution": [
+            1280,
+            1280
+          ],
+          "samples": 64
+        },
+        "schema": "jarvis.studio3d.report.v1",
+        "triangles": 120148,
+        "unverified": [
+          "OEM mechanical accuracy",
+          "manufacturing",
+          "production topology",
+          "UV quality",
+          "baked PBR textures",
+          "LODs",
+          "engine performance"
+        ],
+        "visible_objects": 2,
+        "warnings": [
+          "GLB contains base PBR; procedural bump detail stays in Blender/render.",
+          "Automatic UV presence is not UV quality certification."
+        ]
+      },
+      "resources": {
+        "cpu_seconds": 1200,
+        "elapsed_seconds": 77.54326800000126,
+        "exit_code": 0,
+        "isolation": "Trusted fixed first-party worker with resource Job; not an OS security sandbox. No model Python, external imports or external BLEND loading. Only host-hash-verified first-party masters load with scripts disabled.",
+        "memory_bytes": 4294967296,
+        "output_bytes": 268435456,
+        "peak_memory_bytes": 2164277248,
+        "threads": 4,
+        "wall_seconds": 300
+      },
+      "runtime": {
+        "executable_sha256": "e27fbfea8564aa645d4463cb0949695fd85562b9de6df9561b06859a1074adf7",
+        "license": "GPL-2.0-or-later",
+        "source": "https://www.blender.org/",
+        "version": "Blender 5.2.0 LTS"
+      },
+      "skill": "studio3d",
+      "source_sha256": {
+        "adapters/models/native.py": "f87262082f7ba6178515f11f20000e7390ab4a3c3dc1dddfec3c0910e5df4707",
+        "adapters/models/native_transport.py": "7b0c3de61d01624f9c023f75e7de03a6616786d92af38b50c69aeaa42f17e24a",
+        "adapters/models/vision.py": "9bd86d2dc0b1ba2d8bf8b38edd7f550bd2abb761f4ae2a1f81db476eccb3591e",
+        "adapters/studio3d/asset_pipeline.py": "d41273f361c26f8fdc7da9b242ede1c46d51a05745e4efd5ff28630b268f22f1",
+        "adapters/studio3d/framing.py": "7575830d0367d4d07d0fb09859c7cc9bf9ae21e21c9f4cb0fdcb279b24b75ab0",
+        "adapters/studio3d/organic.py": "1622de615e2ccf8a5b29eafcf4e98875f7ff8c5ef28aa239a45eb1758c95b962",
+        "adapters/studio3d/projection.py": "e1838d6dd43fcddea607bc67bf330d1bcbaaa6e24db1116ac32cbfb02e6b03af",
+        "adapters/studio3d/worker.py": "ad2f5c027235417de1b214fda5e4c64f25f336ae7144905ebc5047a57fd9099e",
+        "apps/studio3d/worker.py": "60af564595dab82acf3118ba581e5bc6b71b738c60ecf32a66c5d5cf36e3c4db",
+        "host/dialogue.py": "c6aa880996eb93b4ef6bd0b7c16ed319431cf0c2395fc7abcd21ad1b960e8cdf",
+        "host/studio3d.py": "913ced30b24eee462cfd85df6d673a21dd2edfcdbbef002c6d831f49099ef127",
+        "host/studio3d_reference.py": "ddc133e0ce867e3caf9a5d5d66dc4039cbbdab2164b223446af9a1c06c955ab8",
+        "host/studio3d_refinement.py": "5b6774280cd424aaea30c1c75f5b93d9c5530c7a064bafb089c5d011ba95cd9e",
+        "modules/dialogue/store.py": "a691879f9af46862aea19a5f6dd5334379ad54e0b6daa0b887b4c3b0823cb780",
+        "modules/skills/studio3d/assets.py": "aab01d79fbbf94305054311c8ff1031a85dee37e64cd6e77c1d42d0bacfd6526",
+        "modules/skills/studio3d/contract.py": "50cb1c3b4ed790b55a3928c82ddbdd140b4e14ef39edbaa4c01893cdc18b6230",
+        "modules/skills/studio3d/presets.py": "f7d18d601f36920cff52d3f26fe21cd943ad1a63fc14ad91decdd78e4865b3a4",
+        "modules/skills/studio3d/production.py": "687a044d25b0f4261afb4eacf0edea84b5d0434250dc6ccd575ca7b9d8d06213",
+        "modules/skills/studio3d/refinement.py": "ecd2b6dd6d26dc65ffa119223accb2ed785330e184c87616ca64cdf418865d82",
+        "modules/skills/studio3d/runtime.json": "09165177ef4357f10de8b4d22cc6313226c95ac88cdb22af01bb3736add887b7",
+        "modules/skills/studio3d/tracked_vehicle.py": "24716810b044cf85d4cb497e9330da2bccd5d9437afe6c891da83908f60566f8"
+      },
+      "title": "写实红苹果高模母版",
+      "unfulfilled": [
+        "单张正面偏俯视参考图无法确定苹果背面、底部萼洼深处及被遮挡侧的精确色素斑块与果点位置，不可见区域按同品种自然规律连续推演。",
+        "果柄顶端断面的细微木质纤维裂纹与果皮局部微小的天然蜡质擦痕仅通过程序化微凹凸与粗糙度变化近似，未作照片级扫描雕刻。"
+      ],
+      "url": "/api/studio3d/view/f1e7d4ef51c24c31b4a34fccb4255818"
+    },
+    "status": "DELIVERED",
+    "turn_id": "studio3d-f1e7d4ef51c24c31b4a34fccb4255818-verify"
+  }
+}

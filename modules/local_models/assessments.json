@@ -1,0 +1,316 @@
+{
+  "schema": 1,
+  "models": {
+    "e5-multilingual-small-int8": {
+      "manifest_fingerprint": "b7aea4d6b4bfa1492996f27cfc2edd5250029a7e5b97e154f131c030b3d6e5fe",
+      "checked_at": "2026-10-23",
+      "profile": "ONNX int8 · CPU 2 线程 · 短文本 ≤512 token，batch 1–4",
+      "upstream_metadata_revision": "614241f622f53c4eeff9890bdc4f31cfecc418b3",
+      "languages_count": 100,
+      "expected": {
+        "disk": {
+          "low": 135429554,
+          "high": 135429554,
+          "basis": "upstream_files_plus_metadata"
+        },
+        "ram": {
+          "low": 367001600,
+          "high": 805306368,
+          "basis": "engineering_estimate"
+        },
+        "vram": {
+          "low": 0,
+          "high": 0,
+          "basis": "cpu_backend"
+        }
+      },
+      "official": [],
+      "notes": [
+        "当前已接通的低占用基线；100 种语言的覆盖不表示各语言精度相同。",
+        "模型 RAM 只计推理子进程，宿主、向量索引与依赖环境另计。"
+      ],
+      "sources": [
+        {
+          "title": "官方模型卡",
+          "url": "https://huggingface.co/intfloat/multilingual-e5-small"
+        }
+      ]
+    },
+    "e5-multilingual-small-fp32": {
+      "manifest_fingerprint": "0b542aeb2bf248a0ba82d921f950068ff9b265fe2dde4f8f32910c9309171c1a",
+      "checked_at": "2026-10-23",
+      "profile": "ONNX fp32 · CPU 2 线程 · 短文本 ≤512 token，batch 1–4",
+      "upstream_metadata_revision": "614241f622f53c4eeff9890bdc4f31cfecc418b3",
+      "languages_count": 100,
+      "expected": {
+        "disk": {
+          "low": 487351240,
+          "high": 487351240,
+          "basis": "upstream_files_plus_metadata"
+        },
+        "ram": {
+          "low": 734003200,
+          "high": 1610612736,
+          "basis": "engineering_estimate"
+        },
+        "vram": {
+          "low": 0,
+          "high": 0,
+          "basis": "cpu_backend"
+        }
+      },
+      "official": [],
+      "notes": [
+        "与 int8 分开测量；更高精度不保证每项检索结果更好。"
+      ],
+      "sources": [
+        {
+          "title": "官方模型卡",
+          "url": "https://huggingface.co/intfloat/multilingual-e5-small"
+        }
+      ]
+    },
+    "qwen3-embedding-06b-q8": {
+      "manifest_fingerprint": "1617a47ceff958efd1a5a7fc1c327cf536947266a2c8a3f2cef7181577d7506f",
+      "checked_at": "2026-10-23",
+      "profile": "GGUF Q8_0 · 规划 CPU · 短文本 ≤512 token，batch 1；适配待接入",
+      "upstream_metadata_revision": "370f27d7550e0def9b39c1f16d3fbaa13aa67728",
+      "languages_count": 100,
+      "expected": {
+        "disk": {
+          "low": 639150592,
+          "high": 639150592,
+          "basis": "upstream_files_plus_metadata"
+        },
+        "ram": {
+          "low": 1073741824,
+          "high": 2684354560,
+          "basis": "engineering_estimate"
+        },
+        "vram": {
+          "low": 0,
+          "high": 0,
+          "basis": "cpu_backend"
+        }
+      },
+      "official": [
+        {
+          "metric": "MTEB Multilingual v2 · Mean (Task)",
+          "score": 64.33,
+          "precision": "官方原版；当前 Q8 待测",
+          "url": "https://huggingface.co/Qwen/Qwen3-Embedding-0.6B"
+        },
+        {
+          "metric": "MTEB Multilingual v2 · Retrieval",
+          "score": 64.64,
+          "precision": "官方原版；当前 Q8 待测",
+          "url": "https://huggingface.co/Qwen/Qwen3-Embedding-0.6B"
+        }
+      ],
+      "notes": [
+        "效果优先的多语言候选。32K 上下文不是本卡 RAM 估计的负载。",
+        "官方成绩属于原版模型，不能当作当前 Q8 文件的本机成绩。"
+      ],
+      "sources": [
+        {
+          "title": "官方模型卡",
+          "url": "https://huggingface.co/Qwen/Qwen3-Embedding-0.6B-GGUF"
+        },
+        {
+          "title": "官方原版评测表",
+          "url": "https://huggingface.co/Qwen/Qwen3-Embedding-0.6B"
+        }
+      ]
+    },
+    "bge-small-zh-reference": {
+      "manifest_fingerprint": "83c4b1c1ba5bc7d6b8d1c1aa632e8c572f1e5b5dc0a3963ec7863cf01bad1445",
+      "checked_at": "2026-10-23",
+      "profile": "上游原始权重 · 规划 CPU · 短文本 ≤512 token，batch 1；适配待接入",
+      "upstream_metadata_revision": "7999e1d3359715c523056ef9478215996d62a620",
+      "languages_count": 1,
+      "expected": {
+        "disk": {
+          "low": 96376313,
+          "high": 97000000,
+          "basis": "upstream_files_plus_metadata"
+        },
+        "ram": {
+          "low": 268435456,
+          "high": 671088640,
+          "basis": "engineering_estimate"
+        },
+        "vram": {
+          "low": 0,
+          "high": 0,
+          "basis": "cpu_backend"
+        }
+      },
+      "official": [],
+      "notes": [
+        "中文专项对照；不作为跨语言主力。",
+        "磁盘来自 safetensors、tokenizer 与词表文件；范围包含小型配置余量。"
+      ],
+      "sources": [
+        {
+          "title": "官方模型卡",
+          "url": "https://huggingface.co/BAAI/bge-small-zh-v1.5"
+        }
+      ]
+    },
+    "embeddinggemma-reference": {
+      "manifest_fingerprint": "2b29d901d8490a1d9a3dd7fd8a5b625e4cc8a10ba2e08d7aee9f0b57bafe7855",
+      "checked_at": "2026-10-23",
+      "profile": "上游 fp32 包 · 规划 CPU · 短文本 ≤512 token，batch 1；适配待接入",
+      "upstream_metadata_revision": "57c266a740f537b4dc058e1b0cda161fd15afa75",
+      "languages_count": 100,
+      "expected": {
+        "disk": {
+          "low": 1263745624,
+          "high": 1270000000,
+          "basis": "upstream_files_plus_metadata"
+        },
+        "ram": {
+          "low": 1610612736,
+          "high": 3221225472,
+          "basis": "engineering_estimate"
+        },
+        "vram": {
+          "low": 0,
+          "high": 0,
+          "basis": "cpu_backend"
+        }
+      },
+      "official": [
+        {
+          "metric": "MTEB Multilingual v2 · Mean (Task)",
+          "score": 61.15,
+          "precision": "官方全精度，768 维",
+          "url": "https://ai.google.dev/gemma/docs/embeddinggemma/model_card"
+        }
+      ],
+      "notes": [
+        "官方低于 200 MB RAM 是量化部署口径，不能套用到当前原始 fp32 权重包。",
+        "量化低资源版本值得候选，但需先核验文件、运行适配和本机效果。"
+      ],
+      "sources": [
+        {
+          "title": "官方模型卡",
+          "url": "https://huggingface.co/google/embeddinggemma-300m"
+        },
+        {
+          "title": "Google 官方评测",
+          "url": "https://ai.google.dev/gemma/docs/embeddinggemma/model_card"
+        },
+        {
+          "title": "量化资源说明",
+          "url": "https://developers.googleblog.com/introducing-embeddinggemma/"
+        }
+      ]
+    },
+    "qwen3-06b-reference": {
+      "manifest_fingerprint": "fa400f9cfaba483e379593b3462db14ef715f69ff259c17035939c7866b1ef27",
+      "checked_at": "2026-10-23",
+      "profile": "上游原始权重 · 规划 CPU · 上下文 ≤2K，batch 1；适配待接入",
+      "upstream_metadata_revision": "c1899de289a04d12100db370d81485cdf75e47ca",
+      "languages_count": null,
+      "expected": {
+        "disk": {
+          "low": 1519171668,
+          "high": 1525000000,
+          "basis": "upstream_files_plus_metadata"
+        },
+        "ram": {
+          "low": 2147483648,
+          "high": 4294967296,
+          "basis": "engineering_estimate"
+        },
+        "vram": {
+          "low": 0,
+          "high": 0,
+          "basis": "cpu_backend"
+        }
+      },
+      "official": [],
+      "notes": [
+        "应急生成模型，不与 embedding 的检索分数横向排名。",
+        "多语言具体覆盖待核验；量化新版本必须另立配方和预测。"
+      ],
+      "sources": [
+        {
+          "title": "官方模型卡",
+          "url": "https://huggingface.co/Qwen/Qwen3-0.6B"
+        }
+      ]
+    },
+    "qwen3-asr-reference": {
+      "manifest_fingerprint": "6999cdf708974a8bf8498afa0482977801fb4b2c107dd5b4ec31ae114110a7c6",
+      "checked_at": "2026-10-23",
+      "profile": "上游原始权重 · 规划 CPU · 音频 ≤10 秒，batch 1；适配待接入",
+      "upstream_metadata_revision": "5eb144179a02acc5e5ba31e748d22b0cf3e303b0",
+      "languages_count": 30,
+      "expected": {
+        "disk": {
+          "low": 1880540390,
+          "high": 1886000000,
+          "basis": "upstream_files_plus_metadata"
+        },
+        "ram": {
+          "low": 3221225472,
+          "high": 6442450944,
+          "basis": "engineering_estimate"
+        },
+        "vram": {
+          "low": 0,
+          "high": 0,
+          "basis": "cpu_backend"
+        }
+      },
+      "official": [],
+      "notes": [
+        "30 种语言与 22 种中文方言分开计数。",
+        "准确度需按语言测 WER/CER，速度测实时率；不能用文本检索分数替代。"
+      ],
+      "sources": [
+        {
+          "title": "官方模型卡",
+          "url": "https://huggingface.co/Qwen/Qwen3-ASR-0.6B"
+        }
+      ]
+    },
+    "qwen3-tts-reference": {
+      "manifest_fingerprint": "8e8eb2ce93fcc21db6883fc05a224cfc70b4ce306a1a40d86d8aacfcbf4fadc8",
+      "checked_at": "2026-10-23",
+      "profile": "上游原始权重＋语音 tokenizer · 规划 CPU · 短句 batch 1；适配待接入",
+      "upstream_metadata_revision": "85e237c12c027371202489a0ec509ded67b5e4b5",
+      "languages_count": 10,
+      "expected": {
+        "disk": {
+          "low": 2498368340,
+          "high": 2505000000,
+          "basis": "upstream_files_plus_metadata"
+        },
+        "ram": {
+          "low": 4294967296,
+          "high": 8589934592,
+          "basis": "engineering_estimate"
+        },
+        "vram": {
+          "low": 0,
+          "high": 0,
+          "basis": "cpu_backend"
+        }
+      },
+      "official": [],
+      "notes": [
+        "10 种语言、9 个预设音色；模型 RAM 尚未本机测量。",
+        "自然度、情绪、首音延迟和实时率需专用语音评测，不与 embedding 混排名。"
+      ],
+      "sources": [
+        {
+          "title": "官方模型卡",
+          "url": "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice"
+        }
+      ]
+    }
+  }
+}

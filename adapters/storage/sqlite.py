@@ -6,6 +6,8 @@ import sqlite3
 import time
 
 from sdk.protocol import CoreError, canonical, decode
+from adapters.storage.knowledge_schema import ensure as ensure_knowledge
+from adapters.storage.memory_schema import ensure as ensure_memory
 
 SCHEMA = """
 CREATE TABLE meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);
@@ -59,6 +61,10 @@ class Database:
         self.connection.row_factory = sqlite3.Row
         self.connection.execute("PRAGMA foreign_keys=ON")
         self.connection.execute("PRAGMA synchronous=FULL")
+        # Readers keep their snapshot while the bounded knowledge writer builds an index.
+        # WAL remains local to this data root; SQLite handles checkpoint/recovery.
+        if self.connection.execute('PRAGMA journal_mode').fetchone()[0] != 'wal':
+            self.connection.execute('PRAGMA journal_mode=WAL')
         version = self.connection.execute("PRAGMA user_version").fetchone()[0]
         if version == 0 and create:
             try:
@@ -137,6 +143,9 @@ PRAGMA user_version=7; COMMIT;""")
                 self.connection.close()
                 raise
 
+        ensure_knowledge(self.connection)
+        ensure_memory(self.connection)
+
     @contextmanager
     def transaction(self):
         self.connection.execute("BEGIN IMMEDIATE")
@@ -146,6 +155,15 @@ PRAGMA user_version=7; COMMIT;""")
         except BaseException:
             self.connection.execute("ROLLBACK")
             raise
+
+    @contextmanager
+    def read_snapshot(self):
+        if self.connection.in_transaction:
+            yield
+            return
+        self.connection.execute('BEGIN')
+        try:yield
+        finally:self.connection.execute('ROLLBACK')
 
     def one(self, sql: str, args=()):
         row = self.connection.execute(sql, args).fetchone()

@@ -1,0 +1,409 @@
+{
+  "module_version": "1.1.0",
+  "scope": "Windows current machine; CPU 2 threads; application network disabled, not OS air gap",
+  "model": "e5-multilingual-small-int8",
+  "total_seconds": 2.548633099999279,
+  "assessment": {
+    "manifest_fingerprint": "b7aea4d6b4bfa1492996f27cfc2edd5250029a7e5b97e154f131c030b3d6e5fe",
+    "checked_at": "2026-10-23",
+    "profile": "ONNX int8 · CPU 2 线程 · 短文本 ≤512 token，batch 1–4",
+    "upstream_metadata_revision": "614241f622f53c4eeff9890bdc4f31cfecc418b3",
+    "languages_count": 100,
+    "expected": {
+      "disk": {
+        "low": 135429554,
+        "high": 135429554,
+        "basis": "measured"
+      },
+      "ram": {
+        "low": 447434752,
+        "high": 532482458,
+        "basis": "measured_with_15_percent_margin"
+      },
+      "vram": {
+        "low": 0,
+        "high": 0,
+        "basis": "cpu_backend"
+      }
+    },
+    "official": [],
+    "notes": [
+      "当前已接通的低占用基线；100 种语言的覆盖不表示各语言精度相同。",
+      "模型 RAM 只计推理子进程，宿主、向量索引与依赖环境另计。"
+    ],
+    "sources": [
+      {
+        "title": "官方模型卡",
+        "url": "https://huggingface.co/intfloat/multilingual-e5-small"
+      }
+    ],
+    "scores": {
+      "resources": 5,
+      "multilingual": 5,
+      "speed": 5,
+      "validation": 3,
+      "retrieval": 95.0
+    },
+    "measured": {
+      "batch_observed_max": 4,
+      "benchmark": {
+        "cases": [
+          {
+            "expected_document": "tea",
+            "id": "zh-tea",
+            "language": "zh",
+            "rank": 1,
+            "top_document": "tea"
+          },
+          {
+            "expected_document": "tea",
+            "id": "en-tea",
+            "language": "en→zh",
+            "rank": 1,
+            "top_document": "tea"
+          },
+          {
+            "expected_document": "car",
+            "id": "zh-car",
+            "language": "zh→en",
+            "rank": 8,
+            "top_document": "tea"
+          },
+          {
+            "expected_document": "bike",
+            "id": "en-bike",
+            "language": "en",
+            "rank": 1,
+            "top_document": "bike"
+          },
+          {
+            "expected_document": "cat",
+            "id": "es-cat",
+            "language": "es",
+            "rank": 1,
+            "top_document": "cat"
+          },
+          {
+            "expected_document": "dog",
+            "id": "en-dog",
+            "language": "en→es",
+            "rank": 1,
+            "top_document": "dog"
+          },
+          {
+            "expected_document": "meeting",
+            "id": "zh-meeting",
+            "language": "zh",
+            "rank": 1,
+            "top_document": "meeting"
+          },
+          {
+            "expected_document": "cancel",
+            "id": "en-cancel",
+            "language": "en→zh",
+            "rank": 1,
+            "top_document": "cancel"
+          },
+          {
+            "expected_document": "passport",
+            "id": "fr-passport",
+            "language": "fr",
+            "rank": 1,
+            "top_document": "passport"
+          },
+          {
+            "expected_document": "keys",
+            "id": "en-keys",
+            "language": "en→fr",
+            "rank": 1,
+            "top_document": "keys"
+          },
+          {
+            "expected_document": "train",
+            "id": "de-train",
+            "language": "de",
+            "rank": 1,
+            "top_document": "train"
+          },
+          {
+            "expected_document": "plane",
+            "id": "en-plane",
+            "language": "en→de",
+            "rank": 1,
+            "top_document": "plane"
+          },
+          {
+            "expected_document": "library",
+            "id": "ja-library",
+            "language": "ja",
+            "rank": 1,
+            "top_document": "library"
+          },
+          {
+            "expected_document": "museum",
+            "id": "en-museum",
+            "language": "en→ja",
+            "rank": 1,
+            "top_document": "museum"
+          },
+          {
+            "expected_document": "backup",
+            "id": "en-backup",
+            "language": "en",
+            "rank": 1,
+            "top_document": "backup"
+          },
+          {
+            "expected_document": "delete",
+            "id": "zh-delete",
+            "language": "zh→en",
+            "rank": 1,
+            "top_document": "delete"
+          },
+          {
+            "expected_document": "battery",
+            "id": "zh-battery",
+            "language": "zh",
+            "rank": 1,
+            "top_document": "battery"
+          },
+          {
+            "expected_document": "screen",
+            "id": "en-screen",
+            "language": "en→zh",
+            "rank": 1,
+            "top_document": "screen"
+          },
+          {
+            "expected_document": "allergy",
+            "id": "zh-allergy",
+            "language": "zh",
+            "rank": 1,
+            "top_document": "allergy"
+          },
+          {
+            "expected_document": "apple",
+            "id": "en-apple",
+            "language": "en→zh",
+            "rank": 1,
+            "top_document": "apple"
+          }
+        ],
+        "completed_at": 1792744997.9112735,
+        "document_count": 20,
+        "hit_at_1": 0.95,
+        "latency_ms": {
+          "p50": 7.2389500001008855,
+          "p95": 9.803599998122081
+        },
+        "limitations": "Small public regression set, no held-out/domain accuracy or factual verification claim",
+        "mrr": 0.95625,
+        "sample_count": 20,
+        "suite": "jarvis-multilingual-retrieval-v1",
+        "suite_sha256": "5bd974a3b3f796dfb7888178df36202bd84106d6a9c86fa6a0324e0a02daed33",
+        "workload": "warm query batch=1; fixed synthetic suite; JSONL round trip included"
+      },
+      "context": {
+        "backend": "onnx-cpu",
+        "dependencies": [
+          [
+            "numpy",
+            "2.4.6"
+          ],
+          [
+            "onnxruntime",
+            "1.24.3"
+          ],
+          [
+            "tokenizers",
+            "0.22.2"
+          ]
+        ],
+        "device": "37a9939460ecaf69",
+        "id": "2c5c20b43ea75f4676771d0719bbb38c92a21c89f4998e1e94b317ebcc4474ae",
+        "machine": "AMD64",
+        "os": "Windows",
+        "os_release": "11",
+        "processor": "AMD64 Family 26 Model 112 Stepping 0, AuthenticAMD",
+        "python": "3.13.0",
+        "threads": 2,
+        "worker_sha256": "ef0d6d0fbf302bd6b3dce4d5eb92932260ad9c68ab85aadd755c32c7c6ddd2b7"
+      },
+      "gpu_bytes": 0,
+      "max_tokens_observed_max": 17,
+      "min_rss_bytes": 447434752,
+      "peak_rss_bytes": 463028224,
+      "rss_bytes": 450887680,
+      "samples": 26,
+      "updated_at": 1792744997.9079692
+    },
+    "disk_measurement": {
+      "updated_at": 1792744995.6857188,
+      "verified_disk_bytes": 135429554
+    },
+    "other_contexts": 0,
+    "context_id": "2c5c20b43ea75f4676771d0719bbb38c92a21c89f4998e1e94b317ebcc4474ae",
+    "benchmark": {
+      "cases": [
+        {
+          "expected_document": "tea",
+          "id": "zh-tea",
+          "language": "zh",
+          "rank": 1,
+          "top_document": "tea"
+        },
+        {
+          "expected_document": "tea",
+          "id": "en-tea",
+          "language": "en→zh",
+          "rank": 1,
+          "top_document": "tea"
+        },
+        {
+          "expected_document": "car",
+          "id": "zh-car",
+          "language": "zh→en",
+          "rank": 8,
+          "top_document": "tea"
+        },
+        {
+          "expected_document": "bike",
+          "id": "en-bike",
+          "language": "en",
+          "rank": 1,
+          "top_document": "bike"
+        },
+        {
+          "expected_document": "cat",
+          "id": "es-cat",
+          "language": "es",
+          "rank": 1,
+          "top_document": "cat"
+        },
+        {
+          "expected_document": "dog",
+          "id": "en-dog",
+          "language": "en→es",
+          "rank": 1,
+          "top_document": "dog"
+        },
+        {
+          "expected_document": "meeting",
+          "id": "zh-meeting",
+          "language": "zh",
+          "rank": 1,
+          "top_document": "meeting"
+        },
+        {
+          "expected_document": "cancel",
+          "id": "en-cancel",
+          "language": "en→zh",
+          "rank": 1,
+          "top_document": "cancel"
+        },
+        {
+          "expected_document": "passport",
+          "id": "fr-passport",
+          "language": "fr",
+          "rank": 1,
+          "top_document": "passport"
+        },
+        {
+          "expected_document": "keys",
+          "id": "en-keys",
+          "language": "en→fr",
+          "rank": 1,
+          "top_document": "keys"
+        },
+        {
+          "expected_document": "train",
+          "id": "de-train",
+          "language": "de",
+          "rank": 1,
+          "top_document": "train"
+        },
+        {
+          "expected_document": "plane",
+          "id": "en-plane",
+          "language": "en→de",
+          "rank": 1,
+          "top_document": "plane"
+        },
+        {
+          "expected_document": "library",
+          "id": "ja-library",
+          "language": "ja",
+          "rank": 1,
+          "top_document": "library"
+        },
+        {
+          "expected_document": "museum",
+          "id": "en-museum",
+          "language": "en→ja",
+          "rank": 1,
+          "top_document": "museum"
+        },
+        {
+          "expected_document": "backup",
+          "id": "en-backup",
+          "language": "en",
+          "rank": 1,
+          "top_document": "backup"
+        },
+        {
+          "expected_document": "delete",
+          "id": "zh-delete",
+          "language": "zh→en",
+          "rank": 1,
+          "top_document": "delete"
+        },
+        {
+          "expected_document": "battery",
+          "id": "zh-battery",
+          "language": "zh",
+          "rank": 1,
+          "top_document": "battery"
+        },
+        {
+          "expected_document": "screen",
+          "id": "en-screen",
+          "language": "en→zh",
+          "rank": 1,
+          "top_document": "screen"
+        },
+        {
+          "expected_document": "allergy",
+          "id": "zh-allergy",
+          "language": "zh",
+          "rank": 1,
+          "top_document": "allergy"
+        },
+        {
+          "expected_document": "apple",
+          "id": "en-apple",
+          "language": "en→zh",
+          "rank": 1,
+          "top_document": "apple"
+        }
+      ],
+      "completed_at": 1792744997.9112735,
+      "document_count": 20,
+      "hit_at_1": 0.95,
+      "latency_ms": {
+        "p50": 7.2389500001008855,
+        "p95": 9.803599998122081
+      },
+      "limitations": "Small public regression set, no held-out/domain accuracy or factual verification claim",
+      "mrr": 0.95625,
+      "sample_count": 20,
+      "suite": "jarvis-multilingual-retrieval-v1",
+      "suite_sha256": "5bd974a3b3f796dfb7888178df36202bd84106d6a9c86fa6a0324e0a02daed33",
+      "workload": "warm query batch=1; fixed synthetic suite; JSONL round trip included"
+    },
+    "calibrated": true,
+    "rules_version": "resource-scores-v1"
+  },
+  "standby_restored": true,
+  "disk_bytes": 135429554,
+  "restart_preserved": true
+}

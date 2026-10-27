@@ -24,6 +24,7 @@ from modules.autonomous_development.service import Development
 from modules.registry_composer.registry import Registry
 from modules.registry_composer.connectors import Connectors
 from modules.task_resource.ledger import Ledger
+from modules.task_resource.works import Works
 from sdk.protocol import CoreError, RetryableError, PROJECT, canonical, decode, digest, read_json
 
 
@@ -52,6 +53,7 @@ class Core:
         self.connectors = Connectors(self.root)
         self.registry = Registry(self.db, plugins=self.packages, connectors=self.connectors)
         self.tasks = Ledger(self.db, self.gate, self.registry)
+        self.works = Works(self.db)
         self.facts = Facts(self.db)
         self.models = ModelGateway()
         self.preferences = Preferences(self.root)
@@ -175,6 +177,15 @@ class Core:
             return self.tasks.get(task_id)
 
     def _run_task(self, task_id):
+        try:
+            return self._execute_task(task_id)
+        finally:
+            from host.outcomes import observe
+            observe(self, task_id)
+            from host.completion import projection
+            projection(self, task_id)
+
+    def _execute_task(self, task_id):
         self.tasks.state(task_id, "RUNNING")
         while True:
             task = self.tasks.get(task_id)
@@ -218,7 +229,7 @@ class Core:
                 self.tasks.dispatch(task_id, action["id"])
             except CoreError as exc:
                 state = "CANCELLED" if exc.code == "cancelled" else ("WAITING" if exc.code in {
-                    "stopped", "denied", "module_disabled", "package_changed", "package_unavailable", "goal_context_changed", "plan_source_changed", "network_disabled"} else "FAILED")
+                    "stopped", "denied", "module_disabled", "package_changed", "package_unavailable", "goal_context_changed", "plan_source_changed", "network_disabled", "experience_changed", "work_conflict", "rework_source_changed", "work_budget_exhausted", "work_budget_invalid"} else "FAILED")
                 self.tasks.state(task_id, state, exc.code)
                 return
             try:
@@ -239,11 +250,49 @@ class Core:
                 self.tasks.uncertain(task_id, action["id"], exc.code if isinstance(exc, CoreError) else 'execution_uncertain')
                 return
 
+    def run_claimed_task(self, task_id, permit):
+        """Only the bounded cohort may share its already-held OS execution lock."""
+        from control.execution import ExecutionPermit
+        if not isinstance(permit, ExecutionPermit):
+            raise CoreError('execution_owner', 'Missing execution permit')
+        permit.bind(self.root, task_id)
+        self.gate.require_running()
+        with self.db.transaction() as tx:
+            task = self.tasks.get(task_id)
+            if task['status'] == 'SUCCEEDED':
+                return task
+            if task['cancel']:
+                raise CoreError('cancelled', 'Task cancelled')
+            if any(a['status'] == 'UNKNOWN' for a in self.tasks.actions(task_id)):
+                raise CoreError('unknown_effect', 'Reconcile effects before dispatch')
+            if task['status'] not in {'READY', 'WAITING'}:
+                raise CoreError('invalid_state', 'Task already has an execution owner')
+            if tx.execute("UPDATE tasks SET status='RUNNING',revision=revision+1 WHERE id=? AND revision=? AND cancel=0",
+                          (task_id, task['revision'])).rowcount != 1:
+                raise CoreError('conflict', 'Task changed during claim')
+            self.db.event(tx, task_id, 'scheduler.claimed', {})
+        self._execution_permit = permit
+        try:
+            self._run_task(task_id)
+            return self.tasks.get(task_id)
+        finally:
+            del self._execution_permit
+
     def _goal_memory_check(self, task_id):
+        from host.completion import check_use
+        check_use(self, task_id)
+        from host.quote_sources import check_task
+        check_task(self,task_id)
+        if hasattr(self, '_execution_permit'):
+            self._execution_permit.check(self.root, task_id)
         row=self.db.one('SELECT id FROM goal_plans WHERE task_id=?',(task_id,))
         if row:
             from host.goal_context import check
             check(self,row['id'])
+            from host.work_revisions import check as check_work
+            check_work(self,row['id'],execution=True)
+            from modules.task_resource.work_budgets import WorkBudgets
+            WorkBudgets(self.db).check_dispatch(task_id,charging=False)
 
     def _execute(self, task_id, action_id, capability, arguments, implementation):
         def checkpoint():

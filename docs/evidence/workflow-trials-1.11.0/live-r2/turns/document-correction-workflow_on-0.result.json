@@ -1,0 +1,86 @@
+{
+  "case_id": "document-correction",
+  "domain": "documents",
+  "arm": "workflow_on",
+  "turn": 0,
+  "freeze_digest": "6cc071169f4fdcc13865485eb587313ffcbbefdc9dc6b35076d6390c18412b57",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\"document\":\"# 研发日报\\n\\n- **日期**：2026-10-27\\n- **已完成与依据**：模型渲染完成（根据你提供的记录）；阅读 20 分钟（根据你提供的记录）。\\n- **异常/未完成与依据**：贴图烘焙失败（根据你提供的记录）。\\n- **进行中或待办**：贴图烘焙故障排查。\\n- **下一步**：\\n  1. 排查贴图烘焙失败原因并完成重新烘焙（完成条件：烘焙流程无报错并产出有效贴图文件）。\",\"minutes\":20,\"render\":\"done\",\"bake\":\"failed\",\"sources\":[\"S1\"]}",
+  "skill_id": "journal-review",
+  "skill_version": "1.0.0",
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 4.8887,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 195,
+        "prompt_tokens": 1115,
+        "total_tokens": 1310
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.0015675,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/document-correction-workflow_on-0.reply.md",
+      "sha256": "0f64c9c246be46f885b7b9525f2ef030ea3e82fa27657c53b0ca8921ddf07363",
+      "kind": "original_session_reply"
+    },
+    {
+      "file": "artifacts/document-correction-workflow_on-0.document.md",
+      "sha256": "684004242f9ddaf39b07675f1a86c68861511761e4cc4617993849d8022751b3",
+      "kind": "verbatim_document_field_from_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "minutes",
+        "status": "passed"
+      },
+      {
+        "id": "render",
+        "status": "passed"
+      },
+      {
+        "id": "bake",
+        "status": "passed"
+      },
+      {
+        "id": "sources",
+        "status": "passed"
+      },
+      {
+        "id": "document_present",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "record_digest": "ce9c8427f589f5bdc6520da229357f5d721c168468e791f770a777b927d84731"
+}

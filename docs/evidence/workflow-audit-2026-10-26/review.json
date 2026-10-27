@@ -1,0 +1,96 @@
+{
+  "version": "workflow-audit-review-1",
+  "date": "2026-10-26",
+  "status": "REVIEW_CHECKS_PASSED",
+  "scope": "source audit, disposable offline diagnostics and authoritative documentation; no runtime implementation change",
+  "runtime_deployed": false,
+  "model_calls": 0,
+  "full_product_accepted": false,
+  "quality_gain": null,
+  "checks": [
+    {
+      "name": "architecture",
+      "command": "python tools/check_architecture.py",
+      "exit_code": 0,
+      "output": "{\"python_files\": 183, \"errors\": []}",
+      "scope": "static architecture check executed earlier in this review; runtime sources unchanged"
+    },
+    {
+      "name": "navigation",
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "tools/sync_doc_navigation.py",
+        "--root",
+        ".",
+        "--check"
+      ],
+      "exit_code": 0,
+      "output": "OK navigation: 0 outdated\n"
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "tools/check_docs.py",
+        "--root",
+        "."
+      ],
+      "exit_code": 0,
+      "output": "OK documents=28 chapters=24 diagrams=46 local_links=3474 errors=0\n"
+    },
+    {
+      "name": "diff",
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "--",
+        "README.md",
+        "docs/README.md",
+        "docs/decisions-review.md",
+        "docs/grok-bot-comparison.md",
+        "docs/core-bootstrap.md",
+        "docs/contracts.md",
+        "docs/tasks-agents.md",
+        "docs/knowledge-learning.md",
+        "docs/delivery-validation.md",
+        "docs/manifest.json"
+      ],
+      "exit_code": 0,
+      "output": ""
+    }
+  ],
+  "diagnostic_report": "run-3/report.json",
+  "observations_reproduced": 12,
+  "observations_are_product_passes": false,
+  "prior_incomplete_or_mismatched_runs": [
+    "run-1/failure.json",
+    "run-2/report.json"
+  ],
+  "selected_source_count": 16,
+  "selected_source_changes_since_run": [],
+  "forecast_r1_sha256": "035f34e43b8b1f7c974202c0820fef905abe86674c5089be6be28a44a76ef66f",
+  "document_digests": {
+    "README.md": "6a3f454b7937298ffe2de3967e1bb31919fed0daab2def98650bcf75e91e87b3",
+    "docs/README.md": "394caff58408f6834ee1c27f00fbf20f209b401a5f680b36e2399e12234c279b",
+    "docs/decisions-review.md": "503ae959ba0b75c7d441b93d4939172cb78c0070f224b035536a437fada013bb",
+    "docs/grok-bot-comparison.md": "ef452cb4b0f18ea40952d998b47a1ae22e827d281467955e56a693213d4bf188",
+    "docs/core-bootstrap.md": "0e69cb5d7dc7d3c1616523a1cf7d81f24d3f450de01d044eaa764d1c8063a482",
+    "docs/contracts.md": "fc793f68ef262043fb047578c6ecd9e1ad85594dc963ea471ffd7bc29f482273",
+    "docs/tasks-agents.md": "fc7ce13fcb7cab6b70bb77fcd62fab4635ba30d2c045cfa656b82b9b59f915ea",
+    "docs/knowledge-learning.md": "f5f9c49bee74a74e1c99bd8969a231f665dae81fa2fbe03aaedf3585f7e4d281",
+    "docs/delivery-validation.md": "67e628a4b41865190517968dcfe3d540d019990c647fda4635c67990f1e860fb",
+    "docs/manifest.json": "7955faed92e374b743497ee7b6a2352980d4f9410a67120929d0544655a3293b"
+  },
+  "unverified": [
+    "natural-language planning",
+    "real research and report delivery",
+    "standing mandate automation",
+    "linked selective repair",
+    "general Bot ownership and transfer",
+    "report method reuse",
+    "long-term quality and cost gains"
+  ],
+  "prior_170_tests_rerun": false,
+  "figures_changed": false
+}

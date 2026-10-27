@@ -1,0 +1,107 @@
+{
+  "case_id": "learning-single-answer-limit",
+  "domain": "learning",
+  "arm": "workflow_on",
+  "turn": 1,
+  "freeze_digest": "a52aaec59d40f9e1f3c82f05a3bd88696e584a44414e87baa4ea158c77826424",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\"target\":\"主谓一致掌握\",\"actual_content\":\"主谓一致独立应用练习\",\"response_evidence\":\"学习者在提示后答对一道主谓一致题（F1）；随后无提示独立答对一道主谓一致题（F2）\",\"independent_answers\":1,\"delayed_retention\":null,\"errors_and_corrections\":\"首题提示前未独立正确作答，次题已可独立正解\",\"pending_points\":\"仅单题独立正确，尚无法证明广泛掌握或延迟保持\",\"next_step_suggestions\":\"暂不安排固定日程，建议后续进行适量同类巩固练习\",\"evidence\":{\"facts\":[{\"source\":\"F1\",\"quote\":\"学习者在提示后答对一道主谓一致题。\"},{\"source\":\"F2\",\"quote\":\"学习者随后无提示独立答对一道主谓一致题。\"}],\"plans\":[],\"suggestions\":[\"后续可适时开展更多同类题型以验证广泛掌握程度。\"]},\"document\":\"## 事实\\n- [F1] 学习者在提示后答对一道主谓一致题。\\n- [F2] 学习者随后无提示独立答对一道主谓一致题。\\n\\n## 已确认计划\\n- 无\\n\\n## 建议（未采纳）\\n- 后续可适时开展更多同类题型以验证广泛掌握程度。\"}",
+  "skill_id": "english-coach",
+  "skill_version": "1.0.0",
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 6.4245,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 342,
+        "prompt_tokens": 1975,
+        "total_tokens": 2317
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.00276375,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/learning-single-answer-limit-workflow_on-1.native.json",
+      "sha256": "f2335708a25b1199b4187db52793395ae2fcc6497ec4cf62b76f9ceccc25fa8e",
+      "kind": "native_protocol_response"
+    },
+    {
+      "file": "artifacts/learning-single-answer-limit-workflow_on-1.reply.md.txt",
+      "sha256": "c7df44b8001687c411c2acd22e474ba4794b080beffd83087f1d8b75a0e9a268",
+      "kind": "original_session_reply"
+    },
+    {
+      "file": "artifacts/learning-single-answer-limit-workflow_on-1.document.md.txt",
+      "sha256": "5d51d74086cc35c3ee83b396e0c8e298aa149556721fb31589be19923fac9722",
+      "kind": "verbatim_document_field_from_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "independent_answers",
+        "status": "passed"
+      },
+      {
+        "id": "delayed_retention",
+        "status": "passed"
+      },
+      {
+        "id": "document_present",
+        "status": "passed"
+      },
+      {
+        "id": "body_shape",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_document_parity",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "record_digest": "813ec9a4fee987251c332cc5fb2e3bda206c3d3e82b1082d0d1699429b768f0a"
+}

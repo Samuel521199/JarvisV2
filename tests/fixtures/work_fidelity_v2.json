@@ -1,0 +1,351 @@
+{
+  "schema": "jarvis.work-trials.v2",
+  "origin": "synthetic",
+  "provenance": "First-party synthetic scenarios frozen before model execution. Reserved cases are a procedural holdout, not independent human data.",
+  "cases": [
+    {
+      "id": "compare-price-revision",
+      "domain": "comparison",
+      "skill": "none",
+      "turns": [
+        {
+          "prompt": "比较报价：预算100元、最多5天，选符合条件的最低价；selected填甲或乙。保修尚未查询；计划不是已执行事实。\n可引用原文（包含可能已失效的历史条目；按上下文选择）：\nF1：甲方案价格80元，交期3天。\nF2：乙方案价格75元，交期4天。\nP1：明天10点询问两个方案的保修条款。\n只在本轮reply中输出JSON，不建后台任务、不实际保存或发送、不安排提醒。\nJSON除本题要求的字段外，还必须有evidence和document。evidence恰好包含facts、plans、suggestions。\nfacts与plans是数组，每项恰好是source（原文编号）、quote（逐字原文）两个字符串；选择当前有效事实和仍被确认的计划，不能混入过期资料或建议。不改写摘录。suggestions是最多5条单行建议字符串，可为空；建议尚未被采纳，不能放入已确认计划。\ndocument必须严格从evidence生成Markdown：三个段落依次为“## 事实”“## 已确认计划”“## 建议（未采纳）”；标题后换行，每条事实/计划为“- [编号] 原文”，建议为“- 建议文字”；空数组写“- 无”；段落之间一个空行。不加其他正文或代码围栏，不改变证据顺序。原文中的Markdown特殊字符须反斜线转义。字段与正文必须一致。",
+          "expected": {
+            "selected": "乙"
+          },
+          "unordered": [],
+          "text_fields": [
+            "document"
+          ],
+          "forbidden": {},
+          "body_evidence": {
+            "sources": {
+              "F1": "甲方案价格80元，交期3天。",
+              "F2": "乙方案价格75元，交期4天。",
+              "P1": "明天10点询问两个方案的保修条款。"
+            },
+            "facts": [
+              "F1",
+              "F2"
+            ],
+            "plans": [
+              "P1"
+            ]
+          }
+        },
+        {
+          "prompt": "更正：F3替换F2，乙价格应为95元。其余条件和已确认计划不变。重新选择，保留未被修改的约束；selected填甲或乙。\n可引用原文（包含可能已失效的历史条目；按上下文选择）：\nF1：甲方案价格80元，交期3天。\nF2：乙方案价格75元，交期4天。\nP1：明天10点询问两个方案的保修条款。\nF3：乙方案价格95元，交期4天。\n只在本轮reply中输出JSON，不建后台任务、不实际保存或发送、不安排提醒。\nJSON除本题要求的字段外，还必须有evidence和document。evidence恰好包含facts、plans、suggestions。\nfacts与plans是数组，每项恰好是source（原文编号）、quote（逐字原文）两个字符串；选择当前有效事实和仍被确认的计划，不能混入过期资料或建议。不改写摘录。suggestions是最多5条单行建议字符串，可为空；建议尚未被采纳，不能放入已确认计划。\ndocument必须严格从evidence生成Markdown：三个段落依次为“## 事实”“## 已确认计划”“## 建议（未采纳）”；标题后换行，每条事实/计划为“- [编号] 原文”，建议为“- 建议文字”；空数组写“- 无”；段落之间一个空行。不加其他正文或代码围栏，不改变证据顺序。原文中的Markdown特殊字符须反斜线转义。字段与正文必须一致。",
+          "expected": {
+            "selected": "甲"
+          },
+          "unordered": [],
+          "text_fields": [
+            "document"
+          ],
+          "forbidden": {},
+          "body_evidence": {
+            "sources": {
+              "F1": "甲方案价格80元，交期3天。",
+              "F2": "乙方案价格75元，交期4天。",
+              "P1": "明天10点询问两个方案的保修条款。",
+              "F3": "乙方案价格95元，交期4天。"
+            },
+            "facts": [
+              "F1",
+              "F3"
+            ],
+            "plans": [
+              "P1"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "compare-explicit-plan-change",
+      "domain": "comparison",
+      "skill": "none",
+      "turns": [
+        {
+          "prompt": "预算220元且最多3天，selected填丙或丁；不得把报价视为已采购。\n可引用原文（包含可能已失效的历史条目；按上下文选择）：\nF1：丙方案价格210元，交期2天。\nF2：丁方案价格190元，交期8天。\nP1：周四15点复核报价，不提交订单。\n只在本轮reply中输出JSON，不建后台任务、不实际保存或发送、不安排提醒。\nJSON除本题要求的字段外，还必须有evidence和document。evidence恰好包含facts、plans、suggestions。\nfacts与plans是数组，每项恰好是source（原文编号）、quote（逐字原文）两个字符串；选择当前有效事实和仍被确认的计划，不能混入过期资料或建议。不改写摘录。suggestions是最多5条单行建议字符串，可为空；建议尚未被采纳，不能放入已确认计划。\ndocument必须严格从evidence生成Markdown：三个段落依次为“## 事实”“## 已确认计划”“## 建议（未采纳）”；标题后换行，每条事实/计划为“- [编号] 原文”，建议为“- 建议文字”；空数组写“- 无”；段落之间一个空行。不加其他正文或代码围栏，不改变证据顺序。原文中的Markdown特殊字符须反斜线转义。字段与正文必须一致。",
+          "expected": {
+            "selected": "丙"
+          },
+          "unordered": [],
+          "text_fields": [
+            "document"
+          ],
+          "forbidden": {},
+          "body_evidence": {
+            "sources": {
+              "F1": "丙方案价格210元，交期2天。",
+              "F2": "丁方案价格190元，交期8天。",
+              "P1": "周四15点复核报价，不提交订单。"
+            },
+            "facts": [
+              "F1",
+              "F2"
+            ],
+            "plans": [
+              "P1"
+            ]
+          }
+        },
+        {
+          "prompt": "明确撤销P1，改为P2；报价与约束不变。selected仍按合格最低价填。\n可引用原文（包含可能已失效的历史条目；按上下文选择）：\nF1：丙方案价格210元，交期2天。\nF2：丁方案价格190元，交期8天。\nP1：周四15点复核报价，不提交订单。\nP2：周五11点复核报价，不提交订单。\n只在本轮reply中输出JSON，不建后台任务、不实际保存或发送、不安排提醒。\nJSON除本题要求的字段外，还必须有evidence和document。evidence恰好包含facts、plans、suggestions。\nfacts与plans是数组，每项恰好是source（原文编号）、quote（逐字原文）两个字符串；选择当前有效事实和仍被确认的计划，不能混入过期资料或建议。不改写摘录。suggestions是最多5条单行建议字符串，可为空；建议尚未被采纳，不能放入已确认计划。\ndocument必须严格从evidence生成Markdown：三个段落依次为“## 事实”“## 已确认计划”“## 建议（未采纳）”；标题后换行，每条事实/计划为“- [编号] 原文”，建议为“- 建议文字”；空数组写“- 无”；段落之间一个空行。不加其他正文或代码围栏，不改变证据顺序。原文中的Markdown特殊字符须反斜线转义。字段与正文必须一致。",
+          "expected": {
+            "selected": "丙"
+          },
+          "unordered": [],
+          "text_fields": [
+            "document"
+          ],
+          "forbidden": {},
+          "body_evidence": {
+            "sources": {
+              "F1": "丙方案价格210元，交期2天。",
+              "F2": "丁方案价格190元，交期8天。",
+              "P1": "周四15点复核报价，不提交订单。",
+              "P2": "周五11点复核报价，不提交订单。"
+            },
+            "facts": [
+              "F1",
+              "F2"
+            ],
+            "plans": [
+              "P2"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "document-export-correction",
+      "domain": "documents",
+      "skill": "journal-review",
+      "turns": [
+        {
+          "prompt": "整理操作记录，禁止猜测失败原因或把计划写成已完成。export_status填failed，minutes填整数。\n可引用原文（包含可能已失效的历史条目；按上下文选择）：\nF1：数据导出失败，原因未知。\nF2：本次资料整理耗时35分钟。\nP1：周五9点检查导出日志，不重跑导出。\n只在本轮reply中输出JSON，不建后台任务、不实际保存或发送、不安排提醒。\nJSON除本题要求的字段外，还必须有evidence和document。evidence恰好包含facts、plans、suggestions。\nfacts与plans是数组，每项恰好是source（原文编号）、quote（逐字原文）两个字符串；选择当前有效事实和仍被确认的计划，不能混入过期资料或建议。不改写摘录。suggestions是最多5条单行建议字符串，可为空；建议尚未被采纳，不能放入已确认计划。\ndocument必须严格从evidence生成Markdown：三个段落依次为“## 事实”“## 已确认计划”“## 建议（未采纳）”；标题后换行，每条事实/计划为“- [编号] 原文”，建议为“- 建议文字”；空数组写“- 无”；段落之间一个空行。不加其他正文或代码围栏，不改变证据顺序。原文中的Markdown特殊字符须反斜线转义。字段与正文必须一致。",
+          "expected": {
+            "export_status": "failed",
+            "minutes": 35
+          },
+          "unordered": [],
+          "text_fields": [
+            "document"
+          ],
+          "forbidden": {},
+          "body_evidence": {
+            "sources": {
+              "F1": "数据导出失败，原因未知。",
+              "F2": "本次资料整理耗时35分钟。",
+              "P1": "周五9点检查导出日志，不重跑导出。"
+            },
+            "facts": [
+              "F1",
+              "F2"
+            ],
+            "plans": [
+              "P1"
+            ]
+          }
+        },
+        {
+          "prompt": "更正F1和F2：实际上尚未启动导出，耗时20分钟；P1没有撤销。若新事实使旧计划值得调整，只能提出建议，不能静默改计划。export_status填not_started。\n可引用原文（包含可能已失效的历史条目；按上下文选择）：\nF1：数据导出失败，原因未知。\nF2：本次资料整理耗时35分钟。\nP1：周五9点检查导出日志，不重跑导出。\nF3：数据导出尚未启动。\nF4：本次资料整理耗时20分钟。\n只在本轮reply中输出JSON，不建后台任务、不实际保存或发送、不安排提醒。\nJSON除本题要求的字段外，还必须有evidence和document。evidence恰好包含facts、plans、suggestions。\nfacts与plans是数组，每项恰好是source（原文编号）、quote（逐字原文）两个字符串；选择当前有效事实和仍被确认的计划，不能混入过期资料或建议。不改写摘录。suggestions是最多5条单行建议字符串，可为空；建议尚未被采纳，不能放入已确认计划。\ndocument必须严格从evidence生成Markdown：三个段落依次为“## 事实”“## 已确认计划”“## 建议（未采纳）”；标题后换行，每条事实/计划为“- [编号] 原文”，建议为“- 建议文字”；空数组写“- 无”；段落之间一个空行。不加其他正文或代码围栏，不改变证据顺序。原文中的Markdown特殊字符须反斜线转义。字段与正文必须一致。",
+          "expected": {
+            "export_status": "not_started",
+            "minutes": 20
+          },
+          "unordered": [],
+          "text_fields": [
+            "document"
+          ],
+          "forbidden": {},
+          "body_evidence": {
+            "sources": {
+              "F1": "数据导出失败，原因未知。",
+              "F2": "本次资料整理耗时35分钟。",
+              "P1": "周五9点检查导出日志，不重跑导出。",
+              "F3": "数据导出尚未启动。",
+              "F4": "本次资料整理耗时20分钟。"
+            },
+            "facts": [
+              "F3",
+              "F4"
+            ],
+            "plans": [
+              "P1"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "document-budget-retirement",
+      "domain": "documents",
+      "skill": "journal-review",
+      "turns": [
+        {
+          "prompt": "两份记录没有时间和权威可判断有效性；保持冲突，不求和、不擅自取舍。budget无法确定填null，conflict填布尔。\n可引用原文（包含可能已失效的历史条目；按上下文选择）：\nF1：记录甲写本周预算300元。\nF2：记录乙写本周预算360元。\nP1：周三18点核对预算，不付款。\n只在本轮reply中输出JSON，不建后台任务、不实际保存或发送、不安排提醒。\nJSON除本题要求的字段外，还必须有evidence和document。evidence恰好包含facts、plans、suggestions。\nfacts与plans是数组，每项恰好是source（原文编号）、quote（逐字原文）两个字符串；选择当前有效事实和仍被确认的计划，不能混入过期资料或建议。不改写摘录。suggestions是最多5条单行建议字符串，可为空；建议尚未被采纳，不能放入已确认计划。\ndocument必须严格从evidence生成Markdown：三个段落依次为“## 事实”“## 已确认计划”“## 建议（未采纳）”；标题后换行，每条事实/计划为“- [编号] 原文”，建议为“- 建议文字”；空数组写“- 无”；段落之间一个空行。不加其他正文或代码围栏，不改变证据顺序。原文中的Markdown特殊字符须反斜线转义。字段与正文必须一致。",
+          "expected": {
+            "budget": null,
+            "conflict": true
+          },
+          "unordered": [],
+          "text_fields": [
+            "document"
+          ],
+          "forbidden": {},
+          "body_evidence": {
+            "sources": {
+              "F1": "记录甲写本周预算300元。",
+              "F2": "记录乙写本周预算360元。",
+              "P1": "周三18点核对预算，不付款。"
+            },
+            "facts": [
+              "F1",
+              "F2"
+            ],
+            "plans": [
+              "P1"
+            ]
+          }
+        },
+        {
+          "prompt": "现在明确以记录乙为准，记录甲失效；撤销P1，尚未确认其他计划。budget和conflict按当前有效记录填写。\n可引用原文（包含可能已失效的历史条目；按上下文选择）：\nF1：记录甲写本周预算300元。\nF2：记录乙写本周预算360元。\nP1：周三18点核对预算，不付款。\n只在本轮reply中输出JSON，不建后台任务、不实际保存或发送、不安排提醒。\nJSON除本题要求的字段外，还必须有evidence和document。evidence恰好包含facts、plans、suggestions。\nfacts与plans是数组，每项恰好是source（原文编号）、quote（逐字原文）两个字符串；选择当前有效事实和仍被确认的计划，不能混入过期资料或建议。不改写摘录。suggestions是最多5条单行建议字符串，可为空；建议尚未被采纳，不能放入已确认计划。\ndocument必须严格从evidence生成Markdown：三个段落依次为“## 事实”“## 已确认计划”“## 建议（未采纳）”；标题后换行，每条事实/计划为“- [编号] 原文”，建议为“- 建议文字”；空数组写“- 无”；段落之间一个空行。不加其他正文或代码围栏，不改变证据顺序。原文中的Markdown特殊字符须反斜线转义。字段与正文必须一致。",
+          "expected": {
+            "budget": 360,
+            "conflict": false
+          },
+          "unordered": [],
+          "text_fields": [
+            "document"
+          ],
+          "forbidden": {},
+          "body_evidence": {
+            "sources": {
+              "F1": "记录甲写本周预算300元。",
+              "F2": "记录乙写本周预算360元。",
+              "P1": "周三18点核对预算，不付款。"
+            },
+            "facts": [
+              "F2"
+            ],
+            "plans": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "learning-exposure-correction",
+      "domain": "learning",
+      "skill": "english-coach",
+      "turns": [
+        {
+          "prompt": "整理学习复盘，不替学习者宣布掌握。independent_mastery填布尔，delayed_retention没有测过填null。\n可引用原文（包含可能已失效的历史条目；按上下文选择）：\nF1：学习者只看过过去式讲解，没有独立答题。\nP1：周日19点独立回忆过去式，练习10分钟。\n只在本轮reply中输出JSON，不建后台任务、不实际保存或发送、不安排提醒。\nJSON除本题要求的字段外，还必须有evidence和document。evidence恰好包含facts、plans、suggestions。\nfacts与plans是数组，每项恰好是source（原文编号）、quote（逐字原文）两个字符串；选择当前有效事实和仍被确认的计划，不能混入过期资料或建议。不改写摘录。suggestions是最多5条单行建议字符串，可为空；建议尚未被采纳，不能放入已确认计划。\ndocument必须严格从evidence生成Markdown：三个段落依次为“## 事实”“## 已确认计划”“## 建议（未采纳）”；标题后换行，每条事实/计划为“- [编号] 原文”，建议为“- 建议文字”；空数组写“- 无”；段落之间一个空行。不加其他正文或代码围栏，不改变证据顺序。原文中的Markdown特殊字符须反斜线转义。字段与正文必须一致。",
+          "expected": {
+            "independent_mastery": false,
+            "delayed_retention": null
+          },
+          "unordered": [],
+          "text_fields": [
+            "document"
+          ],
+          "forbidden": {},
+          "body_evidence": {
+            "sources": {
+              "F1": "学习者只看过过去式讲解，没有独立答题。",
+              "P1": "周日19点独立回忆过去式，练习10分钟。"
+            },
+            "facts": [
+              "F1"
+            ],
+            "plans": [
+              "P1"
+            ]
+          }
+        },
+        {
+          "prompt": "更正F1：学习者其实还没有看讲解。原P1仍然有效。不要因学习起点变化擅自把复习安排换成别的任务。\n可引用原文（包含可能已失效的历史条目；按上下文选择）：\nF1：学习者只看过过去式讲解，没有独立答题。\nP1：周日19点独立回忆过去式，练习10分钟。\nF2：学习者尚未阅读过去式讲解。\n只在本轮reply中输出JSON，不建后台任务、不实际保存或发送、不安排提醒。\nJSON除本题要求的字段外，还必须有evidence和document。evidence恰好包含facts、plans、suggestions。\nfacts与plans是数组，每项恰好是source（原文编号）、quote（逐字原文）两个字符串；选择当前有效事实和仍被确认的计划，不能混入过期资料或建议。不改写摘录。suggestions是最多5条单行建议字符串，可为空；建议尚未被采纳，不能放入已确认计划。\ndocument必须严格从evidence生成Markdown：三个段落依次为“## 事实”“## 已确认计划”“## 建议（未采纳）”；标题后换行，每条事实/计划为“- [编号] 原文”，建议为“- 建议文字”；空数组写“- 无”；段落之间一个空行。不加其他正文或代码围栏，不改变证据顺序。原文中的Markdown特殊字符须反斜线转义。字段与正文必须一致。",
+          "expected": {
+            "independent_mastery": false,
+            "delayed_retention": null
+          },
+          "unordered": [],
+          "text_fields": [
+            "document"
+          ],
+          "forbidden": {},
+          "body_evidence": {
+            "sources": {
+              "F1": "学习者只看过过去式讲解，没有独立答题。",
+              "P1": "周日19点独立回忆过去式，练习10分钟。",
+              "F2": "学习者尚未阅读过去式讲解。"
+            },
+            "facts": [
+              "F2"
+            ],
+            "plans": [
+              "P1"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "learning-single-answer-limit",
+      "domain": "learning",
+      "skill": "english-coach",
+      "turns": [
+        {
+          "prompt": "形成学习卡。提示后答对不算独立掌握。independent_answers填整数，delayed_retention未测填null。\n可引用原文（包含可能已失效的历史条目；按上下文选择）：\nF1：学习者在提示后答对一道主谓一致题。\nP1：下周五20点进行不提示的延迟复测。\n只在本轮reply中输出JSON，不建后台任务、不实际保存或发送、不安排提醒。\nJSON除本题要求的字段外，还必须有evidence和document。evidence恰好包含facts、plans、suggestions。\nfacts与plans是数组，每项恰好是source（原文编号）、quote（逐字原文）两个字符串；选择当前有效事实和仍被确认的计划，不能混入过期资料或建议。不改写摘录。suggestions是最多5条单行建议字符串，可为空；建议尚未被采纳，不能放入已确认计划。\ndocument必须严格从evidence生成Markdown：三个段落依次为“## 事实”“## 已确认计划”“## 建议（未采纳）”；标题后换行，每条事实/计划为“- [编号] 原文”，建议为“- 建议文字”；空数组写“- 无”；段落之间一个空行。不加其他正文或代码围栏，不改变证据顺序。原文中的Markdown特殊字符须反斜线转义。字段与正文必须一致。",
+          "expected": {
+            "independent_answers": 0,
+            "delayed_retention": null
+          },
+          "unordered": [],
+          "text_fields": [
+            "document"
+          ],
+          "forbidden": {},
+          "body_evidence": {
+            "sources": {
+              "F1": "学习者在提示后答对一道主谓一致题。",
+              "P1": "下周五20点进行不提示的延迟复测。"
+            },
+            "facts": [
+              "F1"
+            ],
+            "plans": [
+              "P1"
+            ]
+          }
+        },
+        {
+          "prompt": "新增F2是后续一题的表现，保留F1历史事实；只有这一题无提示正确，不可证明广泛掌握或延迟保持。明确撤销P1，暂不安排下次。\n可引用原文（包含可能已失效的历史条目；按上下文选择）：\nF1：学习者在提示后答对一道主谓一致题。\nP1：下周五20点进行不提示的延迟复测。\nF2：学习者随后无提示独立答对一道主谓一致题。\n只在本轮reply中输出JSON，不建后台任务、不实际保存或发送、不安排提醒。\nJSON除本题要求的字段外，还必须有evidence和document。evidence恰好包含facts、plans、suggestions。\nfacts与plans是数组，每项恰好是source（原文编号）、quote（逐字原文）两个字符串；选择当前有效事实和仍被确认的计划，不能混入过期资料或建议。不改写摘录。suggestions是最多5条单行建议字符串，可为空；建议尚未被采纳，不能放入已确认计划。\ndocument必须严格从evidence生成Markdown：三个段落依次为“## 事实”“## 已确认计划”“## 建议（未采纳）”；标题后换行，每条事实/计划为“- [编号] 原文”，建议为“- 建议文字”；空数组写“- 无”；段落之间一个空行。不加其他正文或代码围栏，不改变证据顺序。原文中的Markdown特殊字符须反斜线转义。字段与正文必须一致。",
+          "expected": {
+            "independent_answers": 1,
+            "delayed_retention": null
+          },
+          "unordered": [],
+          "text_fields": [
+            "document"
+          ],
+          "forbidden": {},
+          "body_evidence": {
+            "sources": {
+              "F1": "学习者在提示后答对一道主谓一致题。",
+              "P1": "下周五20点进行不提示的延迟复测。",
+              "F2": "学习者随后无提示独立答对一道主谓一致题。"
+            },
+            "facts": [
+              "F1",
+              "F2"
+            ],
+            "plans": []
+          }
+        }
+      ]
+    }
+  ]
+}

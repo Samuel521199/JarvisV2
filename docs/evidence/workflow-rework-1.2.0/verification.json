@@ -1,0 +1,121 @@
+{
+  "version": "workflow-rework-1.2.0",
+  "status": "LOCAL_SLICE_PASS",
+  "production_deployed": false,
+  "overall_product": "NOT_ACCEPTED",
+  "environment": {
+    "python": "3.13.0 (tags/v3.13.0:60403a5, Oct  7 2024, 09:38:07) [MSC v.1941 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "tests": {
+    "unique": 260,
+    "executions": 306,
+    "all_passed": true,
+    "skipped": 0,
+    "reports": [
+      "regression-r4.json",
+      "source-domain-r5.json"
+    ]
+  },
+  "tested_sources": {
+    "adapters/storage/work_schema.py": "68ddbff86e0bd39072061254c3961c8fca27e201360a092f0d297a13abdbae93",
+    "modules/task_resource/works.py": "25c74fb0e45a76e35799fcc18caeca05c8be8401390edd705ac69847a737b5c2",
+    "host/work_revisions.py": "d8fa99b3dfdc1e32e508337f7d8968d2e22aeac6118b346c9efd9353ea0975b2",
+    "host/core.py": "726c012a6b75e5676a0aa11fbfcf78de5b96f2386eb80da5de9f476a42f8f43e",
+    "host/goals.py": "8434a0ee73886e021feb76afbdcd7b5a6f72b58562520f262bc718f48c5afcf4",
+    "host/goal_context.py": "aceda45642bfdfd5454a8c6c460464fb25d9b26d9e81cda75fc18081a0a8241c",
+    "host/outcomes.py": "76a32626e18998befa774c34444c032ef62395bc6b1965b4b06f3a2ae4e4ddee",
+    "host/assistant.py": "0eccc2c845b219341e7041296caaff1542967c907a5702ce7f8d52c8da0ddc34",
+    "host/work_status.py": "16784cdf2a387efd191e7c6dd89a8fbe8aa92edb450620054f6e3c5596947e10",
+    "host/session_workspace.py": "0d169cb64ba768567ad81288e1b99fe339aaaead14cbd098b6deff3ba01cdd31",
+    "apps/workbench/goals.js": "48303fc094b96765271641168d11ebe83e01c7df18805a110f8c42fb812c8618",
+    "apps/workbench/ui.js": "03b65dd5b28aff599aeeb59fb76c6b18056965f817979a2b6183fbd2be802757",
+    "apps/workbench/assistant-actions.js": "adc976172a23736822de018fb150602e5669eb31a973af74a4ab5e122243ef8d",
+    "apps/workbench/work-revisions.js": "f57b4682fe9a53d78aeffb9908ee7b211fa6d455b52d9261a56e28f22df8d2e6",
+    "tests/test_work_revisions.py": "8ded4d2e7986edac5604200fa5feae5b7949af00376203d62783cf6fc6734ed5",
+    "tools/accept_completion.py": "1c80ad16a61a72e52c491229d78ef2009319c20b6b6d3ad117f979b4b1dd2676",
+    "tools/handoff_crash_worker.py": "f7ad388d29f3c64b21032add8ba26bff3381fa812bc1650bf7b375ccf8f7d07f"
+  },
+  "source_snapshot": "test-sources-r5.json before targeted source/domain/assistant tests; regression-r4.json covers the broader original mechanisms",
+  "browser": {
+    "report": "ui-r7/browser.json",
+    "runtime": "ui-r7/runtime.json",
+    "passed": true,
+    "themes_visually_inspected": [
+      "dark",
+      "light"
+    ],
+    "model_calls": 0
+  },
+  "unverified": [
+    "production",
+    "multi-Bot takeover/leases",
+    "shared root budget enforcement",
+    "automatic semantic impact analysis",
+    "natural-chat routing to rework",
+    "general learning gains",
+    "rework source-check scale/latency"
+  ],
+  "diff_check": {
+    "scope": [
+      "host/core.py",
+      "host/goals.py",
+      "host/goal_context.py",
+      "host/outcomes.py",
+      "host/assistant.py",
+      "host/work_status.py",
+      "host/session_workspace.py",
+      "apps/workbench/goals.js",
+      "apps/workbench/ui.js",
+      "apps/workbench/assistant-actions.js",
+      "tools/accept_completion.py",
+      "tools/handoff_crash_worker.py",
+      "docs/core-bootstrap.md",
+      "docs/contracts.md",
+      "docs/delivery-validation.md",
+      "docs/grok-bot-comparison.md",
+      "docs/knowledge-learning.md",
+      "docs/tasks-agents.md",
+      "docs/manifest.json"
+    ],
+    "exit_code": 0,
+    "output": "",
+    "stderr": ""
+  },
+  "global_diff_limit": "Unrelated Anatomy and other concurrent working-tree edits have whitespace diagnostics; they were not modified by this task.",
+  "checks": [
+    {
+      "command": [
+        "tools/sync_doc_navigation.py",
+        "--root",
+        "."
+      ],
+      "exit_code": 0,
+      "output": "OK navigation: 0 updated",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tools/check_docs.py",
+        "--root",
+        "."
+      ],
+      "exit_code": 0,
+      "output": "OK documents=28 chapters=24 diagrams=46 local_links=3535 errors=0",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tools/check_architecture.py"
+      ],
+      "exit_code": 0,
+      "output": "{\"python_files\": 187, \"errors\": []}",
+      "stderr": ""
+    }
+  ],
+  "browser_probe_sources_after_run": {
+    "tools\\probe_rework_ui.py": "0cac19055ca46b6a3f0f2d2d2734b12c519760c2c7b539064d0ddbe4c309a4e3",
+    "tools\\probe_rework_ui.cjs": "302d576ea8e630e85e717dda074c1e355396d31f416715ecc9a2af12fa476b42"
+  },
+  "forecast_r1_sha256": "035f34e43b8b1f7c974202c0820fef905abe86674c5089be6be28a44a76ef66f"
+}

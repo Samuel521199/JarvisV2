@@ -13,6 +13,34 @@ LAYERS = {"sdk", "control", "adapters", "modules", "host", "apps"}
 def check():
     errors = []
     count = 0
+    # Optional inference libraries are confined to the declared subprocess worker.
+    # This explicit exception does not permit imports into the Host or core.
+    runtime = json.loads((ROOT / 'modules/local_models/runtime.json').read_text(encoding='utf-8'))
+    worker = 'adapters/models/local_embedding_worker.py'
+    allowed = {item['import'] for item in runtime['dependencies']}
+    if runtime['worker'] != worker or allowed != {'numpy', 'onnxruntime', 'tokenizers'}:
+        errors.append('Invalid optional local-runtime dependency declaration')
+        allowed = set()
+    engineering = json.loads((ROOT/'modules/skills/anatomy/runtime-boundary.json').read_text(encoding='utf-8'))
+    engineering_worker = 'adapters/engineering/worker.py'
+    engineering_allowed = {item['import'] for item in engineering['dependencies']}
+    if engineering['worker'] != engineering_worker or engineering['bootstrap'] != 'apps/engineering/worker.py' or engineering_allowed != {'OCP','cantera'}:
+        errors.append('Invalid optional engineering-runtime dependency declaration')
+        engineering_allowed = set()
+    studio=json.loads((ROOT/'modules/skills/studio3d/runtime.json').read_text(encoding='utf-8'))
+    studio_worker='adapters/studio3d/worker.py'
+    studio_allowed={x['import'] for x in studio['dependencies']}
+    studio_support={'adapters/studio3d/asset_pipeline.py','adapters/studio3d/projection.py'}
+    # These original helpers use only stdlib and receive validated Blender
+    # objects; registering them does not grant new bpy/mathutils import sites.
+    studio_helpers={'adapters/studio3d/organic.py','adapters/studio3d/framing.py'}
+    if studio['worker']!=studio_worker or studio['bootstrap']!='apps/studio3d/worker.py' or set(studio.get('support_workers',[]))!=studio_support|studio_helpers or studio_allowed!={'bpy','mathutils'}:
+        errors.append('Invalid optional Blender-runtime declaration');studio_allowed=set()
+    learning=studio.get('learning',{})
+    learning_worker='adapters/studio3d/learning_worker.py'
+    learning_allowed=set(learning.get('dependencies',[]))
+    if learning.get('worker')!=learning_worker or learning.get('bootstrap')!='apps/studio3d/learning_worker.py' or learning_allowed!={'bpy','mathutils','bmesh'}:
+        errors.append('Invalid fixed Blender learning-runtime declaration');learning_allowed=set()
     for layer in sorted(LAYERS):
         for path in (ROOT / layer).rglob("*.py"):
             count += 1
@@ -21,7 +49,8 @@ def check():
                 names = [n.name for n in node.names] if isinstance(node, ast.Import) else ([node.module] if isinstance(node, ast.ImportFrom) and node.module else [])
                 for name in names:
                     top = name.split(".")[0]
-                    if top not in sys.stdlib_module_names and top not in LAYERS:
+                    relative = path.relative_to(ROOT).as_posix()
+                    if top not in sys.stdlib_module_names and top not in LAYERS and not (relative == worker and top in allowed) and not (relative == engineering_worker and top in engineering_allowed) and not (relative in {studio_worker,*studio_support} and top in studio_allowed) and not (relative == learning_worker and top in learning_allowed):
                         errors.append(f"Unapproved dependency: {path.relative_to(ROOT)} -> {name}")
                     if layer == "sdk" and top in LAYERS - {"sdk"}:
                         errors.append(f"SDK depends on implementation: {name}")

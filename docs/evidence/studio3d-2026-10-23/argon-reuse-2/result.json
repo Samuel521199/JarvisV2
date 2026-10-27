@@ -1,0 +1,1321 @@
+{
+  "status": "passed",
+  "origin": "http://127.0.0.1:18282",
+  "id": "9126fb320f8c4fd692e6e0deebf05586",
+  "paid_model_calls_requested": 0,
+  "request": {
+    "id": "9126fb320f8c4fd692e6e0deebf05586",
+    "reuse_candidate": "4696dd34aba04bd9b23e6f4d121277e0",
+    "render": {
+      "quality": "preview",
+      "engine": "CYCLES",
+      "view": "front"
+    }
+  },
+  "accepted": {
+    "existing": false,
+    "id": "9126fb320f8c4fd692e6e0deebf05586"
+  },
+  "job": {
+    "cancel": 0,
+    "chat_id": null,
+    "created": 1792765732.3461928,
+    "error": null,
+    "id": "9126fb320f8c4fd692e6e0deebf05586",
+    "phase": "已交付可编辑模型、渲染与检查回执",
+    "receipt": {
+      "adapter_version": "1.0.0",
+      "configuration": {
+        "description": "金属离心压气机叶轮视觉研究模型，直径约0.25米，轴线沿Z轴。包含圆滑背盘与流线型锥面轮毂、贯穿轴孔（由布尔切割生成）、鼻锥锁紧螺母特征，以及6片采用多截面放样（loft）构建的弯曲扭转薄叶片。不含蜗壳以清晰展示叶片空间曲率。",
+        "materials": [
+          {
+            "coat": 0.25,
+            "color": "#c8d0d8",
+            "detail": "brushed",
+            "id": "titanium-alloy",
+            "metallic": 0.92,
+            "roughness": 0.22,
+            "transmission": 0
+          },
+          {
+            "coat": 0.1,
+            "color": "#7a828a",
+            "detail": "brushed",
+            "id": "machined-steel",
+            "metallic": 0.88,
+            "roughness": 0.32,
+            "transmission": 0
+          },
+          {
+            "coat": 0.15,
+            "color": "#2b3036",
+            "detail": "none",
+            "id": "dark-anodized",
+            "metallic": 0.75,
+            "roughness": 0.28,
+            "transmission": 0
+          }
+        ],
+        "objects": [
+          {
+            "id": "bore-cutter",
+            "kind": "cylinder",
+            "material": "machined-steel",
+            "modifiers": {},
+            "params": {
+              "depth": 0.2,
+              "radius": 0.018
+            },
+            "position": [
+              0,
+              0,
+              0.05
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "visible": false
+          },
+          {
+            "id": "impeller-hub-disk",
+            "kind": "lathe",
+            "material": "titanium-alloy",
+            "modifiers": {
+              "bevel": 0.0015,
+              "difference": [
+                "bore-cutter"
+              ],
+              "subdivision": 1
+            },
+            "params": {
+              "profile": [
+                [
+                  0.016,
+                  0.0
+                ],
+                [
+                  0.125,
+                  0.0
+                ],
+                [
+                  0.125,
+                  0.008
+                ],
+                [
+                  0.118,
+                  0.011
+                ],
+                [
+                  0.095,
+                  0.014
+                ],
+                [
+                  0.072,
+                  0.022
+                ],
+                [
+                  0.052,
+                  0.038
+                ],
+                [
+                  0.038,
+                  0.062
+                ],
+                [
+                  0.03,
+                  0.09
+                ],
+                [
+                  0.028,
+                  0.105
+                ],
+                [
+                  0.016,
+                  0.105
+                ]
+              ],
+              "segments": 96
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "backface-boss",
+            "kind": "lathe",
+            "material": "machined-steel",
+            "modifiers": {
+              "bevel": 0.001,
+              "difference": [
+                "bore-cutter"
+              ]
+            },
+            "params": {
+              "profile": [
+                [
+                  0.016,
+                  -0.012
+                ],
+                [
+                  0.042,
+                  -0.012
+                ],
+                [
+                  0.048,
+                  0.0
+                ],
+                [
+                  0.016,
+                  0.0
+                ]
+              ],
+              "segments": 64
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "nose-locknut",
+            "kind": "lathe",
+            "material": "dark-anodized",
+            "modifiers": {
+              "bevel": 0.001,
+              "difference": [
+                "bore-cutter"
+              ]
+            },
+            "params": {
+              "profile": [
+                [
+                  0.016,
+                  0.105
+                ],
+                [
+                  0.028,
+                  0.105
+                ],
+                [
+                  0.025,
+                  0.118
+                ],
+                [
+                  0.019,
+                  0.124
+                ],
+                [
+                  0.016,
+                  0.124
+                ]
+              ],
+              "segments": 64
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "main-blade-1",
+            "kind": "loft",
+            "material": "titanium-alloy",
+            "modifiers": {
+              "bevel": 0.0008,
+              "subdivision": 1
+            },
+            "params": {
+              "caps": true,
+              "closed": true,
+              "rings": [
+                [
+                  [
+                    0.027,
+                    0.002,
+                    0.096
+                  ],
+                  [
+                    0.056,
+                    0.003,
+                    0.096
+                  ],
+                  [
+                    0.057,
+                    -0.001,
+                    0.095
+                  ],
+                  [
+                    0.027,
+                    -0.002,
+                    0.095
+                  ]
+                ],
+                [
+                  [
+                    0.034,
+                    -0.014,
+                    0.064
+                  ],
+                  [
+                    0.073,
+                    -0.019,
+                    0.067
+                  ],
+                  [
+                    0.071,
+                    -0.024,
+                    0.065
+                  ],
+                  [
+                    0.032,
+                    -0.018,
+                    0.063
+                  ]
+                ],
+                [
+                  [
+                    0.046,
+                    -0.037,
+                    0.032
+                  ],
+                  [
+                    0.082,
+                    -0.056,
+                    0.044
+                  ],
+                  [
+                    0.079,
+                    -0.06,
+                    0.041
+                  ],
+                  [
+                    0.043,
+                    -0.041,
+                    0.03
+                  ]
+                ],
+                [
+                  [
+                    0.059,
+                    -0.068,
+                    0.013
+                  ],
+                  [
+                    0.065,
+                    -0.075,
+                    0.027
+                  ],
+                  [
+                    0.061,
+                    -0.078,
+                    0.025
+                  ],
+                  [
+                    0.055,
+                    -0.071,
+                    0.012
+                  ]
+                ],
+                [
+                  [
+                    0.062,
+                    -0.108,
+                    0.007
+                  ],
+                  [
+                    0.062,
+                    -0.108,
+                    0.023
+                  ],
+                  [
+                    0.058,
+                    -0.111,
+                    0.023
+                  ],
+                  [
+                    0.058,
+                    -0.111,
+                    0.007
+                  ]
+                ]
+              ]
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "main-blade-2",
+            "kind": "loft",
+            "material": "titanium-alloy",
+            "modifiers": {
+              "bevel": 0.0008,
+              "subdivision": 1
+            },
+            "params": {
+              "caps": true,
+              "closed": true,
+              "rings": [
+                [
+                  [
+                    0.027,
+                    0.002,
+                    0.096
+                  ],
+                  [
+                    0.056,
+                    0.003,
+                    0.096
+                  ],
+                  [
+                    0.057,
+                    -0.001,
+                    0.095
+                  ],
+                  [
+                    0.027,
+                    -0.002,
+                    0.095
+                  ]
+                ],
+                [
+                  [
+                    0.034,
+                    -0.014,
+                    0.064
+                  ],
+                  [
+                    0.073,
+                    -0.019,
+                    0.067
+                  ],
+                  [
+                    0.071,
+                    -0.024,
+                    0.065
+                  ],
+                  [
+                    0.032,
+                    -0.018,
+                    0.063
+                  ]
+                ],
+                [
+                  [
+                    0.046,
+                    -0.037,
+                    0.032
+                  ],
+                  [
+                    0.082,
+                    -0.056,
+                    0.044
+                  ],
+                  [
+                    0.079,
+                    -0.06,
+                    0.041
+                  ],
+                  [
+                    0.043,
+                    -0.041,
+                    0.03
+                  ]
+                ],
+                [
+                  [
+                    0.059,
+                    -0.068,
+                    0.013
+                  ],
+                  [
+                    0.065,
+                    -0.075,
+                    0.027
+                  ],
+                  [
+                    0.061,
+                    -0.078,
+                    0.025
+                  ],
+                  [
+                    0.055,
+                    -0.071,
+                    0.012
+                  ]
+                ],
+                [
+                  [
+                    0.062,
+                    -0.108,
+                    0.007
+                  ],
+                  [
+                    0.062,
+                    -0.108,
+                    0.023
+                  ],
+                  [
+                    0.058,
+                    -0.111,
+                    0.023
+                  ],
+                  [
+                    0.058,
+                    -0.111,
+                    0.007
+                  ]
+                ]
+              ]
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              60
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "main-blade-3",
+            "kind": "loft",
+            "material": "titanium-alloy",
+            "modifiers": {
+              "bevel": 0.0008,
+              "subdivision": 1
+            },
+            "params": {
+              "caps": true,
+              "closed": true,
+              "rings": [
+                [
+                  [
+                    0.027,
+                    0.002,
+                    0.096
+                  ],
+                  [
+                    0.056,
+                    0.003,
+                    0.096
+                  ],
+                  [
+                    0.057,
+                    -0.001,
+                    0.095
+                  ],
+                  [
+                    0.027,
+                    -0.002,
+                    0.095
+                  ]
+                ],
+                [
+                  [
+                    0.034,
+                    -0.014,
+                    0.064
+                  ],
+                  [
+                    0.073,
+                    -0.019,
+                    0.067
+                  ],
+                  [
+                    0.071,
+                    -0.024,
+                    0.065
+                  ],
+                  [
+                    0.032,
+                    -0.018,
+                    0.063
+                  ]
+                ],
+                [
+                  [
+                    0.046,
+                    -0.037,
+                    0.032
+                  ],
+                  [
+                    0.082,
+                    -0.056,
+                    0.044
+                  ],
+                  [
+                    0.079,
+                    -0.06,
+                    0.041
+                  ],
+                  [
+                    0.043,
+                    -0.041,
+                    0.03
+                  ]
+                ],
+                [
+                  [
+                    0.059,
+                    -0.068,
+                    0.013
+                  ],
+                  [
+                    0.065,
+                    -0.075,
+                    0.027
+                  ],
+                  [
+                    0.061,
+                    -0.078,
+                    0.025
+                  ],
+                  [
+                    0.055,
+                    -0.071,
+                    0.012
+                  ]
+                ],
+                [
+                  [
+                    0.062,
+                    -0.108,
+                    0.007
+                  ],
+                  [
+                    0.062,
+                    -0.108,
+                    0.023
+                  ],
+                  [
+                    0.058,
+                    -0.111,
+                    0.023
+                  ],
+                  [
+                    0.058,
+                    -0.111,
+                    0.007
+                  ]
+                ]
+              ]
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              120
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "main-blade-4",
+            "kind": "loft",
+            "material": "titanium-alloy",
+            "modifiers": {
+              "bevel": 0.0008,
+              "subdivision": 1
+            },
+            "params": {
+              "caps": true,
+              "closed": true,
+              "rings": [
+                [
+                  [
+                    0.027,
+                    0.002,
+                    0.096
+                  ],
+                  [
+                    0.056,
+                    0.003,
+                    0.096
+                  ],
+                  [
+                    0.057,
+                    -0.001,
+                    0.095
+                  ],
+                  [
+                    0.027,
+                    -0.002,
+                    0.095
+                  ]
+                ],
+                [
+                  [
+                    0.034,
+                    -0.014,
+                    0.064
+                  ],
+                  [
+                    0.073,
+                    -0.019,
+                    0.067
+                  ],
+                  [
+                    0.071,
+                    -0.024,
+                    0.065
+                  ],
+                  [
+                    0.032,
+                    -0.018,
+                    0.063
+                  ]
+                ],
+                [
+                  [
+                    0.046,
+                    -0.037,
+                    0.032
+                  ],
+                  [
+                    0.082,
+                    -0.056,
+                    0.044
+                  ],
+                  [
+                    0.079,
+                    -0.06,
+                    0.041
+                  ],
+                  [
+                    0.043,
+                    -0.041,
+                    0.03
+                  ]
+                ],
+                [
+                  [
+                    0.059,
+                    -0.068,
+                    0.013
+                  ],
+                  [
+                    0.065,
+                    -0.075,
+                    0.027
+                  ],
+                  [
+                    0.061,
+                    -0.078,
+                    0.025
+                  ],
+                  [
+                    0.055,
+                    -0.071,
+                    0.012
+                  ]
+                ],
+                [
+                  [
+                    0.062,
+                    -0.108,
+                    0.007
+                  ],
+                  [
+                    0.062,
+                    -0.108,
+                    0.023
+                  ],
+                  [
+                    0.058,
+                    -0.111,
+                    0.023
+                  ],
+                  [
+                    0.058,
+                    -0.111,
+                    0.007
+                  ]
+                ]
+              ]
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              180
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "main-blade-5",
+            "kind": "loft",
+            "material": "titanium-alloy",
+            "modifiers": {
+              "bevel": 0.0008,
+              "subdivision": 1
+            },
+            "params": {
+              "caps": true,
+              "closed": true,
+              "rings": [
+                [
+                  [
+                    0.027,
+                    0.002,
+                    0.096
+                  ],
+                  [
+                    0.056,
+                    0.003,
+                    0.096
+                  ],
+                  [
+                    0.057,
+                    -0.001,
+                    0.095
+                  ],
+                  [
+                    0.027,
+                    -0.002,
+                    0.095
+                  ]
+                ],
+                [
+                  [
+                    0.034,
+                    -0.014,
+                    0.064
+                  ],
+                  [
+                    0.073,
+                    -0.019,
+                    0.067
+                  ],
+                  [
+                    0.071,
+                    -0.024,
+                    0.065
+                  ],
+                  [
+                    0.032,
+                    -0.018,
+                    0.063
+                  ]
+                ],
+                [
+                  [
+                    0.046,
+                    -0.037,
+                    0.032
+                  ],
+                  [
+                    0.082,
+                    -0.056,
+                    0.044
+                  ],
+                  [
+                    0.079,
+                    -0.06,
+                    0.041
+                  ],
+                  [
+                    0.043,
+                    -0.041,
+                    0.03
+                  ]
+                ],
+                [
+                  [
+                    0.059,
+                    -0.068,
+                    0.013
+                  ],
+                  [
+                    0.065,
+                    -0.075,
+                    0.027
+                  ],
+                  [
+                    0.061,
+                    -0.078,
+                    0.025
+                  ],
+                  [
+                    0.055,
+                    -0.071,
+                    0.012
+                  ]
+                ],
+                [
+                  [
+                    0.062,
+                    -0.108,
+                    0.007
+                  ],
+                  [
+                    0.062,
+                    -0.108,
+                    0.023
+                  ],
+                  [
+                    0.058,
+                    -0.111,
+                    0.023
+                  ],
+                  [
+                    0.058,
+                    -0.111,
+                    0.007
+                  ]
+                ]
+              ]
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              240
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          },
+          {
+            "id": "main-blade-6",
+            "kind": "loft",
+            "material": "titanium-alloy",
+            "modifiers": {
+              "bevel": 0.0008,
+              "subdivision": 1
+            },
+            "params": {
+              "caps": true,
+              "closed": true,
+              "rings": [
+                [
+                  [
+                    0.027,
+                    0.002,
+                    0.096
+                  ],
+                  [
+                    0.056,
+                    0.003,
+                    0.096
+                  ],
+                  [
+                    0.057,
+                    -0.001,
+                    0.095
+                  ],
+                  [
+                    0.027,
+                    -0.002,
+                    0.095
+                  ]
+                ],
+                [
+                  [
+                    0.034,
+                    -0.014,
+                    0.064
+                  ],
+                  [
+                    0.073,
+                    -0.019,
+                    0.067
+                  ],
+                  [
+                    0.071,
+                    -0.024,
+                    0.065
+                  ],
+                  [
+                    0.032,
+                    -0.018,
+                    0.063
+                  ]
+                ],
+                [
+                  [
+                    0.046,
+                    -0.037,
+                    0.032
+                  ],
+                  [
+                    0.082,
+                    -0.056,
+                    0.044
+                  ],
+                  [
+                    0.079,
+                    -0.06,
+                    0.041
+                  ],
+                  [
+                    0.043,
+                    -0.041,
+                    0.03
+                  ]
+                ],
+                [
+                  [
+                    0.059,
+                    -0.068,
+                    0.013
+                  ],
+                  [
+                    0.065,
+                    -0.075,
+                    0.027
+                  ],
+                  [
+                    0.061,
+                    -0.078,
+                    0.025
+                  ],
+                  [
+                    0.055,
+                    -0.071,
+                    0.012
+                  ]
+                ],
+                [
+                  [
+                    0.062,
+                    -0.108,
+                    0.007
+                  ],
+                  [
+                    0.062,
+                    -0.108,
+                    0.023
+                  ],
+                  [
+                    0.058,
+                    -0.111,
+                    0.023
+                  ],
+                  [
+                    0.058,
+                    -0.111,
+                    0.007
+                  ]
+                ]
+              ]
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              300
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "render": {
+          "engine": "CYCLES",
+          "quality": "preview",
+          "view": "front"
+        },
+        "schema": "jarvis.studio3d.v1",
+        "title": "离心压气机叶轮视觉研究 (0.25m, 6叶曲面放样)",
+        "unfulfilled": [
+          "叶型曲面与流道几何仅供产品级视觉研究，未经气动CFD、结构强度、模态共振或五轴加工刀路工程校验。",
+          "未包含压气机蜗壳、扩压器、分流叶片（splitter blades）及轴系内部键槽/花键公差配合细节。"
+        ],
+        "units": "m"
+      },
+      "files": {
+        "model.blend": {
+          "bytes": 154169,
+          "sha256": "80671227c5d3fa931edcc788cf8f6e6913aeafa48c4bc30966b456c603456367",
+          "url": "/api/studio3d/files/9126fb320f8c4fd692e6e0deebf05586/model.blend"
+        },
+        "model.glb": {
+          "bytes": 698992,
+          "sha256": "92bc4c40361a96949df517592c242343bd477dd50456ad3c9f04052be0e064eb",
+          "url": "/api/studio3d/files/9126fb320f8c4fd692e6e0deebf05586/model.glb"
+        },
+        "preview.png": {
+          "bytes": 606718,
+          "sha256": "404ac9f1fdcc06f361c33150057436dcf76158e765b80c0da7399fa31189e941",
+          "url": "/api/studio3d/files/9126fb320f8c4fd692e6e0deebf05586/preview.png"
+        },
+        "report.json": {
+          "bytes": 2524,
+          "sha256": "914f851e82ca858ca8ca2e002898e2852fe0b851a15f2ac2ffdd95b7adac8663",
+          "url": "/api/studio3d/files/9126fb320f8c4fd692e6e0deebf05586/report.json"
+        },
+        "scene.json": {
+          "bytes": 6135,
+          "sha256": "cd7f8e927be05973861552b33c8b52f9c0cb0976a091be535d678881fedd96a0",
+          "url": "/api/studio3d/files/9126fb320f8c4fd692e6e0deebf05586/scene.json"
+        }
+      },
+      "id": "9126fb320f8c4fd692e6e0deebf05586",
+      "input_asset": null,
+      "model_receipt": {
+        "chat_id": "chat-dbf45c2beeab4d82b613d65f6574aa4e",
+        "new_model_calls": 0,
+        "source_job": "4696dd34aba04bd9b23e6f4d121277e0",
+        "status": "SUCCEEDED",
+        "turn_id": "studio3d-4696dd34aba04bd9b23e6f4d121277e0",
+        "visual_review": false
+      },
+      "quality": {
+        "AAA_certified": false,
+        "mechanical_validation": false,
+        "status": "visual_asset_export_checked",
+        "visual_score": null
+      },
+      "report": {
+        "blender": "5.2.0 LTS",
+        "bounds_m": [
+          [
+            -0.12364586442708969,
+            -0.12364586442708969,
+            -0.012000000104308128
+          ],
+          [
+            0.12364586442708969,
+            0.12364586442708969,
+            0.12399999797344208
+          ]
+        ],
+        "elapsed_seconds": 28.45645599999989,
+        "glb_roundtrip": {
+          "bounds_m": [
+            [
+              -0.12364586442708969,
+              -0.12364586442708969,
+              -0.012000000104308128
+            ],
+            [
+              0.12364586442708969,
+              0.12364586442708969,
+              0.12399999797344208
+            ]
+          ],
+          "max_bound_error_m": 0.0,
+          "mesh_objects": 9,
+          "passed": true
+        },
+        "objects": [
+          {
+            "id": "impeller-hub-disk",
+            "triangles": 15840,
+            "uv": true,
+            "vertices": 7920,
+            "zero_area_faces": 52
+          },
+          {
+            "id": "backface-boss",
+            "triangles": 4016,
+            "uv": true,
+            "vertices": 2008,
+            "zero_area_faces": 66
+          },
+          {
+            "id": "nose-locknut",
+            "triangles": 4528,
+            "uv": true,
+            "vertices": 2264,
+            "zero_area_faces": 23
+          },
+          {
+            "id": "main-blade-1",
+            "triangles": 352,
+            "uv": true,
+            "vertices": 178,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "main-blade-2",
+            "triangles": 352,
+            "uv": true,
+            "vertices": 178,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "main-blade-3",
+            "triangles": 352,
+            "uv": true,
+            "vertices": 178,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "main-blade-4",
+            "triangles": 352,
+            "uv": true,
+            "vertices": 178,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "main-blade-5",
+            "triangles": 352,
+            "uv": true,
+            "vertices": 178,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "main-blade-6",
+            "triangles": 352,
+            "uv": true,
+            "vertices": 178,
+            "zero_area_faces": 0
+          }
+        ],
+        "render": {
+          "device": "CPU",
+          "engine": "CYCLES",
+          "resolution": [
+            960,
+            640
+          ],
+          "samples": 24
+        },
+        "schema": "jarvis.studio3d.report.v1",
+        "triangles": 26496,
+        "unverified": [
+          "OEM mechanical accuracy",
+          "manufacturing",
+          "production topology",
+          "UV quality",
+          "baked PBR textures",
+          "LODs",
+          "engine performance"
+        ],
+        "visible_objects": 9,
+        "warnings": [
+          "GLB contains base PBR; procedural bump detail stays in Blender/render.",
+          "Automatic UV presence is not UV quality certification."
+        ]
+      },
+      "resources": {
+        "cpu_seconds": 1200,
+        "elapsed_seconds": 30.081036100000347,
+        "exit_code": 0,
+        "isolation": "Trusted fixed first-party worker with resource Job; not an OS security sandbox. No model Python, external imports or blend loading.",
+        "memory_bytes": 4294967296,
+        "output_bytes": 268435456,
+        "peak_memory_bytes": 1111019520,
+        "threads": 4,
+        "wall_seconds": 300
+      },
+      "runtime": {
+        "executable_sha256": "e27fbfea8564aa645d4463cb0949695fd85562b9de6df9561b06859a1074adf7",
+        "license": "GPL-2.0-or-later",
+        "source": "https://www.blender.org/",
+        "version": "Blender 5.2.0 LTS"
+      },
+      "skill": "studio3d",
+      "source_sha256": {
+        "adapters/studio3d/worker.py": "ce7eca405da54010527b5dbaa75808cd4c5fd164d23836daccdaf5ad0f01fe34",
+        "apps/studio3d/worker.py": "60af564595dab82acf3118ba581e5bc6b71b738c60ecf32a66c5d5cf36e3c4db",
+        "host/studio3d.py": "829bf040234eeed9388eaab3d03fbda21e70167ade2a9c8c89bfd3ea709712ab",
+        "modules/skills/studio3d/assets.py": "7567c2791f7119b51743844079af1b8c239d1687cd7064a75d98d745c55424b0",
+        "modules/skills/studio3d/contract.py": "9434f1621dc2a3a2abde15fc195cf292881eabacbf89a6ffb28b4b773d862995",
+        "modules/skills/studio3d/presets.py": "29ddf0e4183014d4104f848f61152643afa8def26e5440a51e3430705217fccc",
+        "modules/skills/studio3d/runtime.json": "bddad269e59546cd68be22e26bafd9a0201018e560856ef54efc853fc7c33356"
+      },
+      "title": "离心压气机叶轮视觉研究 (0.25m, 6叶曲面放样)",
+      "unfulfilled": [
+        "叶型曲面与流道几何仅供产品级视觉研究，未经气动CFD、结构强度、模态共振或五轴加工刀路工程校验。",
+        "未包含压气机蜗壳、扩压器、分流叶片（splitter blades）及轴系内部键槽/花键公差配合细节。"
+      ],
+      "url": "/api/studio3d/view/9126fb320f8c4fd692e6e0deebf05586"
+    },
+    "status": "DELIVERED",
+    "turn_id": null
+  },
+  "idempotent_replay": {
+    "existing": true,
+    "id": "9126fb320f8c4fd692e6e0deebf05586"
+  }
+}

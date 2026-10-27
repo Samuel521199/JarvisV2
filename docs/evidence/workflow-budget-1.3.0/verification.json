@@ -1,0 +1,142 @@
+{
+  "version": "workflow-budget-1.3.0",
+  "date": "2026-10-27",
+  "status": "LOCAL_SLICE_PASS",
+  "production_deployed": false,
+  "overall_product": "NOT_ACCEPTED",
+  "tests": {
+    "unique": 281,
+    "executions": 288,
+    "all_passed": true,
+    "skipped": 0,
+    "reports": [
+      "regression-r2.json",
+      "reconcile-r3.json"
+    ],
+    "budget_cases": 21
+  },
+  "tested_runtime_sources": {
+    "adapters/storage/work_schema.py": "3dc9e8a79da13c390b7a6b2713195205a02d954d47e50a689e2687a35e0a4050",
+    "modules/task_resource/work_budgets.py": "5793f82000a4a6769c6bed12cc2f4d79c62ae949a3eb623e144747194d6ebcdb",
+    "modules/task_resource/works.py": "431c5df070629f2888e0abbe9695bdc7b09c37eced2cc636d3571cb381a242a4",
+    "modules/task_resource/ledger.py": "b75dbc60c07839f0d4ad19ac682fab4459ab7d5ed4970b21839e648c84dc55b6",
+    "host/core.py": "52622af16852df1247a353d78be501cb36f471034d2dab87f94e241c555454ab",
+    "host/goals.py": "5e6a7e2322feb932990e655d8ed2df8bd358518a0c019774298b24d74077c18c",
+    "host/work_revisions.py": "7299a7f285b76bb2fe6cd081344f17bd7c4e95ea745a40e5fa4ecfc83e481cf0",
+    "apps/workbench/goals.js": "8e4241cc0a3b196ad6325a9ea41c634daa138a24da2496ac78cfd8d0d46ee7ec",
+    "apps/workbench/ui.js": "8010d696e56369d603b68429b8ef0abc8aeea897208ce290963db960cafa2e08",
+    "apps/workbench/work-revisions.js": "9b4642d2c2dc328cf7e40fe7b916a371730f668ab15fbd8a874c673be84c0811",
+    "tools/accept_completion.py": "d7ced50879d37454307161558b29617953f5122269973229fd4b29becffdec29",
+    "tests/test_work_revisions.py": "ec1ed8d1804f6b1de6f15279a5bffee712d959ae5cbf20ba2c5789b9de03e1e3"
+  },
+  "source_snapshot": "test-sources-r2.json taken before combined regression; later test-only addition covered by reconcile-r3.json",
+  "final_test_source_sha256": "0c96da36cbc650cb3b39403f58062e0ebfd6f92f39210dd341dca6690e4f4c81",
+  "browser": {
+    "passed": true,
+    "report": "ui-r3/browser.json",
+    "checks": [
+      "Insufficient shared budget blocks admission without a new task",
+      "Explicit budget update alone does not execute or admit the draft",
+      "Existing approve-only path visibly holds two units until execution",
+      "Completed spend remains counted; lowering below it is rejected and original receipts are unchanged"
+    ],
+    "themes_visually_inspected": [
+      "dark",
+      "light"
+    ]
+  },
+  "paired_experiment": {
+    "passed": true,
+    "report": "paired-r2/results.json",
+    "pairs": 6,
+    "summary": {
+      "full": {
+        "oracle_passes": 6,
+        "repair_units": 18,
+        "total_work_units": 36,
+        "prefix_executions_during_repair": 6
+      },
+      "suffix": {
+        "oracle_passes": 6,
+        "repair_units": 12,
+        "total_work_units": 30,
+        "prefix_executions_during_repair": 0
+      }
+    },
+    "counterexample": {
+      "changed_input_while_reusing_prefix": "rework_invalid",
+      "full_rework_new_input": "符合条件：NEW\n来源：new-source",
+      "full_rework_new_input_pass": true
+    },
+    "model_calls": 0,
+    "scope": "Same-runtime synthetic strategy comparison, not a historical software release or real-user workload benchmark"
+  },
+  "checks": [
+    {
+      "name": "changed_paths_diff",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "tools/sync_doc_navigation.py",
+        "--root",
+        "."
+      ],
+      "exit_code": 0,
+      "output": "OK navigation: 3 updated",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tools/check_docs.py",
+        "--root",
+        "."
+      ],
+      "exit_code": 0,
+      "output": "OK documents=28 chapters=24 diagrams=46 local_links=3563 errors=0",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tools/check_architecture.py"
+      ],
+      "exit_code": 0,
+      "output": "{\"python_files\": 188, \"errors\": []}",
+      "stderr": ""
+    }
+  ],
+  "global_diff_check": {
+    "exit_code": 2,
+    "diagnostic_lines": 1986,
+    "paths": [
+      "apps/workbench/settings-anatomy.js",
+      "apps/workbench/theme.css",
+      "docs/evidence/anatomy-structure-2026-10-23/handoff.json",
+      "host/anatomy.py",
+      "modules/skills/anatomy/structure3d.mjs",
+      "seed/skills/conversation.json",
+      "tools/check_architecture.py"
+    ]
+  },
+  "forecast_r1_sha256": "035f34e43b8b1f7c974202c0820fef905abe86674c5089be6be28a44a76ef66f",
+  "environment": {
+    "python": "3.13.0 (tags/v3.13.0:60403a5, Oct  7 2024, 09:38:07) [MSC v.1941 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "unverified": [
+    "production migration/deployment",
+    "full model/token/money/research budgets",
+    "aggregation of independent root works",
+    "multi-Bot leases/takeover",
+    "automatic semantic impact analysis",
+    "real-user business benefit",
+    "long-term learning gains",
+    "scale/latency overhead of budget checks"
+  ],
+  "probe_source_hashes_recorded_after_runs": {
+    "tools/probe_work_budget.py": "2b244bb493a8ef3f4cb7347cf161fc8e5e2c93a3924b201e202353184b1cb93e",
+    "tools/probe_budget_ui.cjs": "940479377b176fec62c2453933aa19933f2d444f6ccff6cffc66388e875976b0",
+    "tools/probe_rework_ui.py": "8819ea7754731be447784fc558a40efd7ee08e6f4fcc4cbaa9bcf31ee6134a2a"
+  }
+}

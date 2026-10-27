@@ -1,0 +1,59 @@
+{
+  "schema": "jarvis.settings-control.evidence.v1",
+  "recorded_at": "2026-10-23T07:32:59.090742+00:00",
+  "version": "v0.1.0 workspace increment",
+  "scope": "Settings navigation, original brand preservation, theme-aware controls and animated overview; existing business APIs retained.",
+  "runtime_url": "http://127.0.0.1:18282/settings#home",
+  "source_sha256": {
+    "apps/workbench/settings.html": "5b40d49a5f4df44c6801eee351151567e1a45500a18ebda8259e9705c62e1e32",
+    "apps/workbench/settings.js": "9f7cde935bd1595463b8f0b941f9b36e0f9c1dc07eb3a2d5ec0d2ed21a25f41f",
+    "apps/workbench/settings-runtime.js": "02a04522ea147a0247d9d38449bdb92f660fb3d21a376a96d8c65a337f0c5321",
+    "apps/workbench/theme.css": "01c3532e6edb2e5d50b0f713f2015c4320d534848f30454e610c364dc63eca06"
+  },
+  "tests": [
+    {
+      "command": "python -m unittest discover -s tests -p test_settings_management.py -v",
+      "passed": 16,
+      "seconds": 1.372
+    },
+    {
+      "command": "python -m unittest discover -s tests -p test_workbench.py -v",
+      "passed": 2,
+      "seconds": 1.179
+    }
+  ],
+  "javascript_syntax": {
+    "files": [
+      "apps/workbench/settings.js",
+      "apps/workbench/settings-runtime.js"
+    ],
+    "status": "passed"
+  },
+  "browser_evidence": "browser.json",
+  "screenshots": [
+    "overview-dark.png",
+    "appearance-light.png"
+  ],
+  "documentation_check": {
+    "navigation": "passed, 0 updates remaining",
+    "status": "failed",
+    "documents": 26,
+    "chapters": 23,
+    "diagrams": 39,
+    "local_links": 2154,
+    "errors": [
+      "Legacy/external code dependency: anatomy_engine_worker.py",
+      "Legacy/external code dependency: local_models.py",
+      "Legacy/external code dependency: probe_local_models.py"
+    ],
+    "explanation": "Existing checker rejects sys.path.insert in concurrent tools scripts. These files and checker were not modified by the settings increment. No additional link/anchor/asset errors."
+  },
+  "boundaries": [
+    "No model calls, dependency downloads or production service restarts in this change.",
+    "GPU and VRAM telemetry are not connected; no synthetic usage shown.",
+    "Core state represents health and background task/development runners, not every foreground conversation.",
+    "Optional local model route gracefully degrades on the current service; backend functionality is a separate increment.",
+    "No narrow-device, screen-reader, audio playback, prolonged power or GPU performance acceptance."
+  ],
+  "diff_check": "passed for changed settings code and authoritative documents"
+}

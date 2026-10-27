@@ -1,0 +1,124 @@
+{
+  "recorded_at_utc": "2026-10-23T06:47:28.153735+00:00",
+  "scope": "Read-only feasibility research against Anatomy adapter 4.0.0; proposal only, no new capabilities implemented",
+  "authority": "docs/tasks-agents.md#anatomy-physics-feasibility",
+  "adapter_version": "4.0.0",
+  "inspection": {
+    "python": "3.13.0",
+    "python_executable": "D:\\soft\\Python313\\python.exe",
+    "import_spec_found": {
+      "numpy": true,
+      "scipy": true,
+      "cadquery": false,
+      "OCP": false,
+      "build123d": false,
+      "trimesh": false,
+      "cantera": false,
+      "pybullet": false,
+      "shapely": false
+    },
+    "path_commands": {
+      "node": "D:\\soft\\node\\node.EXE",
+      "docker": "C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.EXE",
+      "wsl": "C:\\Windows\\system32\\wsl.EXE",
+      "FreeCAD": null,
+      "FreeCADCmd": null,
+      "blender": null,
+      "gmsh": null,
+      "simpleFoam": null,
+      "foamRun": null,
+      "ccx": null
+    },
+    "limits": [
+      "Import spec presence does not prove numerical operation or project packaging compatibility.",
+      "PATH absence does not prove a tool is absent elsewhere on the computer.",
+      "Docker and WSL launchers were located; daemon, Linux installation and solver readiness were not verified.",
+      "Rapier and GPU library packages were not inventoried; no compatibility or engine benchmark was performed.",
+      "Existing Anatomy tests and historical model scores do not validate any proposed solver."
+    ],
+    "source_sha256": {
+      "host/anatomy.py": "3c5531cb8e2b5bbeb24be09b33cbaa94d8891da905e46e64d743877fe169d1c4",
+      "host/anatomy_scene.py": "684983787c72f6ce2f98a76e217e246e7c4134ba322fef1724bd54141ba82fdf",
+      "host/anatomy_composer.py": "be6bea4a86dbd484413f407d9ef8fa341f13d98218c04e3ae786cd43a9d3d03b",
+      "modules/skills/anatomy/scene-schema.json": "e5afa5b493b02d70f5dcf739fd30f0d13e88754c6bd60a96b5ada2a50661ff61",
+      "modules/skills/anatomy/studio-model.mjs": "a45a3fa11fbf482724e74a67963b0bb8b65b5dd1c502fc2734fc4b978d2aaad0",
+      "modules/skills/anatomy/structure3d.mjs": "53d0194117a82ffb587b6c1cda7d1407a8e3fecea0f492acfa27f70067365904",
+      "apps/workbench/server.py": "33c867cbb43f901b1c598037bf30b69e8450793d42735f027045292bf070a6d0"
+    }
+  },
+  "confirmed_source_constraints": [
+    "Free parts restricted to box/cylinder, prescribed fixed/revolute/prismatic joints in an acyclic parent tree.",
+    "Module shaft links transfer angle/RPM without torque feedback; module connections are acyclic.",
+    "No unified mass, inertia, material and fluid-domain contract.",
+    "Renderer meshes and presentation cut/explode transforms are not validated B-rep or physics geometry.",
+    "Trusted renderer subprocess is locked and bounded to 15 seconds.",
+    "Artifact CSP denies connections and same-origin privileges; WASM compilation is not explicitly enabled."
+  ],
+  "feasible_scoped_candidates": [
+    "Controlled geometric features and cross-sections",
+    "Interference checks and limited rigid-body dynamics",
+    "Specified closed-linkage constraints and small-arm inverse kinematics",
+    "Trusted parameter-to-B-rep CAD factory with STEP round-trip checks",
+    "Lumped motor/pump dynamics and zero-dimensional engine thermodynamics",
+    "Optional Cantera zero-dimensional reactors and one-dimensional laminar flames",
+    "Restricted two-dimensional incompressible laminar flow with analytical validation",
+    "One-dimensional then wet-domain two-dimensional shallow-water flow",
+    "Separately labeled GPU or offline visual effects"
+  ],
+  "not_a_current_general_upgrade_commitment": [
+    "Arbitrary three-dimensional turbulent reacting engine flow",
+    "General moving-mesh multiphase fluid-solid coupled simulation",
+    "Manufacturing certification from generated meshes or STEP export",
+    "Arbitrary freeform CAD or guaranteed arbitrary-mechanism solution"
+  ],
+  "primary_sources": [
+    {
+      "url": "https://rapier.rs/docs/",
+      "supports": "2D/3D rigid-body collisions, forces, joints and Apache-2.0 license"
+    },
+    {
+      "url": "https://cadquery.readthedocs.io/en/latest/importexport.html",
+      "supports": "STEP, mesh and DXF exchange; exchange formats do not preserve full CadQuery parametric history"
+    },
+    {
+      "url": "https://occt3d.com/dev/doc/overview/html/occt_public_license.html",
+      "supports": "OCCT LGPL-2.1 with additional exception; not a distribution compliance review"
+    },
+    {
+      "url": "https://cantera.org/stable/examples/python/reactors/ic_engine.html",
+      "supports": "Scoped reactor-network internal-combustion example"
+    },
+    {
+      "url": "https://cantera.org/stable/examples/python/onedim/index.html",
+      "supports": "One-dimensional reacting-flow and laminar-flame examples"
+    },
+    {
+      "url": "https://www.cantera.org/community.html",
+      "supports": "Cantera BSD-3-Clause license statement"
+    },
+    {
+      "url": "https://www.clawpack.org/gallery/pyclaw/gallery/dam_break.html",
+      "supports": "Shallow-water conservation equations and dam-break example"
+    },
+    {
+      "url": "https://openfoam.org/download/",
+      "supports": "Official Windows-via-WSL distribution path"
+    },
+    {
+      "url": "https://developer.nvidia.com/gpugems/gpugems/part-vi-beyond-triangles/chapter-38-fast-fluid-dynamics-simulation-gpu",
+      "supports": "GPU fluid visualization method; not validation of this project"
+    }
+  ],
+  "actions": {
+    "dependencies_installed": false,
+    "paid_model_calls": 0,
+    "new_solver_tests": false,
+    "runtime_code_modified": false
+  },
+  "documentation_checks": {
+    "navigation": "passed; 1 generated navigation block updated",
+    "check_docs": "passed; documents=26 chapters=23 diagrams=39 local_links=2148 errors=0",
+    "limits": "Documentation checks do not validate the feasibility proposals or any physical solver."
+  },
+  "status": "research_recorded; documentation_checks_passed; proposals_unimplemented"
+}

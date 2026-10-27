@@ -10,6 +10,7 @@
 - [技术栈与选型理由](#technology-selection)
   - [语言与运行形态怎样选择](#technology-selection-3)
   - [普通 PC 优先：默认部署与组件准入](#technology-selection-4)
+  - [透明桌面壳与补充工作台的技术落点](#desktop-presence-shell)
   - [自有任务状态机、LangGraph 与 Temporal 的取舍](#technology-selection-5)
   - [替换与隔离规则](#technology-selection-6)
   - [选型冻结条件](#technology-selection-7)
@@ -45,6 +46,8 @@
 - [连接器的独立实现位置（dev.11）](#mcp-layout)
 - [PC 与 Mac 的综合记忆技术选型（2026-10-23，proposed）](#memory-desktop-selection)
 - [记忆组件升级、索引重建与换机协议（proposed）](#memory-context-migration)
+- [本地模型模块与资产归属](#local-model-layout)
+- [Gmail 模块与本地数据（1.0.0）](#gmail-layout)
 <!-- book-nav:end -->
 
 <a id="technology-selection"></a>
@@ -75,7 +78,7 @@
 
 | 范围 | 默认实现方向 | 按需扩展边界 |
 |---|---|---|
-| 主运行形态 | 本机应用：受保护控制底座、一个模块化业务宿主、受限 Worker；先复用 Python、SQLite 和本地网页 | 按权限与故障隔离拆进程，不按文档中每个模块拆服务；不因支持跨平台而立刻重写内核 |
+| 主运行形态 | 本机应用：受保护控制底座、一个模块化业务宿主、受限 Worker；当前复用 Python、SQLite 和本地网页，目标日常入口为[透明精灵壳](#desktop-presence-shell) | 按权限与故障隔离拆进程，不按文档中每个模块拆服务；工作台按需打开，不因支持跨平台而立刻重写内核 |
 | 持久任务 | 现有账本与有界本机队列，一个后台 Worker 起步 | 按实测资源增加并发；不默认增加 Redis、Celery、Temporal 或消息服务器 |
 | 模型与 Agent | 一个路由权威，共用按需启动的推理后端；Agent 是上下文和任务状态 | 不给每个 Agent 单独部署模型、数据库或服务；只有任务确需时生成角色，限制活跃并发 |
 | 记忆与检索 | SQLite/FTS5 起步，最多选定一个当前向量后端 | 对照候选用于实验，不能把所有记忆框架和数据库一同装入默认包 |
@@ -88,6 +91,19 @@
 新增第三方组件或长期支持一个后端前，须记录：当前任务缺口；用标准库/已有组件能否解决；相同任务的收益；下载/安装体积、空闲和峰值资源、常驻进程、更新与许可证成本；失效与卸载路径。只为未来可能使用而增加兼容层，不构成准入理由。同一能力默认只维护一个已验证实现；对照试验和明确使用中的提供商适配除外，统一走原有接口。
 
 较多服务会增加部署、契约版本和分布式故障成本。保留必要权限隔离，其余业务模块先同宿主，再按真实瓶颈拆分；这借鉴模块化起步的工程经验 [S39](references.md#s39)，不是用进程数替代隔离验收。控制循环掌握授权和生命周期，LLM 不能改变组件准入规则或自行扩大资源预算。正式资源目标与检查方法只维护在[验收页](delivery-validation.md#pc-footprint)。
+
+<a id="desktop-presence-shell"></a>
+### 透明桌面壳与补充工作台的技术落点
+
+**目标定位 accepted，技术方案 proposed。** 优先验证 Tauri 2/Rust 与 Windows WebView2 组合，复用现有 HTML/CSS/JavaScript 与 Host；这是候选选型，没有在本轮安装或作为已具备依赖登记。版本、原生透明合成、命中测试和窗口生命周期必须实测后才能冻结；[现有来源](references.md#desktop-companion-sources)不代替本机验证。若候选达不到透明性与资源出口，再在同一接口下评估 Windows 原生替代，不同时生产维护多个壳。
+
+原生层负责无边框窗口、逐像素背景透明、有效命中区域、鼠标拖动捕获、非主动激活显示、托盘、热键、普通窗口之上的层级和显示器坐标修正；Web 层负责原 Logo、主题、局部动效及按需卡片。CSS 的 `background: transparent` 只能使网页元素背景透明，不能单独证明操作系统窗口透明；原生层和 Web 层都满足[透明要求](interaction-persona.md#desktop-presence-transparency)才算成立。透明区透传与整体穿透不同，交互主体必须仍可点击／拖动。
+
+按[统一系统准则](architecture.md#unified-system-principle)，同一节点／数据根的两种视图复用已有业务 Host，经[呈现契约](contracts.md#desktop-presence-contract)读取状态与配置、提交动作；未来跨节点通过传输适配访问明确的执行节点，不为入口另建模型循环或业务账本。普通收起、工作台关闭、壳视图重建不得结束 Host；明确退出沿既有控制层处理。精灵与卡片采用紧贴内容的小窗口或等效命中区域，隐藏时停动画、释放非必要视图，不能保留一个覆盖整屏的透明浏览器来截取输入。开机启动作为独立设置留给用户选择，本轮不创建启动项或常驻服务。
+
+源码位置只在[目标目录树](#clean-project-layout)登记：`apps/companion/` 为未来原生壳与卡片前端，`apps/workbench/` 保留详细工作台，平台桥经既有 `adapters/desktop/` 边界接入。目录分开仅组织不同视图与平台代码，共享客户端、数据契约、设置校验、主题和通用控件应抽取复用；新平台不复制整套工作台业务。上述规划项不表示目录或平台功能已经存在。原 Logo 继续引用 `apps/workbench/brand/core.png`，不新做另一套标识；主题和动效遵守[品牌规则](interaction-persona.md#jarvis-brand-icon)。构建依赖按实现时的锁文件登记，不导入 H 盘旧桌面程序。
+
+当前源码核对仅发现网页启动器 `apps/workbench/launch.py`：默认启动／复用本机服务并打开浏览器，`--no-browser` 仅不打开页面，不会启动精灵。`control/bootstrap` 的 Rust 控制 CLI 也不是桌面壳。设计样张位于 docs/evidence，不是产品入口。[核查记录](evidence/desktop-companion-2026-10-25/project-integration-checks.json)与[原生验收](delivery-validation.md#desktop-presence-validation)区分素材、网页预览、源码实现和实机行为。
 
 <a id="technology-selection-5"></a>
 ### 自有任务状态机、LangGraph 与 Temporal 的取舍
@@ -178,7 +194,7 @@ K0—K1 在同一目标硬件上比较不超过两个底座候选，先验证确
 | 小范围代码复用或算法借鉴 | 可只引入确有收益的部件，继续共用 Jarvis 路由和存储 | 复制代码后需维护补丁与许可声明；上游私有函数未必是稳定组件 | 用于证据定位、切片、排序等边界清楚的部分；维护来源 SHA 和差异 |
 | 全部自己实现 | 完整控制 | 需重新解决解析、检索、性能、迁移和大量边界问题 | 只自持必要语义和协调逻辑，不自造通用数据库、向量算法或密码协议 |
 
-当前推荐、备选和变更条件见[桌面端选型](#memory-desktop-selection)。当前新工程只有确定性事实视图，词法与混合检索需实际实现；不把旧工程的词法结果描述为 D 盘已具备能力。
+当前推荐、备选和变更条件见[桌面端选型](#memory-desktop-selection)。当前新工程的 [事实检索](knowledge-learning.md#memory-retrieval-runtime) 和 [文本资料库](knowledge-learning.md#knowledge-library-runtime) 已有独立证据；1.2.0 已加入可续建持久向量与片段式知识审阅，完整语义提取/编纂仍待实施，不继承旧工程通过结论。
 
 Mem0 的 `Memory` 对象本身包含模型、embedding、向量后端和历史管理，并非现成的纯 Extractor。第一轮可让完整 SDK 在独立测试存储中输出结果，再转换为候选；若生产仅需提取，优先选择稳定扩展点或小范围实现，不依赖其私有函数。其 user / agent / run 过滤字段可作输入，不能直接等同 Jarvis 的主人、项目、人格和模拟域权限。[S154](references.md#s154)
 
@@ -187,7 +203,7 @@ LangMem 的函数式接口减少了存储接管，但不保证结果天然具有
 <a id="memory-recommended-plan"></a>
 #### 综合比较后的推荐方案与替换条件
 
-2026-10-23 更新：采用本地事务事实管理与可替换组件的路线，具体默认/备选、费用和替换条件只维护在[桌面端选型](#memory-desktop-selection)。当前 D 盘仍是确定性候选与有界事实视图；FTS5、语义召回、自动提取和知识编纂尚未实施，不能把 H 盘词法与实验结果套为当前实现。
+2026-10-23 更新：采用本地事务事实管理与可替换组件的路线，具体默认/备选、费用和替换条件只维护在[桌面端选型](#memory-desktop-selection)。当前 D 盘已有事实有界 E5 和文本资料 FTS5 子集，见[当前实现](knowledge-learning.md#knowledge-library-runtime)；1.2.0 已补持久向量与片段审阅，自动语义提取和通用知识编纂仍未完成，旧工程实验不作为当前通过证据。
 
 保留完整替代路线参加评测：若 EverOS、Hindsight 或其他框架在相同中文、分域、纠正、遗忘、离线和资源预算下显著降低维护成本，应按 ADR 流程重评。自研不会自动获得更高质量评分；完整框架也不能凭上游排行榜继承 Jarvis 的可靠性结论。
 
@@ -285,7 +301,7 @@ Graphiti、Hindsight、MemOS 与 OpenViking 的本轮 README/依赖快照记录�
 <a id="project-structure"></a>
 ## 项目文件结构与依赖规则
 
-本页是新工程源码和运行数据目录的唯一权威。下面是逐步实施的目标树；当前实际建立了 README、AGENTS、docs、文档工具及编辑/忽略配置，运行源码和用户数据尚未创建。
+本页是新工程源码和运行数据目录的唯一权威。下面是逐步实施的目标树；当前已有核心、网页工作台及分项能力源码，实际范围见本页后续增量与[当前验收](delivery-validation.md#session-folder-evidence)。目标目录不等于已经创建，尤其不能把规划中的桌面壳视为当前运行入口。
 
 <a id="project-structure-1"></a>
 ### 新工程的推荐源码结构
@@ -331,7 +347,10 @@ D:/Jarvis/
 │   ├── desktop/
 │   ├── storage/
 │   └── toolchains/
-├── apps/                         # cli / web；桌面壳按需，复用一套 UI
+├── apps/
+│   ├── cli/                      # 现有命令行与维护入口
+│   ├── workbench/                # 现有网页；目标为主动打开的特殊补充
+│   └── companion/                # proposed：日常透明精灵壳与按需卡片，共用 Host
 ├── sdk/                          # 首个已支持语言的薄协议封装
 ├── seed/                         # 无私人数据、无凭据的首次启动种子
 │   ├── charter/                  # G0 的构建引用与策略版本
@@ -651,6 +670,56 @@ MemPalace、A-MEM、MemOS、Cognee、Letta 保留在前面的分工表作为原�
 导出使用版本化 JSONL＋原件清单/摘要＋源映射＋必要撤销与权限；Markdown 供人阅读，不独自承担事务修订。向量可选导出但可丢弃重建。加密私密域按[恢复规则](security-sovereignty.md#memory-private-storage)另封装；默认排除模型凭据、邮箱令牌与不在范围的成员数据。
 
 PC/Mac 共用逻辑契约，分别打包 SQLite 扩展/编码器和系统密钥适配器。Windows x64、Apple Silicon、Intel Mac 分别验证安装/冷启动/睡眠唤醒/取消/恢复；同步使用稳定逻辑 ID，由节点映射路径，不传绝对盘符作为事实身份。真实 Mac 证据缺失时标未验证，不能拿 Windows 测试替代。
+
+<a id="local-model-layout"></a>
+## 本地模型模块与资产归属
+
+模型评价配置 `modules/local_models/assessments.json`、评分器 `assessments.py`、固定合成评测集 `retrieval-suite.json` 和执行器 `benchmark.py` 独立维护；持久测量与资源校准存于原模型状态库，权重仍不进入源码。
+
+本地模型管理以宿主编排、领域清单、下载/推理适配三层独立组成，不添加 Kubernetes 或常驻容器集群。其运行规则只在[本地模型中心](models-offline.md#local-model-manager-runtime)维护。
+
+```text
+modules/local_models/
+  catalog.json        公开来源、修订、许可证、语言/维度与文件摘要
+  catalog.py          清单校验、向量空间标识
+  runtime.json/.py    可选依赖锁定与只读就绪检查
+  descriptor.json    组件版本、契约、状态、测试与替换边界
+  assessments.json/.py  官方来源、资源规划与评分规则
+  retrieval-suite.json / benchmark.py  固定多语回归集与执行器
+host/local_models.py  独立管理通道、状态机与 Worker 生命周期
+adapters/models/
+  local_download.py          有界断点下载与摘要校验
+  local_embedding_worker.py  本地 CPU 编码进程
+apps/workbench/settings-local-models.js
+  设置中的模型生命周期、资源与清单视图
+tools/local_models.py         同一状态契约的离线恢复 CLI
+tools/probe_local_models.py   真实模型、合成样本的可重复探针
+tools/probe_local_model_assessments.py  校准、评测、重启保留探针
+user-data/                   Git 忽略的本机运行资料
+  config/local-models.sqlite3 目录、状态、修订、恢复指针、操作与分域测量记录
+  local-models/<model-id>/    不可变版本对应的文件与 .part
+```
+
+下载包与推理环境分别计量。模型清单不内嵌凭据；公开源模型无需账号令牌。GitHub 分发源码、元数据、许可证链接与下载工具，权重由本机管理器取得；这是本项目分发策略，不是 GitHub 绝对不能承载任何模型。`.gitignore` 同时忽略运行目录和常见权重后缀，发布仍应检查实际暂存文件。
+
+可选原生 Python 库只允许指定 Worker 导入；核心与 Host 保持标准库通路。`tools/check_architecture.py` 对该固定路径按依赖声明检查，不放开所有模块的任意第三方导入。管理器只使用自身独立 SQLite 状态，不耦合记忆正文表；未来有状态迁移必须保留模型指纹和恢复引用，按[自身实现替换](evolution-release.md#local-model-foundation-evolution)验证。
+
+<a id="gmail-layout"></a>
+## Gmail 模块与本地数据（1.0.0）
+
+| 层 | 位置与职责 |
+|---|---|
+| 协议与纯函数 | `sdk/mail.py`：scope、有限动作、MIME、文本化、分类 |
+| Google 适配器 | `adapters/mail/google.py`、`oauth.py`：固定 HTTPS、有限响应、系统浏览器 PKCE |
+| 邮箱领域 | `modules/mail/store.py`：加密账号、客户端、缓存、草稿、规则、审阅与任务回执 |
+| Host | `host/mailbox.py`：队列、代际核对、接续与回执；`host/mail_ai.py`：明确发起的单封分析 |
+| HTTP/UI | `apps/workbench/mail_http.py`、`mailbox.js`、`mail.css`；复用身份、来源和 nonce |
+| 一次迁移 | `apps/cli/migrate_gmail.py --source <旧连接库路径>`；仅在明确授权后使用 |
+| 数据 | `<数据根>/private/mail.sqlite3`；默认工程 `user-data/private/mail.sqlite3`，不依赖旧项目运行 |
+
+SQLite 仅明文索引对象 ID、种类、修订；内容、地址、令牌、client secret、草稿及请求/结果正文均经 Windows 当前用户 DPAPI 加密，独立于模型凭据、家庭私密库与知识库。原 OAuth JSON 不自动删除。
+
+无新增第三方 Python 包或常驻数据库。读取与写入按需联网，展示与本地分类不消耗 token，明确 AI 分析才调用模型。当前加密仅 Windows verified；其他系统不降级明文，后续需平台密钥适配与真机验收。
 
 <!-- book-footer:start -->
 [返回工程主入口](../README.md) · [全书目录](../README.md#book-tree) · [上一章：公共接口与数据契约](contracts.md) · [下一章：模型路由、本地模型与离线生存](models-offline.md)

@@ -1,0 +1,141 @@
+{
+  "case_id": "shadow-quote",
+  "domain": "comparison",
+  "arm": "workflow_on",
+  "turn": 0,
+  "freeze_digest": "71391b8d2bdd53f79c5f9c75120d927ef36530622746a92a132fdbe6134c3fc2",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\"document\":\"# 方案比选报告\\n\\n## 约束条件\\n- 预算上限：100元\\n- 交期上限：5天\\n- 规则：选择符合条件的最低价方案\\n\\n## 原始报价及比选分析\\n- **甲方案**：报价90元，交期3天。符合预算（90元 ≤ 100元）且符合交期要求（3天 ≤ 5天）。\\n- **乙方案**：报价80元，交期7天。虽然报价更低，但交期7天超出5天上限，故予以排除。\\n\\n综合比选，**甲方案**为唯一符合全部条件的方案。\\n\\n## 已确认计划\\n- 明天10点询问保修，不下单。（注：该事项为待办计划，尚未执行/完成；绝对时间待核对）。\",\"selected\":\"甲\"}",
+  "skill_id": null,
+  "skill_version": null,
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 6.6206,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 242,
+        "prompt_tokens": 1389,
+        "total_tokens": 1631
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.00194925,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/shadow-quote-workflow_on-0.native.json",
+      "sha256": "42290dcd32e87eebc3dbfee50655d33f9d324b2a0b469b8229e0ee53ac2042a0",
+      "kind": "native_protocol_response"
+    },
+    {
+      "file": "artifacts/shadow-quote-workflow_on-0.reply.md.txt",
+      "sha256": "3ed57f47176907c9fdd44997d2cdc425f7f7473d8dfaa6833499afb16837e09b",
+      "kind": "original_session_reply"
+    },
+    {
+      "file": "artifacts/shadow-quote-workflow_on-0.document.md.txt",
+      "sha256": "8f1ff5ab8d0ccf20e648f08957618a59e8e1c974302a15a21eb93c63b058059f",
+      "kind": "verbatim_document_field_from_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "selected",
+        "status": "passed"
+      },
+      {
+        "id": "document_present",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "delivery_basis": {
+    "digest": "18fd3617c4003e6d68eaa9249c42b5efcde62ae0779fdbcbc5a4ce2a80625e9c",
+    "entries": [
+      {
+        "end": 202,
+        "id": "F1",
+        "kind": "facts",
+        "quote": "甲方案价格90元，交期3天。",
+        "source_turn": "trial-shadow-quote-workflow_on-0",
+        "start": 188
+      },
+      {
+        "end": 217,
+        "id": "F2",
+        "kind": "facts",
+        "quote": "乙方案价格80元，交期7天。",
+        "source_turn": "trial-shadow-quote-workflow_on-0",
+        "start": 203
+      },
+      {
+        "end": 239,
+        "id": "P1",
+        "kind": "plans",
+        "quote": "明天10点询问保修，不下单。",
+        "source_turn": "trial-shadow-quote-workflow_on-0",
+        "start": 225
+      }
+    ],
+    "relative_time_resolution": "UNVERIFIED",
+    "revision": 1,
+    "source_time_utc": "2026-10-27T11:01:04.451396+00:00",
+    "source_turn": "trial-shadow-quote-workflow_on-0"
+  },
+  "delivery_review": {
+    "basis_digest": "18fd3617c4003e6d68eaa9249c42b5efcde62ae0779fdbcbc5a4ce2a80625e9c",
+    "basis_revision": 1,
+    "checks": [
+      {
+        "id": "F1",
+        "kind": "facts",
+        "status": "literal_not_found"
+      },
+      {
+        "id": "F2",
+        "kind": "facts",
+        "status": "literal_not_found"
+      },
+      {
+        "id": "P1",
+        "kind": "plans",
+        "status": "literal_found"
+      }
+    ],
+    "method": "literal_presence",
+    "mode": "shadow",
+    "quality_score": null,
+    "reason": "missing_quote_may_be_paraphrase_or_omission; additions_and_semantics_unverified",
+    "reply_digest": "5b8cdd3ac30744303b3f067476544f8e9572cc977b959a581a3ea66f1cd4fc10",
+    "state": "REVIEW",
+    "version": "delivery-shadow-1",
+    "would_block": false
+  },
+  "record_digest": "82afdcc6b8aef85d7272822094a0dea6237d1070e742e21fafad11d3f370eb71"
+}

@@ -1,0 +1,107 @@
+{
+  "case_id": "document-export-correction",
+  "domain": "documents",
+  "arm": "workflow_off",
+  "turn": 1,
+  "freeze_digest": "ec010b94b1fadab51945c09363031d51bf804e0179d248577ddbcee1967da01d",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\n  \"export_status\": \"not_started\",\n  \"minutes\": 20,\n  \"evidence\": {\n    \"facts\": [\n      {\n        \"source\": \"F3\",\n        \"quote\": \"数据导出尚未启动。\"\n      },\n      {\n        \"source\": \"F4\",\n        \"quote\": \"本次资料整理耗时20分钟。\"\n      }\n    ],\n    \"plans\": [\n      {\n        \"source\": \"P1\",\n        \"quote\": \"周五9点检查导出日志，不重跑导出。\"\n      }\n    ],\n    \"suggestions\": [\n      \"鉴于数据导出尚未启动，建议周五检查前先核实是否需先执行导出以产生日志。\"\n    ]\n  },\n  \"document\": \"## 事实\\n- [F3] 数据导出尚未启动。\\n- [F4] 本次资料整理耗时20分钟。\\n\\n## 已确认计划\\n- [P1] 周五9点检查导出日志，不重跑导出。\\n\\n## 建议（未采纳）\\n- 鉴于数据导出尚未启动，建议周五检查前先核实是否需先执行导出以产生日志。\"\n}",
+  "skill_id": null,
+  "skill_version": null,
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 12.9637,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 324,
+        "prompt_tokens": 1793,
+        "total_tokens": 2117
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.00255975,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/document-export-correction-workflow_off-1.native.json",
+      "sha256": "3182b90c73333c89e47bfd65e62252f5efd19257a2a327d1f0459bb9e7c14aff",
+      "kind": "native_protocol_response"
+    },
+    {
+      "file": "artifacts/document-export-correction-workflow_off-1.reply.md.txt",
+      "sha256": "7a56ec5b66ea6a0968910bd50104926a267b3124be389872ac3c9704bef768cc",
+      "kind": "original_session_reply"
+    },
+    {
+      "file": "artifacts/document-export-correction-workflow_off-1.document.md.txt",
+      "sha256": "ed73acc64093c0cd3e86651c5aef769a58f6d48d8b2494cb4ffaf5d7cdda12ec",
+      "kind": "verbatim_document_field_from_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "export_status",
+        "status": "passed"
+      },
+      {
+        "id": "minutes",
+        "status": "passed"
+      },
+      {
+        "id": "document_present",
+        "status": "passed"
+      },
+      {
+        "id": "body_shape",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_document_parity",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "record_digest": "91b3e3945713429b0d409bb2b56256cead1f44c784de3bdd3e499b72111a99b6"
+}

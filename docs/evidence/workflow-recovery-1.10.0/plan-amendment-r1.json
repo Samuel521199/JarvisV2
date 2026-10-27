@@ -1,0 +1,9 @@
+{
+  "reason": "Frozen regression found old partial-prefix rejection contract changed by review refactor",
+  "failed_case": "test_quote_rework.ReworkIntegration.test_partial_prefix_mode_is_explicitly_unsupported",
+  "expected": "acceptance_invalid",
+  "actual": "rework_source_changed",
+  "planned_fix": "Validate the supported bounded lineage before checking current source facts; preserve existing assertion and all gate thresholds",
+  "evidence": "frozen-r1/run/tests.json",
+  "new_scope": "No added feature or permission; legacy rejection order compatibility repair"
+}

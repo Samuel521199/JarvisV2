@@ -1,0 +1,960 @@
+{
+  "status": "passed",
+  "origin": "http://127.0.0.1:18283",
+  "checks": [
+    "real settings entry creates 19-part constrained B-rep assembly",
+    "complete solid / actual capped section and exploded display",
+    "ordered assembly steps, progress, previous/next and animation",
+    "keyboard orbit preserves assembly progress",
+    "STEP download from sandboxed artifact succeeds",
+    "channel, conservative shallow water and Cantera equilibrium curves",
+    "mobile layout fits viewport"
+  ],
+  "errors": [],
+  "receipts": [
+    {
+      "adapter_version": "5.0.0",
+      "bytes": 3577589,
+      "checks": {
+        "collisions": [],
+        "interference_status": "clear_at_static_pose",
+        "limits": "静态装配姿态 B-rep 体积交集检查；不证明运动全过程或装配插入路径无碰撞。配合检查为名义尺寸，未含制造公差。轴承滚道/螺纹/预紧为简化。",
+        "narrow_phase_pairs": 45,
+        "step_roundtrip_bounds_error_mm": 1.4210854715202004e-14,
+        "step_roundtrip_relative_volume_error": 2.2320136215529207e-14,
+        "total_mass_kg": 1.4135111957825561
+      },
+      "configuration": {
+        "description": "19 个零件：轴、双轴承、空心机壳、双孔系法兰、隔套、密封、贯穿螺栓与螺母。名义尺寸演示；螺纹与滚道简化。",
+        "experiments": [
+          {
+            "kind": "channel",
+            "params": {
+              "cells": 32,
+              "density": 1000,
+              "height": 0.02,
+              "length": 0.2,
+              "pressure_drop": 0.01,
+              "viscosity": 0.001
+            }
+          },
+          {
+            "kind": "shallow-water",
+            "params": {
+              "amplitude": 0.05,
+              "cells": 80,
+              "depth": 1,
+              "duration": 1,
+              "length": 10
+            }
+          },
+          {
+            "kind": "combustion",
+            "params": {
+              "equivalence": 1,
+              "fuel": "CH4",
+              "pressure": 101325,
+              "temperature": 300
+            }
+          }
+        ],
+        "mates": [
+          {
+            "child_port": "axis",
+            "fit": "clearance",
+            "gap": 24,
+            "joint": "revolute",
+            "parent": "shaft",
+            "parent_port": "axis",
+            "part": "bearing-front",
+            "twist": 0
+          },
+          {
+            "child_port": "axis",
+            "fit": "clearance",
+            "gap": -24,
+            "joint": "revolute",
+            "parent": "shaft",
+            "parent_port": "axis",
+            "part": "bearing-back",
+            "twist": 0
+          },
+          {
+            "child_port": "axis",
+            "fit": "clearance",
+            "gap": 0,
+            "joint": "fixed",
+            "parent": "shaft",
+            "parent_port": "axis",
+            "part": "rotor",
+            "twist": 0
+          },
+          {
+            "child_port": "axis",
+            "fit": "clearance",
+            "gap": 13.5,
+            "joint": "fixed",
+            "parent": "shaft",
+            "parent_port": "axis",
+            "part": "spacer-front",
+            "twist": 0
+          },
+          {
+            "child_port": "axis",
+            "fit": "clearance",
+            "gap": -13.5,
+            "joint": "fixed",
+            "parent": "shaft",
+            "parent_port": "axis",
+            "part": "spacer-back",
+            "twist": 0
+          },
+          {
+            "child_port": "axis",
+            "fit": "locate",
+            "gap": 0,
+            "joint": "fixed",
+            "parent": "shaft",
+            "parent_port": "axis",
+            "part": "housing",
+            "twist": 0
+          },
+          {
+            "child_port": "axis",
+            "fit": "locate",
+            "gap": 34,
+            "joint": "fixed",
+            "parent": "housing",
+            "parent_port": "axis",
+            "part": "flange-front",
+            "twist": 0
+          },
+          {
+            "child_port": "axis",
+            "fit": "locate",
+            "gap": -34,
+            "joint": "fixed",
+            "parent": "housing",
+            "parent_port": "axis",
+            "part": "flange-back",
+            "twist": 0
+          },
+          {
+            "child_port": "axis",
+            "fit": "clearance",
+            "gap": 43,
+            "joint": "fixed",
+            "parent": "shaft",
+            "parent_port": "axis",
+            "part": "seal-front",
+            "twist": 0
+          },
+          {
+            "child_port": "axis",
+            "fit": "clearance",
+            "gap": -43,
+            "joint": "fixed",
+            "parent": "shaft",
+            "parent_port": "axis",
+            "part": "seal-back",
+            "twist": 0
+          },
+          {
+            "child_port": "axis",
+            "fit": "clearance",
+            "gap": 4,
+            "joint": "fixed",
+            "parent": "flange-front",
+            "parent_port": "bolt-0",
+            "part": "bolt-0",
+            "twist": 0
+          },
+          {
+            "child_port": "axis",
+            "fit": "clearance",
+            "gap": 4,
+            "joint": "fixed",
+            "parent": "flange-front",
+            "parent_port": "bolt-1",
+            "part": "bolt-1",
+            "twist": 0
+          },
+          {
+            "child_port": "axis",
+            "fit": "clearance",
+            "gap": 4,
+            "joint": "fixed",
+            "parent": "flange-front",
+            "parent_port": "bolt-2",
+            "part": "bolt-2",
+            "twist": 0
+          },
+          {
+            "child_port": "axis",
+            "fit": "clearance",
+            "gap": 4,
+            "joint": "fixed",
+            "parent": "flange-front",
+            "parent_port": "bolt-3",
+            "part": "bolt-3",
+            "twist": 0
+          },
+          {
+            "child_port": "axis",
+            "fit": "locate",
+            "gap": -78.5,
+            "joint": "fixed",
+            "parent": "bolt-0",
+            "parent_port": "axis",
+            "part": "nut-0",
+            "twist": 0
+          },
+          {
+            "child_port": "axis",
+            "fit": "locate",
+            "gap": -78.5,
+            "joint": "fixed",
+            "parent": "bolt-1",
+            "parent_port": "axis",
+            "part": "nut-1",
+            "twist": 0
+          },
+          {
+            "child_port": "axis",
+            "fit": "locate",
+            "gap": -78.5,
+            "joint": "fixed",
+            "parent": "bolt-2",
+            "parent_port": "axis",
+            "part": "nut-2",
+            "twist": 0
+          },
+          {
+            "child_port": "axis",
+            "fit": "locate",
+            "gap": -78.5,
+            "joint": "fixed",
+            "parent": "bolt-3",
+            "parent_port": "axis",
+            "part": "nut-3",
+            "twist": 0
+          }
+        ],
+        "parts": [
+          {
+            "id": "shaft",
+            "kind": "shaft",
+            "material": "steel",
+            "name": "主传动轴",
+            "params": {
+              "diameter": 20,
+              "length": 140
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "bearing-front",
+            "kind": "bearing",
+            "material": "steel",
+            "name": "前滚动轴承",
+            "params": {
+              "inner": 20.1,
+              "length": 12,
+              "outer": 50
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "bearing-back",
+            "kind": "bearing",
+            "material": "steel",
+            "name": "后滚动轴承",
+            "params": {
+              "inner": 20.1,
+              "length": 12,
+              "outer": 50
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "rotor",
+            "kind": "tube",
+            "material": "bronze",
+            "name": "中间轮毂",
+            "params": {
+              "inner": 20.2,
+              "length": 18,
+              "outer": 40
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "spacer-front",
+            "kind": "tube",
+            "material": "steel",
+            "name": "定位隔套 front",
+            "params": {
+              "inner": 20.2,
+              "length": 9,
+              "outer": 29
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "spacer-back",
+            "kind": "tube",
+            "material": "steel",
+            "name": "定位隔套 back",
+            "params": {
+              "inner": 20.2,
+              "length": 9,
+              "outer": 29
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "housing",
+            "kind": "tube",
+            "material": "aluminum",
+            "name": "空心轴承机壳",
+            "params": {
+              "inner": 50,
+              "length": 60,
+              "outer": 70
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "flange-front",
+            "kind": "flange",
+            "material": "aluminum",
+            "name": "带孔端盖法兰 front",
+            "params": {
+              "bolt_circle": 76,
+              "bolt_diameter": 6.4,
+              "bolts": 4,
+              "inner": 20.4,
+              "outer": 90,
+              "thickness": 8
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "flange-back",
+            "kind": "flange",
+            "material": "aluminum",
+            "name": "带孔端盖法兰 back",
+            "params": {
+              "bolt_circle": 76,
+              "bolt_diameter": 6.4,
+              "bolts": 4,
+              "inner": 20.4,
+              "outer": 90,
+              "thickness": 8
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "seal-front",
+            "kind": "tube",
+            "material": "polymer",
+            "name": "外侧密封环 front",
+            "params": {
+              "inner": 20.2,
+              "length": 10,
+              "outer": 30
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "seal-back",
+            "kind": "tube",
+            "material": "polymer",
+            "name": "外侧密封环 back",
+            "params": {
+              "inner": 20.2,
+              "length": 10,
+              "outer": 30
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "bolt-0",
+            "kind": "bolt",
+            "material": "steel",
+            "name": "贯穿螺栓 1",
+            "params": {
+              "diameter": 5.8,
+              "head_diameter": 10,
+              "head_height": 5,
+              "length": 76
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "bolt-1",
+            "kind": "bolt",
+            "material": "steel",
+            "name": "贯穿螺栓 2",
+            "params": {
+              "diameter": 5.8,
+              "head_diameter": 10,
+              "head_height": 5,
+              "length": 76
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "bolt-2",
+            "kind": "bolt",
+            "material": "steel",
+            "name": "贯穿螺栓 3",
+            "params": {
+              "diameter": 5.8,
+              "head_diameter": 10,
+              "head_height": 5,
+              "length": 76
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "bolt-3",
+            "kind": "bolt",
+            "material": "steel",
+            "name": "贯穿螺栓 4",
+            "params": {
+              "diameter": 5.8,
+              "head_diameter": 10,
+              "head_height": 5,
+              "length": 76
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "nut-0",
+            "kind": "nut",
+            "material": "steel",
+            "name": "固定螺母 1",
+            "params": {
+              "inner": 6,
+              "outer": 12,
+              "thickness": 5
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "nut-1",
+            "kind": "nut",
+            "material": "steel",
+            "name": "固定螺母 2",
+            "params": {
+              "inner": 6,
+              "outer": 12,
+              "thickness": 5
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "nut-2",
+            "kind": "nut",
+            "material": "steel",
+            "name": "固定螺母 3",
+            "params": {
+              "inner": 6,
+              "outer": 12,
+              "thickness": 5
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "id": "nut-3",
+            "kind": "nut",
+            "material": "steel",
+            "name": "固定螺母 4",
+            "params": {
+              "inner": 6,
+              "outer": 12,
+              "thickness": 5
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "schema": "anatomy.engineering.v1",
+        "steps": [
+          {
+            "direction": [
+              0,
+              0,
+              1
+            ],
+            "distance": 0,
+            "instruction": "定位并安装主传动轴，核对名义配合与方向。",
+            "part": "shaft"
+          },
+          {
+            "direction": [
+              0,
+              0,
+              1
+            ],
+            "distance": 100,
+            "instruction": "定位并安装前滚动轴承，核对名义配合与方向。",
+            "part": "bearing-front"
+          },
+          {
+            "direction": [
+              0,
+              0,
+              -1
+            ],
+            "distance": 100,
+            "instruction": "定位并安装后滚动轴承，核对名义配合与方向。",
+            "part": "bearing-back"
+          },
+          {
+            "direction": [
+              0,
+              0,
+              1
+            ],
+            "distance": 100,
+            "instruction": "定位并安装中间轮毂，核对名义配合与方向。",
+            "part": "rotor"
+          },
+          {
+            "direction": [
+              0,
+              0,
+              1
+            ],
+            "distance": 100,
+            "instruction": "定位并安装定位隔套 front，核对名义配合与方向。",
+            "part": "spacer-front"
+          },
+          {
+            "direction": [
+              0,
+              0,
+              -1
+            ],
+            "distance": 100,
+            "instruction": "定位并安装定位隔套 back，核对名义配合与方向。",
+            "part": "spacer-back"
+          },
+          {
+            "direction": [
+              0,
+              0,
+              1
+            ],
+            "distance": 100,
+            "instruction": "定位并安装空心轴承机壳，核对名义配合与方向。",
+            "part": "housing"
+          },
+          {
+            "direction": [
+              0,
+              0,
+              1
+            ],
+            "distance": 100,
+            "instruction": "定位并安装带孔端盖法兰 front，核对名义配合与方向。",
+            "part": "flange-front"
+          },
+          {
+            "direction": [
+              0,
+              0,
+              -1
+            ],
+            "distance": 100,
+            "instruction": "定位并安装带孔端盖法兰 back，核对名义配合与方向。",
+            "part": "flange-back"
+          },
+          {
+            "direction": [
+              0,
+              0,
+              1
+            ],
+            "distance": 100,
+            "instruction": "定位并安装外侧密封环 front，核对名义配合与方向。",
+            "part": "seal-front"
+          },
+          {
+            "direction": [
+              0,
+              0,
+              -1
+            ],
+            "distance": 100,
+            "instruction": "定位并安装外侧密封环 back，核对名义配合与方向。",
+            "part": "seal-back"
+          },
+          {
+            "direction": [
+              0,
+              0,
+              1
+            ],
+            "distance": 100,
+            "instruction": "定位并安装贯穿螺栓 1，核对名义配合与方向。",
+            "part": "bolt-0"
+          },
+          {
+            "direction": [
+              0,
+              0,
+              1
+            ],
+            "distance": 100,
+            "instruction": "定位并安装贯穿螺栓 2，核对名义配合与方向。",
+            "part": "bolt-1"
+          },
+          {
+            "direction": [
+              0,
+              0,
+              1
+            ],
+            "distance": 100,
+            "instruction": "定位并安装贯穿螺栓 3，核对名义配合与方向。",
+            "part": "bolt-2"
+          },
+          {
+            "direction": [
+              0,
+              0,
+              1
+            ],
+            "distance": 100,
+            "instruction": "定位并安装贯穿螺栓 4，核对名义配合与方向。",
+            "part": "bolt-3"
+          },
+          {
+            "direction": [
+              0,
+              0,
+              -1
+            ],
+            "distance": 100,
+            "instruction": "定位并安装固定螺母 1，核对名义配合与方向。",
+            "part": "nut-0"
+          },
+          {
+            "direction": [
+              0,
+              0,
+              -1
+            ],
+            "distance": 100,
+            "instruction": "定位并安装固定螺母 2，核对名义配合与方向。",
+            "part": "nut-1"
+          },
+          {
+            "direction": [
+              0,
+              0,
+              -1
+            ],
+            "distance": 100,
+            "instruction": "定位并安装固定螺母 3，核对名义配合与方向。",
+            "part": "nut-2"
+          },
+          {
+            "direction": [
+              0,
+              0,
+              -1
+            ],
+            "distance": 100,
+            "instruction": "定位并安装固定螺母 4，核对名义配合与方向。",
+            "part": "nut-3"
+          }
+        ],
+        "title": "轴系装配与守恒流动实验",
+        "unfulfilled": [
+          "装配插入路径未经连续碰撞检测；静态检查不保证运动周期安全。",
+          "没有制造公差、螺纹、预紧与轴承接触载荷求解。"
+        ],
+        "units": "mm"
+      },
+      "downloads": {
+        "assembly.step": {
+          "bytes": 347202,
+          "sha256": "121ab2503b1ea8d2dd7160c205301ffbebefc8cb17c20c5ca876c90ecfa0e35b",
+          "url": "/api/anatomy/exports/57a8558f7e1f4edd8ca9d7afedc9a0e0/assembly.step"
+        },
+        "assembly.stl": {
+          "bytes": 1077884,
+          "sha256": "0c71066e2915cb8927b5e89810cb772aa8b7ede6b189493e8c486ac9a4882e18",
+          "url": "/api/anatomy/exports/57a8558f7e1f4edd8ca9d7afedc9a0e0/assembly.stl"
+        },
+        "bom.csv": {
+          "bytes": 1425,
+          "sha256": "25118bbe563099d3fec308913ff033b30f3f5ecc0a466732047e3f431367c524",
+          "url": "/api/anatomy/exports/57a8558f7e1f4edd8ca9d7afedc9a0e0/bom.csv"
+        },
+        "cad-package.zip": {
+          "bytes": 425755,
+          "sha256": "9491ead1e997f9fb864660e46c6063bfa40a0753cf028abb2b0c2d7e65d7da9f",
+          "url": "/api/anatomy/exports/57a8558f7e1f4edd8ca9d7afedc9a0e0/cad-package.zip"
+        },
+        "configuration.json": {
+          "bytes": 16334,
+          "sha256": "d239f465e8dacf4d7c400409ce82df14daf02c0063da02b372da1d203ee4b798",
+          "url": "/api/anatomy/exports/57a8558f7e1f4edd8ca9d7afedc9a0e0/configuration.json"
+        },
+        "flange-profile.dxf": {
+          "bytes": 460,
+          "sha256": "01d273e369fc47fc674a62dd43c3d51e0fd944518230b9b5e15551d1d82cdf5f",
+          "url": "/api/anatomy/exports/57a8558f7e1f4edd8ca9d7afedc9a0e0/flange-profile.dxf"
+        },
+        "report.json": {
+          "bytes": 235887,
+          "sha256": "062b0941f84de1874ecb44f44f4acdd3db942e3499d21a71b1c2b10ae6351961",
+          "url": "/api/anatomy/exports/57a8558f7e1f4edd8ca9d7afedc9a0e0/report.json"
+        }
+      },
+      "host_validation_sha256": {
+        "host/anatomy_engineering.py": "27ad6e71d5c03b0fa2ea0f70ccc4b39c9950d6481f41963be74da10c86b908fe",
+        "tools/anatomy_engine_worker.py": "1d87e7a97f803d1b1fa3dbfe6e9126a7d00ee16a8c6c9aa92da47438c29a700b"
+      },
+      "id": "57a8558f7e1f4edd8ca9d7afedc9a0e0",
+      "limits": [
+        "展示的装配步骤是用户/模型定义的操作次序，插入路径未经连续碰撞检查。",
+        "剖面为原实体沿全局 Y=0 的真实布尔截面；展示拆解不改变检查几何。",
+        "CAD 有效性与 STEP 回读不等于制造认证。"
+      ],
+      "mechanism": "engineering",
+      "model_calls": 0,
+      "path": "D:\\Jarvis\\user-data\\test-runs\\anatomy-engineering-web\\artifacts\\anatomy\\57a8558f7e1f4edd8ca9d7afedc9a0e0.html",
+      "renderer_sha256": {
+        "engineering-build.mjs": "2a9efbe0be1e8517a048086447fc90b8e0548b096e4d5d3ae2d25d20cae3bbe3",
+        "engineering-contract.json": "51bfc44b2f1591da7e330a5efdb86cec5db331c1f0ca73a7e03a6548ea5c6894",
+        "engineering-presets.json": "c2c902485cd25125e6287554b180ebc15b7760a18ed3bcd3bd926984996f2b8b",
+        "engineering-view.js": "f0b71e9dc345679d1559052d118bbc4e646dd9f6c24980b959a453fef9dab55b",
+        "engineering.html": "01a0ce512dc7a519a19330e18a6ec4cd03ce8587a706e499308e520474c1a137",
+        "engineering_physics.py": "1efd68a7a5c9af8c0d7840bebd0036ad742f7a9a58545aac63d77697d899fd91",
+        "runtime-lock.json": "27399e8628a98258064d2e99277e1e94a66343a0d961f1d134c350028fa2d924",
+        "structure3d.mjs": "c66ea14a9e9c174bb586f6e76743d2613ac41b9c5fd16631fe8a78685e9dafb3"
+      },
+      "resources": {
+        "active_process_limit": 2,
+        "elapsed_seconds": 1.9928513000013481,
+        "isolation": "Trusted fixed native factories; resource job only, not LPAC security isolation",
+        "job_memory_limit_bytes": 1073741824,
+        "output_quota_bytes": 67108864,
+        "peak_job_memory_bytes": 167084032,
+        "peak_process_memory_bytes": 165068800,
+        "process_cpu_limit_seconds": 30,
+        "wall_limit_seconds": 45
+      },
+      "runtime_lock_sha256": "27399e8628a98258064d2e99277e1e94a66343a0d961f1d134c350028fa2d924",
+      "sha256": "9d8799192a712955fefe2d771d655cd9de526d853929bc2ac4108ff288db68a2",
+      "skill": "gears",
+      "source": {
+        "commit": "1482e8469b0a9e0d8cc18ea2740a01423d29ae80",
+        "copyright": "Copyright (c) 2026 Ryan",
+        "files": {
+          "LICENSE": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+          "SKILL.md.txt": "3423ada45a05033bb6e320dfc3b3ac832569969a5afb059bbfc9096c5cf0c71b",
+          "kit/iso-kit.mjs": "6d3ecc725d30c3b0346da309cf61dfa5a65017c23620bbd4093009d4fb104018",
+          "kit/iso.css": "ef19bac5a42ba9be42b56b2c1cf7fc7e21d332a8060765e9ca1d987b8ab23924",
+          "references/craft.md.txt": "38761fa9b81d66b30e50b05488501d4815830d3627f153d60f76ca783f598936",
+          "references/kit.md.txt": "684672e069fdb52735efabc3f4310dedd840d0c8066a8dc7784be2b7e656be71",
+          "references/motion.md.txt": "dda401ca1b4661a5f0b7c1e33dac6e7e4b8c13d51ca5d9312123a5c02dab320b",
+          "references/verify.md.txt": "fb81437fc5d75094a34432eb6f545644aa228e15173a27d08b3cace912033561"
+        },
+        "license": "MIT",
+        "note": "Markdown reference snapshots use .md.txt locally; bytes and original upstream paths/hashes are retained.",
+        "repository": "https://github.com/wheresryan22/anatomy",
+        "upstream_files": {
+          "LICENSE": "87c078ab9d90a3044f359e6b563d4e6afea7aa060897cf4f21618687b3856796",
+          "SKILL.md": "3423ada45a05033bb6e320dfc3b3ac832569969a5afb059bbfc9096c5cf0c71b",
+          "kit/iso-kit.mjs": "6d3ecc725d30c3b0346da309cf61dfa5a65017c23620bbd4093009d4fb104018",
+          "kit/iso.css": "ef19bac5a42ba9be42b56b2c1cf7fc7e21d332a8060765e9ca1d987b8ab23924",
+          "references/craft.md": "38761fa9b81d66b30e50b05488501d4815830d3627f153d60f76ca783f598936",
+          "references/kit.md": "684672e069fdb52735efabc3f4310dedd840d0c8066a8dc7784be2b7e656be71",
+          "references/motion.md": "dda401ca1b4661a5f0b7c1e33dac6e7e4b8c13d51ca5d9312123a5c02dab320b",
+          "references/verify.md": "fb81437fc5d75094a34432eb6f545644aa228e15173a27d08b3cace912033561"
+        }
+      },
+      "url": "/api/anatomy/artifacts/57a8558f7e1f4edd8ca9d7afedc9a0e0"
+    }
+  ],
+  "model_calls": 0,
+  "url": "http://127.0.0.1:18283/api/anatomy/artifacts/9dedafdad2b44e71a7f84bb6458adc6f",
+  "download_sha256": "8429b2f1150a7906d796e418c0a441c34725bd7d5f728a296583c7fba62574be"
+}

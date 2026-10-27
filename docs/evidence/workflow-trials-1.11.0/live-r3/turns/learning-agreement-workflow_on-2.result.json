@@ -1,0 +1,86 @@
+{
+  "case_id": "learning-agreement",
+  "domain": "learning",
+  "arm": "workflow_on",
+  "turn": 2,
+  "freeze_digest": "41045f324177d33c2ad08c9f097037300e48b4342620c4703dacfd7cba086ce2",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\"independent_mastery\":false,\"retry_completed\":false,\"delayed_test\":null,\"observed_error\":\"subject_verb_agreement\",\"next_step\":\"下次先完成主谓一致重试题（The wheels turn/turns fast.），确认单复数动词规则掌握情况。\"}",
+  "skill_id": "english-coach",
+  "skill_version": "1.0.0",
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 7.9931,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 96,
+        "prompt_tokens": 1467,
+        "total_tokens": 1563
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.00146025,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/learning-agreement-workflow_on-2.native.json",
+      "sha256": "64028ff5e77b82967232751a1bfc5149e6ed24a73a290b6cf8be479efaa09474",
+      "kind": "native_protocol_response"
+    },
+    {
+      "file": "artifacts/learning-agreement-workflow_on-2.reply.md.txt",
+      "sha256": "cf719415851b9180b3009d6524c3d679e581d7936af3b70a57b9ae09de1dfe3e",
+      "kind": "original_session_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "independent_mastery",
+        "status": "passed"
+      },
+      {
+        "id": "retry_completed",
+        "status": "passed"
+      },
+      {
+        "id": "delayed_test",
+        "status": "passed"
+      },
+      {
+        "id": "observed_error",
+        "status": "passed"
+      },
+      {
+        "id": "next_step_present",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "record_digest": "919b5afdf0b9233811c9acc97afa3e0d1cb435020ac58bab58483346cbc047f6"
+}

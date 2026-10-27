@@ -1,0 +1,436 @@
+{
+  "checks": [
+    "Insufficient shared budget blocks admission without a new task",
+    "Explicit budget update alone does not execute or admit the draft",
+    "Existing approve-only path visibly holds two units until execution",
+    "Completed spend remains counted; lowering below it is rejected and original receipts are unchanged"
+  ],
+  "errors": [],
+  "snapshot": {
+    "actions": [
+      {
+        "arguments": {
+          "text": "HELLO 中文"
+        },
+        "attempts": 1,
+        "capability": "plugin.rework-upper.v1",
+        "digest": "e524fc639f18b049d0b768fd4ec25e065bdaf0e99efe7292513561be8b4f49ea",
+        "error": null,
+        "id": "action-c2f1ae1482f4d644b24f78e6b30b6d4f",
+        "result": {
+          "package_id": "pkg-ab4ee0280f2092c529bd0dcc71ce2a599751114b8df6c1fb79756c6336c543b5",
+          "text": "HELLO 中文",
+          "worker": {
+            "active_process_limit": 1,
+            "appcontainer_verified": true,
+            "backend": "windows-lpac-job",
+            "capabilities": [
+              "registryRead"
+            ],
+            "cpu_limit_seconds": 3,
+            "elapsed_seconds": 0.3037,
+            "memory_limit_bytes": 268435456,
+            "network_capabilities": [],
+            "peak_memory_bytes": 13262848,
+            "wall_limit_seconds": 8
+          }
+        },
+        "status": "CONFIRMED",
+        "step_id": "step-1",
+        "task_id": "task-ce171b48984e44b7b9e62ffa2ad9c4e9"
+      },
+      {
+        "arguments": {
+          "content": "{\"package_id\":\"pkg-ab4ee0280f2092c529bd0dcc71ce2a599751114b8df6c1fb79756c6336c543b5\",\"text\":\"HELLO 中文\",\"worker\":{\"active_process_limit\":1,\"appcontainer_verified\":true,\"backend\":\"windows-lpac-job\",\"capabilities\":[\"registryRead\"],\"cpu_limit_seconds\":3,\"elapsed_seconds\":0.3037,\"memory_limit_bytes\":268435456,\"network_capabilities\":[],\"peak_memory_bytes\":13262848,\"wall_limit_seconds\":8}}",
+          "name": "result.json"
+        },
+        "attempts": 1,
+        "capability": "artifact.write.v1",
+        "digest": "ba54e88ec9ce04708a593201773168a3b1561b2bfd82efc9d3d5af90598574b8",
+        "error": null,
+        "id": "action-a81aa3ec1ce138ce10b64aa964d8c1b8",
+        "result": {
+          "bytes": 389,
+          "relative_path": "artifacts/task-ce171b48984e44b7b9e62ffa2ad9c4e9/action-a81aa3ec1ce138ce10b64aa964d8c1b8/result.json",
+          "sha256": "7d8a973a9646fddea7b1df3bd32c6ed16fac54a5d046a7fdf20de5302c52a910",
+          "verified": true
+        },
+        "status": "CONFIRMED",
+        "step_id": "deliver",
+        "task_id": "task-ce171b48984e44b7b9e62ffa2ad9c4e9"
+      }
+    ],
+    "completion": {
+      "acceptance": {
+        "revision": 0,
+        "rules": null
+      },
+      "assessment_history": [
+        {
+          "assessment": {
+            "acceptance": {
+              "revision": 0,
+              "rules": null
+            },
+            "checks": [],
+            "condition_score": null,
+            "evidence_ready": false,
+            "feedback": null,
+            "fingerprint": "a0a17729222e625ee167fb9883b0f3a3b26a4265fba91ae40411c3e63781f80c",
+            "outcome_id": null,
+            "requirement_coverage": {
+              "complete": false,
+              "requirements": [],
+              "scope": "explicitly_declared_requirements",
+              "semantic_goal_verified": false,
+              "state": "INCOMPLETE",
+              "version": "declared-requirements-1"
+            },
+            "score_scope": "declared_conditions_only",
+            "state": "WAITING",
+            "task_id": "task-ce171b48984e44b7b9e62ffa2ad9c4e9",
+            "version": "completion-1.1.0"
+          },
+          "created": 1793087412.4998345
+        },
+        {
+          "assessment": {
+            "acceptance": {
+              "revision": 0,
+              "rules": null
+            },
+            "checks": [],
+            "condition_score": null,
+            "evidence_ready": false,
+            "feedback": null,
+            "fingerprint": "cebee6141e12f3bdf891156aae0139f2c77a6ea9ce3fdf31bdaa7601c7ac3036",
+            "outcome_id": null,
+            "requirement_coverage": {
+              "complete": false,
+              "requirements": [],
+              "scope": "explicitly_declared_requirements",
+              "semantic_goal_verified": false,
+              "state": "INCOMPLETE",
+              "version": "declared-requirements-1"
+            },
+            "score_scope": "declared_conditions_only",
+            "state": "WAITING",
+            "task_id": "task-ce171b48984e44b7b9e62ffa2ad9c4e9",
+            "version": "completion-1.1.0"
+          },
+          "created": 1793087412.013774
+        }
+      ],
+      "checks": [],
+      "condition_score": null,
+      "evidence_ready": false,
+      "feedback": null,
+      "feedback_history": [],
+      "fingerprint": "03e5da1bfe4c0a28bf7756654b84a56eeb4abac970727f21ce87d34b1cc23013",
+      "method": null,
+      "method_available": false,
+      "outcome_id": "outcome-9809ca497688aae4f34c1ee769fcc778",
+      "requirement_coverage": {
+        "complete": false,
+        "requirements": [],
+        "scope": "explicitly_declared_requirements",
+        "semantic_goal_verified": false,
+        "state": "INCOMPLETE",
+        "version": "declared-requirements-1"
+      },
+      "score_scope": "declared_conditions_only",
+      "state": "UNSPECIFIED",
+      "task_id": "task-ce171b48984e44b7b9e62ffa2ad9c4e9",
+      "version": "completion-1.1.0"
+    },
+    "context": null,
+    "growth": null,
+    "outcome": {
+      "assessed_at": 1793087412.5512052,
+      "coverage": {
+        "known": 6,
+        "passed": 6,
+        "total": 9
+      },
+      "criteria": [
+        {
+          "evidence_refs": [
+            "task:task-ce171b48984e44b7b9e62ffa2ad9c4e9"
+          ],
+          "id": "execution",
+          "reason": "execution_state",
+          "status": "passed"
+        },
+        {
+          "evidence_refs": [
+            "goal:goal-f828bb1a725b4be4b07a668004779e11"
+          ],
+          "id": "source",
+          "reason": "source_current",
+          "status": "passed"
+        },
+        {
+          "evidence_refs": [
+            "action:action-c2f1ae1482f4d644b24f78e6b30b6d4f"
+          ],
+          "id": "receipt:step-1",
+          "reason": "confirmed_action",
+          "status": "passed"
+        },
+        {
+          "evidence_refs": [
+            "action:action-c2f1ae1482f4d644b24f78e6b30b6d4f"
+          ],
+          "id": "integrity:step-1",
+          "reason": "computation_receipt",
+          "status": "passed"
+        },
+        {
+          "evidence_refs": [
+            "action:action-c2f1ae1482f4d644b24f78e6b30b6d4f"
+          ],
+          "id": "result:step-1",
+          "reason": "semantic_verifier_missing",
+          "status": "unknown"
+        },
+        {
+          "evidence_refs": [
+            "action:action-a81aa3ec1ce138ce10b64aa964d8c1b8"
+          ],
+          "id": "receipt:deliver",
+          "reason": "confirmed_action",
+          "status": "passed"
+        },
+        {
+          "evidence_refs": [
+            "action:action-a81aa3ec1ce138ce10b64aa964d8c1b8"
+          ],
+          "id": "artifact:deliver",
+          "reason": "artifact_intact",
+          "status": "passed"
+        },
+        {
+          "evidence_refs": [],
+          "id": "goal_quality",
+          "reason": "goal_verifier_missing",
+          "status": "unknown"
+        },
+        {
+          "evidence_refs": [],
+          "id": "recipient_delivery",
+          "reason": "recipient_receipt_missing",
+          "status": "unknown"
+        }
+      ],
+      "evaluator": "deterministic-1.0.0",
+      "evidence": [
+        {
+          "digest": "7d8a973a9646fddea7b1df3bd32c6ed16fac54a5d046a7fdf20de5302c52a910",
+          "ref": "action:action-c2f1ae1482f4d644b24f78e6b30b6d4f"
+        },
+        {
+          "digest": "82bf79426f76f339057785e386201657ff2dc43be902b9856817f566b0a2f4e7",
+          "ref": "action:action-a81aa3ec1ce138ce10b64aa964d8c1b8"
+        },
+        {
+          "digest": "7d8a973a9646fddea7b1df3bd32c6ed16fac54a5d046a7fdf20de5302c52a910",
+          "ref": "artifact:action-a81aa3ec1ce138ce10b64aa964d8c1b8"
+        }
+      ],
+      "execution_status": "SUCCEEDED",
+      "fingerprint": "f52b18ea22fe606382761e2120f8cd7bb19443e0377772feb86422944cf5b633",
+      "goal_id": "goal-f828bb1a725b4be4b07a668004779e11",
+      "goal_revision": 2,
+      "id": "outcome-9809ca497688aae4f34c1ee769fcc778",
+      "schema": "jarvis.outcome-assessment.v1",
+      "score": null,
+      "source_status": "current",
+      "state": "PARTIAL",
+      "supersedes": "",
+      "task_id": "task-ce171b48984e44b7b9e62ffa2ad9c4e9",
+      "task_revision": 8
+    },
+    "plan": {
+      "cancel": 0,
+      "catalog": [
+        {
+          "active": "pkg-ab4ee0280f2092c529bd0dcc71ce2a599751114b8df6c1fb79756c6336c543b5",
+          "capability": "plugin.rework-upper.v1",
+          "description": "Convert letters to uppercase",
+          "name": "Uppercase synthetic text",
+          "revision": 1
+        }
+      ],
+      "created": 1793087411.5766103,
+      "deadline": 1793088011.5766103,
+      "digest": "87dca87832e3a522f2e0cdffcda4185f34db65d582db50364f2609b4c2e245f9",
+      "error": null,
+      "generation": 0,
+      "id": "goal-f828bb1a725b4be4b07a668004779e11",
+      "planning_round": 0,
+      "proposal": {
+        "input_text": "HELLO 中文",
+        "questions": [],
+        "schema": "jarvis.goal-plan.v1",
+        "steps": [
+          {
+            "capability": "plugin.rework-upper.v1",
+            "expected": "HELLO 中文",
+            "source": "input",
+            "title": "文字转大写"
+          }
+        ],
+        "summary": "第二步追加要求，前段仍适用"
+      },
+      "request": {
+        "goal": "保留第一步，重新处理最后一步",
+        "input_text": "HELLO 中文",
+        "model": "",
+        "provider": "auto",
+        "reasoning": "default",
+        "request_id": "work-6a4b69bbe7b8eec53a0869ffacaabe71068653ab"
+      },
+      "request_id": "work-6a4b69bbe7b8eec53a0869ffacaabe71068653ab",
+      "revision": 2,
+      "routes": [
+        {
+          "id": "openai",
+          "model": "fixture",
+          "parameters": {}
+        }
+      ],
+      "status": "ACCEPTED",
+      "task_id": "task-ce171b48984e44b7b9e62ffa2ad9c4e9"
+    },
+    "task": {
+      "bindings": {
+        "artifact.write.v1": "artifact.local.v1",
+        "plugin.rework-upper.v1": "pkg-ab4ee0280f2092c529bd0dcc71ce2a599751114b8df6c1fb79756c6336c543b5"
+      },
+      "body": {
+        "goal": "保留第一步，重新处理最后一步",
+        "grant_id": "goal-f828bb1a725b4be4b07a668004779e11-execute",
+        "limits": {
+          "max_attempts": 1,
+          "max_cost_units": 2,
+          "max_seconds": 600,
+          "max_steps": 2
+        },
+        "principal_id": "owner.local",
+        "request_id": "goal-use.f828bb1a725b4be4b07a668004779e11",
+        "schema": "jarvis.task.v1",
+        "scope_id": "personal",
+        "steps": [
+          {
+            "arguments": {
+              "text": "HELLO 中文"
+            },
+            "capability": "plugin.rework-upper.v1",
+            "step_id": "step-1"
+          },
+          {
+            "arguments": {
+              "name": "result.json"
+            },
+            "capability": "artifact.write.v1",
+            "input_from": "step-1",
+            "step_id": "deliver"
+          }
+        ]
+      },
+      "cancel": 0,
+      "created": 1793087411.854568,
+      "deadline": 1793088011.854568,
+      "digest": "ac33c2af1dfadbcc7112026b061aa4812efc95f22fef20798fbca733e9031068",
+      "error": null,
+      "id": "task-ce171b48984e44b7b9e62ffa2ad9c4e9",
+      "next_step": 2,
+      "request_id": "goal-use.f828bb1a725b4be4b07a668004779e11",
+      "revision": 8,
+      "spent": 2,
+      "status": "SUCCEEDED"
+    },
+    "work": {
+      "assistant_id": "jarvis-91ff960ab1eb482d972422a22af4f2cf",
+      "budget": {
+        "available_units": 0,
+        "committed_units": 5,
+        "enforced": true,
+        "integrity": "complete",
+        "limit_units": 5,
+        "reserved_units": 0,
+        "revision": 2,
+        "scope": "linked_task_action_units",
+        "spent_units": 5,
+        "unresolved_tasks": 0
+      },
+      "cancelled": 0,
+      "created": 1793087407.4824896,
+      "cumulative_budget_enforced": true,
+      "current_goal": "goal-f828bb1a725b4be4b07a668004779e11",
+      "owner_bot_id": "default",
+      "ownership_mode": "default_projection",
+      "registration": "admission",
+      "remaining_followups": 2,
+      "revision": 2,
+      "root_goal": "goal-d2fd7f08d5b145b9946f1d4c3d37dedb",
+      "schema": "jarvis.work.v1",
+      "spent_cost_units": 5,
+      "versions": [
+        {
+          "cancel": 0,
+          "goal_id": "goal-d2fd7f08d5b145b9946f1d4c3d37dedb",
+          "kind": "original",
+          "note": "",
+          "ordinal": 1,
+          "parent_goal": null,
+          "spent": 3,
+          "start_step": 1,
+          "status": "ACCEPTED",
+          "task_id": "task-d900dbdf72a34055ad1b58bbe8ab82a7",
+          "task_status": "SUCCEEDED"
+        },
+        {
+          "cancel": 0,
+          "goal_id": "goal-f828bb1a725b4be4b07a668004779e11",
+          "kind": "new_requirement",
+          "note": "第二步追加要求，前段仍适用",
+          "ordinal": 2,
+          "parent_goal": "goal-d2fd7f08d5b145b9946f1d4c3d37dedb",
+          "spent": 2,
+          "start_step": 2,
+          "status": "ACCEPTED",
+          "task_id": "task-ce171b48984e44b7b9e62ffa2ad9c4e9",
+          "task_status": "SUCCEEDED"
+        }
+      ]
+    },
+    "work_closure": {
+      "assessment_fingerprint": "03e5da1bfe4c0a28bf7756654b84a56eeb4abac970727f21ce87d34b1cc23013",
+      "complete": false,
+      "completion_state": "UNSPECIFIED",
+      "condition_score": null,
+      "current_goal": "goal-f828bb1a725b4be4b07a668004779e11",
+      "current_task": "task-ce171b48984e44b7b9e62ffa2ad9c4e9",
+      "quality_score": null,
+      "reasons": [
+        "UNSPECIFIED"
+      ],
+      "requirement_coverage": {
+        "complete": false,
+        "requirements": [],
+        "scope": "explicitly_declared_requirements",
+        "semantic_goal_verified": false,
+        "state": "INCOMPLETE",
+        "version": "declared-requirements-1"
+      },
+      "reserved_cost_units": 0,
+      "root_goal": "goal-d2fd7f08d5b145b9946f1d4c3d37dedb",
+      "score_scope": "current_declared_conditions_only",
+      "spent_cost_units": 5,
+      "state": "NEEDS_EVIDENCE",
+      "version": "work-closure-1.4.0"
+    }
+  },
+  "passed": true
+}

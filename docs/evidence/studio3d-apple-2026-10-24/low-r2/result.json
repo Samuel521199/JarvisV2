@@ -1,0 +1,1035 @@
+{
+  "origin": "http://127.0.0.1:18282",
+  "request": {
+    "production": {
+      "ray_distance": 0.0015,
+      "triangle_budget": 1000,
+      "category": "organic"
+    },
+    "id": "9edebb240aa0424cadbc06932aee395a",
+    "render": {
+      "engine": "CYCLES",
+      "exposure": -0.6,
+      "five_views": false,
+      "quality": "final",
+      "view": "front"
+    },
+    "texture_size": 2048,
+    "prepare_asset": "a925f17d53cc4e95af05b611e3ec6a82"
+  },
+  "accepted": {
+    "existing": false,
+    "id": "9edebb240aa0424cadbc06932aee395a"
+  },
+  "job": {
+    "cancel": 0,
+    "chat_id": null,
+    "created": 1792801356.8126388,
+    "error": null,
+    "id": "9edebb240aa0424cadbc06932aee395a",
+    "phase": "已交付可编辑模型、渲染与检查回执",
+    "receipt": {
+      "adapter_version": "1.4.0",
+      "configuration": {
+        "asset_pipeline": {
+          "category": "organic",
+          "method": "project",
+          "ray_distance": 0.0015,
+          "texture_size": 2048,
+          "triangle_budget": 1000
+        },
+        "description": "根据参考图观察：这是一颗形态饱满、上宽下收的写实红苹果，直径约8.6cm、高度约7.7cm，肩部浑圆高耸，腹部在中上部达到最大半径后向底部平缓内收，底部带浅凹与轻微五棱承托感；顶部梗洼深而圆润，窝内呈黄绿与浅褐过渡；果皮以浓郁鲜红至深红为主色，夹杂纵向断续的金黄/橙黄条纹及斑块，表面密布细小浅黄褐色果点（皮孔），具自然果蜡光泽；中央有一根短小、略微弯曲倾斜的深棕色木质果柄，顶端断面略膨大粗糙，无叶片。",
+        "master": "a925f17d53cc4e95af05b611e3ec6a82",
+        "materials": [
+          {
+            "coat": 0.0,
+            "color": "#b51d22",
+            "detail": "fruit_skin",
+            "id": "apple-skin",
+            "metallic": 0.0,
+            "roughness": 0.26,
+            "secondary_color": "#e3a83b",
+            "speckle_density": 135,
+            "streak_strength": 0.46,
+            "transmission": 0
+          },
+          {
+            "coat": 0.0,
+            "color": "#4d321e",
+            "detail": "bark",
+            "id": "apple-stem-bark",
+            "metallic": 0.0,
+            "roughness": 0.82,
+            "secondary_color": "#735135",
+            "transmission": 0
+          }
+        ],
+        "objects": [
+          {
+            "id": "apple-body",
+            "kind": "lathe",
+            "material": "apple-skin",
+            "modifiers": {
+              "subdivision": 2
+            },
+            "params": {
+              "asymmetry": 0.028,
+              "caps": true,
+              "lobe_depth": 0.022,
+              "lobes": 5,
+              "profile": [
+                [
+                  0.0018,
+                  0.0048
+                ],
+                [
+                  0.0045,
+                  0.0038
+                ],
+                [
+                  0.0078,
+                  0.0022
+                ],
+                [
+                  0.0115,
+                  0.0008
+                ],
+                [
+                  0.0155,
+                  0.0
+                ],
+                [
+                  0.0198,
+                  0.0006
+                ],
+                [
+                  0.0242,
+                  0.0024
+                ],
+                [
+                  0.0285,
+                  0.0055
+                ],
+                [
+                  0.0326,
+                  0.0098
+                ],
+                [
+                  0.0362,
+                  0.0152
+                ],
+                [
+                  0.0392,
+                  0.0215
+                ],
+                [
+                  0.0414,
+                  0.0285
+                ],
+                [
+                  0.0428,
+                  0.036
+                ],
+                [
+                  0.0434,
+                  0.0435
+                ],
+                [
+                  0.0431,
+                  0.0508
+                ],
+                [
+                  0.0418,
+                  0.0578
+                ],
+                [
+                  0.0395,
+                  0.0642
+                ],
+                [
+                  0.0362,
+                  0.0696
+                ],
+                [
+                  0.0318,
+                  0.0736
+                ],
+                [
+                  0.0268,
+                  0.0762
+                ],
+                [
+                  0.0218,
+                  0.0772
+                ],
+                [
+                  0.0172,
+                  0.0766
+                ],
+                [
+                  0.0132,
+                  0.0744
+                ],
+                [
+                  0.0098,
+                  0.0712
+                ],
+                [
+                  0.0072,
+                  0.0676
+                ],
+                [
+                  0.005,
+                  0.0642
+                ],
+                [
+                  0.0032,
+                  0.0616
+                ],
+                [
+                  0.0018,
+                  0.0602
+                ],
+                [
+                  0.0008,
+                  0.0596
+                ]
+              ],
+              "segments": 128
+            },
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              18.0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "shading": "smooth"
+          },
+          {
+            "id": "apple-stem",
+            "kind": "lathe",
+            "material": "apple-stem-bark",
+            "modifiers": {
+              "subdivision": 1
+            },
+            "params": {
+              "asymmetry": 0.04,
+              "caps": true,
+              "lobe_depth": 0.03,
+              "lobes": 3,
+              "profile": [
+                [
+                  0.0006,
+                  0.0
+                ],
+                [
+                  0.0018,
+                  0.0008
+                ],
+                [
+                  0.0021,
+                  0.004
+                ],
+                [
+                  0.0019,
+                  0.0085
+                ],
+                [
+                  0.0018,
+                  0.013
+                ],
+                [
+                  0.002,
+                  0.0168
+                ],
+                [
+                  0.0026,
+                  0.0195
+                ],
+                [
+                  0.0031,
+                  0.0212
+                ],
+                [
+                  0.0024,
+                  0.0218
+                ],
+                [
+                  0.0008,
+                  0.0216
+                ]
+              ],
+              "segments": 32
+            },
+            "position": [
+              0.0005,
+              -0.0005,
+              0.0582
+            ],
+            "rotation": [
+              8.0,
+              16.0,
+              -25.0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "shading": "smooth"
+          }
+        ],
+        "reference": "ef4b78387783404ca25efc1bb839e4bb",
+        "render": {
+          "engine": "CYCLES",
+          "exposure": -0.6,
+          "five_views": false,
+          "quality": "final",
+          "view": "front"
+        },
+        "schema": "jarvis.studio3d.v1",
+        "title": "游戏低模 · 写实红苹果高模母版 · PBR/LOD",
+        "unfulfilled": [
+          "单张正面偏俯视参考图无法提供苹果背面、正底部萼洼内部以及被遮挡侧的精确条纹分布与局部凹凸，背面与底部几何及纹理系按同品种自然规律连续推演生成。",
+          "当前仅输出高模阶段程序化材质与曲面的母版数据，尚未执行1000三角面以内的低模减面拓扑与静态PBR贴图投射烘焙。",
+          "不包含照片级精确扫描重建或AAA级手绘微雕认证。"
+        ],
+        "units": "m"
+      },
+      "derived_from": "a925f17d53cc4e95af05b611e3ec6a82",
+      "files": {
+        "ao.png": {
+          "bytes": 291762,
+          "sha256": "ce71d72b19279ffd93b4897d92976ed9c501128694911de0d68b2fdc3b77e23b",
+          "url": "/api/studio3d/files/9edebb240aa0424cadbc06932aee395a/ao.png"
+        },
+        "basecolor.png": {
+          "bytes": 2982613,
+          "sha256": "d206dcb25ea4edc3145d2cf5064368fc7b5d28568442316f2757342b2ddaf635",
+          "url": "/api/studio3d/files/9edebb240aa0424cadbc06932aee395a/basecolor.png"
+        },
+        "model-lod1.glb": {
+          "bytes": 7723320,
+          "sha256": "3ba00524734e8139222dbad9bab6789f78db27c7288d5d70bdd94bf289b2315b",
+          "url": "/api/studio3d/files/9edebb240aa0424cadbc06932aee395a/model-lod1.glb"
+        },
+        "model-lod2.glb": {
+          "bytes": 7714184,
+          "sha256": "237cbc74da0fffebf83705e1a0ab661c74e68386cf25e2bd44def7dfb88e3879",
+          "url": "/api/studio3d/files/9edebb240aa0424cadbc06932aee395a/model-lod2.glb"
+        },
+        "model.blend": {
+          "bytes": 11090817,
+          "sha256": "afa3ea533dbdda23c71d7c8c41dd5268dd6934fcf75958082aa6638316581891",
+          "url": "/api/studio3d/files/9edebb240aa0424cadbc06932aee395a/model.blend"
+        },
+        "model.glb": {
+          "bytes": 7741480,
+          "sha256": "3252cebc5ed081e2556f3e7d4b1cbd7b56cf731a6e7f882592f186ceadef7144",
+          "url": "/api/studio3d/files/9edebb240aa0424cadbc06932aee395a/model.glb"
+        },
+        "normal.png": {
+          "bytes": 2509761,
+          "sha256": "b3d9485ae0edf47e7f0cdd619da6d3610dbd728742e1fff000be72b0c864573e",
+          "url": "/api/studio3d/files/9edebb240aa0424cadbc06932aee395a/normal.png"
+        },
+        "orm.png": {
+          "bytes": 2205955,
+          "sha256": "ad2f1d58f38ec14d9de93408b280f4baeda6ff58266248f12342bbe208034ffb",
+          "url": "/api/studio3d/files/9edebb240aa0424cadbc06932aee395a/orm.png"
+        },
+        "preview.png": {
+          "bytes": 1146614,
+          "sha256": "a77f60f250f7b6c0a0a43fa7c819c833dc44f43de6e2d44e28aca5fcdb00f207",
+          "url": "/api/studio3d/files/9edebb240aa0424cadbc06932aee395a/preview.png"
+        },
+        "reference.png": {
+          "bytes": 2457554,
+          "sha256": "35d9f97952e2d4046734c9511f1a9938f46300c879c180b548ec2919aaff3d8e",
+          "url": "/api/studio3d/files/9edebb240aa0424cadbc06932aee395a/reference.png"
+        },
+        "report.json": {
+          "bytes": 10373,
+          "sha256": "f9bed2c7e6e96d1095c23a239acefb5e006da115afc1a9ced5435c8c3e3b0496",
+          "url": "/api/studio3d/files/9edebb240aa0424cadbc06932aee395a/report.json"
+        },
+        "scene.json": {
+          "bytes": 3016,
+          "sha256": "43540dc72605f650ea5ed204f0db0130aab6d123687deb1cb1e35151424a5234",
+          "url": "/api/studio3d/files/9edebb240aa0424cadbc06932aee395a/scene.json"
+        }
+      },
+      "frozen_master": {
+        "blend_sha256": "bf3e7386b859c19885f32abd462a0b951fca3c7db04c2d70ab033bbdf70e48de",
+        "id": "a925f17d53cc4e95af05b611e3ec6a82",
+        "parts": [
+          "apple-body",
+          "apple-stem"
+        ],
+        "source": "SHA-verified first-party delivered blend; external blend upload unsupported"
+      },
+      "id": "9edebb240aa0424cadbc06932aee395a",
+      "input_asset": null,
+      "model_receipt": null,
+      "quality": {
+        "AAA_certified": false,
+        "mechanical_validation": false,
+        "status": "visual_asset_export_checked",
+        "visual_score": null
+      },
+      "reference": {
+        "bytes": 2457554,
+        "id": "ef4b78387783404ca25efc1bb839e4bb",
+        "license": "Owner-requested AI generated reference for this original asset study",
+        "mode": "Visual guidance; no automatic image-to-mesh or vision-model call",
+        "name": "apple-reference.png",
+        "provenance_verified": false,
+        "resolution": [
+          1254,
+          1254
+        ],
+        "sha256": "35d9f97952e2d4046734c9511f1a9938f46300c879c180b548ec2919aaff3d8e",
+        "source": "Codex built-in image_gen, owner requested 2026-10-24; generated reference, not real photo"
+      },
+      "report": {
+        "asset_pipeline": {
+          "AAA_certified": false,
+          "baking": {
+            "ao": {
+              "bake": "Cycles high master projected to reduced low mesh",
+              "file": "ao.png",
+              "pixel_max": 1.0,
+              "pixel_min": 0.0,
+              "resolution": [
+                2048,
+                2048
+              ]
+            },
+            "basecolor": {
+              "bake": "Cycles high master projected to reduced low mesh",
+              "file": "basecolor.png",
+              "pixel_max": 0.8274510502815247,
+              "pixel_min": 0.0,
+              "resolution": [
+                2048,
+                2048
+              ]
+            },
+            "normal": {
+              "bake": "Cycles high master projected to reduced low mesh",
+              "file": "normal.png",
+              "pixel_max": 0.8901961445808411,
+              "pixel_min": 0.12941177189350128,
+              "resolution": [
+                2048,
+                2048
+              ]
+            },
+            "orm": {
+              "bake": "Cycles high master projected to reduced low mesh",
+              "file": "orm.png",
+              "pixel_max": 1.0,
+              "pixel_min": 0.0,
+              "resolution": [
+                2048,
+                2048
+              ]
+            }
+          },
+          "checks": [
+            {
+              "id": "degenerate-faces",
+              "message": "0",
+              "status": "pass"
+            },
+            {
+              "id": "mesh-boundary",
+              "message": "0 boundary edges; 0 nonmanifold edges",
+              "status": "pass"
+            },
+            {
+              "id": "uv-atlas",
+              "message": "UV present and in 0..1; exact overlap and density unverified",
+              "status": "pass"
+            },
+            {
+              "id": "lod-reduction",
+              "message": "Actual triangle counts checked",
+              "status": "pass"
+            },
+            {
+              "id": "lod-sampled-distance",
+              "message": "Two-direction sampled distance; silhouette popping requires view check",
+              "status": "pass"
+            },
+            {
+              "id": "uv-area-utilization",
+              "message": "52.65% summed triangle UV area; not exact union area or density uniformity",
+              "status": "pass"
+            },
+            {
+              "id": "singular-uv-tangent",
+              "message": "0 singular UV tangent frames use orthogonal fallback; artist review required",
+              "status": "pass"
+            },
+            {
+              "id": "projection-coverage",
+              "message": "{'samples': 998, 'misses': 0, 'miss_fraction': 0.0, 'method': 'triangle-centre rays, max4096 samples; not per-texel proof'}",
+              "status": "pass"
+            },
+            {
+              "id": "game-budget",
+              "message": "998 / 1000",
+              "status": "pass"
+            }
+          ],
+          "cleanup": {
+            "degenerate_distance_m": 1e-08,
+            "merge_distance_m": 1e-06,
+            "vertices_removed": 0
+          },
+          "elapsed_seconds": 15.793165099996259,
+          "kind": "projected rigid parts",
+          "lods": [
+            {
+              "distance": {
+                "max_distance_m": 0,
+                "samples": 0
+              },
+              "file": "model.glb",
+              "level": 0,
+              "ratio_requested": 1,
+              "tangent_frames": {
+                "meaning": "Orthogonal fallback at singular UVs; UV quality still requires review",
+                "singular_tangent_frames": 0
+              },
+              "topology": {
+                "boundary_edges": 0,
+                "degenerate_faces": 0,
+                "edge_flow_artist_review": "required",
+                "loose_edges": 0,
+                "ngons": 0,
+                "nonmanifold_edges": 0,
+                "polygons": 998,
+                "triangles": 998,
+                "uv_outside_01_loops": 0,
+                "uv_overlap": "not exactly tested",
+                "uv_present": true,
+                "uv_triangle_area_sum": 0.526531457636256,
+                "vertices": 503
+              }
+            },
+            {
+              "distance": {
+                "max_distance_m": 0.0005927546881139278,
+                "method": "two-direction sampled vertex-to-triangle nearest distance; not continuous Hausdorff proof",
+                "samples": 756
+              },
+              "file": "model-lod1.glb",
+              "level": 1,
+              "max_distance_fraction_of_diameter": 0.0040654679452534455,
+              "ratio_requested": 0.5,
+              "tangent_frames": {
+                "meaning": "Orthogonal fallback at singular UVs; UV quality still requires review",
+                "singular_tangent_frames": 0
+              },
+              "topology": {
+                "boundary_edges": 0,
+                "degenerate_faces": 0,
+                "edge_flow_artist_review": "required",
+                "loose_edges": 0,
+                "ngons": 0,
+                "nonmanifold_edges": 0,
+                "polygons": 498,
+                "triangles": 498,
+                "uv_outside_01_loops": 0,
+                "uv_overlap": "not exactly tested",
+                "uv_present": true,
+                "uv_triangle_area_sum": 0.5072928294900474,
+                "vertices": 253
+              }
+            },
+            {
+              "distance": {
+                "max_distance_m": 0.0013517276383936405,
+                "method": "two-direction sampled vertex-to-triangle nearest distance; not continuous Hausdorff proof",
+                "samples": 631
+              },
+              "file": "model-lod2.glb",
+              "level": 2,
+              "max_distance_fraction_of_diameter": 0.009270960643243812,
+              "ratio_requested": 0.25,
+              "tangent_frames": {
+                "meaning": "Orthogonal fallback at singular UVs; UV quality still requires review",
+                "singular_tangent_frames": 0
+              },
+              "topology": {
+                "boundary_edges": 0,
+                "degenerate_faces": 0,
+                "edge_flow_artist_review": "required",
+                "loose_edges": 0,
+                "ngons": 0,
+                "nonmanifold_edges": 0,
+                "polygons": 248,
+                "triangles": 248,
+                "uv_outside_01_loops": 0,
+                "uv_overlap": "not exactly tested",
+                "uv_present": true,
+                "uv_triangle_area_sum": 0.4672222982584335,
+                "vertices": 128
+              }
+            }
+          ],
+          "part_hierarchy_preserved": false,
+          "part_origins_preserved": true,
+          "projection": {
+            "category": "organic",
+            "coverage": {
+              "method": "triangle-centre rays, max4096 samples; not per-texel proof",
+              "miss_fraction": 0.0,
+              "misses": 0,
+              "samples": 998
+            },
+            "high_created_before_low": true,
+            "high_triangles": 123520,
+            "method": "Cycles selected-to-active, separated part bake positions",
+            "normal_convention": "glTF tangent +Y",
+            "origin_preserved": true,
+            "parts": [
+              {
+                "budget_group": "body",
+                "high_triangles": 120832,
+                "low_triangles": 852,
+                "name": "apple-body",
+                "target_triangles": 852,
+                "weight": 347.6089757184069
+              },
+              {
+                "budget_group": "body",
+                "high_triangles": 2688,
+                "low_triangles": 146,
+                "name": "apple-stem",
+                "target_triangles": 147,
+                "weight": 51.84592558726288
+              }
+            ],
+            "ray_distance_m": 0.0015,
+            "reference_fidelity": "requires photo review; polygon count is not evidence",
+            "requested_low_budget": 1000,
+            "rig_or_animation_preserved": false
+          },
+          "schema": "jarvis.studio3d.asset-pipeline.v1",
+          "source_part_names": [
+            "apple-body",
+            "apple-stem"
+          ],
+          "topology_before": {
+            "boundary_edges": 0,
+            "degenerate_faces": 0,
+            "edge_flow_artist_review": "required",
+            "loose_edges": 0,
+            "ngons": 0,
+            "nonmanifold_edges": 0,
+            "polygons": 998,
+            "triangles": 998,
+            "uv_outside_01_loops": 0,
+            "uv_overlap": "not exactly tested",
+            "uv_present": true,
+            "uv_triangle_area_sum": 0.526531457636256,
+            "vertices": 503
+          },
+          "topology_raw": {
+            "boundary_edges": 0,
+            "degenerate_faces": 0,
+            "edge_flow_artist_review": "required",
+            "loose_edges": 0,
+            "ngons": 0,
+            "nonmanifold_edges": 0,
+            "polygons": 998,
+            "triangles": 998,
+            "uv_outside_01_loops": 0,
+            "uv_overlap": "not exactly tested",
+            "uv_present": true,
+            "uv_triangle_area_sum": 0.8913338576528942,
+            "vertices": 503
+          },
+          "unverified": [
+            "artist retopology and deformation edge flow",
+            "exact UV overlap/density",
+            "per-texel projection and photo fidelity",
+            "LOD silhouette popping",
+            "material coat/transmission and anisotropy preservation",
+            "full target-engine performance"
+          ]
+        },
+        "blender": "5.2.0 LTS",
+        "bounds_m": [
+          [
+            -0.04213956743478775,
+            -0.043554432690143585,
+            0.00018088390061166137
+          ],
+          [
+            0.04439858719706535,
+            0.04288078472018242,
+            0.07954347878694534
+          ]
+        ],
+        "elapsed_seconds": 44.29716980000376,
+        "glb_roundtrip": {
+          "bounds_m": [
+            [
+              -0.04213956743478775,
+              -0.043554432690143585,
+              0.00018088390061166137
+            ],
+            [
+              0.04439858719706535,
+              0.04288078844547272,
+              0.07954347878694534
+            ]
+          ],
+          "max_bound_error_m": 3.725290298461914e-09,
+          "mesh_objects": 2,
+          "passed": true
+        },
+        "gltf_validation": {
+          "files": {
+            "model-lod1.glb": {
+              "info": {
+                "animationCount": 0,
+                "drawCallCount": 2,
+                "generator": "Khronos glTF Blender I/O v5.2.39",
+                "hasDefaultScene": true,
+                "hasMorphTargets": false,
+                "hasSkins": false,
+                "hasTextures": true,
+                "materialCount": 1,
+                "maxAttributes": 4,
+                "maxInfluences": 0,
+                "maxUVs": 1,
+                "resources": [
+                  {
+                    "byteLength": 7720188,
+                    "mimeType": "application/gltf-buffer",
+                    "pointer": "/buffers/0",
+                    "storage": "glb"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 2048,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 2048
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/0",
+                    "storage": "buffer-view"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 2048,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 2048
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/1",
+                    "storage": "buffer-view"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 2048,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 2048
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/2",
+                    "storage": "buffer-view"
+                  }
+                ],
+                "totalTriangleCount": 498,
+                "totalVertexCount": 393,
+                "version": "2.0"
+              },
+              "issues": {
+                "messages": [],
+                "numErrors": 0,
+                "numHints": 0,
+                "numInfos": 0,
+                "numWarnings": 0,
+                "truncated": false
+              },
+              "mimeType": "model/gltf-binary",
+              "uri": "model-lod1.glb",
+              "validatedAt": "2026-10-24T00:23:22.215Z",
+              "validatorVersion": "2.0.0-dev.3.10"
+            },
+            "model-lod2.glb": {
+              "info": {
+                "animationCount": 0,
+                "drawCallCount": 2,
+                "generator": "Khronos glTF Blender I/O v5.2.39",
+                "hasDefaultScene": true,
+                "hasMorphTargets": false,
+                "hasSkins": false,
+                "hasTextures": true,
+                "materialCount": 1,
+                "maxAttributes": 4,
+                "maxInfluences": 0,
+                "maxUVs": 1,
+                "resources": [
+                  {
+                    "byteLength": 7711056,
+                    "mimeType": "application/gltf-buffer",
+                    "pointer": "/buffers/0",
+                    "storage": "glb"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 2048,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 2048
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/0",
+                    "storage": "buffer-view"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 2048,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 2048
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/1",
+                    "storage": "buffer-view"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 2048,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 2048
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/2",
+                    "storage": "buffer-view"
+                  }
+                ],
+                "totalTriangleCount": 248,
+                "totalVertexCount": 234,
+                "version": "2.0"
+              },
+              "issues": {
+                "messages": [],
+                "numErrors": 0,
+                "numHints": 0,
+                "numInfos": 0,
+                "numWarnings": 0,
+                "truncated": false
+              },
+              "mimeType": "model/gltf-binary",
+              "uri": "model-lod2.glb",
+              "validatedAt": "2026-10-24T00:23:22.319Z",
+              "validatorVersion": "2.0.0-dev.3.10"
+            },
+            "model.glb": {
+              "info": {
+                "animationCount": 0,
+                "drawCallCount": 2,
+                "generator": "Khronos glTF Blender I/O v5.2.39",
+                "hasDefaultScene": true,
+                "hasMorphTargets": false,
+                "hasSkins": false,
+                "hasTextures": true,
+                "materialCount": 1,
+                "maxAttributes": 4,
+                "maxInfluences": 0,
+                "maxUVs": 1,
+                "resources": [
+                  {
+                    "byteLength": 7738356,
+                    "mimeType": "application/gltf-buffer",
+                    "pointer": "/buffers/0",
+                    "storage": "glb"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 2048,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 2048
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/0",
+                    "storage": "buffer-view"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 2048,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 2048
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/1",
+                    "storage": "buffer-view"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 2048,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 2048
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/2",
+                    "storage": "buffer-view"
+                  }
+                ],
+                "totalTriangleCount": 998,
+                "totalVertexCount": 709,
+                "version": "2.0"
+              },
+              "issues": {
+                "messages": [],
+                "numErrors": 0,
+                "numHints": 0,
+                "numInfos": 0,
+                "numWarnings": 0,
+                "truncated": false
+              },
+              "mimeType": "model/gltf-binary",
+              "uri": "model.glb",
+              "validatedAt": "2026-10-24T00:23:22.101Z",
+              "validatorVersion": "2.0.0-dev.3.10"
+            }
+          },
+          "implementation": "Khronos glTF-Validator",
+          "version": "2.0.0-dev.3.10"
+        },
+        "objects": [
+          {
+            "id": "apple-body · game",
+            "triangles": 852,
+            "uv": true,
+            "vertices": 428,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "apple-stem · game",
+            "triangles": 146,
+            "uv": true,
+            "vertices": 75,
+            "zero_area_faces": 0
+          }
+        ],
+        "orthographic_views": [],
+        "render": {
+          "device": "CPU",
+          "engine": "CYCLES",
+          "requested_engine": "CYCLES",
+          "resolution": [
+            1280,
+            854
+          ],
+          "samples": 64
+        },
+        "schema": "jarvis.studio3d.report.v1",
+        "triangles": 998,
+        "unverified": [
+          "artist topology",
+          "exact UV quality",
+          "per-texel projection",
+          "photo fidelity",
+          "LOD silhouettes",
+          "target engine performance"
+        ],
+        "visible_objects": 2,
+        "warnings": [
+          "High master projected to reduced rigid parts; original part origins retained, no rig/animation preservation.",
+          "Photo fidelity, per-texel projection and target-engine performance require review."
+        ]
+      },
+      "resources": {
+        "cpu_seconds": 1200,
+        "elapsed_seconds": 45.068731500003196,
+        "exit_code": 0,
+        "isolation": "Trusted fixed first-party worker with resource Job; not an OS security sandbox. No model Python, external imports or external BLEND loading. Only host-hash-verified first-party masters load with scripts disabled.",
+        "memory_bytes": 4294967296,
+        "output_bytes": 268435456,
+        "peak_memory_bytes": 2445975552,
+        "threads": 4,
+        "wall_seconds": 300
+      },
+      "runtime": {
+        "executable_sha256": "e27fbfea8564aa645d4463cb0949695fd85562b9de6df9561b06859a1074adf7",
+        "license": "GPL-2.0-or-later",
+        "source": "https://www.blender.org/",
+        "version": "Blender 5.2.0 LTS"
+      },
+      "skill": "studio3d",
+      "source_sha256": {
+        "adapters/models/native.py": "f4a0aa3902433fbcd54879689c38a021a18ce65665f33fee1596a0d097520a35",
+        "adapters/models/native_transport.py": "7b0c3de61d01624f9c023f75e7de03a6616786d92af38b50c69aeaa42f17e24a",
+        "adapters/models/vision.py": "91c184f93ebf05dfac31f2632a1deb6f13422500a111ea901f3a5d697b222a25",
+        "adapters/studio3d/asset_pipeline.py": "d41273f361c26f8fdc7da9b242ede1c46d51a05745e4efd5ff28630b268f22f1",
+        "adapters/studio3d/framing.py": "7575830d0367d4d07d0fb09859c7cc9bf9ae21e21c9f4cb0fdcb279b24b75ab0",
+        "adapters/studio3d/organic.py": "fdf71284e128a7af840db8c0006ed81d3366db747fcead4b9fd71fe0229ccaeb",
+        "adapters/studio3d/projection.py": "e1838d6dd43fcddea607bc67bf330d1bcbaaa6e24db1116ac32cbfb02e6b03af",
+        "adapters/studio3d/worker.py": "444b3af3d58418ed788422ef1d167a1ae1b41e62d966f988b6486a2633a4ea34",
+        "apps/studio3d/worker.py": "60af564595dab82acf3118ba581e5bc6b71b738c60ecf32a66c5d5cf36e3c4db",
+        "host/dialogue.py": "762940f6fc77bdc85c160187739939d8c4748838bf1480a89df042252c8ef1e8",
+        "host/studio3d.py": "085a60b49b2399aa5b03cca34ae669f5c2200802a209188b804998f5effedca1",
+        "host/studio3d_reference.py": "ddc133e0ce867e3caf9a5d5d66dc4039cbbdab2164b223446af9a1c06c955ab8",
+        "modules/dialogue/store.py": "f210124eefbe55241d1bb8a0cb6ff90f3af593563c22a6a34b7b6fd6b69df86a",
+        "modules/skills/studio3d/assets.py": "aab01d79fbbf94305054311c8ff1031a85dee37e64cd6e77c1d42d0bacfd6526",
+        "modules/skills/studio3d/contract.py": "3f3600b4daef21f3f5c4d23c8a47e5dc0f2176e29b0e3311bd7fa31884851c73",
+        "modules/skills/studio3d/presets.py": "f7d18d601f36920cff52d3f26fe21cd943ad1a63fc14ad91decdd78e4865b3a4",
+        "modules/skills/studio3d/production.py": "2341a9573caaf74473699195044332f5349ae621002470da9211484c97ba4500",
+        "modules/skills/studio3d/runtime.json": "50231430a21fabec96222607db38754f1c8e63fe7b46310cb8f0c338809593ff",
+        "modules/skills/studio3d/tracked_vehicle.py": "24716810b044cf85d4cb497e9330da2bccd5d9437afe6c891da83908f60566f8"
+      },
+      "title": "游戏低模 · 写实红苹果高模母版 · PBR/LOD",
+      "unfulfilled": [
+        "单张正面偏俯视参考图无法提供苹果背面、正底部萼洼内部以及被遮挡侧的精确条纹分布与局部凹凸，背面与底部几何及纹理系按同品种自然规律连续推演生成。",
+        "当前仅输出高模阶段程序化材质与曲面的母版数据，尚未执行1000三角面以内的低模减面拓扑与静态PBR贴图投射烘焙。",
+        "不包含照片级精确扫描重建或AAA级手绘微雕认证。"
+      ],
+      "url": "/api/studio3d/view/9edebb240aa0424cadbc06932aee395a"
+    },
+    "status": "DELIVERED",
+    "turn_id": null
+  }
+}

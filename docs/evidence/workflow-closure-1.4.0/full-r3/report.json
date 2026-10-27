@@ -1,0 +1,203 @@
+{
+  "version": "completion-acceptance-v1",
+  "run_id": "20261026T181210Z-6f4a724e",
+  "created_at": "2026-10-26T18:12:10.922618+00:00",
+  "plan_sha256": "fcf6e840ef30667ede36b6528a3b25b1d885bb0e12c9f38ea008755c0cf67957",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.13.0",
+  "source_unchanged": false,
+  "changed_sources": [
+    "host/studio3d_learning.py",
+    "tools/studio3d_learning.py"
+  ],
+  "checks": [
+    {
+      "id": "regression",
+      "status": "PASS",
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "-m",
+        "tools.accept_completion",
+        "--test-report",
+        "D:\\Jarvis\\docs\\evidence\\workflow-closure-1.4.0\\full-r3\\tests.json"
+      ],
+      "log": "regression.log",
+      "returncode": 0,
+      "seconds": 405.164
+    },
+    {
+      "id": "frozen_test_set",
+      "status": "PASS",
+      "reason": "No missing, skipped or substituted tests"
+    },
+    {
+      "id": "architecture",
+      "status": "FAIL",
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "tools/check_architecture.py"
+      ],
+      "log": "architecture.log",
+      "returncode": 1,
+      "seconds": 0.419
+    },
+    {
+      "id": "documentation",
+      "status": "PASS",
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "tools/check_docs.py",
+        "--root",
+        "."
+      ],
+      "log": "documentation.log",
+      "returncode": 0,
+      "seconds": 2.428
+    },
+    {
+      "id": "paired_rework_tasks",
+      "status": "PASS",
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "-m",
+        "tools.probe_work_budget",
+        "--output",
+        "D:\\Jarvis\\docs\\evidence\\workflow-closure-1.4.0\\full-r3\\paired"
+      ],
+      "log": "paired_rework_tasks.log",
+      "returncode": 0,
+      "seconds": 31.983
+    },
+    {
+      "id": "performance_and_observer_ui",
+      "status": "PASS",
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "-m",
+        "tools.probe_outcomes",
+        "--output",
+        "D:\\Jarvis\\docs\\evidence\\workflow-closure-1.4.0\\full-r3",
+        "--browser"
+      ],
+      "log": "performance_and_observer_ui.log",
+      "returncode": 0,
+      "seconds": 9.947
+    },
+    {
+      "id": "completion_ui",
+      "status": "PASS",
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "-m",
+        "tools.probe_outcomes",
+        "--output",
+        "D:\\Jarvis\\docs\\evidence\\workflow-closure-1.4.0\\full-r3",
+        "--browser-only",
+        "--completion-ui"
+      ],
+      "log": "completion_ui.log",
+      "returncode": 0,
+      "seconds": 3.333
+    },
+    {
+      "id": "browser.json",
+      "status": "PASS"
+    },
+    {
+      "id": "completion-browser.json",
+      "status": "PASS"
+    },
+    {
+      "id": "handoff_ui",
+      "status": "PASS",
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "-m",
+        "tools.probe_handoff_ui",
+        "--output",
+        "D:\\Jarvis\\docs\\evidence\\workflow-closure-1.4.0\\full-r3\\handoff"
+      ],
+      "log": "handoff_ui.log",
+      "returncode": 0,
+      "seconds": 7.348
+    },
+    {
+      "id": "handoff_browser_evidence",
+      "status": "PASS"
+    },
+    {
+      "id": "rework_ui",
+      "status": "PASS",
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "-m",
+        "tools.probe_rework_ui",
+        "--output",
+        "D:\\Jarvis\\docs\\evidence\\workflow-closure-1.4.0\\full-r3\\rework"
+      ],
+      "log": "rework_ui.log",
+      "returncode": 0,
+      "seconds": 7.92
+    },
+    {
+      "id": "rework_browser_evidence",
+      "status": "PASS"
+    },
+    {
+      "id": "budget_ui",
+      "status": "PASS",
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "-m",
+        "tools.probe_rework_ui",
+        "--output",
+        "D:\\Jarvis\\docs\\evidence\\workflow-closure-1.4.0\\full-r3\\budget",
+        "--budget"
+      ],
+      "log": "budget_ui.log",
+      "returncode": 0,
+      "seconds": 9.02
+    },
+    {
+      "id": "budget_browser_evidence",
+      "status": "PASS"
+    },
+    {
+      "id": "closure_ui",
+      "status": "PASS",
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "-m",
+        "tools.probe_rework_ui",
+        "--output",
+        "D:\\Jarvis\\docs\\evidence\\workflow-closure-1.4.0\\full-r3\\closure",
+        "--closure"
+      ],
+      "log": "closure_ui.log",
+      "returncode": 0,
+      "seconds": 8.722
+    },
+    {
+      "id": "closure_browser_evidence",
+      "status": "PASS"
+    },
+    {
+      "id": "source_unchanged",
+      "status": "FAIL"
+    }
+  ],
+  "tests_run": 312,
+  "local_verdict": "FAIL",
+  "full_product_verdict": "NOT_ACCEPTED",
+  "pending": {
+    "生产版本": "本轮只启动临时测试实例；实际服务加载版本及真实数据迁移仍需另行核对。",
+    "真实工作收益": "尚无匹配旧版与候选版的真实任务对照；质量、人工介入、成本与 JPF 差距仍未测。",
+    "通用多 Bot": "关联工作的工具动作额度已接通；负责人任期、委派、接管和完整费用预算仍未实现，不能借用线程并发测试签收。",
+    "通用自愈与自改造": "模块恢复接续不代表自动诊断修码；通用候选发布、恢复和累计非退化仍需验收。",
+    "长期成长与陪伴": "需要真实使用反馈、延迟复测、跨任务迁移和错误复发记录；加速时钟不能替代长期效果。",
+    "多机器人": "需要设备、控制适配器及真实停止/断连证据；仿真通过不等于物理验收。"
+  },
+  "quality_score": null,
+  "learning_gain": null,
+  "production_deployed": false
+}

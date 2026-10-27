@@ -1,3 +1,4 @@
+import re
 import sqlite3
 from pathlib import Path
 from control.paths import child
@@ -27,7 +28,16 @@ class Skills:
         usable = [x for x in self.list() if x['enabled'] and x['state'] == 'ready']
         if ident == 'auto':
             # Narrow, explainable matching; ordinary chat loads no guidance.
-            return next((x for x in usable if any(word in text.lower() for word in x['triggers'])), None)
+            return next((x for x in usable if self.matches(x, text)), None)
         match = next((x for x in usable if x['id'] == ident), None)
         if match is None: raise CoreError('skill_unavailable', 'Skill disabled or adapter not ready')
         return match
+
+    @staticmethod
+    def matches(item, text):
+        patterns = item.get('auto_patterns')
+        if patterns is not None:
+            # First-party anchored requests; mentions, quotes and negations alone
+            # must not activate a personal workflow. Explicit selection still works.
+            return any(re.search(pattern, text.strip(), re.IGNORECASE) for pattern in patterns)
+        return any(word in text.lower() for word in item['triggers'])

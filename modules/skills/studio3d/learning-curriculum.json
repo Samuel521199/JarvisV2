@@ -1,0 +1,278 @@
+{
+  "schema": "jarvis.studio3d.curriculum.v1",
+  "version": "1.0.0",
+  "protocol_status": "registered; references and baselines not yet frozen",
+  "formal_completed": 0,
+  "splits": {
+    "train": 12,
+    "development": 6,
+    "holdout": 6
+  },
+  "comparisons": [
+    "baseline",
+    "facts",
+    "conditional_methods",
+    "executable_skills"
+  ],
+  "metrics": [
+    "major_visible_errors",
+    "repeat_errors",
+    "human_interventions",
+    "repair_rounds",
+    "stage_wall_seconds",
+    "input_tokens",
+    "output_tokens",
+    "api_usd",
+    "unknown_cost_items"
+  ],
+  "hard_gates": [
+    "no_rejected_part_revival",
+    "source_and_actual_export_identity",
+    "no_unresolved_declared_geometry_errors",
+    "motion_not_broken",
+    "user_high_approval_before_lod"
+  ],
+  "leakage_policy": "Split by asset/reference origin, never camera view. Once holdout evidence informs tuning, retire that case from holdout and replace it. Diagnostic coupons do not count.",
+  "cases": [
+    {
+      "id": "S3DP-01",
+      "split": "train",
+      "title": "折弯防护板：轮廓与厚度",
+      "kind": "component",
+      "reference_group": null,
+      "reference_sha256": null,
+      "status": "PENDING_REFERENCE",
+      "results": []
+    },
+    {
+      "id": "S3DP-02",
+      "split": "train",
+      "title": "带孔板：开口和边界",
+      "kind": "component",
+      "reference_group": null,
+      "reference_sha256": null,
+      "status": "PENDING_REFERENCE",
+      "results": []
+    },
+    {
+      "id": "S3DP-03",
+      "split": "train",
+      "title": "轮盘与轮毂：分层和比例",
+      "kind": "component",
+      "reference_group": null,
+      "reference_sha256": null,
+      "status": "PENDING_REFERENCE",
+      "results": []
+    },
+    {
+      "id": "S3DP-04",
+      "split": "train",
+      "title": "摇轮与支座：可见连接",
+      "kind": "component",
+      "reference_group": null,
+      "reference_sha256": null,
+      "status": "PENDING_REFERENCE",
+      "results": []
+    },
+    {
+      "id": "S3DP-05",
+      "split": "train",
+      "title": "附件与紧固件：归属和残留",
+      "kind": "component",
+      "reference_group": null,
+      "reference_sha256": null,
+      "status": "PENDING_REFERENCE",
+      "results": []
+    },
+    {
+      "id": "S3DP-06",
+      "split": "train",
+      "title": "漆面与露钢：材质分区",
+      "kind": "component",
+      "reference_group": null,
+      "reference_sha256": null,
+      "status": "PENDING_REFERENCE",
+      "results": []
+    },
+    {
+      "id": "S3DP-07",
+      "split": "train",
+      "title": "圆柱端面：UV 和法线",
+      "kind": "component",
+      "reference_group": null,
+      "reference_sha256": null,
+      "status": "PENDING_REFERENCE",
+      "results": []
+    },
+    {
+      "id": "S3DP-08",
+      "split": "train",
+      "title": "可动组：枢轴和材质分组",
+      "kind": "component",
+      "reference_group": null,
+      "reference_sha256": null,
+      "status": "PENDING_REFERENCE",
+      "results": []
+    },
+    {
+      "id": "S3DP-09",
+      "split": "train",
+      "title": "车架与支腿组合：五视图一致",
+      "kind": "assembly",
+      "reference_group": null,
+      "reference_sha256": null,
+      "status": "PENDING_REFERENCE",
+      "results": []
+    },
+    {
+      "id": "S3DP-10",
+      "split": "train",
+      "title": "上架与护板组合：多图冲突",
+      "kind": "assembly",
+      "reference_group": null,
+      "reference_sha256": null,
+      "status": "PENDING_REFERENCE",
+      "results": []
+    },
+    {
+      "id": "S3DP-11",
+      "split": "train",
+      "title": "完整牵引火炮外观 A",
+      "kind": "full_asset",
+      "reference_group": null,
+      "reference_sha256": null,
+      "status": "PENDING_REFERENCE",
+      "results": []
+    },
+    {
+      "id": "S3DP-12",
+      "split": "train",
+      "title": "完整牵引火炮外观 B",
+      "kind": "full_asset",
+      "reference_group": null,
+      "reference_sha256": null,
+      "status": "PENDING_REFERENCE",
+      "results": []
+    },
+    {
+      "id": "S3DP-13",
+      "split": "development",
+      "title": "不同侧翼造型的护板",
+      "kind": "component",
+      "reference_group": null,
+      "reference_sha256": null,
+      "status": "PENDING_REFERENCE",
+      "results": []
+    },
+    {
+      "id": "S3DP-14",
+      "split": "development",
+      "title": "不同轮盘造型的车轮",
+      "kind": "component",
+      "reference_group": null,
+      "reference_sha256": null,
+      "status": "PENDING_REFERENCE",
+      "results": []
+    },
+    {
+      "id": "S3DP-15",
+      "split": "development",
+      "title": "控制轮与不同支座组合",
+      "kind": "assembly",
+      "reference_group": null,
+      "reference_sha256": null,
+      "status": "PENDING_REFERENCE",
+      "results": []
+    },
+    {
+      "id": "S3DP-16",
+      "split": "development",
+      "title": "不同开合外观的活动部件组合",
+      "kind": "assembly",
+      "reference_group": null,
+      "reference_sha256": null,
+      "status": "PENDING_REFERENCE",
+      "results": []
+    },
+    {
+      "id": "S3DP-17",
+      "split": "development",
+      "title": "完整牵引火炮外观 C",
+      "kind": "full_asset",
+      "reference_group": null,
+      "reference_sha256": null,
+      "status": "PENDING_REFERENCE",
+      "results": []
+    },
+    {
+      "id": "S3DP-18",
+      "split": "development",
+      "title": "完整牵引火炮外观 D",
+      "kind": "full_asset",
+      "reference_group": null,
+      "reference_sha256": null,
+      "status": "PENDING_REFERENCE",
+      "results": []
+    },
+    {
+      "id": "S3DP-19",
+      "split": "holdout",
+      "title": "未见护板变体",
+      "kind": "component",
+      "reference_group": null,
+      "reference_sha256": null,
+      "status": "PENDING_REFERENCE",
+      "results": []
+    },
+    {
+      "id": "S3DP-20",
+      "split": "holdout",
+      "title": "未见轮组变体",
+      "kind": "component",
+      "reference_group": null,
+      "reference_sha256": null,
+      "status": "PENDING_REFERENCE",
+      "results": []
+    },
+    {
+      "id": "S3DP-21",
+      "split": "holdout",
+      "title": "未见附件与固定支撑组合",
+      "kind": "assembly",
+      "reference_group": null,
+      "reference_sha256": null,
+      "status": "PENDING_REFERENCE",
+      "results": []
+    },
+    {
+      "id": "S3DP-22",
+      "split": "holdout",
+      "title": "未见材质与运动分组组合",
+      "kind": "assembly",
+      "reference_group": null,
+      "reference_sha256": null,
+      "status": "PENDING_REFERENCE",
+      "results": []
+    },
+    {
+      "id": "S3DP-23",
+      "split": "holdout",
+      "title": "完整牵引火炮外观 E",
+      "kind": "full_asset",
+      "reference_group": null,
+      "reference_sha256": null,
+      "status": "PENDING_REFERENCE",
+      "results": []
+    },
+    {
+      "id": "S3DP-24",
+      "split": "holdout",
+      "title": "完整牵引火炮外观 F",
+      "kind": "full_asset",
+      "reference_group": null,
+      "reference_sha256": null,
+      "status": "PENDING_REFERENCE",
+      "results": []
+    }
+  ]
+}

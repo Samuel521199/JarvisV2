@@ -1,0 +1,78 @@
+{
+  "case_id": "learning-past",
+  "domain": "learning",
+  "arm": "workflow_off",
+  "turn": 0,
+  "freeze_digest": "58e89113b8e37c7cb0dbe11414bd8d9d7f403111ca74ceaf5d1fd9b9c9eba16e",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\"question\": \"She ___ (go/went) home yesterday.\", \"answer\": null, \"encouragement\": \"慢慢来，按照自己的节奏思考就好，我们一步一步来。\"}",
+  "skill_id": null,
+  "skill_version": null,
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 4.4167,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 73,
+        "prompt_tokens": 964,
+        "total_tokens": 1037
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.00099675,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/learning-past-workflow_off-0.native.json",
+      "sha256": "d825fc66e286c4463df89cd8562237f46d7a2364b7fea0bf3c07c93310bf63d8",
+      "kind": "native_protocol_response"
+    },
+    {
+      "file": "artifacts/learning-past-workflow_off-0.reply.md.txt",
+      "sha256": "a34c7daf99d5923baa33358ad510dd80b787898692d73f51d1629c819c0461a8",
+      "kind": "original_session_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "question",
+        "status": "passed"
+      },
+      {
+        "id": "answer",
+        "status": "passed"
+      },
+      {
+        "id": "encouragement_present",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "record_digest": "a8d5a908d64e31e87ca5361dbb0253d3b9a553ce7d5e57d4df2fec03567462d6"
+}

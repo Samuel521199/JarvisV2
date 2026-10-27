@@ -1,0 +1,11 @@
+flowchart LR
+  A1["改进：一个负责 Bot<br/>按需委派，共用原任务"] --> B1["机制：有人跟到交付<br/>分工、接管、返工有归属"] --> C1["预期：少催办与重复协调<br/>独立完成率上升"]
+  A2["改进：评分＋因果诊断<br/>统一证据与版本关联"] --> B2["机制：知道哪里没做好<br/>能追到具体失败环节"] --> C2["预期：首次合格率上升<br/>定位问题更快"]
+  A3["改进：纠正经验＋Harness²<br/>按条件复用，经验证采用"] --> B3["机制：下次改变做法<br/>无收益时保留稳定版本"] --> C3["预期：重复错误减少<br/>质量可提升，计算成本可能增加"]
+  A4["改进：复用委托＋前后台分离<br/>普通自动，重要决定才询问"] --> B4["机制：少打断且继续交流<br/>等待只暂停受影响工作"] --> C4["预期：无效询问减少<br/>陪伴更连续"]
+  classDef change fill:#e8effb,stroke:#7894bb,color:#19324f;
+  classDef mechanism fill:#e6f3ee,stroke:#7ba493,color:#193b34;
+  classDef forecast fill:#fff2dc,stroke:#bc9456,color:#513c1c;
+  class A1,A2,A3,A4 change;
+  class B1,B2,B3,B4 mechanism;
+  class C1,C2,C3,C4 forecast;

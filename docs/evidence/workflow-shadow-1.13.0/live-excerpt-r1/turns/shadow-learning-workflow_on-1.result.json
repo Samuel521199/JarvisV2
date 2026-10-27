@@ -1,0 +1,170 @@
+{
+  "case_id": "shadow-learning",
+  "domain": "learning",
+  "arm": "workflow_on",
+  "turn": 1,
+  "freeze_digest": "4f28282101f06a3faf5650901bfa7a2f7b521eebf93358be43a244bceabc01a6",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\"document\":\"## 事实\\n- [F1] 学习者只看过过去式讲解，尚未独立作答。\\n\\n## 已确认计划\\n- [P1] 周六10点独立复测过去式。\\n\\n## 建议（未采纳）\\n- 无\",\"independent_mastery\":false,\"retention\":null,\"evidence\":{\"facts\":[{\"source\":\"F1\",\"quote\":\"学习者只看过过去式讲解，尚未独立作答。\"}],\"plans\":[{\"source\":\"P1\",\"quote\":\"周六10点独立复测过去式。\"}],\"suggestions\":[]}}",
+  "skill_id": "english-coach",
+  "skill_version": "1.0.0",
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 5.064,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 173,
+        "prompt_tokens": 2210,
+        "total_tokens": 2383
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.00230625,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/shadow-learning-workflow_on-1.native.json",
+      "sha256": "383e38cdcd463dea37bca0743bbd0816e91b63538dbffb9e4bc01e4d77fd9a0f",
+      "kind": "native_protocol_response"
+    },
+    {
+      "file": "artifacts/shadow-learning-workflow_on-1.reply.md.txt",
+      "sha256": "516ff258c1c8a350fd5322b2886da1d658d7f624d2de88a268a64593dc12e857",
+      "kind": "original_session_reply"
+    },
+    {
+      "file": "artifacts/shadow-learning-workflow_on-1.document.md.txt",
+      "sha256": "6b2f1a6ed8116c7c052fe3d0005205d2e42f27e3f03722694f60d322e534c451",
+      "kind": "verbatim_document_field_from_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "independent_mastery",
+        "status": "passed"
+      },
+      {
+        "id": "retention",
+        "status": "passed"
+      },
+      {
+        "id": "document_present",
+        "status": "passed"
+      },
+      {
+        "id": "body_shape",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_document_parity",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "delivery_basis": {
+    "digest": "17789a3cc43433c4e2ed968dfafc8a44d5b5e8a379b0a07706dea3a34fd2e610",
+    "entries": [
+      {
+        "end": 442,
+        "id": "F1",
+        "kind": "facts",
+        "quote": "学习者只看过过去式讲解，尚未独立作答。",
+        "source_turn": "trial-shadow-learning-workflow_on-1",
+        "start": 423
+      },
+      {
+        "end": 463,
+        "id": "P1",
+        "kind": "plans",
+        "quote": "周六10点独立复测过去式。",
+        "source_turn": "trial-shadow-learning-workflow_on-1",
+        "start": 450
+      }
+    ],
+    "relative_time_resolution": "UNVERIFIED",
+    "revision": 2,
+    "source_time_utc": "2026-10-27T11:03:10.432293+00:00",
+    "source_turn": "trial-shadow-learning-workflow_on-1"
+  },
+  "delivery_review": {
+    "basis_digest": "17789a3cc43433c4e2ed968dfafc8a44d5b5e8a379b0a07706dea3a34fd2e610",
+    "basis_revision": 2,
+    "checks": [
+      {
+        "id": "body_shape",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_document_parity",
+        "status": "passed"
+      }
+    ],
+    "method": "source_excerpt",
+    "mode": "shadow",
+    "quality_score": null,
+    "reason": "bounded_document_check_only",
+    "reply_digest": "0790b15ada79ed333bd97224c7b5539e4ba4c0d6551721ed8270b6d8fc7d105e",
+    "state": "EXCERPT_MATCH",
+    "version": "delivery-shadow-1",
+    "would_block": false
+  },
+  "record_digest": "2583384bef7b412c4e43bcca3cdbd95f93414ebe4528b0d0e903be68b489b993"
+}

@@ -7,14 +7,30 @@ const { chromium } = require('playwright');
 const version = '11.12.0';
 const library = `https://cdn.jsdelivr.net/npm/mermaid@${version}/dist/mermaid.esm.min.mjs`;
 const guide = process.argv.includes('--guide');
-if (process.argv.slice(2).some(argument => argument !== '--guide')) {
-  throw new Error('Supported option: --guide');
+const assistantForecast = process.argv.includes('--assistant-forecast');
+const growthLearning = process.argv.includes('--growth-learning');
+const trinityIntegration = process.argv.includes('--trinity-integration');
+const loopClosure = process.argv.includes('--loop-closure');
+if (process.argv.slice(2).some(argument => !['--guide', '--assistant-forecast', '--growth-learning', '--trinity-integration', '--loop-closure'].includes(argument)) || [guide, assistantForecast, growthLearning, trinityIntegration, loopClosure].filter(Boolean).length > 1) {
+  throw new Error('Supported option: --guide OR --assistant-forecast OR --growth-learning OR --trinity-integration OR --loop-closure');
 }
-const names = guide
+const names = loopClosure
+  ? ['assistant-loop-closure']
+  : trinityIntegration
+  ? ['assistant-trinity-integration']
+  : growthLearning
+  ? ['assistant-growth-regression', 'assistant-knowledge-reuse']
+  : assistantForecast
+  ? ['assistant-decision-map', 'assistant-improvement-effects', 'assistant-forecast-validation']
+  : guide
   ? ['memory-guide-data', 'memory-guide-parallel', 'memory-guide-branches',
      'memory-guide-forget-race', 'memory-guide-reconnect', 'memory-guide-private-output']
   : ['memory-context-architecture', 'memory-context-lifecycle'];
-const receipt = guide ? 'memory-guide-render-2026-10-23.json' : 'memory-context-render-2026-10-23.json';
+const receipt = loopClosure ? 'closed-loop-render-2026-10-26.json'
+  : trinityIntegration ? 'trinity-implementation-render-2026-10-26.json'
+  : growthLearning ? 'learning-knowledge-render-2026-10-26.json'
+  : assistantForecast ? 'assistant-forecast-render-2026-10-26.json'
+  : guide ? 'memory-guide-render-2026-10-23.json' : 'memory-context-render-2026-10-23.json';
 const root = path.resolve(__dirname, '..');
 const sha = data => crypto.createHash('sha256').update(data).digest('hex');
 (async () => {

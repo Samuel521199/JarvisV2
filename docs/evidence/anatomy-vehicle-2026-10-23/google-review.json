@@ -1,0 +1,366 @@
+{
+  "status": "passed",
+  "model_submissions": 1,
+  "evidence_mode": "data-only",
+  "visual_score": null,
+  "chat_id": "chat-acc3970fab2f452a855fd7e3433aa40a",
+  "turn_id": "anatomy-vehicle-review-699bb5fdf11f4293abfe97fb2e4f2d03",
+  "provider": "vertex",
+  "model": "gemini-3.8-flash",
+  "evidence": {
+    "parts": 32,
+    "subassemblies": [
+      {
+        "id": "frame",
+        "name": "承载车架",
+        "parts": [
+          "rail-left",
+          "rail-right",
+          "cross-0",
+          "cross-1",
+          "cross-2"
+        ],
+        "direction": [
+          0,
+          0,
+          1
+        ],
+        "distance": 0,
+        "batches": [
+          [
+            "rail-left",
+            "rail-right"
+          ],
+          [
+            "cross-0",
+            "cross-1",
+            "cross-2"
+          ]
+        ]
+      },
+      {
+        "id": "rear-drive",
+        "name": "电驱动后桥总成",
+        "parts": [
+          "rear-mount-left",
+          "rear-block-left",
+          "rear-bearing-left",
+          "rear-mount-right",
+          "rear-block-right",
+          "rear-bearing-right",
+          "motor-case",
+          "motor-rotor",
+          "coupling-left",
+          "halfshaft-left",
+          "rear-hub-left",
+          "rear-tire-left",
+          "coupling-right",
+          "halfshaft-right",
+          "rear-hub-right",
+          "rear-tire-right"
+        ],
+        "direction": [
+          0,
+          0,
+          -1
+        ],
+        "distance": 100,
+        "batches": [
+          [
+            "rear-mount-left",
+            "rear-mount-right"
+          ],
+          [
+            "rear-block-left",
+            "rear-block-right"
+          ],
+          [
+            "motor-case"
+          ],
+          [
+            "motor-rotor"
+          ],
+          [
+            "coupling-left",
+            "coupling-right"
+          ],
+          [
+            "rear-bearing-left",
+            "rear-bearing-right"
+          ],
+          [
+            "halfshaft-left",
+            "halfshaft-right"
+          ],
+          [
+            "rear-hub-left",
+            "rear-hub-right"
+          ],
+          [
+            "rear-tire-left",
+            "rear-tire-right"
+          ]
+        ]
+      },
+      {
+        "id": "front-left",
+        "name": "前转向轮组 · left",
+        "parts": [
+          "front-mount-left",
+          "knuckle-left",
+          "spindle-left",
+          "front-hub-left",
+          "front-tire-left"
+        ],
+        "direction": [
+          0,
+          0,
+          -1
+        ],
+        "distance": 100,
+        "batches": [
+          [
+            "front-mount-left"
+          ],
+          [
+            "knuckle-left"
+          ],
+          [
+            "spindle-left"
+          ],
+          [
+            "front-hub-left"
+          ],
+          [
+            "front-tire-left"
+          ]
+        ]
+      },
+      {
+        "id": "front-right",
+        "name": "前转向轮组 · right",
+        "parts": [
+          "front-mount-right",
+          "knuckle-right",
+          "spindle-right",
+          "front-hub-right",
+          "front-tire-right"
+        ],
+        "direction": [
+          0,
+          0,
+          -1
+        ],
+        "distance": 100,
+        "batches": [
+          [
+            "front-mount-right"
+          ],
+          [
+            "knuckle-right"
+          ],
+          [
+            "spindle-right"
+          ],
+          [
+            "front-hub-right"
+          ],
+          [
+            "front-tire-right"
+          ]
+        ]
+      },
+      {
+        "id": "power",
+        "name": "动力电池",
+        "parts": [
+          "battery"
+        ],
+        "direction": [
+          0,
+          0,
+          1
+        ],
+        "distance": 100,
+        "batches": [
+          [
+            "battery"
+          ]
+        ]
+      }
+    ],
+    "checks": {
+      "interference_status": "clear_at_static_pose",
+      "collisions": [],
+      "narrow_phase_pairs": 48,
+      "step_roundtrip_relative_volume_error": 1.0524370927403453e-14,
+      "step_roundtrip_bounds_error_mm": 1.4210854715202004e-14,
+      "total_mass_kg": 1.2218817270612132,
+      "limits": "静态装配姿态 B-rep 体积交集检查；不证明运动全过程或装配插入路径无碰撞。配合检查为名义尺寸，未含制造公差。轴承滚道/螺纹/预紧为简化。",
+      "insertion": {
+        "status": "clear_at_sampled_poses",
+        "samples_per_step": 7,
+        "narrow_phase_pairs": 73,
+        "hits": [],
+        "limits": "按声明的直线插入方向、距离和父先子后步骤，在每步7个时刻检查已安装零件；离散采样可能漏过薄障碍物或采样间穿透，不是连续碰撞/扫掠体证明。"
+      },
+      "plan_candidate": null,
+      "groups": {
+        "status": "clear_at_sampled_poses",
+        "hits": [],
+        "samples_per_group": 7,
+        "narrow_phase_pairs": 9,
+        "limits": "子总成以同一刚体平移，逐组检查已安装总成；内部零件相对位置不变。未检查连续扫掠路径。分组内部逐件装配另见 insertion。",
+        "parallel_internal": {
+          "status": "clear_at_sampled_poses",
+          "hits": [],
+          "samples_per_batch": 7,
+          "moving_pair_checks": 0,
+          "limits": "独立子总成工位内，每批次7时刻检查移动零件间及前序已装件；批内同时、批间顺序。不含其他总成或连续路径。"
+        }
+      },
+      "operation": {
+        "status": "clear_at_sampled_poses",
+        "hits": [],
+        "poses": 9,
+        "narrow_phase_pairs": 285,
+        "limits": "仅 -max/0/+max 转向与 0/45/90 度同相车轮的9个 B-rep 姿态；未穷举独立轮相位、转角、连续轨迹、轮胎接触和动力学。"
+      }
+    },
+    "browser": {
+      "status": "passed",
+      "origin": "http://127.0.0.1:18283",
+      "checks": [
+        "real settings creates 32-part vehicle, all four native checks clear and initially paused",
+        "single-piece assembly and incomplete vehicle blocks operation",
+        "five rigid subassemblies integrate as groups",
+        "isolated subassembly supports checked two-part concurrent batches and retained prior batches",
+        "same subassembly can also be built piece by piece",
+        "assembly playback advances, whole vehicle completion enables run",
+        "Ackermann steering, distinct inner/outer wheel phases and pause",
+        "reverse speed reverses wheel phase",
+        "exploding or disassembling stops and resets operation",
+        "static actual section available after operation reset",
+        "vehicle CAD export downloads in sandbox",
+        "mobile layout fits viewport"
+      ],
+      "errors": [],
+      "externalRequests": [],
+      "model_calls": 0,
+      "url": "http://127.0.0.1:18283/api/anatomy/artifacts/a93a540517764714903728af839f9765"
+    },
+    "implementation": "Independent first-party bounded data factories. Single-part insertion; rigid whole subassemblies; sequential batches with simultaneous parts. Typed ideal Ackermann front pivots and independent wheel phases, ideal differential rotor uses mean rear speed. Body held fixed on a demonstration stand. Dynamic geometry uses world-space rigid transforms, no scripts in input. Python/JS numeric transforms match to 1e-9.",
+    "limits": [
+      "No full vehicle suspension or bodywork",
+      "Differential internal gears, tie rods, fasteners and wire harness are simplified or omitted",
+      "Motor/traction loads, tyre deformation and road contact are not solved",
+      "Changing inspection scope restores completed pose; it is a teaching viewer, not manual snap-to-assemble game or assembly training record",
+      "Nine co-phased wheel/steering native poses are not complete cycle or independent-phase collision certification",
+      "Seven insertion samples can miss thin obstacles",
+      "CAD valid export is not manufacturing certification",
+      "No images supplied to this text reviewer"
+    ]
+  },
+  "raw_turn": {
+    "assistant_action": null,
+    "cancel": 0,
+    "chat_id": "chat-acc3970fab2f452a855fd7e3433aa40a",
+    "context_count": 1,
+    "created": 1792747983.549528,
+    "error": null,
+    "guidance": null,
+    "id": "anatomy-vehicle-review-699bb5fdf11f4293abfe97fb2e4f2d03",
+    "memory_context": {
+      "enabled": false,
+      "epoch": 7,
+      "facts": [],
+      "provider": "vertex",
+      "scope": "personal"
+    },
+    "model": "gemini-3.8-flash",
+    "provider": "vertex",
+    "reply": "```json\n{\n  \"schema\": \"anatomy.vehicle.review.v1\",\n  \"evidence_mode\": \"data-only\",\n  \"visual_score\": null,\n  \"scores\": {\n    \"structure\": 7.5,\n    \"assembly_correctness\": 7.0,\n    \"kinematics\": 6.5,\n    \"usability_evidence\": 8.0\n  },\n  \"issues\": [\n    \"装配插入路径碰撞检测采用固定直线（每步7个离散采样点），缺乏连续扫掠体（swept-volume）检测，可能漏检薄壁障碍物或步间瞬态穿透。\",\n    \"运行运动学仅对9个离散姿态（3种转角×3种同相轮位）完成B-rep干涉检查，未穷举独立轮相位、全转角域及连续轨迹干涉。\",\n    \"结构定义为教学级刚体简化模型，省略了真实差速器行星齿轮组、转向拉杆、悬架系统、紧固件与线束，不能等同于工程/制造级完整结构。\",\n    \"动力学未求解实际电机负载、传动载荷、轮胎形变及地面接触约束，仅为理想阿克曼几何与刚体运动学回放。\"\n  ],\n  \"improvements\": [\n    \"将装配干涉检测升级为连续碰撞检测（CCD）或扫掠体交集计算，避免基于固定步长的离散采样盲区。\",\n    \"扩充运动干涉验证范围，覆盖独立车轮相位扫掠与转向行程连续扫掠判定。\",\n    \"逐步补全转向机构物理约束（如转向节拉杆闭环）与后桥差速器内部啮合机构的刚体表达。\",\n    \"在导出或说明中明确标注公差等级与简化件清单，避免用户误将教学级STEP/CAD导出视为可量产合规件。\"\n  ],\n  \"unverified\": [\n    \"未提供视觉截图或3D渲染输出，视觉渲染质量与UI实际外观完全未验证。\",\n    \"名义尺寸下的B-rep无干涉无法保证在实际制造公差、装配间隙和形变下的可装配性。\",\n    \"任意复杂拓扑或自由生成车辆的装配规划鲁棒性未在此单一32件固定样例中得到验证。\",\n    \"真实工况下的结构强度、刚度、疲劳寿命及动载荷特性未验证。\"\n  ]\n}\n```",
+    "request": {
+      "chat_id": "chat-acc3970fab2f452a855fd7e3433aa40a",
+      "memory_enabled": false,
+      "model": "gemini-3.8-flash",
+      "provider": "vertex",
+      "reasoning": "low",
+      "request_id": "anatomy-vehicle-review-699bb5fdf11f4293abfe97fb2e4f2d03",
+      "skill": "none",
+      "text": "对Jarvis Anatomy 5.1的32件车辆组装样例做严格技术评审。只返回JSON：schema=\"anatomy.vehicle.review.v1\", evidence_mode=\"data-only\", visual_score=null, scores={structure:0到10,assembly_correctness:0到10,kinematics:0到10,usability_evidence:0到10}, issues数组, improvements数组, unverified数组。仅评估所给有限证据，不能称为任意复杂车辆自由生成成功或制造合格，不要虚构看到截图。证据：{\"parts\":32,\"subassemblies\":[{\"id\":\"frame\",\"name\":\"承载车架\",\"parts\":[\"rail-left\",\"rail-right\",\"cross-0\",\"cross-1\",\"cross-2\"],\"direction\":[0,0,1],\"distance\":0,\"batches\":[[\"rail-left\",\"rail-right\"],[\"cross-0\",\"cross-1\",\"cross-2\"]]},{\"id\":\"rear-drive\",\"name\":\"电驱动后桥总成\",\"parts\":[\"rear-mount-left\",\"rear-block-left\",\"rear-bearing-left\",\"rear-mount-right\",\"rear-block-right\",\"rear-bearing-right\",\"motor-case\",\"motor-rotor\",\"coupling-left\",\"halfshaft-left\",\"rear-hub-left\",\"rear-tire-left\",\"coupling-right\",\"halfshaft-right\",\"rear-hub-right\",\"rear-tire-right\"],\"direction\":[0,0,-1],\"distance\":100,\"batches\":[[\"rear-mount-left\",\"rear-mount-right\"],[\"rear-block-left\",\"rear-block-right\"],[\"motor-case\"],[\"motor-rotor\"],[\"coupling-left\",\"coupling-right\"],[\"rear-bearing-left\",\"rear-bearing-right\"],[\"halfshaft-left\",\"halfshaft-right\"],[\"rear-hub-left\",\"rear-hub-right\"],[\"rear-tire-left\",\"rear-tire-right\"]]},{\"id\":\"front-left\",\"name\":\"前转向轮组 · left\",\"parts\":[\"front-mount-left\",\"knuckle-left\",\"spindle-left\",\"front-hub-left\",\"front-tire-left\"],\"direction\":[0,0,-1],\"distance\":100,\"batches\":[[\"front-mount-left\"],[\"knuckle-left\"],[\"spindle-left\"],[\"front-hub-left\"],[\"front-tire-left\"]]},{\"id\":\"front-right\",\"name\":\"前转向轮组 · right\",\"parts\":[\"front-mount-right\",\"knuckle-right\",\"spindle-right\",\"front-hub-right\",\"front-tire-right\"],\"direction\":[0,0,-1],\"distance\":100,\"batches\":[[\"front-mount-right\"],[\"knuckle-right\"],[\"spindle-right\"],[\"front-hub-right\"],[\"front-tire-right\"]]},{\"id\":\"power\",\"name\":\"动力电池\",\"parts\":[\"battery\"],\"direction\":[0,0,1],\"distance\":100,\"batches\":[[\"battery\"]]}],\"checks\":{\"interference_status\":\"clear_at_static_pose\",\"collisions\":[],\"narrow_phase_pairs\":48,\"step_roundtrip_relative_volume_error\":1.0524370927403453e-14,\"step_roundtrip_bounds_error_mm\":1.4210854715202004e-14,\"total_mass_kg\":1.2218817270612132,\"limits\":\"静态装配姿态 B-rep 体积交集检查；不证明运动全过程或装配插入路径无碰撞。配合检查为名义尺寸，未含制造公差。轴承滚道/螺纹/预紧为简化。\",\"insertion\":{\"status\":\"clear_at_sampled_poses\",\"samples_per_step\":7,\"narrow_phase_pairs\":73,\"hits\":[],\"limits\":\"按声明的直线插入方向、距离和父先子后步骤，在每步7个时刻检查已安装零件；离散采样可能漏过薄障碍物或采样间穿透，不是连续碰撞/扫掠体证明。\"},\"plan_candidate\":null,\"groups\":{\"status\":\"clear_at_sampled_poses\",\"hits\":[],\"samples_per_group\":7,\"narrow_phase_pairs\":9,\"limits\":\"子总成以同一刚体平移，逐组检查已安装总成；内部零件相对位置不变。未检查连续扫掠路径。分组内部逐件装配另见 insertion。\",\"parallel_internal\":{\"status\":\"clear_at_sampled_poses\",\"hits\":[],\"samples_per_batch\":7,\"moving_pair_checks\":0,\"limits\":\"独立子总成工位内，每批次7时刻检查移动零件间及前序已装件；批内同时、批间顺序。不含其他总成或连续路径。\"}},\"operation\":{\"status\":\"clear_at_sampled_poses\",\"hits\":[],\"poses\":9,\"narrow_phase_pairs\":285,\"limits\":\"仅 -max/0/+max 转向与 0/45/90 度同相车轮的9个 B-rep 姿态；未穷举独立轮相位、转角、连续轨迹、轮胎接触和动力学。\"}},\"browser\":{\"status\":\"passed\",\"origin\":\"http://127.0.0.1:18283\",\"checks\":[\"real settings creates 32-part vehicle, all four native checks clear and initially paused\",\"single-piece assembly and incomplete vehicle blocks operation\",\"five rigid subassemblies integrate as groups\",\"isolated subassembly supports checked two-part concurrent batches and retained prior batches\",\"same subassembly can also be built piece by piece\",\"assembly playback advances, whole vehicle completion enables run\",\"Ackermann steering, distinct inner/outer wheel phases and pause\",\"reverse speed reverses wheel phase\",\"exploding or disassembling stops and resets operation\",\"static actual section available after operation reset\",\"vehicle CAD export downloads in sandbox\",\"mobile layout fits viewport\"],\"errors\":[],\"externalRequests\":[],\"model_calls\":0,\"url\":\"http://127.0.0.1:18283/api/anatomy/artifacts/a93a540517764714903728af839f9765\"},\"implementation\":\"Independent first-party bounded data factories. Single-part insertion; rigid whole subassemblies; sequential batches with simultaneous parts. Typed ideal Ackermann front pivots and independent wheel phases, ideal differential rotor uses mean rear speed. Body held fixed on a demonstration stand. Dynamic geometry uses world-space rigid transforms, no scripts in input. Python/JS numeric transforms match to 1e-9.\",\"limits\":[\"No full vehicle suspension or bodywork\",\"Differential internal gears, tie rods, fasteners and wire harness are simplified or omitted\",\"Motor/traction loads, tyre deformation and road contact are not solved\",\"Changing inspection scope restores completed pose; it is a teaching viewer, not manual snap-to-assemble game or assembly training record\",\"Nine co-phased wheel/steering native poses are not complete cycle or independent-phase collision certification\",\"Seven insertion samples can miss thin obstacles\",\"CAD valid export is not manufacturing certification\",\"No images supplied to this text reviewer\"]}"
+    },
+    "status": "SUCCEEDED",
+    "usage": {
+      "completion_tokens": 563,
+      "prompt_tokens": 1615,
+      "total_tokens": 2178
+    }
+  },
+  "normalization": "Removed one enclosing JSON fence; original response retained",
+  "review": {
+    "schema": "anatomy.vehicle.review.v1",
+    "evidence_mode": "data-only",
+    "visual_score": null,
+    "scores": {
+      "structure": 7.5,
+      "assembly_correctness": 7.0,
+      "kinematics": 6.5,
+      "usability_evidence": 8.0
+    },
+    "issues": [
+      "装配插入路径碰撞检测采用固定直线（每步7个离散采样点），缺乏连续扫掠体（swept-volume）检测，可能漏检薄壁障碍物或步间瞬态穿透。",
+      "运行运动学仅对9个离散姿态（3种转角×3种同相轮位）完成B-rep干涉检查，未穷举独立轮相位、全转角域及连续轨迹干涉。",
+      "结构定义为教学级刚体简化模型，省略了真实差速器行星齿轮组、转向拉杆、悬架系统、紧固件与线束，不能等同于工程/制造级完整结构。",
+      "动力学未求解实际电机负载、传动载荷、轮胎形变及地面接触约束，仅为理想阿克曼几何与刚体运动学回放。"
+    ],
+    "improvements": [
+      "将装配干涉检测升级为连续碰撞检测（CCD）或扫掠体交集计算，避免基于固定步长的离散采样盲区。",
+      "扩充运动干涉验证范围，覆盖独立车轮相位扫掠与转向行程连续扫掠判定。",
+      "逐步补全转向机构物理约束（如转向节拉杆闭环）与后桥差速器内部啮合机构的刚体表达。",
+      "在导出或说明中明确标注公差等级与简化件清单，避免用户误将教学级STEP/CAD导出视为可量产合规件。"
+    ],
+    "unverified": [
+      "未提供视觉截图或3D渲染输出，视觉渲染质量与UI实际外观完全未验证。",
+      "名义尺寸下的B-rep无干涉无法保证在实际制造公差、装配间隙和形变下的可装配性。",
+      "任意复杂拓扑或自由生成车辆的装配规划鲁棒性未在此单一32件固定样例中得到验证。",
+      "真实工况下的结构强度、刚度、疲劳寿命及动载荷特性未验证。"
+    ]
+  },
+  "technical_score": 7.25,
+  "usage": [
+    {
+      "billing": {
+        "amount": 0.0033225,
+        "currency": "USD",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        },
+        "reason": "token_rates"
+      },
+      "connection_label": "Google Vertex",
+      "created": 1792747983.5643747,
+      "error": null,
+      "id": 25,
+      "key_label": "原有凭据 · v1",
+      "model": "gemini-3.8-flash",
+      "provider": "vertex",
+      "status": "SUCCEEDED",
+      "turn_id": "anatomy-vehicle-review-699bb5fdf11f4293abfe97fb2e4f2d03",
+      "usage": {
+        "completion_tokens": 563,
+        "prompt_tokens": 1615,
+        "total_tokens": 2178
+      }
+    }
+  ]
+}

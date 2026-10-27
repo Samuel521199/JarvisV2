@@ -59,20 +59,24 @@ def pending(root,ident,exc):
 
 def publish_reply(root,chat,turn):
     if turn['status']!='SUCCEEDED' or not turn['reply']: return
+    if turn.get('memory_context') and decode(turn['memory_context']).get('redacted'):return
     ensure(root,chat,write=True); sessions=Sessions(root)
     try: sessions.publish(chat['id'],'replies/'+component(turn['id'])+'.md',turn['reply'].encode())
     finally: sessions.close()
 
 
 def deliver_task(core,task_id):
-    link=core.db.one('SELECT g.chat_id FROM chat_goals g JOIN goal_plans p ON g.goal_id=p.id WHERE p.task_id=?',(task_id,))
+    link=core.db.one('''SELECT g.chat_id FROM goal_plans p LEFT JOIN work_revisions r ON r.goal_id=p.id
+        JOIN chat_goals g ON g.goal_id=COALESCE(r.root_goal,p.id) WHERE p.task_id=?''',(task_id,))
     if not link: return
     chats=Dialogues(core.root); sessions=Sessions(core.root)
     try:
         chat=chats.read(link['chat_id']); ensure(core.root,chat,write=True)
         for action in core.tasks.actions(task_id):
             if action['capability']!='artifact.write.v1' or action['status']!='CONFIRMED': continue
-            result=decode(action['result']); path=child(core.root,result['relative_path'])
+            result=decode(action['result'])
+            if result.get('redacted'):continue
+            path=child(core.root,result['relative_path'])
             if not path.is_file() or path.stat().st_size>2000000: raise CoreError('session_output_invalid','Original artifact is unavailable')
             raw=path.read_bytes()
             if hashlib.sha256(raw).hexdigest()!=result['sha256']: raise CoreError('session_output_invalid','Original artifact changed')
@@ -98,7 +102,8 @@ def command(root,value):
             from host.core import Core
             core=Core(root)
             try:
-                for row in core.db.all('SELECT p.task_id FROM chat_goals g JOIN goal_plans p ON p.id=g.goal_id WHERE g.chat_id=? AND p.task_id IS NOT NULL',(chat['id'],)):
+                for row in core.db.all('''SELECT p.task_id FROM goal_plans p LEFT JOIN work_revisions r ON r.goal_id=p.id
+                    JOIN chat_goals g ON g.goal_id=COALESCE(r.root_goal,p.id) WHERE g.chat_id=? AND p.task_id IS NOT NULL''',(chat['id'],)):
                     deliver_task(core,row['task_id'])
             finally: core.close()
             sessions.delivery_error(chat['id'],None)

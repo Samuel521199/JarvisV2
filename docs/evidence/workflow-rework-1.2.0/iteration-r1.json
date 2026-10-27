@@ -1,0 +1,9 @@
+{
+  "passed": false,
+  "run": 21,
+  "failures": 1,
+  "errors": 19,
+  "cause": "Source reader decoded Ledger.get()['bindings'] twice; Ledger already returns a dict. All 19 errors and the crash-helper exit failure arose from that reader.",
+  "fix": "Consume the existing typed Ledger projection; no gate or assertion removed.",
+  "limitation": "Recorded after the console test run; not a contemporaneous complete case log. The next run records every case."
+}

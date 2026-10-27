@@ -1,0 +1,162 @@
+{
+  "checks": [
+    "One approval HTTP request persists execution; no second start request is needed"
+  ],
+  "errors": [],
+  "requests": [
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-bb43d444e9324ad0aeeb40bd1a9a904d"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "approve_and_run",
+        "id": "goal-bb43d444e9324ad0aeeb40bd1a9a904d",
+        "revision": 2,
+        "budget_limit": 8
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-bb43d444e9324ad0aeeb40bd1a9a904d"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-bb43d444e9324ad0aeeb40bd1a9a904d"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-338c014fc03d4cc9942bf228847b78e9"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "approve_and_run",
+        "id": "goal-338c014fc03d4cc9942bf228847b78e9",
+        "revision": 2,
+        "acceptance": {
+          "coverage": "complete",
+          "criteria": [
+            {
+              "id": "declared-result",
+              "step_id": "step-1",
+              "check": "text_contains",
+              "expected": "最低报价：B"
+            }
+          ],
+          "requirements": [
+            {
+              "id": "requirement-1",
+              "text": "预算最多100",
+              "kind": "semantic",
+              "criterion_ids": [
+                "declared-result"
+              ]
+            },
+            {
+              "id": "requirement-2",
+              "text": "交付不超过5天",
+              "kind": "semantic",
+              "criterion_ids": [
+                "declared-result"
+              ]
+            }
+          ]
+        },
+        "budget_limit": 8
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-338c014fc03d4cc9942bf228847b78e9"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-338c014fc03d4cc9942bf228847b78e9"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-338c014fc03d4cc9942bf228847b78e9"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-338c014fc03d4cc9942bf228847b78e9"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-338c014fc03d4cc9942bf228847b78e9"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-338c014fc03d4cc9942bf228847b78e9"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-338c014fc03d4cc9942bf228847b78e9"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-338c014fc03d4cc9942bf228847b78e9"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-338c014fc03d4cc9942bf228847b78e9"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-338c014fc03d4cc9942bf228847b78e9"
+      }
+    },
+    {
+      "url": "/api/goals",
+      "body": {
+        "action": "detail",
+        "id": "goal-338c014fc03d4cc9942bf228847b78e9"
+      }
+    }
+  ],
+  "passed": false,
+  "failure": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: '刷新详情', exact: true })\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\">刷新详情</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <dialog open=\"\" class=\"\" id=\"modal\">…</dialog> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <dialog open=\"\" class=\"\" id=\"modal\">…</dialog> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    58 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is visible, enabled and stable\u001b[22m\n\u001b[2m       - scrolling into view if needed\u001b[22m\n\u001b[2m       - done scrolling\u001b[22m\n\u001b[2m       - <dialog open=\"\" class=\"\" id=\"modal\">…</dialog> intercepts pointer events\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\n    at D:\\Jarvis\\tools\\probe_handoff_ui.cjs:24:59"
+}

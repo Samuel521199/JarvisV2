@@ -1,0 +1,28 @@
+{
+  "schema": "jarvis.memory-evaluation-plan.v1",
+  "status": "proposed",
+  "version": "2026-10-23-r1",
+  "implemented_evaluator": false,
+  "thresholds": {
+    "candidate_precision_min": 0.97,
+    "candidate_recall_min": 0.9,
+    "retrieval_recall_at_5_min": 0.9,
+    "answer_evidence_support_min": 0.98,
+    "end_to_end_answer_correct_min": 0.9,
+    "no_answer_handling_min": 0.95,
+    "scope_leaks_max": 0,
+    "revoked_data_resurrections_max": 0,
+    "unverified_false_promotions_max": 0
+  },
+  "generative_repetitions_min": 3,
+  "datasets": {
+    "retrieval_development_min": 60,
+    "retrieval_holdout_min": 30,
+    "extraction_development_min": 120,
+    "extraction_holdout_min": 60,
+    "additional_domain_development_min": 10,
+    "additional_domain_holdout_min": 5
+  },
+  "dataset_hashes": null,
+  "note": "Freeze independent source-disjoint datasets and execution configuration before tuning; requirements are not measured outcomes."
+}

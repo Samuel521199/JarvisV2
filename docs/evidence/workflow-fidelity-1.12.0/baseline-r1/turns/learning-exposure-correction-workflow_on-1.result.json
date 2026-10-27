@@ -1,0 +1,107 @@
+{
+  "case_id": "learning-exposure-correction",
+  "domain": "learning",
+  "arm": "workflow_on",
+  "turn": 1,
+  "freeze_digest": "a52aaec59d40f9e1f3c82f05a3bd88696e584a44414e87baa4ea158c77826424",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\"independent_mastery\":false,\"delayed_retention\":null,\"evidence\":{\"facts\":[{\"source\":\"F2\",\"quote\":\"学习者尚未阅读过去式讲解。\"}],\"plans\":[{\"source\":\"P1\",\"quote\":\"周日19点独立回忆过去式，练习10分钟。\"}],\"suggestions\":[]},\"document\":\"## 事实\\n- [F2] 学习者尚未阅读过去式讲解。\\n\\n## 已确认计划\\n- [P1] 周日19点独立回忆过去式，练习10分钟。\\n\\n## 建议（未采纳）\\n- 无\"}",
+  "skill_id": "english-coach",
+  "skill_version": "1.0.0",
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 4.8796,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 175,
+        "prompt_tokens": 1887,
+        "total_tokens": 2062
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.0020715,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/learning-exposure-correction-workflow_on-1.native.json",
+      "sha256": "60da1fe30303b1ecc67d83a7df3473385d1f032f44d89de02f6158e183475679",
+      "kind": "native_protocol_response"
+    },
+    {
+      "file": "artifacts/learning-exposure-correction-workflow_on-1.reply.md.txt",
+      "sha256": "d4cbe665c9f345bc2b09b60c19f2b5ec8e396261b62bef56a354777da01cccc5",
+      "kind": "original_session_reply"
+    },
+    {
+      "file": "artifacts/learning-exposure-correction-workflow_on-1.document.md.txt",
+      "sha256": "2bd8a900b4343b8f6c155734aa4b2dc236ad42aa3aee380a2ba48b011954f8cd",
+      "kind": "verbatim_document_field_from_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "independent_mastery",
+        "status": "passed"
+      },
+      {
+        "id": "delayed_retention",
+        "status": "passed"
+      },
+      {
+        "id": "document_present",
+        "status": "passed"
+      },
+      {
+        "id": "body_shape",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_document_parity",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "record_digest": "15efb6d21c4e4df099397d4e6c6aff7fc00704b62c374edb496bab363cfcefa6"
+}

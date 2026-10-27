@@ -1,0 +1,264 @@
+{
+  "schema_version": 1,
+  "type": "documentation-research",
+  "date": "2026-10-26",
+  "topic": "持续学习、知识贡献、条件化经验与改造退化处理",
+  "design_status": "proposed",
+  "runtime_changes": false,
+  "business_experiments_run": false,
+  "new_performance_results": null,
+  "research_sources": [
+    {
+      "id": "S385",
+      "title": "ReasoningBank",
+      "urls": [
+        "https://arxiv.org/abs/2509.25140",
+        "https://www.research.google/blog/reasoningbank-enabling-agents-to-learn-from-experience/"
+      ],
+      "use": "从成功与失败中提炼可复用方法；自评与简单追加不作为正确性或整库治理已经解决的证据"
+    },
+    {
+      "id": "S386",
+      "title": "Agentic Context Engineering",
+      "urls": [
+        "https://arxiv.org/html/2510.04618v1"
+      ],
+      "use": "条目化增量与上下文保真；不将反馈计数当因果证据"
+    },
+    {
+      "id": "S387",
+      "title": "Self-RAG",
+      "urls": [
+        "https://arxiv.org/abs/2310.11511"
+      ],
+      "use": "按需检索与核对；设计借鉴不等于复现专门训练方法"
+    },
+    {
+      "id": "S388",
+      "title": "Lost in the Middle",
+      "urls": [
+        "https://aclanthology.org/2024.tacl-1.9/"
+      ],
+      "use": "长上下文使用可能受位置影响；不外推原模型上的定量成绩"
+    },
+    {
+      "id": "S389",
+      "title": "Google SRE Canarying Releases",
+      "urls": [
+        "https://sre.google/workbook/canarying-releases/"
+      ],
+      "use": "限定范围与对照、共享数据污染边界"
+    }
+  ],
+  "local_code_read_only": [
+    {
+      "path": "modules/context_knowledge/retrieval.py",
+      "sha256": "e3e93795b9cda722ce9552ad0ec73b59f9f0795aa4a329aa3b77c6b6baafb49e"
+    },
+    {
+      "path": "modules/context_knowledge/claims.py",
+      "sha256": "88274fc9831d13d843a7dcfd78bd72b30c4313135dc163fc6999e03f212871bc"
+    },
+    {
+      "path": "host/goal_context.py",
+      "sha256": "5f98fa1975cc6a4bcaf032055a5780c3d400976003683bb76a052173c132afc5"
+    },
+    {
+      "path": "host/knowledge.py",
+      "sha256": "02588662c7428074330c9380e63e7cc9ac467c9c636ea676a999607750b14c72"
+    }
+  ],
+  "implementation_boundary": "现有检索、引用候选与失效检查为局部基础；本轮未运行或签收持续归纳、知识净收益、长期防退化、候选隔离与恢复的业务验收。",
+  "forecast_preservation": {
+    "path": "docs/evidence/assistant-forecast-r1-2026-10-26.json",
+    "before_sha256": "035f34e43b8b1f7c974202c0820fef905abe86674c5089be6be28a44a76ef66f",
+    "after_sha256": "035f34e43b8b1f7c974202c0820fef905abe86674c5089be6be28a44a76ef66f",
+    "unchanged": true,
+    "baseline_and_actual_not_filled": true
+  },
+  "new_validation_cases": {
+    "ids": [
+      "V-KLG-01",
+      "V-KLG-02",
+      "V-KLG-03",
+      "V-KLG-04",
+      "V-KLG-05",
+      "V-KLG-06",
+      "V-KLG-07",
+      "V-KLG-08",
+      "V-KLG-09",
+      "V-KLG-10"
+    ],
+    "status": "NOT_RUN"
+  },
+  "knowledge_ablation": {
+    "configs": [
+      "ABL-0",
+      "ABL-1",
+      "ABL-2",
+      "ABL-3",
+      "ABL-4",
+      "ABL-5"
+    ],
+    "status": "NOT_RUN",
+    "purpose": "控制当前任务必要资料和其他能力，测量知识各层的条件性边际贡献及交互"
+  },
+  "hypothetical_examples": [
+    "Q=82 到 70 再到 84 仅演示研究与采用分开判断",
+    "每题 10000 到 4000 token、形成成本 12000、10 次净省 48% 仅算术示例"
+  ],
+  "diagram_render_receipt": "docs/evidence/learning-knowledge-render-2026-10-26.json",
+  "visual_review": {
+    "method": "view_image 检视两张实际生成 PNG",
+    "status": "PASS",
+    "notes": "中文可读、文字完整、节点与连线清楚、无可见裁切；图示流程和正文一致。"
+  },
+  "authority_sections": {
+    "docs/knowledge-learning.md": [
+      "knowledge-compounding",
+      "knowledge-value-layers",
+      "experience-consolidation",
+      "conditional-experience-routing",
+      "knowledge-anti-dogmatism",
+      "knowledge-order-and-health",
+      "knowledge-token-economics"
+    ],
+    "docs/evolution-release.md": [
+      "growth-regression-policy",
+      "growth-three-evidence-views",
+      "growth-regression-triage",
+      "growth-stable-candidate",
+      "growth-recovery-vector"
+    ],
+    "docs/delivery-validation.md": [
+      "learning-value-validation",
+      "knowledge-value-ablation",
+      "learning-transfer-cases",
+      "learning-nonregression-gates",
+      "learning-validation-cases"
+    ],
+    "docs/references.md": [
+      "learning-compounding-sources"
+    ],
+    "docs/grok-bot-comparison.md": [
+      "jarvis-learning-deepening",
+      "jarvis-learning-definition",
+      "jarvis-regression-analysis",
+      "jarvis-knowledge-contribution",
+      "jarvis-conditional-learning",
+      "jarvis-knowledge-cost-and-order",
+      "jarvis-learning-implementation"
+    ],
+    "docs/architecture-atlas.md": [
+      "figure-assistant-growth-regression",
+      "figure-assistant-knowledge-reuse"
+    ]
+  },
+  "checks": {
+    "navigation_sync": {
+      "status": "PASS",
+      "command": "python tools/sync_doc_navigation.py --root .",
+      "output": "OK navigation: 0 updated"
+    },
+    "documentation_check": {
+      "status": "PASS",
+      "command": "python tools/check_docs.py --root .",
+      "output": "OK documents=28 chapters=24 diagrams=44 local_links=3116 errors=0"
+    },
+    "scoped_diff_check": {
+      "status": "PASS",
+      "command": "git diff --check -- <listed documentation scope>",
+      "paths": [
+        "README.md",
+        "docs/MAINTENANCE.md",
+        "docs/architecture-atlas.md",
+        "docs/core-bootstrap.md",
+        "docs/delivery-validation.md",
+        "docs/evolution-release.md",
+        "docs/knowledge-learning.md",
+        "docs/manifest.json",
+        "docs/memory-cognition-design.md",
+        "docs/references.md",
+        "docs/grok-bot-comparison.md",
+        "tools/render_memory_diagrams.cjs"
+      ],
+      "output": ""
+    },
+    "encoding_check": {
+      "status": "PASS",
+      "scope": [
+        "README.md",
+        "docs/MAINTENANCE.md",
+        "docs/architecture-atlas.md",
+        "docs/core-bootstrap.md",
+        "docs/delivery-validation.md",
+        "docs/evolution-release.md",
+        "docs/knowledge-learning.md",
+        "docs/manifest.json",
+        "docs/memory-cognition-design.md",
+        "docs/references.md",
+        "docs/grok-bot-comparison.md",
+        "tools/render_memory_diagrams.cjs"
+      ]
+    },
+    "new_diagram_source_artifact_hashes": {
+      "status": "PASS",
+      "receipt": "docs/evidence/learning-knowledge-render-2026-10-26.json"
+    },
+    "frozen_forecast_digest": {
+      "status": "PASS",
+      "unchanged": true
+    }
+  },
+  "artifact_digests": [
+    {
+      "path": "README.md",
+      "sha256": "658f6057e567fd14485203441b2976c5b74654331240a7c09c6cccbe0f8c9c4b"
+    },
+    {
+      "path": "docs/MAINTENANCE.md",
+      "sha256": "5e142b646aea18c7867596ad05f940baf9b452809afc0a6bfb3d4572c392e181"
+    },
+    {
+      "path": "docs/architecture-atlas.md",
+      "sha256": "87d522ecf35dc9b9522acbee31a7bb22641450bd59a6ca74578fae79d15b2065"
+    },
+    {
+      "path": "docs/core-bootstrap.md",
+      "sha256": "afdd15f0bf1435de0e567be9dad79d633eb1af3e9646e94557176609ef4299d0"
+    },
+    {
+      "path": "docs/delivery-validation.md",
+      "sha256": "e500e95c313f7ec8555c35bdd78de9c95273f555bc86c56c4e4436b68828a56b"
+    },
+    {
+      "path": "docs/evolution-release.md",
+      "sha256": "41b2d3280b88ef78efcf21e7962f5dda99fab62190c7fbf1d85208b276ef46bb"
+    },
+    {
+      "path": "docs/knowledge-learning.md",
+      "sha256": "82995a71d99394708aa7737eaa9c3591f020338684cdfbd2aab6f3f854be0497"
+    },
+    {
+      "path": "docs/manifest.json",
+      "sha256": "914d558d61194faebaee0ef6d2521fdae6990f79d79a7a9c8c5c5eab1bbd79fd"
+    },
+    {
+      "path": "docs/memory-cognition-design.md",
+      "sha256": "348d6c70b68f90612aff288050ed7158b0ee5319b2681e993d31e2c5d6ec08d9"
+    },
+    {
+      "path": "docs/references.md",
+      "sha256": "f8541c0a172f40176b964cdac245caa8df34f4892da380e45bdc00114a2af8a8"
+    },
+    {
+      "path": "docs/grok-bot-comparison.md",
+      "sha256": "946ceff4f4f47adddabe897871ff20aaa84366d9a690df4cf79f0f379110b773"
+    },
+    {
+      "path": "tools/render_memory_diagrams.cjs",
+      "sha256": "f7af8521aa893a0cfd25296aa461ad159efc93a163e3ee776f45e3ccb9ecdb40"
+    }
+  ],
+  "completed_at": "2026-10-26T09:14:23.144699+00:00"
+}

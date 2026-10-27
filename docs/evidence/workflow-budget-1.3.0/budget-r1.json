@@ -1,0 +1,111 @@
+{
+  "passed": false,
+  "run": 19,
+  "failures": 1,
+  "errors": 0,
+  "skipped": 0,
+  "seconds": 54.102,
+  "cases": [
+    {
+      "id": "test_work_budgets.WorkBudgetsTest.test_approval_retry_uses_original_selection_after_explicit_budget_update",
+      "status": "PASS",
+      "seconds": 1.3502
+    },
+    {
+      "id": "test_work_budgets.WorkBudgetsTest.test_budget_increase_does_not_change_grants_or_execute_draft",
+      "status": "PASS",
+      "seconds": 3.2833
+    },
+    {
+      "id": "test_work_budgets.WorkBudgetsTest.test_budget_is_not_a_replacement_for_revoked_execution_grant",
+      "status": "FAIL",
+      "seconds": 2.7766
+    },
+    {
+      "id": "test_work_budgets.WorkBudgetsTest.test_budget_request_id_and_revision_survive_later_changes",
+      "status": "PASS",
+      "seconds": 2.7577
+    },
+    {
+      "id": "test_work_budgets.WorkBudgetsTest.test_cancelled_root_cannot_receive_fresh_budget_or_reactivate",
+      "status": "PASS",
+      "seconds": 2.8262
+    },
+    {
+      "id": "test_work_budgets.WorkBudgetsTest.test_concurrent_budget_edits_compare_revision",
+      "status": "PASS",
+      "seconds": 2.7173
+    },
+    {
+      "id": "test_work_budgets.WorkBudgetsTest.test_dispatch_transaction_rechecks_root_budget_before_original_charge",
+      "status": "PASS",
+      "seconds": 2.7788
+    },
+    {
+      "id": "test_work_budgets.WorkBudgetsTest.test_effect_boundary_stops_if_budget_evidence_changes_after_charge",
+      "status": "PASS",
+      "seconds": 2.8751
+    },
+    {
+      "id": "test_work_budgets.WorkBudgetsTest.test_exact_total_is_shared_across_followup_versions",
+      "status": "PASS",
+      "seconds": 3.024
+    },
+    {
+      "id": "test_work_budgets.WorkBudgetsTest.test_insufficient_root_budget_rolls_back_new_grant_task_and_queue",
+      "status": "PASS",
+      "seconds": 2.817
+    },
+    {
+      "id": "test_work_budgets.WorkBudgetsTest.test_invalid_or_insufficient_initial_limits_rollback_all_admission",
+      "status": "PASS",
+      "seconds": 1.2773
+    },
+    {
+      "id": "test_work_budgets.WorkBudgetsTest.test_lowering_cannot_steal_reservation_and_cancel_releases_unused",
+      "status": "PASS",
+      "seconds": 2.8978
+    },
+    {
+      "id": "test_work_budgets.WorkBudgetsTest.test_missing_reservation_is_not_recreated_by_budget_edit",
+      "status": "PASS",
+      "seconds": 2.8319
+    },
+    {
+      "id": "test_work_budgets.WorkBudgetsTest.test_pre_dispatch_failure_releases_reservation_without_faking_spend",
+      "status": "PASS",
+      "seconds": 3.3499
+    },
+    {
+      "id": "test_work_budgets.WorkBudgetsTest.test_real_process_crash_around_reservation_is_atomic",
+      "status": "PASS",
+      "seconds": 3.4932
+    },
+    {
+      "id": "test_work_budgets.WorkBudgetsTest.test_reservation_becomes_original_ledger_spend_and_draft_costs_nothing",
+      "status": "PASS",
+      "seconds": 3.3664
+    },
+    {
+      "id": "test_work_budgets.WorkBudgetsTest.test_restart_and_approval_retries_do_not_double_reserve_or_charge",
+      "status": "PASS",
+      "seconds": 2.8086
+    },
+    {
+      "id": "test_work_budgets.WorkBudgetsTest.test_schema_upgrade_preserves_legacy_inflight_then_requires_explicit_adoption",
+      "status": "PASS",
+      "seconds": 3.359
+    },
+    {
+      "id": "test_work_budgets.WorkBudgetsTest.test_unknown_even_after_cancel_keeps_unconfirmed_reservation",
+      "status": "PASS",
+      "seconds": 3.4183
+    }
+  ],
+  "failure_details": [
+    {
+      "id": "test_work_budgets.WorkBudgetsTest.test_budget_is_not_a_replacement_for_revoked_execution_grant",
+      "trace": "Traceback (most recent call last):\n  File \"D:\\Jarvis\\tests\\test_work_budgets.py\", line 157, in test_budget_is_not_a_replacement_for_revoked_execution_grant\n    self.assertEqual(self.core.tasks.actions(new),[])\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Lists differ: [{'id': 'action-a4c03604eea061b50182b67fff[293 chars]one}] != []\n\nFirst list contains 1 additional elements.\nFirst extra element 0:\n{'id': 'action-a4c03604eea061b50182b67fffdcbb8a', 'task_id': 'task-bcee4db6f2c84b4ea0a2c175b759aa82', 'step_id': 'step-1', 'capability': 'plugin.upper.v1', 'arguments': '{\"text\":\"JARVIS 中文\"}', 'digest': '7fa747bffa102b645af2d6d269c2f175d6e6e565b50ac07cca6bcca54c63177b', 'status': 'PREPARED', 'attempts': 0, 'result': None, 'error': None}\n\n+ []\n- [{'arguments': '{\"text\":\"JARVIS 中文\"}',\n-   'attempts': 0,\n-   'capability': 'plugin.upper.v1',\n-   'digest': '7fa747bffa102b645af2d6d269c2f175d6e6e565b50ac07cca6bcca54c63177b',\n-   'error': None,\n-   'id': 'action-a4c03604eea061b50182b67fffdcbb8a',\n-   'result': None,\n-   'status': 'PREPARED',\n-   'step_id': 'step-1',\n-   'task_id': 'task-bcee4db6f2c84b4ea0a2c175b759aa82'}]\n"
+    }
+  ]
+}

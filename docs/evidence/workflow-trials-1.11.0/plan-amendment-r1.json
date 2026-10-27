@@ -1,0 +1,19 @@
+{
+  "reason": "First live run stopped after three incomplete model replies; usage shows 1724-1725 reasoning tokens plus 71-72 reply tokens against an 1800 output ceiling",
+  "preserve": "live-r1 freeze, all 10 attempts, costs and routing failures remain unchanged",
+  "next_live_round": {
+    "same_model": "vertex/gemini-3.8-flash",
+    "reasoning": "low",
+    "max_output_tokens": 4096,
+    "max_calls": 24,
+    "suite_and_gold": "unchanged",
+    "automatic_retry": false,
+    "cross_round_causal_comparison": false
+  },
+  "measurement_fixes": [
+    "Known failed delivery is FAIL with quality unknown; UNKNOWN/cancel remain unmeasured",
+    "A failed early check plus a missing later turn cannot count as a complete pair",
+    "Differentiate output limit/protocol/routing/content/delivery instead of calling every failure transport"
+  ],
+  "change_kind": "Collector correctness and new experiment configuration, not weakening original task criteria or changing production model defaults"
+}

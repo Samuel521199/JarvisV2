@@ -30,12 +30,17 @@ def atomic(path, raw):
 
 
 def configuration(value):
-    fields={'text','requirements','skill','enabled','attachments','memory','selection','reasoning','mode'}
+    fields={'text','requirements','skill','enabled','attachments','memory','selection','reasoning','mode','delivery_basis'}
     if not isinstance(value,dict) or set(value)-fields: raise CoreError('session_config_invalid','Unknown session configuration')
     for key,limit in {'text':12000,'requirements':2000,'skill':100,'reasoning':30,'mode':20}.items():
         if key in value and (not isinstance(value[key],str) or len(value[key])>limit): raise CoreError('session_config_invalid','Invalid session text')
     for key in ('enabled','memory'):
         if key in value and type(value[key]) is not bool: raise CoreError('session_config_invalid','Expected boolean')
+    basis=value.get('delivery_basis')
+    if basis is not None and (not isinstance(basis,dict) or set(basis)!={'enabled','expected_revision','facts','plans'}
+            or type(basis['enabled']) is not bool or type(basis['expected_revision']) is not int or basis['expected_revision']<0
+            or any(not isinstance(basis[k],str) or len(basis[k])>6000 for k in ('facts','plans'))):
+        raise CoreError('session_config_invalid','Invalid delivery basis draft')
     selection=value.get('selection')
     if selection is not None and (not isinstance(selection,dict) or set(selection)!={'provider','model'} or any(not isinstance(v,str) or len(v)>200 for v in selection.values())):
         raise CoreError('session_config_invalid','Only model identifiers belong in the session')
@@ -55,6 +60,7 @@ class Sessions:
         self.db.execute('PRAGMA synchronous=FULL')
         self.db.execute('CREATE TABLE IF NOT EXISTS session_folders(chat_id TEXT PRIMARY KEY,project_id TEXT NOT NULL,path TEXT UNIQUE NOT NULL)')
         self.db.execute('CREATE TABLE IF NOT EXISTS session_delivery_errors(chat_id TEXT PRIMARY KEY,error TEXT NOT NULL)')
+        self.db.execute('CREATE TABLE IF NOT EXISTS session_retractions(chat_id TEXT NOT NULL,relative TEXT NOT NULL,PRIMARY KEY(chat_id,relative))')
 
     def close(self): self.db.close()
 
@@ -121,6 +127,8 @@ class Sessions:
     def publish(self,ident,relative,raw):
         if not isinstance(raw,bytes) or len(raw)>2000000: raise CoreError('session_output_invalid','Result is too large')
         with LOCK:
+            if self.db.execute('SELECT 1 FROM session_retractions WHERE chat_id=? AND relative=?',(ident,relative)).fetchone():
+                raise CoreError('session_output_retracted','This projection was withdrawn and cannot be republished')
             path=child(self.path(ident),relative); path.parent.mkdir(parents=True,exist_ok=True)
             if path.exists():
                 if path.stat().st_size!=len(raw) or path.read_bytes()!=raw: raise CoreError('session_output_conflict','Existing result has changed; it will not be overwritten')
@@ -129,6 +137,23 @@ class Sessions:
                 # A partial write is detected on retry and is never silently overwritten.
                 with path.open('xb') as file: file.write(raw); file.flush(); os.fsync(file.fileno())
             return {'path':str(path),'sha256':hashlib.sha256(raw).hexdigest(),'bytes':len(raw)}
+
+    def retract_reply(self,ident,turn_id,expected_sha):
+        relative='replies/'+component(turn_id)+'.md'
+        return self.retract_projection(ident,relative,expected_sha)
+
+    def retract_projection(self,ident,relative,expected_sha):
+        with LOCK:
+            # Persist the delivery latch before touching a file. A crash cannot
+            # cause normal sync to republish a withdrawn response.
+            self.db.execute('INSERT OR IGNORE INTO session_retractions VALUES(?,?)',(component(ident),relative))
+            if not self.db.execute('SELECT 1 FROM session_folders WHERE chat_id=?',(ident,)).fetchone():return 'absent'
+            path=child(self.path(ident),relative)
+            if not path.exists():return 'absent'
+            if not path.is_file() or path.stat().st_size>2000000 or hashlib.sha256(path.read_bytes()).hexdigest()!=expected_sha:
+                return 'modified_preserved'
+            reject_links(path);path.unlink()
+            return 'cleared'
 
     def files(self,ident):
         path=self.path(ident); result=[]

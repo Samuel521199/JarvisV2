@@ -1,0 +1,38 @@
+{
+  "created_at": "2026-10-27T09:48:55.552775+00:00",
+  "kind": "posthoc_assistant_semantic_review",
+  "independent_human_reference": false,
+  "formal_quality_score": null,
+  "frozen_checks_changed": false,
+  "scope": "Read delivered workflow-on document bodies from r3/r4; r3 correction follow-up timed out. This is limited qualitative issue finding, not semantic coverage certification.",
+  "findings": [
+    {
+      "id": "TRIAL-SEM-01",
+      "evidence": {
+        "path": "live-r4/turns/document-correction-workflow_on-0.result.json",
+        "sha256": "2edb0bb9f1490aabd127fc2b92d40afa50d79ffb4a49c12ccebc146a1b681fb3"
+      },
+      "input": "贴图烘焙失败",
+      "output_excerpt": "贴图烘焙过程出现异常中断",
+      "finding": "异常中断 is not established by the source; distinguish source fact, hypothesis and suggested checks.",
+      "priority": "next_candidate",
+      "status": "OPEN"
+    },
+    {
+      "id": "TRIAL-SEM-02",
+      "evidence": {
+        "path": "live-r4/turns/document-correction-workflow_on-1.result.json",
+        "sha256": "1ec3428099dcac0ad6e1c013f4a0ac879f4f5e852afb77f6874024d23d8fa3f6"
+      },
+      "input": "明天计划排查；修订只更正阅读时间与烘焙状态并保留其他事实",
+      "output_excerpt": "启动并执行贴图烘焙流程",
+      "finding": "Revised document drops the original tomorrow constraint and changes planned investigation to execution. A possible plan change after factual correction must be marked as a suggestion or unresolved conflict, not silently replace the confirmed plan.",
+      "priority": "next_candidate",
+      "status": "OPEN"
+    }
+  ],
+  "why_field_checks_missed": "Fixture checks current structured facts and presence of document text; it does not validate all prose claims or preservation of plan/time constraints.",
+  "next_acceptance": "Freeze new semantic requirements before a new candidate; test unseen factual corrections, changed plans and contradictions across all three domains; use independent review and record false acceptance/rejection. Preserve current frozen scores and failures.",
+  "knowledge_writeback": false,
+  "production_deployed": false
+}

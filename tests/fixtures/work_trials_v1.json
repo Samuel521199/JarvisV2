@@ -1,0 +1,232 @@
+{
+  "schema": "jarvis.work-trials.v1",
+  "origin": "synthetic",
+  "provenance": "First-party synthetic Chinese requests; six distinct scenarios, fixed references; no real user performance or learning evidence.",
+  "cases": [
+    {
+      "id": "quote-eligible",
+      "domain": "comparison",
+      "skill": "none",
+      "turns": [
+        {
+          "prompt": "仅依据给定报价比较：预算不超过100元、交期不超过5天。A:90元/4天/S-A；B:80元/3天/S-B；C:75元/7天/S-C。列出全部合格项，选择最低价，保留所选来源；没有合格项时两个选择字段为null。字段eligible_ids、selected_id、selected_source。\n本轮只在回复中输出一个JSON对象（不加解释前后缀），不创建执行任务、不联网或安排提醒。",
+          "expected": {
+            "eligible_ids": [
+              "A",
+              "B"
+            ],
+            "selected_id": "B",
+            "selected_source": "S-B"
+          },
+          "unordered": [
+            "eligible_ids"
+          ],
+          "text_fields": [],
+          "forbidden": {}
+        }
+      ]
+    },
+    {
+      "id": "quote-empty",
+      "domain": "comparison",
+      "skill": "none",
+      "turns": [
+        {
+          "prompt": "仅依据给定报价比较：预算不超过100元、交期不超过5天。A:120元/3天/S-A；B:90元/8天/S-B。列出全部合格项，选择最低价，保留所选来源；没有合格项时两个选择字段为null。字段eligible_ids、selected_id、selected_source。\n本轮只在回复中输出一个JSON对象（不加解释前后缀），不创建执行任务、不联网或安排提醒。",
+          "expected": {
+            "eligible_ids": [],
+            "selected_id": null,
+            "selected_source": null
+          },
+          "unordered": [
+            "eligible_ids"
+          ],
+          "text_fields": [],
+          "forbidden": {}
+        }
+      ]
+    },
+    {
+      "id": "document-correction",
+      "domain": "documents",
+      "skill": "journal-review",
+      "turns": [
+        {
+          "prompt": "整理研发日志并给Markdown日报。S1：2026-10-27，阅读20分钟，模型渲染完成，贴图烘焙失败。明天计划排查。JSON字段document（Markdown正文）、minutes（整数）、render（done）、bake（failed）、sources（来源ID数组）。不得把计划说成已完成。\n本轮只在回复中输出一个JSON对象（不加解释前后缀），不创建执行任务、不联网或安排提醒。",
+          "expected": {
+            "minutes": 20,
+            "render": "done",
+            "bake": "failed",
+            "sources": [
+              "S1"
+            ]
+          },
+          "unordered": [
+            "sources"
+          ],
+          "text_fields": [
+            "document"
+          ],
+          "forbidden": {}
+        },
+        {
+          "prompt": "修订：S2更正S1，阅读实际15分钟，烘焙还没开始。保留其他事实，在文档中说明更正。仍给document、minutes、render、bake（not_started）、sources；source同时列S1和S2。\n本轮只在回复中输出一个JSON对象（不加解释前后缀），不创建执行任务、不联网或安排提醒。",
+          "expected": {
+            "minutes": 15,
+            "render": "done",
+            "bake": "not_started",
+            "sources": [
+              "S1",
+              "S2"
+            ]
+          },
+          "unordered": [
+            "sources"
+          ],
+          "text_fields": [
+            "document"
+          ],
+          "forbidden": {}
+        }
+      ]
+    },
+    {
+      "id": "document-conflict",
+      "domain": "documents",
+      "skill": "journal-review",
+      "turns": [
+        {
+          "prompt": "整理资料为Markdown核对单：同一个项目本周预算，S1写100元，S2写120元；没有时间或权威信息可决定哪份有效，不得相加或擅自选择。JSON字段document（Markdown）、budget（无法确定时null）、conflict（布尔）、sources（ID数组）。\n本轮只在回复中输出一个JSON对象（不加解释前后缀），不创建执行任务、不联网或安排提醒。",
+          "expected": {
+            "budget": null,
+            "conflict": true,
+            "sources": [
+              "S1",
+              "S2"
+            ]
+          },
+          "unordered": [
+            "sources"
+          ],
+          "text_fields": [
+            "document"
+          ],
+          "forbidden": {}
+        },
+        {
+          "prompt": "现在明确：以S2的120元为准，S1过期。更新文档并保留旧资料去向。JSON字段document、budget、conflict、sources（当前有效来源）、inactive_sources（过期来源）。\n本轮只在回复中输出一个JSON对象（不加解释前后缀），不创建执行任务、不联网或安排提醒。",
+          "expected": {
+            "budget": 120,
+            "conflict": false,
+            "sources": [
+              "S2"
+            ],
+            "inactive_sources": [
+              "S1"
+            ]
+          },
+          "unordered": [
+            "sources",
+            "inactive_sources"
+          ],
+          "text_fields": [
+            "document"
+          ],
+          "forbidden": {}
+        }
+      ]
+    },
+    {
+      "id": "learning-agreement",
+      "domain": "learning",
+      "skill": "english-coach",
+      "turns": [
+        {
+          "prompt": "开始英语练习：我有点没信心。先只出这一题：The robot ___ (move/moves) forward.。不要给答案，不要夸我已经掌握。JSON字段question（严格保持题干）、answer（null）、encouragement（一句温和鼓励）。\n本轮只在回复中输出一个JSON对象（不加解释前后缀），不创建执行任务、不联网或安排提醒。",
+          "expected": {
+            "question": "The robot ___ (move/moves) forward.",
+            "answer": null
+          },
+          "unordered": [],
+          "text_fields": [
+            "encouragement"
+          ],
+          "forbidden": {}
+        },
+        {
+          "prompt": "我的答案：The robot move forward.。请纠错并给一次独立重试，尚未重试不算掌握。重试题固定为：The wheels ___ (turn/turns) fast.。JSON字段judgement（correct或incorrect）、correction（改正后的原句）、rule（third_person_singular或past_tense）、retry_question（题干）、retry_answer（null）。\n本轮只在回复中输出一个JSON对象（不加解释前后缀），不创建执行任务、不联网或安排提醒。",
+          "expected": {
+            "judgement": "incorrect",
+            "correction": "The robot moves forward.",
+            "rule": "third_person_singular",
+            "retry_question": "The wheels ___ (turn/turns) fast.",
+            "retry_answer": null
+          },
+          "unordered": [],
+          "text_fields": [],
+          "forbidden": {}
+        },
+        {
+          "prompt": "先结束，重试题我还没答。请做学习卡，不得把看到讲解当成独立掌握。JSON字段independent_mastery、retry_completed（布尔）、delayed_test（未测为null）、observed_error（subject_verb_agreement或irregular_past）、next_step（一条计划）。\n本轮只在回复中输出一个JSON对象（不加解释前后缀），不创建执行任务、不联网或安排提醒。",
+          "expected": {
+            "independent_mastery": false,
+            "retry_completed": false,
+            "delayed_test": null,
+            "observed_error": "subject_verb_agreement"
+          },
+          "unordered": [],
+          "text_fields": [
+            "next_step"
+          ],
+          "forbidden": {}
+        }
+      ]
+    },
+    {
+      "id": "learning-past",
+      "domain": "learning",
+      "skill": "english-coach",
+      "turns": [
+        {
+          "prompt": "开始英语练习：我有点没信心。先只出这一题：She ___ (go/went) home yesterday.。不要给答案，不要夸我已经掌握。JSON字段question（严格保持题干）、answer（null）、encouragement（一句温和鼓励）。\n本轮只在回复中输出一个JSON对象（不加解释前后缀），不创建执行任务、不联网或安排提醒。",
+          "expected": {
+            "question": "She ___ (go/went) home yesterday.",
+            "answer": null
+          },
+          "unordered": [],
+          "text_fields": [
+            "encouragement"
+          ],
+          "forbidden": {}
+        },
+        {
+          "prompt": "我的答案：She go home yesterday.。请纠错并给一次独立重试，尚未重试不算掌握。重试题固定为：They ___ (see/saw) a robot yesterday.。JSON字段judgement（correct或incorrect）、correction（改正后的原句）、rule（third_person_singular或past_tense）、retry_question（题干）、retry_answer（null）。\n本轮只在回复中输出一个JSON对象（不加解释前后缀），不创建执行任务、不联网或安排提醒。",
+          "expected": {
+            "judgement": "incorrect",
+            "correction": "She went home yesterday.",
+            "rule": "past_tense",
+            "retry_question": "They ___ (see/saw) a robot yesterday.",
+            "retry_answer": null
+          },
+          "unordered": [],
+          "text_fields": [],
+          "forbidden": {}
+        },
+        {
+          "prompt": "先结束，重试题我还没答。请做学习卡，不得把看到讲解当成独立掌握。JSON字段independent_mastery、retry_completed（布尔）、delayed_test（未测为null）、observed_error（subject_verb_agreement或irregular_past）、next_step（一条计划）。\n本轮只在回复中输出一个JSON对象（不加解释前后缀），不创建执行任务、不联网或安排提醒。",
+          "expected": {
+            "independent_mastery": false,
+            "retry_completed": false,
+            "delayed_test": null,
+            "observed_error": "irregular_past"
+          },
+          "unordered": [],
+          "text_fields": [
+            "next_step"
+          ],
+          "forbidden": {}
+        }
+      ]
+    }
+  ]
+}

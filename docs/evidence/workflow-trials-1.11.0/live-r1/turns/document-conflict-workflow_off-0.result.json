@@ -1,0 +1,61 @@
+{
+  "case_id": "document-conflict",
+  "domain": "documents",
+  "arm": "workflow_off",
+  "turn": 0,
+  "freeze_digest": "b6fd47cf664df70f600d975f74554060fa968cd4b977a41219a54bce1659c3ee",
+  "status": "FAILED",
+  "error": "model_reply_incomplete",
+  "reply": null,
+  "skill_id": null,
+  "skill_version": null,
+  "action_kind": null,
+  "task_count": 0,
+  "flow_valid": false,
+  "elapsed_seconds": 15.038,
+  "attempts": [
+    {
+      "status": "INVALID",
+      "usage": {
+        "completion_tokens": 72,
+        "prompt_tokens": 697,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 1724,
+        "total_tokens": 2493
+      },
+      "error": "model_reply_incomplete",
+      "estimate": {
+        "amount": 0.00725775,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [],
+  "assessment": {
+    "state": "UNMEASURED",
+    "checks": [
+      {
+        "id": "dialogue_flow",
+        "status": "unknown"
+      }
+    ],
+    "condition_score": null,
+    "quality_score": null
+  },
+  "failure_stage": "transport",
+  "business_quality": null,
+  "record_digest": "54f09dce075511b76c927e19a0989812364194feae5e5fd8437452f8aae4a222"
+}

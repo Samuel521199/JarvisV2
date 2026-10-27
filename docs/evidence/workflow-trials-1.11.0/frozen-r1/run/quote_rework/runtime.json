@@ -1,0 +1,572 @@
+{
+  "scope": "executed Work requirement inheritance through real UI; synthetic offline quotes",
+  "production_deployed": false,
+  "model_calls": 0,
+  "tasks": [
+    {
+      "id": "task-b0139c1f36a543dd9e046edf990510fc",
+      "status": "SUCCEEDED",
+      "spent": 2,
+      "completion": {
+        "version": "completion-1.1.0",
+        "task_id": "task-b0139c1f36a543dd9e046edf990510fc",
+        "state": "VERIFIED",
+        "fingerprint": "e7fdb01e9242173712ac35a21e6921ad3ba7eff473fc5d56bb3e91e33e3291df",
+        "acceptance": {
+          "revision": 1,
+          "rules": {
+            "coverage": "complete",
+            "criteria": [
+              {
+                "check": "quote_rework",
+                "expected": "08cee5904297188e3d63da8201af73f81e4dbd55aac63908cebd79c59818b910",
+                "id": "quote-rework",
+                "step_id": "step-1"
+              }
+            ],
+            "requirements": [
+              {
+                "criterion_ids": [
+                  "quote-rework"
+                ],
+                "id": "rework-domain",
+                "kind": "quote_rework",
+                "text": "继承已核对版本的全部有效要求，仅按明确变更修订，独立核对本次报价结果"
+              }
+            ]
+          }
+        },
+        "checks": [
+          {
+            "id": "quote-rework",
+            "step_id": "step-1",
+            "status": "passed",
+            "verifier": "quote-selection-1",
+            "source_digest": "cd8c3ceb3cf0d2a06cfd648558d83dcf4ca5d313c540862b3a4997f67dcc5791",
+            "reason": "quote_verified",
+            "request_verifier": "quote-request-1",
+            "request_binding": "d61e2da964936fd881378a500cbbe1e25871ee57817a1051127899cd262b8327",
+            "request_goal_digest": "520e61c1327b150a6e4f4c37eadcf68afe4ddd00eb56123ff79accd51a124a43",
+            "unresolved_count": 0,
+            "semantic_goal_verified": false,
+            "request_scope": "stored_goal_only",
+            "rework_verifier": "quote-rework-1",
+            "rework_binding": "08cee5904297188e3d63da8201af73f81e4dbd55aac63908cebd79c59818b910",
+            "source_scope": "explicit_work_inheritance",
+            "source_count": 3,
+            "rework_count": 1,
+            "active_count": 5
+          }
+        ],
+        "condition_score": 100.0,
+        "score_scope": "declared_conditions_only",
+        "outcome_id": "outcome-5f576e32384553cd907c0bc36ecf23ad",
+        "requirement_coverage": {
+          "version": "declared-requirements-1",
+          "state": "SATISFIED",
+          "requirements": [
+            {
+              "criterion_ids": [
+                "quote-rework"
+              ],
+              "id": "rework-domain",
+              "kind": "quote_rework",
+              "text": "继承已核对版本的全部有效要求，仅按明确变更修订，独立核对本次报价结果",
+              "status": "passed",
+              "reason": "linked_checks"
+            }
+          ],
+          "complete": true,
+          "scope": "explicitly_declared_requirements",
+          "semantic_goal_verified": false
+        },
+        "evidence_ready": true,
+        "feedback": null,
+        "method": null,
+        "method_available": false,
+        "feedback_history": [],
+        "assessment_history": [
+          {
+            "created": 1793094581.5367672,
+            "assessment": {
+              "acceptance": {
+                "revision": 1,
+                "rules": {
+                  "coverage": "complete",
+                  "criteria": [
+                    {
+                      "check": "quote_rework",
+                      "expected": "08cee5904297188e3d63da8201af73f81e4dbd55aac63908cebd79c59818b910",
+                      "id": "quote-rework",
+                      "step_id": "step-1"
+                    }
+                  ],
+                  "requirements": [
+                    {
+                      "criterion_ids": [
+                        "quote-rework"
+                      ],
+                      "id": "rework-domain",
+                      "kind": "quote_rework",
+                      "text": "继承已核对版本的全部有效要求，仅按明确变更修订，独立核对本次报价结果"
+                    }
+                  ]
+                }
+              },
+              "checks": [
+                {
+                  "id": "quote-rework",
+                  "status": "unknown",
+                  "step_id": "step-1"
+                }
+              ],
+              "condition_score": null,
+              "evidence_ready": false,
+              "feedback": null,
+              "fingerprint": "31328070beffd08ded4f92b29bc921b6b115036796a008d079e2e1f70c94f453",
+              "outcome_id": null,
+              "requirement_coverage": {
+                "complete": false,
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "quote-rework"
+                    ],
+                    "id": "rework-domain",
+                    "kind": "quote_rework",
+                    "reason": "linked_checks",
+                    "status": "unknown",
+                    "text": "继承已核对版本的全部有效要求，仅按明确变更修订，独立核对本次报价结果"
+                  }
+                ],
+                "scope": "explicitly_declared_requirements",
+                "semantic_goal_verified": false,
+                "state": "INCOMPLETE",
+                "version": "declared-requirements-1"
+              },
+              "score_scope": "declared_conditions_only",
+              "state": "WAITING",
+              "task_id": "task-b0139c1f36a543dd9e046edf990510fc",
+              "version": "completion-1.1.0"
+            }
+          },
+          {
+            "created": 1793094581.0127661,
+            "assessment": {
+              "acceptance": {
+                "revision": 1,
+                "rules": {
+                  "coverage": "complete",
+                  "criteria": [
+                    {
+                      "check": "quote_rework",
+                      "expected": "08cee5904297188e3d63da8201af73f81e4dbd55aac63908cebd79c59818b910",
+                      "id": "quote-rework",
+                      "step_id": "step-1"
+                    }
+                  ],
+                  "requirements": [
+                    {
+                      "criterion_ids": [
+                        "quote-rework"
+                      ],
+                      "id": "rework-domain",
+                      "kind": "quote_rework",
+                      "text": "继承已核对版本的全部有效要求，仅按明确变更修订，独立核对本次报价结果"
+                    }
+                  ]
+                }
+              },
+              "checks": [
+                {
+                  "id": "quote-rework",
+                  "status": "unknown",
+                  "step_id": "step-1"
+                }
+              ],
+              "condition_score": null,
+              "evidence_ready": false,
+              "feedback": null,
+              "fingerprint": "b70128582004c09f94f3d3c5ee07435f6379954d244d8302004552e2e3d0a19a",
+              "outcome_id": null,
+              "requirement_coverage": {
+                "complete": false,
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "quote-rework"
+                    ],
+                    "id": "rework-domain",
+                    "kind": "quote_rework",
+                    "reason": "linked_checks",
+                    "status": "unknown",
+                    "text": "继承已核对版本的全部有效要求，仅按明确变更修订，独立核对本次报价结果"
+                  }
+                ],
+                "scope": "explicitly_declared_requirements",
+                "semantic_goal_verified": false,
+                "state": "INCOMPLETE",
+                "version": "declared-requirements-1"
+              },
+              "score_scope": "declared_conditions_only",
+              "state": "WAITING",
+              "task_id": "task-b0139c1f36a543dd9e046edf990510fc",
+              "version": "completion-1.1.0"
+            }
+          },
+          {
+            "created": 1793094580.8835232,
+            "assessment": {
+              "acceptance": {
+                "revision": 1,
+                "rules": {
+                  "coverage": "complete",
+                  "criteria": [
+                    {
+                      "check": "quote_rework",
+                      "expected": "08cee5904297188e3d63da8201af73f81e4dbd55aac63908cebd79c59818b910",
+                      "id": "quote-rework",
+                      "step_id": "step-1"
+                    }
+                  ],
+                  "requirements": [
+                    {
+                      "criterion_ids": [
+                        "quote-rework"
+                      ],
+                      "id": "rework-domain",
+                      "kind": "quote_rework",
+                      "text": "继承已核对版本的全部有效要求，仅按明确变更修订，独立核对本次报价结果"
+                    }
+                  ]
+                }
+              },
+              "checks": [
+                {
+                  "id": "quote-rework",
+                  "status": "unknown",
+                  "step_id": "step-1"
+                }
+              ],
+              "condition_score": null,
+              "evidence_ready": false,
+              "feedback": null,
+              "fingerprint": "bd92bd2e85307c5a65a86074e8266376495c7ed2379519e9617e9c75df22c73b",
+              "outcome_id": null,
+              "requirement_coverage": {
+                "complete": false,
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "quote-rework"
+                    ],
+                    "id": "rework-domain",
+                    "kind": "quote_rework",
+                    "reason": "linked_checks",
+                    "status": "unknown",
+                    "text": "继承已核对版本的全部有效要求，仅按明确变更修订，独立核对本次报价结果"
+                  }
+                ],
+                "scope": "explicitly_declared_requirements",
+                "semantic_goal_verified": false,
+                "state": "INCOMPLETE",
+                "version": "declared-requirements-1"
+              },
+              "score_scope": "declared_conditions_only",
+              "state": "WAITING",
+              "task_id": "task-b0139c1f36a543dd9e046edf990510fc",
+              "version": "completion-1.1.0"
+            }
+          }
+        ]
+      },
+      "closure": {
+        "version": "work-closure-1.4.0",
+        "root_goal": "goal-90c8d7c8f0be4641b2eeea37ef0abcb4",
+        "current_goal": "goal-956158ad195f40c68e36b6148321c227",
+        "current_task": "task-b0139c1f36a543dd9e046edf990510fc",
+        "state": "COMPLETE",
+        "complete": true,
+        "reasons": [],
+        "completion_state": "VERIFIED",
+        "condition_score": 100.0,
+        "score_scope": "current_declared_conditions_only",
+        "quality_score": null,
+        "requirement_coverage": {
+          "version": "declared-requirements-1",
+          "state": "SATISFIED",
+          "requirements": [
+            {
+              "criterion_ids": [
+                "quote-rework"
+              ],
+              "id": "rework-domain",
+              "kind": "quote_rework",
+              "text": "继承已核对版本的全部有效要求，仅按明确变更修订，独立核对本次报价结果",
+              "status": "passed",
+              "reason": "linked_checks"
+            }
+          ],
+          "complete": true,
+          "scope": "explicitly_declared_requirements",
+          "semantic_goal_verified": false
+        },
+        "assessment_fingerprint": "e7fdb01e9242173712ac35a21e6921ad3ba7eff473fc5d56bb3e91e33e3291df",
+        "spent_cost_units": 4,
+        "reserved_cost_units": 0
+      }
+    },
+    {
+      "id": "task-1190ba68d14d4282a14de85dc3e38d3d",
+      "status": "SUCCEEDED",
+      "spent": 2,
+      "completion": {
+        "version": "completion-1.1.0",
+        "task_id": "task-1190ba68d14d4282a14de85dc3e38d3d",
+        "state": "WAITING_EVIDENCE",
+        "fingerprint": "f455f760ec77243a2aaf61d53f23885394288163a847d476652faa9991ba286a",
+        "acceptance": {
+          "revision": 1,
+          "rules": {
+            "coverage": "recipe",
+            "criteria": [
+              {
+                "check": "quote_rework",
+                "expected": "849d81014ef88be47676f6f860dbbcf94957e0376c32c8216d9a7136eb23c64d",
+                "id": "quote-rework",
+                "step_id": "step-1"
+              }
+            ],
+            "requirements": [
+              {
+                "criterion_ids": [
+                  "quote-rework"
+                ],
+                "id": "rework-domain",
+                "kind": "quote_rework",
+                "text": "继承已核对版本的全部有效要求，仅按明确变更修订，独立核对本次报价结果"
+              }
+            ]
+          }
+        },
+        "checks": [
+          {
+            "id": "quote-rework",
+            "step_id": "step-1",
+            "status": "unknown",
+            "verifier": "quote-selection-1",
+            "source_digest": "03e3cb460dbc962c6a571a29f10d370b1ba77a5109e3c26dac4cefd0aebdb382",
+            "reason": "quote_rework_unresolved",
+            "request_verifier": "quote-request-1",
+            "request_binding": "dd1236c5a99e3e9f768fc98eb4bc30757f566fc4c170b6b6f45c729af0da7754",
+            "request_goal_digest": "58ae436d7665ce31011bda2c15cd31a75c17e8632b6c5f0168afba9b4906ca65",
+            "unresolved_count": 1,
+            "semantic_goal_verified": false,
+            "request_scope": "stored_goal_only",
+            "rework_verifier": "quote-rework-1",
+            "rework_binding": "849d81014ef88be47676f6f860dbbcf94957e0376c32c8216d9a7136eb23c64d",
+            "source_scope": "explicit_work_inheritance",
+            "source_count": 3,
+            "rework_count": 1,
+            "active_count": 6
+          }
+        ],
+        "condition_score": null,
+        "score_scope": "declared_conditions_only",
+        "outcome_id": "outcome-b714abc4137fb8201eccf91fdeb5da80",
+        "requirement_coverage": {
+          "version": "declared-requirements-1",
+          "state": "INCOMPLETE",
+          "requirements": [
+            {
+              "criterion_ids": [
+                "quote-rework"
+              ],
+              "id": "rework-domain",
+              "kind": "quote_rework",
+              "text": "继承已核对版本的全部有效要求，仅按明确变更修订，独立核对本次报价结果",
+              "status": "unknown",
+              "reason": "linked_checks"
+            }
+          ],
+          "complete": false,
+          "scope": "explicitly_declared_requirements",
+          "semantic_goal_verified": false
+        },
+        "evidence_ready": false,
+        "feedback": null,
+        "method": null,
+        "method_available": false,
+        "feedback_history": [],
+        "assessment_history": [
+          {
+            "created": 1793094584.408633,
+            "assessment": {
+              "acceptance": {
+                "revision": 1,
+                "rules": {
+                  "coverage": "recipe",
+                  "criteria": [
+                    {
+                      "check": "quote_rework",
+                      "expected": "849d81014ef88be47676f6f860dbbcf94957e0376c32c8216d9a7136eb23c64d",
+                      "id": "quote-rework",
+                      "step_id": "step-1"
+                    }
+                  ],
+                  "requirements": [
+                    {
+                      "criterion_ids": [
+                        "quote-rework"
+                      ],
+                      "id": "rework-domain",
+                      "kind": "quote_rework",
+                      "text": "继承已核对版本的全部有效要求，仅按明确变更修订，独立核对本次报价结果"
+                    }
+                  ]
+                }
+              },
+              "checks": [
+                {
+                  "id": "quote-rework",
+                  "status": "unknown",
+                  "step_id": "step-1"
+                }
+              ],
+              "condition_score": null,
+              "evidence_ready": false,
+              "feedback": null,
+              "fingerprint": "596486a3f8eeb0346e3ccb876011feaf75f177bb6bddb8527b24e6b7ccec1671",
+              "outcome_id": null,
+              "requirement_coverage": {
+                "complete": false,
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "quote-rework"
+                    ],
+                    "id": "rework-domain",
+                    "kind": "quote_rework",
+                    "reason": "linked_checks",
+                    "status": "unknown",
+                    "text": "继承已核对版本的全部有效要求，仅按明确变更修订，独立核对本次报价结果"
+                  }
+                ],
+                "scope": "explicitly_declared_requirements",
+                "semantic_goal_verified": false,
+                "state": "INCOMPLETE",
+                "version": "declared-requirements-1"
+              },
+              "score_scope": "declared_conditions_only",
+              "state": "WAITING",
+              "task_id": "task-1190ba68d14d4282a14de85dc3e38d3d",
+              "version": "completion-1.1.0"
+            }
+          },
+          {
+            "created": 1793094583.795431,
+            "assessment": {
+              "acceptance": {
+                "revision": 1,
+                "rules": {
+                  "coverage": "recipe",
+                  "criteria": [
+                    {
+                      "check": "quote_rework",
+                      "expected": "849d81014ef88be47676f6f860dbbcf94957e0376c32c8216d9a7136eb23c64d",
+                      "id": "quote-rework",
+                      "step_id": "step-1"
+                    }
+                  ],
+                  "requirements": [
+                    {
+                      "criterion_ids": [
+                        "quote-rework"
+                      ],
+                      "id": "rework-domain",
+                      "kind": "quote_rework",
+                      "text": "继承已核对版本的全部有效要求，仅按明确变更修订，独立核对本次报价结果"
+                    }
+                  ]
+                }
+              },
+              "checks": [
+                {
+                  "id": "quote-rework",
+                  "status": "unknown",
+                  "step_id": "step-1"
+                }
+              ],
+              "condition_score": null,
+              "evidence_ready": false,
+              "feedback": null,
+              "fingerprint": "e9ad9da79301e04bea18d94dc5d7c43dcf54fcb82fd9a747ea5363d5f497cf88",
+              "outcome_id": null,
+              "requirement_coverage": {
+                "complete": false,
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "quote-rework"
+                    ],
+                    "id": "rework-domain",
+                    "kind": "quote_rework",
+                    "reason": "linked_checks",
+                    "status": "unknown",
+                    "text": "继承已核对版本的全部有效要求，仅按明确变更修订，独立核对本次报价结果"
+                  }
+                ],
+                "scope": "explicitly_declared_requirements",
+                "semantic_goal_verified": false,
+                "state": "INCOMPLETE",
+                "version": "declared-requirements-1"
+              },
+              "score_scope": "declared_conditions_only",
+              "state": "WAITING",
+              "task_id": "task-1190ba68d14d4282a14de85dc3e38d3d",
+              "version": "completion-1.1.0"
+            }
+          }
+        ]
+      },
+      "closure": {
+        "version": "work-closure-1.4.0",
+        "root_goal": "goal-16db704cbdf349abbc0f3e7521649146",
+        "current_goal": "goal-7cb8fad6428b4ab0aaa18dfccfe8db4b",
+        "current_task": "task-1190ba68d14d4282a14de85dc3e38d3d",
+        "state": "NEEDS_EVIDENCE",
+        "complete": false,
+        "reasons": [
+          "WAITING_EVIDENCE"
+        ],
+        "completion_state": "WAITING_EVIDENCE",
+        "condition_score": null,
+        "score_scope": "current_declared_conditions_only",
+        "quality_score": null,
+        "requirement_coverage": {
+          "version": "declared-requirements-1",
+          "state": "INCOMPLETE",
+          "requirements": [
+            {
+              "criterion_ids": [
+                "quote-rework"
+              ],
+              "id": "rework-domain",
+              "kind": "quote_rework",
+              "text": "继承已核对版本的全部有效要求，仅按明确变更修订，独立核对本次报价结果",
+              "status": "unknown",
+              "reason": "linked_checks"
+            }
+          ],
+          "complete": false,
+          "scope": "explicitly_declared_requirements",
+          "semantic_goal_verified": false
+        },
+        "assessment_fingerprint": "f455f760ec77243a2aaf61d53f23885394288163a847d476652faa9991ba286a",
+        "spent_cost_units": 4,
+        "reserved_cost_units": 0
+      }
+    },
+    null
+  ]
+}

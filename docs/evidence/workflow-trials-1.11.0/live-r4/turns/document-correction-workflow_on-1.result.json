@@ -1,0 +1,91 @@
+{
+  "case_id": "document-correction",
+  "domain": "documents",
+  "arm": "workflow_on",
+  "turn": 1,
+  "freeze_digest": "cc702145676756cbfaa7cb3b0a06842f622595011a6ec056120028630ebc2879",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\"document\":\"# 研发日报\\n\\n- **日期/范围**：2026-10-27\\n- **已完成与依据**：根据你提供的更正记录（S2替换S1中原20分钟耗时），已完成阅读（15分钟）；根据你提供的记录（S1），模型渲染已完成。\\n- **进行中或待办**：根据你提供的更正记录（S2更正S1中的失败状态），贴图烘焙尚未开始。\\n- **观察与想法**：贴图烘焙任务已从前次记录的失败状态更正为尚未开始，前置模型渲染已具备烘焙基础。\\n- **下一步**：\\n  1. 启动并执行贴图烘焙流程（完成条件：生成完整贴图输出且无报错）。\",\"minutes\":15,\"render\":\"done\",\"bake\":\"not_started\",\"sources\":[\"S1\",\"S2\"]}",
+  "skill_id": "journal-review",
+  "skill_version": "1.0.0",
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 6.1209,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 245,
+        "prompt_tokens": 1487,
+        "total_tokens": 1732
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.002034,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/document-correction-workflow_on-1.native.json",
+      "sha256": "d5ff6dea8793ed95ded4cb072581e24e6a9439fe41b27ad9b34c51a6b8685d87",
+      "kind": "native_protocol_response"
+    },
+    {
+      "file": "artifacts/document-correction-workflow_on-1.reply.md.txt",
+      "sha256": "5541df68087c0e6a756c159d2f7a9c3f56da6f45c6fd87a178d086e0faf6462e",
+      "kind": "original_session_reply"
+    },
+    {
+      "file": "artifacts/document-correction-workflow_on-1.document.md.txt",
+      "sha256": "f05e2e1feb76b7deaa5ed170d69b784c0ce6e57007f01cf934e6990109c6468c",
+      "kind": "verbatim_document_field_from_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "minutes",
+        "status": "passed"
+      },
+      {
+        "id": "render",
+        "status": "passed"
+      },
+      {
+        "id": "bake",
+        "status": "passed"
+      },
+      {
+        "id": "sources",
+        "status": "passed"
+      },
+      {
+        "id": "document_present",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "record_digest": "308d28ebd9a66d3e1890904b5c7a958b3a20952ad8dfeef09e76934f4b159b5c"
+}

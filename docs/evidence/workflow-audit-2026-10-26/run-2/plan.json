@@ -1,0 +1,29 @@
+{
+  "version": "workflow-audit-1",
+  "created_at": 1793019588.6234367,
+  "source_digests": {
+    "host/assistant.py": "3f8efde5d8333d77f5e0d2bb453b4d2bf5e61a02f8bb6c80665b0cd8750ce9d0",
+    "host/goals.py": "7cc72de7fe1061a814b10d4bab9152f98698aeeb8694f4aa5ecdfdea20608db3",
+    "host/goal_context.py": "5f98fa1975cc6a4bcaf032055a5780c3d400976003683bb76a052173c132afc5",
+    "host/goal_growth.py": "1c005501b9ab1dafeef13f2e0646a3a348e282e03d761a5d0af256f01f7c9fdb",
+    "host/core.py": "1744501072e3c5e46365594bf55d4fb72b2ca286462ed93274d086ffa48d6c83",
+    "host/completion.py": "0d7f1cc8339902bf4525ef7668b18ef1670974c9cc1e90f07adfe7a4c2f0b0c6",
+    "host/memory.py": "51bec513ee02f09ef3124f9911d772cb94aa487eacae59007cee750d10284a14",
+    "host/task_scheduler.py": "36bddc0f487da395bc8e879f18fd5364b33bd3be0fce199e7cacdf621feb3c81",
+    "modules/task_resource/plans.py": "d513d089b18f73e6c7dbc69b61d2ca379a5af4fbdeddc5973ce4ac5d3a6b4f25",
+    "modules/task_resource/ledger.py": "e699cb03be82568e1178df879589b2d24f1d471196b28732d974c0065293c4f8",
+    "modules/task_resource/completion.py": "189a66193011d25d608a8d29373379f3d82586f00b08ceef03725cbb16b19ab2",
+    "modules/task_resource/scheduling.py": "3b9a29bbfdc787486621cb0a1c1a5a6ab0ac3e1a47b29ff1498feb3c26188b92",
+    "modules/context_knowledge/episodes.py": "8c3a2994f73576002a6ad8bbc5a6a69d85333e212e862c533543c331b298bdaf",
+    "modules/evaluation/outcomes.py": "91f4faa618ba14632bb98a3cfaa7780cd9d6a31d9d1e5d2319592d78e968b875",
+    "apps/workbench/goals.js": "69b96706ef98b5e655638448c2871d829066c5c36f761dd1565a34eb826c5916",
+    "tools/probe_workflow_audit.py": "cc15d1c74bcee8f61e46a0e76d9274a6bf8213fb99518f5fd69607f8c817203a"
+  },
+  "input": "A|120|5|source-A\nB|90|8|source-B",
+  "limited_tool_output": "最低报价：B\nA|120|5|source-A\nB|90|8|source-B",
+  "business_goal": "比较报价：预算最多100，交付最多5天；无同时满足者必须明确说明，保留来源。",
+  "business_oracle": "无同时满足预算100及5天交付的报价。",
+  "scope": "synthetic local control-path diagnostics; not semantic model or whole-product acceptance",
+  "production_changes": false,
+  "paid_model_calls": 0
+}

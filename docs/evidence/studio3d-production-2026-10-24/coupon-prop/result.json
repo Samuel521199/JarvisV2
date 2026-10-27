@@ -1,0 +1,896 @@
+{
+  "request": {
+    "id": "592165ccab2c458e827c5b88a58aa767",
+    "prepare_asset": "f1eb820b8dc447719e41497782817c0f",
+    "texture_size": 512,
+    "production": {
+      "category": "prop",
+      "triangle_budget": 1000,
+      "ray_distance": 0.04
+    },
+    "render": {
+      "engine": "CYCLES",
+      "exposure": -1,
+      "quality": "preview",
+      "view": "front",
+      "five_views": false
+    }
+  },
+  "origin": "http://127.0.0.1:18283",
+  "paid_model_calls": 0,
+  "accepted": {
+    "existing": false,
+    "id": "592165ccab2c458e827c5b88a58aa767"
+  },
+  "job": {
+    "cancel": 0,
+    "chat_id": null,
+    "created": 1792777825.4222462,
+    "error": null,
+    "id": "592165ccab2c458e827c5b88a58aa767",
+    "phase": "已交付可编辑模型、渲染与检查回执",
+    "receipt": {
+      "adapter_version": "1.3.0",
+      "configuration": {
+        "asset_pipeline": {
+          "category": "prop",
+          "method": "project",
+          "ray_distance": 0.04,
+          "texture_size": 512,
+          "triangle_budget": 1000
+        },
+        "master": "f1eb820b8dc447719e41497782817c0f",
+        "materials": [
+          {
+            "coat": 0,
+            "color": "#28525a",
+            "id": "paint",
+            "metallic": 0,
+            "roughness": 0.6,
+            "transmission": 0
+          },
+          {
+            "coat": 0,
+            "color": "#898d90",
+            "id": "steel",
+            "metallic": 1,
+            "roughness": 0.3,
+            "transmission": 0
+          }
+        ],
+        "objects": [
+          {
+            "id": "plate",
+            "kind": "box",
+            "material": "paint",
+            "modifiers": {
+              "bevel": 0.003,
+              "bevel_segments": 8
+            },
+            "params": {
+              "size": [
+                1,
+                0.7,
+                0.08
+              ]
+            },
+            "position": [
+              0,
+              0,
+              0.1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "shading": "flat"
+          },
+          {
+            "bake_target": "plate",
+            "id": "rivet",
+            "kind": "lathe",
+            "material": "steel",
+            "modifiers": {},
+            "params": {
+              "profile": [
+                [
+                  0.035,
+                  -0.006
+                ],
+                [
+                  0.05,
+                  -0.003
+                ],
+                [
+                  0.055,
+                  0.003
+                ],
+                [
+                  0.05,
+                  0.006
+                ],
+                [
+                  0.001,
+                  0.006
+                ]
+              ],
+              "segments": 64
+            },
+            "position": [
+              -0.2,
+              0,
+              0.145
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "shading": "smooth"
+          },
+          {
+            "bake_target": "plate",
+            "id": "seam",
+            "kind": "curve",
+            "material": "steel",
+            "modifiers": {},
+            "params": {
+              "points": [
+                [
+                  0.05,
+                  -0.2,
+                  0.142
+                ],
+                [
+                  0.08,
+                  0,
+                  0.142
+                ],
+                [
+                  0.05,
+                  0.2,
+                  0.142
+                ]
+              ],
+              "radius": 0.008
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "render": {
+          "engine": "CYCLES",
+          "exposure": -1,
+          "five_views": false,
+          "quality": "preview",
+          "view": "front"
+        },
+        "schema": "jarvis.studio3d.v1",
+        "title": "硬表面投射校准板 · 烘焙与LOD",
+        "unfulfilled": [
+          "投射校准用平板；非成品资产或AAA认证。"
+        ],
+        "units": "m"
+      },
+      "derived_from": "f1eb820b8dc447719e41497782817c0f",
+      "files": {
+        "ao.png": {
+          "bytes": 13228,
+          "sha256": "f5c76e5fef70b1854bdd7d25808bfd8913e8a63eb0bb52afa94cfad034646204",
+          "url": "/api/studio3d/files/592165ccab2c458e827c5b88a58aa767/ao.png"
+        },
+        "basecolor.png": {
+          "bytes": 6493,
+          "sha256": "cd6f468c19046aa1923c1bb45808b57a50d9e7c2347d661f32ebc36c686f869f",
+          "url": "/api/studio3d/files/592165ccab2c458e827c5b88a58aa767/basecolor.png"
+        },
+        "model-lod1.glb": {
+          "bytes": 102992,
+          "sha256": "62234b058ab6066079fbf31f903c20615b9b2c017bdd73dcf96c2bea7c1012bd",
+          "url": "/api/studio3d/files/592165ccab2c458e827c5b88a58aa767/model-lod1.glb"
+        },
+        "model-lod2.glb": {
+          "bytes": 66476,
+          "sha256": "d53fa8f94f7f9f1eaef1fa48d634eba2c6f7a3975526295f5527788146463801",
+          "url": "/api/studio3d/files/592165ccab2c458e827c5b88a58aa767/model-lod2.glb"
+        },
+        "model.blend": {
+          "bytes": 234345,
+          "sha256": "ad4d488164fc904444fb08782f9b1a767cf1e7e1686b9b19ddf2e9f796e35433",
+          "url": "/api/studio3d/files/592165ccab2c458e827c5b88a58aa767/model.blend"
+        },
+        "model.glb": {
+          "bytes": 169136,
+          "sha256": "ad90bc79a868b4cab268dedad4a192606e4932778dcf137dda0336617bfac4c5",
+          "url": "/api/studio3d/files/592165ccab2c458e827c5b88a58aa767/model.glb"
+        },
+        "normal.png": {
+          "bytes": 8228,
+          "sha256": "39a84f81257fc6035ff9f6e6d9f6d446a8dfa68b638a90b66e0765e9dff0202e",
+          "url": "/api/studio3d/files/592165ccab2c458e827c5b88a58aa767/normal.png"
+        },
+        "orm.png": {
+          "bytes": 13617,
+          "sha256": "1e2c406f901bf02de042a7ec4d972757b82558cc5b62908949708fc92090f306",
+          "url": "/api/studio3d/files/592165ccab2c458e827c5b88a58aa767/orm.png"
+        },
+        "preview.png": {
+          "bytes": 540268,
+          "sha256": "6fe9eafad9490600f8d621225ecd174e45dac61048a5ab790d618a7b814b87b5",
+          "url": "/api/studio3d/files/592165ccab2c458e827c5b88a58aa767/preview.png"
+        },
+        "report.json": {
+          "bytes": 10092,
+          "sha256": "4137af0698e41cc407b5e0ce67e0c24cd684646ab22ef554517752e37b9fc948",
+          "url": "/api/studio3d/files/592165ccab2c458e827c5b88a58aa767/report.json"
+        },
+        "scene.json": {
+          "bytes": 1325,
+          "sha256": "3a1992f65ed77f45542f62a9227fb227960c1880009351dfdc0f930e978bc8da",
+          "url": "/api/studio3d/files/592165ccab2c458e827c5b88a58aa767/scene.json"
+        }
+      },
+      "frozen_master": {
+        "blend_sha256": "81c51ddbfc4e8549a7ed245ba303067f14c29554afbaed5bbc432ff45c844d15",
+        "id": "f1eb820b8dc447719e41497782817c0f",
+        "parts": [
+          "plate",
+          "rivet",
+          "seam"
+        ],
+        "source": "SHA-verified first-party delivered blend; external blend upload unsupported"
+      },
+      "id": "592165ccab2c458e827c5b88a58aa767",
+      "input_asset": null,
+      "model_receipt": null,
+      "quality": {
+        "AAA_certified": false,
+        "mechanical_validation": false,
+        "status": "visual_asset_export_checked",
+        "visual_score": null
+      },
+      "reference": null,
+      "report": {
+        "asset_pipeline": {
+          "AAA_certified": false,
+          "baking": {
+            "ao": {
+              "bake": "Cycles high master projected to reduced low mesh",
+              "file": "ao.png",
+              "pixel_max": 1.0,
+              "pixel_min": 0.0,
+              "resolution": [
+                512,
+                512
+              ]
+            },
+            "basecolor": {
+              "bake": "Cycles high master projected to reduced low mesh",
+              "file": "basecolor.png",
+              "pixel_max": 0.5372549295425415,
+              "pixel_min": 0.0,
+              "resolution": [
+                512,
+                512
+              ]
+            },
+            "normal": {
+              "bake": "Cycles high master projected to reduced low mesh",
+              "file": "normal.png",
+              "pixel_max": 0.9764706492424011,
+              "pixel_min": 0.0313725508749485,
+              "resolution": [
+                512,
+                512
+              ]
+            },
+            "orm": {
+              "bake": "Cycles high master projected to reduced low mesh",
+              "file": "orm.png",
+              "pixel_max": 1.0,
+              "pixel_min": 0.0,
+              "resolution": [
+                512,
+                512
+              ]
+            }
+          },
+          "checks": [
+            {
+              "id": "degenerate-faces",
+              "message": "0",
+              "status": "pass"
+            },
+            {
+              "id": "mesh-boundary",
+              "message": "0 boundary edges; 0 nonmanifold edges",
+              "status": "pass"
+            },
+            {
+              "id": "uv-atlas",
+              "message": "UV present and in 0..1; exact overlap and density unverified",
+              "status": "pass"
+            },
+            {
+              "id": "lod-reduction",
+              "message": "Actual triangle counts checked",
+              "status": "pass"
+            },
+            {
+              "id": "lod-sampled-distance",
+              "message": "Two-direction sampled distance; silhouette popping requires view check",
+              "status": "pass"
+            },
+            {
+              "id": "uv-area-utilization",
+              "message": "54.32% summed triangle UV area; not exact union area or density uniformity",
+              "status": "pass"
+            },
+            {
+              "id": "singular-uv-tangent",
+              "message": "0 singular UV tangent frames use orthogonal fallback; artist review required",
+              "status": "pass"
+            },
+            {
+              "id": "projection-coverage",
+              "message": "{'samples': 972, 'misses': 0, 'miss_fraction': 0.0, 'method': 'triangle-centre rays, max4096 samples; not per-texel proof'}",
+              "status": "pass"
+            },
+            {
+              "id": "game-budget",
+              "message": "972 / 1000",
+              "status": "pass"
+            }
+          ],
+          "cleanup": {
+            "degenerate_distance_m": 1e-08,
+            "merge_distance_m": 1e-06,
+            "vertices_removed": 0
+          },
+          "elapsed_seconds": 0.6489065999994637,
+          "kind": "projected rigid parts",
+          "lods": [
+            {
+              "distance": {
+                "max_distance_m": 0,
+                "samples": 0
+              },
+              "file": "model.glb",
+              "level": 0,
+              "ratio_requested": 1,
+              "tangent_frames": {
+                "meaning": "Orthogonal fallback at singular UVs; UV quality still requires review",
+                "singular_tangent_frames": 0
+              },
+              "topology": {
+                "boundary_edges": 0,
+                "degenerate_faces": 0,
+                "edge_flow_artist_review": "required",
+                "loose_edges": 0,
+                "ngons": 0,
+                "nonmanifold_edges": 0,
+                "polygons": 972,
+                "triangles": 972,
+                "uv_outside_01_loops": 0,
+                "uv_overlap": "not exactly tested",
+                "uv_present": true,
+                "uv_triangle_area_sum": 0.5431732763516258,
+                "vertices": 488
+              }
+            },
+            {
+              "distance": {
+                "max_distance_m": 3.045064295292832e-05,
+                "method": "two-direction sampled vertex-to-triangle nearest distance; not continuous Hausdorff proof",
+                "samples": 733
+              },
+              "file": "model-lod1.glb",
+              "level": 1,
+              "max_distance_fraction_of_diameter": 2.489273522572086e-05,
+              "ratio_requested": 0.5,
+              "tangent_frames": {
+                "meaning": "Orthogonal fallback at singular UVs; UV quality still requires review",
+                "singular_tangent_frames": 0
+              },
+              "topology": {
+                "boundary_edges": 0,
+                "degenerate_faces": 0,
+                "edge_flow_artist_review": "required",
+                "loose_edges": 0,
+                "ngons": 0,
+                "nonmanifold_edges": 0,
+                "polygons": 486,
+                "triangles": 486,
+                "uv_outside_01_loops": 0,
+                "uv_overlap": "not exactly tested",
+                "uv_present": true,
+                "uv_triangle_area_sum": 0.5430271599939267,
+                "vertices": 245
+              }
+            },
+            {
+              "distance": {
+                "max_distance_m": 8.521606650901958e-05,
+                "method": "two-direction sampled vertex-to-triangle nearest distance; not continuous Hausdorff proof",
+                "samples": 611
+              },
+              "file": "model-lod2.glb",
+              "level": 2,
+              "max_distance_fraction_of_diameter": 6.966227228323434e-05,
+              "ratio_requested": 0.25,
+              "tangent_frames": {
+                "meaning": "Orthogonal fallback at singular UVs; UV quality still requires review",
+                "singular_tangent_frames": 0
+              },
+              "topology": {
+                "boundary_edges": 0,
+                "degenerate_faces": 0,
+                "edge_flow_artist_review": "required",
+                "loose_edges": 0,
+                "ngons": 0,
+                "nonmanifold_edges": 0,
+                "polygons": 242,
+                "triangles": 242,
+                "uv_outside_01_loops": 0,
+                "uv_overlap": "not exactly tested",
+                "uv_present": true,
+                "uv_triangle_area_sum": 0.5425500157587311,
+                "vertices": 123
+              }
+            }
+          ],
+          "part_hierarchy_preserved": false,
+          "part_origins_preserved": true,
+          "projection": {
+            "category": "prop",
+            "coverage": {
+              "method": "triangle-centre rays, max4096 samples; not per-texel proof",
+              "miss_fraction": 0.0,
+              "misses": 0,
+              "samples": 972
+            },
+            "high_created_before_low": true,
+            "high_triangles": 1964,
+            "method": "Cycles selected-to-active, separated part bake positions",
+            "normal_convention": "glTF tangent +Y",
+            "origin_preserved": true,
+            "parts": [
+              {
+                "attached_details": [
+                  {
+                    "name": "rivet",
+                    "triangles": 512
+                  },
+                  {
+                    "name": "seam",
+                    "triangles": 480
+                  }
+                ],
+                "budget_group": "body",
+                "high_triangles": 972,
+                "low_triangles": 972,
+                "name": "plate",
+                "target_triangles": 972,
+                "weight": 31.176914536239792
+              }
+            ],
+            "ray_distance_m": 0.04,
+            "reference_fidelity": "requires photo review; polygon count is not evidence",
+            "requested_low_budget": 1000,
+            "rig_or_animation_preserved": false
+          },
+          "schema": "jarvis.studio3d.asset-pipeline.v1",
+          "source_part_names": [
+            "plate",
+            "rivet",
+            "seam"
+          ],
+          "topology_before": {
+            "boundary_edges": 0,
+            "degenerate_faces": 0,
+            "edge_flow_artist_review": "required",
+            "loose_edges": 0,
+            "ngons": 0,
+            "nonmanifold_edges": 0,
+            "polygons": 972,
+            "triangles": 972,
+            "uv_outside_01_loops": 0,
+            "uv_overlap": "not exactly tested",
+            "uv_present": true,
+            "uv_triangle_area_sum": 0.5431732763516258,
+            "vertices": 488
+          },
+          "topology_raw": {
+            "boundary_edges": 0,
+            "degenerate_faces": 0,
+            "edge_flow_artist_review": "required",
+            "loose_edges": 0,
+            "ngons": 0,
+            "nonmanifold_edges": 0,
+            "polygons": 486,
+            "triangles": 972,
+            "uv_outside_01_loops": 0,
+            "uv_overlap": "not exactly tested",
+            "uv_present": true,
+            "uv_triangle_area_sum": 0.5824749099949813,
+            "vertices": 488
+          },
+          "unverified": [
+            "artist retopology and deformation edge flow",
+            "exact UV overlap/density",
+            "per-texel projection and photo fidelity",
+            "LOD silhouette popping",
+            "material coat/transmission and anisotropy preservation",
+            "full target-engine performance"
+          ]
+        },
+        "blender": "5.2.0 LTS",
+        "bounds_m": [
+          [
+            -0.5,
+            -0.3499999940395355,
+            0.06000000238418579
+          ],
+          [
+            0.5,
+            0.3499999940395355,
+            0.14000000059604645
+          ]
+        ],
+        "elapsed_seconds": 8.080564299998514,
+        "glb_roundtrip": {
+          "bounds_m": [
+            [
+              -0.5,
+              -0.3499999940395355,
+              0.06000000238418579
+            ],
+            [
+              0.5,
+              0.3499999940395355,
+              0.14000000059604645
+            ]
+          ],
+          "max_bound_error_m": 0.0,
+          "mesh_objects": 1,
+          "passed": true
+        },
+        "gltf_validation": {
+          "files": {
+            "model-lod1.glb": {
+              "info": {
+                "animationCount": 0,
+                "drawCallCount": 1,
+                "generator": "Khronos glTF Blender I/O v5.2.39",
+                "hasDefaultScene": true,
+                "hasMorphTargets": false,
+                "hasSkins": false,
+                "hasTextures": true,
+                "materialCount": 1,
+                "maxAttributes": 4,
+                "maxInfluences": 0,
+                "maxUVs": 1,
+                "resources": [
+                  {
+                    "byteLength": 101052,
+                    "mimeType": "application/gltf-buffer",
+                    "pointer": "/buffers/0",
+                    "storage": "glb"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 512,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 512
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/0",
+                    "storage": "buffer-view"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 512,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 512
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/1",
+                    "storage": "buffer-view"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 512,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 512
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/2",
+                    "storage": "buffer-view"
+                  }
+                ],
+                "totalTriangleCount": 486,
+                "totalVertexCount": 1454,
+                "version": "2.0"
+              },
+              "issues": {
+                "messages": [],
+                "numErrors": 0,
+                "numHints": 0,
+                "numInfos": 0,
+                "numWarnings": 0,
+                "truncated": false
+              },
+              "mimeType": "model/gltf-binary",
+              "uri": "model-lod1.glb",
+              "validatedAt": "2026-10-23T17:50:34.597Z",
+              "validatorVersion": "2.0.0-dev.3.10"
+            },
+            "model-lod2.glb": {
+              "info": {
+                "animationCount": 0,
+                "drawCallCount": 1,
+                "generator": "Khronos glTF Blender I/O v5.2.39",
+                "hasDefaultScene": true,
+                "hasMorphTargets": false,
+                "hasSkins": false,
+                "hasTextures": true,
+                "materialCount": 1,
+                "maxAttributes": 4,
+                "maxInfluences": 0,
+                "maxUVs": 1,
+                "resources": [
+                  {
+                    "byteLength": 64548,
+                    "mimeType": "application/gltf-buffer",
+                    "pointer": "/buffers/0",
+                    "storage": "glb"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 512,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 512
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/0",
+                    "storage": "buffer-view"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 512,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 512
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/1",
+                    "storage": "buffer-view"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 512,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 512
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/2",
+                    "storage": "buffer-view"
+                  }
+                ],
+                "totalTriangleCount": 242,
+                "totalVertexCount": 724,
+                "version": "2.0"
+              },
+              "issues": {
+                "messages": [],
+                "numErrors": 0,
+                "numHints": 0,
+                "numInfos": 0,
+                "numWarnings": 0,
+                "truncated": false
+              },
+              "mimeType": "model/gltf-binary",
+              "uri": "model-lod2.glb",
+              "validatedAt": "2026-10-23T17:50:34.705Z",
+              "validatorVersion": "2.0.0-dev.3.10"
+            },
+            "model.glb": {
+              "info": {
+                "animationCount": 0,
+                "drawCallCount": 1,
+                "generator": "Khronos glTF Blender I/O v5.2.39",
+                "hasDefaultScene": true,
+                "hasMorphTargets": false,
+                "hasSkins": false,
+                "hasTextures": true,
+                "materialCount": 1,
+                "maxAttributes": 4,
+                "maxInfluences": 0,
+                "maxUVs": 1,
+                "resources": [
+                  {
+                    "byteLength": 167232,
+                    "mimeType": "application/gltf-buffer",
+                    "pointer": "/buffers/0",
+                    "storage": "glb"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 512,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 512
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/0",
+                    "storage": "buffer-view"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 512,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 512
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/1",
+                    "storage": "buffer-view"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 512,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 512
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/2",
+                    "storage": "buffer-view"
+                  }
+                ],
+                "totalTriangleCount": 972,
+                "totalVertexCount": 2772,
+                "version": "2.0"
+              },
+              "issues": {
+                "messages": [],
+                "numErrors": 0,
+                "numHints": 0,
+                "numInfos": 0,
+                "numWarnings": 0,
+                "truncated": false
+              },
+              "mimeType": "model/gltf-binary",
+              "uri": "model.glb",
+              "validatedAt": "2026-10-23T17:50:34.487Z",
+              "validatorVersion": "2.0.0-dev.3.10"
+            }
+          },
+          "implementation": "Khronos glTF-Validator",
+          "version": "2.0.0-dev.3.10"
+        },
+        "objects": [
+          {
+            "id": "plate · game",
+            "triangles": 972,
+            "uv": true,
+            "vertices": 488,
+            "zero_area_faces": 0
+          }
+        ],
+        "orthographic_views": [],
+        "render": {
+          "device": "CPU",
+          "engine": "CYCLES",
+          "requested_engine": "CYCLES",
+          "resolution": [
+            960,
+            640
+          ],
+          "samples": 24
+        },
+        "schema": "jarvis.studio3d.report.v1",
+        "triangles": 972,
+        "unverified": [
+          "artist topology",
+          "exact UV quality",
+          "per-texel projection",
+          "photo fidelity",
+          "LOD silhouettes",
+          "target engine performance"
+        ],
+        "visible_objects": 1,
+        "warnings": [
+          "High master projected to reduced rigid parts; original part origins retained, no rig/animation preservation.",
+          "Photo fidelity, per-texel projection and target-engine performance require review."
+        ]
+      },
+      "resources": {
+        "cpu_seconds": 1200,
+        "elapsed_seconds": 8.871302100000321,
+        "exit_code": 0,
+        "isolation": "Trusted fixed first-party worker with resource Job; not an OS security sandbox. No model Python, external imports or blend loading.",
+        "memory_bytes": 4294967296,
+        "output_bytes": 268435456,
+        "peak_memory_bytes": 1030520832,
+        "threads": 4,
+        "wall_seconds": 300
+      },
+      "runtime": {
+        "executable_sha256": "e27fbfea8564aa645d4463cb0949695fd85562b9de6df9561b06859a1074adf7",
+        "license": "GPL-2.0-or-later",
+        "source": "https://www.blender.org/",
+        "version": "Blender 5.2.0 LTS"
+      },
+      "skill": "studio3d",
+      "source_sha256": {
+        "adapters/studio3d/asset_pipeline.py": "d41273f361c26f8fdc7da9b242ede1c46d51a05745e4efd5ff28630b268f22f1",
+        "adapters/studio3d/projection.py": "40c5c9b5e02e5c1f7183f5a6d42326f978673cf27dcaa94df08dd3a00f5b0328",
+        "adapters/studio3d/worker.py": "60487d9420df69ba9f10e1270b8bcf4ae6401f877ed90123bb4e0b935c17e294",
+        "apps/studio3d/worker.py": "60af564595dab82acf3118ba581e5bc6b71b738c60ecf32a66c5d5cf36e3c4db",
+        "host/studio3d.py": "21b156f40ca75084684dce6058acc875537fe27ae7b570f0c182d2930149e069",
+        "host/studio3d_reference.py": "43b915ff84901976001887365fff38c31a10d016c6cc6b5b9d28f3c63df9b2c0",
+        "modules/skills/studio3d/assets.py": "aab01d79fbbf94305054311c8ff1031a85dee37e64cd6e77c1d42d0bacfd6526",
+        "modules/skills/studio3d/contract.py": "702e6fed14bd77296c4c0242a4323feef1bb8476b1697cdf4e48ac4bc4d498e2",
+        "modules/skills/studio3d/presets.py": "f7d18d601f36920cff52d3f26fe21cd943ad1a63fc14ad91decdd78e4865b3a4",
+        "modules/skills/studio3d/production.py": "f65ef9295716013e1e9fd297b77f09e1b2d7f5d4aa8f000a3daecf804a28ac52",
+        "modules/skills/studio3d/runtime.json": "324a7e1d9f2d080516390dce93322e80692264db399a7d8d5d72cebe676e7d3e",
+        "modules/skills/studio3d/tracked_vehicle.py": "24716810b044cf85d4cb497e9330da2bccd5d9437afe6c891da83908f60566f8"
+      },
+      "title": "硬表面投射校准板 · 烘焙与LOD",
+      "unfulfilled": [
+        "投射校准用平板；非成品资产或AAA认证。"
+      ],
+      "url": "/api/studio3d/view/592165ccab2c458e827c5b88a58aa767"
+    },
+    "status": "DELIVERED",
+    "turn_id": null
+  }
+}

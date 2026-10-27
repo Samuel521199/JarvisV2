@@ -1,0 +1,723 @@
+{
+  "checks": [
+    "Read-only analysis keeps one valid prefix step and creates no version",
+    "Edited input invalidates UI review and requires all steps",
+    "Automatic analysis creates only the linked suffix draft; historical entry sees it as pending",
+    "Frozen literal acceptance closes the current version; original receipts and cumulative cost persist",
+    "Goal changes after ancestral prefix reuse require a complete reviewed plan; no misleading partial draft is created",
+    "Late correction reopens work across entrypoints without rewriting successful execution",
+    "Real chat projection and the original conversation card expose the same current closure while retaining old output"
+  ],
+  "errors": [],
+  "snapshot": {
+    "actions": [
+      {
+        "arguments": {
+          "text": "HELLO 中文"
+        },
+        "attempts": 1,
+        "capability": "plugin.rework-upper.v1",
+        "digest": "e524fc639f18b049d0b768fd4ec25e065bdaf0e99efe7292513561be8b4f49ea",
+        "error": null,
+        "id": "action-56fe8f735314d722d30714a2079e920f",
+        "result": {
+          "package_id": "pkg-ab4ee0280f2092c529bd0dcc71ce2a599751114b8df6c1fb79756c6336c543b5",
+          "text": "HELLO 中文",
+          "worker": {
+            "active_process_limit": 1,
+            "appcontainer_verified": true,
+            "backend": "windows-lpac-job",
+            "capabilities": [
+              "registryRead"
+            ],
+            "cpu_limit_seconds": 3,
+            "elapsed_seconds": 0.2676,
+            "memory_limit_bytes": 268435456,
+            "network_capabilities": [],
+            "peak_memory_bytes": 12861440,
+            "wall_limit_seconds": 8
+          }
+        },
+        "status": "CONFIRMED",
+        "step_id": "step-1",
+        "task_id": "task-3eaee6422370448380d6284ea1c0db73"
+      },
+      {
+        "arguments": {
+          "content": "{\"package_id\":\"pkg-ab4ee0280f2092c529bd0dcc71ce2a599751114b8df6c1fb79756c6336c543b5\",\"text\":\"HELLO 中文\",\"worker\":{\"active_process_limit\":1,\"appcontainer_verified\":true,\"backend\":\"windows-lpac-job\",\"capabilities\":[\"registryRead\"],\"cpu_limit_seconds\":3,\"elapsed_seconds\":0.2676,\"memory_limit_bytes\":268435456,\"network_capabilities\":[],\"peak_memory_bytes\":12861440,\"wall_limit_seconds\":8}}",
+          "name": "result.json"
+        },
+        "attempts": 1,
+        "capability": "artifact.write.v1",
+        "digest": "ead647ff190864820bf48ca152a1d976efc4968afdcb5cd5b7ae98438d8341d0",
+        "error": null,
+        "id": "action-7fbdd0eea5c800672eae46c4ed566cc2",
+        "result": {
+          "bytes": 389,
+          "relative_path": "artifacts/task-3eaee6422370448380d6284ea1c0db73/action-7fbdd0eea5c800672eae46c4ed566cc2/result.json",
+          "sha256": "3003b4c9b2afa229752d1b1b5939a7593ec8f8b665155b827330a1c3995b8579",
+          "verified": true
+        },
+        "status": "CONFIRMED",
+        "step_id": "deliver",
+        "task_id": "task-3eaee6422370448380d6284ea1c0db73"
+      }
+    ],
+    "completion": {
+      "acceptance": {
+        "revision": 1,
+        "rules": {
+          "coverage": "complete",
+          "criteria": [
+            {
+              "check": "text_equals",
+              "expected": "HELLO 中文",
+              "id": "literal",
+              "step_id": "step-1"
+            }
+          ],
+          "requirements": [
+            {
+              "criterion_ids": [
+                "literal"
+              ],
+              "id": "output",
+              "kind": "literal",
+              "text": "字面输出等于 HELLO 中文"
+            }
+          ]
+        }
+      },
+      "assessment_history": [
+        {
+          "assessment": {
+            "acceptance": {
+              "revision": 1,
+              "rules": {
+                "coverage": "complete",
+                "criteria": [
+                  {
+                    "check": "text_equals",
+                    "expected": "HELLO 中文",
+                    "id": "literal",
+                    "step_id": "step-1"
+                  }
+                ],
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "literal"
+                    ],
+                    "id": "output",
+                    "kind": "literal",
+                    "text": "字面输出等于 HELLO 中文"
+                  }
+                ]
+              }
+            },
+            "checks": [
+              {
+                "id": "literal",
+                "status": "passed",
+                "step_id": "step-1"
+              }
+            ],
+            "condition_score": 100,
+            "evidence_ready": true,
+            "feedback": null,
+            "fingerprint": "769fdfc1c928884e7ae5439b39ce4a31bfff63196e072d6ffbe24bfe088c1423",
+            "outcome_id": "outcome-8e4183617a1d7d356eace2fb4db77890",
+            "requirement_coverage": {
+              "complete": true,
+              "requirements": [
+                {
+                  "criterion_ids": [
+                    "literal"
+                  ],
+                  "id": "output",
+                  "kind": "literal",
+                  "reason": "linked_checks",
+                  "status": "passed",
+                  "text": "字面输出等于 HELLO 中文"
+                }
+              ],
+              "scope": "explicitly_declared_requirements",
+              "semantic_goal_verified": false,
+              "state": "SATISFIED",
+              "version": "declared-requirements-1"
+            },
+            "score_scope": "declared_conditions_only",
+            "state": "VERIFIED",
+            "task_id": "task-3eaee6422370448380d6284ea1c0db73",
+            "version": "completion-1.1.0"
+          },
+          "created": 1793039583.1377344
+        },
+        {
+          "assessment": {
+            "acceptance": {
+              "revision": 1,
+              "rules": {
+                "coverage": "complete",
+                "criteria": [
+                  {
+                    "check": "text_equals",
+                    "expected": "HELLO 中文",
+                    "id": "literal",
+                    "step_id": "step-1"
+                  }
+                ],
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "literal"
+                    ],
+                    "id": "output",
+                    "kind": "literal",
+                    "text": "字面输出等于 HELLO 中文"
+                  }
+                ]
+              }
+            },
+            "checks": [
+              {
+                "id": "literal",
+                "status": "passed",
+                "step_id": "step-1"
+              }
+            ],
+            "condition_score": 100,
+            "evidence_ready": false,
+            "feedback": null,
+            "fingerprint": "b8b7f30269c1ab3e6cbacd7dc2602a5d209bc44fd487a5a4a838e265bddb2be8",
+            "outcome_id": null,
+            "requirement_coverage": {
+              "complete": false,
+              "requirements": [
+                {
+                  "criterion_ids": [
+                    "literal"
+                  ],
+                  "id": "output",
+                  "kind": "literal",
+                  "reason": "linked_checks",
+                  "status": "passed",
+                  "text": "字面输出等于 HELLO 中文"
+                }
+              ],
+              "scope": "explicitly_declared_requirements",
+              "semantic_goal_verified": false,
+              "state": "INCOMPLETE",
+              "version": "declared-requirements-1"
+            },
+            "score_scope": "declared_conditions_only",
+            "state": "WAITING",
+            "task_id": "task-3eaee6422370448380d6284ea1c0db73",
+            "version": "completion-1.1.0"
+          },
+          "created": 1793039582.5314157
+        },
+        {
+          "assessment": {
+            "acceptance": {
+              "revision": 1,
+              "rules": {
+                "coverage": "complete",
+                "criteria": [
+                  {
+                    "check": "text_equals",
+                    "expected": "HELLO 中文",
+                    "id": "literal",
+                    "step_id": "step-1"
+                  }
+                ],
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "literal"
+                    ],
+                    "id": "output",
+                    "kind": "literal",
+                    "text": "字面输出等于 HELLO 中文"
+                  }
+                ]
+              }
+            },
+            "checks": [
+              {
+                "id": "literal",
+                "status": "unknown",
+                "step_id": "step-1"
+              }
+            ],
+            "condition_score": null,
+            "evidence_ready": false,
+            "feedback": null,
+            "fingerprint": "59beab54b4f77769c5c03fb34b5bd519cfc4aec794ecf559be3a1e3f2c982f5e",
+            "outcome_id": null,
+            "requirement_coverage": {
+              "complete": false,
+              "requirements": [
+                {
+                  "criterion_ids": [
+                    "literal"
+                  ],
+                  "id": "output",
+                  "kind": "literal",
+                  "reason": "linked_checks",
+                  "status": "unknown",
+                  "text": "字面输出等于 HELLO 中文"
+                }
+              ],
+              "scope": "explicitly_declared_requirements",
+              "semantic_goal_verified": false,
+              "state": "INCOMPLETE",
+              "version": "declared-requirements-1"
+            },
+            "score_scope": "declared_conditions_only",
+            "state": "WAITING",
+            "task_id": "task-3eaee6422370448380d6284ea1c0db73",
+            "version": "completion-1.1.0"
+          },
+          "created": 1793039582.398737
+        },
+        {
+          "assessment": {
+            "acceptance": {
+              "revision": 1,
+              "rules": {
+                "coverage": "complete",
+                "criteria": [
+                  {
+                    "check": "text_equals",
+                    "expected": "HELLO 中文",
+                    "id": "literal",
+                    "step_id": "step-1"
+                  }
+                ],
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "literal"
+                    ],
+                    "id": "output",
+                    "kind": "literal",
+                    "text": "字面输出等于 HELLO 中文"
+                  }
+                ]
+              }
+            },
+            "checks": [
+              {
+                "id": "literal",
+                "status": "unknown",
+                "step_id": "step-1"
+              }
+            ],
+            "condition_score": null,
+            "evidence_ready": false,
+            "feedback": null,
+            "fingerprint": "99b7160a31abd742e4f3e71a370ef3d3855827802e971dad41d1e69919070aab",
+            "outcome_id": null,
+            "requirement_coverage": {
+              "complete": false,
+              "requirements": [
+                {
+                  "criterion_ids": [
+                    "literal"
+                  ],
+                  "id": "output",
+                  "kind": "literal",
+                  "reason": "linked_checks",
+                  "status": "unknown",
+                  "text": "字面输出等于 HELLO 中文"
+                }
+              ],
+              "scope": "explicitly_declared_requirements",
+              "semantic_goal_verified": false,
+              "state": "INCOMPLETE",
+              "version": "declared-requirements-1"
+            },
+            "score_scope": "declared_conditions_only",
+            "state": "WAITING",
+            "task_id": "task-3eaee6422370448380d6284ea1c0db73",
+            "version": "completion-1.1.0"
+          },
+          "created": 1793039582.012542
+        }
+      ],
+      "checks": [
+        {
+          "id": "literal",
+          "status": "passed",
+          "step_id": "step-1"
+        }
+      ],
+      "condition_score": 100,
+      "evidence_ready": true,
+      "feedback": {
+        "created": 1793039583.1380165,
+        "fingerprint": "769fdfc1c928884e7ae5439b39ce4a31bfff63196e072d6ffbe24bfe088c1423",
+        "id": "feedback-878ad6170c90ba063f003b42628f1b7d",
+        "kind": "reject",
+        "note": "迟到纠正：需要进一步确认业务含义"
+      },
+      "feedback_history": [
+        {
+          "created": 1793039583.1380165,
+          "fingerprint": "769fdfc1c928884e7ae5439b39ce4a31bfff63196e072d6ffbe24bfe088c1423",
+          "id": "feedback-878ad6170c90ba063f003b42628f1b7d",
+          "kind": "reject",
+          "note": "迟到纠正：需要进一步确认业务含义"
+        }
+      ],
+      "fingerprint": "769fdfc1c928884e7ae5439b39ce4a31bfff63196e072d6ffbe24bfe088c1423",
+      "method": null,
+      "method_available": false,
+      "outcome_id": "outcome-8e4183617a1d7d356eace2fb4db77890",
+      "requirement_coverage": {
+        "complete": false,
+        "requirements": [
+          {
+            "criterion_ids": [
+              "literal"
+            ],
+            "id": "output",
+            "kind": "literal",
+            "reason": "linked_checks",
+            "status": "passed",
+            "text": "字面输出等于 HELLO 中文"
+          }
+        ],
+        "scope": "explicitly_declared_requirements",
+        "semantic_goal_verified": false,
+        "state": "INCOMPLETE",
+        "version": "declared-requirements-1"
+      },
+      "score_scope": "declared_conditions_only",
+      "state": "NEEDS_CORRECTION",
+      "task_id": "task-3eaee6422370448380d6284ea1c0db73",
+      "version": "completion-1.1.0"
+    },
+    "context": {
+      "enabled": 1,
+      "goal_id": "goal-24d7cef8a04a471fbc131eab73ca63db",
+      "history": [],
+      "scope": "personal",
+      "view": {
+        "dependencies": [],
+        "facts": [],
+        "providers": [
+          "openai"
+        ],
+        "retrieval": {
+          "mode": "lexical",
+          "semantic": "transaction_lexical",
+          "version": "memory-retrieval-1.1.0"
+        },
+        "selectors": {
+          "channel": "task"
+        }
+      }
+    },
+    "growth": null,
+    "outcome": {
+      "assessed_at": 1793039582.5667312,
+      "coverage": {
+        "known": 6,
+        "passed": 6,
+        "total": 9
+      },
+      "criteria": [
+        {
+          "evidence_refs": [
+            "task:task-3eaee6422370448380d6284ea1c0db73"
+          ],
+          "id": "execution",
+          "reason": "execution_state",
+          "status": "passed"
+        },
+        {
+          "evidence_refs": [
+            "goal:goal-24d7cef8a04a471fbc131eab73ca63db"
+          ],
+          "id": "source",
+          "reason": "source_current",
+          "status": "passed"
+        },
+        {
+          "evidence_refs": [
+            "action:action-56fe8f735314d722d30714a2079e920f"
+          ],
+          "id": "receipt:step-1",
+          "reason": "confirmed_action",
+          "status": "passed"
+        },
+        {
+          "evidence_refs": [
+            "action:action-56fe8f735314d722d30714a2079e920f"
+          ],
+          "id": "integrity:step-1",
+          "reason": "computation_receipt",
+          "status": "passed"
+        },
+        {
+          "evidence_refs": [
+            "action:action-56fe8f735314d722d30714a2079e920f"
+          ],
+          "id": "result:step-1",
+          "reason": "semantic_verifier_missing",
+          "status": "unknown"
+        },
+        {
+          "evidence_refs": [
+            "action:action-7fbdd0eea5c800672eae46c4ed566cc2"
+          ],
+          "id": "receipt:deliver",
+          "reason": "confirmed_action",
+          "status": "passed"
+        },
+        {
+          "evidence_refs": [
+            "action:action-7fbdd0eea5c800672eae46c4ed566cc2"
+          ],
+          "id": "artifact:deliver",
+          "reason": "artifact_intact",
+          "status": "passed"
+        },
+        {
+          "evidence_refs": [],
+          "id": "goal_quality",
+          "reason": "goal_verifier_missing",
+          "status": "unknown"
+        },
+        {
+          "evidence_refs": [],
+          "id": "recipient_delivery",
+          "reason": "recipient_receipt_missing",
+          "status": "unknown"
+        }
+      ],
+      "evaluator": "deterministic-1.0.0",
+      "evidence": [
+        {
+          "digest": "3003b4c9b2afa229752d1b1b5939a7593ec8f8b665155b827330a1c3995b8579",
+          "ref": "action:action-56fe8f735314d722d30714a2079e920f"
+        },
+        {
+          "digest": "395308a1452299b8fb3ead52ed3c526de6ed0d2e71468f58186a3a51c233654c",
+          "ref": "action:action-7fbdd0eea5c800672eae46c4ed566cc2"
+        },
+        {
+          "digest": "3003b4c9b2afa229752d1b1b5939a7593ec8f8b665155b827330a1c3995b8579",
+          "ref": "artifact:action-7fbdd0eea5c800672eae46c4ed566cc2"
+        }
+      ],
+      "execution_status": "SUCCEEDED",
+      "fingerprint": "d897ab2ed063a79da7d78581629b94abde0abbed66f12acf22ced6a395d24aa2",
+      "goal_id": "goal-24d7cef8a04a471fbc131eab73ca63db",
+      "goal_revision": 2,
+      "id": "outcome-8e4183617a1d7d356eace2fb4db77890",
+      "schema": "jarvis.outcome-assessment.v1",
+      "score": null,
+      "source_status": "current",
+      "state": "PARTIAL",
+      "supersedes": "",
+      "task_id": "task-3eaee6422370448380d6284ea1c0db73",
+      "task_revision": 8
+    },
+    "plan": {
+      "cancel": 0,
+      "catalog": [
+        {
+          "active": "pkg-ab4ee0280f2092c529bd0dcc71ce2a599751114b8df6c1fb79756c6336c543b5",
+          "capability": "plugin.rework-upper.v1",
+          "description": "Convert letters to uppercase",
+          "name": "Uppercase synthetic text",
+          "revision": 1
+        }
+      ],
+      "created": 1793039580.8060637,
+      "deadline": 1793040180.8060637,
+      "digest": "894806c6b1443f352faedb1fcaf49706f9691cc1b875371f0c72809defb09fdc",
+      "error": null,
+      "generation": 0,
+      "id": "goal-24d7cef8a04a471fbc131eab73ca63db",
+      "planning_round": 0,
+      "proposal": {
+        "input_text": "HELLO 中文",
+        "questions": [],
+        "schema": "jarvis.goal-plan.v1",
+        "steps": [
+          {
+            "capability": "plugin.rework-upper.v1",
+            "expected": "字母全部大写，中文原样保留",
+            "source": "input",
+            "title": "文字转大写"
+          }
+        ],
+        "summary": "第二步要求更明确，第一步保持原样"
+      },
+      "request": {
+        "goal": "转换两段文字处理步骤，并保存结果",
+        "input_text": "HELLO 中文",
+        "model": "fixture",
+        "provider": "openai",
+        "reasoning": "default",
+        "request_id": "work-65eccfbf4535b250bfb1d5be2e63afeb0f484dbc"
+      },
+      "request_id": "work-65eccfbf4535b250bfb1d5be2e63afeb0f484dbc",
+      "revision": 2,
+      "routes": [
+        {
+          "id": "openai",
+          "model": "fixture",
+          "parameters": {}
+        }
+      ],
+      "status": "ACCEPTED",
+      "task_id": "task-3eaee6422370448380d6284ea1c0db73"
+    },
+    "task": {
+      "bindings": {
+        "artifact.write.v1": "artifact.local.v1",
+        "plugin.rework-upper.v1": "pkg-ab4ee0280f2092c529bd0dcc71ce2a599751114b8df6c1fb79756c6336c543b5"
+      },
+      "body": {
+        "goal": "转换两段文字处理步骤，并保存结果",
+        "grant_id": "goal-24d7cef8a04a471fbc131eab73ca63db-execute",
+        "limits": {
+          "max_attempts": 1,
+          "max_cost_units": 2,
+          "max_seconds": 600,
+          "max_steps": 2
+        },
+        "principal_id": "owner.local",
+        "request_id": "goal-use.24d7cef8a04a471fbc131eab73ca63db",
+        "schema": "jarvis.task.v1",
+        "scope_id": "personal",
+        "steps": [
+          {
+            "arguments": {
+              "text": "HELLO 中文"
+            },
+            "capability": "plugin.rework-upper.v1",
+            "step_id": "step-1"
+          },
+          {
+            "arguments": {
+              "name": "result.json"
+            },
+            "capability": "artifact.write.v1",
+            "input_from": "step-1",
+            "step_id": "deliver"
+          }
+        ]
+      },
+      "cancel": 0,
+      "created": 1793039580.962215,
+      "deadline": 1793040180.962215,
+      "digest": "234d0bae8f926cdca3df883aed81e5b9c2cd6e438586cfb31685f3164dbf999a",
+      "error": null,
+      "id": "task-3eaee6422370448380d6284ea1c0db73",
+      "next_step": 2,
+      "request_id": "goal-use.24d7cef8a04a471fbc131eab73ca63db",
+      "revision": 8,
+      "spent": 2,
+      "status": "SUCCEEDED"
+    },
+    "work": {
+      "assistant_id": "jarvis-80c0365463d141aeb9289f4f7556e861",
+      "budget": {
+        "available_units": 7,
+        "committed_units": 5,
+        "enforced": true,
+        "integrity": "complete",
+        "limit_units": 12,
+        "reserved_units": 0,
+        "revision": 1,
+        "scope": "linked_task_action_units",
+        "spent_units": 5,
+        "unresolved_tasks": 0
+      },
+      "cancelled": 0,
+      "created": 1793039578.0288737,
+      "cumulative_budget_enforced": true,
+      "current_goal": "goal-24d7cef8a04a471fbc131eab73ca63db",
+      "owner_bot_id": "default",
+      "ownership_mode": "default_projection",
+      "registration": "admission",
+      "remaining_followups": 2,
+      "revision": 2,
+      "root_goal": "goal-7d1021481d144ac1bb260baf7ac78a4f",
+      "schema": "jarvis.work.v1",
+      "spent_cost_units": 5,
+      "versions": [
+        {
+          "cancel": 0,
+          "goal_id": "goal-7d1021481d144ac1bb260baf7ac78a4f",
+          "kind": "original",
+          "note": "",
+          "ordinal": 1,
+          "parent_goal": null,
+          "spent": 3,
+          "start_step": 1,
+          "status": "ACCEPTED",
+          "task_id": "task-4fc1cb9568da42eeb95ff7482e653a75",
+          "task_status": "SUCCEEDED"
+        },
+        {
+          "cancel": 0,
+          "goal_id": "goal-24d7cef8a04a471fbc131eab73ca63db",
+          "kind": "new_requirement",
+          "note": "第二步要求更明确，第一步保持原样",
+          "ordinal": 2,
+          "parent_goal": "goal-7d1021481d144ac1bb260baf7ac78a4f",
+          "spent": 2,
+          "start_step": 2,
+          "status": "ACCEPTED",
+          "task_id": "task-3eaee6422370448380d6284ea1c0db73",
+          "task_status": "SUCCEEDED"
+        }
+      ]
+    },
+    "work_closure": {
+      "assessment_fingerprint": "769fdfc1c928884e7ae5439b39ce4a31bfff63196e072d6ffbe24bfe088c1423",
+      "complete": false,
+      "completion_state": "NEEDS_CORRECTION",
+      "condition_score": 100,
+      "current_goal": "goal-24d7cef8a04a471fbc131eab73ca63db",
+      "current_task": "task-3eaee6422370448380d6284ea1c0db73",
+      "quality_score": null,
+      "reasons": [
+        "NEEDS_CORRECTION"
+      ],
+      "requirement_coverage": {
+        "complete": false,
+        "requirements": [
+          {
+            "criterion_ids": [
+              "literal"
+            ],
+            "id": "output",
+            "kind": "literal",
+            "reason": "linked_checks",
+            "status": "passed",
+            "text": "字面输出等于 HELLO 中文"
+          }
+        ],
+        "scope": "explicitly_declared_requirements",
+        "semantic_goal_verified": false,
+        "state": "INCOMPLETE",
+        "version": "declared-requirements-1"
+      },
+      "reserved_cost_units": 0,
+      "root_goal": "goal-7d1021481d144ac1bb260baf7ac78a4f",
+      "score_scope": "current_declared_conditions_only",
+      "spent_cost_units": 5,
+      "state": "NEEDS_EVIDENCE",
+      "version": "work-closure-1.4.0"
+    }
+  },
+  "passed": true
+}

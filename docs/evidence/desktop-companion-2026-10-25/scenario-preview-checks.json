@@ -1,0 +1,85 @@
+{
+  "date": "2026-10-25",
+  "status": "accepted product direction; proposed native implementation",
+  "scope": "Existing authoritative design chapter plus eight synthetic UI scenarios; the workbench is an explicitly invoked supplementary tool",
+  "authority": "docs/interaction-persona.md#desktop-presence-design",
+  "source": "presence-scenarios.html",
+  "rendering": {
+    "method": "Browser full-page screenshots of first-party HTML/CSS reference scenes, with animation paused at its initial phase",
+    "reproduce": "python docs/evidence/desktop-companion-2026-10-25/serve-preview.py; visit the printed loopback URL with ?sheet=daily&still=1 or ?sheet=events&still=1; use &theme=light for the light variant",
+    "server_scope": "Temporary loopback-only server, exact allowlist of reference HTML and unchanged core.png; no application APIs or user-data served",
+    "width_css_px": 1265,
+    "synthetic_data": true,
+    "model_calls": 0,
+    "external_dependencies": [],
+    "screenshots": [
+      "presence-daily.jpg",
+      "presence-events.jpg",
+      "presence-events-light.jpg"
+    ]
+  },
+  "browser_checks": {
+    "status": "passed for recorded desktop reference viewport",
+    "observations": [
+      "A and B buttons show one reference sheet at a time; each sheet intentionally presents four independent moments for comparison",
+      "All eight logo image elements loaded from the original workbench asset",
+      "Dark daily and events screenshots visually checked for text, spacing and clipping",
+      "Light theme switched through the actual preview control; screenshot visually checked",
+      "No horizontal document overflow at the observed width; event cards inside their scene bounds",
+      "Preview motion toggle changes from paused to running; rendered logo CSS reports breathe animation running",
+      "Browser warning/error log empty after dark reference capture"
+    ],
+    "limitations": [
+      "UI actions inside the scene drawings are labels, not connected product controls",
+      "No real task, file, microphone, native window, tray or hotkey interaction tested",
+      "No native DPI, multiple-monitor, sleep, keyboard-focus integration, narrow-device or power benchmark claim",
+      "JPEG files show animation phases, not motion; source HTML provides the visual motion reference",
+      "Product behavior remains proposed; render checks do not establish native implementation"
+    ]
+  },
+  "brand": {
+    "source": "apps/workbench/brand/core.png",
+    "sha256": "3d66ab1a1d125e12ef289eaca563e37bc12b762b0c9d135f5f5c42902f610e4a",
+    "changed": false
+  },
+  "assets": {
+    "presence-scenarios.html": {
+      "sha256": "103bfe890d313d1f6553cf876efc2d91be9273a9498a66f26817a110723a0bbd",
+      "bytes": 19912
+    },
+    "serve-preview.py": {
+      "sha256": "0d20d5fa23b5029b67e47f0082ed2f0680a34da1867e943329cd3a6e99e00972",
+      "bytes": 1446
+    },
+    "presence-daily.jpg": {
+      "sha256": "9c810d26824d1683da5487d536fd426738828d12d8e7981f88c4287bbb71fbe6",
+      "bytes": 119835,
+      "width_px": 1264,
+      "height_px": 1038,
+      "format": "JPEG"
+    },
+    "presence-events.jpg": {
+      "sha256": "150a59caf7a1627a853151ca8ade5d04b5f8c50983706bd3f4e6385252a4cde3",
+      "bytes": 132211,
+      "width_px": 1264,
+      "height_px": 1038,
+      "format": "JPEG"
+    },
+    "presence-events-light.jpg": {
+      "sha256": "76adc281893c0bece84a30f66567a70cfe8059f10646deafcf8cc703ce10b7ba",
+      "bytes": 128513,
+      "width_px": 1264,
+      "height_px": 1038,
+      "format": "JPEG"
+    }
+  },
+  "documentation_checks": {
+    "status": "passed",
+    "navigation": "synchronized",
+    "documents": 27,
+    "chapters": 23,
+    "diagrams": 39,
+    "local_links": 2581,
+    "errors": 0
+  }
+}

@@ -1,3 +1,27 @@
 <!doctype html>
-<html lang="zh-CN" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>设置 · Jarvis</title><link rel="icon" href="/brand/icon.png"><link rel="stylesheet" href="/theme.css"><link rel="stylesheet" href="/logo.css"><link rel="stylesheet" href="/lifecycle.css"><link rel="stylesheet" href="/style.css"></head><body>
-<div class="settings-shell"><aside class="settings-nav"><a class="brand" href="/"><img src="/brand/icon.png" alt=""><div><strong>Jarvis</strong><small>设置中心</small></div></a><div class="note">偏好与后台管理</div><nav id="settings-nav" aria-label="设置导航"></nav><div class="bottom"><span>本机管理 · 数据留在本工程</span><a href="/">← 返回工作台</a></div></aside><main class="settings-main"><header class="settings-header"><a href="/">工作台</a>　/　设置</header><div id="error" role="status" hidden></div><section class="settings-content"><div id="page-eyebrow" class="eyebrow">SETTINGS</div><h1 id="page-title">设置</h1><p id="page-subtitle" class="settings-subtitle"></p><div id="settings-body"></div></section></main></div><div id="version" class="app-version"></div><dialog id="modal"><div class="modal-head"><h2 id="modal-title"></h2><button id="close-modal" class="icon" aria-label="关闭对话框" data-icon="close"></button></div><div id="modal-content"></div></dialog><script type="module" src="/settings.js"></script></body></html>
+<html lang="zh-CN" data-theme="dark">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>设置 · Jarvis</title><link rel="icon" href="/brand/icon.png"><link rel="stylesheet" href="/theme.css"><link rel="stylesheet" href="/logo.css"><link rel="stylesheet" href="/lifecycle.css"><link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/mail.css"><link rel="stylesheet" href="/studio3d.css">
+<link rel="stylesheet" href="/work-status.css"></head>
+<body class="settings-app">
+  <div class="settings-shell">
+    <aside class="settings-nav">
+      <a class="brand" href="/"><img src="/brand/core.png" alt="Jarvis 原版 Logo"><div><strong>JARVIS</strong><small>智能体控制中心</small></div></a>
+      <div class="note settings-nav-caption">CONTROL SYSTEM</div>
+      <nav id="settings-nav" aria-label="设置大类"></nav>
+      <div class="bottom"><span>本机管理 · 数据留在本工程</span><a href="/">← 返回工作台</a></div>
+    </aside>
+    <main class="settings-main">
+      <header class="settings-header"><div class="settings-breadcrumb"><a href="/">工作台</a><span>/</span><span>设置</span><span>/</span><b id="settings-group-name">总览</b></div><div id="settings-header-tools" class="top-tools" aria-label="设置工具"></div></header>
+      <div id="error" role="status" hidden></div>
+      <section class="settings-content">
+        <div class="settings-page-heading"><div><div id="page-eyebrow" class="eyebrow">CONTROL CENTER</div><h1 id="page-title">设置总览</h1></div><span id="settings-runtime-state" class="settings-state" role="status">正在连接核心</span></div>
+        <p id="page-subtitle" class="settings-subtitle"></p>
+        <nav id="settings-subnav" aria-label="当前大类中的设置" hidden></nav>
+        <div id="settings-body"></div>
+      </section>
+    </main>
+  </div>
+  <div id="version" class="app-version"></div>
+  <dialog id="modal"><div class="modal-head"><h2 id="modal-title"></h2><button id="close-modal" class="icon" aria-label="关闭对话框" data-icon="close"></button></div><div id="modal-content"></div></dialog>
+  <script type="module" src="/settings.js"></script>
+</body></html>

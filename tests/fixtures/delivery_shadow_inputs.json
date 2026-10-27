@@ -1,0 +1,67 @@
+{
+  "schema": "jarvis.delivery-inputs.v1",
+  "cases": {
+    "shadow-quote": [
+      {
+        "expected_revision": 0,
+        "facts": [
+          "甲方案价格90元，交期3天。",
+          "乙方案价格80元，交期7天。"
+        ],
+        "plans": [
+          "明天10点询问保修，不下单。"
+        ]
+      },
+      {
+        "expected_revision": 1,
+        "facts": [
+          "甲方案价格90元，交期3天。",
+          "乙方案价格85元，交期4天。"
+        ],
+        "plans": [
+          "明天10点询问保修，不下单。"
+        ]
+      }
+    ],
+    "shadow-journal": [
+      {
+        "expected_revision": 0,
+        "facts": [
+          "数据导出失败，原因未知。"
+        ],
+        "plans": [
+          "明天10点检查日志，不重跑导出。"
+        ]
+      },
+      {
+        "expected_revision": 1,
+        "facts": [
+          "数据导出尚未开始。"
+        ],
+        "plans": [
+          "明天10点检查日志，不重跑导出。"
+        ]
+      }
+    ],
+    "shadow-learning": [
+      {
+        "expected_revision": 0,
+        "facts": [
+          "学习者只看过过去式讲解，尚未独立作答。"
+        ],
+        "plans": [
+          "周五19点独立复测过去式。"
+        ]
+      },
+      {
+        "expected_revision": 1,
+        "facts": [
+          "学习者只看过过去式讲解，尚未独立作答。"
+        ],
+        "plans": [
+          "周六10点独立复测过去式。"
+        ]
+      }
+    ]
+  }
+}

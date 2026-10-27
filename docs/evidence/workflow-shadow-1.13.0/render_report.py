@@ -1,0 +1,98 @@
+"""Render measured shadow-delivery evidence; never infer semantic quality from PASS."""
+from pathlib import Path
+import hashlib
+import html
+import json
+
+HERE=Path(__file__).resolve().parent
+ROOT=HERE.parents[2]
+read=lambda p:json.loads((HERE/p).read_text('utf-8'))
+write=lambda p,v:(HERE/p).write_text(json.dumps(v,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+run=read('frozen-r2/run/report.json');wrapper=read('frozen-r2/result.json')
+tests=read('frozen-r2/run/tests.json');snapshot=read('frozen-r2/snapshot.json')
+assert run['local_verdict']==wrapper['local_verdict']=='PASS' and tests['passed']
+old=json.loads((HERE.parent/'workflow-fidelity-1.12.0/frozen-r1/run/plan.json').read_text('utf-8'))['test_ids']
+ids=read('frozen-r2/run/plan.json')['test_ids'];missing=sorted(set(old)-set(ids))
+assert len(old)==561 and not missing and len(ids)==len(set(ids))==591
+assert len(run['checks'])==32
+cost=read('cost-overview.json');cal=read('calibration.json');scope=read('trial-source-review.json')
+assert all(r['generation_and_review_sources_unchanged'] and r['observations_recomputed_without_change'] for r in scope['runs'].values())
+forecast=hashlib.sha256((HERE.parent/'assistant-forecast-r1-2026-10-26.json').read_bytes()).hexdigest()
+status=hashlib.sha256((ROOT/'host/work_status.py').read_bytes()).hexdigest()
+assert forecast=='035f34e43b8b1f7c974202c0820fef905abe86674c5089be6be28a44a76ef66f'
+assert status=='16784cdf2a387efd191e7c6dd89a8fbe8aa92edb450620054f6e3c5596947e10'
+perf=read('frozen-r2/run/performance.json');off=perf['task_ms']['False']['p95'];on=perf['task_ms']['True']['p95']
+v={'version':'workflow-shadow-1.13.0','local_verdict':'PASS','tests':tests['run'],'baseline_retained':len(old),
+   'new_tests':len(set(ids)-set(old)),'missing_baseline':missing,'browser_workflows':13,'gates':len(run['checks']),
+   'source_count':snapshot['source_count'],'supporting_count':len(snapshot['supporting_input_digests']),
+   'original_observer_p95_ms':{'off':off,'on':on,'added':round(on-off,3),'budget':25},
+   'live_calls':cost['calls'],'underlying_synthetic_scenarios':3,'independent_real_user_cases':0,
+   'explicit_basis_input':True,'automatic_trusted_extraction':False,'shadow_is_completion_gate':False,
+   'calibration_counts':cal['counts'],'free_prose_semantic_gate':'NOT_ACCEPTED',
+   'open_prior_issues':['TRIAL-SEM-01','TRIAL-SEM-02'],'formal_quality_score':None,'quality_gain':None,
+   'full_cost':None,'automatic_knowledge_promotion':False,'production_deployed':False,
+   'original_forecast_preserved':True,'old_work_status_preserved':True,'live_source_scope':'Two UI-only differences disclosed; generation and review code unchanged'}
+write('verification.json',v)
+write('adoption-review.json',{'kind':'report_only_not_runtime_policy','engineering_verdict':'PASS',
+   'accepted_scope':'Explicit same-chat basis, version-bound reply observation, visible revision/clear, unchanged execution authority',
+   'free_prose_semantic_gate':'NOT_ACCEPTED','automatic_rewrite':False,'automatic_knowledge_promotion':False,
+   'production_deployed':False,'original_issues_still_open':['TRIAL-SEM-01','TRIAL-SEM-02'],
+   'decision':'Keep optional nonblocking observations. Calibrate semantic evidence before using results to close tasks, grade quality, learn methods or publish changes.'})
+gates=''.join(f'<tr><td>{html.escape(c["id"])}</td><td>{c["status"]}</td></tr>' for c in run['checks'])
+rows=''
+for name,label in [('live-prose-r1','自由正文'),('live-excerpt-r1','来源摘录')]:
+    s=read(name+'/summary.json');c=s['costs']
+    rows+=f'<tr><td><a href="{name}/summary.json">{label}</a></td><td>{s["recorded_turns"]} / {s["planned_turns"]}</td><td>12 / 12</td><td>{html.escape(str(s["shadow_states"]))}</td><td>{c["known_tokens"]:,}</td><td>${c["known_api_estimates"]["USD"]:.6f}</td></tr>'
+review=read('prose-review.json')
+prose_rows=''.join(f'<tr><td><a href="{r["record"]}">{r["case_id"]} / {r["arm"]} / 第{r["turn"]+1}轮</a></td><td>{html.escape(r["observation"])}</td><td>{html.escape(r["remaining_risk"] or "本次阅读未另标该风险；不是完整语义签收")}</td></tr>' for r in review['rows'])
+css='''*{box-sizing:border-box}body{margin:0;background:#0a1220;color:#e8eff8;font:17px/1.72 system-ui,sans-serif}main{max-width:1140px;margin:auto;padding:42px 24px}h1{font-size:38px;line-height:1.28;max-width:900px}h2{font-size:25px;margin-top:36px}p{color:#c4d0df}a{color:#80d3ff;overflow-wrap:anywhere}strong{color:#80e0bb}.tag{letter-spacing:2px;font-size:13px;color:#80d3ff}.cards,.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.card,.flow>div{background:#14243b;border:1px solid #34506c;border-radius:12px;padding:18px}.number{font-size:30px;display:block;color:#80e0bb}.small{font-size:14px;color:#aebed3}.scroll{overflow:auto}table{width:100%;border-collapse:collapse;font-size:15px}th,td{text-align:left;vertical-align:top;padding:13px;border-bottom:1px solid #30465f;min-width:105px}th{color:#80d3ff}.note{border-left:3px solid #dfb16b;padding:12px 18px;background:#172236}.flow{grid-template-columns:repeat(5,1fr);font-size:15px}.bar{height:30px;border-radius:5px;display:flex;overflow:hidden;color:#061525;font-size:14px;font-weight:700;text-align:center}.bar span{display:block;line-height:30px}.good{background:#73c9ad}.bad{background:#e79089}.unknown{background:#e1bb78}details{border:1px solid #34506c;border-radius:12px;padding:16px;margin:24px 0}summary{cursor:pointer;color:#80d3ff}code{overflow-wrap:anywhere}li{margin:8px 0}img{max-width:100%;height:auto;border-radius:10px}.shots{display:grid;grid-template-columns:2fr 1fr;gap:12px;align-items:start}@media(max-width:720px){main{padding:24px 16px}h1{font-size:29px}.number{font-size:26px;white-space:nowrap}.cards,.flow{grid-template-columns:repeat(2,1fr)}.flow>div:last-child{grid-column:span 2}.shots{grid-template-columns:1fr}}'''
+page=f'''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Jarvis 1.13 交付影子核对验收</title><style>{css}</style><main>
+<div class="tag">JARVIS · WORKFLOW SHADOW 1.13.0 · 2026-10-27</div>
+<h1>依据能追溯，计划能修订，<br>交付问题开始可见</h1>
+<p><strong>显式资料 → 依据版本 → 原回复 → 影子核对 → 工作台 → 更正，数据链已接通。</strong>当前逐字观察会误报、漏报，保持可选、非阻断；未签收自动语义审核，也未部署生产进程。</p>
+<div class="cards"><div class="card"><b class="number">591 / 591</b>技术回归通过<span class="small"><br>原561项全部保留，新增30项</span></div><div class="card"><b class="number">13 · 32</b>浏览器流程 · 验收门<span class="small"><br>最终冻结版本全部通过</span></div><div class="card"><b class="number">3 · 24</b>合成场景 · 模型调用<span class="small"><br>三域各一场景，两轮、双格式、双臂</span></div><div class="card"><b class="number">未评分</b>真实质量收益尚未测得<span class="small"><br>工程通过不换算任务质量分</span></div></div>
+<div class="note">本轮可签收的是版本和观察链。自由正文12次全部提示待核查，不代表12次全部有错；摘录12次匹配只说明限定正文与声明来源相符，不证明来源为真或整份交付优秀。旧问题TRIAL-SEM-01/02继续保留。</div>
+<h2>改进了什么，会发生什么</h2>
+<div class="scroll"><table><tr><th>本轮改进</th><th>实际效果</th><th>未覆盖的能力</th></tr>
+<tr><td>会话内显式事实和计划</td><td>来源逐字绑定可见消息，引用随轮次冻结；旧版本不会被新填写覆盖</td><td>自动提取、事实真伪和跨会话长期知识</td></tr>
+<tr><td>原回复旁边显示核对详情</td><td>遗漏原文、摘录不符或核对异常可见；原回复和成功状态保持</td><td>自由改写的完整语义评价、自动返工</td></tr>
+<tr><td>修订冲突与旧观察失效标识</td><td>并发旧编辑被拒；改期、清空后新轮次使用新版本，历史保留</td><td>自动推理撤销范围、语义遗忘、绝对日期核定</td></tr>
+<tr><td>移动端编辑区限高</td><td>发送按钮底边从868px回到760px，844px高屏幕内可见</td><td>任意设备、软键盘和无障碍全面认证</td></tr></table></div>
+<h2>一轮交付怎样回到下一轮改进</h2>
+<div class="flow"><div>① 明确依据<br><span class="small">用户声明；未核实真伪</span></div><div>② 原事务冻结<br><span class="small">版本、来源位置与时间</span></div><div>③ 原模型交付<br><span class="small">沿用既有Host和权限</span></div><div>④ 影子观察<br><span class="small">结果与回复一同保存</span></div><div>⑤ 工作台修订<br><span class="small">更正 / 改期 / 清空 → 新版本</span></div></div>
+<p>不填写依据的正常聊天照常工作。建立依据后可沿用；只有明确修改才递增版本。清空停止后续核对，不删除历史，也不等同于遗忘正式知识。相对时间保留来源UTC语境，但绝对日期仍标未核定。</p>
+<h2>预测与实测：哪些吻合，哪些必须继续研究</h2>
+<div class="scroll"><table><tr><th>事前预期</th><th>实测</th><th>本轮判断</th></tr>
+<tr><td>同一会话资料、计划、回复可追溯</td><td>原HTTP/存储/Host/界面贯通，重启、排队快照、旧修订冲突均有测试</td><td>限定数据链吻合预期</td></tr>
+<tr><td>观察不替代执行器或结案门</td><td>异常不改原回复与状态，would_block=false；无新增模型调用</td><td>限定故障隔离吻合预期；依据上下文仍会影响生成</td></tr>
+<tr><td>逐字缺失可能是合理改写</td><td>15条校准中3条合理改写误提示、3条无依据扩写漏提示</td><td>确认不适合自动语义放行</td></tr>
+<tr><td>质量与总成本收益不预填</td><td>无独立真实用户样本、无长期跟踪、成本不完整</td><td>Q、学习增益、预测差值均保持空值</td></tr></table></div>
+<p class="small">以上与<a href="plan.json">事前计划</a>逐项对照。原JPF预测摘要不变；没有把技术通过率写成“更聪明”的分数。</p>
+<h2>三类模型试跑：字段正确不等于正文无缺陷</h2>
+<div class="scroll"><table><tr><th>格式 / 原证据</th><th>调用</th><th>预设检查通过</th><th>影子观察</th><th>已知token</th><th>API估算</th></tr>{rows}</table></div>
+<p>报价场景：修订后由甲90元/3天变为选乙85元/4天，保留询问保修且不下单。文档场景：由导出失败更正为尚未开始，保留明天10点查日志、不重跑。学习场景：只看过讲解、未独立作答，明确从周五19点改为周六10点；不虚报独立掌握或留存。</p>
+<p><strong>三类各一条合成场景，不是六条独立样本。</strong>同一场景跨两种格式和工作流开关重复；依据由明确输入包填写，未测试自动提取。工作流开关各臂都通过，不能据此证明质量增益。</p>
+<div class="note">逐份复看12条自由正文：计划保留有局部正面观察，但日志出现未提供的“当前无进行中导出任务”；学习文字把“只看过”写成“完成学习”存在夸大风险。该复看由助手事后完成，不是独立人工评分。</div>
+<h2>评估器先接受自己的反例测试</h2>
+<p>15条预设合成校准，三域各5条。原文完全保留、合理改写、漏计划、改时间、原文后追加无依据结论。</p>
+<div class="bar" role="img" aria-label="15条反例：正确提示6、误提示3、漏提示3、正确不提示3"><span class="good" style="flex:6">正确提示 6</span><span class="unknown" style="flex:3">误报 3</span><span class="bad" style="flex:3">漏报 3</span><span class="good" style="flex:3">未报对 3</span></div>
+<div class="scroll"><table><tr><th>预设参考</th><th>提示核查</th><th>未提示</th></tr><tr><td>有缺陷（9条）</td><td>6 正确提示</td><td>3 漏提示</td></tr><tr><td>无预设缺陷（6条）</td><td>3 误提示</td><td>3 正确不提示</td></tr></table></div>
+<p>这是刻意构造的反例集合，不能估计真实任务的误报率。它已足以拒绝直接把当前观察器升级为自动结案、自动评分或经验晋升门。</p>
+<h2>保住原设计，也保留真实失败记录</h2>
+<p>本轮修改19个源码/测试输入；冻结{snapshot['source_count']}个源码输入和{len(snapshot['supporting_input_digests'])}个支撑输入。复用原Host、DialogueStore、发送契约和工作台投影，不新增许可或执行通路；原Task/预算/知识门及host/work_status.py保持。未验证未来精灵实际入口、多Bot或机器人。</p>
+<p>原观察器预算探针p95：关闭{off:.3f}ms，开启{on:.3f}ms，差{on-off:.3f}ms（原预算25ms）。这是原结果观察器探针，不是新增聊天核对的专门延迟基准，不代表真实模型端到端速度。</p>
+<ul><li>UI r1在初始化前填写，未发送；r2探针把原接口202误写成200预期。修复探针，保留失败。</li><li>UI r3通过基础断言，但目视发现窄屏按钮超出24px；补几何断言、编辑区限高，r4通过。</li><li>frozen-r1未产生完整结果，恢复时无运行进程，原因未知；不计通过。最终frozen-r2重新运行全部原门。</li><li>全共享树格式检查另有3705条既存问题，未顺手改动；本轮选定改动单独检查。</li><li><a href="temporary-cleanup.json">失败探针临时目录清理</a>被自动审批拒绝（仅返回blocked by policy），目录保留；不影响源码或验收证据。</li></ul>
+<div class="note">实测试跑之后只修改了移动端CSS和界面探针。原模型回执与summary未重写；当前整包重算如实返回source_status=CHANGED。<a href="trial-source-review.json">分范围核验</a>确认其余全部源码（包括生成与核对）摘要相同、原观察可重算不变。模型证据只适用于未变动组件；最终完整界面版本由frozen-r2验收。</div>
+<h2>下一步顺序与采用边界</h2>
+<div class="scroll"><table><tr><th>顺序</th><th>继续完善</th><th>采用前必须看到</th></tr><tr><td>1</td><td>语义校准：区分合理改写、关键遗漏、无依据新增、计划冲突</td><td>保留集逐例证据；错误告警和漏报都可复核；无证据继续标未知</td></tr><tr><td>2</td><td>从自然请求提出依据候选，保留来源位置、冲突、时间解释</td><td>明确声明与自动推断分开；跨轮修订不丢有效限制，不擅自转成执行许可</td></tr><tr><td>3</td><td>有限任务返工与结果回流，再接条件化经验候选</td><td>三域独立真实请求、延迟反证、完整成本和质量对照；不把自评写成真值</td></tr><tr><td>4</td><td>扩大多Bot责任链与常设委托</td><td>先依赖前述可靠验收；共享任务预算、负责人、冲突和撤回链各自验证</td></tr></table></div>
+<p>知识库本轮不自动接纳观察结果。将来只有经过来源、适用条件、反例和真实收益验证的经验才可成为候选；过期或被反证的依据要沿使用链失效。结构有改进而实测下降时，保留研发候选、停止扩大采用，不能用结构得分冲抵任务失败。</p>
+<h2>用法与证据</h2><p>工作台输入区展开“资料与计划核对”，逐行填明确事实、当前计划，勾选随本次消息更新后发送；回复旁展开核对详情。需要改期或撤销时编辑完整当前两组内容；清空两组并提交则停止后续核对。该可选编辑器为校准与追溯入口，自动可信抽取尚待实现。</p>
+<p>24次模型调用，已知{cost['known_tokens']:,} token，API估算USD {cost['known_api_estimate_usd']:.6f}。未含人工、本地计算、供应商账单对账；完整费用与质量/费用收益均未评。核对器本身不额外请求模型，但依据进入上下文会增加输入token；本轮未设置无依据消融，不能宣称零成本或更省token。</p>
+<p><a href="../../delivery-validation.md#workflow-shadow-evidence">权威验收章节</a> · <a href="../../core-bootstrap.md#workflow-shadow-runtime">实施与使用</a> · <a href="../../contracts.md#workflow-shadow-contract">契约</a> · <a href="verification.json">实测汇总</a> · <a href="adoption-review.json">采用边界</a> · <a href="frozen-r2/run/report.html">完整技术验收</a> · <a href="delivery-checks.json">交付检查</a></p>
+<details><summary>展开全部32道验收门</summary><div class="scroll"><table><tr><th>验收门</th><th>结果</th></tr>{gates}</table></div></details>
+<details><summary>展开12条自由正文的事后阅读记录</summary><div class="scroll"><table><tr><th>原记录</th><th>观察</th><th>剩余风险</th></tr>{prose_rows}</table></div></details>
+<details><summary>展开工作台桌面与窄屏实测截图</summary><p class="small">隔离服务、模拟模型、真实浏览器操作；不是生产截图或真实模型质量证明。</p><div class="shots"><img src="ui-r4/shadow-desktop.png" alt="工作台桌面交付核对详情"><img src="ui-r4/shadow-mobile.png" alt="修复后窄屏发送按钮位于视口内"></div></details>
+<p class="small">范围：本地候选、显式声明、合成场景、受限文字交付。非生产部署，非全功能优秀证明，非持续成长或情绪陪伴验收。历史失败与原预测继续有效。</p>
+</main></html>'''
+(HERE/'report.html').write_text(page,encoding='utf-8')
+print(json.dumps({'report':'report.html','tests':tests['run'],'gates':len(run['checks'])}))

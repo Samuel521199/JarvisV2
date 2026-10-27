@@ -1,0 +1,67 @@
+{
+  "case_id": "document-correction",
+  "domain": "documents",
+  "arm": "workflow_off",
+  "turn": 1,
+  "freeze_digest": "b6fd47cf664df70f600d975f74554060fa968cd4b977a41219a54bce1659c3ee",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "我已整理好补充建议，确认后才会更新原目标并重新规划。",
+  "skill_id": null,
+  "skill_version": null,
+  "action_kind": "amend",
+  "task_count": 0,
+  "flow_valid": false,
+  "elapsed_seconds": 9.103,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 258,
+        "prompt_tokens": 958,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 371,
+        "total_tokens": 1587
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.00307725,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/document-correction-workflow_off-1.reply.md",
+      "sha256": "a6bb8fb69bd671afa059bbfb23b8abdd809ccf0a345a8dfb133ce20642074ba8",
+      "kind": "original_session_reply"
+    }
+  ],
+  "assessment": {
+    "state": "FAIL",
+    "checks": [
+      {
+        "id": "dialogue_flow",
+        "status": "failed"
+      }
+    ],
+    "condition_score": null,
+    "quality_score": null
+  },
+  "failure_stage": "assistant_routing",
+  "business_quality": null,
+  "record_digest": "74a8144de35e1c392f24f69ef32f8d2034fe7296e918fac5ec50f5163c4aa4ad"
+}

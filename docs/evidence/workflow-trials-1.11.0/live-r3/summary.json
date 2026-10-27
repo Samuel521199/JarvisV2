@@ -1,0 +1,220 @@
+{
+  "version": "work-trials-2",
+  "origin": "synthetic",
+  "independent_cases": 6,
+  "planned_turns": 24,
+  "recorded_turns": 24,
+  "complete_pairs": 5,
+  "cases": [
+    {
+      "id": "quote-eligible",
+      "domain": "comparison",
+      "arms": {
+        "workflow_off": {
+          "state": "PASS",
+          "turn_states": [
+            "PASS"
+          ]
+        },
+        "workflow_on": {
+          "state": "PASS",
+          "turn_states": [
+            "PASS"
+          ]
+        }
+      }
+    },
+    {
+      "id": "quote-empty",
+      "domain": "comparison",
+      "arms": {
+        "workflow_off": {
+          "state": "PASS",
+          "turn_states": [
+            "PASS"
+          ]
+        },
+        "workflow_on": {
+          "state": "PASS",
+          "turn_states": [
+            "PASS"
+          ]
+        }
+      }
+    },
+    {
+      "id": "document-correction",
+      "domain": "documents",
+      "arms": {
+        "workflow_off": {
+          "state": "PASS",
+          "turn_states": [
+            "PASS",
+            "PASS"
+          ]
+        },
+        "workflow_on": {
+          "state": "UNMEASURED",
+          "turn_states": [
+            "PASS",
+            "UNMEASURED"
+          ]
+        }
+      }
+    },
+    {
+      "id": "document-conflict",
+      "domain": "documents",
+      "arms": {
+        "workflow_off": {
+          "state": "PASS",
+          "turn_states": [
+            "PASS",
+            "PASS"
+          ]
+        },
+        "workflow_on": {
+          "state": "PASS",
+          "turn_states": [
+            "PASS",
+            "PASS"
+          ]
+        }
+      }
+    },
+    {
+      "id": "learning-agreement",
+      "domain": "learning",
+      "arms": {
+        "workflow_off": {
+          "state": "PASS",
+          "turn_states": [
+            "PASS",
+            "PASS",
+            "PASS"
+          ]
+        },
+        "workflow_on": {
+          "state": "PASS",
+          "turn_states": [
+            "PASS",
+            "PASS",
+            "PASS"
+          ]
+        }
+      }
+    },
+    {
+      "id": "learning-past",
+      "domain": "learning",
+      "arms": {
+        "workflow_off": {
+          "state": "PASS",
+          "turn_states": [
+            "PASS",
+            "PASS",
+            "PASS"
+          ]
+        },
+        "workflow_on": {
+          "state": "PASS",
+          "turn_states": [
+            "PASS",
+            "PASS",
+            "PASS"
+          ]
+        }
+      }
+    }
+  ],
+  "domains": {
+    "comparison": {
+      "workflow_off": {
+        "PASS": 2,
+        "FAIL": 0,
+        "UNMEASURED": 0
+      },
+      "workflow_on": {
+        "PASS": 2,
+        "FAIL": 0,
+        "UNMEASURED": 0
+      }
+    },
+    "documents": {
+      "workflow_off": {
+        "PASS": 2,
+        "FAIL": 0,
+        "UNMEASURED": 0
+      },
+      "workflow_on": {
+        "PASS": 1,
+        "FAIL": 0,
+        "UNMEASURED": 1
+      }
+    },
+    "learning": {
+      "workflow_off": {
+        "PASS": 2,
+        "FAIL": 0,
+        "UNMEASURED": 0
+      },
+      "workflow_on": {
+        "PASS": 2,
+        "FAIL": 0,
+        "UNMEASURED": 0
+      }
+    }
+  },
+  "descriptive_improved_pairs": 0,
+  "descriptive_regressed_pairs": 0,
+  "all_candidate_conditions_passed": false,
+  "comparison_complete": false,
+  "quality_gain": null,
+  "learning_gain": null,
+  "emotion_quality": null,
+  "real_work_gain": null,
+  "all_functional_excellence_verified": false,
+  "scope": "Current-runtime workflow guidance ablation on bounded structured replies; no causal or population inference",
+  "execution": "live",
+  "costs": {
+    "attempts": 24,
+    "known_tokens": 26876,
+    "tokens_complete": false,
+    "total_tokens": null,
+    "known_api_estimates": {
+      "USD": 0.027192
+    },
+    "unpriced_attempts": 1,
+    "full_cost": null,
+    "missing": [
+      "human effort",
+      "local compute",
+      "supplier invoice reconciliation"
+    ],
+    "quality_cost_efficiency": null
+  },
+  "source_matches_freeze": true,
+  "production_deployed": false,
+  "forecast_delta": null,
+  "avoidable_interventions": null,
+  "required_decisions": null,
+  "unmeasured": [
+    "independent real requests",
+    "free-form semantic coverage",
+    "subjective document quality",
+    "human retention and transfer",
+    "emotional experience",
+    "full costs"
+  ],
+  "failure_details": [
+    {
+      "case_id": "document-correction",
+      "arm": "workflow_on",
+      "turn": 1,
+      "stage": "transport_or_availability",
+      "failed_checks": [
+        "response_delivery"
+      ]
+    }
+  ]
+}

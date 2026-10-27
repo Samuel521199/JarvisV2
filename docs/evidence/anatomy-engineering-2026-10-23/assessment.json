@@ -1,0 +1,109 @@
+{
+  "status": "verified_with_limits",
+  "adapter_version": "5.0.0",
+  "project_version_file": "0.1.0",
+  "source_sha256": {
+    "host/anatomy.py": "7482bb187b3f43cc163897b431cc6d34112c6c40568720d72013d29c7dc450a0",
+    "host/anatomy_engineering.py": "c1205a5a921dc35ce2cb0e7ca546393ed4765ee7315d7169005d42fa3e58092a",
+    "host/anatomy_composer.py": "a6aedd07133475c10db1a76034c8e013eb2db0c323b82259ccc08730859c0b62",
+    "adapters/engineering/worker.py": "e6cda3984f9e8d9f0551760104bf0571e4b9203b216b893c51dd7a707a15737e",
+    "apps/engineering/worker.py": "c501fe0e152e8cd0116f53d1e0926fe205487201b411b7dc31518753ba407e4b",
+    "apps/workbench/settings-anatomy.js": "b2349d241002d8558dd53899f8c2b8872f76d7cc632aaf469052e481b8157ada",
+    "apps/workbench/ui.js": "34fc250ae425b8161a8ac870703ebbef6b65aeafbebae6db75acba217ead4454",
+    "apps/workbench/server.py": "96e0d9f24d3b676f024c1c20cd12d4af48a0e04df6546c653d69b498cb7fea41",
+    "tools/check_architecture.py": "b34a4f7a56af2225e779705c4e64d1a0c5c512785a5c5587f8016dbe2be46df0",
+    "tools/prepare_anatomy_runtime.py": "0de640a67793348217c53f149cd60326022ca0b40accd957c510eacc42ea3be8",
+    "tests/test_anatomy_engineering.py": "7b3c8c21703cadf4d60a80977786341580277863177303d9d1dd0bac71405cb6",
+    "seed/skills/conversation.json": "a4bb37e86a3a55ec8b146f72aea417d4d9ffb7cc4b9e632135a1e03119688180",
+    "modules/skills/anatomy/engineering-build.mjs": "2a9efbe0be1e8517a048086447fc90b8e0548b096e4d5d3ae2d25d20cae3bbe3",
+    "modules/skills/anatomy/engineering-contract.json": "b0b1c34615716b4adc27e927d9107aa14ed207e4ed8b4b4df61930288961aea9",
+    "modules/skills/anatomy/engineering-presets.json": "c72918ea250ff268ae6b4603bdcf6668d2d127c0c0599e17cec384ae4ac94ea7",
+    "modules/skills/anatomy/engineering-view.js": "956f76f8b570ec7e984b6b0c7835156910e7659773b7adeddacb3e0cc8e92f66",
+    "modules/skills/anatomy/engineering.html": "a3860060c0fe25680057134ea6e9ed944de71f0c1c26977400ed5b4aad68107a",
+    "modules/skills/anatomy/engineering_model.py": "55636e5c84de0b0677d647a321a4caa7232539d00537dfeabc412aa82bbc4a0a",
+    "modules/skills/anatomy/engineering_physics.py": "99aec69194e81f4403cd5d9317fcd3d329325bf46f3231a60920076467e2c9c4",
+    "modules/skills/anatomy/runtime-lock.json": "27399e8628a98258064d2e99277e1e94a66343a0d961f1d134c350028fa2d924",
+    "modules/skills/anatomy/runtime-boundary.json": "172f344b22f6710139f6a2012a8a4f9c40efc456a833709fd633e2a0c63f6ed0",
+    "modules/skills/anatomy/structure3d.mjs": "c66ea14a9e9c174bb586f6e76743d2613ac41b9c5fd16631fe8a78685e9dafb3"
+  },
+  "tests": {
+    "python_regression": {
+      "tests": 261,
+      "seconds": 228.071,
+      "status": "passed",
+      "log": "python-regression.txt"
+    },
+    "anatomy_final": {
+      "tests": 29,
+      "status": "passed",
+      "log": "python-targeted.txt"
+    },
+    "engineering_final": {
+      "tests": 14,
+      "status": "passed",
+      "log": "python-engineering.txt"
+    },
+    "browser_final": {
+      "status": "passed",
+      "checks": 9,
+      "errors": [],
+      "file": "final-live/browser.json"
+    },
+    "generated_and_plan_adoption": {
+      "status": "passed",
+      "checks": 4,
+      "file": "frozen-plan-browser/browser.json"
+    },
+    "architecture": {
+      "python_files": 99,
+      "errors": []
+    },
+    "final_catalog_and_anatomy": {
+      "tests": 29,
+      "status": "passed",
+      "log": "python-catalog-final.txt"
+    }
+  },
+  "models": {
+    "provider": "vertex",
+    "model": "gemini-3.8-flash",
+    "initial_static_scope_score": 7.33,
+    "after_model_static_repair_score": 9.12,
+    "final_broader_scope_score": 7.88,
+    "visual_score": null,
+    "score_limits": "Different evidence scopes and criteria; scores are not a quality percentage or manufacturing certification. Final assembly steps were improved by trusted B-rep search, not silently attributed to the model.",
+    "actual_calls": 7,
+    "estimated_usd": "0.08412900",
+    "failed_attempts": [
+      "model-3: model_reply_incomplete",
+      "insertion-model-1: enclosing JSON fence rejected; no candidate executed"
+    ]
+  },
+  "delivery": {
+    "seven_part_current_runtime": "/api/anatomy/artifacts/5c76463f8cdf439bb1079c4df18493d7",
+    "seven_part_frozen_source": "/api/anatomy/artifacts/962f6753bff24f3395838e362fe4ebe2",
+    "nineteen_part_current_runtime": "http://127.0.0.1:18282/api/anatomy/artifacts/e7d54f8e9ebe492699f6fc2861f38383",
+    "verified_step_file_download": true,
+    "verified_zip_download": true
+  },
+  "runtime": {
+    "observed_normal_startup_pid": 63360,
+    "final_quality_gate_api": "needs_revision for obstructed steps; checked_scope_passed after trusted-step adoption",
+    "verification": "runtime-verification.json",
+    "restart_attempt_by_this_conversation": "blocked by policy; not retried",
+    "later_independent_startup": "observed and verified using APIs",
+    "temporary_test_services": "18283 and 18285 stopped after tests",
+    "temporary_ports_closed": {
+      "18283": true,
+      "18285": true
+    }
+  },
+  "remaining": [
+    "continuous insertion/motion collision",
+    "general rigid body contact and arbitrary mechanisms",
+    "manufacturing tolerances, threads, preload and structural strength",
+    "arbitrary 2D/3D CFD, ignition kinetics, spatial combustion and FSI",
+    "OpenFOAM/Blender integration, video and low-memory long-run validation"
+  ],
+  "docs_check": "passed; documents=26 chapters=23 diagrams=39 local_links=2214 errors=0"
+}

@@ -1,0 +1,92 @@
+{
+  "created_at": "2026-10-27T06:36:49.089321+00:00",
+  "source_matches_frozen_candidate": true,
+  "source_differences": [],
+  "supporting_changes_after_acceptance": [
+    "README.md"
+  ],
+  "supporting_change_reason": "README measured result updated after acceptance; runtime source must remain fixed",
+  "docs": {
+    "command": [
+      "D:\\soft\\Python313\\python.exe",
+      "tools/check_docs.py",
+      "--root",
+      "."
+    ],
+    "returncode": 0,
+    "output": "OK documents=29 chapters=25 diagrams=46 local_links=3813 errors=0"
+  },
+  "architecture": {
+    "command": [
+      "D:\\soft\\Python313\\python.exe",
+      "tools/check_architecture.py"
+    ],
+    "returncode": 0,
+    "output": "{\"python_files\": 201, \"errors\": []}"
+  },
+  "selected_diff_check": {
+    "command": [
+      "git",
+      "diff",
+      "--check",
+      "--",
+      "apps/workbench/goals.js",
+      "apps/workbench/ui.js",
+      "host/completion.py",
+      "host/goals.py",
+      "host/quote_sources.py",
+      "modules/task_resource/change_checks.py",
+      "modules/task_resource/completion.py",
+      "modules/task_resource/coverage.py",
+      "tests/test_quote_changes.py",
+      "tools/accept_completion.py",
+      "tools/probe_quote_requests_ui.cjs",
+      "tools/probe_quote_ui.py",
+      "README.md",
+      "docs/core-bootstrap.md",
+      "docs/contracts.md",
+      "docs/delivery-validation.md",
+      "docs/decisions-review.md",
+      "docs/manifest.json"
+    ],
+    "returncode": 0,
+    "output": ""
+  },
+  "changed_source_trailing_whitespace": [],
+  "whole_shared_tree_format_check": {
+    "returncode": 2,
+    "files_with_findings": [
+      "apps/workbench/server.py",
+      "apps/workbench/settings-anatomy.js",
+      "apps/workbench/theme.css",
+      "docs/evidence/anatomy-structure-2026-10-23/handoff.json",
+      "docs/knowledge-learning.md",
+      "docs/tasks-agents.md",
+      "host/anatomy.py",
+      "modules/skills/anatomy/structure3d.mjs",
+      "seed/skills/conversation.json",
+      "tools/check_architecture.py"
+    ],
+    "finding_lines": 3705,
+    "scope": "Whole shared working tree; no unrelated line-ending edits made"
+  },
+  "report_ui": {
+    "passed": true,
+    "errors": [],
+    "viewports": [
+      {
+        "viewport": "desktop",
+        "width": 1400,
+        "overflow": false
+      },
+      {
+        "viewport": "mobile",
+        "width": 390,
+        "overflow": false
+      }
+    ]
+  },
+  "original_forecast_unchanged": true,
+  "report_sha256": "a7cd012ce8d1f150daf76a5939add377b9219e52e4cb0d675e000af23ad3d65a",
+  "production_deployed": false
+}

@@ -1,0 +1,78 @@
+{
+  "case_id": "quote-empty",
+  "domain": "comparison",
+  "arm": "workflow_on",
+  "turn": 0,
+  "freeze_digest": "41045f324177d33c2ad08c9f097037300e48b4342620c4703dacfd7cba086ce2",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\"eligible_ids\":[],\"selected_id\":null,\"selected_source\":null}",
+  "skill_id": null,
+  "skill_version": null,
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 4.3495,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 51,
+        "prompt_tokens": 832,
+        "total_tokens": 883
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.00081525,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/quote-empty-workflow_on-0.native.json",
+      "sha256": "7c32dae6a3b389d04054c4224605e9584be0a6b2c9821ce7c0fd12626b6b23df",
+      "kind": "native_protocol_response"
+    },
+    {
+      "file": "artifacts/quote-empty-workflow_on-0.reply.md.txt",
+      "sha256": "12abe38f0b4204419b115ec0447396c40d354a153565e69dd34e0dd29b5517a5",
+      "kind": "original_session_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "eligible_ids",
+        "status": "passed"
+      },
+      {
+        "id": "selected_id",
+        "status": "passed"
+      },
+      {
+        "id": "selected_source",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "record_digest": "2d8462ec965cf7fd7d3a173521010ad45733366ef9d8807ad342ab7f3f9544ea"
+}

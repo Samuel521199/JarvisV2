@@ -1,0 +1,977 @@
+{
+  "origin": "http://127.0.0.1:18282",
+  "request": {
+    "id": "f4616ee9773c457a8a318e78f7d8e1e2",
+    "scene": {
+      "description": "写实红苹果高模：修正为正方形构图与明亮灰白背景；果柄从深果窝内向右上弯曲探出并高于果肩约6毫米，具独立木质切面材质；果皮改为纵向细碎黄红条纹、自然黄绿褐果窝过渡、清晰可见的浅色皮孔与微米级果皮起伏，并恢复左上方通透受控的蜡质高光。",
+      "materials": [
+        {
+          "basin_color": "#6c662f",
+          "basin_radius": 0.18,
+          "bump_distance": 4.5e-05,
+          "coat": 0,
+          "coat_roughness": 0.22,
+          "color": "#940c13",
+          "detail": "fruit_skin",
+          "id": "apple-skin",
+          "metallic": 0.0,
+          "micro_scale": 380,
+          "mottle_contrast": 0.35,
+          "regions": [],
+          "roughness": 0.29,
+          "roughness_variation": 0.09,
+          "secondary_color": "#e69b35",
+          "speckle_color": "#dec385",
+          "speckle_density": 85,
+          "speckle_size": 0.12,
+          "speckle_strength": 0.72,
+          "streak_distortion": 0.07,
+          "streak_scale": [
+            14.0,
+            14.0,
+            0.65
+          ],
+          "streak_strength": 0.54,
+          "transmission": 0.0
+        },
+        {
+          "bump_distance": 0.0002,
+          "coat": 0.0,
+          "color": "#372313",
+          "detail": "bark",
+          "id": "apple-stem-bark",
+          "metallic": 0.0,
+          "micro_scale": 260,
+          "mottle_contrast": 0.5,
+          "roughness": 0.84,
+          "roughness_variation": 0.12,
+          "secondary_color": "#68452a",
+          "transmission": 0.0
+        },
+        {
+          "bump_distance": 0.0003,
+          "coat": 0.0,
+          "color": "#675339",
+          "detail": "bark",
+          "id": "apple-stem-cut",
+          "metallic": 0.0,
+          "micro_scale": 420,
+          "mottle_contrast": 0.65,
+          "roughness": 0.9,
+          "roughness_variation": 0.1,
+          "secondary_color": "#493622",
+          "transmission": 0.0
+        }
+      ],
+      "objects": [
+        {
+          "id": "apple-body",
+          "kind": "lathe",
+          "material": "apple-skin",
+          "modifiers": {
+            "subdivision": 2
+          },
+          "params": {
+            "asymmetry": 0.038,
+            "caps": true,
+            "lobe_depth": 0.028,
+            "lobes": 5,
+            "profile": [
+              [
+                0.0012,
+                0.0038
+              ],
+              [
+                0.0038,
+                0.0028
+              ],
+              [
+                0.0072,
+                0.0014
+              ],
+              [
+                0.011,
+                0.0004
+              ],
+              [
+                0.0148,
+                0.0
+              ],
+              [
+                0.019,
+                0.0008
+              ],
+              [
+                0.0232,
+                0.0028
+              ],
+              [
+                0.0274,
+                0.0062
+              ],
+              [
+                0.0316,
+                0.0108
+              ],
+              [
+                0.0354,
+                0.0165
+              ],
+              [
+                0.0386,
+                0.023
+              ],
+              [
+                0.041,
+                0.0302
+              ],
+              [
+                0.0426,
+                0.0378
+              ],
+              [
+                0.0432,
+                0.0452
+              ],
+              [
+                0.0428,
+                0.0522
+              ],
+              [
+                0.0412,
+                0.0588
+              ],
+              [
+                0.0384,
+                0.0648
+              ],
+              [
+                0.0344,
+                0.0698
+              ],
+              [
+                0.0294,
+                0.0736
+              ],
+              [
+                0.0238,
+                0.076
+              ],
+              [
+                0.0182,
+                0.0768
+              ],
+              [
+                0.0134,
+                0.0754
+              ],
+              [
+                0.0096,
+                0.0722
+              ],
+              [
+                0.0068,
+                0.068
+              ],
+              [
+                0.0046,
+                0.0636
+              ],
+              [
+                0.003,
+                0.0596
+              ],
+              [
+                0.0018,
+                0.0566
+              ],
+              [
+                0.0009,
+                0.0548
+              ]
+            ],
+            "segments": 128
+          },
+          "position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            12.0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shading": "smooth"
+        },
+        {
+          "cap_material": "apple-stem-cut",
+          "id": "apple-stem",
+          "kind": "sweep",
+          "material": "apple-stem-bark",
+          "modifiers": {},
+          "params": {
+            "end_irregularity": 0.12,
+            "oval": 1.22,
+            "points": [
+              [
+                0.0,
+                0.0,
+                0.054
+              ],
+              [
+                0.0002,
+                -0.0002,
+                0.059
+              ],
+              [
+                0.0008,
+                -0.0006,
+                0.0645
+              ],
+              [
+                0.0018,
+                -0.0012,
+                0.07
+              ],
+              [
+                0.0033,
+                -0.002,
+                0.0752
+              ],
+              [
+                0.0052,
+                -0.0028,
+                0.0798
+              ],
+              [
+                0.0068,
+                -0.0034,
+                0.083
+              ]
+            ],
+            "radii": [
+              0.0012,
+              0.0013,
+              0.0014,
+              0.0015,
+              0.0017,
+              0.0022,
+              0.0024
+            ],
+            "segments": 28,
+            "steps": 10
+          },
+          "position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shading": "smooth"
+        }
+      ],
+      "reference": "ef4b78387783404ca25efc1bb839e4bb",
+      "render": {
+        "camera_direction": [
+          0.0,
+          -2.25,
+          1.18
+        ],
+        "engine": "CYCLES",
+        "exposure": 0,
+        "five_views": false,
+        "floor_color": "#dcdedf",
+        "format": "square",
+        "lens": 75,
+        "lights": [
+          {
+            "position": [
+              -1.4,
+              -1.3,
+              2.1
+            ],
+            "power": 90,
+            "size": 1.5,
+            "color": "#fffcf8"
+          },
+          {
+            "position": [
+              1.8,
+              -1.4,
+              1.5
+            ],
+            "power": 7,
+            "size": 2.4,
+            "color": "#ffffff"
+          }
+        ],
+        "quality": "preview",
+        "view": "front",
+        "world_color": "#d8dadd",
+        "world_strength": 0.18
+      },
+      "schema": "jarvis.studio3d.v1",
+      "title": "Apple texture v1.6",
+      "unfulfilled": [
+        "Generated albedo inspired by one reference; hidden pigment is invented, not a measured scan.",
+        "Roughness and micro normal remain authored procedural estimates.",
+        "Codex authored texture integration and material settings; AAA not certified."
+      ],
+      "units": "m",
+      "surface_texture": {
+        "reference": "f71edf4c59ad4f5b86b5a98e7f42c60a",
+        "material": "apple-skin",
+        "mapping": "cylindrical",
+        "rotation": 25
+      }
+    }
+  },
+  "accepted": {
+    "existing": false,
+    "id": "f4616ee9773c457a8a318e78f7d8e1e2"
+  },
+  "job": {
+    "cancel": 0,
+    "chat_id": null,
+    "created": 1792805761.4148712,
+    "error": null,
+    "id": "f4616ee9773c457a8a318e78f7d8e1e2",
+    "phase": "已交付可编辑模型、渲染与检查回执",
+    "receipt": {
+      "adapter_version": "1.6.0",
+      "configuration": {
+        "description": "写实红苹果高模：修正为正方形构图与明亮灰白背景；果柄从深果窝内向右上弯曲探出并高于果肩约6毫米，具独立木质切面材质；果皮改为纵向细碎黄红条纹、自然黄绿褐果窝过渡、清晰可见的浅色皮孔与微米级果皮起伏，并恢复左上方通透受控的蜡质高光。",
+        "materials": [
+          {
+            "basin_color": "#6c662f",
+            "basin_radius": 0.18,
+            "bump_distance": 4.5e-05,
+            "coat": 0,
+            "coat_roughness": 0.22,
+            "color": "#940c13",
+            "detail": "fruit_skin",
+            "id": "apple-skin",
+            "metallic": 0.0,
+            "micro_scale": 380,
+            "mottle_contrast": 0.35,
+            "regions": [],
+            "roughness": 0.29,
+            "roughness_variation": 0.09,
+            "secondary_color": "#e69b35",
+            "speckle_color": "#dec385",
+            "speckle_density": 85,
+            "speckle_size": 0.12,
+            "speckle_strength": 0.72,
+            "streak_distortion": 0.07,
+            "streak_scale": [
+              14.0,
+              14.0,
+              0.65
+            ],
+            "streak_strength": 0.54,
+            "transmission": 0.0
+          },
+          {
+            "bump_distance": 0.0002,
+            "coat": 0.0,
+            "color": "#372313",
+            "detail": "bark",
+            "id": "apple-stem-bark",
+            "metallic": 0.0,
+            "micro_scale": 260,
+            "mottle_contrast": 0.5,
+            "roughness": 0.84,
+            "roughness_variation": 0.12,
+            "secondary_color": "#68452a",
+            "transmission": 0.0
+          },
+          {
+            "bump_distance": 0.0003,
+            "coat": 0.0,
+            "color": "#675339",
+            "detail": "bark",
+            "id": "apple-stem-cut",
+            "metallic": 0.0,
+            "micro_scale": 420,
+            "mottle_contrast": 0.65,
+            "roughness": 0.9,
+            "roughness_variation": 0.1,
+            "secondary_color": "#493622",
+            "transmission": 0.0
+          }
+        ],
+        "objects": [
+          {
+            "id": "apple-body",
+            "kind": "lathe",
+            "material": "apple-skin",
+            "modifiers": {
+              "subdivision": 2
+            },
+            "params": {
+              "asymmetry": 0.038,
+              "caps": true,
+              "lobe_depth": 0.028,
+              "lobes": 5,
+              "profile": [
+                [
+                  0.0012,
+                  0.0038
+                ],
+                [
+                  0.0038,
+                  0.0028
+                ],
+                [
+                  0.0072,
+                  0.0014
+                ],
+                [
+                  0.011,
+                  0.0004
+                ],
+                [
+                  0.0148,
+                  0.0
+                ],
+                [
+                  0.019,
+                  0.0008
+                ],
+                [
+                  0.0232,
+                  0.0028
+                ],
+                [
+                  0.0274,
+                  0.0062
+                ],
+                [
+                  0.0316,
+                  0.0108
+                ],
+                [
+                  0.0354,
+                  0.0165
+                ],
+                [
+                  0.0386,
+                  0.023
+                ],
+                [
+                  0.041,
+                  0.0302
+                ],
+                [
+                  0.0426,
+                  0.0378
+                ],
+                [
+                  0.0432,
+                  0.0452
+                ],
+                [
+                  0.0428,
+                  0.0522
+                ],
+                [
+                  0.0412,
+                  0.0588
+                ],
+                [
+                  0.0384,
+                  0.0648
+                ],
+                [
+                  0.0344,
+                  0.0698
+                ],
+                [
+                  0.0294,
+                  0.0736
+                ],
+                [
+                  0.0238,
+                  0.076
+                ],
+                [
+                  0.0182,
+                  0.0768
+                ],
+                [
+                  0.0134,
+                  0.0754
+                ],
+                [
+                  0.0096,
+                  0.0722
+                ],
+                [
+                  0.0068,
+                  0.068
+                ],
+                [
+                  0.0046,
+                  0.0636
+                ],
+                [
+                  0.003,
+                  0.0596
+                ],
+                [
+                  0.0018,
+                  0.0566
+                ],
+                [
+                  0.0009,
+                  0.0548
+                ]
+              ],
+              "segments": 128
+            },
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              12.0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "shading": "smooth"
+          },
+          {
+            "cap_material": "apple-stem-cut",
+            "id": "apple-stem",
+            "kind": "sweep",
+            "material": "apple-stem-bark",
+            "modifiers": {},
+            "params": {
+              "end_irregularity": 0.12,
+              "oval": 1.22,
+              "points": [
+                [
+                  0.0,
+                  0.0,
+                  0.054
+                ],
+                [
+                  0.0002,
+                  -0.0002,
+                  0.059
+                ],
+                [
+                  0.0008,
+                  -0.0006,
+                  0.0645
+                ],
+                [
+                  0.0018,
+                  -0.0012,
+                  0.07
+                ],
+                [
+                  0.0033,
+                  -0.002,
+                  0.0752
+                ],
+                [
+                  0.0052,
+                  -0.0028,
+                  0.0798
+                ],
+                [
+                  0.0068,
+                  -0.0034,
+                  0.083
+                ]
+              ],
+              "radii": [
+                0.0012,
+                0.0013,
+                0.0014,
+                0.0015,
+                0.0017,
+                0.0022,
+                0.0024
+              ],
+              "segments": 28,
+              "steps": 10
+            },
+            "position": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "shading": "smooth"
+          }
+        ],
+        "reference": "ef4b78387783404ca25efc1bb839e4bb",
+        "render": {
+          "camera_direction": [
+            0.0,
+            -2.25,
+            1.18
+          ],
+          "engine": "CYCLES",
+          "exposure": 0,
+          "five_views": false,
+          "floor_color": "#dcdedf",
+          "format": "square",
+          "lens": 75,
+          "lights": [
+            {
+              "color": "#fffcf8",
+              "position": [
+                -1.4,
+                -1.3,
+                2.1
+              ],
+              "power": 90,
+              "size": 1.5
+            },
+            {
+              "color": "#ffffff",
+              "position": [
+                1.8,
+                -1.4,
+                1.5
+              ],
+              "power": 7,
+              "size": 2.4
+            }
+          ],
+          "quality": "preview",
+          "view": "front",
+          "world_color": "#d8dadd",
+          "world_strength": 0.18
+        },
+        "schema": "jarvis.studio3d.v1",
+        "surface_texture": {
+          "mapping": "cylindrical",
+          "material": "apple-skin",
+          "reference": "f71edf4c59ad4f5b86b5a98e7f42c60a",
+          "rotation": 25
+        },
+        "title": "Apple texture v1.6",
+        "unfulfilled": [
+          "Generated albedo inspired by one reference; hidden pigment is invented, not a measured scan.",
+          "Roughness and micro normal remain authored procedural estimates.",
+          "Codex authored texture integration and material settings; AAA not certified."
+        ],
+        "units": "m"
+      },
+      "files": {
+        "model.blend": {
+          "bytes": 3912465,
+          "sha256": "0b7c6e1938a296b9bae87198e6341e6ea91cebe6d15106774611e90f94ca5893",
+          "url": "/api/studio3d/files/f4616ee9773c457a8a318e78f7d8e1e2/model.blend"
+        },
+        "model.glb": {
+          "bytes": 7224156,
+          "sha256": "06dcafed06ed49feeaebf86fbe6f332ff6ddea14e23b009acd239dae38012a89",
+          "url": "/api/studio3d/files/f4616ee9773c457a8a318e78f7d8e1e2/model.glb"
+        },
+        "preview.png": {
+          "bytes": 1298033,
+          "sha256": "5ab23286976a0fcd8de0e60481ea07a974ee709388a81da0ff3a87b87d843261",
+          "url": "/api/studio3d/files/f4616ee9773c457a8a318e78f7d8e1e2/preview.png"
+        },
+        "reference.png": {
+          "bytes": 2457554,
+          "sha256": "35d9f97952e2d4046734c9511f1a9938f46300c879c180b548ec2919aaff3d8e",
+          "url": "/api/studio3d/files/f4616ee9773c457a8a318e78f7d8e1e2/reference.png"
+        },
+        "report.json": {
+          "bytes": 2462,
+          "sha256": "71d5a632938677d93f8c9795fa781d7257a54cea6ca8d15d294ec8cbf8ac3883",
+          "url": "/api/studio3d/files/f4616ee9773c457a8a318e78f7d8e1e2/report.json"
+        },
+        "scene.json": {
+          "bytes": 3437,
+          "sha256": "d9d6fe6b932989ccfc622db45879e70462f7e792c829f2d718dae7b08288c7d1",
+          "url": "/api/studio3d/files/f4616ee9773c457a8a318e78f7d8e1e2/scene.json"
+        },
+        "surface-albedo.png": {
+          "bytes": 3630928,
+          "sha256": "cbc60318a64120566ff5e168cdadfa73653c79700fb1fe850f8ddbac58f4fcb4",
+          "url": "/api/studio3d/files/f4616ee9773c457a8a318e78f7d8e1e2/surface-albedo.png"
+        }
+      },
+      "frozen_master": null,
+      "id": "f4616ee9773c457a8a318e78f7d8e1e2",
+      "input_asset": null,
+      "model_receipt": null,
+      "quality": {
+        "AAA_certified": false,
+        "mechanical_validation": false,
+        "status": "visual_asset_export_checked",
+        "visual_score": null
+      },
+      "reference": {
+        "bytes": 2457554,
+        "id": "ef4b78387783404ca25efc1bb839e4bb",
+        "license": "Owner-requested AI generated reference for this original asset study",
+        "mode": "Visual guidance; no automatic image-to-mesh or vision-model call",
+        "name": "apple-reference.png",
+        "provenance_verified": false,
+        "resolution": [
+          1254,
+          1254
+        ],
+        "sha256": "35d9f97952e2d4046734c9511f1a9938f46300c879c180b548ec2919aaff3d8e",
+        "source": "Codex built-in image_gen, owner requested 2026-10-24; generated reference, not real photo"
+      },
+      "report": {
+        "blender": "5.2.0 LTS",
+        "bounds_m": [
+          [
+            -0.041455112397670746,
+            -0.04366055876016617,
+            0.0001830899273045361
+          ],
+          [
+            0.044587455689907074,
+            0.04252392798662186,
+            0.08436562865972519
+          ]
+        ],
+        "elapsed_seconds": 16.082351299999573,
+        "glb_roundtrip": {
+          "bounds_m": [
+            [
+              -0.041455112397670746,
+              -0.04366055876016617,
+              0.0001830899273045361
+            ],
+            [
+              0.044587455689907074,
+              0.04252392798662186,
+              0.08436562865972519
+            ]
+          ],
+          "max_bound_error_m": 0.0,
+          "mesh_objects": 2,
+          "passed": true
+        },
+        "gltf_validation": {
+          "files": {
+            "model.glb": {
+              "info": {
+                "animationCount": 0,
+                "drawCallCount": 3,
+                "extensionsUsed": [
+                  "KHR_materials_clearcoat"
+                ],
+                "generator": "Khronos glTF Blender I/O v5.2.39",
+                "hasDefaultScene": true,
+                "hasMorphTargets": false,
+                "hasSkins": false,
+                "hasTextures": true,
+                "materialCount": 3,
+                "maxAttributes": 3,
+                "maxInfluences": 0,
+                "maxUVs": 1,
+                "resources": [
+                  {
+                    "byteLength": 7220616,
+                    "mimeType": "application/gltf-buffer",
+                    "pointer": "/buffers/0",
+                    "storage": "glb"
+                  },
+                  {
+                    "image": {
+                      "bits": 8,
+                      "format": "rgb",
+                      "height": 887,
+                      "primaries": "srgb",
+                      "transfer": "srgb",
+                      "width": 1774
+                    },
+                    "mimeType": "image/png",
+                    "pointer": "/images/0",
+                    "storage": "buffer-view"
+                  }
+                ],
+                "totalTriangleCount": 120148,
+                "totalVertexCount": 67762,
+                "version": "2.0"
+              },
+              "issues": {
+                "messages": [
+                  {
+                    "code": "UNUSED_OBJECT",
+                    "message": "This object may be unused.",
+                    "pointer": "/meshes/1/primitives/0/attributes/TEXCOORD_0",
+                    "severity": 2
+                  },
+                  {
+                    "code": "UNUSED_OBJECT",
+                    "message": "This object may be unused.",
+                    "pointer": "/meshes/1/primitives/1/attributes/TEXCOORD_0",
+                    "severity": 2
+                  },
+                  {
+                    "code": "IMAGE_NPOT_DIMENSIONS",
+                    "message": "Image has non-power-of-two dimensions: 1774x887.",
+                    "pointer": "/images/0",
+                    "severity": 2
+                  }
+                ],
+                "numErrors": 0,
+                "numHints": 0,
+                "numInfos": 3,
+                "numWarnings": 0,
+                "truncated": false
+              },
+              "mimeType": "model/gltf-binary",
+              "uri": "model.glb",
+              "validatedAt": "2026-10-24T01:36:18.493Z",
+              "validatorVersion": "2.0.0-dev.3.10"
+            }
+          },
+          "implementation": "Khronos glTF-Validator",
+          "version": "2.0.0-dev.3.10"
+        },
+        "objects": [
+          {
+            "id": "apple-body",
+            "triangles": 116736,
+            "uv": true,
+            "vertices": 58370,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "apple-stem",
+            "triangles": 3412,
+            "uv": true,
+            "vertices": 1708,
+            "zero_area_faces": 0
+          }
+        ],
+        "orthographic_views": [],
+        "render": {
+          "device": "CPU",
+          "engine": "CYCLES",
+          "requested_engine": "CYCLES",
+          "resolution": [
+            960,
+            960
+          ],
+          "samples": 24
+        },
+        "schema": "jarvis.studio3d.report.v1",
+        "triangles": 120148,
+        "unverified": [
+          "OEM mechanical accuracy",
+          "manufacturing",
+          "production topology",
+          "UV quality",
+          "baked PBR textures",
+          "LODs",
+          "engine performance"
+        ],
+        "visible_objects": 2,
+        "warnings": [
+          "GLB contains base PBR; procedural bump detail stays in Blender/render.",
+          "Automatic UV presence is not UV quality certification."
+        ]
+      },
+      "resources": {
+        "cpu_seconds": 1200,
+        "elapsed_seconds": 16.834020499998587,
+        "exit_code": 0,
+        "isolation": "Trusted fixed first-party worker with resource Job; not an OS security sandbox. No model Python, external imports or external BLEND loading. Only host-hash-verified first-party masters load with scripts disabled.",
+        "memory_bytes": 4294967296,
+        "output_bytes": 268435456,
+        "peak_memory_bytes": 1549529088,
+        "threads": 4,
+        "wall_seconds": 300
+      },
+      "runtime": {
+        "executable_sha256": "e27fbfea8564aa645d4463cb0949695fd85562b9de6df9561b06859a1074adf7",
+        "license": "GPL-2.0-or-later",
+        "source": "https://www.blender.org/",
+        "version": "Blender 5.2.0 LTS"
+      },
+      "skill": "studio3d",
+      "source_sha256": {
+        "adapters/models/native.py": "794070c292146ceb52950f8a10fc49c02197f1427baf470b88d1b0b923870583",
+        "adapters/models/native_transport.py": "7b0c3de61d01624f9c023f75e7de03a6616786d92af38b50c69aeaa42f17e24a",
+        "adapters/models/vision.py": "9bd86d2dc0b1ba2d8bf8b38edd7f550bd2abb761f4ae2a1f81db476eccb3591e",
+        "adapters/studio3d/asset_pipeline.py": "22e236d5bad5707174eaac4ad65e31cc51fed714aed1a3cee181d4d5f9e46fff",
+        "adapters/studio3d/framing.py": "7575830d0367d4d07d0fb09859c7cc9bf9ae21e21c9f4cb0fdcb279b24b75ab0",
+        "adapters/studio3d/organic.py": "963d2d232e5d960617268d757bf61c0e31461fc3e524fcd9f99e63d07bd267e1",
+        "adapters/studio3d/projection.py": "e1838d6dd43fcddea607bc67bf330d1bcbaaa6e24db1116ac32cbfb02e6b03af",
+        "adapters/studio3d/worker.py": "dd948c79c21fa892aed68fe4e0ced5c7f86961c096697cb565a1573be568862e",
+        "apps/studio3d/worker.py": "60af564595dab82acf3118ba581e5bc6b71b738c60ecf32a66c5d5cf36e3c4db",
+        "host/dialogue.py": "c6aa880996eb93b4ef6bd0b7c16ed319431cf0c2395fc7abcd21ad1b960e8cdf",
+        "host/studio3d.py": "387a95082335bba88f12f16492fe3124b8951b2681183664dab1f1e672241860",
+        "host/studio3d_reference.py": "ddc133e0ce867e3caf9a5d5d66dc4039cbbdab2164b223446af9a1c06c955ab8",
+        "host/studio3d_refinement.py": "dd54003dccc9eb87d44e11b21a78ffde17a215f0aa8bffd7df66f6a99423a69b",
+        "modules/dialogue/store.py": "a691879f9af46862aea19a5f6dd5334379ad54e0b6daa0b887b4c3b0823cb780",
+        "modules/skills/studio3d/assets.py": "aab01d79fbbf94305054311c8ff1031a85dee37e64cd6e77c1d42d0bacfd6526",
+        "modules/skills/studio3d/contract.py": "4f2b6c73d024abed6f20bed7e546f61f5c6ff7db7ff07101283cfd3e3e5afa72",
+        "modules/skills/studio3d/presets.py": "f7d18d601f36920cff52d3f26fe21cd943ad1a63fc14ad91decdd78e4865b3a4",
+        "modules/skills/studio3d/production.py": "687a044d25b0f4261afb4eacf0edea84b5d0434250dc6ccd575ca7b9d8d06213",
+        "modules/skills/studio3d/refinement.py": "4d3c7bf8f59f17725af0a9b82f15bb314a1a76ee981190d4739aab377c6364df",
+        "modules/skills/studio3d/runtime.json": "b2b1dba880e6541e4f052b31ce1920c4e58e58240f1c25c41c2476b5dc102518",
+        "modules/skills/studio3d/tracked_vehicle.py": "24716810b044cf85d4cb497e9330da2bccd5d9437afe6c891da83908f60566f8"
+      },
+      "surface_texture": {
+        "bytes": 3630928,
+        "id": "f71edf4c59ad4f5b86b5a98e7f42c60a",
+        "license": "AI-generated for this user task; not a scanned material",
+        "mode": "Local visual reference; no automatic upload or image-to-mesh. Only explicit vision_reference sends PNG to the selected Gemini route. Not photogrammetry.",
+        "name": "apple-skin-albedo.png",
+        "provenance_verified": false,
+        "resolution": [
+          1774,
+          887
+        ],
+        "sha256": "cbc60318a64120566ff5e168cdadfa73653c79700fb1fe850f8ddbac58f4fcb4",
+        "source": "Codex built-in image_gen; reference-inspired unlit apple skin; see texture-implementation/imagegen-request.json"
+      },
+      "title": "Apple texture v1.6",
+      "unfulfilled": [
+        "Generated albedo inspired by one reference; hidden pigment is invented, not a measured scan.",
+        "Roughness and micro normal remain authored procedural estimates.",
+        "Codex authored texture integration and material settings; AAA not certified."
+      ],
+      "url": "/api/studio3d/view/f4616ee9773c457a8a318e78f7d8e1e2"
+    },
+    "status": "DELIVERED",
+    "turn_id": null
+  }
+}

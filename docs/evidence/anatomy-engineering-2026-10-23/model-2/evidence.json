@@ -1,0 +1,880 @@
+{
+  "generated_scene": {
+    "description": "7件套参数化机械装配：包含主传动轴、深沟球轴承、前后定位隔套、带4孔端面法兰及两枚安装螺栓。依据实体几何校核，螺栓配合点设于法兰中面正向半厚度偏置（gap=5mm），使螺栓头肩面贴合法兰外端面，螺杆顺利穿入通孔并消除干涉。",
+    "experiments": [
+      {
+        "kind": "motor-pump",
+        "params": {
+          "constant": 0.1,
+          "duration": 3,
+          "friction": 0.0002,
+          "inductance": 0.05,
+          "inertia": 0.002,
+          "pump_coefficient": 1e-05,
+          "resistance": 2,
+          "voltage": 12
+        }
+      },
+      {
+        "kind": "otto",
+        "params": {
+          "compression": 8,
+          "displacement_cc": 500,
+          "gamma": 1.4,
+          "heat_input": 800000,
+          "pressure": 101325,
+          "temperature": 300
+        }
+      }
+    ],
+    "mates": [
+      {
+        "child_port": "axis",
+        "fit": "clearance",
+        "gap": -30,
+        "joint": "revolute",
+        "parent": "shaft",
+        "parent_port": "axis",
+        "part": "bearing",
+        "twist": 0
+      },
+      {
+        "child_port": "axis",
+        "fit": "clearance",
+        "gap": -50,
+        "joint": "fixed",
+        "parent": "shaft",
+        "parent_port": "axis",
+        "part": "spacer-a",
+        "twist": 0
+      },
+      {
+        "child_port": "axis",
+        "fit": "clearance",
+        "gap": -10,
+        "joint": "fixed",
+        "parent": "shaft",
+        "parent_port": "axis",
+        "part": "spacer-b",
+        "twist": 0
+      },
+      {
+        "child_port": "axis",
+        "fit": "clearance",
+        "gap": 40,
+        "joint": "fixed",
+        "parent": "shaft",
+        "parent_port": "axis",
+        "part": "flange",
+        "twist": 0
+      },
+      {
+        "child_port": "axis",
+        "fit": "clearance",
+        "gap": 5,
+        "joint": "fixed",
+        "parent": "flange",
+        "parent_port": "bolt-0",
+        "part": "bolt-a",
+        "twist": 0
+      },
+      {
+        "child_port": "axis",
+        "fit": "clearance",
+        "gap": 5,
+        "joint": "fixed",
+        "parent": "flange",
+        "parent_port": "bolt-2",
+        "part": "bolt-b",
+        "twist": 0
+      }
+    ],
+    "parts": [
+      {
+        "id": "shaft",
+        "kind": "shaft",
+        "material": "steel",
+        "name": "主传动轴",
+        "params": {
+          "diameter": 20,
+          "length": 180
+        },
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "id": "bearing",
+        "kind": "bearing",
+        "material": "steel",
+        "name": "支撑深沟球轴承",
+        "params": {
+          "inner": 20.2,
+          "length": 14,
+          "outer": 47
+        },
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "id": "spacer-a",
+        "kind": "tube",
+        "material": "bronze",
+        "name": "轴承后定位隔套",
+        "params": {
+          "inner": 20.4,
+          "length": 16,
+          "outer": 28
+        },
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "id": "spacer-b",
+        "kind": "tube",
+        "material": "bronze",
+        "name": "轴承前定位隔套",
+        "params": {
+          "inner": 20.4,
+          "length": 16,
+          "outer": 28
+        },
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "id": "flange",
+        "kind": "flange",
+        "material": "steel",
+        "name": "前端固定带孔法兰",
+        "params": {
+          "bolt_circle": 50,
+          "bolt_diameter": 6.4,
+          "bolts": 4,
+          "inner": 20.4,
+          "outer": 80,
+          "thickness": 10
+        },
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "id": "bolt-a",
+        "kind": "bolt",
+        "material": "steel",
+        "name": "法兰紧固螺栓-A",
+        "params": {
+          "diameter": 5.8,
+          "head_diameter": 10,
+          "head_height": 5,
+          "length": 25
+        },
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "id": "bolt-b",
+        "kind": "bolt",
+        "material": "steel",
+        "name": "法兰紧固螺栓-B",
+        "params": {
+          "diameter": 5.8,
+          "head_diameter": 10,
+          "head_height": 5,
+          "length": 25
+        },
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "schema": "anatomy.engineering.v1",
+    "steps": [
+      {
+        "direction": [
+          0,
+          0,
+          1
+        ],
+        "distance": 0,
+        "instruction": "将主传动轴基准固定于装配工位。",
+        "part": "shaft"
+      },
+      {
+        "direction": [
+          0,
+          0,
+          -1
+        ],
+        "distance": 80,
+        "instruction": "自轴端沿负Z向推入后定位隔套A至轴向预设位置。",
+        "part": "spacer-a"
+      },
+      {
+        "direction": [
+          0,
+          0,
+          -1
+        ],
+        "distance": 70,
+        "instruction": "自轴端沿负Z向安装深沟球轴承，贴靠隔套端面。",
+        "part": "bearing"
+      },
+      {
+        "direction": [
+          0,
+          0,
+          -1
+        ],
+        "distance": 60,
+        "instruction": "自轴端滑入前定位隔套B，完成轴承轴向夹持定位。",
+        "part": "spacer-b"
+      },
+      {
+        "direction": [
+          0,
+          0,
+          1
+        ],
+        "distance": 70,
+        "instruction": "自轴正向端推入法兰盘，对齐轴心并推至指定间隙位置。",
+        "part": "flange"
+      },
+      {
+        "direction": [
+          0,
+          0,
+          -1
+        ],
+        "distance": 40,
+        "instruction": "将螺栓A自正向插入法兰第0号螺栓孔，使螺栓头肩面贴合法兰外端面。",
+        "part": "bolt-a"
+      },
+      {
+        "direction": [
+          0,
+          0,
+          -1
+        ],
+        "distance": 40,
+        "instruction": "将螺栓B自正向插入法兰第2号螺栓孔，使螺栓头肩面贴合法兰外端面。",
+        "part": "bolt-b"
+      }
+    ],
+    "title": "传动轴轴承隔套与法兰螺栓装配",
+    "unfulfilled": [
+      "本导出CAD模型不包含真实螺纹几何、倒角与制造公差。",
+      "步骤指示仅用于装配展示，不构成无碰撞连续插入轨迹规划验证。",
+      "孔轴径向间隙属于配合尺寸检查，不作为空间实体碰撞检查指标。"
+    ],
+    "units": "mm"
+  },
+  "actual_assembly": {
+    "interference_status": "clear_at_static_pose",
+    "collisions": [],
+    "narrow_phase_pairs": 6,
+    "fits": [
+      {
+        "part": "bearing",
+        "parent": "shaft",
+        "declared_fit": "clearance",
+        "diametral_clearance_mm": 0.1999999999999993,
+        "status": "pass"
+      },
+      {
+        "part": "spacer-a",
+        "parent": "shaft",
+        "declared_fit": "clearance",
+        "diametral_clearance_mm": 0.3999999999999986,
+        "status": "pass"
+      },
+      {
+        "part": "spacer-b",
+        "parent": "shaft",
+        "declared_fit": "clearance",
+        "diametral_clearance_mm": 0.3999999999999986,
+        "status": "pass"
+      },
+      {
+        "part": "flange",
+        "parent": "shaft",
+        "declared_fit": "clearance",
+        "diametral_clearance_mm": 0.3999999999999986,
+        "status": "pass"
+      },
+      {
+        "part": "bolt-a",
+        "parent": "flange",
+        "declared_fit": "clearance",
+        "diametral_clearance_mm": 0.6000000000000005,
+        "status": "pass"
+      },
+      {
+        "part": "bolt-b",
+        "parent": "flange",
+        "declared_fit": "clearance",
+        "diametral_clearance_mm": 0.6000000000000005,
+        "status": "pass"
+      }
+    ],
+    "step_roundtrip_relative_volume_error": 1.759947800122333e-14,
+    "step_roundtrip_bounds_error_mm": 0.0,
+    "total_mass_kg": 1.0083469095050006,
+    "limits": "静态装配姿态 B-rep 体积交集检查；不证明运动全过程或装配插入路径无碰撞。配合检查为名义尺寸，未含制造公差。轴承滚道/螺纹/预紧为简化。"
+  },
+  "actual_bom": [
+    {
+      "id": "shaft",
+      "name": "主传动轴",
+      "kind": "shaft",
+      "material": "steel",
+      "density_kg_m3": 7850,
+      "mass_kg": 0.44390704195223785,
+      "volume_mm3": 56548.667764616286,
+      "center_mm": [
+        0.0,
+        -8.000364887631421e-17,
+        0.0
+      ],
+      "inertia_kg_m2": [
+        [
+          0.0012096466893198486,
+          1.2865205251277713e-21,
+          7.310882210731507e-21
+        ],
+        [
+          1.2865205251277713e-21,
+          0.001209646689319848,
+          7.885373100297926e-22
+        ],
+        [
+          7.310882210731507e-21,
+          7.885373100297926e-22,
+          2.2195352097612005e-05
+        ]
+      ],
+      "bounds": [
+        -10.0000001,
+        -10.0000001,
+        -90.0000001,
+        10.0000001,
+        10.0000001,
+        90.0000001
+      ],
+      "pose": {
+        "rotation": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "position": [
+          0,
+          0,
+          0
+        ]
+      },
+      "valid": true
+    },
+    {
+      "id": "bearing",
+      "name": "支撑深沟球轴承",
+      "kind": "bearing",
+      "material": "steel",
+      "density_kg_m3": 7850,
+      "mass_kg": 0.1077249890332183,
+      "volume_mm3": 13722.928539263476,
+      "center_mm": [
+        3.947537729964562e-15,
+        -3.1066666290382175e-15,
+        -29.99999999999999
+      ],
+      "inertia_kg_m2": [
+        [
+          2.0306579507227177e-05,
+          4.919138518744147e-21,
+          -1.8482467112335114e-21
+        ],
+        [
+          4.919138518744147e-21,
+          2.030657950722684e-05,
+          -1.1244765119045366e-22
+        ],
+        [
+          -1.8482467112335114e-21,
+          -1.1244765119045366e-22,
+          3.715694732911399e-05
+        ]
+      ],
+      "bounds": [
+        -23.5000001,
+        -23.5000001,
+        -37.0000001,
+        23.5000001,
+        23.5000001,
+        -22.9999999
+      ],
+      "pose": {
+        "rotation": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "position": [
+          0.0,
+          0.0,
+          -30.0
+        ]
+      },
+      "valid": true
+    },
+    {
+      "id": "spacer-a",
+      "name": "轴承后定位隔套",
+      "kind": "tube",
+      "material": "bronze",
+      "density_kg_m3": 8800,
+      "mass_kg": 0.040677241147715745,
+      "volume_mm3": 4622.4137667858795,
+      "center_mm": [
+        3.148120432863216e-15,
+        9.924710521305727e-17,
+        -50.00000000000001
+      ],
+      "inertia_kg_m2": [
+        [
+          3.918981002974788e-06,
+          2.5453292374653305e-23,
+          -2.5611370801925663e-22
+        ],
+        [
+          2.5453292374653305e-23,
+          3.91898100297469e-06,
+          -1.7060600133906196e-37
+        ],
+        [
+          -2.5611370801925663e-22,
+          -1.7060600133906196e-37,
+          6.102399716980355e-06
+        ]
+      ],
+      "bounds": [
+        -14.0000001,
+        -14.0000001,
+        -58.0000001,
+        14.0000001,
+        14.0000001,
+        -41.9999999
+      ],
+      "pose": {
+        "rotation": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "position": [
+          0.0,
+          0.0,
+          -50.0
+        ]
+      },
+      "valid": true
+    },
+    {
+      "id": "spacer-b",
+      "name": "轴承前定位隔套",
+      "kind": "tube",
+      "material": "bronze",
+      "density_kg_m3": 8800,
+      "mass_kg": 0.040677241147715745,
+      "volume_mm3": 4622.4137667858795,
+      "center_mm": [
+        3.148120432863216e-15,
+        9.924710521305727e-17,
+        -10.0
+      ],
+      "inertia_kg_m2": [
+        [
+          3.918981002974811e-06,
+          2.5453292374653305e-23,
+          -3.2014213502407076e-22
+        ],
+        [
+          2.5453292374653305e-23,
+          3.918981002974748e-06,
+          1.5322066797012104e-23
+        ],
+        [
+          -3.2014213502407076e-22,
+          1.5322066797012104e-23,
+          6.102399716980355e-06
+        ]
+      ],
+      "bounds": [
+        -14.0000001,
+        -14.0000001,
+        -18.0000001,
+        14.0000001,
+        14.0000001,
+        -1.9999999
+      ],
+      "pose": {
+        "rotation": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "position": [
+          0.0,
+          0.0,
+          -10.0
+        ]
+      },
+      "valid": true
+    },
+    {
+      "id": "flange",
+      "name": "前端固定带孔法兰",
+      "kind": "flange",
+      "material": "steel",
+      "density_kg_m3": 7850,
+      "mass_kg": 0.3588248589113921,
+      "volume_mm3": 45710.17310973148,
+      "center_mm": [
+        -3.726954302204838e-15,
+        -2.089183592827537e-15,
+        40.0
+      ],
+      "inertia_kg_m2": [
+        [
+          0.00015697393023523785,
+          6.1685568653047116e-21,
+          -3.187801667081658e-21
+        ],
+        [
+          6.1685568653047116e-21,
+          0.00015697393023523447,
+          1.713488018140197e-22
+        ],
+        [
+          -3.187801667081658e-21,
+          1.713488018140197e-22,
+          0.000307967446155282
+        ]
+      ],
+      "bounds": [
+        -40.0000001,
+        -40.0000001,
+        34.9999999,
+        40.0000001,
+        40.0000001,
+        45.0000001
+      ],
+      "pose": {
+        "rotation": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "position": [
+          0.0,
+          0.0,
+          40.0
+        ]
+      },
+      "valid": true
+    },
+    {
+      "id": "bolt-a",
+      "name": "法兰紧固螺栓-A",
+      "kind": "bolt",
+      "material": "steel",
+      "density_kg_m3": 7850,
+      "mass_kg": 0.008267768656360426,
+      "volume_mm3": 1053.2189371159777,
+      "center_mm": [
+        25.0,
+        8.734639345580058e-18,
+        38.092841163310965
+      ],
+      "inertia_kg_m2": [
+        [
+          7.416369979550719e-07,
+          1.8296957580656322e-24,
+          0.0
+        ],
+        [
+          1.8296957580656322e-24,
+          7.416369979550682e-07,
+          -1.090213520637649e-23
+        ],
+        [
+          0.0,
+          -1.090213520637649e-23,
+          6.033686242911986e-08
+        ]
+      ],
+      "bounds": [
+        19.9999999,
+        -5.0000001,
+        19.9999999,
+        30.0000001,
+        5.0000001,
+        50.0000001
+      ],
+      "pose": {
+        "rotation": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "position": [
+          25.0,
+          0.0,
+          45.0
+        ]
+      },
+      "valid": true
+    },
+    {
+      "id": "bolt-b",
+      "name": "法兰紧固螺栓-B",
+      "kind": "bolt",
+      "material": "steel",
+      "density_kg_m3": 7850,
+      "mass_kg": 0.008267768656360426,
+      "volume_mm3": 1053.2189371159777,
+      "center_mm": [
+        -25.0,
+        3.1085388385643252e-15,
+        38.092841163310965
+      ],
+      "inertia_kg_m2": [
+        [
+          7.416369979550719e-07,
+          1.714743514573313e-24,
+          2.741580829024315e-21
+        ],
+        [
+          1.714743514573313e-24,
+          7.416369979550682e-07,
+          -1.0202703306062277e-23
+        ],
+        [
+          2.741580829024315e-21,
+          -1.0202703306062277e-23,
+          6.033686242911986e-08
+        ]
+      ],
+      "bounds": [
+        -30.0000001,
+        -5.000000099999998,
+        19.9999999,
+        -19.9999999,
+        5.000000100000003,
+        50.0000001
+      ],
+      "pose": {
+        "rotation": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "position": [
+          -25.0,
+          3.061616997868383e-15,
+          45.0
+        ]
+      },
+      "valid": true
+    }
+  ],
+  "experiments": [
+    {
+      "kind": "motor-pump",
+      "summary": {
+        "final_current_A": 1.1394983852766412,
+        "final_speed_rpm": 928.288702581724,
+        "energy_residual_J": -5.2287258966998706e-08,
+        "relative_energy_error": 8.924539923471216e-10,
+        "steps": 3000,
+        "time_step_s": 0.001
+      },
+      "limits": "集总直流电机 L·di/dt=V−Ri−Kω，J·dω/dt=Ki−bω−cω|ω|；泵负载系数为用户给定，不根据叶轮外观预测扬程/流量。"
+    },
+    {
+      "kind": "otto",
+      "summary": {
+        "efficiency": 0.5647247183519379,
+        "cycle_work_J": 303.75717301354894,
+        "heat_input_J": 537.8853858212855,
+        "mass_kg": 0.0006723567322766069,
+        "peak_temperature_K": 1804.0073773946672,
+        "energy_residual_J": 5.684341886080802e-14
+      },
+      "limits": "定比热理想空气标准循环，闭系统等容加热/冷却与绝热压缩/膨胀；不是实际发动机燃烧、功率或排放预测。"
+    }
+  ],
+  "browser": {
+    "status": "passed",
+    "checks": [
+      "real settings entry creates 19-part constrained B-rep assembly",
+      "complete solid / actual capped section and exploded display",
+      "ordered assembly steps, progress, previous/next and animation",
+      "keyboard orbit preserves assembly progress",
+      "STEP download from sandboxed artifact succeeds",
+      "channel, conservative shallow water and Cantera equilibrium curves",
+      "mobile layout fits viewport"
+    ],
+    "errors": []
+  },
+  "scope": "Browser tests cover predefined 19-part scene; generated scene has actual native CAD checks but its browser inspection is recorded separately. No screenshots provided to reviewer.",
+  "independent_tests": [
+    "known box intersection volume=500mm3",
+    "actual solid cap on Y=0",
+    "STEP volume/bounds/units roundtrip",
+    "motor energy balance and load response",
+    "Otto analytic energy/efficiency",
+    "Poiseuille profile and grid refinement",
+    "wet shallow-water mass/positivity/refinement",
+    "pendulum energy/period",
+    "Cantera element/enthalpy conservation"
+  ]
+}

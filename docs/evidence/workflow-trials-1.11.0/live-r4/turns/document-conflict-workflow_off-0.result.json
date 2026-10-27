@@ -1,0 +1,87 @@
+{
+  "case_id": "document-conflict",
+  "domain": "documents",
+  "arm": "workflow_off",
+  "turn": 0,
+  "freeze_digest": "cc702145676756cbfaa7cb3b0a06842f622595011a6ec056120028630ebc2879",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\"document\":\"# 项目本周预算核对单\\n\\n- [ ] **S1 记录**：100 元\\n- [ ] **S2 记录**：120 元\\n\\n> **核对说明**：由于缺少时间戳及权威判定依据，当前数据存在冲突，未予合并或单方采纳，待进一步确认。\",\"budget\":null,\"conflict\":true,\"sources\":[\"S1\",\"S2\"]}",
+  "skill_id": null,
+  "skill_version": null,
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 4.9696,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 165,
+        "prompt_tokens": 820,
+        "total_tokens": 985
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.00123375,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/document-conflict-workflow_off-0.native.json",
+      "sha256": "4978a26c38d042df567043012f19d8cf50f0055c0a5570de660625c90d8eb78e",
+      "kind": "native_protocol_response"
+    },
+    {
+      "file": "artifacts/document-conflict-workflow_off-0.reply.md.txt",
+      "sha256": "95b67128e622363fe6d64fc091b037d2edd905e677a3cc320bdeb298c4af6b09",
+      "kind": "original_session_reply"
+    },
+    {
+      "file": "artifacts/document-conflict-workflow_off-0.document.md.txt",
+      "sha256": "fda71595a6d8ac57c30bee238dd545054e2addc328da535485977080fac47d3b",
+      "kind": "verbatim_document_field_from_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "budget",
+        "status": "passed"
+      },
+      {
+        "id": "conflict",
+        "status": "passed"
+      },
+      {
+        "id": "sources",
+        "status": "passed"
+      },
+      {
+        "id": "document_present",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "record_digest": "5c3fa49da6a9948312392efc836562e662bc2a2c1a20264df0714baacb31ac89"
+}

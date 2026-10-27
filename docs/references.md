@@ -3,7 +3,7 @@
 > 新工程设计基线 · 2026-10-22 · 目标/明确规则 accepted，运行方案 proposed。H 盘版本记录不构成本工程的实现或验收证据。
 
 <!-- book-nav:start -->
-[工程主入口](../README.md) › [第五篇 · 验证与参考](../README.md#part-evidence) › 第 22 章
+[工程主入口](../README.md) › [第五篇 · 验证与参考](../README.md#part-evidence) › 第 24 章
 
 **本章导航**
 
@@ -51,6 +51,12 @@
 - [本地凭据与原生模型协议依据（2026-10-22）](#native-model-sources)
 - [MCP 子集实现依据（2026-10-23）](#mcp-runtime-sources)
 - [综合记忆与桌面端选型复核（2026-10-23）](#memory-context-sources)
+- [3D 查看与资产检查来源（2026-10-23）](#studio3d-viewer-sources)
+- [Gmail 官方接口与授权依据（2026-10-25）](#gmail-sources)
+- [桌面常驻伙伴参考（2026-10-25）](#desktop-companion-sources)
+- [Grok Bot 功能、界面与运行机制研究（2026-10-26）](#grok-bot-research-sources)
+- [Harness² 与多机器人主脑研究来源（2026-10-26）](#harness2-research-sources)
+- [经验成长、知识治理与退化控制的研究依据（2026-10-26）](#learning-compounding-sources)
 <!-- book-nav:end -->
 
 <a id="references"></a>
@@ -678,10 +684,112 @@ DPAPI 的范围与同账户限制继续引用 [S244](#s244)，不重复建立来
 | <a id="s300"></a>S300 | [VikingRAG，2026-09-10](https://arxiv.org/abs/2609.11390) | 结构文档逐层取证与有界追加检索；预印本，不能直接推出个人伙伴记忆质量或本机时延 |
 | <a id="s301"></a>S301 | [LightMem](https://github.com/zjunlp/LightMem)、[LightMem 论文](https://arxiv.org/abs/2510.18866) | 批次整理、短长期组织与事件绑定参考；包依赖固定 torch 且 Python 范围不同，轻量调用不等于轻量安装 |
 | <a id="s302"></a>S302 | [SQLCipher](https://www.zetetic.net/sqlcipher/)、[Apple Keychain](https://support.apple.com/guide/security/keychain-data-protection-secb0694df1a/web) | 本地加密与密钥封装候选；Windows 继续用 S244；跨机恢复、明文副本和私密索引保护需独立验证 |
+| <a id="s331"></a>S331 | [OWASP Password Storage](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html)、[Microsoft DPAPI 示例与边界](https://learn.microsoft.com/en-us/windows/win32/seccrypto/example-c-program-using-cryptprotectdata) | 2026-10-24 核对 PBKDF2-HMAC-SHA256 600,000 次及 DPAPI 的同用户/同设备默认边界；本工程 stdlib 首版选择 PBKDF2，不声称优于 Argon2id；DPAPI 不等于独立成员密钥或跨机恢复 |
 | <a id="s303"></a>S303 | [multilingual-e5-small](https://huggingface.co/intfloat/multilingual-e5-small)、[BGE-small-zh-v1.5](https://huggingface.co/BAAI/bge-small-zh-v1.5)、[EmbeddingGemma-300m](https://huggingface.co/google/embeddinggemma-300m)、[Qwen3-Embedding-0.6B](https://huggingface.co/Qwen/Qwen3-Embedding-0.6B)、[ONNX Runtime 安装](https://onnxruntime.ai/docs/install/) | 前两项作为小模型基线，后两项作为升级候选；许可、输入上限、维度和精度分别核对。未下载、量化或测试，不宣称最新最强或 RAM 实测值 |
 | <a id="s304"></a>S304 | [Anthropic Context Engineering](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)、[LongMemEval](https://arxiv.org/abs/2410.10813) | 有限上下文、按需读取、压缩与跨会话评测；工程经验与公开数据需本地中文/业务任务复核 |
+| <a id="s330"></a>S330 | [DeepMind XQuAD 官方数据](https://github.com/google-deepmind/xquad)、[固定修订](https://github.com/google-deepmind/xquad/tree/7d30520c717524000f0d9d2f9c10a069acd9d285) | CC BY-SA 4.0；本机使用英、中、西、德、阿、泰六语 JSON，按原文章及全部翻译分隔开发/留出；不是官方排行榜分数，没有无答案样本；原件摘要、划分与限制见连续性验收 |
 
 本轮方案正文见[综合入口](knowledge-learning.md#memory-context-design)，组件比较归[技术选型](stack-project-layout.md#memory-desktop-selection)，测试与资源阈值归[验收](delivery-validation.md#memory-context-acceptance)。所有“推荐”是基于职责与部署约束的工程判断，缺少同条件测量的指标保持未测。
+
+<a id="studio3d-viewer-sources"></a>
+## 3D 查看与资产检查来源（2026-10-23）
+
+| 编号 | 一手来源 | 采用与边界 |
+|---|---|---|
+| <a id="s324"></a>S324 | [Three.js](https://github.com/mrdoob/three.js)、[r186发布](https://github.com/mrdoob/three.js/releases/tag/r186) | 使用0.186.0官方包的本地模块、GLTFLoader、OrbitControls和摄影棚环境，MIT；固定来源和摘要，不使用CDN |
+| <a id="s325"></a>S325 | [Khronos glTF-Validator](https://github.com/KhronosGroup/glTF-Validator) | 使用2.0.0-dev.3.10固定包，Apache-2.0；检查文件格式，不证明拓扑、视觉或3A质量 |
+| <a id="s326"></a>S326 | [three-gltf-viewer](https://github.com/donmccurdy/three-gltf-viewer) | MIT的交互glTF查看参考；未整包复制或运行，Jarvis交互/验收代码自行实现 |
+| <a id="s327"></a>S327 | [glTF-Sample-Viewer](https://github.com/KhronosGroup/glTF-Sample-Viewer) | Apache-2.0的官方PBR参考查看器；本轮只用于选型，不宣称渲染一致性已对照验收 |
+| <a id="s328"></a>S328 | [Khronos 3D Formats Guidelines](https://github.com/KhronosGroup/3D-Formats-Guidelines) | 资产制作/交付的一般参考；具体预算以项目和目标平台为准，不能推导通用3A阈值 |
+| <a id="s329"></a>S329 | [The Tank Museum · Panzer II](https://tankmuseum.org/tank-nuts/tank-collection/panzer-ii/) | 核对Ausf. F车型身份；本轮AI参考板与独立建模，未复制馆藏照片，不声明博物馆精确测绘或授权复刻 |
+
+实际引入、许可、SHA512/SHA256和未完成审计范围见[本轮来源记录](evidence/studio3d-viewer-2026-10-23/source-review.json)。固定依赖不表示任意外来GLB安全；输入、进程与浏览器边界归[工作室边界](security-sovereignty.md#studio3d-viewer-boundary)。
+
+<a id="gmail-sources"></a>
+## Gmail 官方接口与授权依据（2026-10-25）
+
+| 编号 | 一手来源 | 采用与边界 |
+|---|---|---|
+| <a id="s350"></a>S350 | [Google 桌面 OAuth](https://developers.google.com/identity/protocols/oauth2/native-app) | 系统浏览器、loopback、state、PKCE 与离线令牌；固定端点，不采用上传 JSON 中的任意 URL |
+| <a id="s351"></a>S351 | [Gmail scope](https://developers.google.com/workspace/gmail/api/auth/scopes)、[发送邮件](https://developers.google.com/workspace/gmail/api/guides/sending) | 实际权限与 MIME/base64url；应用另限制具体审阅动作 |
+| <a id="s352"></a>S352 | [OAuth 令牌失效](https://developers.google.com/identity/protocols/oauth2#expiration) | 自动刷新非永不过期；测试状态、撤销、账号变化等可能要求重新授权 |
+
+参考协议与旧工程经验，新代码独立实现；未安装第三方 Gmail SDK，未将令牌写入公开证据。
+
+<a id="desktop-companion-sources"></a>
+## 桌面常驻伙伴参考（2026-10-25）
+
+只读官方页面与项目 README，没有安装运行、复现宣传指标或完成源码/依赖审计。用于[桌面入口设计](interaction-persona.md#desktop-presence-design)的职责与交互参考，不是替换 Jarvis 核心的授权。许可证以下为仓库当前声明，真正引入代码时另固定版本和核查。
+
+| 编号 | 来源 | 采用点与边界 |
+|---|---|---|
+| <a id="s353"></a>S353 | [Grok Bot 产品页](https://x.ai/bot)、[发布介绍](https://x.ai/news/introducing-grok-bot) | 官方描述云端电脑、并行任务、上下文延续与需要判断时回问；采用交办体验。未据此证明整体产品已开源，云端持续执行不适用于本机睡眠 |
+| <a id="s354"></a>S354 | [OpenMausBot](https://github.com/milind-soni/OpenMausBot) | Apache-2.0；README 的桌面端、统一事件流、问题卡与模型选择有参考价值。云端电脑和连接器依赖另有成本，不整包迁入 |
+| <a id="s355"></a>S355 | [OpenClaw](https://github.com/openclaw/openclaw)、[Gateway](https://docs.openclaw.ai/gateway) | MIT；网关服务多个交互端、状态与事件分离、缺口后刷新快照。Jarvis 保留自己既有 Host 和任务记录，不再运行第二个编排核心 |
+| <a id="s356"></a>S356 | [OpenBot](https://github.com/ob-f/OpenBot) | MIT；此同名项目是以手机为核心的实体机器人，非本次桌面常驻壳。不能假定它就是主人所指仓库 |
+| <a id="s357"></a>S357 | [Tauri 托盘](https://v2.tauri.app/learn/system-tray/)、[全局快捷键](https://v2.tauri.app/plugin/global-shortcut/)、[窗口接口](https://v2.tauri.app/reference/javascript/api/namespacewindow/) | 本地壳候选；托盘、拖动、热键与窗口行为的官方 API 依据。透明窗口不自动保证逐像素穿透，多屏/命中/省电须验证 |
+| <a id="s358"></a>S358 | [Microsoft WebView2 API](https://learn.microsoft.com/en-us/microsoft-edge/webview2/concepts/overview-features-apis) | 系统 WebView 与原生应用通信、窗口及浏览器能力参考；不据 API 存在承诺内存或功耗 |
+
+<a id="grok-bot-research-sources"></a>
+## Grok Bot 功能、界面与运行机制研究（2026-10-26）
+
+对应完整研究为[Grok Bot 与 Jarvis 对比](grok-bot-comparison.md#grok-comparison-scope)。本次使用官方网页与本工程源码/既有证据，未登录或运行 Grok Bot；公开能力与真实效果分开，借鉴建议为 proposed。产品页和首发介绍沿用 [S353](#s353)，当前版本、权限与套餐优先核对下表具体页面。检索摘要可能落后于正文，尤其是发送审批和 Vault。
+
+| 编号 | 官方来源 | 本次使用范围与边界 |
+|---|---|---|
+| <a id="s359"></a>S359 | [Grok Bot 总览](https://docs.x.ai/grok-bot/overview) | 产品对象、持久职责和任务交办；不是内部实现审计 |
+| <a id="s360"></a>S360 | [创建与管理 Bot](https://docs.x.ai/grok-bot/bots) | 职责、分区与隐藏；隐藏不等于暂停 |
+| <a id="s361"></a>S361 | [消息与协作](https://docs.x.ai/grok-bot/chat-and-collaboration) | 工具活动、语音、群聊、异步交接及群内卡片限制；未实测性能 |
+| <a id="s362"></a>S362 | [电脑与应用](https://docs.x.ai/grok-bot/computer-and-apps) | 账号共享云电脑、独立屏幕、连接器与本机执行边界；不按 Bot 声称安全隔离 |
+| <a id="s363"></a>S363 | [技能、示教与例行流程](https://docs.x.ai/grok-bot/skills-routines-and-automations) | 技能草案、示教限制、方法与触发分离；不推断权重训练 |
+| <a id="s364"></a>S364 | [文件、成果与 Pages](https://docs.x.ai/grok-bot/files-and-results) | 预览卡片、持续页面与成果入口；不证明格式还原质量 |
+| <a id="s365"></a>S365 | [设置与通知](https://docs.x.ai/grok-bot/settings-and-notifications) | 主题、语言、关注状态；设置列表需结合后续版本 Vault |
+| <a id="s366"></a>S366 | [审批、安全与隐私](https://docs.x.ai/grok-bot/approvals-security-and-privacy) | Auto Review、规则优先级与本机控制；后续发送语义结合 S374/S376 |
+| <a id="s367"></a>S367 | [Team Bots](https://docs.x.ai/grok-bot/team-bots) | 团队/个人记忆、执行位置与个人例行流程；不同渠道不可套同一身份假设 |
+| <a id="s368"></a>S368 | [移动端](https://docs.x.ai/grok-bot/mobile) | 同一工作与手机接续；不等于桌面所有控制均可用 |
+| <a id="s369"></a>S369 | [Bot 记忆](https://cursor.com/help/grok-bot/memory) | 自动保存、对话式纠错、群聊使用与删除范围；无质量排名 |
+| <a id="s370"></a>S370 | [模型选择](https://cursor.com/help/grok-bot/models) | 后台第一/第三方路由、无用户模型选择与逐请求型号；不能假定固定 Grok 模型 |
+| <a id="s371"></a>S371 | [企业安全与数据路径](https://prod.cursor.com/docs/grok-bot/security) | 模型/连接器/云电脑、控制层及套餐差别；不是绝对安全或全量零保留承诺 |
+| <a id="s372"></a>S372 | [计划与计费](https://prod.cursor.com/help/grok-bot/plans) | 新旧账号接入、共享周额度、超额路径与绑定不叠加 |
+| <a id="s373"></a>S373 | [当前价格](https://x.ai/pricing)、[X Subscription 价格说明](https://docs.x.ai/x-subscription/pricing) | 查询日月付标价与 Bot 资格；税、实际账号与后续变价另核对 |
+| <a id="s374"></a>S374 | [Grok Bot 更新日志](https://x.ai/changelog/bot) | 本次最新列项 v0.75.5（2026-10-23）；Vault 与主动请求/后台发送差别 |
+| <a id="s375"></a>S375 | [Vault 与安全秘密输入](https://cursor.com/help/grok-bot/secrets) | 0.75.2 起的账号级 Vault、秘密值不可见与卡片使用规则；保密不等于动作逐次批准 |
+| <a id="s376"></a>S376 | [Bot 邮箱](https://cursor.com/help/grok-bot/agent-email) | 账号地址、事件处理与当前发送语义；搜索摘要曾滞后 |
+| <a id="s377"></a>S377 | [Routine 帮助](https://cursor.com/help/grok-bot/routines) | 触发、运行、限流、200 仅受理与实际用量；不承诺持续必达 |
+| <a id="s378"></a>S378 | [排障与恢复](https://docs.x.ai/grok-bot/troubleshooting) | 软件/电脑恢复顺序及数据保存边界；未执行故障实验 |
+| <a id="s379"></a>S379 | [X 的 @bot 任务入口](https://docs.x.ai/grok-bot/tag-on-x) | 入口接回原 Bot、地区与账号限制；不混同公开 @Grok 回复 |
+
+本地只读核查、版本、文件摘要、文档检查与未验证项记录于[研究回执](evidence/grok-bot-research-2026-10-26.json)。没有安装外部代码、搬用旧工程实现、改变运行权限或创建自动化。
+
+<a id="harness2-research-sources"></a>
+## Harness² 与多机器人主脑研究来源（2026-10-26）
+
+用于[Grok 对比后的设计深化](grok-bot-comparison.md#jarvis-autonomy-deepening)。只读网络与仓库文件；没有安装、运行、移植或全面审计该项目。GitHub 固定提交为 `1cfe254e8d25b15f37048c3730134686abe60335`（2026-10-14）；论文版本和产品文档的日期独立记录，不能当作同一产品发布。
+
+| 编号 | 一手来源 | 采用与边界 |
+|---|---|---|
+| <a id="s380"></a>S380 | [Harness² 论文](https://arxiv.org/abs/2610.14224)、[HTML v1](https://arxiv.org/html/2610.14224v1) | 固定模型权重、任务内探测组合与跨任务改进库；作者基准结果未由 Jarvis 复现 |
+| <a id="s381"></a>S381 | [Google Research 固定版 README](https://github.com/google-research/harness2/blob/1cfe254e8d25b15f37048c3730134686abe60335/README.md) | 项目身份、八类可编辑组件、执行/评价入口；研究代码非通用长期助手产品，第三方组件另有许可 |
+| <a id="s382"></a>S382 | [固定版实验说明](https://github.com/google-research/harness2/blob/1cfe254e8d25b15f37048c3730134686abe60335/docs/EXPERIMENTS.md) | 有界并行/顺序模式、按域经验、复现条件、网络/评分泄漏和关闭沙箱的实验限制；不照搬运行边界 |
+| <a id="s383"></a>S383 | [经验库源码](https://github.com/google-research/harness2/blob/1cfe254e8d25b15f37048c3730134686abe60335/harness2/core/library.py)、[递归源码](https://github.com/google-research/harness2/blob/1cfe254e8d25b15f37048c3730134686abe60335/harness2/core/recursion.py) | 条件化经验、方法树、版本化索引、4k 执行/3k 改进阶段；仅核查相关片段，未做依赖或全仓安全审计 |
+| <a id="s384"></a>S384 | [Google Robotics ER 官方文档](https://ai.google.dev/gemini-api/docs/robotics-overview) | 感知推理、任务编排与机器人 API 的分层参考；预览产品不证明本工程实机能力或物理安全 |
+
+Jarvis 的确定性权限、根预算、任务所有权和发布约束继续以本工程主题页为准；外部论文、代码注释和模型建议都不能扩大其运行权限。
+
+<a id="learning-compounding-sources"></a>
+## 经验成长、知识治理与退化控制的研究依据（2026-10-26）
+
+本轮只读论文和官方资料，未安装、运行或复现其中系统。以下来源支持研究方向，不证明 Jarvis 已取得相同效果；本项目的条件化经验、发布与验收规则为 proposed。
+
+| 编号 | 一手来源 | 借鉴与边界 |
+|---|---|---|
+| <a id="s385"></a>S385 | [ReasoningBank 论文](https://arxiv.org/abs/2509.25140)、[Google Research 介绍](https://www.research.google/blog/reasoningbank-enabling-agents-to-learn-from-experience/) | 从成功与失败提炼可迁移方法；原研究含模型自评，官方介绍说明其简单追加经验、更复杂整合仍有研究空间，不能当作本项目独立验收或整库治理已完成 |
+| <a id="s386"></a>S386 | [ACE 论文 v1](https://arxiv.org/html/2510.04618v1) | 条目化、生成/反思/整理分工与局部增量，减少整体重写丢失细节；本文指 Agentic Context Engineering，不是其他同名 ACE，原基准结果不外推 |
+| <a id="s387"></a>S387 | [Self-RAG](https://arxiv.org/abs/2310.11511) | 按需检索、相关性与支持度检查；原方法训练反思 token，Jarvis 的宿主策略借鉴不等于已训练或复现 Self-RAG |
+| <a id="s388"></a>S388 | [Lost in the Middle，ACL/TACL](https://aclanthology.org/2024.tacl-1.9/) | 提醒检验长上下文中的相关信息位置与使用效果；其特定模型/任务实验不能用于断言所有当前模型具有相同退化幅度 |
+| <a id="s389"></a>S389 | [Google SRE：Canarying Releases](https://sre.google/workbook/canarying-releases/) | 有限范围/时间的变更评估与对照污染风险；借鉴发布方法，不据此宣称本地候选、经验和数据库已实现隔离 |
+
+本轮结论、适用范围和检查见[成长与知识治理记录](evidence/learning-knowledge-strategy-2026-10-26.json)。隐私/污染边界仍归安全主题，不能借“学习更聪明”扩大资料用途或运行权限。
 
 <!-- book-footer:start -->
 [返回工程主入口](../README.md) · [全书目录](../README.md#book-tree) · [上一章：架构与流程图册](architecture-atlas.md) · [下一章：文档维护规范](MAINTENANCE.md)

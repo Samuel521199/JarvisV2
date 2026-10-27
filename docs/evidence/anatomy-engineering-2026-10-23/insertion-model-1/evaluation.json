@@ -1,0 +1,51 @@
+{
+  "status": "failed",
+  "model_submissions": 1,
+  "reasoning": "low",
+  "scope": "Existing Jarvis API; step-only data repair, immutable prior parts/mates",
+  "turns": [
+    {
+      "chat_id": "chat-f8a43145206646cdb9ab941f12c8e064",
+      "turn_id": "anatomy-insertion-79c2257a025c4a7dac6d70ca031f110b"
+    }
+  ],
+  "model_turns": [
+    {
+      "assistant_action": null,
+      "cancel": 0,
+      "chat_id": "chat-f8a43145206646cdb9ab941f12c8e064",
+      "context_count": 1,
+      "created": 1792744504.03968,
+      "error": null,
+      "guidance": null,
+      "id": "anatomy-insertion-79c2257a025c4a7dac6d70ca031f110b",
+      "memory_context": {
+        "enabled": false,
+        "epoch": 7,
+        "facts": [],
+        "provider": "vertex",
+        "scope": "personal"
+      },
+      "model": "gemini-3.8-flash",
+      "provider": "vertex",
+      "reply": "```json\n{\n  \"schema\": \"anatomy.steps-repair.v1\",\n  \"steps\": [\n    {\n      \"direction\": [0, 0, 1],\n      \"distance\": 0,\n      \"instruction\": \"将主传动轴基准固定于装配工位。\",\n      \"part\": \"shaft\"\n    },\n    {\n      \"direction\": [0, 0, 1],\n      \"distance\": 70,\n      \"instruction\": \"自轴正端套入前端固定带孔法兰至指定轴向间隙位置。\",\n      \"part\": \"flange\"\n    },\n    {\n      \"direction\": [0, 0, 1],\n      \"distance\": 50,\n      \"instruction\": \"自法兰正面(+Z向)向-Z插入法兰紧固螺栓-A，使螺栓头贴合法兰端面。\",\n      \"part\": \"bolt-a\"\n    },\n    {\n      \"direction\": [0, 0, 1],\n      \"distance\": 50,\n      \"instruction\": \"自法兰正面(+Z向)向-Z插入法兰紧固螺栓-B，使螺栓头贴合法兰端面。\",\n      \"part\": \"bolt-b\"\n    },\n    {\n      \"direction\": [0, 0, -1],\n      \"distance\": 60,\n      \"instruction\": \"自轴负端推入轴承后定位隔套A至轴向预设位置。\",\n      \"part\": \"spacer-a\"\n    },\n    {\n      \"direction\": [0, 0, -1],\n      \"distance\": 80,\n      \"instruction\": \"自轴负端沿+Z向安装支撑深沟球轴承，贴靠隔套A端面。\",\n      \"part\": \"bearing\"\n    },\n    {\n      \"direction\": [0, 0, -1],\n      \"distance\": 100,\n      \"instruction\": \"自轴负端滑入轴承前定位隔套B，完成轴承轴向夹持定位。\",\n      \"part\": \"spacer-b\"\n    }\n  ]\n}\n```",
+      "request": {
+        "chat_id": "chat-f8a43145206646cdb9ab941f12c8e064",
+        "memory_enabled": false,
+        "model": "gemini-3.8-flash",
+        "provider": "vertex",
+        "reasoning": "low",
+        "request_id": "anatomy-insertion-79c2257a025c4a7dac6d70ca031f110b",
+        "skill": "none",
+        "text": "请修订装配插入步骤，只返回严格JSON对象 {\"schema\":\"anatomy.steps-repair.v1\",\"steps\":[...]}。每个step保持part/instruction/direction/distance四字段。严禁更改任何零件尺寸、mate/gap或新增零件。direction是从终点指向起点：start=final+direction*distance，插入运动方向与direction相反。螺栓头位于+Z，杆沿-Z；从法兰正面插入的起点应该在法兰+Z外侧。每件必须出现一次且父先子后；可以调整顺序、从轴的两端选择方向，避免穿过已经装好的大直径零件。距离0..300mm。静态装配已无体积干涉；七点采样发现的实际障碍如下，先根据明确几何关系修订步骤，不需要重新推导热力学或长篇解释。{\"parts\":[{\"id\":\"shaft\",\"kind\":\"shaft\",\"material\":\"steel\",\"name\":\"主传动轴\",\"params\":{\"diameter\":20,\"length\":180},\"position\":[0,0,0],\"rotation\":[0,0,0]},{\"id\":\"bearing\",\"kind\":\"bearing\",\"material\":\"steel\",\"name\":\"支撑深沟球轴承\",\"params\":{\"inner\":20.2,\"length\":14,\"outer\":47},\"position\":[0,0,0],\"rotation\":[0,0,0]},{\"id\":\"spacer-a\",\"kind\":\"tube\",\"material\":\"bronze\",\"name\":\"轴承后定位隔套\",\"params\":{\"inner\":20.4,\"length\":16,\"outer\":28},\"position\":[0,0,0],\"rotation\":[0,0,0]},{\"id\":\"spacer-b\",\"kind\":\"tube\",\"material\":\"bronze\",\"name\":\"轴承前定位隔套\",\"params\":{\"inner\":20.4,\"length\":16,\"outer\":28},\"position\":[0,0,0],\"rotation\":[0,0,0]},{\"id\":\"flange\",\"kind\":\"flange\",\"material\":\"steel\",\"name\":\"前端固定带孔法兰\",\"params\":{\"bolt_circle\":50,\"bolt_diameter\":6.4,\"bolts\":4,\"inner\":20.4,\"outer\":80,\"thickness\":10},\"position\":[0,0,0],\"rotation\":[0,0,0]},{\"id\":\"bolt-a\",\"kind\":\"bolt\",\"material\":\"steel\",\"name\":\"法兰紧固螺栓-A\",\"params\":{\"diameter\":5.8,\"head_diameter\":10,\"head_height\":5,\"length\":25},\"position\":[0,0,0],\"rotation\":[0,0,0]},{\"id\":\"bolt-b\",\"kind\":\"bolt\",\"material\":\"steel\",\"name\":\"法兰紧固螺栓-B\",\"params\":{\"diameter\":5.8,\"head_diameter\":10,\"head_height\":5,\"length\":25},\"position\":[0,0,0],\"rotation\":[0,0,0]}],\"mates\":[{\"child_port\":\"axis\",\"fit\":\"clearance\",\"gap\":-30,\"joint\":\"revolute\",\"parent\":\"shaft\",\"parent_port\":\"axis\",\"part\":\"bearing\",\"twist\":0},{\"child_port\":\"axis\",\"fit\":\"clearance\",\"gap\":-50,\"joint\":\"fixed\",\"parent\":\"shaft\",\"parent_port\":\"axis\",\"part\":\"spacer-a\",\"twist\":0},{\"child_port\":\"axis\",\"fit\":\"clearance\",\"gap\":-10,\"joint\":\"fixed\",\"parent\":\"shaft\",\"parent_port\":\"axis\",\"part\":\"spacer-b\",\"twist\":0},{\"child_port\":\"axis\",\"fit\":\"clearance\",\"gap\":40,\"joint\":\"fixed\",\"parent\":\"shaft\",\"parent_port\":\"axis\",\"part\":\"flange\",\"twist\":0},{\"child_port\":\"axis\",\"fit\":\"clearance\",\"gap\":5,\"joint\":\"fixed\",\"parent\":\"flange\",\"parent_port\":\"bolt-0\",\"part\":\"bolt-a\",\"twist\":0},{\"child_port\":\"axis\",\"fit\":\"clearance\",\"gap\":5,\"joint\":\"fixed\",\"parent\":\"flange\",\"parent_port\":\"bolt-2\",\"part\":\"bolt-b\",\"twist\":0}],\"steps\":[{\"direction\":[0,0,1],\"distance\":0,\"instruction\":\"将主传动轴基准固定于装配工位。\",\"part\":\"shaft\"},{\"direction\":[0,0,-1],\"distance\":80,\"instruction\":\"自轴端沿负Z向推入后定位隔套A至轴向预设位置。\",\"part\":\"spacer-a\"},{\"direction\":[0,0,-1],\"distance\":70,\"instruction\":\"自轴端沿负Z向安装深沟球轴承，贴靠隔套端面。\",\"part\":\"bearing\"},{\"direction\":[0,0,-1],\"distance\":60,\"instruction\":\"自轴端滑入前定位隔套B，完成轴承轴向夹持定位。\",\"part\":\"spacer-b\"},{\"direction\":[0,0,1],\"distance\":70,\"instruction\":\"自轴正向端推入法兰盘，对齐轴心并推至指定间隙位置。\",\"part\":\"flange\"},{\"direction\":[0,0,-1],\"distance\":40,\"instruction\":\"将螺栓A自正向插入法兰第0号螺栓孔，使螺栓头肩面贴合法兰外端面。\",\"part\":\"bolt-a\"},{\"direction\":[0,0,-1],\"distance\":40,\"instruction\":\"将螺栓B自正向插入法兰第2号螺栓孔，使螺栓头肩面贴合法兰外端面。\",\"part\":\"bolt-b\"}],\"insertion\":{\"status\":\"sampled_interference\",\"samples_per_step\":7,\"narrow_phase_pairs\":37,\"hits\":[{\"part\":\"bearing\",\"obstacle\":\"spacer-a\",\"max_intersection_mm3\":3370.510038281369,\"remaining_fractions\":[0.333333,0.166667]},{\"part\":\"spacer-b\",\"obstacle\":\"spacer-a\",\"max_intersection_mm3\":4622.4137667858795,\"remaining_fractions\":[0.833333,0.666667,0.5]},{\"part\":\"spacer-b\",\"obstacle\":\"bearing\",\"max_intersection_mm3\":4044.612045937646,\"remaining_fractions\":[0.5,0.333333,0.166667]},{\"part\":\"bolt-a\",\"obstacle\":\"flange\",\"max_intersection_mm3\":231.84953783492674,\"remaining_fractions\":[0.333333,0.166667]},{\"part\":\"bolt-b\",\"obstacle\":\"flange\",\"max_intersection_mm3\":231.84953783492674,\"remaining_fractions\":[0.333333,0.166667]}],\"limits\":\"按声明的直线插入方向、距离和父先子后步骤，在每步7个时刻检查已安装零件；离散采样可能漏过薄障碍物或采样间穿透，不是连续碰撞/扫掠体证明。\"}}"
+      },
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 505,
+        "prompt_tokens": 1622,
+        "total_tokens": 2127
+      }
+    }
+  ],
+  "error": "Expecting value: line 1 column 1 (char 0)"
+}

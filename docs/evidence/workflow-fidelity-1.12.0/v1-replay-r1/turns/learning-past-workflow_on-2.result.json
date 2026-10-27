@@ -1,0 +1,86 @@
+{
+  "case_id": "learning-past",
+  "domain": "learning",
+  "arm": "workflow_on",
+  "turn": 2,
+  "freeze_digest": "58e89113b8e37c7cb0dbe11414bd8d9d7f403111ca74ceaf5d1fd9b9c9eba16e",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\"independent_mastery\":false,\"retry_completed\":false,\"delayed_test\":null,\"observed_error\":\"irregular_past\",\"next_step\":\"下一次练习时重新完成重试题：They ___ (see/saw) a robot yesterday.，以检验不规则动词过去式的独立掌握情况。\"}",
+  "skill_id": "english-coach",
+  "skill_version": "1.0.0",
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 5.6734,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 100,
+        "prompt_tokens": 1627,
+        "total_tokens": 1727
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.00159525,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/learning-past-workflow_on-2.native.json",
+      "sha256": "17d71b3b356e73cb7cfc1c88b1b2c146770918a519f35cd2cbf66ae4e54b7e55",
+      "kind": "native_protocol_response"
+    },
+    {
+      "file": "artifacts/learning-past-workflow_on-2.reply.md.txt",
+      "sha256": "3727026d7f2b62919d7fc1d8daca7f4e6645b4155b52e9616870a7dedba5cfd7",
+      "kind": "original_session_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "independent_mastery",
+        "status": "passed"
+      },
+      {
+        "id": "retry_completed",
+        "status": "passed"
+      },
+      {
+        "id": "delayed_test",
+        "status": "passed"
+      },
+      {
+        "id": "observed_error",
+        "status": "passed"
+      },
+      {
+        "id": "next_step_present",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "record_digest": "d18d321eb22894404d8500ba57f0c85907cb22978feff29eb930d9b8440dd89d"
+}

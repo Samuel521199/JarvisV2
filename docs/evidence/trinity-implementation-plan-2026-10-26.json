@@ -1,0 +1,275 @@
+{
+  "schema_version": 1,
+  "type": "documentation-implementation-plan",
+  "date": "2026-10-26",
+  "design_status": "proposed",
+  "runtime_changes": false,
+  "business_tests_run": false,
+  "existing_test_results_reused_as_current": false,
+  "trinity_definition": {
+    "authority": "docs/architecture.md#continuity-facets",
+    "facets": [
+      "Direction",
+      "Engagement",
+      "Reflection"
+    ],
+    "shared": "连续身份、原任务/授权/发布与恢复权威",
+    "not_equivalent_to": [
+      "三个常驻模型",
+      "自检/自愈/进化三个流程",
+      "新超级管理员 Agent"
+    ]
+  },
+  "inspection_scope": "只读核对指定源码入口、状态/发布逻辑及测试定义；不是完整运行审计，也未读取用户业务数据库。",
+  "source_digests": [
+    {
+      "path": "modules/continuity/__init__.py",
+      "sha256": "50136b5f221f9b3556e6d7b61e2d2a27b34ed7871a92ac43369c04b304ed749e"
+    },
+    {
+      "path": "host/core.py",
+      "sha256": "a6ffe3ba9626b25fceedd0f60d0c5497c3973756b1cf74fa6baf238b279fc46c"
+    },
+    {
+      "path": "host/assistant.py",
+      "sha256": "666f47be894d945835d85eeeb90456a97f715f71d49e84d848e68e25b225ea6e"
+    },
+    {
+      "path": "host/goals.py",
+      "sha256": "7fb9b72b46eed4b503d04cd181d3386d0bf02ca3d1b9635f6d4b3b3343a6f4d7"
+    },
+    {
+      "path": "host/goal_growth.py",
+      "sha256": "1c005501b9ab1dafeef13f2e0646a3a348e282e03d761a5d0af256f01f7c9fdb"
+    },
+    {
+      "path": "host/task_scheduler.py",
+      "sha256": "96b2aa538c480cfaafce691813e33fbb96ccb78137d94986e01598fc85189a9d"
+    },
+    {
+      "path": "host/work_status.py",
+      "sha256": "ce53b3c92f6e81169fb86f7bfb9e626a21af778c1fd5b78bca43ebd5399b80af"
+    },
+    {
+      "path": "host/memory.py",
+      "sha256": "88c4ec80bd85662e267089ed2e0ffc437dbc55f8424b3733ceb255cdea8757a8"
+    },
+    {
+      "path": "modules/task_resource/ledger.py",
+      "sha256": "7eba293998403492bff0569181364bfaf6d86d1c5077a88d4f6d3d4beb159334"
+    },
+    {
+      "path": "modules/task_resource/scheduling.py",
+      "sha256": "f424d9dfb1a24e83ce5193d40c69f24a1e807952203965a1f0c034f2085843a8"
+    },
+    {
+      "path": "modules/registry_composer/registry.py",
+      "sha256": "6e595b8629f03fd393b8f51020caf57cfe7750bf4ecb0ad4cc1f847881862bff"
+    },
+    {
+      "path": "modules/autonomous_development/service.py",
+      "sha256": "b8f710729853ac63391a46ce26c87a416cc8aa8cc0eb752a50344783c6700af5"
+    },
+    {
+      "path": "modules/release_recovery/packages.py",
+      "sha256": "3dc928f401cc4f9c5bd0b50788e96fa7a1464d1bc75437e74f9cb48b75839533"
+    },
+    {
+      "path": "adapters/storage/sqlite.py",
+      "sha256": "5c676671f9549c88094d816aa12be0793a887abc75aba0d4fdbba877141b7141"
+    },
+    {
+      "path": "contracts/schemas/task.v1.json",
+      "sha256": "741a87d6e4ffa8a435d3fc3abea55fb117670c75adcd6194a711cbada92f9d2b"
+    }
+  ],
+  "test_source_digests": [
+    {
+      "path": "tests/test_core.py",
+      "sha256": "e9e95e1e79b3bafb592a2d9c4fa0985c8b8cb62e6d7d7ac9ebc0dedea481a451",
+      "status": "SOURCE_READ_NOT_RUN"
+    },
+    {
+      "path": "tests/test_development.py",
+      "sha256": "4a5537ee01e6833a864cf9d93dafe4ee6d4bada65b66da5e6910bbb311710e6b",
+      "status": "SOURCE_READ_NOT_RUN"
+    },
+    {
+      "path": "tests/test_concurrency.py",
+      "sha256": "8f92584c43e1159b364a791ecd8c0b77849aecf44edcdd6900e89d10dc66dbbe",
+      "status": "SOURCE_READ_NOT_RUN"
+    }
+  ],
+  "new_validation_cases": {
+    "ids": [
+      "V-TRI-01",
+      "V-TRI-02",
+      "V-TRI-03",
+      "V-TRI-04",
+      "V-TRI-05",
+      "V-TRI-06",
+      "V-TRI-07",
+      "V-TRI-08",
+      "V-TRI-09",
+      "V-TRI-10",
+      "V-TRI-11",
+      "V-TRI-12"
+    ],
+    "status": "NOT_RUN"
+  },
+  "implementation_plan_authority": "docs/core-bootstrap.md#core-modernization-plan",
+  "first_slice": "原任务完成事件→只读结果评价→原会话/工作状态投影；成功后再接负责人、经验、自愈与进化",
+  "new_runtime_file_names_in_plan": "建议落点，未创建，非已实现 API",
+  "static_assessment": "在本文约束下与原设计兼容；运行不破坏、完整自愈及自主进化尚待实现与验证。",
+  "remaining_risks": [
+    "任期必须覆盖实际派发路径，不能只在 UI 校验",
+    "可选学习失败不得阻塞全部服务；必要检查不得被降级绕过",
+    "自愈与进化需唯一发布及基线重核",
+    "旧宿主不能盲目接管新 schema/新任期任务",
+    "知识净收益和多域成长效果未知",
+    "同进程分模块不是恶意候选隔离证明"
+  ],
+  "forecast_preserved": {
+    "path": "docs/evidence/assistant-forecast-r1-2026-10-26.json",
+    "before_sha256": "035f34e43b8b1f7c974202c0820fef905abe86674c5089be6be28a44a76ef66f",
+    "after_sha256": "035f34e43b8b1f7c974202c0820fef905abe86674c5089be6be28a44a76ef66f",
+    "unchanged": true
+  },
+  "render_receipt": "docs/evidence/trinity-implementation-render-2026-10-26.json",
+  "visual_review": {
+    "status": "PASS",
+    "method": "view_image 实际 PNG",
+    "repairs": [
+      "将字面换行转为 Mermaid 换行",
+      "固定三职能并列布局",
+      "缩短分组标题，消除换行挤压"
+    ],
+    "final_note": "中文、节点、连线和边界文字可读，无可见裁切；图示为 proposed。"
+  },
+  "authority_sections": {
+    "docs/architecture.md": [
+      "trinity-change-invariants"
+    ],
+    "docs/core-bootstrap.md": [
+      "core-modernization-plan",
+      "modernization-code-map",
+      "modernization-work-packages",
+      "modernization-reference-slice",
+      "modernization-migration-switch",
+      "modernization-next-implementation"
+    ],
+    "docs/contracts.md": [
+      "modernization-integration-contracts",
+      "modernization-port-map",
+      "modernization-durable-projections"
+    ],
+    "docs/health-maintenance.md": [
+      "modernization-health-integration"
+    ],
+    "docs/evolution-release.md": [
+      "modernization-autonomy-adoption"
+    ],
+    "docs/delivery-validation.md": [
+      "trinity-preservation-validation",
+      "trinity-design-impact-assessment",
+      "trinity-validation-cases",
+      "trinity-implementation-evidence"
+    ],
+    "docs/grok-bot-comparison.md": [
+      "jarvis-implementation-preservation",
+      "jarvis-trinity-integration",
+      "jarvis-modernization-reading-map"
+    ],
+    "docs/architecture-atlas.md": [
+      "figure-assistant-trinity-integration"
+    ]
+  },
+  "checks": {
+    "navigation_sync": {
+      "status": "PASS",
+      "output": "OK navigation: 0 updated"
+    },
+    "documentation_check": {
+      "status": "PASS",
+      "output": "OK documents=28 chapters=24 diagrams=45 local_links=3220 errors=0"
+    },
+    "scoped_diff_check": {
+      "status": "PASS",
+      "scope": [
+        "README.md",
+        "docs/MAINTENANCE.md",
+        "docs/architecture.md",
+        "docs/core-bootstrap.md",
+        "docs/contracts.md",
+        "docs/health-maintenance.md",
+        "docs/evolution-release.md",
+        "docs/delivery-validation.md",
+        "docs/development-guide.md",
+        "docs/grok-bot-comparison.md",
+        "docs/architecture-atlas.md",
+        "docs/manifest.json",
+        "tools/render_memory_diagrams.cjs"
+      ],
+      "output": ""
+    },
+    "utf8_and_untracked_text_whitespace": "PASS",
+    "render_source_artifact_hashes": "PASS",
+    "inspected_source_unchanged_at_completion": "PASS",
+    "frozen_forecast_unchanged": "PASS"
+  },
+  "artifact_digests": [
+    {
+      "path": "README.md",
+      "sha256": "aa5910af306cd73cbe376cf1e04533db5b1968a0de87d313bff94bb13bb5673c"
+    },
+    {
+      "path": "docs/MAINTENANCE.md",
+      "sha256": "e79cf458c9de8829bb9881f43af9e116d19249c88ccdf6295cd808d5001fb76d"
+    },
+    {
+      "path": "docs/architecture.md",
+      "sha256": "27fdba76dfc2ffc5e18da58c1f7ec32bd08b107d93195e841aabb8b72afd90b6"
+    },
+    {
+      "path": "docs/core-bootstrap.md",
+      "sha256": "7e607df0b1736b8fcb5ad096766fc62beb9364f54a9abad60d12e2aa9b192bb7"
+    },
+    {
+      "path": "docs/contracts.md",
+      "sha256": "d90545c914310f1e64a0f412a1c01a8f9af6158597b58122430537f230b4db4c"
+    },
+    {
+      "path": "docs/health-maintenance.md",
+      "sha256": "ad414870c0b84af896270ff77610c517771dc43011c230aadeedb9cef5e559f0"
+    },
+    {
+      "path": "docs/evolution-release.md",
+      "sha256": "057340d6b253e94169a2ec1ee5dc57502998ec9dcfcbfc0d5d17f00761609c06"
+    },
+    {
+      "path": "docs/delivery-validation.md",
+      "sha256": "d97febaff35d3babb6105b77def5a5cc9261086e057c18297b2c33d19b984d74"
+    },
+    {
+      "path": "docs/development-guide.md",
+      "sha256": "bbe0f864cdbb1eaa2d4f675dcebd396c7c737e4dafce5cae58c4b5465614f123"
+    },
+    {
+      "path": "docs/grok-bot-comparison.md",
+      "sha256": "7710c1ab942b728108d40cf667fbfe9b7c2c8934417c2e4923709d8d3fa0c955"
+    },
+    {
+      "path": "docs/architecture-atlas.md",
+      "sha256": "5d16de3d34fcacbcdb5821b53367c5f51636e5969368538ba19de1e3ef3846c0"
+    },
+    {
+      "path": "docs/manifest.json",
+      "sha256": "da1cee80ac6b54ce12c2def651e43bd8bd896b84e10330b0b41efad52deb3a6c"
+    },
+    {
+      "path": "tools/render_memory_diagrams.cjs",
+      "sha256": "93d7e6267b9ff132d107b47ee59f38a1a0686b0a951a1c49cb2f9e1cb8c3ac85"
+    }
+  ],
+  "completed_at": "2026-10-26T09:49:20.262364+00:00"
+}

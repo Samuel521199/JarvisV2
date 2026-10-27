@@ -1,0 +1,18 @@
+{
+  "reason": "Second low-reasoning round reached all three domains but exposed assistant_invalid and explicit reply-only requests routed as Goal",
+  "new_runtime_scope": [
+    "host/assistant.py prompt distinguishes outer assistant wire schema from requested JSON/Markdown inside reply",
+    "Explicit reply-only requests excluding background/external effects use chat; real external effects retain original Goal admission"
+  ],
+  "unchanged": [
+    "assistant.parse schema enforcement",
+    "grants, ledger, budget, evaluation and knowledge rules",
+    "same six tasks and references"
+  ],
+  "next_live_round": {
+    "same_as_round2": "vertex/gemini-3.8-flash, LOW, 4096, max24calls",
+    "extra_evidence": "Capture original model protocol result before parsing for fault attribution",
+    "comparison": "Post-prompt-fix on/off within current round; cross-round results descriptive only"
+  },
+  "collector_packaging": "Copy Markdown evidence as .md.txt; original session Markdown unchanged. Preserve earlier complete packs in verified zip archives before replacing generated copies; do not weaken document registry checks."
+}

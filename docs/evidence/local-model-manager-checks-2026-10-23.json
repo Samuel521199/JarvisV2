@@ -1,0 +1,45 @@
+{
+  "module": "local-model-manager",
+  "module_version": "1.0.0",
+  "app_version": "0.1.0",
+  "status": "working_tree_increment_not_tagged",
+  "checked_at": 1792743832.6798308,
+  "tests": {
+    "test_local_models*.py": 10,
+    "test_workbench.py": 2,
+    "test_assistant_goals.py": 12,
+    "test_settings_management.py": 16
+  },
+  "total_tests_passed": 40,
+  "real_model_probe": "local-model-manager-2026-10-23.json",
+  "ui_probe": "local-model-manager-web-2026-10-23.json",
+  "implementation_notes": [
+    "independent model queue and file lifecycle",
+    "only E5 ONNX runtime executable",
+    "no OS network isolation claim",
+    "new optional-manager startup failure fallback tested; running service confirmed normal path"
+  ],
+  "source_sha256": {
+    "host/local_models.py": "eb228e693a6374de3c6ea95b9b49a70edcb090b614f9ba8e1efedc76f8971052",
+    "host/assistant.py": "8aa01f9580545634330eb5e32c8c00317635876750700c9fb604d52fa6ef4d98",
+    "apps/workbench/server.py": "96e0d9f24d3b676f024c1c20cd12d4af48a0e04df6546c653d69b498cb7fea41",
+    "apps/workbench/settings-local-models.js": "da0147fbc116049ebcf4a8f43d759984791093a806832e1e58580a7cf42b7c39",
+    "apps/workbench/settings.js": "fc048751a9793d3ea4d790a387365f2d92d65e60570b434b3e49a81dc2bb073a",
+    "adapters/models/local_download.py": "724311025b5db21c6d526b820e7bd8844032c82e8e45678b851ccf154bc1a259",
+    "adapters/models/local_embedding_worker.py": "84fa93ecdf55a90064e23c073998c0c5a8911f592a8a4406ca5b94949fc85355",
+    "modules/local_models/__init__.py": "a923d2fd734984f0e4a478f30ccd38851be26aeda16583d7af25f1f3435354d8",
+    "modules/local_models/catalog.py": "a21bb5791da7fe4070a36a787730abc892892f6392e0a3afc079c2856d5024dc",
+    "modules/local_models/catalog.json": "de7d8103640d4e263e590f39bb8413ee0b550d43ee94a6f39f504ef3cdcc09ad",
+    "modules/local_models/runtime.py": "5c611e4cec482e79c2799db45ac9ed4d34b5debff227c98416ac946ed7c7b2ef",
+    "modules/local_models/runtime.json": "8a28a89f3245230a28d103aa4bfc5b777192bb71424aeaa395e521b248b75160",
+    "modules/local_models/descriptor.json": "3f83adec0ccec2466c5fc2f577afb22d1564ba3cb83c8cc484200550309f4397",
+    "tests/test_local_models.py": "3e9b652c0ec41acf4c6880e6ea0d4014d749515ca2442a2868fde6689cc383e6",
+    "tests/test_local_models_http.py": "1d34ccdf186c7e7d5d57534c2d88e5302a10b18acd294cb9f1a2d0b2e4e272df",
+    "tools/local_models.py": "b4b792280433822f986d9b273d6b4485e4dba064badb622b7589fb2541b7b912",
+    "tools/probe_local_models.py": "a2b1070ef4b9bb9306d37ad4b851d77984486934e24956219bb99578c38ca17a",
+    "tools/check_architecture.py": "b34a4f7a56af2225e779705c4e64d1a0c5c512785a5c5587f8016dbe2be46df0",
+    "packaging/runtime-lock.json": "f8cbae5ec277423646c83a98777ecfc02d88ac745636ff7b89a598c33416f1b0",
+    "control/recovery/gate.py": "084e32cf7a51ca12cee8ecc575c11acb0b7e7605b94c6efd87fbafa90de97f9e",
+    ".gitignore": "20aab448ade643aa73cef80c3ea9fdefc83cc06569d9e429c7d6d7d650e2d6c5"
+  }
+}

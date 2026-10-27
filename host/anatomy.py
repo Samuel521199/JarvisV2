@@ -11,6 +11,14 @@ LOCK=threading.Lock()
 def validate_request(value):
     if not isinstance(value,dict) or 'mechanism' not in value:raise CoreError('anatomy_invalid','Select a mechanism')
     mechanism=value['mechanism']
+    if mechanism=='engineering':
+        from host.anatomy_engineering import validate_engineering
+        if set(value)=={'mechanism','scene'}:return mechanism,validate_engineering(value['scene'])
+        if set(value)<={'mechanism','preset'}:
+            presets=json.loads((ROOT/'modules/skills/anatomy/engineering-presets.json').read_text(encoding='utf-8'))
+            name=value.get('preset','shaft-assembly')
+            if isinstance(name,str) and name in presets:return mechanism,validate_engineering(presets[name])
+        raise CoreError('anatomy_engineering_invalid','Select one engineering preset or scene')
     if mechanism=='slider-crank' and set(value)=={'mechanism'}:return mechanism,{}
     if mechanism=='studio':
         if set(value)=={'mechanism','scene'}:return mechanism,validate_scene(value['scene'])
@@ -38,6 +46,9 @@ def render(root,value):
     if not node:raise CoreError('anatomy_dependency','Node.js is required')
     if not LOCK.acquire(blocking=False):raise CoreError('conflict','Renderer busy')
     try:
+        if mechanism=='engineering':
+            from host.anatomy_engineering import render_engineering
+            return render_engineering(root,config,source)
         result=subprocess.run([node,str(ROOT/'modules/skills/anatomy/build.mjs'),mechanism],input=json.dumps(config).encode(),capture_output=True,timeout=15,env={k:v for k,v in os.environ.items() if k.upper() in {'SYSTEMROOT','WINDIR','TEMP','TMP'}},creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
         StopGate(root).require_running()
         if result.returncode or not 10000<len(result.stdout)<1000000:raise CoreError('anatomy_build','Fixed renderer did not deliver bounded HTML')

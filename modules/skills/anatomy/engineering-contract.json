@@ -1,0 +1,479 @@
+{
+  "schema": "anatomy.engineering.v1",
+  "units": "mm",
+  "max_parts": 96,
+  "max_experiments": 4,
+  "materials": {
+    "steel": {
+      "density": 7850,
+      "color": "#a7bac9"
+    },
+    "aluminum": {
+      "density": 2700,
+      "color": "#91c3d8"
+    },
+    "bronze": {
+      "density": 8800,
+      "color": "#d5a365"
+    },
+    "polymer": {
+      "density": 1200,
+      "color": "#77b7a8"
+    },
+    "rubber": {
+      "density": 1100,
+      "color": "#394858"
+    },
+    "composite": {
+      "density": 1500,
+      "color": "#df6854"
+    }
+  },
+  "kinds": {
+    "box": {
+      "width": {
+        "default": 80,
+        "min": 4,
+        "max": 250
+      },
+      "depth": {
+        "default": 60,
+        "min": 4,
+        "max": 250
+      },
+      "height": {
+        "default": 12,
+        "min": 2,
+        "max": 200
+      },
+      "bore": {
+        "default": 0,
+        "min": 0,
+        "max": 150
+      }
+    },
+    "shaft": {
+      "diameter": {
+        "default": 20,
+        "min": 2,
+        "max": 150
+      },
+      "length": {
+        "default": 140,
+        "min": 5,
+        "max": 300
+      }
+    },
+    "tube": {
+      "outer": {
+        "default": 70,
+        "min": 4,
+        "max": 200
+      },
+      "inner": {
+        "default": 50,
+        "min": 1,
+        "max": 190
+      },
+      "length": {
+        "default": 60,
+        "min": 2,
+        "max": 250
+      }
+    },
+    "flange": {
+      "outer": {
+        "default": 90,
+        "min": 10,
+        "max": 250
+      },
+      "inner": {
+        "default": 20.4,
+        "min": 0,
+        "max": 200
+      },
+      "thickness": {
+        "default": 8,
+        "min": 2,
+        "max": 50
+      },
+      "bolt_circle": {
+        "default": 76,
+        "min": 6,
+        "max": 230
+      },
+      "bolt_diameter": {
+        "default": 6.4,
+        "min": 1,
+        "max": 30
+      },
+      "bolts": {
+        "default": 4,
+        "min": 3,
+        "max": 8,
+        "integer": true
+      }
+    },
+    "bearing": {
+      "outer": {
+        "default": 50,
+        "min": 10,
+        "max": 150
+      },
+      "inner": {
+        "default": 20.1,
+        "min": 2,
+        "max": 130
+      },
+      "length": {
+        "default": 12,
+        "min": 4,
+        "max": 50
+      }
+    },
+    "bolt": {
+      "diameter": {
+        "default": 5.8,
+        "min": 1,
+        "max": 24
+      },
+      "length": {
+        "default": 81,
+        "min": 4,
+        "max": 250
+      },
+      "head_diameter": {
+        "default": 10,
+        "min": 3,
+        "max": 45
+      },
+      "head_height": {
+        "default": 5,
+        "min": 2,
+        "max": 24
+      }
+    },
+    "nut": {
+      "outer": {
+        "default": 12,
+        "min": 4,
+        "max": 50
+      },
+      "inner": {
+        "default": 6,
+        "min": 1,
+        "max": 30
+      },
+      "thickness": {
+        "default": 5,
+        "min": 2,
+        "max": 25
+      }
+    },
+    "gear": {
+      "module": {
+        "default": 1,
+        "min": 0.5,
+        "max": 2
+      },
+      "teeth": {
+        "default": 24,
+        "min": 18,
+        "max": 60,
+        "integer": true
+      },
+      "thickness": {
+        "default": 4,
+        "min": 2,
+        "max": 12
+      },
+      "bore": {
+        "default": 8.2,
+        "min": 1,
+        "max": 30
+      },
+      "backlash": {
+        "default": 0.12,
+        "min": 0.06,
+        "max": 0.3
+      }
+    },
+    "shell": {
+      "length": {
+        "default": 100,
+        "min": 20,
+        "max": 250
+      },
+      "rear_width": {
+        "default": 54,
+        "min": 12,
+        "max": 180
+      },
+      "front_width": {
+        "default": 54,
+        "min": 12,
+        "max": 180
+      },
+      "height": {
+        "default": 24,
+        "min": 8,
+        "max": 80
+      },
+      "wall": {
+        "default": 2,
+        "min": 1,
+        "max": 4
+      },
+      "opening": {
+        "default": 0,
+        "min": 0,
+        "max": 120
+      },
+      "mount_span": {
+        "default": 0,
+        "min": 0,
+        "max": 200
+      },
+      "mount_width": {
+        "default": 0,
+        "min": 0,
+        "max": 150
+      }
+    }
+  },
+  "experiments": {
+    "motor-pump": {
+      "voltage": {
+        "default": 12,
+        "min": 0,
+        "max": 48
+      },
+      "resistance": {
+        "default": 2,
+        "min": 0.5,
+        "max": 20
+      },
+      "inductance": {
+        "default": 0.05,
+        "min": 0.005,
+        "max": 1
+      },
+      "constant": {
+        "default": 0.1,
+        "min": 0.02,
+        "max": 0.5
+      },
+      "inertia": {
+        "default": 0.002,
+        "min": 0.0005,
+        "max": 0.1
+      },
+      "friction": {
+        "default": 0.0002,
+        "min": 0,
+        "max": 0.02
+      },
+      "pump_coefficient": {
+        "default": 1e-05,
+        "min": 0,
+        "max": 0.0002
+      },
+      "duration": {
+        "default": 3,
+        "min": 0.1,
+        "max": 10
+      }
+    },
+    "otto": {
+      "compression": {
+        "default": 8,
+        "min": 2,
+        "max": 18
+      },
+      "gamma": {
+        "default": 1.4,
+        "min": 1.2,
+        "max": 1.67
+      },
+      "temperature": {
+        "default": 300,
+        "min": 250,
+        "max": 500
+      },
+      "pressure": {
+        "default": 101325,
+        "min": 50000,
+        "max": 300000
+      },
+      "heat_input": {
+        "default": 800000,
+        "min": 100000,
+        "max": 1500000
+      },
+      "displacement_cc": {
+        "default": 500,
+        "min": 50,
+        "max": 2000
+      }
+    },
+    "channel": {
+      "height": {
+        "default": 0.02,
+        "min": 0.005,
+        "max": 0.1
+      },
+      "length": {
+        "default": 0.2,
+        "min": 0.05,
+        "max": 1
+      },
+      "viscosity": {
+        "default": 0.001,
+        "min": 0.0005,
+        "max": 0.01
+      },
+      "density": {
+        "default": 1000,
+        "min": 500,
+        "max": 1500
+      },
+      "pressure_drop": {
+        "default": 0.01,
+        "min": 0.0001,
+        "max": 0.5
+      },
+      "cells": {
+        "default": 32,
+        "min": 16,
+        "max": 64,
+        "integer": true
+      }
+    },
+    "shallow-water": {
+      "length": {
+        "default": 10,
+        "min": 2,
+        "max": 30
+      },
+      "depth": {
+        "default": 1,
+        "min": 0.2,
+        "max": 3
+      },
+      "amplitude": {
+        "default": 0.05,
+        "min": 0.005,
+        "max": 0.1
+      },
+      "duration": {
+        "default": 1,
+        "min": 0.1,
+        "max": 3
+      },
+      "cells": {
+        "default": 80,
+        "min": 40,
+        "max": 120,
+        "integer": true
+      }
+    },
+    "combustion": {
+      "fuel": {
+        "default": "CH4",
+        "enum": [
+          "CH4",
+          "H2"
+        ]
+      },
+      "equivalence": {
+        "default": 1,
+        "min": 0.5,
+        "max": 1.5
+      },
+      "temperature": {
+        "default": 300,
+        "min": 280,
+        "max": 600
+      },
+      "pressure": {
+        "default": 101325,
+        "min": 50000,
+        "max": 500000
+      }
+    },
+    "pendulum": {
+      "length": {
+        "default": 0.5,
+        "min": 0.1,
+        "max": 2
+      },
+      "angle_deg": {
+        "default": 12,
+        "min": 2,
+        "max": 40
+      },
+      "damping": {
+        "default": 0.02,
+        "min": 0,
+        "max": 0.2
+      },
+      "duration": {
+        "default": 5,
+        "min": 1,
+        "max": 10
+      }
+    },
+    "fourbar": {
+      "ground": {
+        "default": 100,
+        "min": 20,
+        "max": 200
+      },
+      "crank": {
+        "default": 30,
+        "min": 10,
+        "max": 150
+      },
+      "coupler": {
+        "default": 100,
+        "min": 20,
+        "max": 200
+      },
+      "follower": {
+        "default": 60,
+        "min": 10,
+        "max": 200
+      }
+    },
+    "arm-ik": {
+      "upper": {
+        "default": 80,
+        "min": 10,
+        "max": 150
+      },
+      "lower": {
+        "default": 60,
+        "min": 10,
+        "max": 150
+      },
+      "target_x": {
+        "default": 95,
+        "min": -250,
+        "max": 250
+      },
+      "target_y": {
+        "default": 45,
+        "min": -250,
+        "max": 250
+      }
+    }
+  },
+  "steps_contract": {
+    "direction": "Unit vector from FINAL part position toward START position. start=final+direction*distance; insertion motion is in the OPPOSITE direction.",
+    "distance": "0..300 mm; 7 discrete B-rep intersection samples per declared straight insertion; not continuous collision proof.",
+    "order": "Exactly one step per part, parent installed before child; order must also avoid previously installed obstacles."
+  },
+  "optional_assembly_plan": "1..16 ordered groups: id, name(max50), parts(exclusive exhaustive ids), direction(unit final-to-start), distance(0..300mm). Each group inserts as a rigid unit; parent group cannot follow child group. Local group assembly uses original per-part steps. Optional batches: ordered nonempty arrays partitioning group parts, simultaneous within batch, sequential between batches. Internal step paths retained; exact seven-pose batch checks include moving pairs and prior installed batches. Optional type=body identifies detachable shell groups; view filters do not alter checks.",
+  "optional_operation": "vehicle only: kind, wheels(exact4: axle front/rear, side left/right, center[3], pivot[3], parts ids), steering_parts{left:ids,right:ids}, rear_rotating ids, wheelbase50..400, pivot_track40..250, radius10..80, max_steer5..25. X forward,Y left,Z up; centres Z=radius; rear axes concentric; front pivots at Y=+/-pivot_track/2. Ackermann ideal kinematics, differential mean rotor; no general dynamics. Requires assembly_plan. See vehicle-chassis example. Optional transmission: output(gear id), stages(max4 driver/driven gear pairs), shafts(max5 gear/parts groups). External spur gears, same module, 20 degree pressure angle, root independent world poses and Y-aligned axes; stages must form a connected consistent ratio graph linked by keyed shafts. No gear contact forces. Optional verification=extended checks 30 selected steer/independent wheel phase combinations, not continuous coverage.",
+  "max_groups": 16
+}

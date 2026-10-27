@@ -1,0 +1,117 @@
+{
+  "schema": "jarvis.studio3d.inspection.v1",
+  "sha256": "c40ae86d13da48f7865e5234b12d297ef810deb3a82ccf007e2928cc3c92f3e5",
+  "bytes": 8381488,
+  "profile": {
+    "id": "desktop-static-review-v1",
+    "name": "桌面静态资产检查基线",
+    "triangle_budget": 100000,
+    "texture_edge_budget": 2048,
+    "required_maps": [
+      "baseColor",
+      "normal",
+      "metallicRoughness",
+      "occlusion"
+    ],
+    "human_checks": [
+      "轮廓与参考一致性",
+      "倒角与法线接缝",
+      "UV接缝和纹素密度",
+      "LOD轮廓与切换",
+      "授权来源和美术要求"
+    ],
+    "scope": "A configurable review baseline, not a universal AAA standard or certification."
+  },
+  "triangles": 498,
+  "primitives": 2,
+  "materials": [
+    {
+      "index": 0,
+      "name": "Baked static PBR",
+      "baseColor": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "metallic": 1,
+      "roughness": 1,
+      "doubleSided": true,
+      "maps": {
+        "baseColor": true,
+        "metallicRoughness": true,
+        "normal": true,
+        "occlusion": true,
+        "emissive": false
+      },
+      "missing_for_profile": [],
+      "extensions": []
+    }
+  ],
+  "images": [
+    {
+      "index": 0,
+      "name": "normal",
+      "mime": "image/png",
+      "bytes": 2996883,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "rgba_mip_estimate_bytes": 22369621
+    },
+    {
+      "index": 1,
+      "name": "basecolor",
+      "mime": "image/png",
+      "bytes": 3130885,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "rgba_mip_estimate_bytes": 22369621
+    },
+    {
+      "index": 2,
+      "name": "orm",
+      "mime": "image/png",
+      "bytes": 2228432,
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "rgba_mip_estimate_bytes": 22369621
+    }
+  ],
+  "textures": 3,
+  "texture_memory_estimate_bytes": 67108863,
+  "extensions": [],
+  "checks": [
+    {
+      "id": "triangle-budget",
+      "status": "pass",
+      "message": "498 / 100000 三角面"
+    },
+    {
+      "id": "uv-presence",
+      "status": "pass",
+      "message": "0 个图元缺少 UV0；不代表展开质量"
+    },
+    {
+      "id": "texture-channels",
+      "status": "pass",
+      "message": "基线要求的贴图通道已绑定"
+    },
+    {
+      "id": "texture-size",
+      "status": "pass",
+      "message": "图像尺寸基线 2048"
+    },
+    {
+      "id": "artist-review",
+      "status": "unverified",
+      "message": "轮廓、拓扑流向、UV接缝、烘焙伪影和LOD切换需要人工或专门图像评测"
+    }
+  ],
+  "AAA_certified": false
+}

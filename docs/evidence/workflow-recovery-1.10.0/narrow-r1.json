@@ -1,0 +1,9 @@
+{
+  "status": "FAIL",
+  "tests": 12,
+  "errors": 10,
+  "seconds": 40.413,
+  "evidence": "initial unittest terminal output; output truncated, no complete per-test log",
+  "finding": "Recovery incorrectly required a computation receipt for the deliver action, whose original evidence is the confirmed file hash. This rejected valid recoveries.",
+  "fix": "Use the existing file-evidence path for deliver and computation receipts for plugins; do not weaken either check."
+}

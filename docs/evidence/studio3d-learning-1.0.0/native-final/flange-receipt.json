@@ -1,0 +1,443 @@
+{
+  "schema": "jarvis.studio3d.learning.receipt.v1",
+  "id": "55c5183d957e4a8889951004cfb9a28d",
+  "asset_id": "diagnostic-flange",
+  "status": "REPAIRED_DECLARED_CHECKS",
+  "version": "1.0.0",
+  "source_sha256": "a40cf4619d6f8685bc10fe4b7dc101dc23ba9784055434bcac7e5789374d2c31",
+  "contract_sha256": "1e1fa8d88be4be3879a5f69504c8f337c6650ad00c82b8e1af57070b9461ad5f",
+  "source_code_sha256": {
+    "host/studio3d_learning.py": "ba30fd6e7de8a7e3bafc63953322014df0fc6bba0ffe86cf250c544ddcb3ec21",
+    "modules/context_knowledge/studio3d_experience.py": "5725b91c514bafd17adf8b4d0f30b5f13944115101c67dcc88bb963bb4d1f099",
+    "modules/skills/studio3d/learning_contract.py": "0c519ea1fb493a500183423acb676e396875fbb8518d4243cf1b887b6875e19f",
+    "modules/skills/studio3d/experience-cards.json": "6ca223c60bda5fe5c0e40eabca22b932b4fd5df59dbeeb66ddf4e7e9f7960c30",
+    "adapters/studio3d/learning_worker.py": "6bc150758a5fbcbf8e7a4e3d5002aa9c3b50c22411413ab393839de94af13212",
+    "apps/studio3d/learning_worker.py": "ba373bf3aff430037fa40a4bcd804ba28c2c1159de24e50af4f302cd4c4094ab"
+  },
+  "retrieved_methods": [
+    {
+      "id": "remove-rejected-family",
+      "revision": 1
+    },
+    {
+      "id": "seat-declared-attachment",
+      "revision": 1
+    }
+  ],
+  "adoptions": [
+    {
+      "id": "remove-rejected-family",
+      "revision": 1,
+      "tool": "remove_rejected"
+    },
+    {
+      "id": "seat-declared-attachment",
+      "revision": 1,
+      "tool": "seat_attachment"
+    }
+  ],
+  "user_approval": false,
+  "lod_authorized": false,
+  "cross_asset_art_gain_verified": false,
+  "cost": {
+    "model_calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "api_usd": 0,
+    "authoring_tokens": null,
+    "authoring_usd": null,
+    "compute_usd": null,
+    "total_usd": null,
+    "wall_seconds": 5.308098399997107
+  },
+  "folder": "D:\\Jarvis\\user-data\\artifacts\\studio3d-learning\\55c5183d957e4a8889951004cfb9a28d",
+  "result": {
+    "schema": "jarvis.studio3d.learning.worker.v1",
+    "before": {
+      "parts": [
+        {
+          "id": "support",
+          "node": "support",
+          "motion": "fixed",
+          "motion_owner": "support",
+          "position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "triangles": 252,
+          "materials": [
+            "paint"
+          ],
+          "nonmanifold_edges": 0
+        },
+        {
+          "id": "attachment",
+          "node": "attachment",
+          "motion": "coupled",
+          "motion_owner": "support",
+          "position": [
+            0.25,
+            0.20000000298023224,
+            0.25
+          ],
+          "triangles": 188,
+          "materials": [
+            "steel"
+          ],
+          "nonmanifold_edges": 0
+        }
+      ],
+      "contacts": [
+        {
+          "part": "attachment",
+          "support": "support",
+          "sampled_surface_gap_m": 0.18000000715255737,
+          "tolerance_m": 0.002
+        }
+      ],
+      "issues": [
+        {
+          "code": "rejected_part",
+          "symptom": "rejected_parts",
+          "node": "pod-residue"
+        },
+        {
+          "code": "rejected_part",
+          "symptom": "rejected_parts",
+          "node": "rejected-pod"
+        },
+        {
+          "code": "rejected_part",
+          "symptom": "rejected_parts",
+          "node": "rejected-pod.001"
+        },
+        {
+          "code": "floating_attachment",
+          "symptom": "floating_attachment",
+          "part": "attachment",
+          "gap_m": 0.18000000715255737
+        }
+      ],
+      "passed": false,
+      "scope": "declared objects, welded audit edges and sampled vertex-to-surface distances only",
+      "unverified": [
+        "visual reference similarity",
+        "historical accuracy",
+        "intersections and support strength",
+        "material and UV quality",
+        "animation sweep collision",
+        "AAA",
+        "user high approval"
+      ]
+    },
+    "actions": [
+      {
+        "tool": "remove_rejected",
+        "changed": [
+          "pod-residue",
+          "rejected-pod",
+          "rejected-pod.001"
+        ],
+        "elapsed_seconds": 0.0025693999996292405,
+        "before_issues": 4,
+        "after_issues": 1
+      },
+      {
+        "tool": "seat_attachment",
+        "changed": [
+          {
+            "node": "attachment",
+            "before_position": [
+              0.25,
+              0.20000000298023224,
+              0.25
+            ],
+            "after_position": [
+              0.25,
+              0.2,
+              0.07
+            ]
+          }
+        ],
+        "elapsed_seconds": 0.0016369000004488043,
+        "before_issues": 1,
+        "after_issues": 0
+      }
+    ],
+    "blender": "5.2.0 LTS",
+    "source_sha256": "a40cf4619d6f8685bc10fe4b7dc101dc23ba9784055434bcac7e5789374d2c31",
+    "render_before": {
+      "front": {
+        "file": "before-front.png",
+        "sha256": "504a8a253d34c36fa87006b4190fc14942343faf7ccb4e3c2d9648c19eb333d3"
+      },
+      "rear": {
+        "file": "before-rear.png",
+        "sha256": "354a0143ed4a097cc8e0368d83e9049855ff9605ea100abf066d2c0e9717e41c"
+      },
+      "left": {
+        "file": "before-left.png",
+        "sha256": "a78d6dc1dba7c1ad554b6f332cdd8608209cdd6ddd180438be7202d679daa6cc"
+      },
+      "right": {
+        "file": "before-right.png",
+        "sha256": "437ac9b7db8164c398e2edcea74dca237f4f50820b9e302c908776030bd2be78"
+      },
+      "top": {
+        "file": "before-top.png",
+        "sha256": "78b92b2a0de09f67b11e66e82bea4a0bac165614b2279cc41fa06ff0872cf297"
+      }
+    },
+    "render_after": {
+      "front": {
+        "file": "after-front.png",
+        "sha256": "6f8832dcf09aaefd4195aec744ed6a87caf7b5528f41596f4c238d8c0048bc58"
+      },
+      "rear": {
+        "file": "after-rear.png",
+        "sha256": "060aceb4a2274f8d766fafd6818466d3cc620ab7412e7363d39d08d774bf7bbe"
+      },
+      "left": {
+        "file": "after-left.png",
+        "sha256": "7d7260932f9d6135af1fb904da274c8b92a5fc52e863e87b1f8c3ad52d1c56af"
+      },
+      "right": {
+        "file": "after-right.png",
+        "sha256": "8394a905b80bd8e8af2d80f4c65bf58b293a9c84c708e32e8fcbf2157f5cbec4"
+      },
+      "top": {
+        "file": "after-top.png",
+        "sha256": "83a7c6677da75fbf7df7be2c13b338c77de8f6010b73f22ebd49642732cb37e4"
+      }
+    },
+    "framing": {
+      "center": [
+        0.0,
+        0.0,
+        0.23499998450279236
+      ],
+      "span": 2.040000081062317
+    },
+    "after": {
+      "parts": [
+        {
+          "id": "support",
+          "node": "support",
+          "motion": "fixed",
+          "motion_owner": "support",
+          "position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "triangles": 252,
+          "materials": [
+            "paint"
+          ],
+          "nonmanifold_edges": 0
+        },
+        {
+          "id": "attachment",
+          "node": "attachment",
+          "motion": "coupled",
+          "motion_owner": "support",
+          "position": [
+            0.25,
+            0.20000000298023224,
+            0.07000000029802322
+          ],
+          "triangles": 188,
+          "materials": [
+            "steel"
+          ],
+          "nonmanifold_edges": 0
+        }
+      ],
+      "contacts": [
+        {
+          "part": "attachment",
+          "support": "support",
+          "sampled_surface_gap_m": 0.0,
+          "tolerance_m": 0.002
+        }
+      ],
+      "issues": [],
+      "passed": true,
+      "scope": "declared objects, welded audit edges and sampled vertex-to-surface distances only",
+      "unverified": [
+        "visual reference similarity",
+        "historical accuracy",
+        "intersections and support strength",
+        "material and UV quality",
+        "animation sweep collision",
+        "AAA",
+        "user high approval"
+      ]
+    },
+    "candidate_sha256": "2d60bfaf576918bc8591ffa90f6f0ccc58201c7a5707a9cc23fc3d0a77afc2c1",
+    "roundtrip": {
+      "parts": [
+        {
+          "id": "support",
+          "node": "support",
+          "motion": "fixed",
+          "motion_owner": "support",
+          "position": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "triangles": 252,
+          "materials": [
+            "paint"
+          ],
+          "nonmanifold_edges": 0
+        },
+        {
+          "id": "attachment",
+          "node": "attachment",
+          "motion": "coupled",
+          "motion_owner": "support",
+          "position": [
+            0.25,
+            0.20000000298023224,
+            0.07000000029802322
+          ],
+          "triangles": 188,
+          "materials": [
+            "steel"
+          ],
+          "nonmanifold_edges": 0
+        }
+      ],
+      "contacts": [
+        {
+          "part": "attachment",
+          "support": "support",
+          "sampled_surface_gap_m": 0.0,
+          "tolerance_m": 0.002
+        }
+      ],
+      "issues": [],
+      "passed": true,
+      "scope": "declared objects, welded audit edges and sampled vertex-to-surface distances only",
+      "unverified": [
+        "visual reference similarity",
+        "historical accuracy",
+        "intersections and support strength",
+        "material and UV quality",
+        "animation sweep collision",
+        "AAA",
+        "user high approval"
+      ]
+    },
+    "status": "REPAIRED_DECLARED_CHECKS",
+    "gltf_validation": {
+      "uri": "candidate.glb",
+      "mimeType": "model/gltf-binary",
+      "validatorVersion": "2.0.0-dev.3.10",
+      "validatedAt": "2026-10-26T19:05:14.549Z",
+      "issues": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 2,
+        "numHints": 0,
+        "messages": [
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/meshes/0/primitives/0/attributes/TEXCOORD_0"
+          },
+          {
+            "code": "UNUSED_OBJECT",
+            "message": "This object may be unused.",
+            "severity": 2,
+            "pointer": "/meshes/1/primitives/0/attributes/TEXCOORD_0"
+          }
+        ],
+        "truncated": false
+      },
+      "info": {
+        "version": "2.0",
+        "generator": "Khronos glTF Blender I/O v5.2.39",
+        "resources": [
+          {
+            "pointer": "/buffers/0",
+            "mimeType": "application/gltf-buffer",
+            "storage": "glb",
+            "byteLength": 24144
+          }
+        ],
+        "animationCount": 0,
+        "materialCount": 2,
+        "hasMorphTargets": false,
+        "hasSkins": false,
+        "hasTextures": false,
+        "hasDefaultScene": true,
+        "drawCallCount": 2,
+        "totalVertexCount": 672,
+        "totalTriangleCount": 440,
+        "maxUVs": 1,
+        "maxInfluences": 0,
+        "maxAttributes": 3
+      }
+    }
+  },
+  "candidate_usable": true,
+  "files": {
+    "after-front.png": {
+      "sha256": "6f8832dcf09aaefd4195aec744ed6a87caf7b5528f41596f4c238d8c0048bc58",
+      "bytes": 111452
+    },
+    "after-left.png": {
+      "sha256": "7d7260932f9d6135af1fb904da274c8b92a5fc52e863e87b1f8c3ad52d1c56af",
+      "bytes": 111368
+    },
+    "after-rear.png": {
+      "sha256": "060aceb4a2274f8d766fafd6818466d3cc620ab7412e7363d39d08d774bf7bbe",
+      "bytes": 111410
+    },
+    "after-right.png": {
+      "sha256": "8394a905b80bd8e8af2d80f4c65bf58b293a9c84c708e32e8fcbf2157f5cbec4",
+      "bytes": 111278
+    },
+    "after-top.png": {
+      "sha256": "83a7c6677da75fbf7df7be2c13b338c77de8f6010b73f22ebd49642732cb37e4",
+      "bytes": 125403
+    },
+    "before-front.png": {
+      "sha256": "504a8a253d34c36fa87006b4190fc14942343faf7ccb4e3c2d9648c19eb333d3",
+      "bytes": 112493
+    },
+    "before-left.png": {
+      "sha256": "a78d6dc1dba7c1ad554b6f332cdd8608209cdd6ddd180438be7202d679daa6cc",
+      "bytes": 113255
+    },
+    "before-rear.png": {
+      "sha256": "354a0143ed4a097cc8e0368d83e9049855ff9605ea100abf066d2c0e9717e41c",
+      "bytes": 112669
+    },
+    "before-right.png": {
+      "sha256": "437ac9b7db8164c398e2edcea74dca237f4f50820b9e302c908776030bd2be78",
+      "bytes": 112411
+    },
+    "before-top.png": {
+      "sha256": "78b92b2a0de09f67b11e66e82bea4a0bac165614b2279cc41fa06ff0872cf297",
+      "bytes": 127226
+    },
+    "candidate.blend": {
+      "sha256": "69373980a1d8805237b9a70e2dd31141d268559803f09d6d74efc5aafc4a547a",
+      "bytes": 100868
+    },
+    "candidate.glb": {
+      "sha256": "2d60bfaf576918bc8591ffa90f6f0ccc58201c7a5707a9cc23fc3d0a77afc2c1",
+      "bytes": 26436
+    },
+    "source.glb": {
+      "sha256": "a40cf4619d6f8685bc10fe4b7dc101dc23ba9784055434bcac7e5789374d2c31",
+      "bytes": 31128
+    }
+  }
+}

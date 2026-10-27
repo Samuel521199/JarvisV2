@@ -1,0 +1,20 @@
+flowchart TB
+  T["当前任务与约束<br/>先确认要解决什么"]
+  T --> K["检索获准且有效的资料<br/>事实 / 方法卡 / 相关反例"]
+  K --> D{"关键条件和版本<br/>真的匹配吗？"}
+  D -->|匹配且有证据| F["快路径<br/>复用方法，重取当前变量"]
+  D -->|未知或不匹配| R["复核或探索<br/>补原件，比较不同方法"]
+  F --> V["执行与检查<br/>保留真实结果、成本及失败"]
+  R --> V
+  V --> H{"有新的纠正或方法证据？"}
+  H -->|没有| W["不追加同义总结<br/>只更新必要使用记录"]
+  H -->|有| C["形成局部经验候选<br/>条件 / 原理 / 反例 / 来源"]
+  C --> Q["独立任务验证与整理<br/>合并、分支、修订或拒绝"]
+  Q --> M["可复用方法与知识视图<br/>旧结论可撤销，不是永久指令"]
+  M -.->|下次按需取用| K
+  classDef input fill:#e8effb,stroke:#7894bb,color:#19324f;
+  classDef use fill:#e6f3ee,stroke:#7ba493,color:#193b34;
+  classDef judge fill:#fff2dc,stroke:#bc9456,color:#513c1c;
+  class T,K,C,M input;
+  class F,R,V,Q,W use;
+  class D,H judge;

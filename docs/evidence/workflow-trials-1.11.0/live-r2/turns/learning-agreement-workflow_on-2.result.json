@@ -1,0 +1,81 @@
+{
+  "case_id": "learning-agreement",
+  "domain": "learning",
+  "arm": "workflow_on",
+  "turn": 2,
+  "freeze_digest": "6cc071169f4fdcc13865485eb587313ffcbbefdc9dc6b35076d6390c18412b57",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\"independent_mastery\": false, \"retry_completed\": false, \"delayed_test\": null, \"observed_error\": \"subject_verb_agreement\", \"next_step\": \"下次先独立完成主谓一致重试题：The wheels ___ (turn/turns) fast. 并观察复数主语动词形式。\"}",
+  "skill_id": "english-coach",
+  "skill_version": "1.0.0",
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 4.4296,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 105,
+        "prompt_tokens": 1352,
+        "total_tokens": 1457
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.00140775,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/learning-agreement-workflow_on-2.reply.md",
+      "sha256": "d64dd2e4e3ad442544ea3dd24966a789c272a5eb90aa6e475b5eb1b6e3201608",
+      "kind": "original_session_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "independent_mastery",
+        "status": "passed"
+      },
+      {
+        "id": "retry_completed",
+        "status": "passed"
+      },
+      {
+        "id": "delayed_test",
+        "status": "passed"
+      },
+      {
+        "id": "observed_error",
+        "status": "passed"
+      },
+      {
+        "id": "next_step_present",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "record_digest": "451e3a7a7d937f30704bdcfcffbabae66bdb0f30120bfa2dcfc0804608ced22b"
+}

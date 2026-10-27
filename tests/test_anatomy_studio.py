@@ -11,7 +11,7 @@ from sdk.protocol import CoreError,canonical
 
 class FakeDialogue:
  def __init__(self,root,status='SUCCEEDED',text=None):self.root=root;self.status=status;self.text=text;self.calls=0
- def submit(self,c):
+ def submit_background(self,c):
   self.calls+=1;s=Dialogues(self.root)
   try:
    s.begin(c,[]);s.start_attempt(c['request_id'],{'id':'fixture','model':'fake','billing_profile':None})

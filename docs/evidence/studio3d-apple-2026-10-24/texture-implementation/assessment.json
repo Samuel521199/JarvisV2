@@ -1,0 +1,130 @@
+{
+  "adapter": "1.6.0",
+  "date": "2026-10-24",
+  "reference_id": "ef4b78387783404ca25efc1bb839e4bb",
+  "albedo_id": "f71edf4c59ad4f5b86b5a98e7f42c60a",
+  "high_id": "06e6c19241554449beab73881c0ae524",
+  "low_id": "1477949a9b4a4251a7282c95fb71c88c",
+  "high_triangles": 120148,
+  "low_triangles": [
+    990,
+    472,
+    228
+  ],
+  "model_calls_this_revision": 0,
+  "imagegen_calls": 1,
+  "generated_albedo_resolution": [
+    1774,
+    887
+  ],
+  "baked_resolution": [
+    2048,
+    2048
+  ],
+  "high_resources": {
+    "cpu_seconds": 1200,
+    "elapsed_seconds": 54.98021870000002,
+    "exit_code": 0,
+    "isolation": "Trusted fixed first-party worker with resource Job; not an OS security sandbox. No model Python, external imports or external BLEND loading. Only host-hash-verified first-party masters load with scripts disabled.",
+    "memory_bytes": 4294967296,
+    "output_bytes": 268435456,
+    "peak_memory_bytes": 2219520000,
+    "threads": 4,
+    "wall_seconds": 300
+  },
+  "low_resources": {
+    "cpu_seconds": 1200,
+    "elapsed_seconds": 79.04942340000025,
+    "exit_code": 0,
+    "isolation": "Trusted fixed first-party worker with resource Job; not an OS security sandbox. No model Python, external imports or external BLEND loading. Only host-hash-verified first-party masters load with scripts disabled.",
+    "memory_bytes": 4294967296,
+    "output_bytes": 268435456,
+    "peak_memory_bytes": 2789707776,
+    "threads": 4,
+    "wall_seconds": 300
+  },
+  "coverage": [
+    {
+      "method": "7 smooth-cage barycentric rays per sampled triangle, max8192 samples; not per-texel proof",
+      "miss_fraction": 0.0,
+      "misses": 0,
+      "samples": 6930
+    },
+    {
+      "method": "7 smooth-cage barycentric rays per sampled triangle, max8192 samples; not per-texel proof",
+      "miss_fraction": 0.0,
+      "misses": 0,
+      "samples": 3304
+    },
+    {
+      "method": "7 smooth-cage barycentric rays per sampled triangle, max8192 samples; not per-texel proof",
+      "miss_fraction": 0.0012531328320802004,
+      "misses": 2,
+      "samples": 1596
+    }
+  ],
+  "format_validation": {
+    "model-lod1.glb": {
+      "messages": [],
+      "numErrors": 0,
+      "numHints": 0,
+      "numInfos": 0,
+      "numWarnings": 0,
+      "truncated": false
+    },
+    "model-lod2.glb": {
+      "messages": [],
+      "numErrors": 0,
+      "numHints": 0,
+      "numInfos": 0,
+      "numWarnings": 0,
+      "truncated": false
+    },
+    "model.glb": {
+      "messages": [],
+      "numErrors": 0,
+      "numHints": 0,
+      "numInfos": 0,
+      "numWarnings": 0,
+      "truncated": false
+    }
+  },
+  "fixes": [
+    "Reference-inspired generated unlit albedo, kept separate from authored roughness and micro normal.",
+    "Arc-length SurfaceUV for the high lathe instead of height projection.",
+    "Independent high-to-low UV, basecolor, normal and ORM bake for every project LOD.",
+    "4mm cage for this apple, denser smooth-cage coverage samples and selected-LOD diagnostics.",
+    "Regular organic lathe rings snapped to high surface replace irregular collapse triangles on the body.",
+    "Blender import merges compatible coincident vertices; this alone did not resolve the crown artifact."
+  ],
+  "visual_review": {
+    "renderer": "Blender 5.2 Cycles, GLB reimport with merge_vertices=True, 640 square,16 samples",
+    "views_per_lod": [
+      0,
+      90,
+      180,
+      270
+    ],
+    "lod0": "Prior black patches and thin crown shadow seam not observed in four reviewed views; limited visual pass.",
+    "lod1": "No large black patches in four reviewed views; some silhouette simplification.",
+    "lod2": "Extreme reduction comparison only: visibly polygonal silhouette, 2/1596 coverage misses, not production accepted.",
+    "browser": "No new browser visual test in this revision: browser-control tool unavailable after interruption. JavaScript syntax and local HTTP inspections checked separately."
+  },
+  "quality": {
+    "AAA_certified": false,
+    "reference_match": "needs_revision",
+    "remaining": [
+      "Generated pigment is approximate, not measured de-lighting.",
+      "Lenticels too large/contrasty in places, wax flecks too pale, stem end too simple.",
+      "Crown UV density and extreme LOD distortion remain imperfect.",
+      "Hidden surface invented; bottom/target-engine performance not fully reviewed."
+    ]
+  },
+  "failed_candidates": {
+    "texture-low": "1.5mm projection left black patches; retained for diagnosis.",
+    "texture-low-cage / texture-low-final / texture-delivery": "4mm removed large black patches, but collapse LOD0 retained a fine crown shading seam.",
+    "import-merge hypothesis": "Early single-view improvement did not generalize; normal and ORM ablations did not remove it. Ring retopology removed it in the reviewed four views."
+  },
+  "evidence": "lod-review-rings/review-inputs.json",
+  "post_run_change": "After the ring run started, eligibility was restricted to lathe declarations without boolean difference or shell thickness. This apple has neither; the artifact receipt retains the executed source hash. Exclusion of modified lathe sources is source-reviewed, not a new native boolean test."
+}

@@ -1,0 +1,132 @@
+{
+  "status": "verified_with_limits",
+  "date": "2026-10-23",
+  "project_version": "0.1.0",
+  "adapter_version": "5.1.0",
+  "live_pid": 51008,
+  "url": "http://127.0.0.1:18282/api/anatomy/artifacts/ca93164eedab48a6b32a50713befb718",
+  "parts": 32,
+  "subassemblies": 5,
+  "python": {
+    "total": 268,
+    "seconds": 199.916,
+    "failures": 0
+  },
+  "anatomy_python": {
+    "total": 36,
+    "seconds": 20.95,
+    "failures": 0
+  },
+  "browser_vehicle": {
+    "checks": 12,
+    "status": "passed"
+  },
+  "browser_legacy": {
+    "checks": 9,
+    "status": "passed",
+    "evidence": "../anatomy-engineering-2026-10-23/vehicle-legacy-live-2/browser.json"
+  },
+  "native_checks": {
+    "interference_status": "clear_at_static_pose",
+    "collisions": [],
+    "narrow_phase_pairs": 48,
+    "step_roundtrip_relative_volume_error": 1.0524370927403453e-14,
+    "step_roundtrip_bounds_error_mm": 1.4210854715202004e-14,
+    "total_mass_kg": 1.2218817270612132,
+    "limits": "静态装配姿态 B-rep 体积交集检查；不证明运动全过程或装配插入路径无碰撞。配合检查为名义尺寸，未含制造公差。轴承滚道/螺纹/预紧为简化。",
+    "insertion": {
+      "status": "clear_at_sampled_poses",
+      "samples_per_step": 7,
+      "narrow_phase_pairs": 73,
+      "hits": [],
+      "limits": "按声明的直线插入方向、距离和父先子后步骤，在每步7个时刻检查已安装零件；离散采样可能漏过薄障碍物或采样间穿透，不是连续碰撞/扫掠体证明。"
+    },
+    "plan_candidate": null,
+    "groups": {
+      "status": "clear_at_sampled_poses",
+      "hits": [],
+      "samples_per_group": 7,
+      "narrow_phase_pairs": 9,
+      "limits": "子总成以同一刚体平移，逐组检查已安装总成；内部零件相对位置不变。未检查连续扫掠路径。分组内部逐件装配另见 insertion。",
+      "parallel_internal": {
+        "status": "clear_at_sampled_poses",
+        "hits": [],
+        "samples_per_batch": 7,
+        "moving_pair_checks": 0,
+        "limits": "独立子总成工位内，每批次7时刻检查移动零件间及前序已装件；批内同时、批间顺序。不含其他总成或连续路径。"
+      }
+    },
+    "operation": {
+      "status": "clear_at_sampled_poses",
+      "hits": [],
+      "poses": 9,
+      "narrow_phase_pairs": 285,
+      "limits": "仅 -max/0/+max 转向与 0/45/90 度同相车轮的9个 B-rep 姿态；未穷举独立轮相位、转角、连续轨迹、轮胎接触和动力学。"
+    }
+  },
+  "resources": {
+    "peak_process_memory_bytes": 154054656,
+    "peak_job_memory_bytes": 156069888,
+    "elapsed_seconds": 2.4076299000007566,
+    "wall_limit_seconds": 45,
+    "process_cpu_limit_seconds": 30,
+    "job_memory_limit_bytes": 1073741824,
+    "active_process_limit": 2,
+    "output_quota_bytes": 67108864,
+    "isolation": "Trusted fixed native factories; resource job only, not LPAC security isolation"
+  },
+  "cross_language_transform_abs_tolerance": 1e-09,
+  "model": {
+    "submissions": 1,
+    "provider": "vertex",
+    "model": "gemini-3.8-flash",
+    "evidence": "google-review.json",
+    "technical_score": 7.25,
+    "visual_score": null,
+    "stored_rate_estimate_USD": 0.0033225
+  },
+  "skill_catalog_version_checked": "5.1.0",
+  "source_sha256": {
+    "modules/skills/anatomy/engineering_model.py": "cb800c7909fa5bee0ab6207ca5b8fad89c70b2eaf00ec28c1e5f1dd84a2e3f13",
+    "modules/skills/anatomy/engineering-motion.mjs": "de602a202ea16de5ff023f005a0536e1f861bc8f97c38a12c1a0e088be6875cc",
+    "modules/skills/anatomy/engineering-view.js": "fbea5a38d8f822007060809f4149f4df4d1c39b430622c6b892591bd4e972e08",
+    "modules/skills/anatomy/engineering-contract.json": "99b5e0b83db6e571b16c6ebea70a0348d0c6cb46cbd2c49860ba13c84b64191a",
+    "modules/skills/anatomy/engineering-presets.json": "5b19e232b14dfa1227b0ec6101a6b8b0b11a3dd9f170c67aaef6e496d8711434",
+    "adapters/engineering/worker.py": "a005399bac72dc5ea1d9478ef128442b82c28d188aba40afb157baa760a82ef0",
+    "host/anatomy_engineering.py": "b16b3a19ae8ff83dc99e3049d12025029290decc4a61ea747d03ebda2bd35a79",
+    "host/anatomy_composer.py": "b48cc99d9714285e66553373ab222477d5682e98b0902839b2aeaae42a53bf1c",
+    "apps/workbench/settings-anatomy.js": "bce34ebe487306f10949919dcf5fcf7758190d5c779eca16aba5cc0fdfd0cdb6",
+    "seed/skills/conversation.json": "a0615bfee0d4318b5bac3ebbf4d907bc85da5ef76aac257d7b2956a1b22e3b29"
+  },
+  "limits": [
+    "理想差速分配替代内部齿轮；未建模真实转向拉杆与悬架。",
+    "运转为架空台架运动学演示，车身保持静止；未模拟路面接触、轮胎变形、动力学与载荷。",
+    "仅离散姿态碰撞采样；不是连续碰撞、公差或制造认证。",
+    "No drag/snap assembly trainer; changing scope restores completed inspection pose",
+    "No arbitrary-vehicle topology solver or generalized mate dynamics",
+    "Nine co-phased motion samples do not cover independent phase continuum"
+  ],
+  "initial_failures_retained": [
+    "initial-native.json",
+    "native-v2.json",
+    "../anatomy-engineering-2026-10-23/vehicle-legacy-live/browser.json"
+  ],
+  "runtime_reload": "Normal reload after checking no active calls, turns, tasks or download; no approval rejection this turn",
+  "documentation_checks": {
+    "navigation": "passed; 2 generated navigation files updated",
+    "documents": 26,
+    "chapters": 23,
+    "diagrams": 39,
+    "local_links": 2233,
+    "errors": 0
+  },
+  "architecture_check": {
+    "python_files": 99,
+    "errors": []
+  },
+  "temporary_service": {
+    "port": 18283,
+    "stopped": true,
+    "live_port_18282_pid": 51008
+  }
+}

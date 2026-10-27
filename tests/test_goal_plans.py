@@ -33,6 +33,30 @@ def proposal(text='Jarvis 中文',chain=False):
 
 
 class GoalPlans(unittest.TestCase):
+    def test_frozen_acceptance_closes_goal_and_rejects_changed_reapproval(self):
+        ident=self.create();self.plan(ident);revision=self.detail(ident)['plan']['revision']
+        rules={'coverage':'complete','criteria':[{'id':'uppercase','step_id':'step-1','check':'text_equals','expected':'JARVIS 中文'}],
+               'requirements':[{'id':'literal-output','text':'结果原样等于 JARVIS 中文','kind':'literal','criterion_ids':['uppercase']}]}
+        request={'action':'approve','id':ident,'revision':revision,'acceptance':rules}
+        tid=goals.command(self.root,request)['task_id'];self.core.run_task(tid)
+        detail=self.detail(ident)
+        self.assertEqual(detail['completion']['state'],'VERIFIED')
+        self.assertEqual(detail['completion']['condition_score'],100)
+        self.assertEqual(goals.command(self.root,request)['task_id'],tid)
+        changed={**rules,'criteria':[{**rules['criteria'][0],'expected':'changed'}]}
+        self.code('conflict',goals.command,self.root,{**request,'acceptance':changed})
+
+    def test_wrong_result_condition_prevents_quality_closure_and_memory_promotion(self):
+        from host import memory
+        from host.completion import refresh
+        ident=self.create();self.plan(ident)
+        rules={'coverage':'complete','criteria':[{'id':'expected','step_id':'step-1','check':'text_equals','expected':'wrong expected result'}]}
+        tid=goals.command(self.root,{'action':'approve','id':ident,'revision':self.detail(ident)['plan']['revision'],'acceptance':rules})['task_id']
+        self.core.run_task(tid)
+        self.assertEqual(self.core.tasks.get(tid)['status'],'SUCCEEDED')
+        self.assertEqual(refresh(self.core,tid)['state'],'NEEDS_CORRECTION')
+        self.code('memory_source_changed',memory.goal_source,self.root,ident)
+
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory(prefix='jarvis-goal-');self.root=Path(self.temp.name)
         self.core=Core.initialize(self.root)

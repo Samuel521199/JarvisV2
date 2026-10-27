@@ -1,0 +1,402 @@
+{
+  "request": {
+    "id": "f1eb820b8dc447719e41497782817c0f",
+    "preset": "projection-coupon"
+  },
+  "origin": "http://127.0.0.1:18283",
+  "paid_model_calls": 0,
+  "accepted": {
+    "existing": false,
+    "id": "f1eb820b8dc447719e41497782817c0f"
+  },
+  "job": {
+    "cancel": 0,
+    "chat_id": null,
+    "created": 1792777791.7647266,
+    "error": null,
+    "id": "f1eb820b8dc447719e41497782817c0f",
+    "phase": "已交付可编辑模型、渲染与检查回执",
+    "receipt": {
+      "adapter_version": "1.3.0",
+      "configuration": {
+        "materials": [
+          {
+            "coat": 0,
+            "color": "#28525a",
+            "id": "paint",
+            "metallic": 0,
+            "roughness": 0.6,
+            "transmission": 0
+          },
+          {
+            "coat": 0,
+            "color": "#898d90",
+            "id": "steel",
+            "metallic": 1,
+            "roughness": 0.3,
+            "transmission": 0
+          }
+        ],
+        "objects": [
+          {
+            "id": "plate",
+            "kind": "box",
+            "material": "paint",
+            "modifiers": {
+              "bevel": 0.003,
+              "bevel_segments": 8
+            },
+            "params": {
+              "size": [
+                1,
+                0.7,
+                0.08
+              ]
+            },
+            "position": [
+              0,
+              0,
+              0.1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "shading": "flat"
+          },
+          {
+            "bake_target": "plate",
+            "id": "rivet",
+            "kind": "lathe",
+            "material": "steel",
+            "modifiers": {},
+            "params": {
+              "profile": [
+                [
+                  0.035,
+                  -0.006
+                ],
+                [
+                  0.05,
+                  -0.003
+                ],
+                [
+                  0.055,
+                  0.003
+                ],
+                [
+                  0.05,
+                  0.006
+                ],
+                [
+                  0.001,
+                  0.006
+                ]
+              ],
+              "segments": 64
+            },
+            "position": [
+              -0.2,
+              0,
+              0.145
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "shading": "smooth"
+          },
+          {
+            "bake_target": "plate",
+            "id": "seam",
+            "kind": "curve",
+            "material": "steel",
+            "modifiers": {},
+            "params": {
+              "points": [
+                [
+                  0.05,
+                  -0.2,
+                  0.142
+                ],
+                [
+                  0.08,
+                  0,
+                  0.142
+                ],
+                [
+                  0.05,
+                  0.2,
+                  0.142
+                ]
+              ],
+              "radius": 0.008
+            },
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "render": {
+          "engine": "CYCLES",
+          "exposure": -1,
+          "quality": "preview",
+          "view": "front"
+        },
+        "schema": "jarvis.studio3d.v1",
+        "title": "硬表面投射校准板",
+        "unfulfilled": [
+          "投射校准用平板；非成品资产或AAA认证。"
+        ],
+        "units": "m"
+      },
+      "files": {
+        "model.blend": {
+          "bytes": 105889,
+          "sha256": "81c51ddbfc4e8549a7ed245ba303067f14c29554afbaed5bbc432ff45c844d15",
+          "url": "/api/studio3d/files/f1eb820b8dc447719e41497782817c0f/model.blend"
+        },
+        "model.glb": {
+          "bytes": 98180,
+          "sha256": "d700f186d81a0386920de396d8922a082058d7a22ceaceb899158368cefe3c61",
+          "url": "/api/studio3d/files/f1eb820b8dc447719e41497782817c0f/model.glb"
+        },
+        "preview.png": {
+          "bytes": 546041,
+          "sha256": "4500e32d597ca2d061d8fba061349cf65ecb5170bf72164dd70637e263ac0f67",
+          "url": "/api/studio3d/files/f1eb820b8dc447719e41497782817c0f/preview.png"
+        },
+        "report.json": {
+          "bytes": 2227,
+          "sha256": "652eaba0ab1d2050498db4071ec741c34b18254ca09a00eb81d4fda2e6af32df",
+          "url": "/api/studio3d/files/f1eb820b8dc447719e41497782817c0f/report.json"
+        },
+        "scene.json": {
+          "bytes": 1128,
+          "sha256": "688ddf4b3771355869aaf69d2bbdbf3550b7397ed8f4ee9143dee71c0f35a473",
+          "url": "/api/studio3d/files/f1eb820b8dc447719e41497782817c0f/scene.json"
+        }
+      },
+      "frozen_master": null,
+      "id": "f1eb820b8dc447719e41497782817c0f",
+      "input_asset": null,
+      "model_receipt": null,
+      "quality": {
+        "AAA_certified": false,
+        "mechanical_validation": false,
+        "status": "visual_asset_export_checked",
+        "visual_score": null
+      },
+      "reference": null,
+      "report": {
+        "blender": "5.2.0 LTS",
+        "bounds_m": [
+          [
+            -0.5,
+            -0.3499999940395355,
+            0.06000000238418579
+          ],
+          [
+            0.5,
+            0.3499999940395355,
+            0.1509999930858612
+          ]
+        ],
+        "elapsed_seconds": 7.430817299999035,
+        "glb_roundtrip": {
+          "bounds_m": [
+            [
+              -0.5,
+              -0.3499999940395355,
+              0.06000000238418579
+            ],
+            [
+              0.5,
+              0.3499999940395355,
+              0.1509999930858612
+            ]
+          ],
+          "max_bound_error_m": 0.0,
+          "mesh_objects": 3,
+          "passed": true
+        },
+        "gltf_validation": {
+          "files": {
+            "model.glb": {
+              "info": {
+                "animationCount": 0,
+                "drawCallCount": 3,
+                "generator": "Khronos glTF Blender I/O v5.2.39",
+                "hasDefaultScene": true,
+                "hasMorphTargets": false,
+                "hasSkins": false,
+                "hasTextures": false,
+                "materialCount": 2,
+                "maxAttributes": 3,
+                "maxInfluences": 0,
+                "maxUVs": 1,
+                "resources": [
+                  {
+                    "byteLength": 95080,
+                    "mimeType": "application/gltf-buffer",
+                    "pointer": "/buffers/0",
+                    "storage": "glb"
+                  }
+                ],
+                "totalTriangleCount": 1964,
+                "totalVertexCount": 2603,
+                "version": "2.0"
+              },
+              "issues": {
+                "messages": [
+                  {
+                    "code": "UNUSED_OBJECT",
+                    "message": "This object may be unused.",
+                    "pointer": "/meshes/0/primitives/0/attributes/TEXCOORD_0",
+                    "severity": 2
+                  },
+                  {
+                    "code": "UNUSED_OBJECT",
+                    "message": "This object may be unused.",
+                    "pointer": "/meshes/1/primitives/0/attributes/TEXCOORD_0",
+                    "severity": 2
+                  },
+                  {
+                    "code": "UNUSED_OBJECT",
+                    "message": "This object may be unused.",
+                    "pointer": "/meshes/2/primitives/0/attributes/TEXCOORD_0",
+                    "severity": 2
+                  }
+                ],
+                "numErrors": 0,
+                "numHints": 0,
+                "numInfos": 3,
+                "numWarnings": 0,
+                "truncated": false
+              },
+              "mimeType": "model/gltf-binary",
+              "uri": "model.glb",
+              "validatedAt": "2026-10-23T17:50:00.218Z",
+              "validatorVersion": "2.0.0-dev.3.10"
+            }
+          },
+          "implementation": "Khronos glTF-Validator",
+          "version": "2.0.0-dev.3.10"
+        },
+        "objects": [
+          {
+            "id": "plate",
+            "triangles": 972,
+            "uv": true,
+            "vertices": 488,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "rivet",
+            "triangles": 512,
+            "uv": true,
+            "vertices": 320,
+            "zero_area_faces": 0
+          },
+          {
+            "id": "seam",
+            "triangles": 480,
+            "uv": true,
+            "vertices": 250,
+            "zero_area_faces": 0
+          }
+        ],
+        "orthographic_views": [],
+        "render": {
+          "device": "CPU",
+          "engine": "CYCLES",
+          "requested_engine": "CYCLES",
+          "resolution": [
+            960,
+            640
+          ],
+          "samples": 24
+        },
+        "schema": "jarvis.studio3d.report.v1",
+        "triangles": 1964,
+        "unverified": [
+          "OEM mechanical accuracy",
+          "manufacturing",
+          "production topology",
+          "UV quality",
+          "baked PBR textures",
+          "LODs",
+          "engine performance"
+        ],
+        "visible_objects": 3,
+        "warnings": [
+          "GLB contains base PBR; procedural bump detail stays in Blender/render.",
+          "Automatic UV presence is not UV quality certification."
+        ]
+      },
+      "resources": {
+        "cpu_seconds": 1200,
+        "elapsed_seconds": 8.269425599999522,
+        "exit_code": 0,
+        "isolation": "Trusted fixed first-party worker with resource Job; not an OS security sandbox. No model Python, external imports or blend loading.",
+        "memory_bytes": 4294967296,
+        "output_bytes": 268435456,
+        "peak_memory_bytes": 986316800,
+        "threads": 4,
+        "wall_seconds": 300
+      },
+      "runtime": {
+        "executable_sha256": "e27fbfea8564aa645d4463cb0949695fd85562b9de6df9561b06859a1074adf7",
+        "license": "GPL-2.0-or-later",
+        "source": "https://www.blender.org/",
+        "version": "Blender 5.2.0 LTS"
+      },
+      "skill": "studio3d",
+      "source_sha256": {
+        "adapters/studio3d/asset_pipeline.py": "d41273f361c26f8fdc7da9b242ede1c46d51a05745e4efd5ff28630b268f22f1",
+        "adapters/studio3d/projection.py": "40c5c9b5e02e5c1f7183f5a6d42326f978673cf27dcaa94df08dd3a00f5b0328",
+        "adapters/studio3d/worker.py": "60487d9420df69ba9f10e1270b8bcf4ae6401f877ed90123bb4e0b935c17e294",
+        "apps/studio3d/worker.py": "60af564595dab82acf3118ba581e5bc6b71b738c60ecf32a66c5d5cf36e3c4db",
+        "host/studio3d.py": "21b156f40ca75084684dce6058acc875537fe27ae7b570f0c182d2930149e069",
+        "host/studio3d_reference.py": "43b915ff84901976001887365fff38c31a10d016c6cc6b5b9d28f3c63df9b2c0",
+        "modules/skills/studio3d/assets.py": "aab01d79fbbf94305054311c8ff1031a85dee37e64cd6e77c1d42d0bacfd6526",
+        "modules/skills/studio3d/contract.py": "702e6fed14bd77296c4c0242a4323feef1bb8476b1697cdf4e48ac4bc4d498e2",
+        "modules/skills/studio3d/presets.py": "f7d18d601f36920cff52d3f26fe21cd943ad1a63fc14ad91decdd78e4865b3a4",
+        "modules/skills/studio3d/production.py": "f65ef9295716013e1e9fd297b77f09e1b2d7f5d4aa8f000a3daecf804a28ac52",
+        "modules/skills/studio3d/runtime.json": "324a7e1d9f2d080516390dce93322e80692264db399a7d8d5d72cebe676e7d3e",
+        "modules/skills/studio3d/tracked_vehicle.py": "24716810b044cf85d4cb497e9330da2bccd5d9437afe6c891da83908f60566f8"
+      },
+      "title": "硬表面投射校准板",
+      "unfulfilled": [
+        "投射校准用平板；非成品资产或AAA认证。"
+      ],
+      "url": "/api/studio3d/view/f1eb820b8dc447719e41497782817c0f"
+    },
+    "status": "DELIVERED",
+    "turn_id": null
+  }
+}

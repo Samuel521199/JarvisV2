@@ -1,0 +1,75 @@
+{
+  "origin": "http://127.0.0.1:18282",
+  "reference": {
+    "bytes": 2457554,
+    "id": "ef4b78387783404ca25efc1bb839e4bb",
+    "license": "Owner-requested AI generated reference for this original asset study",
+    "mode": "Visual guidance; no automatic image-to-mesh or vision-model call",
+    "name": "apple-reference.png",
+    "provenance_verified": false,
+    "resolution": [
+      1254,
+      1254
+    ],
+    "sha256": "35d9f97952e2d4046734c9511f1a9938f46300c879c180b548ec2919aaff3d8e",
+    "source": "Codex built-in image_gen, owner requested 2026-10-24; generated reference, not real photo"
+  },
+  "request": {
+    "id": "7e4a45adefcd45c890d10930c1b170a5",
+    "prompt": "请实际观察随本次消息发送的苹果参考图，再规划一个可编辑的写实苹果高模母版。目标为高质量游戏道具候选，几何约5万到15万三角面，先只制作高模，之后再减面到1000以内并投射烘焙。不是参考图贴在平面上。图中只有完整红苹果和短果柄，没有叶片。观察形状、果皮色彩、顶部凹窝、果柄比例并在description描述观察结论；背面不可见须在unfulfilled中说明。\n用现有DATA契约表达：果实体用lathe，profile按底部中心附近→底部凹窝→腹部→肩部→顶部凹窝中心附近的连续剖面顺序，形状来自图片。用28至36个不重复的profile采样点、128周向segments、subdivision=2，为真实曲面和凹窝提供采样；caps=true封闭两端。lobes=5，lobe_depth与asymmetry适度，保留自然不对称。radius与z单位米，真实苹果约8至9cm宽。避免底部尖锥、顶部空洞和过深穿通。\n果皮使用detail=fruit_skin，按图选择color主红色、secondary_color黄斑色、streak_strength条纹覆盖率、speckle_density细点尺度、roughness粗糙度。metallic=0，coat=0（后续低模流程暂不保留清漆，靠粗糙度表现蜡质）。果柄用有caps的细lathe，短而略斜，棕色detail=bark；果柄可做多个半径采样和轻微不对称，但避免悬空和过粗。果实与果柄分别命名，优先只用2至3对象。微孔由材质表达，不能增加无意义隐藏几何凑面数。\nrender用CYCLES、quality=final、view=front、five_views=false、exposure=-0.6。仅输出合法scene JSON，不含任何路径、脚本、asset_pipeline或reference字段。不要宣称已达到AAA或照片级精确重建。\n",
+    "provider": "vertex",
+    "model": "gemini-4-argon",
+    "reference": "ef4b78387783404ca25efc1bb839e4bb",
+    "vision_reference": true
+  },
+  "paid_calls_requested": 1,
+  "accepted": {
+    "existing": false,
+    "id": "7e4a45adefcd45c890d10930c1b170a5"
+  },
+  "job": {
+    "cancel": 0,
+    "chat_id": "chat-846a2338b31245bc807c2e109157b76f",
+    "created": 1792800844.2000148,
+    "error": "studio3d_invalid",
+    "id": "7e4a45adefcd45c890d10930c1b170a5",
+    "phase": "没有自动重试",
+    "receipt": null,
+    "status": "FAILED",
+    "turn_id": "studio3d-7e4a45adefcd45c890d10930c1b170a5"
+  },
+  "usage": [
+    {
+      "billing": {
+        "amount": 0.034468,
+        "currency": "USD",
+        "price": {
+          "cache_read": 0.2,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 4,
+          "max_input_tokens": 1000000,
+          "output": 20,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        "reason": "token_rates"
+      },
+      "connection_label": "Google Vertex",
+      "created": 1792800844.260277,
+      "error": null,
+      "id": 30,
+      "key_label": "原有凭据 · v1",
+      "model": "gemini-4-argon",
+      "provider": "vertex",
+      "status": "SUCCEEDED",
+      "turn_id": "studio3d-7e4a45adefcd45c890d10930c1b170a5",
+      "usage": {
+        "completion_tokens": 1201,
+        "prompt_tokens": 2612,
+        "total_tokens": 3813
+      }
+    }
+  ]
+}

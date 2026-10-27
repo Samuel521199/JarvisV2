@@ -1,0 +1,107 @@
+{
+  "case_id": "learning-single-answer-limit",
+  "domain": "learning",
+  "arm": "workflow_on",
+  "turn": 0,
+  "freeze_digest": "ec010b94b1fadab51945c09363031d51bf804e0179d248577ddbcee1967da01d",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\"independent_answers\":0,\"delayed_retention\":null,\"goal\":\"主谓一致专项练习与掌握\",\"actual_content\":\"主谓一致练习题1道（提示后答对）\",\"evidence_of_performance\":\"学习者在提示后答对一道主谓一致题\",\"errors_and_corrections\":\"提示前未独立答对，经提示后修正完成\",\"points_to_consolidate\":\"主谓一致独立应用规则\",\"next_step_suggestions\":\"在无提示环境下重试同类主谓一致题目\",\"evidence\":{\"facts\":[{\"source\":\"F1\",\"quote\":\"学习者在提示后答对一道主谓一致题。\"}],\"plans\":[{\"source\":\"P1\",\"quote\":\"下周五20点进行不提示的延迟复测。\"}],\"suggestions\":[\"复测前可自行回顾主谓一致核心规则\"]},\"document\":\"## 事实\\n- [F1] 学习者在提示后答对一道主谓一致题。\\n\\n## 已确认计划\\n- [P1] 下周五20点进行不提示的延迟复测。\\n\\n## 建议（未采纳）\\n- 复测前可自行回顾主谓一致核心规则\"}",
+  "skill_id": "english-coach",
+  "skill_version": "1.0.0",
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 5.9626,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 305,
+        "prompt_tokens": 1569,
+        "total_tokens": 1874
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.0023205,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/learning-single-answer-limit-workflow_on-0.native.json",
+      "sha256": "babe1596586090c5176883f69c853faa608684b13323b160f8fe95c74503fccb",
+      "kind": "native_protocol_response"
+    },
+    {
+      "file": "artifacts/learning-single-answer-limit-workflow_on-0.reply.md.txt",
+      "sha256": "34b4f5a9ddb7f632b165eaa238c7631b380ef9f6076b55022215c47d35d6d7f2",
+      "kind": "original_session_reply"
+    },
+    {
+      "file": "artifacts/learning-single-answer-limit-workflow_on-0.document.md.txt",
+      "sha256": "56909ece512d6f07bc40f0b6a128d22e6a192dfcc96a0fc2886a02dd3eaa8e2d",
+      "kind": "verbatim_document_field_from_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "independent_answers",
+        "status": "passed"
+      },
+      {
+        "id": "delayed_retention",
+        "status": "passed"
+      },
+      {
+        "id": "document_present",
+        "status": "passed"
+      },
+      {
+        "id": "body_shape",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_document_parity",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "record_digest": "9b9d7ecd3ab1b1d2c2c4b6101f2667c99efe3c924a3534ab619c2014e8fa05c4"
+}

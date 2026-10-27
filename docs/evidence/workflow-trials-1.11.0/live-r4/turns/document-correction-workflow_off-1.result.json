@@ -1,0 +1,91 @@
+{
+  "case_id": "document-correction",
+  "domain": "documents",
+  "arm": "workflow_off",
+  "turn": 1,
+  "freeze_digest": "cc702145676756cbfaa7cb3b0a06842f622595011a6ec056120028630ebc2879",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\"document\":\"# 研发日报\\n\\n**日期**：2026-10-27\\n\\n### 今日进展\\n- 技术资料阅读：耗时 15 分钟（更正说明：根据 S2 更正，实际阅读时长由 20 分钟更正为 15 分钟）\\n- 模型渲染：已完成\\n- 贴图烘焙：尚未开始（更正说明：根据 S2 更正，贴图烘焙状态由失败更正为尚未开始）\\n\\n### 明日计划\\n- 排查贴图烘焙相关事宜\",\"minutes\":15,\"render\":\"done\",\"bake\":\"not_started\",\"sources\":[\"S1\",\"S2\"]}",
+  "skill_id": null,
+  "skill_version": null,
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 5.1017,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 197,
+        "prompt_tokens": 1011,
+        "total_tokens": 1208
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.001497,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/document-correction-workflow_off-1.native.json",
+      "sha256": "69c0a0cd90fcbe22f9d0ad07f8bd6c889108783b50f31d468571715bea5d5dc5",
+      "kind": "native_protocol_response"
+    },
+    {
+      "file": "artifacts/document-correction-workflow_off-1.reply.md.txt",
+      "sha256": "64c72660063bf730bb3f53c99bc976b9519968c14a70aec2c0805f2aa5c41ea7",
+      "kind": "original_session_reply"
+    },
+    {
+      "file": "artifacts/document-correction-workflow_off-1.document.md.txt",
+      "sha256": "c4f2b251ff938558466e594371a5d8db62b86ac52e1b3400ca0a0c012d386679",
+      "kind": "verbatim_document_field_from_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "minutes",
+        "status": "passed"
+      },
+      {
+        "id": "render",
+        "status": "passed"
+      },
+      {
+        "id": "bake",
+        "status": "passed"
+      },
+      {
+        "id": "sources",
+        "status": "passed"
+      },
+      {
+        "id": "document_present",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "record_digest": "9ca5e23b3444edfb04eae271af46bc5811ce49b7d76c9f482fb4b513280e4e33"
+}

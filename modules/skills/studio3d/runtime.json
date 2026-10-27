@@ -1,0 +1,56 @@
+{
+  "id": "studio3d",
+  "version": "1.6.0",
+  "worker": "adapters/studio3d/worker.py",
+  "bootstrap": "apps/studio3d/worker.py",
+  "support_workers": [
+    "adapters/studio3d/asset_pipeline.py",
+    "adapters/studio3d/projection.py",
+    "adapters/studio3d/organic.py",
+    "adapters/studio3d/framing.py"
+  ],
+  "dependencies": [
+    {
+      "import": "bpy",
+      "source": "Blender embedded Python",
+      "license": "GPL-2.0-or-later"
+    },
+    {
+      "import": "mathutils",
+      "source": "Blender embedded Python",
+      "license": "GPL-2.0-or-later"
+    }
+  ],
+  "limits": {
+    "wall_seconds": 300,
+    "cpu_seconds": 1200,
+    "memory_bytes": 4294967296,
+    "output_bytes": 268435456,
+    "threads": 4
+  },
+  "isolation": "Trusted fixed first-party worker with resource Job; not an OS security sandbox. No model Python, external imports or external BLEND loading. Only host-hash-verified first-party masters load with scripts disabled.",
+  "learning": {
+    "version": "1.0.0",
+    "worker": "adapters/studio3d/learning_worker.py",
+    "bootstrap": "apps/studio3d/learning_worker.py",
+    "dependencies": [
+      "bpy",
+      "mathutils",
+      "bmesh"
+    ],
+    "host": "host/studio3d_learning.py",
+    "tools": [
+      "remove_rejected",
+      "seat_attachment"
+    ],
+    "limits": {
+      "wall_seconds": 300,
+      "cpu_seconds": 1200,
+      "memory_bytes": 4294967296,
+      "output_bytes": 268435456,
+      "threads": 4
+    },
+    "no_generated_code_execution": true,
+    "no_automatic_replay": true
+  }
+}

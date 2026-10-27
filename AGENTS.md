@@ -14,6 +14,7 @@
 - `docs/manifest.json` 管理唯一章节归属，正文使用显式锚点。不要手工编辑导航生成块。
 - `docs/diagrams/*.mmd` 是唯一图源，PNG/SVG 是生成物；图文同步。改图后实际渲染、检查、再登记摘要。图册规则见维护规范。
 - 顶栏右侧工具统一遵守[图标规则](docs/interaction-persona.md#workbench-settings)，不在其他页维护另一套规则。
+- 全项目遵守[一套系统、多种表现与工作形式](docs/architecture.md#unified-system-principle)：精灵和工作台共用功能基础、任务、设置与状态；新能力先复用领域服务和契约，再做不同深度的呈现。跨平台或远端设备扩展沿相同架构接适配器，不另建重复的业务系统；评审与验收同时核对跨入口一致性。
 - 区分 accepted、proposed、implemented、verified；实现和验证必须给出本工程的版本、环境及证据。资料可以纠正、遗忘；恢复代码不能复活已撤回权限或旧错误记忆。
 - 外部代码、模型候选和安装依赖遵守[供应链准入](docs/security-sovereignty.md#personal-life-supply-chain)。不把提示词、目录分离或另起进程当作隔离已验证。
 

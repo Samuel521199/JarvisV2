@@ -1,0 +1,87 @@
+{
+  "case_id": "document-conflict",
+  "domain": "documents",
+  "arm": "workflow_on",
+  "turn": 0,
+  "freeze_digest": "58e89113b8e37c7cb0dbe11414bd8d9d7f403111ca74ceaf5d1fd9b9c9eba16e",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\"document\":\"### 项目本周预算核对单\\n\\n- **日期/范围**：本周（具体日期待确定）\\n- **已完成与依据**：\\n  - 记录S1显示预算为 100 元（根据你提供的记录）\\n  - 记录S2显示预算为 120 元（根据你提供的记录）\\n- **进行中或待办（冲突状态）**：\\n  - [ ] 待核实最终有效预算：S1（100元）与 S2（120元）存在数据冲突，因缺乏时间戳或权威来源信息，暂无法确定有效数值。\\n- **观察与想法**：当前两份来源均无优先级判定依据，禁止擅自相加或预选其一。\\n- **下一步**：\\n  1. 向项目负责人或财务复核权威预算版本。\\n  2. 确认S1与S2的生成时间或版本号以消除冲突。\",\"budget\":null,\"conflict\":true,\"sources\":[\"S1\",\"S2\"]}",
+  "skill_id": "journal-review",
+  "skill_version": "1.0.0",
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 6.0862,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 276,
+        "prompt_tokens": 1395,
+        "total_tokens": 1671
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.00208125,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/document-conflict-workflow_on-0.native.json",
+      "sha256": "13d7d9c8d3867d7c6cbaadcce466b3c3663ff238e4236e92cbdbf296a214769e",
+      "kind": "native_protocol_response"
+    },
+    {
+      "file": "artifacts/document-conflict-workflow_on-0.reply.md.txt",
+      "sha256": "0d5bf9bced863a21677506f166883d8ce71a0603504e36f9b33969321f7a4719",
+      "kind": "original_session_reply"
+    },
+    {
+      "file": "artifacts/document-conflict-workflow_on-0.document.md.txt",
+      "sha256": "2ef5a6591f28637f41bea4d3f07895d528f32938607deba1fdf5a8ce756d02ba",
+      "kind": "verbatim_document_field_from_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "budget",
+        "status": "passed"
+      },
+      {
+        "id": "conflict",
+        "status": "passed"
+      },
+      {
+        "id": "sources",
+        "status": "passed"
+      },
+      {
+        "id": "document_present",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "record_digest": "7b673b7f85af3c97651f97adb5e3e6e843d414553ae757132f34d4f22d540ef4"
+}

@@ -1,0 +1,507 @@
+{
+  "date": "2026-10-26",
+  "version": "bounded-concurrency-1.0.0",
+  "scope": "real Host HTTP/SQLite/dispatch with deterministic model and bounded synthetic CPU/I/O tools",
+  "environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.0",
+    "logical_cpus": 32,
+    "system_memory_total": 68341796864
+  },
+  "peaks": {
+    "threads": 0,
+    "system_memory_used": 0,
+    "cpu_percent": 0
+  },
+  "paid_model_calls": 0,
+  "model_delay_seconds": 0.2,
+  "pairs": 30,
+  "soak_seconds": 4.5000015234109014e-06,
+  "checks": {
+    "two_background_executions_overlap": true,
+    "loaded_input_p95_le_200ms": true,
+    "loaded_input_p99_le_500ms": true,
+    "reply_p95_increase_le_10_percent": true,
+    "reply_p95_increase_le_100ms": true,
+    "foreground_dispatch_p95_le_100ms": true,
+    "foreground_dispatch_p99_le_250ms": true,
+    "soak_30_minutes": false,
+    "background_progress": true
+  },
+  "statistics_ms": {
+    "idle": {
+      "input_ms": {
+        "count": 30,
+        "p50": 24.594,
+        "p95": 36.59,
+        "p99": 37.828,
+        "max": 37.828
+      },
+      "reply_ms": {
+        "count": 30,
+        "p50": 292.621,
+        "p95": 326.035,
+        "p99": 326.24,
+        "max": 326.24
+      },
+      "dispatch_ms": {
+        "count": 30,
+        "p50": 11.029,
+        "p95": 17.585,
+        "p99": 20.639,
+        "max": 20.639
+      }
+    },
+    "loaded": {
+      "input_ms": {
+        "count": 30,
+        "p50": 30.657,
+        "p95": 38.761,
+        "p99": 48.985,
+        "max": 48.985
+      },
+      "reply_ms": {
+        "count": 30,
+        "p50": 315.553,
+        "p95": 355.094,
+        "p99": 357.794,
+        "max": 357.794
+      },
+      "dispatch_ms": {
+        "count": 30,
+        "p50": 4.026,
+        "p95": 6.729,
+        "p99": 7.368,
+        "max": 7.368
+      }
+    },
+    "soak": {
+      "input_ms": {
+        "count": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      "reply_ms": {
+        "count": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      "dispatch_ms": {
+        "count": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      }
+    }
+  },
+  "max_execution_overlap": 2,
+  "background_completed": 62,
+  "soak_background_completed": 2,
+  "elapsed_seconds": 25.496892600000137,
+  "raw_pairs": [
+    {
+      "pair": 1,
+      "idle": {
+        "input_ms": 21.473299999343,
+        "reply_ms": 280.8484999986831,
+        "dispatch_ms": 13.544
+      },
+      "loaded": {
+        "input_ms": 25.588900000002468,
+        "reply_ms": 304.52359999981127,
+        "dispatch_ms": 2.485
+      }
+    },
+    {
+      "pair": 2,
+      "idle": {
+        "input_ms": 21.022199998697033,
+        "reply_ms": 278.15840000039316,
+        "dispatch_ms": 12.121
+      },
+      "loaded": {
+        "input_ms": 28.445199997804593,
+        "reply_ms": 299.02469999797177,
+        "dispatch_ms": 4.908
+      }
+    },
+    {
+      "pair": 3,
+      "idle": {
+        "input_ms": 20.786299999599578,
+        "reply_ms": 284.107600000425,
+        "dispatch_ms": 5.007
+      },
+      "loaded": {
+        "input_ms": 25.722000002133427,
+        "reply_ms": 301.8673000005947,
+        "dispatch_ms": 3.511
+      }
+    },
+    {
+      "pair": 4,
+      "idle": {
+        "input_ms": 21.716200000810204,
+        "reply_ms": 290.0535000007949,
+        "dispatch_ms": 4.037
+      },
+      "loaded": {
+        "input_ms": 29.366499999014195,
+        "reply_ms": 330.33029999933206,
+        "dispatch_ms": 6.729
+      }
+    },
+    {
+      "pair": 5,
+      "idle": {
+        "input_ms": 23.629600000276696,
+        "reply_ms": 288.91700000167475,
+        "dispatch_ms": 9.698
+      },
+      "loaded": {
+        "input_ms": 25.23740000106045,
+        "reply_ms": 313.0901000004087,
+        "dispatch_ms": 3.623
+      }
+    },
+    {
+      "pair": 6,
+      "idle": {
+        "input_ms": 23.00900000045658,
+        "reply_ms": 292.4146000004839,
+        "dispatch_ms": 17.331
+      },
+      "loaded": {
+        "input_ms": 23.949399997945875,
+        "reply_ms": 314.9110999984259,
+        "dispatch_ms": 7.368
+      }
+    },
+    {
+      "pair": 7,
+      "idle": {
+        "input_ms": 22.36319999792613,
+        "reply_ms": 302.1697999975004,
+        "dispatch_ms": 12.827
+      },
+      "loaded": {
+        "input_ms": 48.98519999915152,
+        "reply_ms": 355.0935999992362,
+        "dispatch_ms": 5.262
+      }
+    },
+    {
+      "pair": 8,
+      "idle": {
+        "input_ms": 29.347600000619423,
+        "reply_ms": 288.3548999998311,
+        "dispatch_ms": 11.029
+      },
+      "loaded": {
+        "input_ms": 24.89879999848199,
+        "reply_ms": 298.0269999970915,
+        "dispatch_ms": 2.918
+      }
+    },
+    {
+      "pair": 9,
+      "idle": {
+        "input_ms": 29.073000001517357,
+        "reply_ms": 295.42619999847375,
+        "dispatch_ms": 5.417
+      },
+      "loaded": {
+        "input_ms": 33.61059999951976,
+        "reply_ms": 323.6880000004021,
+        "dispatch_ms": 4.941
+      }
+    },
+    {
+      "pair": 10,
+      "idle": {
+        "input_ms": 24.05469999939669,
+        "reply_ms": 283.7278000006336,
+        "dispatch_ms": 10.131
+      },
+      "loaded": {
+        "input_ms": 28.321699999651173,
+        "reply_ms": 321.28630000079283,
+        "dispatch_ms": 3.319
+      }
+    },
+    {
+      "pair": 11,
+      "idle": {
+        "input_ms": 24.59399999861489,
+        "reply_ms": 280.7701999990968,
+        "dispatch_ms": 3.784
+      },
+      "loaded": {
+        "input_ms": 28.584499999851687,
+        "reply_ms": 312.911000000895,
+        "dispatch_ms": 4.414
+      }
+    },
+    {
+      "pair": 12,
+      "idle": {
+        "input_ms": 23.94350000031409,
+        "reply_ms": 290.3182999980345,
+        "dispatch_ms": 4.353
+      },
+      "loaded": {
+        "input_ms": 27.156799998920178,
+        "reply_ms": 316.1560999978974,
+        "dispatch_ms": 4.026
+      }
+    },
+    {
+      "pair": 13,
+      "idle": {
+        "input_ms": 23.30449999863049,
+        "reply_ms": 289.46559999894816,
+        "dispatch_ms": 15.083
+      },
+      "loaded": {
+        "input_ms": 28.94150000065565,
+        "reply_ms": 305.2420999993046,
+        "dispatch_ms": 2.929
+      }
+    },
+    {
+      "pair": 14,
+      "idle": {
+        "input_ms": 23.305399998207577,
+        "reply_ms": 308.1181999987166,
+        "dispatch_ms": 15.274
+      },
+      "loaded": {
+        "input_ms": 26.624699999956647,
+        "reply_ms": 334.62560000043595,
+        "dispatch_ms": 5.294
+      }
+    },
+    {
+      "pair": 15,
+      "idle": {
+        "input_ms": 29.492100002244115,
+        "reply_ms": 292.9617000008875,
+        "dispatch_ms": 3.678
+      },
+      "loaded": {
+        "input_ms": 30.721499999344815,
+        "reply_ms": 306.14390000118874,
+        "dispatch_ms": 4.357
+      }
+    },
+    {
+      "pair": 16,
+      "idle": {
+        "input_ms": 24.201699998229742,
+        "reply_ms": 292.53700000117533,
+        "dispatch_ms": 4.019
+      },
+      "loaded": {
+        "input_ms": 31.229799998982344,
+        "reply_ms": 320.44569999925443,
+        "dispatch_ms": 4.079
+      }
+    },
+    {
+      "pair": 17,
+      "idle": {
+        "input_ms": 25.543100000504637,
+        "reply_ms": 294.77200000110315,
+        "dispatch_ms": 14.105
+      },
+      "loaded": {
+        "input_ms": 33.27740000167978,
+        "reply_ms": 311.9174999992538,
+        "dispatch_ms": 3.318
+      }
+    },
+    {
+      "pair": 18,
+      "idle": {
+        "input_ms": 24.51640000072075,
+        "reply_ms": 301.42440000054194,
+        "dispatch_ms": 15.285
+      },
+      "loaded": {
+        "input_ms": 37.94040000138921,
+        "reply_ms": 324.9978000021656,
+        "dispatch_ms": 4.705
+      }
+    },
+    {
+      "pair": 19,
+      "idle": {
+        "input_ms": 26.830800001334865,
+        "reply_ms": 292.62070000186213,
+        "dispatch_ms": 13.104
+      },
+      "loaded": {
+        "input_ms": 35.21090000140248,
+        "reply_ms": 318.1296000002476,
+        "dispatch_ms": 3.711
+      }
+    },
+    {
+      "pair": 20,
+      "idle": {
+        "input_ms": 36.399900000105845,
+        "reply_ms": 303.56359999859706,
+        "dispatch_ms": 8.989
+      },
+      "loaded": {
+        "input_ms": 27.835699998831842,
+        "reply_ms": 317.69619999977294,
+        "dispatch_ms": 3.883
+      }
+    },
+    {
+      "pair": 21,
+      "idle": {
+        "input_ms": 24.551999998948304,
+        "reply_ms": 292.9662999995344,
+        "dispatch_ms": 11.443
+      },
+      "loaded": {
+        "input_ms": 35.60219999781111,
+        "reply_ms": 315.5531999982486,
+        "dispatch_ms": 4.981
+      }
+    },
+    {
+      "pair": 22,
+      "idle": {
+        "input_ms": 28.833799999119947,
+        "reply_ms": 288.2917999995698,
+        "dispatch_ms": 6.857
+      },
+      "loaded": {
+        "input_ms": 30.87980000054813,
+        "reply_ms": 306.94750000111526,
+        "dispatch_ms": 4.598
+      }
+    },
+    {
+      "pair": 23,
+      "idle": {
+        "input_ms": 26.73490000233869,
+        "reply_ms": 300.0618000005488,
+        "dispatch_ms": 17.585
+      },
+      "loaded": {
+        "input_ms": 38.761199997679796,
+        "reply_ms": 357.7944999997271,
+        "dispatch_ms": 6.356
+      }
+    },
+    {
+      "pair": 24,
+      "idle": {
+        "input_ms": 30.53379999983008,
+        "reply_ms": 300.1302000011492,
+        "dispatch_ms": 7.555
+      },
+      "loaded": {
+        "input_ms": 30.65710000009858,
+        "reply_ms": 320.2915999972902,
+        "dispatch_ms": 3.382
+      }
+    },
+    {
+      "pair": 25,
+      "idle": {
+        "input_ms": 30.276299999968614,
+        "reply_ms": 304.3885000006412,
+        "dispatch_ms": 13.045
+      },
+      "loaded": {
+        "input_ms": 32.44430000268039,
+        "reply_ms": 314.55930000083754,
+        "dispatch_ms": 4.974
+      }
+    },
+    {
+      "pair": 26,
+      "idle": {
+        "input_ms": 35.45030000168481,
+        "reply_ms": 326.2402000000293,
+        "dispatch_ms": 6.64
+      },
+      "loaded": {
+        "input_ms": 38.369799996871734,
+        "reply_ms": 343.2308999981615,
+        "dispatch_ms": 5.459
+      }
+    },
+    {
+      "pair": 27,
+      "idle": {
+        "input_ms": 36.58999999970547,
+        "reply_ms": 325.6881999986945,
+        "dispatch_ms": 4.201
+      },
+      "loaded": {
+        "input_ms": 22.94609999808017,
+        "reply_ms": 306.54689999937546,
+        "dispatch_ms": 3.612
+      }
+    },
+    {
+      "pair": 28,
+      "idle": {
+        "input_ms": 37.82800000044517,
+        "reply_ms": 326.03519999975106,
+        "dispatch_ms": 20.639
+      },
+      "loaded": {
+        "input_ms": 38.001599998096935,
+        "reply_ms": 315.39689999772236,
+        "dispatch_ms": 2.412
+      }
+    },
+    {
+      "pair": 29,
+      "idle": {
+        "input_ms": 25.74770000137505,
+        "reply_ms": 287.94310000012047,
+        "dispatch_ms": 12.306
+      },
+      "loaded": {
+        "input_ms": 35.13739999834797,
+        "reply_ms": 338.231599998835,
+        "dispatch_ms": 3.883
+      }
+    },
+    {
+      "pair": 30,
+      "idle": {
+        "input_ms": 30.750800000532763,
+        "reply_ms": 299.6932000023662,
+        "dispatch_ms": 13.821
+      },
+      "loaded": {
+        "input_ms": 32.86969999680878,
+        "reply_ms": 330.2905999989889,
+        "dispatch_ms": 3.055
+      }
+    }
+  ],
+  "soak_samples": [],
+  "not_verified": [
+    "real cloud limits and latency",
+    "GPU-heavy rendering",
+    "8 GiB device",
+    "thermal/battery limits",
+    "arbitrary external tools",
+    "full V-DLG-01..14"
+  ]
+}

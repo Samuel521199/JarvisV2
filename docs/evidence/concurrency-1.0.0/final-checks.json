@@ -1,0 +1,135 @@
+{
+  "status": "passed",
+  "checked_at": 1793001118.551132,
+  "checks": [
+    {
+      "name": "navigation",
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "-X",
+        "utf8",
+        "tools/sync_doc_navigation.py",
+        "--root",
+        "."
+      ],
+      "exit_code": 0,
+      "output": "OK navigation: 0 updated"
+    },
+    {
+      "name": "documentation",
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "-X",
+        "utf8",
+        "tools/check_docs.py",
+        "--root",
+        "."
+      ],
+      "exit_code": 0,
+      "output": "OK documents=28 chapters=24 diagrams=39 local_links=2932 errors=0"
+    },
+    {
+      "name": "architecture",
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "-X",
+        "utf8",
+        "tools/check_architecture.py",
+        "--root",
+        "."
+      ],
+      "exit_code": 0,
+      "output": "{\"python_files\": 173, \"errors\": []}"
+    },
+    {
+      "name": "whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "--",
+        "README.md",
+        "docs/README.md",
+        "docs/tasks-agents.md",
+        "docs/delivery-validation.md",
+        "docs/development-guide.md",
+        "docs/contracts.md",
+        "docs/manifest.json",
+        "control/recovery/gate.py",
+        "host/core.py",
+        "host/dialogue.py",
+        "host/memory.py",
+        "modules/dialogue/store.py",
+        "host/settings_operations.py",
+        "host/anatomy_composer.py",
+        "apps/workbench/server.py",
+        "apps/workbench/app.js",
+        "apps/workbench/settings.js",
+        "apps/workbench/ui.js",
+        "apps/workbench/index.html",
+        "apps/workbench/settings.html",
+        "tests/test_anatomy_studio.py"
+      ],
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "name": "javascript-syntax",
+      "command": [
+        "node",
+        "--check",
+        "apps/workbench/work-status.js"
+      ],
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "name": "javascript-syntax",
+      "command": [
+        "node",
+        "--check",
+        "apps/workbench/app.js"
+      ],
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "name": "javascript-syntax",
+      "command": [
+        "node",
+        "--check",
+        "apps/workbench/settings.js"
+      ],
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "name": "javascript-syntax",
+      "command": [
+        "node",
+        "--check",
+        "tools/probe_concurrency_ui.cjs"
+      ],
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "name": "python-syntax",
+      "files": [
+        "control/execution.py",
+        "modules/task_resource/scheduling.py",
+        "host/task_scheduler.py",
+        "host/work_status.py",
+        "host/memory_domains.py",
+        "host/studio3d.py",
+        "host/studio3d_refinement.py",
+        "tests/test_concurrency.py",
+        "tools/probe_concurrency.py",
+        "tools/probe_concurrency_control.py",
+        "tools/report_concurrency.py"
+      ],
+      "exit_code": 0,
+      "output": "AST parse passed"
+    }
+  ]
+}

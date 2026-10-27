@@ -1,0 +1,86 @@
+{
+  "case_id": "learning-agreement",
+  "domain": "learning",
+  "arm": "workflow_on",
+  "turn": 1,
+  "freeze_digest": "cc702145676756cbfaa7cb3b0a06842f622595011a6ec056120028630ebc2879",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\"judgement\":\"incorrect\",\"correction\":\"The robot moves forward.\",\"rule\":\"third_person_singular\",\"retry_question\":\"The wheels ___ (turn/turns) fast.\",\"retry_answer\":null}",
+  "skill_id": "english-coach",
+  "skill_version": "1.0.0",
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 4.438,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 77,
+        "prompt_tokens": 1331,
+        "total_tokens": 1408
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.001287,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/learning-agreement-workflow_on-1.native.json",
+      "sha256": "e5095ca8195045aec5c884df3a84c281d31f06796cf20ea8e7f67770d7fba383",
+      "kind": "native_protocol_response"
+    },
+    {
+      "file": "artifacts/learning-agreement-workflow_on-1.reply.md.txt",
+      "sha256": "a4c22881292c470860b82c71957cda7f579b2b0c27532c818a5e8d2b7698d009",
+      "kind": "original_session_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "judgement",
+        "status": "passed"
+      },
+      {
+        "id": "correction",
+        "status": "passed"
+      },
+      {
+        "id": "rule",
+        "status": "passed"
+      },
+      {
+        "id": "retry_question",
+        "status": "passed"
+      },
+      {
+        "id": "retry_answer",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "record_digest": "8435ffa0f07c7d3c7b1451712906524c557a11633f99251939ea5f4c7df64333"
+}

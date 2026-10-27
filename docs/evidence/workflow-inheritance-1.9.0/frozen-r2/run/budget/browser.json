@@ -1,0 +1,11 @@
+{
+  "checks": [
+    "Insufficient shared budget blocks admission without a new task",
+    "Explicit budget update alone does not execute or admit the draft",
+    "Existing approve-only path visibly holds two units until execution"
+  ],
+  "errors": [],
+  "passed": false,
+  "failure": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    {\n      arguments: {\n        text: 'hello 中文'\n      },\n...\n      },\n+     attempts: 1,\n-     attempts: 0,\n      capability: 'artifact.write.v1',\n      digest: 'bbed8b47e00d27b2a15bdc3e871bf92804a4de9c2feaa878306bdddb782fb6d9',\n      error: null,\n      id: 'action-c0c65d0b42a721d404d88fb0f07090dd',\n+     result: {\n+       bytes: 389,\n+       relative_path: 'artifacts/task-1b0505f68b3143f39c8bf48924fb7de3/action-c0c65d0b42a721d404d88fb0f07090dd/result.json',\n+       sha256: 'b2fecaaffc2e81590bbb93eda4ccc6e52bce72db5adbf41eead0559a49481b70',\n+       verified: true\n+     },\n+     status: 'CONFIRMED',\n-     result: null,\n-     status: 'PREPARED',\n      step_id: 'deliver',\n      task_id: 'task-1b0505f68b3143f39c8bf48924fb7de3'\n    }\n  ]\n\n    at C:\\Users\\samuel\\AppData\\Local\\Temp\\jarvis-frozen-acceptance-7_t71va8\\tools\\probe_budget_ui.cjs:26:10",
+  "body": "已开始执行此计划；可以继续聊天。　×\n告诉 Jarvis，你想完成什么\n\n根据目标选择现有能力，先核对可修改的计划，再在后台执行。做不到的部分会列出，不当作已完成。\n\n+ 制定行动计划\n刷新计划\n可用的本地工具\nMCP 连接器\n\n规划与编码共用一个后台通道。支持个人文本任务和明确启用的 MCP 工具；Gmail 请使用独立邮箱助手；日程和 QQ 连接仍待接入。\n\n保留第一步，重新处理最后一步\n\n待执行\n\n计划与交付\n转换两段文字处理步骤，并保存结果\n\n执行完成\n\n计划与交付\n保留第一步，重新处理最后一步\n执行完成\n收起\n整件工作的结案状态\n\n当前版本尚未结案\n\n缺少事前验收条件\n\n所有历史入口都查看当前版本；旧版结果和评价保留。结案可因迟到反馈或来源撤回重新打开。\n\n这件工作的负责人 · Jarvis 默认 Bot\n\n当前第 2 版 · 已用 5 成本单位\n\n各版本保留自己的任务、授权与评价。当前显示第 2 版。\n\n整件工作执行额度：5 已用 + 0 预留 / 5 总额 · 可用 0\n\n按工具动作计单位，含本机保存；不含模型、研发费用。未确认效果保留预留，不代表可以重试。\n\n调整整件工作执行额度\n第 1 版 · 原始要求\n打开第 1 版\n第 2 版 · 新增要求 · 当前\n打开第 2 版\n\n第二步追加要求，前段仍适用\n\n停止整件工作接续\n修改计划并自动分析返工范围关联返工 / 追加要求\n\n第二步追加要求，前段仍适用\n\n将处理的文本\n1. 文字转大写\n\nHELLO 中文\n\nplugin.rework-upper.v1 · 使用原始输入\n\n行动 1 的实际输出\n\nplugin.rework-upper.v1\n\nHELLO 中文\n复制最后结果\n导出最后结果\n\n已执行所有行动，并将最后结果保存到本机产物目录。请核对内容是否满足你的预期。\n\n基础核对完成，目标质量待验证\n\n尚未约定可验证的验收条件\n\n目标覆盖尚未证实；检查通过或记录认可不等于全部业务要求正确。\n\n查看历次核对\n指出需要修改\n刷新详情\n补充目标，另建计划\n版本与执行回执"
+}

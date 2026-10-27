@@ -1,0 +1,127 @@
+{
+  "created_at": "2026-10-27T13:36:00.131516+00:00",
+  "source_matches_frozen_candidate": true,
+  "source_differences": [],
+  "supporting_changes_after_acceptance": [
+    "README.md"
+  ],
+  "supporting_change_reason": "README measured result updated after acceptance; runtime source must remain fixed",
+  "docs": {
+    "command": [
+      "D:\\soft\\Python313\\python.exe",
+      "tools/check_docs.py",
+      "--root",
+      "."
+    ],
+    "returncode": 0,
+    "output": "OK documents=29 chapters=25 diagrams=46 local_links=4014 errors=0"
+  },
+  "architecture": {
+    "command": [
+      "D:\\soft\\Python313\\python.exe",
+      "tools/check_architecture.py"
+    ],
+    "returncode": 0,
+    "output": "{\"python_files\": 210, \"errors\": []}"
+  },
+  "selected_diff_check": {
+    "command": [
+      "git",
+      "diff",
+      "--check",
+      "--",
+      "apps/workbench/app.js",
+      "apps/workbench/delivery-review.css",
+      "apps/workbench/delivery-review.js",
+      "apps/workbench/index.html",
+      "apps/workbench/ui.js",
+      "host/delivery_review.py",
+      "host/dialogue.py",
+      "modules/dialogue/delivery_basis.py",
+      "modules/dialogue/store.py",
+      "modules/task_resource/delivery_review.py",
+      "modules/workspace/sessions.py",
+      "tests/fixtures/delivery_shadow_inputs.json",
+      "tests/fixtures/delivery_shadow_v1.json",
+      "tests/fixtures/delivery_shadow_v2.json",
+      "tests/test_delivery_shadow.py",
+      "tools/accept_completion.py",
+      "tools/probe_delivery_shadow_ui.cjs",
+      "tools/probe_delivery_shadow_ui.py",
+      "tools/work_trials.py",
+      "README.md",
+      "docs/core-bootstrap.md",
+      "docs/contracts.md",
+      "docs/delivery-validation.md",
+      "docs/decisions-review.md",
+      "docs/manifest.json"
+    ],
+    "returncode": 0,
+    "output": ""
+  },
+  "changed_source_trailing_whitespace": [],
+  "whole_shared_tree_format_check": {
+    "returncode": 2,
+    "findings": 3705,
+    "paths": [
+      "apps/workbench/server.py",
+      "apps/workbench/settings-anatomy.js",
+      "apps/workbench/theme.css",
+      "docs/evidence/anatomy-structure-2026-10-23/handoff.json",
+      "docs/knowledge-learning.md",
+      "docs/tasks-agents.md",
+      "host/anatomy.py",
+      "modules/skills/anatomy/structure3d.mjs",
+      "seed/skills/conversation.json",
+      "tools/check_architecture.py"
+    ],
+    "full_output_sha256": "6ce4fe2feb8e92b63e67c427e4738ae779ddca2b3e9b70cebdebd18e1a7a8680",
+    "scope": "Whole shared tree; unrelated changes not modified"
+  },
+  "report_ui": {
+    "passed": true,
+    "errors": [],
+    "viewports": [
+      {
+        "viewport": "desktop",
+        "width": 1400,
+        "overflow": false
+      },
+      {
+        "viewport": "mobile",
+        "width": 390,
+        "overflow": false
+      }
+    ]
+  },
+  "raw_trial_recomputation_matches_scoped_review": {
+    "live-prose-r1": true,
+    "live-excerpt-r1": true
+  },
+  "live_whole_source_matches_final_candidate": false,
+  "original_forecast_unchanged": true,
+  "old_work_status_unchanged": true,
+  "report_sha256": "611e0416a41fe631e2004eee503ea39f2a722f6b2d65f7f868e4635ceb094285",
+  "frozen_result": {
+    "local_verdict": "PASS",
+    "returncode": 0,
+    "frozen_source_unchanged": true,
+    "shared_workspace_changed_sources": [],
+    "frozen_supporting_inputs_unchanged": true,
+    "shared_workspace_changed_supporting_inputs": [],
+    "shared_workspace_is_frozen_version": true,
+    "production_deployed": false,
+    "full_product_verdict": "NOT_ACCEPTED",
+    "report": "run/report.html"
+  },
+  "temporary_cleanup": {
+    "action": "Remove only failed UI probe temporary directory",
+    "target": "C:/Users/samuel/AppData/Local/Temp/jarvis-shadow-ui-a4egwok2",
+    "state": "BLOCKED_BY_AUTOMATIC_APPROVAL",
+    "reason": "blocked by policy; no more specific reason supplied",
+    "retained": true,
+    "workaround_attempted": false,
+    "impact": "No effect on runtime source, preserved evidence or acceptance"
+  },
+  "production_deployed": false
+}

@@ -1,0 +1,91 @@
+{
+  "case_id": "document-correction",
+  "domain": "documents",
+  "arm": "workflow_off",
+  "turn": 0,
+  "freeze_digest": "41045f324177d33c2ad08c9f097037300e48b4342620c4703dacfd7cba086ce2",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\"document\":\"# 研发日报\\n\\n**日期**：2026-10-27\\n\\n### 今日进展\\n- 文档/资料阅读：20分钟\\n- 模型渲染：已完成\\n- 贴图烘焙：失败\\n\\n### 明日计划\\n- 排查贴图烘焙失败原因\",\"minutes\":20,\"render\":\"done\",\"bake\":\"failed\",\"sources\":[\"S1\"]}",
+  "skill_id": null,
+  "skill_version": null,
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 5.8716,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 135,
+        "prompt_tokens": 824,
+        "total_tokens": 959
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.00112425,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/document-correction-workflow_off-0.native.json",
+      "sha256": "6acdf8ff6af84eb278ec87473298c4b045b2ba60b2a7c469cfb29d781baa2edd",
+      "kind": "native_protocol_response"
+    },
+    {
+      "file": "artifacts/document-correction-workflow_off-0.reply.md.txt",
+      "sha256": "c70a955438022dc0eb8e5826767f63fff5a9e1c8913b9196670782e4503108b7",
+      "kind": "original_session_reply"
+    },
+    {
+      "file": "artifacts/document-correction-workflow_off-0.document.md.txt",
+      "sha256": "81257c5dc8e1dbe8309635e1c4f5e883f17f431ad8a72ad337665b6b18f44cd3",
+      "kind": "verbatim_document_field_from_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "minutes",
+        "status": "passed"
+      },
+      {
+        "id": "render",
+        "status": "passed"
+      },
+      {
+        "id": "bake",
+        "status": "passed"
+      },
+      {
+        "id": "sources",
+        "status": "passed"
+      },
+      {
+        "id": "document_present",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "record_digest": "1c6bf06449f5cbecf02f275c0936cbe11ce6be8358a7fa8c73ced92f93bc75a2"
+}

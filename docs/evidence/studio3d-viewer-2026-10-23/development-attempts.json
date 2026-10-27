@@ -1,0 +1,78 @@
+{
+  "date": "2026-10-23",
+  "attempts": [
+    {
+      "attempt": 1,
+      "id": "3fd2555323214d47a3c78f02b9e1e0e1",
+      "job": {
+        "id": "3fd2555323214d47a3c78f02b9e1e0e1",
+        "status": "FAILED",
+        "error": "studio3d_build_failed"
+      },
+      "assessment": "Rejected by native degenerate geometry gate.",
+      "retained_native_evidence": "native-1.json",
+      "stderr_tail": "Traceback (most recent call last):\n  File \"D:\\Jarvis\\apps\\studio3d\\worker.py\", line 7, in <module>\n    main()\n    ~~~~^^\n  File \"D:\\Jarvis\\adapters\\studio3d\\worker.py\", line 81, in main\n    visible,asset_report=prepare(folder,visible,scene['asset_pipeline']['texture_size'],phase)\n                         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\Jarvis\\adapters\\studio3d\\asset_pipeline.py\", line 51, in prepare\n    if before['degenerate_faces'] or not before['uv_present']:raise ValueError('Degenerate faces or absent UV prevent baking')\n                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: Degenerate faces or absent UV prevent baking\n\nError: script failed, file: 'D:\\Jarvis\\apps\\studio3d\\worker.py', exiting.\n"
+    },
+    {
+      "attempt": 2,
+      "id": "96b785eddad3443e9066a2698f4601ca",
+      "job": {
+        "id": "96b785eddad3443e9066a2698f4601ca",
+        "status": "DELIVERED",
+        "error": null
+      },
+      "assessment": "Delivered then rejected in subsequent quality review: inherited UV atlas area sum 3.93985 proved overlap. Browser functional success is not asset quality acceptance.",
+      "retained_native_evidence": "native-2.json",
+      "stderr_tail": ""
+    },
+    {
+      "attempt": 3,
+      "id": "cf051444fa4541d191e6b284f287728a",
+      "job": {
+        "id": "cf051444fa4541d191e6b284f287728a",
+        "status": "FAILED",
+        "error": "studio3d_build_failed"
+      },
+      "assessment": "Rejected by new definite UV overlap gate: face selection lost during cleanup, default UV sum 11878.89.",
+      "retained_native_evidence": "native-3.json",
+      "stderr_tail": "Traceback (most recent call last):\n  File \"D:\\Jarvis\\apps\\studio3d\\worker.py\", line 7, in <module>\n    main()\n    ~~~~^^\n  File \"D:\\Jarvis\\adapters\\studio3d\\worker.py\", line 81, in main\n    visible,asset_report=prepare(folder,visible,scene['asset_pipeline']['texture_size'],phase)\n                         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\Jarvis\\adapters\\studio3d\\asset_pipeline.py\", line 63, in prepare\n    if before['degenerate_faces'] or not before['uv_present'] or before['uv_triangle_area_sum']>1.02:raise ValueError('Degenerate faces, absent UV or definite UV overlap prevent baking')\n                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: Degenerate faces, absent UV or definite UV overlap prevent baking\n\nError: script failed, file: 'D:\\Jarvis\\apps\\studio3d\\worker.py', exiting.\n"
+    },
+    {
+      "attempt": 4,
+      "id": "ad80b308cedb43fa80353260b7ecd11f",
+      "job": {
+        "id": "ad80b308cedb43fa80353260b7ecd11f",
+        "status": "DELIVERED",
+        "error": null
+      },
+      "assessment": "New independent UV atlas fixed; missing/zero tangent vectors identified by official validator.",
+      "retained_native_evidence": "native-4.json",
+      "stderr_tail": ""
+    },
+    {
+      "attempt": 5,
+      "id": "2dbf129b44b849c089e0412ab1a3d9cd",
+      "job": {
+        "id": "2dbf129b44b849c089e0412ab1a3d9cd",
+        "status": "DELIVERED",
+        "error": null
+      },
+      "assessment": "Triangulation fixed LOD0/2 format; four zero tangent vectors remained at singular UVs in LOD1.",
+      "retained_native_evidence": "native-5.json",
+      "stderr_tail": ""
+    },
+    {
+      "attempt": 6,
+      "id": "c59a429edcdb44569c92dd2c22cdfa92",
+      "job": {
+        "id": "c59a429edcdb44569c92dd2c22cdfa92",
+        "status": "DELIVERED",
+        "error": null
+      },
+      "assessment": "Formal format passed all three files after explicit recorded orthogonal tangent fallback. Artist UV, boundary and silhouette review remain pending.",
+      "retained_native_evidence": "native-6.json",
+      "stderr_tail": ""
+    }
+  ],
+  "claim": "Developer fixes with preserved failures; not autonomous self-repair. The first functional browser passes did not certify assets."
+}

@@ -1,0 +1,62 @@
+{
+  "status": "failed",
+  "origin": "http://127.0.0.1:18282",
+  "id": "4696dd34aba04bd9b23e6f4d121277e0",
+  "paid_model_calls_requested": 1,
+  "request": {
+    "id": "4696dd34aba04bd9b23e6f4d121277e0",
+    "prompt": "制作一个金属离心压气机叶轮的产品级视觉研究：约0.25米直径，6片明显弯曲并沿半径扭转的薄叶片，圆滑轮毂、背盘和轴孔，用 loft 或 mesh 表达叶片曲面，不能用盒子冒充叶片。分为6片叶片与轮毂、背盘，总计不超过12对象。不要制作外壳以便看清叶片。适当倒角、金属材质和摄影棚构图，明确叶型没有工程校验。叶轮轴沿Z。尽量做出清楚、完整、可编辑的曲面。",
+    "provider": "vertex",
+    "model": "gemini-4-argon"
+  },
+  "accepted": {
+    "existing": false,
+    "id": "4696dd34aba04bd9b23e6f4d121277e0"
+  },
+  "job": {
+    "cancel": 0,
+    "chat_id": "chat-dbf45c2beeab4d82b613d65f6574aa4e",
+    "created": 1792765363.9527955,
+    "error": "studio3d_build_failed",
+    "id": "4696dd34aba04bd9b23e6f4d121277e0",
+    "phase": "没有自动重试",
+    "receipt": null,
+    "status": "FAILED",
+    "turn_id": "studio3d-4696dd34aba04bd9b23e6f4d121277e0"
+  },
+  "error": "3D job FAILED: studio3d_build_failed",
+  "usage": [
+    {
+      "billing": {
+        "amount": 0.07026,
+        "currency": "USD",
+        "price": {
+          "cache_read": 0.2,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 4,
+          "max_input_tokens": 1000000,
+          "output": 20,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+        },
+        "reason": "token_rates"
+      },
+      "connection_label": "Google Vertex",
+      "created": 1792765364.0552704,
+      "error": null,
+      "id": 28,
+      "key_label": "原有凭据 · v1",
+      "model": "gemini-4-argon",
+      "provider": "vertex",
+      "status": "SUCCEEDED",
+      "turn_id": "studio3d-4696dd34aba04bd9b23e6f4d121277e0",
+      "usage": {
+        "completion_tokens": 3317,
+        "prompt_tokens": 980,
+        "total_tokens": 4297
+      }
+    }
+  ]
+}

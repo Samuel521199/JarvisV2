@@ -1,0 +1,269 @@
+{
+  "schema_version": 1,
+  "type": "documentation-closure-audit",
+  "date": "2026-10-26",
+  "design_status": "proposed",
+  "runtime_code_changes": false,
+  "business_tests_run": false,
+  "business_score_added": false,
+  "new_automations_created": false,
+  "audit_scope": "权威文档与指定源码片段的静态审查；不是全量代码审计，不读取用户业务数据，不执行真实外部效果。",
+  "verdict": "主链与局部实现基础存在；完整端到端、长期与全领域闭环尚未证明。设计补充不改变未实现/未验证状态。",
+  "source_observations": [
+    {
+      "path": "host/memory.py",
+      "sha256": "88c4ec80bd85662e267089ed2e0ffc437dbc55f8424b3733ceb255cdea8757a8",
+      "lines": [
+        183,
+        208
+      ],
+      "observation": "完成目标的受限模板候选与 REJOINED 关联；不代表条件化归纳/跨任务效用闭环"
+    },
+    {
+      "path": "host/task_scheduler.py",
+      "sha256": "96b2aa538c480cfaafce691813e33fbb96ccb78137d94986e01598fc85189a9d",
+      "lines": [
+        104,
+        184
+      ],
+      "observation": "持久队列、资源等待、UNKNOWN 停派；未据此推断存在全部外部依赖的通用持久唤醒"
+    },
+    {
+      "path": "host/assistant.py",
+      "sha256": "666f47be894d945835d85eeeb90456a97f715f71d49e84d848e68e25b225ea6e",
+      "lines": [
+        127,
+        148
+      ],
+      "observation": "原任务状态和工具结果投影；不是完整逐目标验收和用户后续反馈"
+    },
+    {
+      "path": "modules/release_recovery/packages.py",
+      "sha256": "3dc928f401cc4f9c5bd0b50788e96fa7a1464d1bc75437e74f9cb48b75839533",
+      "lines": [
+        208,
+        236
+      ],
+      "observation": "隔离/回退及两个观察后 STABLE；不把状态枚举当长期可靠性证据"
+    },
+    {
+      "path": "host/goal_growth.py",
+      "sha256": "1c005501b9ab1dafeef13f2e0646a3a348e282e03d761a5d0af256f01f7c9fdb",
+      "lines": [
+        144,
+        186
+      ],
+      "observation": "受限研发精确候选检查及原目标回接；不能外推任意模块自愈"
+    }
+  ],
+  "already_defined_not_claimed_missing": [
+    "共享预算与前台资源",
+    "独立评价和固定量表",
+    "撤权、纠正、遗忘",
+    "UNKNOWN 对账与恢复",
+    "组合版本回归",
+    "候选/经验反例和退出条件"
+  ],
+  "handoffs_to_complete": [
+    "根目标条目结案",
+    "持久等待与可靠唤醒",
+    "交付后迟到纠正",
+    "部分效果与业务补救",
+    "自愈后原工作回接",
+    "评价器校准与漂移",
+    "多循环共同收敛",
+    "累计退化与组合效果",
+    "经验实际收益与迟到反证",
+    "陪伴/学习/长期职责/设备的领域出口"
+  ],
+  "new_validation_cases": {
+    "ids": [
+      "V-CLC-01",
+      "V-CLC-02",
+      "V-CLC-03",
+      "V-CLC-04",
+      "V-CLC-05",
+      "V-CLC-06",
+      "V-CLC-07",
+      "V-CLC-08",
+      "V-CLC-09",
+      "V-CLC-10"
+    ],
+    "status": "NOT_RUN"
+  },
+  "authority_sections": {
+    "docs/decisions-review.md": [
+      "closed-loop-audit",
+      "closure-audit-method",
+      "closure-current-evidence",
+      "closure-gap-register",
+      "closure-composite-counterexample",
+      "closure-audit-priorities",
+      "closure-gap-01",
+      "closure-gap-02",
+      "closure-gap-03",
+      "closure-gap-04",
+      "closure-gap-05",
+      "closure-gap-06",
+      "closure-gap-07",
+      "closure-gap-08",
+      "closure-gap-09",
+      "closure-gap-10"
+    ],
+    "docs/tasks-agents.md": [
+      "goal-outcome-closure",
+      "goal-completion-reconciliation",
+      "durable-wait-resumption",
+      "business-remediation-closure"
+    ],
+    "docs/contracts.md": [
+      "closure-handoff-records"
+    ],
+    "docs/health-maintenance.md": [
+      "multi-loop-recovery-coordination"
+    ],
+    "docs/knowledge-learning.md": [
+      "experience-delayed-outcome"
+    ],
+    "docs/evolution-release.md": [
+      "cumulative-evolution-guard"
+    ],
+    "docs/delivery-validation.md": [
+      "closure-validation-protocol",
+      "evaluator-calibration-closure",
+      "closure-validation-cases",
+      "closure-validation-register"
+    ],
+    "docs/interaction-persona.md": [
+      "companion-learning-outcome-closure"
+    ],
+    "docs/core-bootstrap.md": [
+      "closure-stage-integration"
+    ],
+    "docs/grok-bot-comparison.md": [
+      "jarvis-closure-audit-summary"
+    ],
+    "docs/architecture-atlas.md": [
+      "figure-assistant-loop-closure"
+    ]
+  },
+  "preserved_forecast": {
+    "path": "docs/evidence/assistant-forecast-r1-2026-10-26.json",
+    "sha256": "035f34e43b8b1f7c974202c0820fef905abe86674c5089be6be28a44a76ef66f",
+    "unchanged": true
+  },
+  "render_receipt": "docs/evidence/closed-loop-render-2026-10-26.json",
+  "visual_review": {
+    "status": "PASS",
+    "method": "view_image 实际生成 PNG",
+    "notes": "补显式退出和仍需等待分支；改取消回接连线避免穿过反馈节点。最终中文及连线可读，无可见裁切。"
+  },
+  "hypothetical_counterexamples": [
+    "质量 90 起每轮减 0.5，十轮为 85，仅算术反例，非实测或容许阈值",
+    "交付后用户迟到纠正与旧经验扩散",
+    "修复与评价组件同时失效"
+  ],
+  "checks": {
+    "navigation_sync": {
+      "status": "PASS",
+      "output": "OK navigation: 13 updated"
+    },
+    "documentation_check": {
+      "status": "PASS",
+      "output": "OK documents=28 chapters=24 diagrams=46 local_links=3309 errors=0"
+    },
+    "scoped_diff_check": {
+      "status": "PASS",
+      "paths": [
+        "README.md",
+        "docs/README.md",
+        "docs/MAINTENANCE.md",
+        "docs/architecture-atlas.md",
+        "docs/contracts.md",
+        "docs/core-bootstrap.md",
+        "docs/decisions-review.md",
+        "docs/delivery-validation.md",
+        "docs/evolution-release.md",
+        "docs/health-maintenance.md",
+        "docs/interaction-persona.md",
+        "docs/knowledge-learning.md",
+        "docs/tasks-agents.md",
+        "docs/grok-bot-comparison.md",
+        "docs/manifest.json",
+        "tools/render_memory_diagrams.cjs"
+      ],
+      "output": ""
+    },
+    "utf8_and_new_text_whitespace": "PASS",
+    "ten_gaps_and_ten_validation_cases": "PASS",
+    "inspected_source_unchanged": "PASS",
+    "original_prediction_unchanged": "PASS"
+  },
+  "artifact_digests": [
+    {
+      "path": "README.md",
+      "sha256": "356b78ee3571610e3a74edf42115ffc4adf9b385ee2ea61600fde7e343a0e2ec"
+    },
+    {
+      "path": "docs/README.md",
+      "sha256": "394caff58408f6834ee1c27f00fbf20f209b401a5f680b36e2399e12234c279b"
+    },
+    {
+      "path": "docs/MAINTENANCE.md",
+      "sha256": "2ec8b4a0009122f2cbe31bcf5d3ef2f4e903ff164bd63c39ce925b367e0ae2b5"
+    },
+    {
+      "path": "docs/architecture-atlas.md",
+      "sha256": "135108ff7a77c5e8da6d7e2fbc460bc0c8bc59129ca1cfdccecc4f2f6b4df10a"
+    },
+    {
+      "path": "docs/contracts.md",
+      "sha256": "be80e10745056cd4ae46b36f53db26eea902b328e653818809d143f486c1074b"
+    },
+    {
+      "path": "docs/core-bootstrap.md",
+      "sha256": "b2a6eafc2a47837e8b6e049808cf6207df1b88642f3ae06a2bad227840e49292"
+    },
+    {
+      "path": "docs/decisions-review.md",
+      "sha256": "e0587f9b59007b9097404e79ffa70a8c273ad04ec856cacc7023f05dbc5013e2"
+    },
+    {
+      "path": "docs/delivery-validation.md",
+      "sha256": "f7ab4a3b12383c15bee35e97f3a1655d982a65a00ac16bc91c8c416dd07e6ffa"
+    },
+    {
+      "path": "docs/evolution-release.md",
+      "sha256": "f81b75ebe11d6707030a7a96722a972b7f8a32700e3958bdd98ac61edfe7ffad"
+    },
+    {
+      "path": "docs/health-maintenance.md",
+      "sha256": "9fe8a6965a90076da3a0358b8b2ddb377817a71a273d23db33ae0cadbcbef29c"
+    },
+    {
+      "path": "docs/interaction-persona.md",
+      "sha256": "a8eed0ac1dffc80710dc468dc6d00a6899faeead3c582b074ec57d13f6da01c6"
+    },
+    {
+      "path": "docs/knowledge-learning.md",
+      "sha256": "f0aaa5372586f6e576e1b038e18be230c4c68b52bde7618d4bc8c44e0452bcd4"
+    },
+    {
+      "path": "docs/tasks-agents.md",
+      "sha256": "b12033296371c14824f78e8a0716717a14ff4dfa9f3f11ff9ec24330096c0769"
+    },
+    {
+      "path": "docs/grok-bot-comparison.md",
+      "sha256": "14739dd5e1434262924f722def0429898143d613d8dd650a697b37b95a0d75a5"
+    },
+    {
+      "path": "docs/manifest.json",
+      "sha256": "17f613a3a9167d4031bfbe445ee464bacbd1248ce1c7f0b10b973a354b2ed551"
+    },
+    {
+      "path": "tools/render_memory_diagrams.cjs",
+      "sha256": "e02b78ecd6445d657ba0fecdb69260b8835b09a775ec1d66c80902b4941b8d2c"
+    }
+  ],
+  "completed_at": "2026-10-26T10:17:24.115160+00:00"
+}

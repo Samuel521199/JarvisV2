@@ -1,0 +1,22 @@
+flowchart TB
+  S["稳定通路<br/>继续日常交付，保留可恢复基线"]
+  S -->|只读回放或隔离副本| C["候选改造<br/>结构假设 · 缺陷清单 · 研究预算"]
+  C --> E["分别评价<br/>结构证据 / 当前交付 / 新能力"]
+  E --> G{"当前表现与关键条件<br/>支持在目标范围采用？"}
+  G -->|是| P["限定范围采用<br/>真实观察，保留恢复方式"]
+  P -->|验证后更新| S
+  G -->|否| R{"有可验证潜力<br/>且研究预算仍有效？"}
+  R -->|是| F["隔离修复或缩小范围<br/>不替换默认服务，不重置预算"]
+  F --> E
+  R -->|否| X["停止扩大或结束候选<br/>保留有用部分和失败证据"]
+  N["代码、知识、检索共同核对<br/>恢复不复活撤权、不重放外部效果"]
+  P -.-> N
+  X -.-> N
+  classDef stable fill:#e6f3ee,stroke:#7ba493,color:#193b34;
+  classDef candidate fill:#e8effb,stroke:#7894bb,color:#19324f;
+  classDef decision fill:#fff2dc,stroke:#bc9456,color:#513c1c;
+  classDef stop fill:#f9e9e8,stroke:#bd8580,color:#603632;
+  class S,P stable;
+  class C,E,F,N candidate;
+  class G,R decision;
+  class X stop;

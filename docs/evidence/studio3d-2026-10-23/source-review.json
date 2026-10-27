@@ -1,0 +1,80 @@
+{
+  "checked_at": "2026-10-23",
+  "implementation": "Independent first-party adapter. No upstream Blender MCP code copied; no installer or new third-party dependency run. Existing Blender binary registered.",
+  "selected": {
+    "software": "Blender 5.2.0 LTS",
+    "source": "https://www.blender.org/",
+    "license": "GPL-2.0-or-later",
+    "renderers": [
+      "Cycles",
+      "EEVEE"
+    ],
+    "binary": {
+      "version": "Blender 5.2.0 LTS",
+      "executable": "D:\\soft\\Blender Foundation\\Blender 5.2\\blender.exe",
+      "executable_sha256": "e27fbfea8564aa645d4463cb0949695fd85562b9de6df9561b06859a1074adf7",
+      "runtime_sha256": "bddad269e59546cd68be22e26bafd9a0201018e560856ef54efc853fc7c33356",
+      "source": "https://www.blender.org/",
+      "license": "GPL-2.0-or-later",
+      "review_scope": "Existing local installation, version and SHA256 fixed; no download, addon or install script. This is not publisher-signature or vulnerability certification."
+    }
+  },
+  "research": [
+    {
+      "name": "Blender",
+      "url": "https://www.blender.org/",
+      "status": "used installed runtime",
+      "role": "curved mesh/PBR/render/export"
+    },
+    {
+      "name": "MCP for Blender",
+      "url": "https://github.com/ahujasid/blender-mcp",
+      "license": "MIT",
+      "status": "reference only; no code copied or generic Python endpoint exposed to Jarvis",
+      "role": "research AI control patterns"
+    },
+    {
+      "name": "Material Maker",
+      "url": "https://github.com/RodZill4/material-maker",
+      "license": "MIT",
+      "status": "candidate not installed",
+      "role": "PBR texture authoring and painting"
+    },
+    {
+      "name": "Instant Meshes",
+      "url": "https://github.com/wjakob/instant-meshes",
+      "license": "BSD-3-Clause",
+      "status": "candidate not installed",
+      "role": "field-aligned remeshing; does not guarantee production topology"
+    },
+    {
+      "name": "MeshLab",
+      "url": "https://github.com/cnr-isti-vclab/meshlab",
+      "license": "GPL",
+      "status": "candidate not installed",
+      "role": "mesh cleanup and processing"
+    },
+    {
+      "name": "TRELLIS.2",
+      "url": "https://github.com/microsoft/TRELLIS.2",
+      "license": "MIT",
+      "status": "not installed; official Linux and NVIDIA 24GB minimum incompatible with this AMD integrated GPU setup",
+      "role": "high-fidelity image-to-3D; not mechanical reconstruction"
+    },
+    {
+      "name": "Poly Haven",
+      "url": "https://polyhaven.com/license",
+      "license": "CC0 assets",
+      "status": "asset source recommendation only; no asset downloaded",
+      "role": "models, HDRIs and textures; API/service terms separate"
+    },
+    {
+      "name": "Gemini 4 Argon",
+      "url": "https://deepmind.google/models/gemini/",
+      "status": "existing Jarvis Vertex route; actual paid probe succeeded",
+      "role": "bounded scene planner; official Blender showcase does not prove this adapter has full showcase capability"
+    }
+  ],
+  "worker_license_file": "modules/skills/studio3d/BLENDER-WORKER-LICENSE.txt",
+  "worker_license_sha256": "92e8c0f0e4d0f8adc34eef4fa03da369aeb267a5a5f94473df138ff6645f30b9"
+}

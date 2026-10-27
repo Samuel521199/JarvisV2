@@ -1,0 +1,118 @@
+{
+  "status": "proposed design; no native resident shell implemented in this increment",
+  "recorded_at": "2026-10-25T10:50:27.192664+08:00",
+  "hardware": {
+    "model": "ROG Flow Z13 GZ302EA",
+    "cpu": "AMD Ryzen AI MAX+ 395",
+    "cores": 16,
+    "system_total_ram_gib": 123.6,
+    "gpu": "AMD Radeon 8060S Graphics",
+    "note": "Not free RAM or dedicated VRAM; no load/energy benchmark"
+  },
+  "read_only_observations": {
+    "workbench_port": 18282,
+    "task_runner": "idle",
+    "shared_background_model_lane": "idle",
+    "control": "ready",
+    "returned_task_records": {
+      "SUCCEEDED": 17
+    },
+    "returned_development_records": {
+      "SUCCEEDED": 4
+    },
+    "returned_goal_records": {
+      "ACCEPTED": 5,
+      "CANCELLED": 1
+    },
+    "scope": "Point-in-time selected Jarvis endpoints only; not a live system-wide job count; accepted goals are not necessarily running"
+  },
+  "source_files_inspected": [
+    "apps/workbench/server.py",
+    "apps/workbench/brand-state.js",
+    "host/background.py",
+    "modules/dialogue/store.py"
+  ],
+  "sources": [
+    {
+      "url": "https://x.ai/bot",
+      "scope": "official product description"
+    },
+    {
+      "url": "https://x.ai/news/introducing-grok-bot",
+      "scope": "official launch description"
+    },
+    {
+      "url": "https://github.com/milind-soni/OpenMausBot",
+      "scope": "README architecture/features and stated Apache-2.0 license"
+    },
+    {
+      "url": "https://github.com/openclaw/openclaw",
+      "scope": "README architecture and stated MIT license"
+    },
+    {
+      "url": "https://docs.openclaw.ai/gateway",
+      "scope": "event/snapshot and gap recovery description"
+    },
+    {
+      "url": "https://github.com/ob-f/OpenBot",
+      "scope": "README identifies physical robotics, stated MIT license"
+    },
+    {
+      "url": "https://v2.tauri.app/learn/system-tray/",
+      "scope": "candidate native shell API"
+    },
+    {
+      "url": "https://v2.tauri.app/plugin/global-shortcut/",
+      "scope": "candidate native shell API"
+    },
+    {
+      "url": "https://v2.tauri.app/reference/javascript/api/namespacewindow/",
+      "scope": "dragging/cursor/window methods; per-pixel hit testing unverified"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/microsoft-edge/webview2/concepts/overview-features-apis",
+      "scope": "embedded view/native integration reference"
+    }
+  ],
+  "brand_sha256": "3d66ab1a1d125e12ef289eaca563e37bc12b762b0c9d135f5f5c42902f610e4a",
+  "prototype": {
+    "task_data": "explicitly labelled synthetic examples",
+    "network_calls": false,
+    "native_features": "not implemented; browser-only layout and local interactions",
+    "checks": {
+      "javascript_syntax": "passed",
+      "browser": "passed at 1280px browser width",
+      "interactions": [
+        "answer changes pending 1 to 0 and running 2 to 3",
+        "stop one task reduces running 3 to 2, others continue",
+        "collapse panel and reopen from tray simulation",
+        "switch between sprite and edge-strip variants"
+      ],
+      "logos_loaded": true,
+      "horizontal_overflow": false,
+      "console_errors_or_warnings": [],
+      "not_verified": [
+        "native shell, draggable desktop window, real tray, global hotkeys and speech",
+        "all narrow screen sizes and native power usage"
+      ],
+      "fragment_sha256": "dd1863d1a6b37cf59205c52128c2be15e59d242326081f97640a41c4db44baa4",
+      "screenshot": "design-preview.png"
+    }
+  },
+  "limits": [
+    "No upstream installation, execution, complete code audit, benchmark reproduction or license dependency audit",
+    "No autostart, microphone, screen capture or recurring monitoring enabled",
+    "Existing tasks, model settings and user credentials unchanged",
+    "Framework choice and performance budgets are proposals, not measured results"
+  ],
+  "documentation_check": {
+    "status": "passed",
+    "documents": 27,
+    "chapters": 23,
+    "diagrams": 39,
+    "local_links": 2569,
+    "errors": 0,
+    "navigation": "0 updates remaining",
+    "diff": "passed for touched design/reference/manifest files"
+  }
+}

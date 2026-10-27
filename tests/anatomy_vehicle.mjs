@@ -1,0 +1,13 @@
+import fs from 'node:fs';import assert from 'node:assert/strict';
+import {assemblyItems,assemblyOffsets,operationReady,vehicleKinematics,operationTransforms,transformPoint} from '../modules/skills/anatomy/engineering-motion.mjs';
+const s=JSON.parse(fs.readFileSync(new URL('../modules/skills/anatomy/engineering-presets.json',import.meta.url)))['vehicle-chassis'];
+const parts=assemblyItems(s),groups=assemblyItems(s,'','groups'),batch=assemblyItems(s,'rear-drive','parallel');assert.equal(parts.length,32);assert.equal(groups.length,5);assert.equal(batch.length,9);assert.equal(batch[0].parts.length,2);
+assert.equal(Object.keys(assemblyOffsets(s,parts,0,0)).length,0);assert.equal(Object.keys(assemblyOffsets(s,groups,5,0)).length,32);
+const offsets=assemblyOffsets(s,groups,1.5,0);assert.deepEqual(offsets['motor-rotor'],offsets['halfshaft-left']);assert.deepEqual(offsets['motor-rotor'],[0,0,-50]);
+const parallel=assemblyOffsets(s,batch,.5,0);assert.equal(Object.keys(parallel).length,2);assert.deepEqual(parallel['rear-mount-left'],[0,0,-40]);
+const assembly={collisions:[],fits:[],insertion:{hits:[]},groups:{hits:[],parallel_internal:{hits:[]}},operation:{status:'clear_at_sampled_poses'}},v={scope:'',progress:5,total:5,explode:0,playing:false,assembly};assert.ok(operationReady(v));
+for(const change of [{scope:'rear-drive'},{progress:4},{explode:.01},{playing:true},{assembly:{...assembly,operation:null}},{assembly:{...assembly,groups:{hits:[{}]}}},{assembly:{...assembly,fits:[{status:'mismatch'}]}}])assert.equal(operationReady({...v,...change}),false);
+const k=vehicleKinematics(s.operation,20);assert.ok(k.steer_deg[2]>k.steer_deg[3]);assert.ok(k.speed_ratios[0]<k.speed_ratios[1]);
+const t=operationTransforms(s,[.1,.2,.3,.4],20);assert.ok(!t['battery']);assert.ok(t['knuckle-left']);assert.deepEqual(transformPoint(null,[1,2,3]),[1,2,3]);
+fs.writeFileSync(new URL('../docs/evidence/anatomy-vehicle-2026-10-23/js-math.json',import.meta.url),JSON.stringify({kinematics:k,transforms:t}));
+console.log('vehicle: assembly partitions, rigid groups, concurrent batches, run gating and steering math passed');

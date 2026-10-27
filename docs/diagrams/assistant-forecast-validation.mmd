@@ -1,0 +1,27 @@
+flowchart TB
+  P["事前登记预测版本<br/>指标、增益区间、条件与代价"]
+  P --> F["冻结实验<br/>任务与量表 · 环境与预算<br/>判定容差和样本方案"]
+  F --> B["原版本基线<br/>真实产物与回执"]
+  F --> A["候选改进版本<br/>同条件任务与完整成本"]
+  B --> M["逐任务配对比较<br/>评分与增益 · 成本与区间<br/>保留全部失败明细"]
+  A --> M
+  M --> G{"硬条件通过<br/>且比较有效？"}
+  G -->|否| N["拒绝扩大／不可比较<br/>记录失败、污染、版本差异或缺失"]
+  G -->|是| J["对照事前预测区间<br/>同时考虑实测不确定性"]
+  J --> L["低于预期<br/>查原因，修复或回退"]
+  J --> I["符合预期<br/>按已有发布规则采用"]
+  J --> H["好于预期<br/>复测与保留任务确认"]
+  J --> U["证据不足<br/>标记初步倾向，补充样本"]
+  L --> R["追加复盘与下一版预测<br/>保留原预测和本轮结果，不改写历史"]
+  I --> R
+  H --> R
+  U --> R
+  N --> R
+  classDef plan fill:#e8effb,stroke:#7894bb,color:#19324f;
+  classDef evidence fill:#e6f3ee,stroke:#7ba493,color:#193b34;
+  classDef judgement fill:#fff2dc,stroke:#bc9456,color:#513c1c;
+  classDef stopped fill:#f9e9e8,stroke:#bd8580,color:#603632;
+  class P,F,R plan;
+  class B,A,M evidence;
+  class G,J,L,I,H,U judgement;
+  class N stopped;

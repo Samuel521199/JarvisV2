@@ -1,0 +1,441 @@
+{
+  "cases": [
+    {
+      "id": "comparison-exact",
+      "domain": "comparison",
+      "basis": {
+        "revision": 1,
+        "entries": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "quote": "甲方案价格90元，交期3天。",
+            "source_turn": "calibration-source",
+            "start": 0,
+            "end": 14
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "quote": "明天10点询问保修，不下单。",
+            "source_turn": "calibration-source",
+            "start": 15,
+            "end": 29
+          }
+        ],
+        "source_turn": "calibration-source",
+        "digest": "0bd5d2cda227bb9dff98f5a11da94a92f8258c550a4d29fd0cab331b069f4a8e"
+      },
+      "reply": "甲方案价格90元，交期3天。\n明天10点询问保修，不下单。",
+      "preset_semantic_defect": false
+    },
+    {
+      "id": "comparison-paraphrase",
+      "domain": "comparison",
+      "basis": {
+        "revision": 1,
+        "entries": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "quote": "甲方案价格90元，交期3天。",
+            "source_turn": "calibration-source",
+            "start": 0,
+            "end": 14
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "quote": "明天10点询问保修，不下单。",
+            "source_turn": "calibration-source",
+            "start": 15,
+            "end": 29
+          }
+        ],
+        "source_turn": "calibration-source",
+        "digest": "0bd5d2cda227bb9dff98f5a11da94a92f8258c550a4d29fd0cab331b069f4a8e"
+      },
+      "reply": "甲报价九十元，三天交货；次日上午十时问保修，暂不购买。",
+      "preset_semantic_defect": false
+    },
+    {
+      "id": "comparison-missing-plan",
+      "domain": "comparison",
+      "basis": {
+        "revision": 1,
+        "entries": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "quote": "甲方案价格90元，交期3天。",
+            "source_turn": "calibration-source",
+            "start": 0,
+            "end": 14
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "quote": "明天10点询问保修，不下单。",
+            "source_turn": "calibration-source",
+            "start": 15,
+            "end": 29
+          }
+        ],
+        "source_turn": "calibration-source",
+        "digest": "0bd5d2cda227bb9dff98f5a11da94a92f8258c550a4d29fd0cab331b069f4a8e"
+      },
+      "reply": "甲方案价格90元，交期3天。",
+      "preset_semantic_defect": true
+    },
+    {
+      "id": "comparison-changed-time",
+      "domain": "comparison",
+      "basis": {
+        "revision": 1,
+        "entries": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "quote": "甲方案价格90元，交期3天。",
+            "source_turn": "calibration-source",
+            "start": 0,
+            "end": 14
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "quote": "明天10点询问保修，不下单。",
+            "source_turn": "calibration-source",
+            "start": 15,
+            "end": 29
+          }
+        ],
+        "source_turn": "calibration-source",
+        "digest": "0bd5d2cda227bb9dff98f5a11da94a92f8258c550a4d29fd0cab331b069f4a8e"
+      },
+      "reply": "甲方案价格90元，交期3天。\n今天15点询问保修，不下单。",
+      "preset_semantic_defect": true
+    },
+    {
+      "id": "comparison-unsupported-addition",
+      "domain": "comparison",
+      "basis": {
+        "revision": 1,
+        "entries": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "quote": "甲方案价格90元，交期3天。",
+            "source_turn": "calibration-source",
+            "start": 0,
+            "end": 14
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "quote": "明天10点询问保修，不下单。",
+            "source_turn": "calibration-source",
+            "start": 15,
+            "end": 29
+          }
+        ],
+        "source_turn": "calibration-source",
+        "digest": "0bd5d2cda227bb9dff98f5a11da94a92f8258c550a4d29fd0cab331b069f4a8e"
+      },
+      "reply": "甲方案价格90元，交期3天。\n明天10点询问保修，不下单。\n该方案已经确认终身保修。",
+      "preset_semantic_defect": true
+    },
+    {
+      "id": "documents-exact",
+      "domain": "documents",
+      "basis": {
+        "revision": 1,
+        "entries": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "quote": "数据导出失败，原因未知。",
+            "source_turn": "calibration-source",
+            "start": 0,
+            "end": 12
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "quote": "明天10点检查日志，不重跑导出。",
+            "source_turn": "calibration-source",
+            "start": 13,
+            "end": 29
+          }
+        ],
+        "source_turn": "calibration-source",
+        "digest": "05e6a5b374340199525340fa96f2eff8bb57f888f5c17a4aaa7a6ad69323cc80"
+      },
+      "reply": "数据导出失败，原因未知。\n明天10点检查日志，不重跑导出。",
+      "preset_semantic_defect": false
+    },
+    {
+      "id": "documents-paraphrase",
+      "domain": "documents",
+      "basis": {
+        "revision": 1,
+        "entries": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "quote": "数据导出失败，原因未知。",
+            "source_turn": "calibration-source",
+            "start": 0,
+            "end": 12
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "quote": "明天10点检查日志，不重跑导出。",
+            "source_turn": "calibration-source",
+            "start": 13,
+            "end": 29
+          }
+        ],
+        "source_turn": "calibration-source",
+        "digest": "05e6a5b374340199525340fa96f2eff8bb57f888f5c17a4aaa7a6ad69323cc80"
+      },
+      "reply": "导出没成功且原因尚不清楚；次日上午十时查日志，不重新执行。",
+      "preset_semantic_defect": false
+    },
+    {
+      "id": "documents-missing-plan",
+      "domain": "documents",
+      "basis": {
+        "revision": 1,
+        "entries": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "quote": "数据导出失败，原因未知。",
+            "source_turn": "calibration-source",
+            "start": 0,
+            "end": 12
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "quote": "明天10点检查日志，不重跑导出。",
+            "source_turn": "calibration-source",
+            "start": 13,
+            "end": 29
+          }
+        ],
+        "source_turn": "calibration-source",
+        "digest": "05e6a5b374340199525340fa96f2eff8bb57f888f5c17a4aaa7a6ad69323cc80"
+      },
+      "reply": "数据导出失败，原因未知。",
+      "preset_semantic_defect": true
+    },
+    {
+      "id": "documents-changed-time",
+      "domain": "documents",
+      "basis": {
+        "revision": 1,
+        "entries": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "quote": "数据导出失败，原因未知。",
+            "source_turn": "calibration-source",
+            "start": 0,
+            "end": 12
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "quote": "明天10点检查日志，不重跑导出。",
+            "source_turn": "calibration-source",
+            "start": 13,
+            "end": 29
+          }
+        ],
+        "source_turn": "calibration-source",
+        "digest": "05e6a5b374340199525340fa96f2eff8bb57f888f5c17a4aaa7a6ad69323cc80"
+      },
+      "reply": "数据导出失败，原因未知。\n今天15点检查日志，不重跑导出。",
+      "preset_semantic_defect": true
+    },
+    {
+      "id": "documents-unsupported-addition",
+      "domain": "documents",
+      "basis": {
+        "revision": 1,
+        "entries": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "quote": "数据导出失败，原因未知。",
+            "source_turn": "calibration-source",
+            "start": 0,
+            "end": 12
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "quote": "明天10点检查日志，不重跑导出。",
+            "source_turn": "calibration-source",
+            "start": 13,
+            "end": 29
+          }
+        ],
+        "source_turn": "calibration-source",
+        "digest": "05e6a5b374340199525340fa96f2eff8bb57f888f5c17a4aaa7a6ad69323cc80"
+      },
+      "reply": "数据导出失败，原因未知。\n明天10点检查日志，不重跑导出。\n失败原因已经确定为内存不足。",
+      "preset_semantic_defect": true
+    },
+    {
+      "id": "learning-exact",
+      "domain": "learning",
+      "basis": {
+        "revision": 1,
+        "entries": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "quote": "学习者只看过讲解，尚未独立作答。",
+            "source_turn": "calibration-source",
+            "start": 0,
+            "end": 16
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "quote": "明天10点独立复测，不给提示。",
+            "source_turn": "calibration-source",
+            "start": 17,
+            "end": 32
+          }
+        ],
+        "source_turn": "calibration-source",
+        "digest": "29dfac57b07c67071bb3b9f2f82506237f742bf80123ec7b39fd2bfa13606772"
+      },
+      "reply": "学习者只看过讲解，尚未独立作答。\n明天10点独立复测，不给提示。",
+      "preset_semantic_defect": false
+    },
+    {
+      "id": "learning-paraphrase",
+      "domain": "learning",
+      "basis": {
+        "revision": 1,
+        "entries": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "quote": "学习者只看过讲解，尚未独立作答。",
+            "source_turn": "calibration-source",
+            "start": 0,
+            "end": 16
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "quote": "明天10点独立复测，不给提示。",
+            "source_turn": "calibration-source",
+            "start": 17,
+            "end": 32
+          }
+        ],
+        "source_turn": "calibration-source",
+        "digest": "29dfac57b07c67071bb3b9f2f82506237f742bf80123ec7b39fd2bfa13606772"
+      },
+      "reply": "学生仅阅读了解释、没有自己回答；次日上午十时无提示复习测验。",
+      "preset_semantic_defect": false
+    },
+    {
+      "id": "learning-missing-plan",
+      "domain": "learning",
+      "basis": {
+        "revision": 1,
+        "entries": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "quote": "学习者只看过讲解，尚未独立作答。",
+            "source_turn": "calibration-source",
+            "start": 0,
+            "end": 16
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "quote": "明天10点独立复测，不给提示。",
+            "source_turn": "calibration-source",
+            "start": 17,
+            "end": 32
+          }
+        ],
+        "source_turn": "calibration-source",
+        "digest": "29dfac57b07c67071bb3b9f2f82506237f742bf80123ec7b39fd2bfa13606772"
+      },
+      "reply": "学习者只看过讲解，尚未独立作答。",
+      "preset_semantic_defect": true
+    },
+    {
+      "id": "learning-changed-time",
+      "domain": "learning",
+      "basis": {
+        "revision": 1,
+        "entries": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "quote": "学习者只看过讲解，尚未独立作答。",
+            "source_turn": "calibration-source",
+            "start": 0,
+            "end": 16
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "quote": "明天10点独立复测，不给提示。",
+            "source_turn": "calibration-source",
+            "start": 17,
+            "end": 32
+          }
+        ],
+        "source_turn": "calibration-source",
+        "digest": "29dfac57b07c67071bb3b9f2f82506237f742bf80123ec7b39fd2bfa13606772"
+      },
+      "reply": "学习者只看过讲解，尚未独立作答。\n今天15点独立复测，不给提示。",
+      "preset_semantic_defect": true
+    },
+    {
+      "id": "learning-unsupported-addition",
+      "domain": "learning",
+      "basis": {
+        "revision": 1,
+        "entries": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "quote": "学习者只看过讲解，尚未独立作答。",
+            "source_turn": "calibration-source",
+            "start": 0,
+            "end": 16
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "quote": "明天10点独立复测，不给提示。",
+            "source_turn": "calibration-source",
+            "start": 17,
+            "end": 32
+          }
+        ],
+        "source_turn": "calibration-source",
+        "digest": "29dfac57b07c67071bb3b9f2f82506237f742bf80123ec7b39fd2bfa13606772"
+      },
+      "reply": "学习者只看过讲解，尚未独立作答。\n明天10点独立复测，不给提示。\n学习者已经全面掌握该知识。",
+      "preset_semantic_defect": true
+    }
+  ],
+  "origin": "first_party_synthetic_preset_labels",
+  "independent_human_reference": false
+}

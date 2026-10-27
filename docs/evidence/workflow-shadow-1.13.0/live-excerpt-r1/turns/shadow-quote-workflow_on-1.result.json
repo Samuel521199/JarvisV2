@@ -1,0 +1,174 @@
+{
+  "case_id": "shadow-quote",
+  "domain": "comparison",
+  "arm": "workflow_on",
+  "turn": 1,
+  "freeze_digest": "4f28282101f06a3faf5650901bfa7a2f7b521eebf93358be43a244bceabc01a6",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\"document\":\"## 事实\\n- [F1] 甲方案价格90元，交期3天。\\n- [F2] 乙方案价格85元，交期4天。\\n\\n## 已确认计划\\n- [P1] 明天10点询问保修，不下单。\\n\\n## 建议（未采纳）\\n- 无\",\"evidence\":{\"facts\":[{\"quote\":\"甲方案价格90元，交期3天。\",\"source\":\"F1\"},{\"quote\":\"乙方案价格85元，交期4天。\",\"source\":\"F2\"}],\"plans\":[{\"quote\":\"明天10点询问保修，不下单。\",\"source\":\"P1\"}],\"suggestions\":[]},\"selected\":\"乙\"}",
+  "skill_id": null,
+  "skill_version": null,
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 6.5032,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 207,
+        "prompt_tokens": 1943,
+        "total_tokens": 2150
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.0022335,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/shadow-quote-workflow_on-1.native.json",
+      "sha256": "5c3490cfbcc7235af8e87d5f65fcd3e2b2f7d848a7298a84c50e3ddfb20ae0c0",
+      "kind": "native_protocol_response"
+    },
+    {
+      "file": "artifacts/shadow-quote-workflow_on-1.reply.md.txt",
+      "sha256": "e7e56400b3466c1e9f8c95133dc18bf0d362a41620653e244c8e8c8c9396d78d",
+      "kind": "original_session_reply"
+    },
+    {
+      "file": "artifacts/shadow-quote-workflow_on-1.document.md.txt",
+      "sha256": "20dba445914497dd79b5fd9478b75beb030be7476bf4722e8209e40b2a2a6a72",
+      "kind": "verbatim_document_field_from_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "selected",
+        "status": "passed"
+      },
+      {
+        "id": "document_present",
+        "status": "passed"
+      },
+      {
+        "id": "body_shape",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_document_parity",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "delivery_basis": {
+    "digest": "4ae2087b14ea19430b2564ee103ac8f7a7ce2321b559f76ab116c29e39de53ad",
+    "entries": [
+      {
+        "end": 417,
+        "id": "F1",
+        "kind": "facts",
+        "quote": "甲方案价格90元，交期3天。",
+        "source_turn": "trial-shadow-quote-workflow_on-1",
+        "start": 403
+      },
+      {
+        "end": 432,
+        "id": "F2",
+        "kind": "facts",
+        "quote": "乙方案价格85元，交期4天。",
+        "source_turn": "trial-shadow-quote-workflow_on-1",
+        "start": 418
+      },
+      {
+        "end": 454,
+        "id": "P1",
+        "kind": "plans",
+        "quote": "明天10点询问保修，不下单。",
+        "source_turn": "trial-shadow-quote-workflow_on-1",
+        "start": 440
+      }
+    ],
+    "relative_time_resolution": "UNVERIFIED",
+    "revision": 2,
+    "source_time_utc": "2026-10-27T11:02:25.656319+00:00",
+    "source_turn": "trial-shadow-quote-workflow_on-1"
+  },
+  "delivery_review": {
+    "basis_digest": "4ae2087b14ea19430b2564ee103ac8f7a7ce2321b559f76ab116c29e39de53ad",
+    "basis_revision": 2,
+    "checks": [
+      {
+        "id": "body_shape",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_document_parity",
+        "status": "passed"
+      }
+    ],
+    "method": "source_excerpt",
+    "mode": "shadow",
+    "quality_score": null,
+    "reason": "bounded_document_check_only",
+    "reply_digest": "690a0d144de8d6b02436d178791ab721a4eb9aed3e1d7d165d3e8348b262a362",
+    "state": "EXCERPT_MATCH",
+    "version": "delivery-shadow-1",
+    "would_block": false
+  },
+  "record_digest": "0a4a9b9854e74af9dd574dbdb472a4a78c3a0eebfa36d0bd5f0812c78d00c5c1"
+}

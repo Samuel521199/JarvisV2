@@ -52,7 +52,7 @@ class StopGate:
 class RunLock:
     """One executor per data root. OS releases the lock on process death."""
     def __init__(self, root: Path, lane="executor"):
-        if lane not in {"executor", "development", "dialogue", "planning"}:
+        if lane not in {"executor", "development", "dialogue", "planning", "local-models", "image-generation", "mail", "task-runner"}:
             raise CoreError("invalid_lock", "Unknown runtime lock lane")
         self.path = child(root, "state/" + lane + ".lock")
         self.stream = None

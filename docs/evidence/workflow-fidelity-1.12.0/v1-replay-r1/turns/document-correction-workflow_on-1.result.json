@@ -1,0 +1,91 @@
+{
+  "case_id": "document-correction",
+  "domain": "documents",
+  "arm": "workflow_on",
+  "turn": 1,
+  "freeze_digest": "58e89113b8e37c7cb0dbe11414bd8d9d7f403111ca74ceaf5d1fd9b9c9eba16e",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\"document\":\"# 研发日报\\n\\n- **日期/范围**：2026-10-27\\n- **已完成与依据**：根据你提供的更正记录（S2替换S1），实际完成阅读15分钟（原记录20分钟已更正）；模型渲染完成（依据S1提供记录）。\\n- **进行中或待办**：贴图烘焙尚未开始（更正说明：S2更正S1中烘焙失败状态，实际为还没开始）。\\n- **观察与想法**：贴图烘焙尚未启动，此前排查计划需结合新状态复核。\\n- **下一步**：复核并准备贴图烘焙工作。\",\"minutes\":15,\"render\":\"done\",\"bake\":\"not_started\",\"sources\":[\"S1\",\"S2\"]}",
+  "skill_id": "journal-review",
+  "skill_version": "1.0.0",
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 4.9543,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 219,
+        "prompt_tokens": 1611,
+        "total_tokens": 1830
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.0020295,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/document-correction-workflow_on-1.native.json",
+      "sha256": "c3630d35ab13f7f2094c32c2735c8ceac6b17c35c32799f71d5369d73bfcbbbd",
+      "kind": "native_protocol_response"
+    },
+    {
+      "file": "artifacts/document-correction-workflow_on-1.reply.md.txt",
+      "sha256": "ed9459128133a93f0a0961f0f886f443406a96b0819929cb06276699593ddbae",
+      "kind": "original_session_reply"
+    },
+    {
+      "file": "artifacts/document-correction-workflow_on-1.document.md.txt",
+      "sha256": "0514a66a4d38694ce223e843502091b9decd1086d7b9176683e3ad78919d4cc2",
+      "kind": "verbatim_document_field_from_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "minutes",
+        "status": "passed"
+      },
+      {
+        "id": "render",
+        "status": "passed"
+      },
+      {
+        "id": "bake",
+        "status": "passed"
+      },
+      {
+        "id": "sources",
+        "status": "passed"
+      },
+      {
+        "id": "document_present",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "record_digest": "a076effa965ba8abae984fd4a0f92445594b17adb7bc2cecc4ef78b9157bee72"
+}

@@ -1,0 +1,103 @@
+{
+  "case_id": "reserved-transcription-context",
+  "domain": "documents",
+  "arm": "workflow_off",
+  "turn": 0,
+  "freeze_digest": "ccbd127c5b9f78239d72b467867c2d71bca5edb93d918ce7bb0a0899557626a5",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\"status\":\"failed\",\"evidence\":{\"facts\":[{\"source\":\"F1\",\"quote\":\"音频转写没有成功，原因未确认。\"}],\"plans\":[{\"source\":\"P1\",\"quote\":\"明晚8点检查转写输入，不重新转写。\"}],\"suggestions\":[]},\"document\":\"## 事实\\n- [F1] 音频转写没有成功，原因未确认。\\n\\n## 已确认计划\\n- [P1] 明晚8点检查转写输入，不重新转写。\\n\\n## 建议（未采纳）\\n- 无\"}",
+  "skill_id": null,
+  "skill_version": null,
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 4.4112,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 167,
+        "prompt_tokens": 1183,
+        "total_tokens": 1350
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.0015135,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/reserved-transcription-context-workflow_off-0.native.json",
+      "sha256": "95d5a7eba4f486c6a6d92c9f86180adf7611153748128e7414d25654a61301cd",
+      "kind": "native_protocol_response"
+    },
+    {
+      "file": "artifacts/reserved-transcription-context-workflow_off-0.reply.md.txt",
+      "sha256": "315ab7dc7159d630cd27d9a1d92f51c7c76b9416184872d05b4760b873373731",
+      "kind": "original_session_reply"
+    },
+    {
+      "file": "artifacts/reserved-transcription-context-workflow_off-0.document.md.txt",
+      "sha256": "1522b338680cd8cf0bdcabe5b9e1d0f917b4a26e4317eb6eecf18ee19b45a913",
+      "kind": "verbatim_document_field_from_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "status",
+        "status": "passed"
+      },
+      {
+        "id": "document_present",
+        "status": "passed"
+      },
+      {
+        "id": "body_shape",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_document_parity",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "record_digest": "6c3ecfa8c60d04ab6cf32ac3e46de5f623901d8932cb23988877de3798c26544"
+}

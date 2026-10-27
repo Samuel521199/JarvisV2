@@ -1,0 +1,95 @@
+{
+  "schema": "jarvis.family-private-evidence.v1",
+  "version": "family-private-1.0.0",
+  "release": "0.1.0",
+  "status": "implemented_partial_validation_not_full_memory_closure",
+  "date": "2026-10-24",
+  "policy": "owner_all_member_own_and_explicit_shared_v1",
+  "unit": {
+    "tests": 12,
+    "passed": true,
+    "log": "unit.txt"
+  },
+  "regression_snapshot": {
+    "tests": 491,
+    "seconds": 227.776,
+    "passed": true,
+    "log": "regression.txt"
+  },
+  "final_regression": {
+    "tests": 493,
+    "seconds": 222.685,
+    "passed": true,
+    "log": "regression-final.txt"
+  },
+  "browser": "browser.json",
+  "real_model": "family-live-1.json",
+  "main_deployment": {
+    "port": 18282,
+    "pid": 4360,
+    "process_started_local": "2026-10-24 00:48:02",
+    "new_code_loaded": false,
+    "memory_schema_present": false,
+    "manual_restart_reported_by_owner": true,
+    "manual_restart_verified": false,
+    "tool_reload_rejected": true,
+    "rejection_reason": "blocked by policy",
+    "retry_after_rejection": false
+  },
+  "data_migration": {
+    "ordinary_db_encrypted": false,
+    "main_migration_run": false,
+    "private_store_schema": 1,
+    "new_dependency_installed": false
+  },
+  "remaining": [
+    "Real owner must choose and enter their own password to opt in; no production password set",
+    "Main service reload and real data migration still require verification",
+    "Encrypted portable export/recovery/key rotation and authenticated device synchronization",
+    "Multimodal private audience/voice and family task integration",
+    "General memory extraction/answer quality, semantic knowledge maintenance, time/episode/learning requirements",
+    "Actual low-memory PC, second physical device, long-duration and power-loss acceptance; Mac deferred"
+  ],
+  "source_hashes": {
+    "control/family_identity.py": "3b6914d6bfeb0348c9cf94de58a286655b22aed550192d2429ff706c8a6d126c",
+    "adapters/storage/private_records.py": "2831ed8d9a06ac03649c423f61f157980cbb6fb925bf4a4cd43923d4dc311abd",
+    "modules/context_knowledge/private_memory.py": "f159ee05ea4223bca11f3a2b0fa5cd149f168d75d631d5f669cbaa215b66b5ec",
+    "host/family.py": "a9d9dc51603fe4482ff6079b50d14088fc5fdd1cdbc8ea4a5afd00b61998be40",
+    "apps/workbench/family_http.py": "3e8cc890968eda50567efa6f44b5db05b0b2765d2c3a0c1d00a956a6b4cca8a1",
+    "apps/workbench/server.py": "844bad76b1aadd16f616fe898b4f9820568e32655efe326d98fff5e653515657",
+    "apps/workbench/launch.py": "5dbfd85eeff9d713676a603964543342d7be1ed9e654a08d8f4fc2632d8e63ad",
+    "apps/workbench/family.html": "23e2699366dd2241d577a0bddc9810d0a0029d0c5ab4a3eab2da71d552c34756",
+    "apps/workbench/family.js": "4bfcb1766586516792b3ff61e10dddd3e43b131a6a7253a5d1b7052e604287fe",
+    "apps/workbench/family.css": "aef8854a9e03dad6ed76d9240c0fb6a27904b658baf8cf6200f62c3196fd1413",
+    "apps/workbench/login.html": "ee70a9ca65704d7a205b6be1da15204cb0e109dcb50e253a4f5cd2225ce00d00",
+    "apps/workbench/login.js": "a9502406f6a7f0ac63b088cee774f480f56368307ddada5ce686f9a565203300",
+    "apps/workbench/settings-private.js": "d566a22a3de4945b4a68b0023c185121d02da9de6d29e697a12d6c406151657b",
+    "apps/workbench/settings.js": "9fe17de0c1597874c956312f9c0e9650bb12acff5a9cc5ce3a7c8156e0da429d",
+    "apps/workbench/ui.js": "9dd2cc10faefec529ec79b6fe0d070d8e3c8a503864ce224431958613700c8e9",
+    "tests/test_family_privacy.py": "5a7fc670a51e938a894fcb146d04ac3262f85d348ec0c23d117585dd19aded54",
+    "tools/probe_family_privacy.py": "230e1530b999c0668fcea2382ee9890b3ce8cd94701765e8a47f57a2b8c4475b",
+    "tools/probe_family_live.py": "3609ebdfccb17424d13dc8db31e1ac397a98a9a952028eaee0459eae36057cb5"
+  },
+  "architecture": {
+    "python_files": 143,
+    "errors": []
+  },
+  "javascript_syntax": {
+    "checked": [
+      "family.js",
+      "login.js",
+      "settings-private.js",
+      "ui.js",
+      "settings.js"
+    ],
+    "passed": true
+  },
+  "docs": {
+    "documents": 26,
+    "chapters": 23,
+    "diagrams": 39,
+    "links": 2474,
+    "errors": 0
+  },
+  "owned_diff_whitespace_errors": 0
+}

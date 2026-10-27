@@ -1,0 +1,801 @@
+{
+  "version": "1.1.0",
+  "entry": "http://127.0.0.1:18282/settings#local-models",
+  "job": {
+    "action": "benchmark",
+    "downloaded_bytes": 0,
+    "finished": 1792745458.387147,
+    "id": "0ca239570f0b4dbfa13c5424164c4d92",
+    "model": "e5-multilingual-small-int8",
+    "result": {
+      "cases": [
+        {
+          "expected_document": "tea",
+          "expected_text": "用户晚上喜欢喝茶，不喜欢咖啡。",
+          "id": "zh-tea",
+          "language": "zh",
+          "query": "晚上用户喜欢喝什么？",
+          "rank": 1,
+          "top_document": "tea",
+          "top_text": "用户晚上喜欢喝茶，不喜欢咖啡。"
+        },
+        {
+          "expected_document": "tea",
+          "expected_text": "用户晚上喜欢喝茶，不喜欢咖啡。",
+          "id": "en-tea",
+          "language": "en→zh",
+          "query": "What does the user like drinking in the evening?",
+          "rank": 1,
+          "top_document": "tea",
+          "top_text": "用户晚上喜欢喝茶，不喜欢咖啡。"
+        },
+        {
+          "expected_document": "car",
+          "expected_text": "The car needs an oil change every year.",
+          "id": "zh-car",
+          "language": "zh→en",
+          "query": "汽车需要做什么保养？",
+          "rank": 8,
+          "top_document": "tea",
+          "top_text": "用户晚上喜欢喝茶，不喜欢咖啡。"
+        },
+        {
+          "expected_document": "bike",
+          "expected_text": "The bicycle needs new tires.",
+          "id": "en-bike",
+          "language": "en",
+          "query": "Which vehicle needs new tires?",
+          "rank": 1,
+          "top_document": "bike",
+          "top_text": "The bicycle needs new tires."
+        },
+        {
+          "expected_document": "cat",
+          "expected_text": "El gato duerme en el sofá.",
+          "id": "es-cat",
+          "language": "es",
+          "query": "¿Dónde duerme el gato?",
+          "rank": 1,
+          "top_document": "cat",
+          "top_text": "El gato duerme en el sofá."
+        },
+        {
+          "expected_document": "dog",
+          "expected_text": "El perro duerme en el jardín.",
+          "id": "en-dog",
+          "language": "en→es",
+          "query": "Where does the dog sleep?",
+          "rank": 1,
+          "top_document": "dog",
+          "top_text": "El perro duerme en el jardín."
+        },
+        {
+          "expected_document": "meeting",
+          "expected_text": "项目评审会议定在周三上午十点。",
+          "id": "zh-meeting",
+          "language": "zh",
+          "query": "项目评审在几点？",
+          "rank": 1,
+          "top_document": "meeting",
+          "top_text": "项目评审会议定在周三上午十点。"
+        },
+        {
+          "expected_document": "cancel",
+          "expected_text": "周五下午三点的销售会议已取消。",
+          "id": "en-cancel",
+          "language": "en→zh",
+          "query": "Which meeting was cancelled?",
+          "rank": 1,
+          "top_document": "cancel",
+          "top_text": "周五下午三点的销售会议已取消。"
+        },
+        {
+          "expected_document": "passport",
+          "expected_text": "Le passeport est dans le tiroir du bureau.",
+          "id": "fr-passport",
+          "language": "fr",
+          "query": "Où est le passeport ?",
+          "rank": 1,
+          "top_document": "passport",
+          "top_text": "Le passeport est dans le tiroir du bureau."
+        },
+        {
+          "expected_document": "keys",
+          "expected_text": "Les clés sont dans le sac rouge.",
+          "id": "en-keys",
+          "language": "en→fr",
+          "query": "Where are the keys?",
+          "rank": 1,
+          "top_document": "keys",
+          "top_text": "Les clés sont dans le sac rouge."
+        },
+        {
+          "expected_document": "train",
+          "expected_text": "Der Zug nach Berlin fährt um acht Uhr ab.",
+          "id": "de-train",
+          "language": "de",
+          "query": "Wann fährt der Zug nach Berlin?",
+          "rank": 1,
+          "top_document": "train",
+          "top_text": "Der Zug nach Berlin fährt um acht Uhr ab."
+        },
+        {
+          "expected_document": "plane",
+          "expected_text": "Der Flug nach Berlin startet um zehn Uhr.",
+          "id": "en-plane",
+          "language": "en→de",
+          "query": "When does the flight to Berlin depart?",
+          "rank": 1,
+          "top_document": "plane",
+          "top_text": "Der Flug nach Berlin startet um zehn Uhr."
+        },
+        {
+          "expected_document": "library",
+          "expected_text": "図書館は月曜日が休館日です。",
+          "id": "ja-library",
+          "language": "ja",
+          "query": "図書館の休館日はいつですか？",
+          "rank": 1,
+          "top_document": "library",
+          "top_text": "図書館は月曜日が休館日です。"
+        },
+        {
+          "expected_document": "museum",
+          "expected_text": "美術館は火曜日が休館日です。",
+          "id": "en-museum",
+          "language": "en→ja",
+          "query": "On which day is the art museum closed?",
+          "rank": 1,
+          "top_document": "museum",
+          "top_text": "美術館は火曜日が休館日です。"
+        },
+        {
+          "expected_document": "backup",
+          "expected_text": "Back up the database before installing the update.",
+          "id": "en-backup",
+          "language": "en",
+          "query": "What should be done to the database before the update?",
+          "rank": 1,
+          "top_document": "backup",
+          "top_text": "Back up the database before installing the update."
+        },
+        {
+          "expected_document": "delete",
+          "expected_text": "Delete temporary cache files after the update.",
+          "id": "zh-delete",
+          "language": "zh→en",
+          "query": "更新之后应该删除什么文件？",
+          "rank": 1,
+          "top_document": "delete",
+          "top_text": "Delete temporary cache files after the update."
+        },
+        {
+          "expected_document": "battery",
+          "expected_text": "手机电池发热时，请暂停充电。",
+          "id": "zh-battery",
+          "language": "zh",
+          "query": "电池发热还应该继续充电吗？",
+          "rank": 1,
+          "top_document": "battery",
+          "top_text": "手机电池发热时，请暂停充电。"
+        },
+        {
+          "expected_document": "screen",
+          "expected_text": "手机屏幕太暗时，可以调高亮度。",
+          "id": "en-screen",
+          "language": "en→zh",
+          "query": "How can I make a dark phone display brighter?",
+          "rank": 1,
+          "top_document": "screen",
+          "top_text": "手机屏幕太暗时，可以调高亮度。"
+        },
+        {
+          "expected_document": "allergy",
+          "expected_text": "小林对花生过敏，但可以吃苹果。",
+          "id": "zh-allergy",
+          "language": "zh",
+          "query": "小林不能吃什么？",
+          "rank": 1,
+          "top_document": "allergy",
+          "top_text": "小林对花生过敏，但可以吃苹果。"
+        },
+        {
+          "expected_document": "apple",
+          "expected_text": "小陈对苹果过敏，但可以吃花生。",
+          "id": "en-apple",
+          "language": "en→zh",
+          "query": "Who is allergic to apples?",
+          "rank": 1,
+          "top_document": "apple",
+          "top_text": "小陈对苹果过敏，但可以吃花生。"
+        }
+      ],
+      "completed_at": 1792745458.3559008,
+      "document_count": 20,
+      "hit_at_1": 0.95,
+      "latency_ms": {
+        "p50": 8.365900001081172,
+        "p95": 9.166099996946286
+      },
+      "limitations": "Small public regression set, no held-out/domain accuracy or factual verification claim",
+      "mrr": 0.95625,
+      "sample_count": 20,
+      "suite": "jarvis-multilingual-retrieval-v1",
+      "suite_sha256": "5bd974a3b3f796dfb7888178df36202bd84106d6a9c86fa6a0324e0a02daed33",
+      "workload": "warm query batch=1; fixed synthetic suite; JSONL and measurement persistence included"
+    },
+    "started": 1792745455.7393327,
+    "status": "succeeded"
+  },
+  "model": {
+    "adapter_ready": true,
+    "assessment": {
+      "benchmark": {
+        "cases": [
+          {
+            "expected_document": "tea",
+            "expected_text": "用户晚上喜欢喝茶，不喜欢咖啡。",
+            "id": "zh-tea",
+            "language": "zh",
+            "query": "晚上用户喜欢喝什么？",
+            "rank": 1,
+            "top_document": "tea",
+            "top_text": "用户晚上喜欢喝茶，不喜欢咖啡。"
+          },
+          {
+            "expected_document": "tea",
+            "expected_text": "用户晚上喜欢喝茶，不喜欢咖啡。",
+            "id": "en-tea",
+            "language": "en→zh",
+            "query": "What does the user like drinking in the evening?",
+            "rank": 1,
+            "top_document": "tea",
+            "top_text": "用户晚上喜欢喝茶，不喜欢咖啡。"
+          },
+          {
+            "expected_document": "car",
+            "expected_text": "The car needs an oil change every year.",
+            "id": "zh-car",
+            "language": "zh→en",
+            "query": "汽车需要做什么保养？",
+            "rank": 8,
+            "top_document": "tea",
+            "top_text": "用户晚上喜欢喝茶，不喜欢咖啡。"
+          },
+          {
+            "expected_document": "bike",
+            "expected_text": "The bicycle needs new tires.",
+            "id": "en-bike",
+            "language": "en",
+            "query": "Which vehicle needs new tires?",
+            "rank": 1,
+            "top_document": "bike",
+            "top_text": "The bicycle needs new tires."
+          },
+          {
+            "expected_document": "cat",
+            "expected_text": "El gato duerme en el sofá.",
+            "id": "es-cat",
+            "language": "es",
+            "query": "¿Dónde duerme el gato?",
+            "rank": 1,
+            "top_document": "cat",
+            "top_text": "El gato duerme en el sofá."
+          },
+          {
+            "expected_document": "dog",
+            "expected_text": "El perro duerme en el jardín.",
+            "id": "en-dog",
+            "language": "en→es",
+            "query": "Where does the dog sleep?",
+            "rank": 1,
+            "top_document": "dog",
+            "top_text": "El perro duerme en el jardín."
+          },
+          {
+            "expected_document": "meeting",
+            "expected_text": "项目评审会议定在周三上午十点。",
+            "id": "zh-meeting",
+            "language": "zh",
+            "query": "项目评审在几点？",
+            "rank": 1,
+            "top_document": "meeting",
+            "top_text": "项目评审会议定在周三上午十点。"
+          },
+          {
+            "expected_document": "cancel",
+            "expected_text": "周五下午三点的销售会议已取消。",
+            "id": "en-cancel",
+            "language": "en→zh",
+            "query": "Which meeting was cancelled?",
+            "rank": 1,
+            "top_document": "cancel",
+            "top_text": "周五下午三点的销售会议已取消。"
+          },
+          {
+            "expected_document": "passport",
+            "expected_text": "Le passeport est dans le tiroir du bureau.",
+            "id": "fr-passport",
+            "language": "fr",
+            "query": "Où est le passeport ?",
+            "rank": 1,
+            "top_document": "passport",
+            "top_text": "Le passeport est dans le tiroir du bureau."
+          },
+          {
+            "expected_document": "keys",
+            "expected_text": "Les clés sont dans le sac rouge.",
+            "id": "en-keys",
+            "language": "en→fr",
+            "query": "Where are the keys?",
+            "rank": 1,
+            "top_document": "keys",
+            "top_text": "Les clés sont dans le sac rouge."
+          },
+          {
+            "expected_document": "train",
+            "expected_text": "Der Zug nach Berlin fährt um acht Uhr ab.",
+            "id": "de-train",
+            "language": "de",
+            "query": "Wann fährt der Zug nach Berlin?",
+            "rank": 1,
+            "top_document": "train",
+            "top_text": "Der Zug nach Berlin fährt um acht Uhr ab."
+          },
+          {
+            "expected_document": "plane",
+            "expected_text": "Der Flug nach Berlin startet um zehn Uhr.",
+            "id": "en-plane",
+            "language": "en→de",
+            "query": "When does the flight to Berlin depart?",
+            "rank": 1,
+            "top_document": "plane",
+            "top_text": "Der Flug nach Berlin startet um zehn Uhr."
+          },
+          {
+            "expected_document": "library",
+            "expected_text": "図書館は月曜日が休館日です。",
+            "id": "ja-library",
+            "language": "ja",
+            "query": "図書館の休館日はいつですか？",
+            "rank": 1,
+            "top_document": "library",
+            "top_text": "図書館は月曜日が休館日です。"
+          },
+          {
+            "expected_document": "museum",
+            "expected_text": "美術館は火曜日が休館日です。",
+            "id": "en-museum",
+            "language": "en→ja",
+            "query": "On which day is the art museum closed?",
+            "rank": 1,
+            "top_document": "museum",
+            "top_text": "美術館は火曜日が休館日です。"
+          },
+          {
+            "expected_document": "backup",
+            "expected_text": "Back up the database before installing the update.",
+            "id": "en-backup",
+            "language": "en",
+            "query": "What should be done to the database before the update?",
+            "rank": 1,
+            "top_document": "backup",
+            "top_text": "Back up the database before installing the update."
+          },
+          {
+            "expected_document": "delete",
+            "expected_text": "Delete temporary cache files after the update.",
+            "id": "zh-delete",
+            "language": "zh→en",
+            "query": "更新之后应该删除什么文件？",
+            "rank": 1,
+            "top_document": "delete",
+            "top_text": "Delete temporary cache files after the update."
+          },
+          {
+            "expected_document": "battery",
+            "expected_text": "手机电池发热时，请暂停充电。",
+            "id": "zh-battery",
+            "language": "zh",
+            "query": "电池发热还应该继续充电吗？",
+            "rank": 1,
+            "top_document": "battery",
+            "top_text": "手机电池发热时，请暂停充电。"
+          },
+          {
+            "expected_document": "screen",
+            "expected_text": "手机屏幕太暗时，可以调高亮度。",
+            "id": "en-screen",
+            "language": "en→zh",
+            "query": "How can I make a dark phone display brighter?",
+            "rank": 1,
+            "top_document": "screen",
+            "top_text": "手机屏幕太暗时，可以调高亮度。"
+          },
+          {
+            "expected_document": "allergy",
+            "expected_text": "小林对花生过敏，但可以吃苹果。",
+            "id": "zh-allergy",
+            "language": "zh",
+            "query": "小林不能吃什么？",
+            "rank": 1,
+            "top_document": "allergy",
+            "top_text": "小林对花生过敏，但可以吃苹果。"
+          },
+          {
+            "expected_document": "apple",
+            "expected_text": "小陈对苹果过敏，但可以吃花生。",
+            "id": "en-apple",
+            "language": "en→zh",
+            "query": "Who is allergic to apples?",
+            "rank": 1,
+            "top_document": "apple",
+            "top_text": "小陈对苹果过敏，但可以吃花生。"
+          }
+        ],
+        "completed_at": 1792745458.3559008,
+        "document_count": 20,
+        "hit_at_1": 0.95,
+        "latency_ms": {
+          "p50": 8.365900001081172,
+          "p95": 9.166099996946286
+        },
+        "limitations": "Small public regression set, no held-out/domain accuracy or factual verification claim",
+        "mrr": 0.95625,
+        "sample_count": 20,
+        "suite": "jarvis-multilingual-retrieval-v1",
+        "suite_sha256": "5bd974a3b3f796dfb7888178df36202bd84106d6a9c86fa6a0324e0a02daed33",
+        "workload": "warm query batch=1; fixed synthetic suite; JSONL and measurement persistence included"
+      },
+      "calibrated": true,
+      "checked_at": "2026-10-23",
+      "context_id": "2c5c20b43ea75f4676771d0719bbb38c92a21c89f4998e1e94b317ebcc4474ae",
+      "disk_measurement": {
+        "updated_at": 1792745456.1059406,
+        "verified_disk_bytes": 135429554
+      },
+      "expected": {
+        "disk": {
+          "basis": "measured",
+          "high": 135429554,
+          "low": 135429554
+        },
+        "ram": {
+          "basis": "measured_with_15_percent_margin",
+          "high": 532482458,
+          "low": 447447040
+        },
+        "vram": {
+          "basis": "cpu_backend",
+          "high": 0,
+          "low": 0
+        }
+      },
+      "languages_count": 100,
+      "manifest_fingerprint": "b7aea4d6b4bfa1492996f27cfc2edd5250029a7e5b97e154f131c030b3d6e5fe",
+      "measured": {
+        "batch_observed_max": 4,
+        "benchmark": {
+          "cases": [
+            {
+              "expected_document": "tea",
+              "expected_text": "用户晚上喜欢喝茶，不喜欢咖啡。",
+              "id": "zh-tea",
+              "language": "zh",
+              "query": "晚上用户喜欢喝什么？",
+              "rank": 1,
+              "top_document": "tea",
+              "top_text": "用户晚上喜欢喝茶，不喜欢咖啡。"
+            },
+            {
+              "expected_document": "tea",
+              "expected_text": "用户晚上喜欢喝茶，不喜欢咖啡。",
+              "id": "en-tea",
+              "language": "en→zh",
+              "query": "What does the user like drinking in the evening?",
+              "rank": 1,
+              "top_document": "tea",
+              "top_text": "用户晚上喜欢喝茶，不喜欢咖啡。"
+            },
+            {
+              "expected_document": "car",
+              "expected_text": "The car needs an oil change every year.",
+              "id": "zh-car",
+              "language": "zh→en",
+              "query": "汽车需要做什么保养？",
+              "rank": 8,
+              "top_document": "tea",
+              "top_text": "用户晚上喜欢喝茶，不喜欢咖啡。"
+            },
+            {
+              "expected_document": "bike",
+              "expected_text": "The bicycle needs new tires.",
+              "id": "en-bike",
+              "language": "en",
+              "query": "Which vehicle needs new tires?",
+              "rank": 1,
+              "top_document": "bike",
+              "top_text": "The bicycle needs new tires."
+            },
+            {
+              "expected_document": "cat",
+              "expected_text": "El gato duerme en el sofá.",
+              "id": "es-cat",
+              "language": "es",
+              "query": "¿Dónde duerme el gato?",
+              "rank": 1,
+              "top_document": "cat",
+              "top_text": "El gato duerme en el sofá."
+            },
+            {
+              "expected_document": "dog",
+              "expected_text": "El perro duerme en el jardín.",
+              "id": "en-dog",
+              "language": "en→es",
+              "query": "Where does the dog sleep?",
+              "rank": 1,
+              "top_document": "dog",
+              "top_text": "El perro duerme en el jardín."
+            },
+            {
+              "expected_document": "meeting",
+              "expected_text": "项目评审会议定在周三上午十点。",
+              "id": "zh-meeting",
+              "language": "zh",
+              "query": "项目评审在几点？",
+              "rank": 1,
+              "top_document": "meeting",
+              "top_text": "项目评审会议定在周三上午十点。"
+            },
+            {
+              "expected_document": "cancel",
+              "expected_text": "周五下午三点的销售会议已取消。",
+              "id": "en-cancel",
+              "language": "en→zh",
+              "query": "Which meeting was cancelled?",
+              "rank": 1,
+              "top_document": "cancel",
+              "top_text": "周五下午三点的销售会议已取消。"
+            },
+            {
+              "expected_document": "passport",
+              "expected_text": "Le passeport est dans le tiroir du bureau.",
+              "id": "fr-passport",
+              "language": "fr",
+              "query": "Où est le passeport ?",
+              "rank": 1,
+              "top_document": "passport",
+              "top_text": "Le passeport est dans le tiroir du bureau."
+            },
+            {
+              "expected_document": "keys",
+              "expected_text": "Les clés sont dans le sac rouge.",
+              "id": "en-keys",
+              "language": "en→fr",
+              "query": "Where are the keys?",
+              "rank": 1,
+              "top_document": "keys",
+              "top_text": "Les clés sont dans le sac rouge."
+            },
+            {
+              "expected_document": "train",
+              "expected_text": "Der Zug nach Berlin fährt um acht Uhr ab.",
+              "id": "de-train",
+              "language": "de",
+              "query": "Wann fährt der Zug nach Berlin?",
+              "rank": 1,
+              "top_document": "train",
+              "top_text": "Der Zug nach Berlin fährt um acht Uhr ab."
+            },
+            {
+              "expected_document": "plane",
+              "expected_text": "Der Flug nach Berlin startet um zehn Uhr.",
+              "id": "en-plane",
+              "language": "en→de",
+              "query": "When does the flight to Berlin depart?",
+              "rank": 1,
+              "top_document": "plane",
+              "top_text": "Der Flug nach Berlin startet um zehn Uhr."
+            },
+            {
+              "expected_document": "library",
+              "expected_text": "図書館は月曜日が休館日です。",
+              "id": "ja-library",
+              "language": "ja",
+              "query": "図書館の休館日はいつですか？",
+              "rank": 1,
+              "top_document": "library",
+              "top_text": "図書館は月曜日が休館日です。"
+            },
+            {
+              "expected_document": "museum",
+              "expected_text": "美術館は火曜日が休館日です。",
+              "id": "en-museum",
+              "language": "en→ja",
+              "query": "On which day is the art museum closed?",
+              "rank": 1,
+              "top_document": "museum",
+              "top_text": "美術館は火曜日が休館日です。"
+            },
+            {
+              "expected_document": "backup",
+              "expected_text": "Back up the database before installing the update.",
+              "id": "en-backup",
+              "language": "en",
+              "query": "What should be done to the database before the update?",
+              "rank": 1,
+              "top_document": "backup",
+              "top_text": "Back up the database before installing the update."
+            },
+            {
+              "expected_document": "delete",
+              "expected_text": "Delete temporary cache files after the update.",
+              "id": "zh-delete",
+              "language": "zh→en",
+              "query": "更新之后应该删除什么文件？",
+              "rank": 1,
+              "top_document": "delete",
+              "top_text": "Delete temporary cache files after the update."
+            },
+            {
+              "expected_document": "battery",
+              "expected_text": "手机电池发热时，请暂停充电。",
+              "id": "zh-battery",
+              "language": "zh",
+              "query": "电池发热还应该继续充电吗？",
+              "rank": 1,
+              "top_document": "battery",
+              "top_text": "手机电池发热时，请暂停充电。"
+            },
+            {
+              "expected_document": "screen",
+              "expected_text": "手机屏幕太暗时，可以调高亮度。",
+              "id": "en-screen",
+              "language": "en→zh",
+              "query": "How can I make a dark phone display brighter?",
+              "rank": 1,
+              "top_document": "screen",
+              "top_text": "手机屏幕太暗时，可以调高亮度。"
+            },
+            {
+              "expected_document": "allergy",
+              "expected_text": "小林对花生过敏，但可以吃苹果。",
+              "id": "zh-allergy",
+              "language": "zh",
+              "query": "小林不能吃什么？",
+              "rank": 1,
+              "top_document": "allergy",
+              "top_text": "小林对花生过敏，但可以吃苹果。"
+            },
+            {
+              "expected_document": "apple",
+              "expected_text": "小陈对苹果过敏，但可以吃花生。",
+              "id": "en-apple",
+              "language": "en→zh",
+              "query": "Who is allergic to apples?",
+              "rank": 1,
+              "top_document": "apple",
+              "top_text": "小陈对苹果过敏，但可以吃花生。"
+            }
+          ],
+          "completed_at": 1792745458.3559008,
+          "document_count": 20,
+          "hit_at_1": 0.95,
+          "latency_ms": {
+            "p50": 8.365900001081172,
+            "p95": 9.166099996946286
+          },
+          "limitations": "Small public regression set, no held-out/domain accuracy or factual verification claim",
+          "mrr": 0.95625,
+          "sample_count": 20,
+          "suite": "jarvis-multilingual-retrieval-v1",
+          "suite_sha256": "5bd974a3b3f796dfb7888178df36202bd84106d6a9c86fa6a0324e0a02daed33",
+          "workload": "warm query batch=1; fixed synthetic suite; JSONL and measurement persistence included"
+        },
+        "context": {
+          "backend": "onnx-cpu",
+          "dependencies": [
+            [
+              "numpy",
+              "2.4.6"
+            ],
+            [
+              "onnxruntime",
+              "1.24.3"
+            ],
+            [
+              "tokenizers",
+              "0.22.2"
+            ]
+          ],
+          "device": "37a9939460ecaf69",
+          "id": "2c5c20b43ea75f4676771d0719bbb38c92a21c89f4998e1e94b317ebcc4474ae",
+          "machine": "AMD64",
+          "os": "Windows",
+          "os_release": "11",
+          "processor": "AMD64 Family 26 Model 112 Stepping 0, AuthenticAMD",
+          "python": "3.13.0",
+          "threads": 2,
+          "worker_sha256": "ef0d6d0fbf302bd6b3dce4d5eb92932260ad9c68ab85aadd755c32c7c6ddd2b7"
+        },
+        "gpu_bytes": 0,
+        "max_tokens_observed_max": 17,
+        "min_rss_bytes": 447447040,
+        "peak_rss_bytes": 463028224,
+        "rss_bytes": 450859008,
+        "samples": 26,
+        "updated_at": 1792745458.35097
+      },
+      "notes": [
+        "当前已接通的低占用基线；100 种语言的覆盖不表示各语言精度相同。",
+        "模型 RAM 只计推理子进程，宿主、向量索引与依赖环境另计。"
+      ],
+      "official": [],
+      "other_contexts": 0,
+      "profile": "ONNX int8 · CPU 2 线程 · 短文本 ≤512 token，batch 1–4",
+      "rules_version": "resource-scores-v1",
+      "scores": {
+        "multilingual": 5,
+        "resources": 5,
+        "retrieval": 95.0,
+        "speed": 5,
+        "validation": 3
+      },
+      "sources": [
+        {
+          "title": "官方模型卡",
+          "url": "https://huggingface.co/intfloat/multilingual-e5-small"
+        }
+      ],
+      "stale_benchmark": false,
+      "upstream_metadata_revision": "614241f622f53c4eeff9890bdc4f31cfecc418b3"
+    },
+    "checked": 1792745458.0771558,
+    "dimension": 384,
+    "dimensions": [
+      384
+    ],
+    "disk_bytes": 135429554,
+    "download_bytes": 135429554,
+    "error": null,
+    "files": [
+      {
+        "bytes": 118346824,
+        "name": "model.onnx",
+        "path": "onnx/model_qint8_avx512_vnni.onnx",
+        "sha256": "dd476dd0c2514e9b9be83aeb3853fac0763e0bdf4a71645407587d77c48a2d88"
+      },
+      {
+        "bytes": 17082730,
+        "name": "tokenizer.json",
+        "path": "tokenizer.json",
+        "sha256": "0b44a9d7b51c3c62626640cda0e2c2f70fdacdc25bbbd68038369d14ebdf4c39"
+      }
+    ],
+    "id": "e5-multilingual-small-int8",
+    "kind": "embedding",
+    "languages": [
+      "zh",
+      "en",
+      "multilingual"
+    ],
+    "license": "MIT",
+    "loaded": false,
+    "max_tokens": 512,
+    "memory": {
+      "gpu_bytes": 0,
+      "rss_bytes": 0
+    },
+    "partial_bytes": 0,
+    "recipe": "e5-prefix-mean-l2-v1",
+    "revision": "614241f622f53c4eeff9890bdc4f31cfecc418b3",
+    "runtime": "onnx-e5-v1",
+    "selected": true,
+    "source": "https://huggingface.co/intfloat/multilingual-e5-small",
+    "state": "ready",
+    "title": "Multilingual E5 Small · int8",
+    "vector_space": "1984ed1996abbfa1b5a86dc820cd44995ea49ade176ab2984be8b2c49c84a391"
+  },
+  "default_preserved": true,
+  "standby_restored": true
+}

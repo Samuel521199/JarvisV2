@@ -1,0 +1,18 @@
+{
+  "created_at": "2026-10-27T11:07:56.145231+00:00",
+  "evidence": "mobile-geometry/browser.json",
+  "observed": {
+    "viewport_height": 844,
+    "send_top": 832.234375,
+    "send_bottom": 868.234375,
+    "editor_height": 428.46875
+  },
+  "fix": "Cap expanded optional basis editor to240px on widths<=720px, with vertical scrolling; assert send button fully within viewport",
+  "allowed_changes_after_live_runs": [
+    "apps/workbench/delivery-review.css",
+    "tools/probe_delivery_shadow_ui.cjs"
+  ],
+  "validation": "Fresh UI probe and new complete frozen acceptance. Keep original live runs and disclose their source snapshot; recompute observations while explicitly reporting current source mismatch. Require every other source digest to match before treating model-generation evidence as applicable. No additional paid model calls for a CSS-only fix.",
+  "live_max_calls_unchanged": 24,
+  "production_deployed": false
+}

@@ -1,0 +1,62 @@
+{
+  "ui_version": "1.2.0",
+  "manager_version": "1.1.0",
+  "product_version": "0.1.0",
+  "checks": {
+    "javascript_syntax": {
+      "exit_code": 0,
+      "command": "node --check apps/workbench/settings-local-models.js"
+    },
+    "settings_management": {
+      "passed": 16,
+      "exit_code": 0
+    },
+    "workbench_http": {
+      "passed": 2,
+      "exit_code": 0,
+      "test_file": "test_workbench.py"
+    },
+    "initial_http_pattern": {
+      "matched_tests": 0,
+      "exit_code": 1,
+      "reason": "test_workbench_http.py does not exist; corrected to test_workbench.py"
+    },
+    "browser": {
+      "passed": 18,
+      "failed": 0,
+      "evidence": "local-model-categories-ui-1.2.0.json"
+    },
+    "documentation": {
+      "exit_code": 0,
+      "documents": 26,
+      "chapters": 23,
+      "diagrams": 39,
+      "local_links": 2223,
+      "errors": 0,
+      "navigation_updated": 2
+    },
+    "architecture": {
+      "exit_code": 0,
+      "python_files": 99,
+      "errors": []
+    }
+  },
+  "limitations": [
+    "Desktop browser only; responsive narrow widths not exercised",
+    "No model download, start, switch, or runtime recovery executed this turn"
+  ],
+  "runtime_observed": {
+    "manager_version": "1.1.0",
+    "selected": "e5-multilingual-small-int8",
+    "loaded": [],
+    "catalog_count": 8,
+    "e5_calibration_samples": 26
+  },
+  "source_sha256": {
+    "apps/workbench/settings-local-models.js": "942d654121cd65d781fbb64565bdfa0df48f8d2cee164a68923e17b30eed61f8",
+    "apps/workbench/local-models.css": "bc3c1f05bae2786ac8b1b5fdb366e980d5263bf445a81a8eef21f72650ee59b6",
+    "docs/models-offline.md": "966c3e8c4476f76af74851e1da8fbb3748ce893f1f83addf82fb5e0d93ced46d",
+    "docs/delivery-validation.md": "f035f430ac925a5b04121cf0540af3b34a2f4c16717c7934e47f2663f6d77200",
+    "docs/manifest.json": "b570d03e2641a4975acd58b769127c0e945430b1122c5499654ecc9a0e07f85a"
+  }
+}

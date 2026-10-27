@@ -1,0 +1,75 @@
+{
+  "case_id": "quote-eligible",
+  "domain": "comparison",
+  "arm": "workflow_off",
+  "turn": 0,
+  "freeze_digest": "b6fd47cf664df70f600d975f74554060fa968cd4b977a41219a54bce1659c3ee",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\"eligible_ids\": [\"A\", \"B\"], \"selected_id\": \"B\", \"selected_source\": \"S-B\"}",
+  "skill_id": null,
+  "skill_version": null,
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 9.1779,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 64,
+        "prompt_tokens": 721,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 581,
+        "total_tokens": 1366
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.0029595,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/quote-eligible-workflow_off-0.reply.md",
+      "sha256": "c9a5d461b5ff5d6db3f0bb163bd18acbcfc4668f98bd9b2d67abd831f7ae5e6a",
+      "kind": "original_session_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "eligible_ids",
+        "status": "passed"
+      },
+      {
+        "id": "selected_id",
+        "status": "passed"
+      },
+      {
+        "id": "selected_source",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "record_digest": "dbb5246405e026cbabe7930c95bd8c2e64487ea1d7c19995cb7bca74be3692e3"
+}

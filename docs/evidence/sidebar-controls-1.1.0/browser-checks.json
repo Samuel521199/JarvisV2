@@ -1,0 +1,145 @@
+{
+  "component": "workbench-sidebar",
+  "version": "1.1.0",
+  "verified_at": "2026-10-23T09:45:38.649Z",
+  "test_url": "http://127.0.0.1:18286/",
+  "synthetic_data": true,
+  "checks": [
+    {
+      "case": "bounded project and independent lists",
+      "pass": true
+    },
+    {
+      "case": "collapse all",
+      "pass": true
+    },
+    {
+      "case": "collapse survives reload",
+      "pass": true
+    },
+    {
+      "case": "show more project chats",
+      "pass": true
+    },
+    {
+      "case": "menu keyboard arrow navigation",
+      "pass": true
+    },
+    {
+      "case": "context menu clamped to short viewport",
+      "pass": true
+    },
+    {
+      "case": "project edit persists in sidebar",
+      "pass": true
+    },
+    {
+      "case": "project section persists",
+      "pass": true
+    },
+    {
+      "case": "project pin toggles",
+      "pass": true
+    },
+    {
+      "case": "archive project conversations",
+      "pass": true
+    },
+    {
+      "case": "restore project conversations",
+      "pass": true
+    },
+    {
+      "case": "conversation rename",
+      "pass": true
+    },
+    {
+      "case": "conversation pin",
+      "pass": true
+    },
+    {
+      "case": "fixed archive awaits draft and blocks edits without save error",
+      "pass": true
+    },
+    {
+      "case": "archived draft survives page reload",
+      "pass": true
+    },
+    {
+      "case": "restoring active chat makes draft editable",
+      "pass": true
+    },
+    {
+      "case": "row right click opens conversation menu",
+      "pass": true
+    },
+    {
+      "case": "delete confirmation cancellation preserves chat",
+      "pass": true
+    },
+    {
+      "case": "confirmed soft delete removes chat from sidebar",
+      "pass": true
+    },
+    {
+      "case": "restore deleted conversation",
+      "pass": true
+    },
+    {
+      "case": "remove project hides project list only",
+      "pass": true
+    },
+    {
+      "case": "deleted child of removed project offers combined restore",
+      "pass": true
+    },
+    {
+      "case": "combined restore returns project and child",
+      "pass": true
+    },
+    {
+      "case": "footer stays visible while lists scroll",
+      "pass": true
+    },
+    {
+      "case": "Escape closes menu and returns focus",
+      "pass": true
+    },
+    {
+      "case": "project menu creates a conversation in its project",
+      "pass": true
+    },
+    {
+      "case": "outside click dismisses menu",
+      "pass": true
+    },
+    {
+      "case": "narrow sidebar keeps disclosure and menu in bounds",
+      "pass": true
+    },
+    {
+      "case": "narrow sidebar menu remains reachable",
+      "pass": true
+    }
+  ],
+  "console_errors_and_warnings": [],
+  "initial_findings": [
+    {
+      "issue": "Pending draft save could be rejected by immediate archive.",
+      "resolution": "Await per-conversation queue, lock affected composer while saving, abort hide when save fails.",
+      "verification": "Queue regression plus persisted draft and browser reload verified."
+    },
+    {
+      "issue": "Project menu footer appended after positioning could clip below a 720px viewport.",
+      "resolution": "Reposition after content layout and on resize.",
+      "verification": "Menu bottom 711.96875 within 720px viewport."
+    }
+  ],
+  "scope": "No personal conversations renamed, archived, deleted, or removed; all mutations used isolated synthetic data. No model calls or downloads.",
+  "not_exercised": [
+    "Permanent erasure is not provided",
+    "OS explorer reveal and browser downloads retained but not triggered in this UI run",
+    "Touch device and screen-reader hardware",
+    "Cross-browser collapse synchronization"
+  ]
+}

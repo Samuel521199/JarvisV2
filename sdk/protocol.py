@@ -110,7 +110,7 @@ def validate(schema: dict, value: Any, path: str = "$", depth: int = 0):
 
 
 def contract(name: str, value: Any) -> dict:
-    if name not in {"task", "grant", "module", "step-proposal", "fact", "development", "code-candidate", "development-plan", "goal-plan", "capability-draft", "assistant-turn"}:
+    if name not in {"task", "grant", "module", "step-proposal", "fact", "development", "code-candidate", "development-plan", "goal-plan", "capability-draft", "assistant-turn", "knowledge-source", "outcome-assessment"}:
         raise CoreError("unknown_contract", "Contract is not registered")
     validate(decode((PROJECT / "contracts" / "schemas" / f"{name}.v1.json").read_bytes()), value)
     # Enforce the transport bound for direct Python callers as well.

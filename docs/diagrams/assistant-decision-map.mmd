@@ -1,0 +1,15 @@
+flowchart TB
+  C["核心结论<br/>目标更广 ≠ 实测领先"]
+  C --> G["借鉴 Grok Bot<br/>交办入口 · 跨应用 · 过程可见"]
+  C --> J["保留 Jarvis 定位<br/>长期伙伴 · 资料自主 · 可控成长"]
+  G --> W["优先补齐工作闭环<br/>负责人 → 协作 → 检查 → 返工"]
+  J --> L["连接长期经验<br/>纠正 → 记忆 → 复用 → 验证"]
+  W --> E["条件性预测<br/>少协调 · 少重复错误 · 更可靠<br/>需要同条件实测"]
+  L --> E
+  E -.-> R["后续扩展：学习与多机器人<br/>长期效果和硬件分别验收"]
+  classDef conclusion fill:#e6eefb,stroke:#6889b6,color:#19324f;
+  classDef choice fill:#e5f4ef,stroke:#75a793,color:#193b34;
+  classDef prediction fill:#fff2dc,stroke:#bc9456,color:#513c1c;
+  class C conclusion;
+  class G,J,W,L choice;
+  class E,R prediction;

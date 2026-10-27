@@ -1,0 +1,72 @@
+{
+  "scope": "Windows current machine; CPU 2 threads; synthetic samples; application network disabled, not OS air gap",
+  "model": "e5-multilingual-small-int8",
+  "checks": [
+    {
+      "query": "What does the user like drinking?",
+      "expected": 0,
+      "actual": 0,
+      "passed": true,
+      "scores": [
+        0.8382091395709717,
+        0.7085607909824747,
+        0.7348326001638452,
+        0.698791445937872
+      ]
+    },
+    {
+      "query": "汽车需要做什么保养？",
+      "expected": 1,
+      "actual": 1,
+      "passed": true,
+      "scores": [
+        0.8088074854052226,
+        0.8122504419087895,
+        0.7016743594763586,
+        0.8007501402596976
+      ]
+    },
+    {
+      "query": "¿Dónde duerme el gato?",
+      "expected": 2,
+      "actual": 2,
+      "passed": true,
+      "scores": [
+        0.7477742698812065,
+        0.6779103697048365,
+        0.8794580465500607,
+        0.6893124254663628
+      ]
+    },
+    {
+      "query": "When is the project meeting?",
+      "expected": 3,
+      "actual": 3,
+      "passed": true,
+      "scores": [
+        0.6937566047825164,
+        0.6777064611625906,
+        0.6906025584672062,
+        0.7714250661202345
+      ]
+    }
+  ],
+  "cold_start_seconds": 2.150852399998257,
+  "memory": {
+    "rss_bytes": 448929792,
+    "peak_rss_bytes": 462917632,
+    "gpu_bytes": 0,
+    "sampled_at": 1792743777.0036218
+  },
+  "query_batch_seconds": 0.005902500000956934,
+  "vector_space": "1984ed1996abbfa1b5a86dc820cd44995ea49ade176ab2984be8b2c49c84a391",
+  "standby_loaded": null,
+  "disk_bytes": 135429554,
+  "offline_restart_passed": true,
+  "worker_runtime": {
+    "rss_bytes": 447221760,
+    "peak_rss_bytes": 462729216,
+    "gpu_bytes": 0,
+    "sampled_at": 1792743779.3407528
+  }
+}

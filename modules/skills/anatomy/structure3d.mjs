@@ -40,19 +40,19 @@ export function clipPolygon(points,cutY){
 export function cameraProjection(points,options={}){
  const az=(options.azimuth??38)*pi/180,el=(options.elevation??25)*pi/180;
  const right=[Math.cos(az),-Math.sin(az),0],up=[Math.sin(az)*Math.sin(el),Math.cos(az)*Math.sin(el),Math.cos(el)],toward=unit(cross(right,up));
- const screen=p=>[dot(p,right),-dot(p,up),dot(p,toward)];const projected=points.map(screen),min=[0,1,2].map(i=>Math.min(...projected.map(p=>p[i]))),max=[0,1,2].map(i=>Math.max(...projected.map(p=>p[i])));
+ const screen=p=>[dot(p,right),-dot(p,up),dot(p,toward)];const projected=points.map(screen),min=[Infinity,Infinity,Infinity],max=[-Infinity,-Infinity,-Infinity];for(const p of projected)for(let i=0;i<3;i++){min[i]=Math.min(min[i],p[i]);max[i]=Math.max(max[i],p[i]);}
  const scale=Math.min(510/Math.max(1,max[0]-min[0]),255/Math.max(1,max[1]-min[1]))*(options.zoom??1),cx=(min[0]+max[0])/2,cy=(min[1]+max[1])/2;
  return {scale,toward,project:p=>{const q=screen(p);return [300+(q[0]-cx)*scale,158+(q[1]-cy)*scale,q[2]];}};
 }
 const esc=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 function tint(hex,k){const rgb=hex.match(/[a-f0-9]{2}/gi).map(x=>parseInt(x,16));return '#'+rgb.map(c=>Math.round(Math.min(255,c*k)).toString(16).padStart(2,'0')).join('');}
 export function projectStructure(scene,options={}){
- const camera=cameraProjection(scene.bounds.length?scene.bounds:[[0,0,0],[1,1,1]],options),light=unit([-1,-2,3]),view=[],selected=options.selected||'',shell=options.shell||'section',cut=(options.cut??0)*Math.max(1,...scene.bounds.map(p=>Math.abs(p[1]))),visible=layer=>options.layers?.[layer]!==false;
+ const camera=cameraProjection(scene.bounds.length?scene.bounds:[[0,0,0],[1,1,1]],options),light=unit([-1,-2,3]),view=[],selected=options.selected||'',shell=options.shell||'section',cut=(options.cut??0)*scene.bounds.reduce((a,p)=>Math.max(a,Math.abs(p[1])),1),visible=layer=>options.layers?.[layer]!==false;
  const opacity=(part,base)=>base*(selected&&part!==selected ? .2 : 1),fmt=n=>Number(n.toFixed(2)),coords=pts=>pts.map(p=>p.slice(0,2).map(fmt).join(',')).join(' ');
  let visibleFaces=0,clipped=0;
  for(const face of scene.faces){if(!visible(face.layer)||face.layer==='housing'&&shell==='hidden')continue;let points=face.points;if(face.layer==='housing'&&shell==='section'){points=clipPolygon(points,cut);if(points.length<3){clipped++;continue;}}
   const normal=unit(cross(vsub(points[1],points[0]),vsub(points[2],points[0]))),shade=face.layer==='fluid'?1:.7+.28*Math.abs(dot(normal,light));const pts=points.map(camera.project),depth=pts.reduce((sum,p)=>sum+p[2],0)/pts.length,alpha=opacity(face.part,face.opacity*(face.layer==='housing'&&shell==='transparent' ? .12 : 1));
-  view.push({depth,svg:`<polygon data-part="${esc(face.part)}" class="structure-face" points="${coords(pts)}" fill="${tint(face.color,shade)}" fill-opacity="${alpha}" stroke="${face.part===selected?'#eeb253':'#527184'}" stroke-opacity="${face.layer==='fluid'?0:Math.min(.5,alpha*.6)}" stroke-width="${face.part===selected?1.1:.35}"/>`});visibleFaces++;
+  view.push({depth,svg:`<polygon data-part="${esc(face.part)}" class="structure-face" points="${coords(pts)}" fill="${tint(face.color,shade)}" fill-opacity="${alpha}" stroke="${face.part===selected?'#eeb253':'#527184'}" stroke-opacity="${face.layer==='fluid'||options.edges===false&&face.part!==selected?0:Math.min(.5,alpha*.6)}" stroke-width="${face.part===selected?1.1:.35}"/>`});visibleFaces++;
   if(face.layer==='housing'&&shell==='section'){
    const edge=[];for(let i=0;i<face.points.length;i++){const a=face.points[i],b=face.points[(i+1)%face.points.length];if((a[1]>=cut)!==(b[1]>=cut)){const t=(cut-a[1])/(b[1]-a[1]);edge.push(camera.project(vadd(a,vmul(vsub(b,a),t))));}}
    if(edge.length===2)view.push({depth:(edge[0][2]+edge[1][2])/2+.3,svg:`<polyline data-part="${esc(face.part)}" class="structure-cut-edge" points="${coords(edge)}" stroke="#e5b46f" stroke-width="1.25" opacity="${opacity(face.part,.85)}" fill="none"/>`});

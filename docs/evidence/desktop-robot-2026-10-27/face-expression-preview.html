@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jarvis · 简洁头壳与状态变形</title>
+<style>
+:root{color-scheme:dark;--bg:#0c121b;--panel:#131e2b;--text:#e1edf5;--muted:#9bb0c3;--line:#2c3e51;--accent:#67d9ff;--eye:#6ce9ff;--edge:#16c4f9;--warn:#ffcf7c;--ok:#95e2cf;--off:#d49bab}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.6 'Segoe UI','Microsoft YaHei',sans-serif}body.light{color-scheme:light;--bg:#edf2f6;--panel:#fff;--text:#14273a;--muted:#53677c;--line:#c7d4df;--accent:#087eab}
+main{max-width:1160px;margin:auto;padding:32px}header{display:flex;justify-content:space-between;align-items:center;gap:20px;border-bottom:1px solid var(--line);padding-bottom:20px}.eyebrow{color:var(--accent);font-size:12px;letter-spacing:3px}h1{font-size:25px;margin:8px 0}h2{font-size:16px;margin:0 0 16px}p{color:var(--muted);margin:6px 0}.layout{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(300px,.8fr);gap:40px;margin:28px 0}.stage{min-height:410px;display:grid;place-items:center;overflow:hidden}.head{width:360px;max-width:100%;height:auto;display:block;animation:breathe 5s ease-in-out infinite}.state-line{text-align:center;min-height:40px}.badge{display:inline-block;font:12px ui-monospace,Consolas,monospace;letter-spacing:1px;padding:5px 10px;border:1px solid var(--line);border-radius:6px;color:var(--accent)}.controls{padding:24px;border:1px solid var(--line);background:var(--panel);border-radius:16px}.field{display:grid;gap:6px;margin-bottom:14px}label{color:var(--muted);font-size:13px}select,input,button{font:inherit;color:var(--text);background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:9px 11px}button{cursor:pointer}button:hover{border-color:var(--accent)}button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:3px}.row{display:flex;gap:10px;flex-wrap:wrap}input[type=range]{padding:0;accent-color:var(--accent)}.note,.small-hint{font-size:12px}.small-hint{text-align:center}.note{min-height:42px}
+.screen-eye{fill:var(--eye);filter:url(#glow);transform-box:fill-box;transform-origin:center;animation:blink 5.6s ease-in-out infinite}.line-eye{fill:none;stroke:var(--eye);stroke-width:18;stroke-linecap:round;filter:url(#glow);transform-box:fill-box;transform-origin:center;animation:blink 5.6s ease-in-out infinite}.right-eye{animation-delay:.02s}.gaze{animation:gaze 5s cubic-bezier(.2,.75,.25,1) infinite}.screen-text{fill:var(--eye);font:600 82px ui-monospace,Consolas,monospace;letter-spacing:7px;filter:url(#soft-glow)}.screen-small{font-size:64px;letter-spacing:5px}.glyph{fill:none;stroke:var(--eye);stroke-width:24;stroke-linecap:round;stroke-linejoin:round;filter:url(#soft-glow)}.solid{fill:var(--eye);stroke:none}.sound-bar{transform-box:fill-box;transform-origin:center;animation:receive 1.35s ease-in-out infinite;animation-delay:var(--delay,0s)}.orbit{transform-box:fill-box;transform-origin:center;animation:orbit 2.4s linear infinite}.reverse{animation-direction:reverse;animation-duration:3.1s}.compute-dot{animation:compute 1.5s ease-in-out infinite;animation-delay:var(--delay,0s)}.work-arrow{animation:work 1.65s ease-in-out infinite;animation-delay:var(--delay,0s)}.sand{animation:sand 2.8s ease-in-out infinite}.question{animation:question 3.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}.voice-line{animation:voice 1s ease-in-out infinite;transform-box:fill-box;transform-origin:center}.broadcast{animation:broadcast 1.9s ease-out infinite}.completion{stroke-dasharray:1;animation:complete .65s ease-out both}.warn{stroke:var(--warn)}.off{stroke:var(--off)}.ok{stroke:var(--ok)}.face-entry{animation:arrive .24s ease-out both;transform-box:fill-box;transform-origin:center}.head.face-needs_input{animation:tilt 7s ease-in-out infinite}.head.face-offline{animation:none;opacity:.8}.paused *,.reduced *{animation-play-state:paused!important}.reduced .head,.reduced .gaze,.reduced .screen-eye,.reduced .line-eye{transform:none!important}.reduced .face-entry,.paused .face-entry{animation:none}.reduced .completion,.paused .completion{stroke-dashoffset:0;animation:none}
+.gallery-section{border-top:1px solid var(--line);padding-top:24px}.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0}.state-card{display:flex;align-items:center;text-align:left;gap:5px;padding:10px;background:var(--panel);border-radius:12px}.state-card[aria-pressed=true]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}.mini-head{flex:0 0 auto;display:block}.mini-head *{animation:none!important}.state-card strong{display:block;font-size:14px}.state-card small{display:block;color:var(--muted);font-size:12px}.sizes{display:flex;gap:32px;align-items:end;flex-wrap:wrap;margin-top:20px}.size-sample{text-align:center;color:var(--muted);font-size:12px}.footer{margin-top:24px;font-size:12px;color:var(--muted)}[hidden]{display:none!important}
+@keyframes breathe{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}@keyframes blink{0%,36%,39%,44%,47%,100%{transform:scaleY(1)}37.4%,45.4%{transform:scaleY(.08)}}@keyframes gaze{0%,12%,38%,51%,78%,100%{transform:translate(0,0)}14%,26%{transform:translate(38px,-15px)}28%,36%{transform:translate(48px,-8px)}53%,66%{transform:translate(-42px,10px)}68%,76%{transform:translate(-26px,-16px)}}@keyframes tilt{0%,65%,100%{transform:rotate(0)}75%,88%{transform:rotate(-3deg)}}
+@keyframes receive{0%,100%{transform:scaleY(.45)}22%{transform:scaleY(.95)}55%{transform:scaleY(.62)}76%{transform:scaleY(1)}}@keyframes orbit{to{transform:rotate(360deg)}}@keyframes compute{0%,100%{opacity:.4}40%{opacity:1}}@keyframes work{0%,100%{opacity:.4;transform:translateX(-8px)}50%{opacity:1;transform:translateX(16px)}}@keyframes sand{0%,100%{opacity:.45;transform:translateY(-6px)}50%{opacity:1;transform:translateY(12px)}}@keyframes question{0%,65%,100%{transform:translateY(0) rotate(0)}75%,88%{transform:translateY(-9px) rotate(-5deg)}}@keyframes voice{0%,100%{transform:scaleY(.55)}30%{transform:scaleY(1)}65%{transform:scaleY(.74)}}@keyframes broadcast{0%,100%{opacity:.35}50%{opacity:1}}@keyframes complete{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}@keyframes arrive{from{opacity:0;transform:scale(.78)}to{opacity:1;transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){main *{animation:none!important}}
+@media(max-width:800px){.gallery{grid-template-columns:repeat(2,1fr)}}@media(max-width:720px){main{padding:20px}.layout{grid-template-columns:1fr;gap:20px}.stage{min-height:320px}header{align-items:start}h1{font-size:21px}.controls{padding:18px}.state-card{flex-direction:column;text-align:center}}
+</style>
+<main id="expression-preview">
+<header><div><div class="eyebrow">JARVIS / FACE DISPLAY · 05</div><h1>圆润的外框，亲和的眼神</h1><p>日常是眼睛，工作时变成对应图形 · 全部状态为示例</p></div><button id="theme" aria-label="切换明暗背景">浅色背景</button></header>
+<div class="layout">
+<section aria-label="面罩动态预览"><div class="stage">
+<svg class="head" id="head" viewBox="0 0 1254 1254" role="img" aria-label="Jarvis 待命">
+<defs>
+<linearGradient id="shell" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d6edf4"/><stop offset=".3" stop-color="#a3c3d1"/><stop offset=".58" stop-color="#628a9e"/><stop offset=".82" stop-color="#bddde8"/><stop offset="1" stop-color="#7aa3b6"/></linearGradient>
+<linearGradient id="glass" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#102130"/><stop offset="1" stop-color="#030b13"/></linearGradient>
+<clipPath id="face-clip"><path d="M441 355H813C916 355 974 417 974 502V722C974 819 927 892 853 917C719 961 535 961 401 917C327 892 280 819 280 722V502C280 417 338 355 441 355Z"/></clipPath>
+<filter id="glow" x="-35%" y="-50%" width="170%" height="200%"><feGaussianBlur stdDeviation="6" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<filter id="soft-glow" x="-25%" y="-25%" width="150%" height="150%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<!-- One soft, rounded shell and face panel. No forehead badge or lettermark. -->
+<path id="shell-rim" d="M440 310H814C946 310 1020 385 1020 498V725C1020 851 960 936 887 961C734 1010 520 1010 367 961C294 936 234 851 234 725V498C234 385 308 310 440 310Z" fill="url(#shell)" stroke="#416a7c" stroke-width="4"/>
+<path d="M441 355H813C916 355 974 417 974 502V722C974 819 927 892 853 917C719 961 535 961 401 917C327 892 280 819 280 722V502C280 417 338 355 441 355Z" fill="url(#glass)" stroke="#5bb9d3" stroke-width="5"/>
+<path d="M354 363Q391 332 451 332H804M486 973Q627 1000 768 973" fill="none" stroke="#8de1f6" stroke-width="5" stroke-linecap="round" opacity=".6"/>
+<g clip-path="url(#face-clip)">
+<path d="M315 464Q628 392 939 464L905 492Q627 432 350 505Z" fill="#b0d9f4" opacity=".025"/>
+<g id="face-content"></g>
+<text id="face-text" class="screen-text" x="627" y="705" text-anchor="middle" hidden>READY</text>
+</g>
+</svg>
+</div><div class="state-line"><span id="status" class="badge" aria-live="polite">STANDBY</span></div><p id="small-hint" class="small-hint"></p></section>
+<section class="controls" aria-label="设计预览控制"><h2>切换状态，看眼睛怎样变形</h2>
+<div class="field"><label for="state">示例状态</label><select id="state"><option value="idle">待命 · 柔和双眼</option><option value="listening">聆听 · 双组声波</option><option value="thinking">思考 · 双核运算</option><option value="running">执行 · 推进箭头</option><option value="queued">排队 · 沙漏与队列</option><option value="needs_input">等待回答 · 大问号</option><option value="speaking">说话 · 输出波形</option><option value="completed">完成 · 交付勾</option><option value="offline">断线 · 断开连接</option></select></div>
+<div class="field"><label for="mode">显示形式</label><select id="mode"><option value="eyes">状态形态 · 自动变形</option><option value="text">面罩文字</option><option value="hybrid">状态形态＋短词</option></select></div>
+<div class="field"><label for="expression">日常眼神（仅待命时）</label><select id="expression"><option value="natural">圆润 · 自然</option><option value="smile">微笑</option><option value="curious">好奇</option><option value="focus">专注</option></select></div>
+<div class="field"><label for="custom-text">待命问候（最多 7 个字符）</label><input id="custom-text" maxlength="7" placeholder="HELLO" autocomplete="off"></div>
+<div class="field"><label for="size">显示尺寸 <output id="size-label">360 px</output></label><input id="size" type="range" min="64" max="400" step="8" value="360"></div>
+<div class="row"><button id="pause" aria-pressed="false">暂停预览</button><button id="reduce" aria-pressed="false">减少动态效果</button><button id="tour" aria-pressed="false">播放一轮状态</button></div>
+<p id="description" class="note"></p><p class="note">这里只演示形态。正式版本由同一系统的任务、音频和连接状态驱动；预览不采集声音。</p>
+</section></div>
+<section class="gallery-section" aria-label="九种状态对照"><h2>形状不同，节奏也不同</h2><p>点选任一卡片，在上方查看动态效果。下方为静态对照。</p><div id="gallery" class="gallery"></div></section>
+<div class="sizes" aria-label="当前形态的小尺寸参考"><div class="size-sample" data-size="64">64 px</div><div class="size-sample" data-size="96">96 px</div><div class="size-sample" data-size="160">160 px</div></div>
+<p class="footer">r5 设计预览：饱满圆润的头壳，不再叠加 J 标记；所有控件仅用于设计验证。正式原生窗口、实际状态与统一设置接入尚待实现。</p>
+</main>
+<script>
+(()=>{
+'use strict';
+const el=id=>document.getElementById(id),root=el('expression-preview'),head=el('head');
+const states={
+idle:['STANDBY','READY','待命','柔和双眼','保留饱满圆角双眼：快看、停顿、回看，间或双眨眼。'],
+listening:['LISTENING','LISTEN','聆听','双组声波','双眼展开成两组较大的声波柱，随输入起伏；这里是示例节奏，正式版只在实际采集开启后显示。'],
+thinking:['THINKING','THINK','思考','双核运算','双眼变为两枚运算轨迹，中间的数据点依次接力；没有任务进度百分比。'],
+running:['RUNNING','BUSY','执行','推进箭头','双眼合成为三枚向前推进的圆角箭头，依次亮起，表示有活动执行步骤。'],
+queued:['QUEUED','WAIT','排队','沙漏与队列','一侧变为沙漏，另一侧为静止队列卡片；落沙缓慢，卡片不向前推进。三条线只是队列符号，不是任务计数。'],
+needs_input:['NEEDS ANSWER','ASK','等待回答','大问号','双眼收拢为清晰的大问号，轻轻抬起后停住；待答标记保持到原问题解决。'],
+speaking:['SPEAKING','SPEAK','说话','输出波形','整个面罩连成输出波形，两侧向外传递；正式版由实际播放驱动，与聆听的双组竖条区分。'],
+completed:['COMPLETED','DONE','完成','交付勾','双眼合成一个完整的勾，绘制一次后保持。正式版只由真实交付回执触发，再回到整体状态。'],
+offline:['OFFLINE','OFFLINE','断线','断开连接','面罩显示分开的连接两端和斜线，保持静态，不伪装仍在工作。']};
+const softEye=(x,y,sx=1,sy=1,mirror=1)=>{const p=(a,b)=>`${x+a*sx*mirror} ${y+b*sy}`;return `M${p(-49,-63)}C${p(-17,-69)} ${p(17,-69)} ${p(49,-60)}C${p(75,-53)} ${p(86,-36)} ${p(86,-9)}C${p(86,22)} ${p(77,45)} ${p(53,59)}C${p(23,77)} ${p(-17,78)} ${p(-48,65)}C${p(-76,53)} ${p(-86,30)} ${p(-86,-4)}C${p(-86,-34)} ${p(-77,-56)} ${p(-49,-63)}Z`;};
+const shapes={natural:[softEye(480,642),softEye(774,642,1,1,-1)],smile:['M410 657Q480 561 550 657','M704 657Q774 561 844 657'],focus:[softEye(480,648,1,.72),softEye(774,648,1,.72,-1)],curious:[softEye(480,631,1.03,1.06),softEye(774,651,.95,.92,-1)]};
+// One renderer feeds the main preview, state cards and size samples.
+function graphic(state,mood='natural'){
+if(state==='idle')return `<g class="gaze">${shapes[mood].map((d,i)=>`<path d="${d}" class="${mood==='smile'?'line-eye':'screen-eye'} ${i?'right-eye':''}"/>`).join('')}</g>`;
+if(state==='listening')return `<g class="glyph">${[430,465,500,535,719,754,789,824].map((x,i)=>{const h=[72,132,182,104,104,182,132,72][i];return `<path class="sound-bar" style="--delay:${-(i%4)*.19}s" d="M${x} ${650-h/2}V${650+h/2}"/>`;}).join('')}</g>`;
+if(state==='thinking')return `<g class="glyph"><g class="orbit"><path d="M480 580A70 70 0 1 1 414 674"/><circle class="solid" cx="480" cy="580" r="16"/></g><g class="orbit reverse"><path d="M774 720A70 70 0 1 1 840 626"/><circle class="solid" cx="774" cy="720" r="16"/></g>${[592,627,662].map((x,i)=>`<circle class="solid compute-dot" style="--delay:${i*-.3}s" cx="${x}" cy="650" r="11"/>`).join('')}</g>`;
+if(state==='running')return `<g class="glyph">${[447,597,747].map((x,i)=>`<path class="work-arrow" style="--delay:${i*-.25}s" d="M${x} 568L${x+79} 650L${x} 732"/>`).join('')}</g>`;
+if(state==='queued')return `<g class="glyph warn"><path d="M431 555H567M431 745H567M443 559C443 602 459 622 499 650C539 678 555 700 555 741M555 559C555 602 539 622 499 650C459 678 443 700 443 741"/><path class="sand" d="M499 676V700"/><path d="M671 586H817M671 650H817M671 714H817"/></g>`;
+if(state==='needs_input')return '<g class="glyph warn question"><path d="M553 586C553 533 587 513 630 513C683 513 710 544 710 585C710 628 683 642 654 659C636 670 627 686 627 711"/><path d="M627 777V780" stroke-width="32"/></g>';
+if(state==='speaking')return '<g class="glyph"><path class="voice-line" d="M460 650H488L512 603L540 706L570 561L602 734L635 591L665 682L697 615L729 683L756 650H794"/><path class="broadcast" d="M420 598Q384 650 420 702M834 598Q870 650 834 702" stroke-width="16"/></g>';
+if(state==='completed')return '<g class="glyph ok"><path class="completion" pathLength="1" d="M474 653L583 754L793 546" stroke-width="36"/></g>';
+return '<g class="glyph off"><path d="M573 606L542 575Q504 540 469 575L426 618Q392 653 427 687L466 726Q500 760 533 729M681 694L712 725Q750 760 785 725L828 682Q862 647 827 613L788 574Q754 540 721 571"/><path d="M688 568L566 732" stroke-width="18"/></g>';
+}
+let paused=false,reduced=matchMedia('(prefers-reduced-motion: reduce)').matches,tourTimer=null,tourIndex=0,previous='';
+function form(state,mood,hybrid,enter=false){return `<g data-form="${state}" transform="${hybrid?'translate(125 105) scale(.8)':''}"><g class="${enter?'face-entry':''}">${graphic(state,mood)}</g></g>`;}
+function cloneHead(prefix,state,width,mode='eyes',mood='natural'){
+const copy=head.cloneNode(true);copy.querySelector('#face-content').innerHTML=form(state,mood,false);
+copy.querySelector('#face-text').setAttribute('hidden','');copy.removeAttribute('id');copy.removeAttribute('style');copy.setAttribute('class','mini-head');copy.setAttribute('width',width);copy.setAttribute('height',width);copy.setAttribute('aria-label',states[state][2]+'：'+states[state][3]);
+copy.querySelectorAll('[id]').forEach(n=>n.id=prefix+n.id);
+copy.querySelectorAll('*').forEach(n=>{for(const name of ['clip-path','fill','filter']){const v=n.getAttribute(name);if(v&&v.includes('url(#'))n.setAttribute(name,v.replaceAll('url(#','url(#'+prefix));}});
+return copy;
+}
+function update(){
+const state=el('state').value,info=states[state],size=Number(el('size').value);let mode=el('mode').value;if(size<192)mode='eyes';else if(size<288&&mode==='hybrid')mode='text';
+root.className=((paused||document.hidden)?'paused ':'')+(reduced?'reduced':'');head.className.baseVal='head face-'+state;head.style.width=size+'px';head.setAttribute('aria-label','Jarvis '+info[2]+'，'+(mode==='text'?'面罩文字':info[3]));
+el('size-label').textContent=size+' px';el('status').textContent=info[0];el('description').textContent=info[4];el('small-hint').textContent=size<192?'小尺寸保留状态图形，文字通过提示或卡片阅读。':'眼睛可直接变成状态图形，短词按需显示。';
+const mood=state==='idle'?el('expression').value:'natural',key=state+':'+mood+':'+mode;
+if(key!==previous){el('face-content').innerHTML=form(state,mood,mode==='hybrid',!reduced&&!paused&&!document.hidden);previous=key;}
+el('face-content').style.display=mode==='text'?'none':'';el('face-text').hidden=mode==='eyes';el('face-text').style.display=mode==='eyes'?'none':'';el('face-text').removeAttribute('hidden');el('face-text').setAttribute('class','screen-text'+(mode==='hybrid'?' screen-small':''));el('face-text').setAttribute('y',mode==='hybrid'?'865':'705');
+el('face-text').textContent=(state==='idle'?el('custom-text').value.trim():'')||info[1];el('expression').disabled=state!=='idle';el('custom-text').disabled=state!=='idle'||size<192;
+el('pause').textContent=paused?'继续预览':'暂停预览';el('pause').setAttribute('aria-pressed',String(paused));el('reduce').setAttribute('aria-pressed',String(reduced));
+document.querySelectorAll('[data-state]').forEach(n=>n.setAttribute('aria-pressed',String(n.dataset.state===state)));
+document.querySelectorAll('.size-sample').forEach(n=>{n.querySelector('svg')?.remove();n.prepend(cloneHead('size-'+n.dataset.size+'-',state,Number(n.dataset.size),'eyes',mood));});
+}
+function stopTour(){clearTimeout(tourTimer);tourTimer=null;el('tour').textContent='播放一轮状态';el('tour').setAttribute('aria-pressed','false');}
+function tourStep(){if(document.hidden||paused||reduced){stopTour();return;}const keys=Object.keys(states);el('state').value=keys[tourIndex++];update();if(tourIndex<keys.length)tourTimer=setTimeout(tourStep,2600);else stopTour();}
+['state','mode','expression'].forEach(id=>el(id).addEventListener('change',()=>{stopTour();update();}));['custom-text','size'].forEach(id=>el(id).addEventListener('input',update));
+el('pause').onclick=()=>{paused=!paused;if(paused)stopTour();update();};el('reduce').onclick=()=>{reduced=!reduced;if(reduced)stopTour();update();};el('theme').onclick=()=>{const light=document.body.classList.toggle('light');el('theme').textContent=light?'深色背景':'浅色背景';};
+el('tour').onclick=()=>{if(tourTimer){stopTour();return;}paused=false;reduced=false;tourIndex=0;el('tour').textContent='停止轮播';el('tour').setAttribute('aria-pressed','true');tourStep();};
+document.addEventListener('visibilitychange',()=>{if(document.hidden)stopTour();root.classList.toggle('paused',document.hidden||paused);});
+update();
+Object.entries(states).forEach(([state,info])=>{const button=document.createElement('button');button.type='button';button.className='state-card';button.dataset.state=state;button.setAttribute('aria-label','预览'+info[2]+'：'+info[3]);button.append(cloneHead('card-'+state+'-',state,112));const text=document.createElement('span');text.innerHTML=`<strong>${info[2]}</strong><small>${info[3]}</small>`;button.append(text);button.onclick=()=>{stopTour();el('state').value=state;update();};el('gallery').append(button);});
+update();
+})();
+</script>
+</html>

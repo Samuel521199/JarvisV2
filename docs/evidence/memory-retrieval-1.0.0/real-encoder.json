@@ -1,0 +1,82 @@
+{
+  "version": "memory-retrieval-1.0.0",
+  "environment": "Current Windows PC; CPU 2 threads; application network blocked, not OS air gap",
+  "model": "e5-multilingual-small-int8",
+  "cloud_calls": 0,
+  "checks": [
+    {
+      "query": "会议是什么时候？",
+      "expected": "会议安排",
+      "returned": [
+        "会议安排"
+      ],
+      "expected_present": true,
+      "retrieval": {
+        "version": "memory-retrieval-1.0.0",
+        "mode": "hybrid",
+        "eligible": 23,
+        "matched": 1,
+        "semantic": "ready",
+        "semantic_candidates": 23,
+        "model": "e5-multilingual-small-int8",
+        "vector_space": "1984ed1996abbfa1b5a86dc820cd44995ea49ade176ab2984be8b2c49c84a391",
+        "selected": 1,
+        "bytes": 152
+      },
+      "elapsed_ms": 84.90570000003572
+    },
+    {
+      "query": "What does the user like drinking?",
+      "expected": "饮食偏好",
+      "returned": [
+        "饮食偏好"
+      ],
+      "expected_present": true,
+      "retrieval": {
+        "version": "memory-retrieval-1.0.0",
+        "mode": "hybrid",
+        "eligible": 23,
+        "matched": 1,
+        "semantic": "ready",
+        "semantic_candidates": 23,
+        "model": "e5-multilingual-small-int8",
+        "vector_space": "1984ed1996abbfa1b5a86dc820cd44995ea49ade176ab2984be8b2c49c84a391",
+        "selected": 1,
+        "bytes": 140
+      },
+      "elapsed_ms": 68.37990000008176
+    },
+    {
+      "query": "汽车需要做什么保养？",
+      "expected": "保养手册",
+      "returned": [
+        "保养手册"
+      ],
+      "expected_present": true,
+      "retrieval": {
+        "version": "memory-retrieval-1.0.0",
+        "mode": "hybrid",
+        "eligible": 23,
+        "matched": 1,
+        "semantic": "ready",
+        "semantic_candidates": 23,
+        "model": "e5-multilingual-small-int8",
+        "vector_space": "1984ed1996abbfa1b5a86dc820cd44995ea49ade176ab2984be8b2c49c84a391",
+        "selected": 1,
+        "bytes": 138
+      },
+      "elapsed_ms": 77.78929999994944
+    }
+  ],
+  "correction": {
+    "old_value_used": true,
+    "new_value_used": true,
+    "old_value_excluded": true
+  },
+  "restart_forget": {
+    "selected": 0,
+    "mode": "lexical",
+    "semantic": "not_loaded"
+  },
+  "passed": true
+}

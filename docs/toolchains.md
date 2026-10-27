@@ -3,7 +3,7 @@
 > 新工程设计基线 · 2026-10-22 · 目标/明确规则 accepted，运行方案 proposed。H 盘版本记录不构成本工程的实现或验收证据。
 
 <!-- book-nav:start -->
-[工程主入口](../README.md) › [第四篇 · 自主成长与维护](../README.md#part-evolution) › 第 16 章
+[工程主入口](../README.md) › [第四篇 · 自主成长与维护](../README.md#part-evolution) › 第 17 章
 
 **本章导航**
 
@@ -336,5 +336,5 @@ Windows 首期优先一个明确配置的本地构建 VM 或等效隔离方案�
 外部 CLI 随需启动，结束后清理本轮临时目录，不增加第三方 Python 包、数据库、服务或常驻模型。桌面 Codex 操控、任意仓库改写、自动依赖安装、供应链签名更新仍未由本端口实现。
 
 <!-- book-footer:start -->
-[返回工程主入口](../README.md) · [全书目录](../README.md#book-tree) · [上一章：自主进化、外部编码协作与版本发布](evolution-release.md) · [下一章：系统健康、防退化与自愈](health-maintenance.md)
+[返回工程主入口](../README.md) · [全书目录](../README.md#book-tree) · [上一章：火炮类游戏资产制作与经验学习实施手册](studio3d-learning.md) · [下一章：系统健康、防退化与自愈](health-maintenance.md)
 <!-- book-footer:end -->

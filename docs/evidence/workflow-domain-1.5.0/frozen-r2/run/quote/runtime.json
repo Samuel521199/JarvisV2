@@ -1,0 +1,720 @@
+{
+  "scope": "three synthetic quote tasks; UI requirements and independent oracle, no natural-language extraction",
+  "production_deployed": false,
+  "model_calls": 0,
+  "tasks": [
+    {
+      "id": "task-1de20975d16b491a80cf6b35d68331cd",
+      "status": "SUCCEEDED",
+      "spent": 2,
+      "completion": {
+        "version": "completion-1.1.0",
+        "task_id": "task-1de20975d16b491a80cf6b35d68331cd",
+        "state": "VERIFIED",
+        "fingerprint": "6fe5f08a4b02998a74893e383de4aab56ca34629ed983714741a3681aeba977d",
+        "acceptance": {
+          "revision": 1,
+          "rules": {
+            "coverage": "complete",
+            "criteria": [
+              {
+                "check": "quote_selection",
+                "expected": "03e3cb460dbc962c6a571a29f10d370b1ba77a5109e3c26dac4cefd0aebdb382",
+                "id": "declared-result",
+                "step_id": "step-1"
+              }
+            ],
+            "requirements": [
+              {
+                "criterion_ids": [
+                  "declared-result"
+                ],
+                "id": "requirement-1",
+                "kind": "quote_selection",
+                "text": "按冻结报价输入核对预算、交期、完整合格集合、最低价和所选来源引用"
+              }
+            ]
+          }
+        },
+        "checks": [
+          {
+            "id": "declared-result",
+            "step_id": "step-1",
+            "status": "passed",
+            "verifier": "quote-selection-1",
+            "source_digest": "03e3cb460dbc962c6a571a29f10d370b1ba77a5109e3c26dac4cefd0aebdb382",
+            "reason": "quote_verified"
+          }
+        ],
+        "condition_score": 100.0,
+        "score_scope": "declared_conditions_only",
+        "outcome_id": "outcome-d5978e1ef5cb7481961a85fb9ef3d7f2",
+        "requirement_coverage": {
+          "version": "declared-requirements-1",
+          "state": "SATISFIED",
+          "requirements": [
+            {
+              "criterion_ids": [
+                "declared-result"
+              ],
+              "id": "requirement-1",
+              "kind": "quote_selection",
+              "text": "按冻结报价输入核对预算、交期、完整合格集合、最低价和所选来源引用",
+              "status": "passed",
+              "reason": "linked_checks"
+            }
+          ],
+          "complete": true,
+          "scope": "explicitly_declared_requirements",
+          "semantic_goal_verified": false
+        },
+        "evidence_ready": true,
+        "feedback": null,
+        "method": null,
+        "method_available": false,
+        "feedback_history": [],
+        "assessment_history": [
+          {
+            "created": 1793069597.135222,
+            "assessment": {
+              "acceptance": {
+                "revision": 1,
+                "rules": {
+                  "coverage": "complete",
+                  "criteria": [
+                    {
+                      "check": "quote_selection",
+                      "expected": "03e3cb460dbc962c6a571a29f10d370b1ba77a5109e3c26dac4cefd0aebdb382",
+                      "id": "declared-result",
+                      "step_id": "step-1"
+                    }
+                  ],
+                  "requirements": [
+                    {
+                      "criterion_ids": [
+                        "declared-result"
+                      ],
+                      "id": "requirement-1",
+                      "kind": "quote_selection",
+                      "text": "按冻结报价输入核对预算、交期、完整合格集合、最低价和所选来源引用"
+                    }
+                  ]
+                }
+              },
+              "checks": [
+                {
+                  "id": "declared-result",
+                  "status": "unknown",
+                  "step_id": "step-1"
+                }
+              ],
+              "condition_score": null,
+              "evidence_ready": false,
+              "feedback": null,
+              "fingerprint": "cc3f65f01df72b669b4bd55579987893d5862ddfb11385e0e9053e6c51faa0ac",
+              "outcome_id": null,
+              "requirement_coverage": {
+                "complete": false,
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "declared-result"
+                    ],
+                    "id": "requirement-1",
+                    "kind": "quote_selection",
+                    "reason": "linked_checks",
+                    "status": "unknown",
+                    "text": "按冻结报价输入核对预算、交期、完整合格集合、最低价和所选来源引用"
+                  }
+                ],
+                "scope": "explicitly_declared_requirements",
+                "semantic_goal_verified": false,
+                "state": "INCOMPLETE",
+                "version": "declared-requirements-1"
+              },
+              "score_scope": "declared_conditions_only",
+              "state": "WAITING",
+              "task_id": "task-1de20975d16b491a80cf6b35d68331cd",
+              "version": "completion-1.1.0"
+            }
+          },
+          {
+            "created": 1793069596.2570174,
+            "assessment": {
+              "acceptance": {
+                "revision": 1,
+                "rules": {
+                  "coverage": "complete",
+                  "criteria": [
+                    {
+                      "check": "quote_selection",
+                      "expected": "03e3cb460dbc962c6a571a29f10d370b1ba77a5109e3c26dac4cefd0aebdb382",
+                      "id": "declared-result",
+                      "step_id": "step-1"
+                    }
+                  ],
+                  "requirements": [
+                    {
+                      "criterion_ids": [
+                        "declared-result"
+                      ],
+                      "id": "requirement-1",
+                      "kind": "quote_selection",
+                      "text": "按冻结报价输入核对预算、交期、完整合格集合、最低价和所选来源引用"
+                    }
+                  ]
+                }
+              },
+              "checks": [
+                {
+                  "id": "declared-result",
+                  "status": "unknown",
+                  "step_id": "step-1"
+                }
+              ],
+              "condition_score": null,
+              "evidence_ready": false,
+              "feedback": null,
+              "fingerprint": "72763bf3936d63de7213dd9875fa8d9b51db64dea2bb741548b2c753b09c4a7c",
+              "outcome_id": null,
+              "requirement_coverage": {
+                "complete": false,
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "declared-result"
+                    ],
+                    "id": "requirement-1",
+                    "kind": "quote_selection",
+                    "reason": "linked_checks",
+                    "status": "unknown",
+                    "text": "按冻结报价输入核对预算、交期、完整合格集合、最低价和所选来源引用"
+                  }
+                ],
+                "scope": "explicitly_declared_requirements",
+                "semantic_goal_verified": false,
+                "state": "INCOMPLETE",
+                "version": "declared-requirements-1"
+              },
+              "score_scope": "declared_conditions_only",
+              "state": "WAITING",
+              "task_id": "task-1de20975d16b491a80cf6b35d68331cd",
+              "version": "completion-1.1.0"
+            }
+          }
+        ]
+      },
+      "closure": {
+        "version": "work-closure-1.4.0",
+        "root_goal": "goal-c8171acf7741434cbd61c3e4708818cd",
+        "current_goal": "goal-c8171acf7741434cbd61c3e4708818cd",
+        "current_task": "task-1de20975d16b491a80cf6b35d68331cd",
+        "state": "COMPLETE",
+        "complete": true,
+        "reasons": [],
+        "completion_state": "VERIFIED",
+        "condition_score": 100.0,
+        "score_scope": "current_declared_conditions_only",
+        "quality_score": null,
+        "requirement_coverage": {
+          "version": "declared-requirements-1",
+          "state": "SATISFIED",
+          "requirements": [
+            {
+              "criterion_ids": [
+                "declared-result"
+              ],
+              "id": "requirement-1",
+              "kind": "quote_selection",
+              "text": "按冻结报价输入核对预算、交期、完整合格集合、最低价和所选来源引用",
+              "status": "passed",
+              "reason": "linked_checks"
+            }
+          ],
+          "complete": true,
+          "scope": "explicitly_declared_requirements",
+          "semantic_goal_verified": false
+        },
+        "assessment_fingerprint": "6fe5f08a4b02998a74893e383de4aab56ca34629ed983714741a3681aeba977d",
+        "spent_cost_units": 2,
+        "reserved_cost_units": 0
+      }
+    },
+    {
+      "id": "task-71b4f05fa75449bd809b9125dc68880c",
+      "status": "SUCCEEDED",
+      "spent": 2,
+      "completion": {
+        "version": "completion-1.1.0",
+        "task_id": "task-71b4f05fa75449bd809b9125dc68880c",
+        "state": "NEEDS_CORRECTION",
+        "fingerprint": "0d3098c472780aae63ae9dfe1218caaba0acd0d4e49a30e6afec839e31ab06d5",
+        "acceptance": {
+          "revision": 1,
+          "rules": {
+            "coverage": "complete",
+            "criteria": [
+              {
+                "check": "quote_selection",
+                "expected": "03e3cb460dbc962c6a571a29f10d370b1ba77a5109e3c26dac4cefd0aebdb382",
+                "id": "declared-result",
+                "step_id": "step-1"
+              }
+            ],
+            "requirements": [
+              {
+                "criterion_ids": [
+                  "declared-result"
+                ],
+                "id": "requirement-1",
+                "kind": "quote_selection",
+                "text": "按冻结报价输入核对预算、交期、完整合格集合、最低价和所选来源引用"
+              }
+            ]
+          }
+        },
+        "checks": [
+          {
+            "id": "declared-result",
+            "step_id": "step-1",
+            "status": "failed",
+            "verifier": "quote-selection-1",
+            "source_digest": "03e3cb460dbc962c6a571a29f10d370b1ba77a5109e3c26dac4cefd0aebdb382",
+            "reason": "quote_selection_mismatch"
+          }
+        ],
+        "condition_score": 0.0,
+        "score_scope": "declared_conditions_only",
+        "outcome_id": "outcome-57901a422821de8c58ab3f27e5701c0b",
+        "requirement_coverage": {
+          "version": "declared-requirements-1",
+          "state": "INCOMPLETE",
+          "requirements": [
+            {
+              "criterion_ids": [
+                "declared-result"
+              ],
+              "id": "requirement-1",
+              "kind": "quote_selection",
+              "text": "按冻结报价输入核对预算、交期、完整合格集合、最低价和所选来源引用",
+              "status": "failed",
+              "reason": "linked_checks"
+            }
+          ],
+          "complete": false,
+          "scope": "explicitly_declared_requirements",
+          "semantic_goal_verified": false
+        },
+        "evidence_ready": false,
+        "feedback": null,
+        "method": null,
+        "method_available": false,
+        "feedback_history": [],
+        "assessment_history": [
+          {
+            "created": 1793069599.8389819,
+            "assessment": {
+              "acceptance": {
+                "revision": 1,
+                "rules": {
+                  "coverage": "complete",
+                  "criteria": [
+                    {
+                      "check": "quote_selection",
+                      "expected": "03e3cb460dbc962c6a571a29f10d370b1ba77a5109e3c26dac4cefd0aebdb382",
+                      "id": "declared-result",
+                      "step_id": "step-1"
+                    }
+                  ],
+                  "requirements": [
+                    {
+                      "criterion_ids": [
+                        "declared-result"
+                      ],
+                      "id": "requirement-1",
+                      "kind": "quote_selection",
+                      "text": "按冻结报价输入核对预算、交期、完整合格集合、最低价和所选来源引用"
+                    }
+                  ]
+                }
+              },
+              "checks": [
+                {
+                  "id": "declared-result",
+                  "status": "unknown",
+                  "step_id": "step-1"
+                }
+              ],
+              "condition_score": null,
+              "evidence_ready": false,
+              "feedback": null,
+              "fingerprint": "cc3f65f01df72b669b4bd55579987893d5862ddfb11385e0e9053e6c51faa0ac",
+              "outcome_id": null,
+              "requirement_coverage": {
+                "complete": false,
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "declared-result"
+                    ],
+                    "id": "requirement-1",
+                    "kind": "quote_selection",
+                    "reason": "linked_checks",
+                    "status": "unknown",
+                    "text": "按冻结报价输入核对预算、交期、完整合格集合、最低价和所选来源引用"
+                  }
+                ],
+                "scope": "explicitly_declared_requirements",
+                "semantic_goal_verified": false,
+                "state": "INCOMPLETE",
+                "version": "declared-requirements-1"
+              },
+              "score_scope": "declared_conditions_only",
+              "state": "WAITING",
+              "task_id": "task-71b4f05fa75449bd809b9125dc68880c",
+              "version": "completion-1.1.0"
+            }
+          },
+          {
+            "created": 1793069599.0799444,
+            "assessment": {
+              "acceptance": {
+                "revision": 1,
+                "rules": {
+                  "coverage": "complete",
+                  "criteria": [
+                    {
+                      "check": "quote_selection",
+                      "expected": "03e3cb460dbc962c6a571a29f10d370b1ba77a5109e3c26dac4cefd0aebdb382",
+                      "id": "declared-result",
+                      "step_id": "step-1"
+                    }
+                  ],
+                  "requirements": [
+                    {
+                      "criterion_ids": [
+                        "declared-result"
+                      ],
+                      "id": "requirement-1",
+                      "kind": "quote_selection",
+                      "text": "按冻结报价输入核对预算、交期、完整合格集合、最低价和所选来源引用"
+                    }
+                  ]
+                }
+              },
+              "checks": [
+                {
+                  "id": "declared-result",
+                  "status": "unknown",
+                  "step_id": "step-1"
+                }
+              ],
+              "condition_score": null,
+              "evidence_ready": false,
+              "feedback": null,
+              "fingerprint": "72763bf3936d63de7213dd9875fa8d9b51db64dea2bb741548b2c753b09c4a7c",
+              "outcome_id": null,
+              "requirement_coverage": {
+                "complete": false,
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "declared-result"
+                    ],
+                    "id": "requirement-1",
+                    "kind": "quote_selection",
+                    "reason": "linked_checks",
+                    "status": "unknown",
+                    "text": "按冻结报价输入核对预算、交期、完整合格集合、最低价和所选来源引用"
+                  }
+                ],
+                "scope": "explicitly_declared_requirements",
+                "semantic_goal_verified": false,
+                "state": "INCOMPLETE",
+                "version": "declared-requirements-1"
+              },
+              "score_scope": "declared_conditions_only",
+              "state": "WAITING",
+              "task_id": "task-71b4f05fa75449bd809b9125dc68880c",
+              "version": "completion-1.1.0"
+            }
+          }
+        ]
+      },
+      "closure": {
+        "version": "work-closure-1.4.0",
+        "root_goal": "goal-7951a8688f6447dcb3ee3cb8159e7000",
+        "current_goal": "goal-7951a8688f6447dcb3ee3cb8159e7000",
+        "current_task": "task-71b4f05fa75449bd809b9125dc68880c",
+        "state": "NEEDS_EVIDENCE",
+        "complete": false,
+        "reasons": [
+          "NEEDS_CORRECTION"
+        ],
+        "completion_state": "NEEDS_CORRECTION",
+        "condition_score": 0.0,
+        "score_scope": "current_declared_conditions_only",
+        "quality_score": null,
+        "requirement_coverage": {
+          "version": "declared-requirements-1",
+          "state": "INCOMPLETE",
+          "requirements": [
+            {
+              "criterion_ids": [
+                "declared-result"
+              ],
+              "id": "requirement-1",
+              "kind": "quote_selection",
+              "text": "按冻结报价输入核对预算、交期、完整合格集合、最低价和所选来源引用",
+              "status": "failed",
+              "reason": "linked_checks"
+            }
+          ],
+          "complete": false,
+          "scope": "explicitly_declared_requirements",
+          "semantic_goal_verified": false
+        },
+        "assessment_fingerprint": "0d3098c472780aae63ae9dfe1218caaba0acd0d4e49a30e6afec839e31ab06d5",
+        "spent_cost_units": 2,
+        "reserved_cost_units": 0
+      }
+    },
+    {
+      "id": "task-4d9648602ba145378595952663fe1997",
+      "status": "SUCCEEDED",
+      "spent": 2,
+      "completion": {
+        "version": "completion-1.1.0",
+        "task_id": "task-4d9648602ba145378595952663fe1997",
+        "state": "VERIFIED",
+        "fingerprint": "abe7eb78467f8f04a334bac0904452fad62b6330c2f250aa1df9c2bc58b15842",
+        "acceptance": {
+          "revision": 1,
+          "rules": {
+            "coverage": "complete",
+            "criteria": [
+              {
+                "check": "quote_selection",
+                "expected": "61beaea8526714b97c284e4ad23a208ee3b75edb722dce4f81ba8bb482e91c73",
+                "id": "declared-result",
+                "step_id": "step-1"
+              }
+            ],
+            "requirements": [
+              {
+                "criterion_ids": [
+                  "declared-result"
+                ],
+                "id": "requirement-1",
+                "kind": "quote_selection",
+                "text": "按冻结报价输入核对预算、交期、完整合格集合、最低价和所选来源引用"
+              }
+            ]
+          }
+        },
+        "checks": [
+          {
+            "id": "declared-result",
+            "step_id": "step-1",
+            "status": "passed",
+            "verifier": "quote-selection-1",
+            "source_digest": "61beaea8526714b97c284e4ad23a208ee3b75edb722dce4f81ba8bb482e91c73",
+            "reason": "quote_no_eligible"
+          }
+        ],
+        "condition_score": 100.0,
+        "score_scope": "declared_conditions_only",
+        "outcome_id": "outcome-48e303c5e1d6bad163db77cc73c072ea",
+        "requirement_coverage": {
+          "version": "declared-requirements-1",
+          "state": "SATISFIED",
+          "requirements": [
+            {
+              "criterion_ids": [
+                "declared-result"
+              ],
+              "id": "requirement-1",
+              "kind": "quote_selection",
+              "text": "按冻结报价输入核对预算、交期、完整合格集合、最低价和所选来源引用",
+              "status": "passed",
+              "reason": "linked_checks"
+            }
+          ],
+          "complete": true,
+          "scope": "explicitly_declared_requirements",
+          "semantic_goal_verified": false
+        },
+        "evidence_ready": true,
+        "feedback": null,
+        "method": null,
+        "method_available": false,
+        "feedback_history": [],
+        "assessment_history": [
+          {
+            "created": 1793069602.713249,
+            "assessment": {
+              "acceptance": {
+                "revision": 1,
+                "rules": {
+                  "coverage": "complete",
+                  "criteria": [
+                    {
+                      "check": "quote_selection",
+                      "expected": "61beaea8526714b97c284e4ad23a208ee3b75edb722dce4f81ba8bb482e91c73",
+                      "id": "declared-result",
+                      "step_id": "step-1"
+                    }
+                  ],
+                  "requirements": [
+                    {
+                      "criterion_ids": [
+                        "declared-result"
+                      ],
+                      "id": "requirement-1",
+                      "kind": "quote_selection",
+                      "text": "按冻结报价输入核对预算、交期、完整合格集合、最低价和所选来源引用"
+                    }
+                  ]
+                }
+              },
+              "checks": [
+                {
+                  "id": "declared-result",
+                  "status": "unknown",
+                  "step_id": "step-1"
+                }
+              ],
+              "condition_score": null,
+              "evidence_ready": false,
+              "feedback": null,
+              "fingerprint": "fabc32075383f6166052a9be07587ba321a8e7fa4ccddb0fd4202e6a9b9c6591",
+              "outcome_id": null,
+              "requirement_coverage": {
+                "complete": false,
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "declared-result"
+                    ],
+                    "id": "requirement-1",
+                    "kind": "quote_selection",
+                    "reason": "linked_checks",
+                    "status": "unknown",
+                    "text": "按冻结报价输入核对预算、交期、完整合格集合、最低价和所选来源引用"
+                  }
+                ],
+                "scope": "explicitly_declared_requirements",
+                "semantic_goal_verified": false,
+                "state": "INCOMPLETE",
+                "version": "declared-requirements-1"
+              },
+              "score_scope": "declared_conditions_only",
+              "state": "WAITING",
+              "task_id": "task-4d9648602ba145378595952663fe1997",
+              "version": "completion-1.1.0"
+            }
+          },
+          {
+            "created": 1793069601.9632049,
+            "assessment": {
+              "acceptance": {
+                "revision": 1,
+                "rules": {
+                  "coverage": "complete",
+                  "criteria": [
+                    {
+                      "check": "quote_selection",
+                      "expected": "61beaea8526714b97c284e4ad23a208ee3b75edb722dce4f81ba8bb482e91c73",
+                      "id": "declared-result",
+                      "step_id": "step-1"
+                    }
+                  ],
+                  "requirements": [
+                    {
+                      "criterion_ids": [
+                        "declared-result"
+                      ],
+                      "id": "requirement-1",
+                      "kind": "quote_selection",
+                      "text": "按冻结报价输入核对预算、交期、完整合格集合、最低价和所选来源引用"
+                    }
+                  ]
+                }
+              },
+              "checks": [
+                {
+                  "id": "declared-result",
+                  "status": "unknown",
+                  "step_id": "step-1"
+                }
+              ],
+              "condition_score": null,
+              "evidence_ready": false,
+              "feedback": null,
+              "fingerprint": "dba774fb550db0a5cc91f7cc4d87d7b404a34ad9fea3a54b0b4a3262e6b8158a",
+              "outcome_id": null,
+              "requirement_coverage": {
+                "complete": false,
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "declared-result"
+                    ],
+                    "id": "requirement-1",
+                    "kind": "quote_selection",
+                    "reason": "linked_checks",
+                    "status": "unknown",
+                    "text": "按冻结报价输入核对预算、交期、完整合格集合、最低价和所选来源引用"
+                  }
+                ],
+                "scope": "explicitly_declared_requirements",
+                "semantic_goal_verified": false,
+                "state": "INCOMPLETE",
+                "version": "declared-requirements-1"
+              },
+              "score_scope": "declared_conditions_only",
+              "state": "WAITING",
+              "task_id": "task-4d9648602ba145378595952663fe1997",
+              "version": "completion-1.1.0"
+            }
+          }
+        ]
+      },
+      "closure": {
+        "version": "work-closure-1.4.0",
+        "root_goal": "goal-673de8e1b53b4972acb95fcaf68284f8",
+        "current_goal": "goal-673de8e1b53b4972acb95fcaf68284f8",
+        "current_task": "task-4d9648602ba145378595952663fe1997",
+        "state": "COMPLETE",
+        "complete": true,
+        "reasons": [],
+        "completion_state": "VERIFIED",
+        "condition_score": 100.0,
+        "score_scope": "current_declared_conditions_only",
+        "quality_score": null,
+        "requirement_coverage": {
+          "version": "declared-requirements-1",
+          "state": "SATISFIED",
+          "requirements": [
+            {
+              "criterion_ids": [
+                "declared-result"
+              ],
+              "id": "requirement-1",
+              "kind": "quote_selection",
+              "text": "按冻结报价输入核对预算、交期、完整合格集合、最低价和所选来源引用",
+              "status": "passed",
+              "reason": "linked_checks"
+            }
+          ],
+          "complete": true,
+          "scope": "explicitly_declared_requirements",
+          "semantic_goal_verified": false
+        },
+        "assessment_fingerprint": "abe7eb78467f8f04a334bac0904452fad62b6330c2f250aa1df9c2bc58b15842",
+        "spent_cost_units": 2,
+        "reserved_cost_units": 0
+      }
+    }
+  ]
+}

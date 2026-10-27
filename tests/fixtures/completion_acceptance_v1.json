@@ -1,0 +1,15 @@
+{
+  "version": "completion-acceptance-v1",
+  "scope": "Local deterministic text statistics, not general language quality",
+  "oracle": "Fixed reviewed literals; neither producer nor outcome evaluator computes expected values",
+  "cases": [
+    {"id": "empty", "text": "", "expected": {"characters": 0, "lines": 0, "words": 0, "utf8_bytes": 0}},
+    {"id": "ascii_lines", "text": "one two\nthree", "expected": {"characters": 13, "lines": 2, "words": 3, "utf8_bytes": 13}},
+    {"id": "chinese", "text": "你好 世界\n", "expected": {"characters": 6, "lines": 1, "words": 2, "utf8_bytes": 14}},
+    {"id": "emoji", "text": "a🙂 b", "expected": {"characters": 4, "lines": 1, "words": 2, "utf8_bytes": 7}},
+    {"id": "crlf", "text": "a\r\nb\r\n", "expected": {"characters": 6, "lines": 2, "words": 2, "utf8_bytes": 6}},
+    {"id": "blank_lines", "text": "\n\n", "expected": {"characters": 2, "lines": 2, "words": 0, "utf8_bytes": 2}},
+    {"id": "whitespace", "text": "\t alpha  beta \t", "expected": {"characters": 15, "lines": 1, "words": 2, "utf8_bytes": 15}},
+    {"id": "combining", "text": "é café", "expected": {"characters": 7, "lines": 1, "words": 2, "utf8_bytes": 9}}
+  ]
+}

@@ -1,6 +1,6 @@
 # 记忆与认知综合方案：架构、选型与场景图解
 
-> 文档版本 **memory-context-2026-10-23-r2** · 2026-10-23 · **proposed**。本章把综合方案组织为可连续阅读的正文；r2 增加单篇入口、图表和场景说明，没有宣称新增运行能力。记忆代码核查基线是 dev.10；dev.11 MCP 的独立交付不等于本章设计已实现。
+> 文档版本 **memory-context-2026-10-24-r5** · 2026-10-24 · **proposed**。本章把综合方案组织为可连续阅读的正文；r5 同步持久向量、来源知识审阅与单机派生清理闭环，并链接最终缺口登记；完整目标仍为 proposed。记忆代码核查基线是 dev.10；dev.11 MCP 的独立交付不等于本章设计已实现。
 
 <!-- book-nav:start -->
 [工程主入口](../README.md) › [第三篇 · 智能运行与多设备协同](../README.md#part-runtime) › 第 12 章
@@ -33,6 +33,8 @@ Jarvis 需要在普通 PC／Mac 上持续理解用户，同时处理聊天、情
 
 本章负责综合说明和场景图解；精确字段、完整安全规则、组件比较和验收阈值仍各有唯一权威位置。阅读本章可以了解完整运作方式，实施时再沿每节链接进入细则。图中角色表示职责，不要求分别部署服务。
 
+关于“越用越聪明”而非堆积记忆，新增[知识分层、条件化总结、反例和成本规则](knowledge-learning.md#knowledge-compounding)，配套[直观例子与图解](grok-bot-comparison.md#jarvis-learning-deepening)。知识库作用有多大，需按[分组对照](delivery-validation.md#knowledge-value-ablation)实测，不从容量、检索次数或架构完整性推算成绩。
+
 | 阅读目标 | 本章位置 | 深入实施时的权威章节 |
 |---|---|---|
 | 先看系统如何组成 | [整体架构](#memory-guide-architecture) | [系统架构](architecture.md#clean-core-architecture) |
@@ -42,7 +44,7 @@ Jarvis 需要在普通 PC／Mac 上持续理解用户，同时处理聊天、情
 | 看实际问题怎样处理 | [特殊场景](#memory-guide-cases) | 每个案例下方的规则和验收链接 |
 | 看升级、迁移与验证 | [演进与验收](#memory-guide-delivery) | [迁移协议](stack-project-layout.md#memory-context-migration)、[验收清单](delivery-validation.md#memory-context-acceptance) |
 
-本轮核查的 dev.10 记忆已经具有显式事实、来源候选、范围／供应商过滤和撤回；尚无按问题排序的长期召回、语义索引、通用知识编纂、分支记忆、家庭私密库或多设备同步。实际可用范围见[记忆运行说明](knowledge-learning.md#memory-workbench-runtime)与[当前工程入口](../README.md)。下文案例都是**设计示例与待验证行为**，不是运行截图或已通过测试。
+最初核查基线 dev.10 具备显式事实、来源候选、范围／供应商过滤和撤回。后续 [memory-retrieval-1.0.0](knowledge-learning.md#memory-retrieval-runtime) 已补已核对事实的按问题召回、有界 E5 补充和引用依赖失效；[资料库 1.2.0](knowledge-learning.md#knowledge-library-runtime) 已接文本入库、片段定位、FTS5、资料包恢复与来源撤回；限定历史派生清理见[运行规则](knowledge-learning.md#knowledge-transfer-runtime)。[1.2.0 本地闭环](knowledge-learning.md#knowledge-cycle-runtime) 进一步接通持久语义索引、片段知识审阅与受管任务/文件清理；通用语义编纂、分支记忆、家庭私密库与设备同步仍未完成，逐项差距见[最终目标缺口](knowledge-learning.md#memory-final-gap-register)。实际可用范围见[记忆运行说明](knowledge-learning.md#memory-workbench-runtime)与[当前工程入口](../README.md)。下文案例仍是**设计示例与待验证行为**，不能用局部检索测试替代整套方案验收。
 
 <a id="memory-guide-architecture"></a>
 ## 2. 整体架构：交流、执行与学习共用可信上下文
@@ -211,10 +213,10 @@ Jarvis 需要在普通 PC／Mac 上持续理解用户，同时处理聊天、情
 | 私人终端已解锁，资料与目的地均允许 | 读取必要内容，在私人渠道回答 |
 | 客厅扬声器／未知在场人员 | 提示“有一项私人内容，请在个人设备查看”，不透露标题或正文 |
 | 资料允许本地使用，禁止云端处理 | 本地完成或说明能力缺口；不转云 embedding／重排／TTS 绕过限制 |
-| 家庭成员自己的私密资料 | 根据该成员授权判断，家庭管理员不自动获得读取权 |
+| 家庭成员自己的私密资料 | 采用主人已选择的家庭规则：主人可管理并查看全部，其他家人仅看自己的和明确共享内容；保存前明确告知成员 |
 | 只有声纹相似，没有其他认证 | 仅作辅助线索，不据此解锁秘密 |
 
-完整身份、存储与渠道规则见[个人与家庭私密域](security-sovereignty.md#memory-private-storage)。这是目标交互，当前普通记忆库尚未因此自动获得加密与多人认证能力。
+完整身份、存储与渠道规则见[个人与家庭私密域](security-sovereignty.md#memory-private-storage)。Windows 家庭私密空间已有独立登录与加密对象实现，见[运行入口](knowledge-learning.md#family-private-runtime)；普通记忆库没有因此自动加密，多人声纹、扬声器受众和设备同步仍是目标交互。
 
 <a id="memory-guide-poison-case"></a>
 ### 6.5 技术资料夹带指令，错误又被反复引用

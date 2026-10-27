@@ -1,0 +1,42 @@
+{
+  "schema": "jarvis.component.v1",
+  "id": "local-model-manager",
+  "version": "1.1.0",
+  "contract": "jarvis.local-models.v1",
+  "implementation": [
+    "host/local_models.py",
+    "modules/local_models/catalog.py",
+    "adapters/models/local_download.py",
+    "adapters/models/local_embedding_worker.py",
+    "modules/local_models/assessments.py",
+    "modules/local_models/benchmark.py"
+  ],
+  "runtime_manifest": "modules/local_models/runtime.json",
+  "catalog": "modules/local_models/catalog.json",
+  "state_schema": 2,
+  "state": [
+    "config/local-models.sqlite3",
+    "local-models/{immutable-model-id}/"
+  ],
+  "worker_contract": "jsonl-embedding-v1",
+  "replacement": {
+    "implemented": "probed_embedding_worker_swap_with_previous_pointer",
+    "manager_code": "candidate_tests_then_host_restart",
+    "arbitrary_hot_core_replacement": false
+  },
+  "recovery_command": "python -B -m tools.local_models list",
+  "tests": [
+    "tests/test_local_models.py",
+    "tests/test_local_models_http.py",
+    "tools/probe_local_models.py",
+    "tests/test_local_models_assessments.py"
+  ],
+  "limitations": [
+    "not_an_offline_chat_llm",
+    "not_a_memory_search_index",
+    "not_an_os_network_sandbox",
+    "runtime_environment_repair_not_automated"
+  ],
+  "assessments": "modules/local_models/assessments.json",
+  "benchmark_suite": "modules/local_models/retrieval-suite.json"
+}

@@ -1,0 +1,40 @@
+{
+  "cases": [
+    {
+      "input": " A | 120 | 5 | source-A \n B | 90 | 8 | source-B ",
+      "expected": "无符合条件报价"
+    },
+    {
+      "input": " A | 80 | 6 | source-A \n B | 95 | 4 | source-B ",
+      "expected": "符合条件：B\n来源：source-B"
+    },
+    {
+      "input": " A | 50 | 3 | source-A \n B | 60 | 2 | source-B ",
+      "expected": "符合条件：A\n来源：source-A"
+    },
+    {
+      "input": " A | 100 | 5 | source-A \n B | 90 | 10 | source-B ",
+      "expected": "符合条件：A\n来源：source-A"
+    },
+    {
+      "input": " A | 110 | 2 | source-A \n B | 120 | 1 | source-B ",
+      "expected": "无符合条件报价"
+    },
+    {
+      "input": " 甲 | 90 | 4 | source-first \n 乙 | 90 | 4 | source-second ",
+      "expected": "符合条件：甲\n来源：source-first"
+    }
+  ],
+  "constraints": {
+    "price_max": 100,
+    "days_max": 5,
+    "tie": "first source row"
+  },
+  "strategy_order": "alternate full/suffix within each pair",
+  "tool_sha256": {
+    "normalize": "bb82136d81490d7989969dcfa4fdb3337fb5bbe0faf3c79048abae2f802d12ff",
+    "cheap": "2409c507a4d744ea3b67ce249bed205829e8ef35978fdac147e10fbe2c329382",
+    "both": "37ef04a2da4404027da324f68ae23a6a0de75d37030215a67093af65a1fd6d2e"
+  },
+  "scope": "Synthetic structured report strategy comparison under the same 1.3.0 runtime; not real user work or a prior binary benchmark"
+}

@@ -1,0 +1,504 @@
+{
+  "scope": "linked synthetic chat sources, explicit omissions and conflicts",
+  "production_deployed": false,
+  "model_calls": 0,
+  "tasks": [
+    {
+      "id": "task-4e0baf4e0bb9498a9cabbc2d08716f53",
+      "status": "SUCCEEDED",
+      "spent": 2,
+      "completion": {
+        "version": "completion-1.1.0",
+        "task_id": "task-4e0baf4e0bb9498a9cabbc2d08716f53",
+        "state": "VERIFIED",
+        "fingerprint": "4d2718a269504f10959fe7b653b301d4cfb9bcc3f88eebe36beed1994909596c",
+        "acceptance": {
+          "revision": 1,
+          "rules": {
+            "coverage": "complete",
+            "criteria": [
+              {
+                "check": "quote_sources",
+                "expected": "1f7d1f81e8df49eaadfe2a789f5388c70dfb6a2ac633476e8978d13b809ed19a",
+                "id": "quote-sources",
+                "step_id": "step-1"
+              }
+            ],
+            "requirements": [
+              {
+                "criterion_ids": [
+                  "quote-sources"
+                ],
+                "id": "source-domain",
+                "kind": "quote_sources",
+                "text": "对账已关联聊天原话、会话要求与参考资料范围，再核验当前目标的报价结果"
+              }
+            ]
+          }
+        },
+        "checks": [
+          {
+            "id": "quote-sources",
+            "step_id": "step-1",
+            "status": "passed",
+            "verifier": "quote-selection-1",
+            "source_digest": "03e3cb460dbc962c6a571a29f10d370b1ba77a5109e3c26dac4cefd0aebdb382",
+            "reason": "quote_verified",
+            "request_verifier": "quote-request-1",
+            "request_binding": "a064da344d47389e2453013be4d9957f7db1461a12063b6a966bab44565bbc6c",
+            "request_goal_digest": "8c9942d864ad259d0629760f64f8daece4ef26d349fed4719cd966966cbd84c0",
+            "unresolved_count": 0,
+            "semantic_goal_verified": false,
+            "request_scope": "stored_goal_only",
+            "source_verifier": "quote-sources-1",
+            "source_binding": "1f7d1f81e8df49eaadfe2a789f5388c70dfb6a2ac633476e8978d13b809ed19a",
+            "source_scope": "linked_chat_sources",
+            "source_count": 2
+          }
+        ],
+        "condition_score": 100.0,
+        "score_scope": "declared_conditions_only",
+        "outcome_id": "outcome-127d80b5f6c4b83748ee0ee6ff15fdc7",
+        "requirement_coverage": {
+          "version": "declared-requirements-1",
+          "state": "SATISFIED",
+          "requirements": [
+            {
+              "criterion_ids": [
+                "quote-sources"
+              ],
+              "id": "source-domain",
+              "kind": "quote_sources",
+              "text": "对账已关联聊天原话、会话要求与参考资料范围，再核验当前目标的报价结果",
+              "status": "passed",
+              "reason": "linked_checks"
+            }
+          ],
+          "complete": true,
+          "scope": "explicitly_declared_requirements",
+          "semantic_goal_verified": false
+        },
+        "evidence_ready": true,
+        "feedback": null,
+        "method": null,
+        "method_available": false,
+        "feedback_history": [],
+        "assessment_history": [
+          {
+            "created": 1793080362.4305167,
+            "assessment": {
+              "acceptance": {
+                "revision": 1,
+                "rules": {
+                  "coverage": "complete",
+                  "criteria": [
+                    {
+                      "check": "quote_sources",
+                      "expected": "1f7d1f81e8df49eaadfe2a789f5388c70dfb6a2ac633476e8978d13b809ed19a",
+                      "id": "quote-sources",
+                      "step_id": "step-1"
+                    }
+                  ],
+                  "requirements": [
+                    {
+                      "criterion_ids": [
+                        "quote-sources"
+                      ],
+                      "id": "source-domain",
+                      "kind": "quote_sources",
+                      "text": "对账已关联聊天原话、会话要求与参考资料范围，再核验当前目标的报价结果"
+                    }
+                  ]
+                }
+              },
+              "checks": [
+                {
+                  "id": "quote-sources",
+                  "status": "unknown",
+                  "step_id": "step-1"
+                }
+              ],
+              "condition_score": null,
+              "evidence_ready": false,
+              "feedback": null,
+              "fingerprint": "478bad34157ee055dd0031e2cb56a5a8e98edb764c950dbc0873cd8b94591af4",
+              "outcome_id": null,
+              "requirement_coverage": {
+                "complete": false,
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "quote-sources"
+                    ],
+                    "id": "source-domain",
+                    "kind": "quote_sources",
+                    "reason": "linked_checks",
+                    "status": "unknown",
+                    "text": "对账已关联聊天原话、会话要求与参考资料范围，再核验当前目标的报价结果"
+                  }
+                ],
+                "scope": "explicitly_declared_requirements",
+                "semantic_goal_verified": false,
+                "state": "INCOMPLETE",
+                "version": "declared-requirements-1"
+              },
+              "score_scope": "declared_conditions_only",
+              "state": "WAITING",
+              "task_id": "task-4e0baf4e0bb9498a9cabbc2d08716f53",
+              "version": "completion-1.1.0"
+            }
+          },
+          {
+            "created": 1793080361.5376592,
+            "assessment": {
+              "acceptance": {
+                "revision": 1,
+                "rules": {
+                  "coverage": "complete",
+                  "criteria": [
+                    {
+                      "check": "quote_sources",
+                      "expected": "1f7d1f81e8df49eaadfe2a789f5388c70dfb6a2ac633476e8978d13b809ed19a",
+                      "id": "quote-sources",
+                      "step_id": "step-1"
+                    }
+                  ],
+                  "requirements": [
+                    {
+                      "criterion_ids": [
+                        "quote-sources"
+                      ],
+                      "id": "source-domain",
+                      "kind": "quote_sources",
+                      "text": "对账已关联聊天原话、会话要求与参考资料范围，再核验当前目标的报价结果"
+                    }
+                  ]
+                }
+              },
+              "checks": [
+                {
+                  "id": "quote-sources",
+                  "status": "unknown",
+                  "step_id": "step-1"
+                }
+              ],
+              "condition_score": null,
+              "evidence_ready": false,
+              "feedback": null,
+              "fingerprint": "0df75b2e8de27d29f208ac313bf897e74d25957cca88bc6aec3c9d5d8bd259f5",
+              "outcome_id": null,
+              "requirement_coverage": {
+                "complete": false,
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "quote-sources"
+                    ],
+                    "id": "source-domain",
+                    "kind": "quote_sources",
+                    "reason": "linked_checks",
+                    "status": "unknown",
+                    "text": "对账已关联聊天原话、会话要求与参考资料范围，再核验当前目标的报价结果"
+                  }
+                ],
+                "scope": "explicitly_declared_requirements",
+                "semantic_goal_verified": false,
+                "state": "INCOMPLETE",
+                "version": "declared-requirements-1"
+              },
+              "score_scope": "declared_conditions_only",
+              "state": "WAITING",
+              "task_id": "task-4e0baf4e0bb9498a9cabbc2d08716f53",
+              "version": "completion-1.1.0"
+            }
+          }
+        ]
+      },
+      "closure": {
+        "version": "work-closure-1.4.0",
+        "root_goal": "goal-0212055d5ea1488898339946acc64b10",
+        "current_goal": "goal-0212055d5ea1488898339946acc64b10",
+        "current_task": "task-4e0baf4e0bb9498a9cabbc2d08716f53",
+        "state": "COMPLETE",
+        "complete": true,
+        "reasons": [],
+        "completion_state": "VERIFIED",
+        "condition_score": 100.0,
+        "score_scope": "current_declared_conditions_only",
+        "quality_score": null,
+        "requirement_coverage": {
+          "version": "declared-requirements-1",
+          "state": "SATISFIED",
+          "requirements": [
+            {
+              "criterion_ids": [
+                "quote-sources"
+              ],
+              "id": "source-domain",
+              "kind": "quote_sources",
+              "text": "对账已关联聊天原话、会话要求与参考资料范围，再核验当前目标的报价结果",
+              "status": "passed",
+              "reason": "linked_checks"
+            }
+          ],
+          "complete": true,
+          "scope": "explicitly_declared_requirements",
+          "semantic_goal_verified": false
+        },
+        "assessment_fingerprint": "4d2718a269504f10959fe7b653b301d4cfb9bcc3f88eebe36beed1994909596c",
+        "spent_cost_units": 2,
+        "reserved_cost_units": 0
+      }
+    },
+    {
+      "id": "task-8898fbe4976c405eb234884359c14198",
+      "status": "SUCCEEDED",
+      "spent": 2,
+      "completion": {
+        "version": "completion-1.1.0",
+        "task_id": "task-8898fbe4976c405eb234884359c14198",
+        "state": "WAITING_EVIDENCE",
+        "fingerprint": "c78a49c6e7025b26603c80ec639d97419f55fae1274be9e2f22168e8727b29ab",
+        "acceptance": {
+          "revision": 1,
+          "rules": {
+            "coverage": "recipe",
+            "criteria": [
+              {
+                "check": "quote_sources",
+                "expected": "5f06c11d704381a1b10b055c83b344fe631f02927ffe211eeb62b0480eda8ace",
+                "id": "quote-sources",
+                "step_id": "step-1"
+              }
+            ],
+            "requirements": [
+              {
+                "criterion_ids": [
+                  "quote-sources"
+                ],
+                "id": "source-domain",
+                "kind": "quote_sources",
+                "text": "对账已关联聊天原话、会话要求与参考资料范围，再核验当前目标的报价结果"
+              }
+            ]
+          }
+        },
+        "checks": [
+          {
+            "id": "quote-sources",
+            "step_id": "step-1",
+            "status": "unknown",
+            "verifier": "quote-selection-1",
+            "source_digest": "03e3cb460dbc962c6a571a29f10d370b1ba77a5109e3c26dac4cefd0aebdb382",
+            "reason": "quote_sources_unresolved",
+            "request_verifier": "quote-request-1",
+            "request_binding": "a064da344d47389e2453013be4d9957f7db1461a12063b6a966bab44565bbc6c",
+            "request_goal_digest": "8c9942d864ad259d0629760f64f8daece4ef26d349fed4719cd966966cbd84c0",
+            "unresolved_count": 2,
+            "semantic_goal_verified": false,
+            "request_scope": "stored_goal_only",
+            "source_verifier": "quote-sources-1",
+            "source_binding": "5f06c11d704381a1b10b055c83b344fe631f02927ffe211eeb62b0480eda8ace",
+            "source_scope": "linked_chat_sources",
+            "source_count": 2
+          }
+        ],
+        "condition_score": null,
+        "score_scope": "declared_conditions_only",
+        "outcome_id": "outcome-38a8a5c88f7d30be04c60d752a8c795b",
+        "requirement_coverage": {
+          "version": "declared-requirements-1",
+          "state": "INCOMPLETE",
+          "requirements": [
+            {
+              "criterion_ids": [
+                "quote-sources"
+              ],
+              "id": "source-domain",
+              "kind": "quote_sources",
+              "text": "对账已关联聊天原话、会话要求与参考资料范围，再核验当前目标的报价结果",
+              "status": "unknown",
+              "reason": "linked_checks"
+            }
+          ],
+          "complete": false,
+          "scope": "explicitly_declared_requirements",
+          "semantic_goal_verified": false
+        },
+        "evidence_ready": false,
+        "feedback": null,
+        "method": null,
+        "method_available": false,
+        "feedback_history": [],
+        "assessment_history": [
+          {
+            "created": 1793080365.4454315,
+            "assessment": {
+              "acceptance": {
+                "revision": 1,
+                "rules": {
+                  "coverage": "recipe",
+                  "criteria": [
+                    {
+                      "check": "quote_sources",
+                      "expected": "5f06c11d704381a1b10b055c83b344fe631f02927ffe211eeb62b0480eda8ace",
+                      "id": "quote-sources",
+                      "step_id": "step-1"
+                    }
+                  ],
+                  "requirements": [
+                    {
+                      "criterion_ids": [
+                        "quote-sources"
+                      ],
+                      "id": "source-domain",
+                      "kind": "quote_sources",
+                      "text": "对账已关联聊天原话、会话要求与参考资料范围，再核验当前目标的报价结果"
+                    }
+                  ]
+                }
+              },
+              "checks": [
+                {
+                  "id": "quote-sources",
+                  "status": "unknown",
+                  "step_id": "step-1"
+                }
+              ],
+              "condition_score": null,
+              "evidence_ready": false,
+              "feedback": null,
+              "fingerprint": "2bb29756bc442e776294a4b81c2c0a8950fcf3a5685a6f97cdb6b8bc690ba4a8",
+              "outcome_id": null,
+              "requirement_coverage": {
+                "complete": false,
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "quote-sources"
+                    ],
+                    "id": "source-domain",
+                    "kind": "quote_sources",
+                    "reason": "linked_checks",
+                    "status": "unknown",
+                    "text": "对账已关联聊天原话、会话要求与参考资料范围，再核验当前目标的报价结果"
+                  }
+                ],
+                "scope": "explicitly_declared_requirements",
+                "semantic_goal_verified": false,
+                "state": "INCOMPLETE",
+                "version": "declared-requirements-1"
+              },
+              "score_scope": "declared_conditions_only",
+              "state": "WAITING",
+              "task_id": "task-8898fbe4976c405eb234884359c14198",
+              "version": "completion-1.1.0"
+            }
+          },
+          {
+            "created": 1793080364.53874,
+            "assessment": {
+              "acceptance": {
+                "revision": 1,
+                "rules": {
+                  "coverage": "recipe",
+                  "criteria": [
+                    {
+                      "check": "quote_sources",
+                      "expected": "5f06c11d704381a1b10b055c83b344fe631f02927ffe211eeb62b0480eda8ace",
+                      "id": "quote-sources",
+                      "step_id": "step-1"
+                    }
+                  ],
+                  "requirements": [
+                    {
+                      "criterion_ids": [
+                        "quote-sources"
+                      ],
+                      "id": "source-domain",
+                      "kind": "quote_sources",
+                      "text": "对账已关联聊天原话、会话要求与参考资料范围，再核验当前目标的报价结果"
+                    }
+                  ]
+                }
+              },
+              "checks": [
+                {
+                  "id": "quote-sources",
+                  "status": "unknown",
+                  "step_id": "step-1"
+                }
+              ],
+              "condition_score": null,
+              "evidence_ready": false,
+              "feedback": null,
+              "fingerprint": "6cac805b9ed9d2f57634b8cf147af13be6605fecdb008849f7983f86d078c9b5",
+              "outcome_id": null,
+              "requirement_coverage": {
+                "complete": false,
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "quote-sources"
+                    ],
+                    "id": "source-domain",
+                    "kind": "quote_sources",
+                    "reason": "linked_checks",
+                    "status": "unknown",
+                    "text": "对账已关联聊天原话、会话要求与参考资料范围，再核验当前目标的报价结果"
+                  }
+                ],
+                "scope": "explicitly_declared_requirements",
+                "semantic_goal_verified": false,
+                "state": "INCOMPLETE",
+                "version": "declared-requirements-1"
+              },
+              "score_scope": "declared_conditions_only",
+              "state": "WAITING",
+              "task_id": "task-8898fbe4976c405eb234884359c14198",
+              "version": "completion-1.1.0"
+            }
+          }
+        ]
+      },
+      "closure": {
+        "version": "work-closure-1.4.0",
+        "root_goal": "goal-8c94e5a95762403e928a0d234d7e00fd",
+        "current_goal": "goal-8c94e5a95762403e928a0d234d7e00fd",
+        "current_task": "task-8898fbe4976c405eb234884359c14198",
+        "state": "NEEDS_EVIDENCE",
+        "complete": false,
+        "reasons": [
+          "WAITING_EVIDENCE"
+        ],
+        "completion_state": "WAITING_EVIDENCE",
+        "condition_score": null,
+        "score_scope": "current_declared_conditions_only",
+        "quality_score": null,
+        "requirement_coverage": {
+          "version": "declared-requirements-1",
+          "state": "INCOMPLETE",
+          "requirements": [
+            {
+              "criterion_ids": [
+                "quote-sources"
+              ],
+              "id": "source-domain",
+              "kind": "quote_sources",
+              "text": "对账已关联聊天原话、会话要求与参考资料范围，再核验当前目标的报价结果",
+              "status": "unknown",
+              "reason": "linked_checks"
+            }
+          ],
+          "complete": false,
+          "scope": "explicitly_declared_requirements",
+          "semantic_goal_verified": false
+        },
+        "assessment_fingerprint": "c78a49c6e7025b26603c80ec639d97419f55fae1274be9e2f22168e8727b29ab",
+        "spent_cost_units": 2,
+        "reserved_cost_units": 0
+      }
+    },
+    null
+  ]
+}

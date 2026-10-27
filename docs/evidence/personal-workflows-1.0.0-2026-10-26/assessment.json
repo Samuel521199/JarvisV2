@@ -1,0 +1,80 @@
+{
+  "date": "2026-10-26",
+  "version": "personal-workflows-1.0.0",
+  "reviewer": "Codex inspection of actual Jarvis transcripts and rendered UI",
+  "model": "vertex/gemini-3.8-flash",
+  "live_calls": 7,
+  "scope": "two synthetic text workflows; not general language-learning or journal quality certification",
+  "english": {
+    "passed": true,
+    "checks": [
+      "question withheld the answer",
+      "corrected move to moves with subject-verb agreement explanation",
+      "retry answer not disclosed",
+      "learning card explicitly marks retry unanswered and unobserved abilities unknown"
+    ],
+    "evidence": "live.json"
+  },
+  "journal_initial": {
+    "flow_passed": true,
+    "quality_passed": false,
+    "finding": "User-reported rendering status was described as execution-result evidence without a tool receipt.",
+    "evidence": "live.json"
+  },
+  "journal_retest": {
+    "passed": true,
+    "checks": [
+      "attributes statements to user records",
+      "updates 20 minutes to 15",
+      "replaces failed baking with not started",
+      "retains completed rendering",
+      "does not claim reminder creation"
+    ],
+    "evidence": "journal-retest.json"
+  },
+  "ui": {
+    "passed": true,
+    "checks": [
+      "two colored icons",
+      "keyboard tooltip",
+      "applicability and exclusions",
+      "starter examples",
+      "both dropdown options enabled"
+    ],
+    "evidence": "browser.json"
+  },
+  "limitations": [
+    "no audio recognition or pronunciation grading",
+    "no cross-session spaced-repetition database",
+    "no automatic reminder scheduler",
+    "no automatic news subscription/report pipeline",
+    "only Google model tested live for these workflows",
+    "automatic selection covers explicit request openings; select a workflow in the dropdown for sustained multi-turn work"
+  ],
+  "source_sha256": {
+    "seed/skills/conversation.json": "3c4744cb18df81b9db190f9bcb9481abb4b4caca08948f3b78fdcdeddf00408b",
+    "modules/skills/catalog.py": "640c40ade4619005c612fdedfcb5c4167fcfac484e2ba8d9754ee40a9b95f63f",
+    "host/assistant.py": "666f47be894d945835d85eeeb90456a97f715f71d49e84d848e68e25b225ea6e",
+    "host/dialogue.py": "d62b26f6636663d4d4676760b89f1d955dc1a278fa83748de136216bef0c7cdc",
+    "apps/workbench/settings.js": "523fdeb50d0d0d3b8d9c7726f6b496c88c1424cbbfcabf0ace61503bf5a92a4c",
+    "apps/workbench/theme.css": "dfaae7417bee4fd446e18928d3c9e0f4226d70c4c95ededac759039ebc018a2d"
+  },
+  "usage_totals": {
+    "prompt_tokens": 20877,
+    "completion_tokens": 2040,
+    "reasoning_tokens": 2152,
+    "total_tokens": 25069
+  },
+  "documentation_check": {
+    "passed": true,
+    "documents": 27,
+    "chapters": 23,
+    "diagrams": 39,
+    "errors": 0
+  },
+  "memory_guide": {
+    "saved": true,
+    "checks_passed": 3,
+    "evidence": "D:/Jarvis/user-data/diagnostics/memory/personal-workflows-20261026.json"
+  }
+}

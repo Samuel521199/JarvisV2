@@ -1,0 +1,569 @@
+{
+  "scope": "bounded original-request review on synthetic Chinese clauses",
+  "production_deployed": false,
+  "model_calls": 0,
+  "tasks": [
+    {
+      "id": "task-a75facefa6dc43eda7f8fef992dc54e4",
+      "status": "SUCCEEDED",
+      "spent": 2,
+      "completion": {
+        "version": "completion-1.1.0",
+        "task_id": "task-a75facefa6dc43eda7f8fef992dc54e4",
+        "state": "VERIFIED",
+        "fingerprint": "673d81381e1b7a0b19c794dc148b8befebaed1b641adaa216a29c49f2c72ce50",
+        "acceptance": {
+          "revision": 1,
+          "rules": {
+            "coverage": "complete",
+            "criteria": [
+              {
+                "check": "quote_request",
+                "expected": "a064da344d47389e2453013be4d9957f7db1461a12063b6a966bab44565bbc6c",
+                "id": "quote-request",
+                "step_id": "step-1"
+              }
+            ],
+            "requirements": [
+              {
+                "criterion_ids": [
+                  "quote-request"
+                ],
+                "id": "request-domain",
+                "kind": "quote_request",
+                "text": "对照当前目标原文中受支持的报价条件及冻结输入核验结果，未覆盖内容须另行处理"
+              }
+            ]
+          }
+        },
+        "checks": [
+          {
+            "id": "quote-request",
+            "step_id": "step-1",
+            "status": "passed",
+            "verifier": "quote-selection-1",
+            "source_digest": "03e3cb460dbc962c6a571a29f10d370b1ba77a5109e3c26dac4cefd0aebdb382",
+            "reason": "quote_verified",
+            "request_verifier": "quote-request-1",
+            "request_binding": "a064da344d47389e2453013be4d9957f7db1461a12063b6a966bab44565bbc6c",
+            "request_goal_digest": "8c9942d864ad259d0629760f64f8daece4ef26d349fed4719cd966966cbd84c0",
+            "unresolved_count": 0,
+            "semantic_goal_verified": false,
+            "request_scope": "stored_goal_only"
+          }
+        ],
+        "condition_score": 100.0,
+        "score_scope": "declared_conditions_only",
+        "outcome_id": "outcome-9d3505f5bf64479691900a390586cce0",
+        "requirement_coverage": {
+          "version": "declared-requirements-1",
+          "state": "SATISFIED",
+          "requirements": [
+            {
+              "criterion_ids": [
+                "quote-request"
+              ],
+              "id": "request-domain",
+              "kind": "quote_request",
+              "text": "对照当前目标原文中受支持的报价条件及冻结输入核验结果，未覆盖内容须另行处理",
+              "status": "passed",
+              "reason": "linked_checks"
+            }
+          ],
+          "complete": true,
+          "scope": "explicitly_declared_requirements",
+          "semantic_goal_verified": false
+        },
+        "evidence_ready": true,
+        "feedback": null,
+        "method": null,
+        "method_available": false,
+        "feedback_history": [],
+        "assessment_history": [
+          {
+            "created": 1793094548.4308217,
+            "assessment": {
+              "acceptance": {
+                "revision": 1,
+                "rules": {
+                  "coverage": "complete",
+                  "criteria": [
+                    {
+                      "check": "quote_request",
+                      "expected": "a064da344d47389e2453013be4d9957f7db1461a12063b6a966bab44565bbc6c",
+                      "id": "quote-request",
+                      "step_id": "step-1"
+                    }
+                  ],
+                  "requirements": [
+                    {
+                      "criterion_ids": [
+                        "quote-request"
+                      ],
+                      "id": "request-domain",
+                      "kind": "quote_request",
+                      "text": "对照当前目标原文中受支持的报价条件及冻结输入核验结果，未覆盖内容须另行处理"
+                    }
+                  ]
+                }
+              },
+              "checks": [
+                {
+                  "id": "quote-request",
+                  "status": "unknown",
+                  "step_id": "step-1"
+                }
+              ],
+              "condition_score": null,
+              "evidence_ready": false,
+              "feedback": null,
+              "fingerprint": "0b3e393da4f4b21e99e72b4a0fec7a0dff3bc37f0bf5fd046cf12cb7af00f60f",
+              "outcome_id": null,
+              "requirement_coverage": {
+                "complete": false,
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "quote-request"
+                    ],
+                    "id": "request-domain",
+                    "kind": "quote_request",
+                    "reason": "linked_checks",
+                    "status": "unknown",
+                    "text": "对照当前目标原文中受支持的报价条件及冻结输入核验结果，未覆盖内容须另行处理"
+                  }
+                ],
+                "scope": "explicitly_declared_requirements",
+                "semantic_goal_verified": false,
+                "state": "INCOMPLETE",
+                "version": "declared-requirements-1"
+              },
+              "score_scope": "declared_conditions_only",
+              "state": "WAITING",
+              "task_id": "task-a75facefa6dc43eda7f8fef992dc54e4",
+              "version": "completion-1.1.0"
+            }
+          },
+          {
+            "created": 1793094547.5337884,
+            "assessment": {
+              "acceptance": {
+                "revision": 1,
+                "rules": {
+                  "coverage": "complete",
+                  "criteria": [
+                    {
+                      "check": "quote_request",
+                      "expected": "a064da344d47389e2453013be4d9957f7db1461a12063b6a966bab44565bbc6c",
+                      "id": "quote-request",
+                      "step_id": "step-1"
+                    }
+                  ],
+                  "requirements": [
+                    {
+                      "criterion_ids": [
+                        "quote-request"
+                      ],
+                      "id": "request-domain",
+                      "kind": "quote_request",
+                      "text": "对照当前目标原文中受支持的报价条件及冻结输入核验结果，未覆盖内容须另行处理"
+                    }
+                  ]
+                }
+              },
+              "checks": [
+                {
+                  "id": "quote-request",
+                  "status": "unknown",
+                  "step_id": "step-1"
+                }
+              ],
+              "condition_score": null,
+              "evidence_ready": false,
+              "feedback": null,
+              "fingerprint": "f57ce91734b3049542b1219896ca0e0e08d24379fddc0a331e6da5bb70c88e92",
+              "outcome_id": null,
+              "requirement_coverage": {
+                "complete": false,
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "quote-request"
+                    ],
+                    "id": "request-domain",
+                    "kind": "quote_request",
+                    "reason": "linked_checks",
+                    "status": "unknown",
+                    "text": "对照当前目标原文中受支持的报价条件及冻结输入核验结果，未覆盖内容须另行处理"
+                  }
+                ],
+                "scope": "explicitly_declared_requirements",
+                "semantic_goal_verified": false,
+                "state": "INCOMPLETE",
+                "version": "declared-requirements-1"
+              },
+              "score_scope": "declared_conditions_only",
+              "state": "WAITING",
+              "task_id": "task-a75facefa6dc43eda7f8fef992dc54e4",
+              "version": "completion-1.1.0"
+            }
+          }
+        ]
+      },
+      "closure": {
+        "version": "work-closure-1.4.0",
+        "root_goal": "goal-bdb06fc29b2e4a79bba77823ab8c165f",
+        "current_goal": "goal-bdb06fc29b2e4a79bba77823ab8c165f",
+        "current_task": "task-a75facefa6dc43eda7f8fef992dc54e4",
+        "state": "COMPLETE",
+        "complete": true,
+        "reasons": [],
+        "completion_state": "VERIFIED",
+        "condition_score": 100.0,
+        "score_scope": "current_declared_conditions_only",
+        "quality_score": null,
+        "requirement_coverage": {
+          "version": "declared-requirements-1",
+          "state": "SATISFIED",
+          "requirements": [
+            {
+              "criterion_ids": [
+                "quote-request"
+              ],
+              "id": "request-domain",
+              "kind": "quote_request",
+              "text": "对照当前目标原文中受支持的报价条件及冻结输入核验结果，未覆盖内容须另行处理",
+              "status": "passed",
+              "reason": "linked_checks"
+            }
+          ],
+          "complete": true,
+          "scope": "explicitly_declared_requirements",
+          "semantic_goal_verified": false
+        },
+        "assessment_fingerprint": "673d81381e1b7a0b19c794dc148b8befebaed1b641adaa216a29c49f2c72ce50",
+        "spent_cost_units": 2,
+        "reserved_cost_units": 0
+      }
+    },
+    {
+      "id": "task-c588e1061c99442fa43602336dbc0bbb",
+      "status": "SUCCEEDED",
+      "spent": 2,
+      "completion": {
+        "version": "completion-1.1.0",
+        "task_id": "task-c588e1061c99442fa43602336dbc0bbb",
+        "state": "WAITING_EVIDENCE",
+        "fingerprint": "fcb58678bdb0769eb1ca872d784d2040077349f46e1780ab4a464d5395dc927d",
+        "acceptance": {
+          "revision": 1,
+          "rules": {
+            "coverage": "recipe",
+            "criteria": [
+              {
+                "check": "quote_request",
+                "expected": "dd1236c5a99e3e9f768fc98eb4bc30757f566fc4c170b6b6f45c729af0da7754",
+                "id": "quote-request",
+                "step_id": "step-1"
+              }
+            ],
+            "requirements": [
+              {
+                "criterion_ids": [
+                  "quote-request"
+                ],
+                "id": "request-domain",
+                "kind": "quote_request",
+                "text": "对照当前目标原文中受支持的报价条件及冻结输入核验结果，未覆盖内容须另行处理"
+              }
+            ]
+          }
+        },
+        "checks": [
+          {
+            "id": "quote-request",
+            "step_id": "step-1",
+            "status": "unknown",
+            "verifier": "quote-selection-1",
+            "source_digest": "03e3cb460dbc962c6a571a29f10d370b1ba77a5109e3c26dac4cefd0aebdb382",
+            "reason": "quote_request_unresolved",
+            "request_verifier": "quote-request-1",
+            "request_binding": "dd1236c5a99e3e9f768fc98eb4bc30757f566fc4c170b6b6f45c729af0da7754",
+            "request_goal_digest": "58ae436d7665ce31011bda2c15cd31a75c17e8632b6c5f0168afba9b4906ca65",
+            "unresolved_count": 1,
+            "semantic_goal_verified": false,
+            "request_scope": "stored_goal_only"
+          }
+        ],
+        "condition_score": null,
+        "score_scope": "declared_conditions_only",
+        "outcome_id": "outcome-a4b1c6a310195017908cc88b7e3c52d2",
+        "requirement_coverage": {
+          "version": "declared-requirements-1",
+          "state": "INCOMPLETE",
+          "requirements": [
+            {
+              "criterion_ids": [
+                "quote-request"
+              ],
+              "id": "request-domain",
+              "kind": "quote_request",
+              "text": "对照当前目标原文中受支持的报价条件及冻结输入核验结果，未覆盖内容须另行处理",
+              "status": "unknown",
+              "reason": "linked_checks"
+            }
+          ],
+          "complete": false,
+          "scope": "explicitly_declared_requirements",
+          "semantic_goal_verified": false
+        },
+        "evidence_ready": false,
+        "feedback": null,
+        "method": null,
+        "method_available": false,
+        "feedback_history": [],
+        "assessment_history": [
+          {
+            "created": 1793094551.4132695,
+            "assessment": {
+              "acceptance": {
+                "revision": 1,
+                "rules": {
+                  "coverage": "recipe",
+                  "criteria": [
+                    {
+                      "check": "quote_request",
+                      "expected": "dd1236c5a99e3e9f768fc98eb4bc30757f566fc4c170b6b6f45c729af0da7754",
+                      "id": "quote-request",
+                      "step_id": "step-1"
+                    }
+                  ],
+                  "requirements": [
+                    {
+                      "criterion_ids": [
+                        "quote-request"
+                      ],
+                      "id": "request-domain",
+                      "kind": "quote_request",
+                      "text": "对照当前目标原文中受支持的报价条件及冻结输入核验结果，未覆盖内容须另行处理"
+                    }
+                  ]
+                }
+              },
+              "checks": [
+                {
+                  "id": "quote-request",
+                  "reason": "quote_request_unresolved",
+                  "request_binding": "dd1236c5a99e3e9f768fc98eb4bc30757f566fc4c170b6b6f45c729af0da7754",
+                  "request_goal_digest": "58ae436d7665ce31011bda2c15cd31a75c17e8632b6c5f0168afba9b4906ca65",
+                  "request_scope": "stored_goal_only",
+                  "request_verifier": "quote-request-1",
+                  "semantic_goal_verified": false,
+                  "source_digest": "03e3cb460dbc962c6a571a29f10d370b1ba77a5109e3c26dac4cefd0aebdb382",
+                  "status": "unknown",
+                  "step_id": "step-1",
+                  "unresolved_count": 1,
+                  "verifier": "quote-selection-1"
+                }
+              ],
+              "condition_score": null,
+              "evidence_ready": false,
+              "feedback": null,
+              "fingerprint": "77a57e328ae69392d9ab1e29f34ff368b5766e7ef9c2bb886c9975b158a326a9",
+              "outcome_id": null,
+              "requirement_coverage": {
+                "complete": false,
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "quote-request"
+                    ],
+                    "id": "request-domain",
+                    "kind": "quote_request",
+                    "reason": "linked_checks",
+                    "status": "unknown",
+                    "text": "对照当前目标原文中受支持的报价条件及冻结输入核验结果，未覆盖内容须另行处理"
+                  }
+                ],
+                "scope": "explicitly_declared_requirements",
+                "semantic_goal_verified": false,
+                "state": "INCOMPLETE",
+                "version": "declared-requirements-1"
+              },
+              "score_scope": "declared_conditions_only",
+              "state": "WAITING",
+              "task_id": "task-c588e1061c99442fa43602336dbc0bbb",
+              "version": "completion-1.1.0"
+            }
+          },
+          {
+            "created": 1793094551.2790163,
+            "assessment": {
+              "acceptance": {
+                "revision": 1,
+                "rules": {
+                  "coverage": "recipe",
+                  "criteria": [
+                    {
+                      "check": "quote_request",
+                      "expected": "dd1236c5a99e3e9f768fc98eb4bc30757f566fc4c170b6b6f45c729af0da7754",
+                      "id": "quote-request",
+                      "step_id": "step-1"
+                    }
+                  ],
+                  "requirements": [
+                    {
+                      "criterion_ids": [
+                        "quote-request"
+                      ],
+                      "id": "request-domain",
+                      "kind": "quote_request",
+                      "text": "对照当前目标原文中受支持的报价条件及冻结输入核验结果，未覆盖内容须另行处理"
+                    }
+                  ]
+                }
+              },
+              "checks": [
+                {
+                  "id": "quote-request",
+                  "status": "unknown",
+                  "step_id": "step-1"
+                }
+              ],
+              "condition_score": null,
+              "evidence_ready": false,
+              "feedback": null,
+              "fingerprint": "2afca2b8ebba7c22b2d538e46780b008c77b766568f60055bdc5d63ac4c9d722",
+              "outcome_id": null,
+              "requirement_coverage": {
+                "complete": false,
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "quote-request"
+                    ],
+                    "id": "request-domain",
+                    "kind": "quote_request",
+                    "reason": "linked_checks",
+                    "status": "unknown",
+                    "text": "对照当前目标原文中受支持的报价条件及冻结输入核验结果，未覆盖内容须另行处理"
+                  }
+                ],
+                "scope": "explicitly_declared_requirements",
+                "semantic_goal_verified": false,
+                "state": "INCOMPLETE",
+                "version": "declared-requirements-1"
+              },
+              "score_scope": "declared_conditions_only",
+              "state": "WAITING",
+              "task_id": "task-c588e1061c99442fa43602336dbc0bbb",
+              "version": "completion-1.1.0"
+            }
+          },
+          {
+            "created": 1793094550.5202508,
+            "assessment": {
+              "acceptance": {
+                "revision": 1,
+                "rules": {
+                  "coverage": "recipe",
+                  "criteria": [
+                    {
+                      "check": "quote_request",
+                      "expected": "dd1236c5a99e3e9f768fc98eb4bc30757f566fc4c170b6b6f45c729af0da7754",
+                      "id": "quote-request",
+                      "step_id": "step-1"
+                    }
+                  ],
+                  "requirements": [
+                    {
+                      "criterion_ids": [
+                        "quote-request"
+                      ],
+                      "id": "request-domain",
+                      "kind": "quote_request",
+                      "text": "对照当前目标原文中受支持的报价条件及冻结输入核验结果，未覆盖内容须另行处理"
+                    }
+                  ]
+                }
+              },
+              "checks": [
+                {
+                  "id": "quote-request",
+                  "status": "unknown",
+                  "step_id": "step-1"
+                }
+              ],
+              "condition_score": null,
+              "evidence_ready": false,
+              "feedback": null,
+              "fingerprint": "6bdbf71bed64f3acc1562b58c519f7272eb4c42f373a271b74407c2bb2bc7c37",
+              "outcome_id": null,
+              "requirement_coverage": {
+                "complete": false,
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "quote-request"
+                    ],
+                    "id": "request-domain",
+                    "kind": "quote_request",
+                    "reason": "linked_checks",
+                    "status": "unknown",
+                    "text": "对照当前目标原文中受支持的报价条件及冻结输入核验结果，未覆盖内容须另行处理"
+                  }
+                ],
+                "scope": "explicitly_declared_requirements",
+                "semantic_goal_verified": false,
+                "state": "INCOMPLETE",
+                "version": "declared-requirements-1"
+              },
+              "score_scope": "declared_conditions_only",
+              "state": "WAITING",
+              "task_id": "task-c588e1061c99442fa43602336dbc0bbb",
+              "version": "completion-1.1.0"
+            }
+          }
+        ]
+      },
+      "closure": {
+        "version": "work-closure-1.4.0",
+        "root_goal": "goal-c39e1f30f9fd488ca421a9671786ae5c",
+        "current_goal": "goal-c39e1f30f9fd488ca421a9671786ae5c",
+        "current_task": "task-c588e1061c99442fa43602336dbc0bbb",
+        "state": "NEEDS_EVIDENCE",
+        "complete": false,
+        "reasons": [
+          "WAITING_EVIDENCE"
+        ],
+        "completion_state": "WAITING_EVIDENCE",
+        "condition_score": null,
+        "score_scope": "current_declared_conditions_only",
+        "quality_score": null,
+        "requirement_coverage": {
+          "version": "declared-requirements-1",
+          "state": "INCOMPLETE",
+          "requirements": [
+            {
+              "criterion_ids": [
+                "quote-request"
+              ],
+              "id": "request-domain",
+              "kind": "quote_request",
+              "text": "对照当前目标原文中受支持的报价条件及冻结输入核验结果，未覆盖内容须另行处理",
+              "status": "unknown",
+              "reason": "linked_checks"
+            }
+          ],
+          "complete": false,
+          "scope": "explicitly_declared_requirements",
+          "semantic_goal_verified": false
+        },
+        "assessment_fingerprint": "fcb58678bdb0769eb1ca872d784d2040077349f46e1780ab4a464d5395dc927d",
+        "spent_cost_units": 2,
+        "reserved_cost_units": 0
+      }
+    },
+    null
+  ]
+}

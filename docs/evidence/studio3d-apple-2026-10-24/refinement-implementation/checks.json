@@ -1,0 +1,108 @@
+{
+  "checks": [
+    {
+      "name": "unit",
+      "exit_code": 0,
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "-X",
+        "utf8",
+        "-B",
+        "-c",
+        "import unittest; s=unittest.TestSuite(); [s.addTests(unittest.defaultTestLoader.discover('tests',pattern=p)) for p in ['test_studio3d*.py','test_preferences_dialogue.py','test_cli_native.py','test_model_transport.py']]; r=unittest.TextTestRunner(verbosity=1).run(s); raise SystemExit(not r.wasSuccessful())"
+      ],
+      "log": "unit.txt"
+    },
+    {
+      "name": "architecture",
+      "exit_code": 0,
+      "command": [
+        "D:\\soft\\Python313\\python.exe",
+        "-B",
+        "tools/check_architecture.py"
+      ],
+      "log": "architecture.txt"
+    },
+    {
+      "name": "ui-syntax",
+      "exit_code": 0,
+      "command": [
+        "node",
+        "--check",
+        "apps/workbench/settings-studio3d.js"
+      ],
+      "log": "ui-syntax.txt"
+    },
+    {
+      "name": "viewer-syntax",
+      "exit_code": 0,
+      "command": [
+        "node",
+        "--check",
+        "apps/workbench/studio3d-viewer.js"
+      ],
+      "log": "viewer-syntax.txt"
+    },
+    {
+      "name": "documentation",
+      "exit_code": 0,
+      "command": [
+        "python",
+        "-X",
+        "utf8",
+        "-B",
+        "tools/check_docs.py",
+        "--root",
+        "."
+      ],
+      "observed_output": "OK documents=26 chapters=23 diagrams=39 local_links=2499 errors=0"
+    },
+    {
+      "name": "diff-whitespace",
+      "exit_code": 0,
+      "log": "diff-check.txt",
+      "note": "Initial check rejected CRLF as whitespace; normalized only touched tracked files to LF, then passed."
+    }
+  ],
+  "source_sha256": {
+    "host/studio3d.py": "913ced30b24eee462cfd85df6d673a21dd2edfcdbbef002c6d831f49099ef127",
+    "host/studio3d_refinement.py": "5b6774280cd424aaea30c1c75f5b93d9c5530c7a064bafb089c5d011ba95cd9e",
+    "host/dialogue.py": "c6aa880996eb93b4ef6bd0b7c16ed319431cf0c2395fc7abcd21ad1b960e8cdf",
+    "modules/dialogue/store.py": "a691879f9af46862aea19a5f6dd5334379ad54e0b6daa0b887b4c3b0823cb780",
+    "adapters/models/native.py": "794070c292146ceb52950f8a10fc49c02197f1427baf470b88d1b0b923870583",
+    "adapters/models/vision.py": "9bd86d2dc0b1ba2d8bf8b38edd7f550bd2abb761f4ae2a1f81db476eccb3591e",
+    "modules/skills/studio3d/contract.py": "33e76da4f84f381ec6afbad4dfc7c1dc9cb7a273634a36a2277f608d9bb9f83c",
+    "modules/skills/studio3d/refinement.py": "ecd2b6dd6d26dc65ffa119223accb2ed785330e184c87616ca64cdf418865d82",
+    "modules/skills/studio3d/production.py": "687a044d25b0f4261afb4eacf0edea84b5d0434250dc6ccd575ca7b9d8d06213",
+    "adapters/studio3d/organic.py": "5371cefaf970f66c5abbe272b4419a62f2743984b077265eb730397ae18c5d39",
+    "adapters/studio3d/worker.py": "ad2f5c027235417de1b214fda5e4c64f25f336ae7144905ebc5047a57fd9099e",
+    "adapters/studio3d/asset_pipeline.py": "4d568c170a398fe2007235a6d33439853bb76a152a1dce9ec5e44ee09f2d28f6",
+    "modules/skills/studio3d/runtime.json": "09165177ef4357f10de8b4d22cc6313226c95ac88cdb22af01bb3736add887b7",
+    "apps/workbench/settings-studio3d.js": "e2c8c68fb3ab89d39efe994354d1e580fca41ca74de09f9001b60d6cad252842",
+    "apps/workbench/studio3d-viewer.js": "5d13d206dd786a75847b041d70acbd26b51251014717956dde31fd8dea5d1c8e",
+    "seed/skills/conversation.json": "796263083e9f1a7c7418098909a1bfa0715c370fdb1319e8cde72a0717c0ec18",
+    "tests/test_studio3d_refinement.py": "9b1a0bf0a3a8d9ff89d6feeace33b0a8a2612e7adbe598c325c321fdddee0f99",
+    "tests/test_studio3d_vision.py": "5e97f2f22fd276e5a59589c8fb5c38fec8ce62cd5a6585988120ae13bcc5df71"
+  },
+  "navigation": {
+    "exit_code": 0,
+    "observed_output": "OK navigation: 2 updated"
+  },
+  "browser": {
+    "refine_button_and_final_assessment_visible": true,
+    "lighting_options_verified": true,
+    "LOD0_998_shown": true,
+    "LOD1_and_LOD2_visual_failures_recorded": true,
+    "console_errors": []
+  },
+  "post_execution_format_only": [
+    "README.md",
+    "docs/tasks-agents.md",
+    "docs/delivery-validation.md",
+    "docs/security-sovereignty.md",
+    "adapters/models/native.py",
+    "host/dialogue.py",
+    "modules/dialogue/store.py",
+    "seed/skills/conversation.json"
+  ]
+}

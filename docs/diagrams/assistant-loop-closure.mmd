@@ -1,0 +1,35 @@
+flowchart TB
+  A["当前目标与完成条件<br/>绑定有效修订和授权"]
+  B["原任务与动作执行<br/>单一负责、预算与幂等"]
+  C["实际回执与目标对账<br/>逐项核对证据和未决项"]
+  D{"当前目标条件<br/>是否已经满足？"}
+  E["合格交付与可访问成果<br/>保留后续反馈入口"]
+  W["持久等待<br/>负责者、事件水位、继续条件"]
+  H["故障恢复或业务补救<br/>原问题复测、部分效果对账"]
+  R["继续前重新准入<br/>目标、取消、权限、版本、UNKNOWN"]
+  F["迟到纠正或新证据<br/>追加修订，保留已发生事实"]
+  K["条件化经验与收益观察<br/>采用有据，反例可撤回"]
+  X["取消、到期或终止<br/>保留原因与未决效果，不再新派发"]
+  A --> B --> C --> D
+  D -->|满足| E
+  D -->|必要证据或依赖不足| W
+  D -->|已知失败或部分效果| H
+  W -->|新证据、唤醒或取消| R
+  H -->|复测与善后证据| R
+  H -->|仍缺必要条件| W
+  R -->|仍有有效未完成工作| B
+  R -->|仍缺必要条件| W
+  R -->|已取消或不再适用| X
+  E -->|保留本次经历| K
+  E -.->|以后出现反馈| F
+  F -->|重核受影响条件| C
+  F -->|修订相关方法| K
+  K -.->|后续任务按条件取用| A
+  classDef plan fill:#e8f0fc,stroke:#7394c7,color:#153952
+  classDef evidence fill:#e6f4ee,stroke:#79aa95,color:#143d43
+  classDef pending fill:#fff3da,stroke:#c99648,color:#61451d
+  classDef exit fill:#f9e9e8,stroke:#bd8580,color:#603632
+  class A,B,R plan
+  class C,E,K evidence
+  class D,W,H,F pending
+  class X exit

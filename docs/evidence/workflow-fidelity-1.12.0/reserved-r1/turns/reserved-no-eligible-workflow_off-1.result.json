@@ -1,0 +1,103 @@
+{
+  "case_id": "reserved-no-eligible",
+  "domain": "comparison",
+  "arm": "workflow_off",
+  "turn": 1,
+  "freeze_digest": "ccbd127c5b9f78239d72b467867c2d71bca5edb93d918ce7bb0a0899557626a5",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\"selected\":\"红\",\"evidence\":{\"facts\":[{\"source\":\"F2\",\"quote\":\"蓝方案价格600元，交期2天。\"},{\"source\":\"F3\",\"quote\":\"红方案价格500元，交期3天。\"}],\"plans\":[{\"source\":\"P1\",\"quote\":\"下周一上午核实库存，不购买。\"}],\"suggestions\":[]},\"document\":\"## 事实\\n- [F2] 蓝方案价格600元，交期2天。\\n- [F3] 红方案价格500元，交期3天。\\n\\n## 已确认计划\\n- [P1] 下周一上午核实库存，不购买。\\n\\n## 建议（未采纳）\\n- 无\"}",
+  "skill_id": null,
+  "skill_version": null,
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 5.5473,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 210,
+        "prompt_tokens": 1744,
+        "total_tokens": 1954
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.0020955,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/reserved-no-eligible-workflow_off-1.native.json",
+      "sha256": "95eb49d782038fddee5889c21ae6700e0b546298c48daf0f2856000ec4cfb9f3",
+      "kind": "native_protocol_response"
+    },
+    {
+      "file": "artifacts/reserved-no-eligible-workflow_off-1.reply.md.txt",
+      "sha256": "f42fd366666b50c740c94c77f58c02071bd6b1823da76245458350175b518d69",
+      "kind": "original_session_reply"
+    },
+    {
+      "file": "artifacts/reserved-no-eligible-workflow_off-1.document.md.txt",
+      "sha256": "385c445234168ccc89a86fc05bab3f5b4c72bb8e034da80dff9c36c99fd8fc7d",
+      "kind": "verbatim_document_field_from_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "selected",
+        "status": "passed"
+      },
+      {
+        "id": "document_present",
+        "status": "passed"
+      },
+      {
+        "id": "body_shape",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_document_parity",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "record_digest": "064758480c1a293cdd869fabd11a7fa9cdad1a1bfd9ae241c6e4e482825444fc"
+}

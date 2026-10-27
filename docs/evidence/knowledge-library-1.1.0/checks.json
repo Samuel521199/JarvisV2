@@ -1,0 +1,86 @@
+{
+  "component": "knowledge-library-1.1.0",
+  "root_release": "v0.1.0",
+  "date": "2026-10-23",
+  "python": "3.13.0",
+  "system": "Windows",
+  "status": "implemented_and_limited_verified_deployed",
+  "full_regression": {
+    "invocations": 363,
+    "seconds": 205.942,
+    "result": "passed",
+    "scope": "snapshot before final preview target labels and two additional tests"
+  },
+  "final_targeted": {
+    "invocations": 40,
+    "new_transfer_cleanup_tests": 19,
+    "seconds": 4.456,
+    "result": "passed"
+  },
+  "ui": {
+    "synthetic_only": true,
+    "old_backup_skipped": 1,
+    "fresh_restored": 1,
+    "restored_paused": true,
+    "restored_provider_permissions": [],
+    "cleanup_preview_turns": 1,
+    "cleanup_preview_goals": 1,
+    "cleanup_ui_execution": "not exercised; host transactions tested automatically",
+    "console_errors": 0,
+    "download_sources": 1,
+    "download_tombstones": 1,
+    "download_checksum_valid": true,
+    "preview_targets_visible": true
+  },
+  "known_limits": [
+    "source library only, not full memory backup",
+    "no encrypted transfer or authenticated synchronization",
+    "fresh device requires latest tombstones",
+    "separate database commits, pending receipt on interruption",
+    "original requests, plans/history, tasks/model results, files, backups, provider copies and recoverable SQLite pages excluded",
+    "no Mac, low-resource PC or power-loss test"
+  ],
+  "hashes": {
+    "modules/context_knowledge/transfer.py": "93bdb4418ab3ab579b9e2573c824dd5abea56353fc340d24ce7e5aa276bdbc92",
+    "modules/context_knowledge/knowledge.py": "8356f30201956d71c0d5cce00e35a258a408a2196d0e99960faf5b709e269a0e",
+    "host/knowledge_cleanup.py": "fc2a1b32946a2e718a8973e5ec335ce38656dd6fa29d2daf409447c8613aee5f",
+    "host/knowledge.py": "ca20ebe5af84d22e88ac8398ef9f70b06d03515b8fb9f1c0b9c16d467edc004b",
+    "host/goal_context.py": "3a19e1a216923e01c85cfb8b5c1dcf8874e895b7282d556446e4bf71fd575618",
+    "adapters/storage/knowledge_schema.py": "00f141bb6bea0eab4588c68d32d647c4e6095a52134a6c2c2442537de2a3f87f",
+    "modules/dialogue/store.py": "48121e8f284c34596158b768911f0ec182f9421379c275bea7c3000bcd1a16df",
+    "apps/workbench/server.py": "d7813ab952e39601de33c8b02ea9bc58213942afa16069c9b0bea3b4b754bc8c",
+    "apps/workbench/knowledge.js": "b8d6b832af3b85ccd1700bc4704995232c0f9ea352d225eca3af5782e25b2cc1",
+    "apps/workbench/knowledge-transfer.js": "6ec697a061aa2d873518129462dcf253a86075204b2e52e70bc0d4bcc528b104",
+    "tests/test_knowledge_transfer.py": "e55a0986453c0182c6d0d3d0f08a0a089486da1ba4c237c3531fd26fcad7937b"
+  },
+  "checks": {
+    "documentation": {
+      "documents": 26,
+      "chapters": 23,
+      "diagrams": 39,
+      "errors": 0,
+      "local_links": 2367
+    },
+    "architecture": {
+      "python_files": 115,
+      "errors": 0
+    },
+    "javascript_syntax": "passed knowledge.js and knowledge-transfer.js",
+    "git_diff_check": "passed for changed tracked files"
+  },
+  "deployment": {
+    "evidence": "deployment.json",
+    "pid": 34220,
+    "component": "knowledge-library-1.1.0",
+    "knowledge_schema": "2",
+    "user_content_mutated": false
+  },
+  "test_cleanup": {
+    "tab_closed": true,
+    "server_stopped": true,
+    "temporary_data_removed": true,
+    "download_removed_after_hash_match": true,
+    "prior_blocked_cleanup_paths_untouched": true
+  },
+  "completed_at": "2026-10-24T00:01:40.407173+08:00"
+}

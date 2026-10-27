@@ -1,0 +1,59 @@
+{
+  "schema": "jarvis.settings-subpages.evidence.v1",
+  "recorded_at": "2026-10-23T08:25:33.191307+00:00",
+  "version": "v0.1.0 workspace increment, settings subpages",
+  "scope": "18 section destinations, distinct original inline SVG illustrations and symbols, functional content layout and common theme support",
+  "source_sha256": {
+    "apps/workbench/settings.js": "fc048751a9793d3ea4d790a387365f2d92d65e60570b434b3e49a81dc2bb073a",
+    "apps/workbench/theme.css": "54356443fe44ed05b6a174469ee4aadb633841fddf6eb40d872a79e87be2320b",
+    "apps/workbench/brand/core.png": "3d66ab1a1d125e12ef289eaca563e37bc12b762b0c9d135f5f5c42902f610e4a"
+  },
+  "unique_symbols": 18,
+  "defined_symbols": 18,
+  "tests": [
+    {
+      "command": "python -m unittest discover -s tests -p test_settings_management.py -v",
+      "passed": 16,
+      "seconds": 1.27
+    },
+    {
+      "command": "python -m unittest discover -s tests -p test_workbench.py -v",
+      "passed": 2,
+      "seconds": 1.213
+    }
+  ],
+  "syntax": "node --check apps/workbench/settings.js passed",
+  "browser_evidence": "subpages-browser.json",
+  "verified_interactions": [
+    "18 route initial renders with no page errors or desktop horizontal overflow",
+    "18 distinct illustration markup variants",
+    "Model text filter and open/close editor without saving",
+    "light theme applied, dark restored",
+    "motion paused: illustration and preview animation both none; motion restored",
+    "3 distinct skill/tools/MCP navigation symbols",
+    "fixed header and route-change scroll reset"
+  ],
+  "screenshots": [
+    "subpages-appearance-light.png",
+    "subpages-models-dark.png",
+    "subpages-skills-dark.png",
+    "subpages-appearance-dark.png"
+  ],
+  "documentation_check": {
+    "status": "passed",
+    "navigation": "passed, 0 updates remaining",
+    "documents": 26,
+    "chapters": 23,
+    "diagrams": 39,
+    "local_links": 2181,
+    "errors": 0
+  },
+  "limitations": [
+    "Desktop 1280 x 720 viewport tested; narrow breakpoints reviewed but no device matrix",
+    "No new model calls, business mutations, dependency installs, or production restart",
+    "Local models now render through the concurrently updated service; downloads/inference and backend quality not tested here",
+    "Decorative art is labelled as a functional schematic, not telemetry",
+    "No audio playback, screen-reader or prolonged performance validation"
+  ],
+  "diff_check": "passed for this settings increment"
+}

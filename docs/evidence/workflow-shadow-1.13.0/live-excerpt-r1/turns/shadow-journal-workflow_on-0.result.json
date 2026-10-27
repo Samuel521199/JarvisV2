@@ -1,0 +1,166 @@
+{
+  "case_id": "shadow-journal",
+  "domain": "documents",
+  "arm": "workflow_on",
+  "turn": 0,
+  "freeze_digest": "4f28282101f06a3faf5650901bfa7a2f7b521eebf93358be43a244bceabc01a6",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\"document\":\"## 事实\\n- [F1] 数据导出失败，原因未知。\\n\\n## 已确认计划\\n- [P1] 明天10点检查日志，不重跑导出。\\n\\n## 建议（未采纳）\\n- 无\",\"evidence\":{\"facts\":[{\"quote\":\"数据导出失败，原因未知。\",\"source\":\"F1\"}],\"plans\":[{\"quote\":\"明天10点检查日志，不重跑导出。\",\"source\":\"P1\"}],\"suggestions\":[]},\"status\":\"failed\"}",
+  "skill_id": "journal-review",
+  "skill_version": "1.0.0",
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 5.2381,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 157,
+        "prompt_tokens": 1837,
+        "total_tokens": 1994
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.0019665,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/shadow-journal-workflow_on-0.native.json",
+      "sha256": "cdd3bbccd9ed374e1aef0929c353002af5fff8ba22b924f992c14ab9eeedfee8",
+      "kind": "native_protocol_response"
+    },
+    {
+      "file": "artifacts/shadow-journal-workflow_on-0.reply.md.txt",
+      "sha256": "e1121ed67248aee8af1664013f9bc31c45b74d0180ccb5fea01e660a0609500e",
+      "kind": "original_session_reply"
+    },
+    {
+      "file": "artifacts/shadow-journal-workflow_on-0.document.md.txt",
+      "sha256": "d46e61b637aad3d8370d5ba9354af98352cbadf83b1f2f25715bf71457fad79a",
+      "kind": "verbatim_document_field_from_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "status",
+        "status": "passed"
+      },
+      {
+        "id": "document_present",
+        "status": "passed"
+      },
+      {
+        "id": "body_shape",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_document_parity",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "delivery_basis": {
+    "digest": "e4226614c724ac3d2ce416807a0d2b3ce875d4f4f2157b8ca475a995e60a4780",
+    "entries": [
+      {
+        "end": 409,
+        "id": "F1",
+        "kind": "facts",
+        "quote": "数据导出失败，原因未知。",
+        "source_turn": "trial-shadow-journal-workflow_on-0",
+        "start": 397
+      },
+      {
+        "end": 433,
+        "id": "P1",
+        "kind": "plans",
+        "quote": "明天10点检查日志，不重跑导出。",
+        "source_turn": "trial-shadow-journal-workflow_on-0",
+        "start": 417
+      }
+    ],
+    "relative_time_resolution": "UNVERIFIED",
+    "revision": 1,
+    "source_time_utc": "2026-10-27T11:02:32.227800+00:00",
+    "source_turn": "trial-shadow-journal-workflow_on-0"
+  },
+  "delivery_review": {
+    "basis_digest": "e4226614c724ac3d2ce416807a0d2b3ce875d4f4f2157b8ca475a995e60a4780",
+    "basis_revision": 1,
+    "checks": [
+      {
+        "id": "body_shape",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_document_parity",
+        "status": "passed"
+      }
+    ],
+    "method": "source_excerpt",
+    "mode": "shadow",
+    "quality_score": null,
+    "reason": "bounded_document_check_only",
+    "reply_digest": "1c70b39b07221f299ec7d402e9c2243a73c51ea35b97d060903a2bc54f027ec3",
+    "state": "EXCERPT_MATCH",
+    "version": "delivery-shadow-1",
+    "would_block": false
+  },
+  "record_digest": "b0a559878b387ad8bb68d26c6f65152acd5643d3e869a1ecbd570456b15dcd05"
+}

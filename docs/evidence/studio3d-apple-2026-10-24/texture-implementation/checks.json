@@ -1,0 +1,229 @@
+{
+  "unit": {
+    "command": [
+      "python",
+      "-X",
+      "utf8",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_studio3d*.py"
+    ],
+    "exit_code": 0
+  },
+  "architecture": {
+    "command": [
+      "python",
+      "-X",
+      "utf8",
+      "-B",
+      "tools/check_architecture.py",
+      "--root",
+      "."
+    ],
+    "exit_code": 0
+  },
+  "viewer-js": {
+    "command": [
+      "D:/soft/node/node.exe",
+      "--check",
+      "apps/workbench/studio3d-viewer.js"
+    ],
+    "exit_code": 0
+  },
+  "settings-js": {
+    "command": [
+      "D:/soft/node/node.exe",
+      "--check",
+      "apps/workbench/settings-studio3d.js"
+    ],
+    "exit_code": 0
+  },
+  "navigation": {
+    "command": [
+      "python",
+      "-X",
+      "utf8",
+      "-B",
+      "tools/sync_doc_navigation.py",
+      "--root",
+      ".",
+      "--check"
+    ],
+    "exit_code": 0
+  },
+  "docs": {
+    "command": [
+      "python",
+      "-X",
+      "utf8",
+      "-B",
+      "tools/check_docs.py",
+      "--root",
+      "."
+    ],
+    "exit_code": 0
+  },
+  "diff": {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit_code": 2,
+    "scope": "whole worktree, including unrelated pre-existing changes; retained without editing them"
+  },
+  "http": {
+    "adapter_version": "1.6.0",
+    "ready": true,
+    "inspections": [
+      {
+        "file": "model.glb",
+        "triangles": 990,
+        "images": 3,
+        "sha256": "b5be7b06cb08c9b7c65e3a23139d95edefd7acd6be4470ce7047d44b22a97ad9",
+        "selected_lod_checks": []
+      },
+      {
+        "file": "model-lod1.glb",
+        "triangles": 472,
+        "images": 3,
+        "sha256": "7300474d2d74e4d604d09f431562af7d4349fa38dba58ec0b9926dc40bde3a2a",
+        "selected_lod_checks": [
+          {
+            "id": "selected-LOD-degenerate-faces",
+            "message": "0",
+            "status": "pass"
+          },
+          {
+            "id": "selected-LOD-mesh-boundary",
+            "message": "0 boundary edges; 0 nonmanifold edges",
+            "status": "pass"
+          },
+          {
+            "id": "selected-LOD-uv-atlas",
+            "message": "UV present and in 0..1; exact overlap and density unverified",
+            "status": "pass"
+          },
+          {
+            "id": "selected-LOD-lod-reduction",
+            "message": "Actual triangle counts checked",
+            "status": "pass"
+          },
+          {
+            "id": "selected-LOD-lod-sampled-distance",
+            "message": "Two-direction sampled distance; silhouette popping requires view check",
+            "status": "pass"
+          },
+          {
+            "id": "selected-LOD-lod-visual-review",
+            "message": "Each LOD needs separate visual inspection; format, counts and sampled distance do not certify appearance.",
+            "status": "warn"
+          },
+          {
+            "id": "selected-LOD-uv-area-utilization",
+            "message": "47.05% summed triangle UV area; not exact union area or density uniformity",
+            "status": "pass"
+          },
+          {
+            "id": "selected-LOD-singular-uv-tangent",
+            "message": "0 singular UV tangent frames use orthogonal fallback; artist review required",
+            "status": "pass"
+          },
+          {
+            "id": "selected-LOD-projection-coverage",
+            "message": "{'samples': 3304, 'misses': 0, 'miss_fraction': 0.0, 'method': '7 smooth-cage barycentric rays per sampled triangle, max8192 samples; not per-texel proof'}",
+            "status": "pass"
+          },
+          {
+            "id": "selected-LOD-game-budget",
+            "message": "472 / 500",
+            "status": "pass"
+          }
+        ]
+      },
+      {
+        "file": "model-lod2.glb",
+        "triangles": 228,
+        "images": 3,
+        "sha256": "ff2c25a8303710a370deaa5cb7daba375d45d65f9d7363c86bb5f3e994cd4516",
+        "selected_lod_checks": [
+          {
+            "id": "selected-LOD-degenerate-faces",
+            "message": "0",
+            "status": "pass"
+          },
+          {
+            "id": "selected-LOD-mesh-boundary",
+            "message": "0 boundary edges; 0 nonmanifold edges",
+            "status": "pass"
+          },
+          {
+            "id": "selected-LOD-uv-atlas",
+            "message": "UV present and in 0..1; exact overlap and density unverified",
+            "status": "pass"
+          },
+          {
+            "id": "selected-LOD-lod-reduction",
+            "message": "Actual triangle counts checked",
+            "status": "pass"
+          },
+          {
+            "id": "selected-LOD-lod-sampled-distance",
+            "message": "Two-direction sampled distance; silhouette popping requires view check",
+            "status": "pass"
+          },
+          {
+            "id": "selected-LOD-lod-visual-review",
+            "message": "Each LOD needs separate visual inspection; format, counts and sampled distance do not certify appearance.",
+            "status": "warn"
+          },
+          {
+            "id": "selected-LOD-uv-area-utilization",
+            "message": "52.29% summed triangle UV area; not exact union area or density uniformity",
+            "status": "pass"
+          },
+          {
+            "id": "selected-LOD-singular-uv-tangent",
+            "message": "0 singular UV tangent frames use orthogonal fallback; artist review required",
+            "status": "pass"
+          },
+          {
+            "id": "selected-LOD-projection-coverage",
+            "message": "{'samples': 1596, 'misses': 2, 'miss_fraction': 0.0012531328320802004, 'method': '7 smooth-cage barycentric rays per sampled triangle, max8192 samples; not per-texel proof'}",
+            "status": "warn"
+          },
+          {
+            "id": "selected-LOD-game-budget",
+            "message": "228 / 250",
+            "status": "pass"
+          }
+        ]
+      }
+    ]
+  },
+  "studio3d_scoped_diff": {
+    "exit_code": 0,
+    "paths": [
+      "README.md",
+      "adapters/studio3d",
+      "modules/skills/studio3d",
+      "host/studio3d.py",
+      "host/studio3d_reference.py",
+      "host/studio3d_refinement.py",
+      "host/studio3d_viewer.py",
+      "apps/workbench/settings-studio3d.js",
+      "apps/workbench/studio3d-viewer.js",
+      "seed/skills/conversation.json",
+      "docs/tasks-agents.md",
+      "docs/security-sovereignty.md",
+      "docs/delivery-validation.md",
+      "tests/test_studio3d_textures.py",
+      "tools/render_studio3d_lod_review.py"
+    ]
+  }
+}

@@ -1,0 +1,754 @@
+{
+  "scope": "feedback-only recovery, unchanged requirements, old actions and shared budget through real UI",
+  "production_deployed": false,
+  "model_calls": 0,
+  "tasks": [
+    {
+      "id": "task-064666e4f25a4320b1c6359c8d84164b",
+      "status": "SUCCEEDED",
+      "spent": 2,
+      "completion": {
+        "version": "completion-1.1.0",
+        "task_id": "task-064666e4f25a4320b1c6359c8d84164b",
+        "state": "VERIFIED",
+        "fingerprint": "1c951efc241c1294ff76d8474a5fab99d15f34cacef694a741927da02cdc7c0e",
+        "acceptance": {
+          "revision": 1,
+          "rules": {
+            "coverage": "complete",
+            "criteria": [
+              {
+                "check": "quote_recovery",
+                "expected": "0539d2c4cb6c6c7610eddf14c41d74a7a8f7b9be82e268e88ffc31295c015c47",
+                "id": "quote-recovery",
+                "step_id": "step-1"
+              }
+            ],
+            "requirements": [
+              {
+                "criterion_ids": [
+                  "quote-recovery"
+                ],
+                "id": "recovery-domain",
+                "kind": "quote_recovery",
+                "text": "按明确复核的反馈恢复边界保留有效要求与旧事实，独立核验新版本报价结果"
+              }
+            ]
+          }
+        },
+        "checks": [
+          {
+            "id": "quote-recovery",
+            "step_id": "step-1",
+            "status": "passed",
+            "verifier": "quote-selection-1",
+            "source_digest": "03e3cb460dbc962c6a571a29f10d370b1ba77a5109e3c26dac4cefd0aebdb382",
+            "reason": "quote_verified",
+            "request_verifier": "quote-request-1",
+            "request_binding": "a064da344d47389e2453013be4d9957f7db1461a12063b6a966bab44565bbc6c",
+            "request_goal_digest": "8c9942d864ad259d0629760f64f8daece4ef26d349fed4719cd966966cbd84c0",
+            "unresolved_count": 0,
+            "semantic_goal_verified": false,
+            "request_scope": "stored_goal_only",
+            "recovery_verifier": "quote-recovery-1",
+            "recovery_binding": "0539d2c4cb6c6c7610eddf14c41d74a7a8f7b9be82e268e88ffc31295c015c47",
+            "source_scope": "explicit_feedback_recovery",
+            "recovery_count": 1,
+            "active_count": 5
+          }
+        ],
+        "condition_score": 100.0,
+        "score_scope": "declared_conditions_only",
+        "outcome_id": "outcome-8e87f44d62792df9f85ea150cce6abf4",
+        "requirement_coverage": {
+          "version": "declared-requirements-1",
+          "state": "SATISFIED",
+          "requirements": [
+            {
+              "criterion_ids": [
+                "quote-recovery"
+              ],
+              "id": "recovery-domain",
+              "kind": "quote_recovery",
+              "text": "按明确复核的反馈恢复边界保留有效要求与旧事实，独立核验新版本报价结果",
+              "status": "passed",
+              "reason": "linked_checks"
+            }
+          ],
+          "complete": true,
+          "scope": "explicitly_declared_requirements",
+          "semantic_goal_verified": false
+        },
+        "evidence_ready": true,
+        "feedback": null,
+        "method": null,
+        "method_available": false,
+        "feedback_history": [],
+        "assessment_history": [
+          {
+            "created": 1793089597.5424783,
+            "assessment": {
+              "acceptance": {
+                "revision": 1,
+                "rules": {
+                  "coverage": "complete",
+                  "criteria": [
+                    {
+                      "check": "quote_recovery",
+                      "expected": "0539d2c4cb6c6c7610eddf14c41d74a7a8f7b9be82e268e88ffc31295c015c47",
+                      "id": "quote-recovery",
+                      "step_id": "step-1"
+                    }
+                  ],
+                  "requirements": [
+                    {
+                      "criterion_ids": [
+                        "quote-recovery"
+                      ],
+                      "id": "recovery-domain",
+                      "kind": "quote_recovery",
+                      "text": "按明确复核的反馈恢复边界保留有效要求与旧事实，独立核验新版本报价结果"
+                    }
+                  ]
+                }
+              },
+              "checks": [
+                {
+                  "active_count": 5,
+                  "id": "quote-recovery",
+                  "reason": "quote_verified",
+                  "recovery_binding": "0539d2c4cb6c6c7610eddf14c41d74a7a8f7b9be82e268e88ffc31295c015c47",
+                  "recovery_count": 1,
+                  "recovery_verifier": "quote-recovery-1",
+                  "request_binding": "a064da344d47389e2453013be4d9957f7db1461a12063b6a966bab44565bbc6c",
+                  "request_goal_digest": "8c9942d864ad259d0629760f64f8daece4ef26d349fed4719cd966966cbd84c0",
+                  "request_scope": "stored_goal_only",
+                  "request_verifier": "quote-request-1",
+                  "semantic_goal_verified": false,
+                  "source_digest": "03e3cb460dbc962c6a571a29f10d370b1ba77a5109e3c26dac4cefd0aebdb382",
+                  "source_scope": "explicit_feedback_recovery",
+                  "status": "passed",
+                  "step_id": "step-1",
+                  "unresolved_count": 0,
+                  "verifier": "quote-selection-1"
+                }
+              ],
+              "condition_score": 100.0,
+              "evidence_ready": false,
+              "feedback": null,
+              "fingerprint": "4dbd1df9581031c92a931deeae2b587929107ca0ec4d29127ed4176eec581e31",
+              "outcome_id": null,
+              "requirement_coverage": {
+                "complete": false,
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "quote-recovery"
+                    ],
+                    "id": "recovery-domain",
+                    "kind": "quote_recovery",
+                    "reason": "linked_checks",
+                    "status": "passed",
+                    "text": "按明确复核的反馈恢复边界保留有效要求与旧事实，独立核验新版本报价结果"
+                  }
+                ],
+                "scope": "explicitly_declared_requirements",
+                "semantic_goal_verified": false,
+                "state": "INCOMPLETE",
+                "version": "declared-requirements-1"
+              },
+              "score_scope": "declared_conditions_only",
+              "state": "WAITING",
+              "task_id": "task-064666e4f25a4320b1c6359c8d84164b",
+              "version": "completion-1.1.0"
+            }
+          },
+          {
+            "created": 1793089597.3597782,
+            "assessment": {
+              "acceptance": {
+                "revision": 1,
+                "rules": {
+                  "coverage": "complete",
+                  "criteria": [
+                    {
+                      "check": "quote_recovery",
+                      "expected": "0539d2c4cb6c6c7610eddf14c41d74a7a8f7b9be82e268e88ffc31295c015c47",
+                      "id": "quote-recovery",
+                      "step_id": "step-1"
+                    }
+                  ],
+                  "requirements": [
+                    {
+                      "criterion_ids": [
+                        "quote-recovery"
+                      ],
+                      "id": "recovery-domain",
+                      "kind": "quote_recovery",
+                      "text": "按明确复核的反馈恢复边界保留有效要求与旧事实，独立核验新版本报价结果"
+                    }
+                  ]
+                }
+              },
+              "checks": [
+                {
+                  "id": "quote-recovery",
+                  "status": "unknown",
+                  "step_id": "step-1"
+                }
+              ],
+              "condition_score": null,
+              "evidence_ready": false,
+              "feedback": null,
+              "fingerprint": "f2750205fe42fa96c6154eb5532107b53bf27da5f963e21764053c387882e31c",
+              "outcome_id": null,
+              "requirement_coverage": {
+                "complete": false,
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "quote-recovery"
+                    ],
+                    "id": "recovery-domain",
+                    "kind": "quote_recovery",
+                    "reason": "linked_checks",
+                    "status": "unknown",
+                    "text": "按明确复核的反馈恢复边界保留有效要求与旧事实，独立核验新版本报价结果"
+                  }
+                ],
+                "scope": "explicitly_declared_requirements",
+                "semantic_goal_verified": false,
+                "state": "INCOMPLETE",
+                "version": "declared-requirements-1"
+              },
+              "score_scope": "declared_conditions_only",
+              "state": "WAITING",
+              "task_id": "task-064666e4f25a4320b1c6359c8d84164b",
+              "version": "completion-1.1.0"
+            }
+          },
+          {
+            "created": 1793089596.8486264,
+            "assessment": {
+              "acceptance": {
+                "revision": 1,
+                "rules": {
+                  "coverage": "complete",
+                  "criteria": [
+                    {
+                      "check": "quote_recovery",
+                      "expected": "0539d2c4cb6c6c7610eddf14c41d74a7a8f7b9be82e268e88ffc31295c015c47",
+                      "id": "quote-recovery",
+                      "step_id": "step-1"
+                    }
+                  ],
+                  "requirements": [
+                    {
+                      "criterion_ids": [
+                        "quote-recovery"
+                      ],
+                      "id": "recovery-domain",
+                      "kind": "quote_recovery",
+                      "text": "按明确复核的反馈恢复边界保留有效要求与旧事实，独立核验新版本报价结果"
+                    }
+                  ]
+                }
+              },
+              "checks": [
+                {
+                  "id": "quote-recovery",
+                  "status": "unknown",
+                  "step_id": "step-1"
+                }
+              ],
+              "condition_score": null,
+              "evidence_ready": false,
+              "feedback": null,
+              "fingerprint": "ddbba5ab1deb2b5974d192ca76f36fbf8f1ebcaf664a7e0a2af98be90514e15a",
+              "outcome_id": null,
+              "requirement_coverage": {
+                "complete": false,
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "quote-recovery"
+                    ],
+                    "id": "recovery-domain",
+                    "kind": "quote_recovery",
+                    "reason": "linked_checks",
+                    "status": "unknown",
+                    "text": "按明确复核的反馈恢复边界保留有效要求与旧事实，独立核验新版本报价结果"
+                  }
+                ],
+                "scope": "explicitly_declared_requirements",
+                "semantic_goal_verified": false,
+                "state": "INCOMPLETE",
+                "version": "declared-requirements-1"
+              },
+              "score_scope": "declared_conditions_only",
+              "state": "WAITING",
+              "task_id": "task-064666e4f25a4320b1c6359c8d84164b",
+              "version": "completion-1.1.0"
+            }
+          },
+          {
+            "created": 1793089596.7108698,
+            "assessment": {
+              "acceptance": {
+                "revision": 1,
+                "rules": {
+                  "coverage": "complete",
+                  "criteria": [
+                    {
+                      "check": "quote_recovery",
+                      "expected": "0539d2c4cb6c6c7610eddf14c41d74a7a8f7b9be82e268e88ffc31295c015c47",
+                      "id": "quote-recovery",
+                      "step_id": "step-1"
+                    }
+                  ],
+                  "requirements": [
+                    {
+                      "criterion_ids": [
+                        "quote-recovery"
+                      ],
+                      "id": "recovery-domain",
+                      "kind": "quote_recovery",
+                      "text": "按明确复核的反馈恢复边界保留有效要求与旧事实，独立核验新版本报价结果"
+                    }
+                  ]
+                }
+              },
+              "checks": [
+                {
+                  "id": "quote-recovery",
+                  "status": "unknown",
+                  "step_id": "step-1"
+                }
+              ],
+              "condition_score": null,
+              "evidence_ready": false,
+              "feedback": null,
+              "fingerprint": "7e969c952490556b91eba61986f6eba81ece4b4c8719bdb5cdf69d4738820390",
+              "outcome_id": null,
+              "requirement_coverage": {
+                "complete": false,
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "quote-recovery"
+                    ],
+                    "id": "recovery-domain",
+                    "kind": "quote_recovery",
+                    "reason": "linked_checks",
+                    "status": "unknown",
+                    "text": "按明确复核的反馈恢复边界保留有效要求与旧事实，独立核验新版本报价结果"
+                  }
+                ],
+                "scope": "explicitly_declared_requirements",
+                "semantic_goal_verified": false,
+                "state": "INCOMPLETE",
+                "version": "declared-requirements-1"
+              },
+              "score_scope": "declared_conditions_only",
+              "state": "WAITING",
+              "task_id": "task-064666e4f25a4320b1c6359c8d84164b",
+              "version": "completion-1.1.0"
+            }
+          }
+        ]
+      },
+      "closure": {
+        "version": "work-closure-1.4.0",
+        "root_goal": "goal-2b39daaf79654d0681f29a98f1f1f413",
+        "current_goal": "goal-62c545e28c2442a787c9a09b2954e97d",
+        "current_task": "task-064666e4f25a4320b1c6359c8d84164b",
+        "state": "COMPLETE",
+        "complete": true,
+        "reasons": [],
+        "completion_state": "VERIFIED",
+        "condition_score": 100.0,
+        "score_scope": "current_declared_conditions_only",
+        "quality_score": null,
+        "requirement_coverage": {
+          "version": "declared-requirements-1",
+          "state": "SATISFIED",
+          "requirements": [
+            {
+              "criterion_ids": [
+                "quote-recovery"
+              ],
+              "id": "recovery-domain",
+              "kind": "quote_recovery",
+              "text": "按明确复核的反馈恢复边界保留有效要求与旧事实，独立核验新版本报价结果",
+              "status": "passed",
+              "reason": "linked_checks"
+            }
+          ],
+          "complete": true,
+          "scope": "explicitly_declared_requirements",
+          "semantic_goal_verified": false
+        },
+        "assessment_fingerprint": "1c951efc241c1294ff76d8474a5fab99d15f34cacef694a741927da02cdc7c0e",
+        "spent_cost_units": 6,
+        "reserved_cost_units": 0
+      }
+    },
+    {
+      "id": "task-9700bb7b93c74fc78353d4ea804618bc",
+      "status": "SUCCEEDED",
+      "spent": 2,
+      "completion": {
+        "version": "completion-1.1.0",
+        "task_id": "task-9700bb7b93c74fc78353d4ea804618bc",
+        "state": "WAITING_EVIDENCE",
+        "fingerprint": "a0abf7183005c3b8995d4f96293bcbace5eb113472fedcce818512cecb82282f",
+        "acceptance": {
+          "revision": 1,
+          "rules": {
+            "coverage": "recipe",
+            "criteria": [
+              {
+                "check": "quote_recovery",
+                "expected": "e0d7d73789cb2cea77aa71b1d3830c6d8457d264d8ef4bcbbd236eef94ea2c45",
+                "id": "quote-recovery",
+                "step_id": "step-1"
+              }
+            ],
+            "requirements": [
+              {
+                "criterion_ids": [
+                  "quote-recovery"
+                ],
+                "id": "recovery-domain",
+                "kind": "quote_recovery",
+                "text": "按明确复核的反馈恢复边界保留有效要求与旧事实，独立核验新版本报价结果"
+              }
+            ]
+          }
+        },
+        "checks": [
+          {
+            "id": "quote-recovery",
+            "step_id": "step-1",
+            "status": "unknown",
+            "verifier": "quote-selection-1",
+            "source_digest": "03e3cb460dbc962c6a571a29f10d370b1ba77a5109e3c26dac4cefd0aebdb382",
+            "reason": "quote_recovery_unresolved",
+            "request_verifier": "quote-request-1",
+            "request_binding": "dd1236c5a99e3e9f768fc98eb4bc30757f566fc4c170b6b6f45c729af0da7754",
+            "request_goal_digest": "58ae436d7665ce31011bda2c15cd31a75c17e8632b6c5f0168afba9b4906ca65",
+            "unresolved_count": 1,
+            "semantic_goal_verified": false,
+            "request_scope": "stored_goal_only",
+            "recovery_verifier": "quote-recovery-1",
+            "recovery_binding": "e0d7d73789cb2cea77aa71b1d3830c6d8457d264d8ef4bcbbd236eef94ea2c45",
+            "source_scope": "explicit_feedback_recovery",
+            "recovery_count": 1,
+            "active_count": 6
+          }
+        ],
+        "condition_score": null,
+        "score_scope": "declared_conditions_only",
+        "outcome_id": "outcome-b4afbd0563f44c15d3845c9cd132403d",
+        "requirement_coverage": {
+          "version": "declared-requirements-1",
+          "state": "INCOMPLETE",
+          "requirements": [
+            {
+              "criterion_ids": [
+                "quote-recovery"
+              ],
+              "id": "recovery-domain",
+              "kind": "quote_recovery",
+              "text": "按明确复核的反馈恢复边界保留有效要求与旧事实，独立核验新版本报价结果",
+              "status": "unknown",
+              "reason": "linked_checks"
+            }
+          ],
+          "complete": false,
+          "scope": "explicitly_declared_requirements",
+          "semantic_goal_verified": false
+        },
+        "evidence_ready": false,
+        "feedback": null,
+        "method": null,
+        "method_available": false,
+        "feedback_history": [],
+        "assessment_history": [
+          {
+            "created": 1793089600.2553477,
+            "assessment": {
+              "acceptance": {
+                "revision": 1,
+                "rules": {
+                  "coverage": "recipe",
+                  "criteria": [
+                    {
+                      "check": "quote_recovery",
+                      "expected": "e0d7d73789cb2cea77aa71b1d3830c6d8457d264d8ef4bcbbd236eef94ea2c45",
+                      "id": "quote-recovery",
+                      "step_id": "step-1"
+                    }
+                  ],
+                  "requirements": [
+                    {
+                      "criterion_ids": [
+                        "quote-recovery"
+                      ],
+                      "id": "recovery-domain",
+                      "kind": "quote_recovery",
+                      "text": "按明确复核的反馈恢复边界保留有效要求与旧事实，独立核验新版本报价结果"
+                    }
+                  ]
+                }
+              },
+              "checks": [
+                {
+                  "id": "quote-recovery",
+                  "status": "unknown",
+                  "step_id": "step-1"
+                }
+              ],
+              "condition_score": null,
+              "evidence_ready": false,
+              "feedback": null,
+              "fingerprint": "7646cec83203012fafab60b5943a8f21d233319d8d9d027ec1fbebd03aa97413",
+              "outcome_id": null,
+              "requirement_coverage": {
+                "complete": false,
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "quote-recovery"
+                    ],
+                    "id": "recovery-domain",
+                    "kind": "quote_recovery",
+                    "reason": "linked_checks",
+                    "status": "unknown",
+                    "text": "按明确复核的反馈恢复边界保留有效要求与旧事实，独立核验新版本报价结果"
+                  }
+                ],
+                "scope": "explicitly_declared_requirements",
+                "semantic_goal_verified": false,
+                "state": "INCOMPLETE",
+                "version": "declared-requirements-1"
+              },
+              "score_scope": "declared_conditions_only",
+              "state": "WAITING",
+              "task_id": "task-9700bb7b93c74fc78353d4ea804618bc",
+              "version": "completion-1.1.0"
+            }
+          },
+          {
+            "created": 1793089599.6155126,
+            "assessment": {
+              "acceptance": {
+                "revision": 1,
+                "rules": {
+                  "coverage": "recipe",
+                  "criteria": [
+                    {
+                      "check": "quote_recovery",
+                      "expected": "e0d7d73789cb2cea77aa71b1d3830c6d8457d264d8ef4bcbbd236eef94ea2c45",
+                      "id": "quote-recovery",
+                      "step_id": "step-1"
+                    }
+                  ],
+                  "requirements": [
+                    {
+                      "criterion_ids": [
+                        "quote-recovery"
+                      ],
+                      "id": "recovery-domain",
+                      "kind": "quote_recovery",
+                      "text": "按明确复核的反馈恢复边界保留有效要求与旧事实，独立核验新版本报价结果"
+                    }
+                  ]
+                }
+              },
+              "checks": [
+                {
+                  "id": "quote-recovery",
+                  "status": "unknown",
+                  "step_id": "step-1"
+                }
+              ],
+              "condition_score": null,
+              "evidence_ready": false,
+              "feedback": null,
+              "fingerprint": "827866c599ffb9be0064e0a599c23bf2d4cfdfb0040b63b0c7edd5ce4f0434c8",
+              "outcome_id": null,
+              "requirement_coverage": {
+                "complete": false,
+                "requirements": [
+                  {
+                    "criterion_ids": [
+                      "quote-recovery"
+                    ],
+                    "id": "recovery-domain",
+                    "kind": "quote_recovery",
+                    "reason": "linked_checks",
+                    "status": "unknown",
+                    "text": "按明确复核的反馈恢复边界保留有效要求与旧事实，独立核验新版本报价结果"
+                  }
+                ],
+                "scope": "explicitly_declared_requirements",
+                "semantic_goal_verified": false,
+                "state": "INCOMPLETE",
+                "version": "declared-requirements-1"
+              },
+              "score_scope": "declared_conditions_only",
+              "state": "WAITING",
+              "task_id": "task-9700bb7b93c74fc78353d4ea804618bc",
+              "version": "completion-1.1.0"
+            }
+          }
+        ]
+      },
+      "closure": {
+        "version": "work-closure-1.4.0",
+        "root_goal": "goal-eae43672b27e4b09850681ce7fa9c8fd",
+        "current_goal": "goal-60747859ca3b4f3f893d38af00a8700e",
+        "current_task": "task-9700bb7b93c74fc78353d4ea804618bc",
+        "state": "NEEDS_EVIDENCE",
+        "complete": false,
+        "reasons": [
+          "WAITING_EVIDENCE"
+        ],
+        "completion_state": "WAITING_EVIDENCE",
+        "condition_score": null,
+        "score_scope": "current_declared_conditions_only",
+        "quality_score": null,
+        "requirement_coverage": {
+          "version": "declared-requirements-1",
+          "state": "INCOMPLETE",
+          "requirements": [
+            {
+              "criterion_ids": [
+                "quote-recovery"
+              ],
+              "id": "recovery-domain",
+              "kind": "quote_recovery",
+              "text": "按明确复核的反馈恢复边界保留有效要求与旧事实，独立核验新版本报价结果",
+              "status": "unknown",
+              "reason": "linked_checks"
+            }
+          ],
+          "complete": false,
+          "scope": "explicitly_declared_requirements",
+          "semantic_goal_verified": false
+        },
+        "assessment_fingerprint": "a0abf7183005c3b8995d4f96293bcbace5eb113472fedcce818512cecb82282f",
+        "spent_cost_units": 4,
+        "reserved_cost_units": 0
+      }
+    },
+    {
+      "id": "task-baaccbf5e5fe4cb3a6fb666fe98475a5",
+      "status": "READY",
+      "spent": 0,
+      "completion": {
+        "version": "completion-1.1.0",
+        "task_id": "task-baaccbf5e5fe4cb3a6fb666fe98475a5",
+        "state": "WAITING",
+        "fingerprint": "50d419dd63abe77b5dc3d2199676f581fbb4361da365e7cecbe0b4e0a8291e20",
+        "acceptance": {
+          "revision": 1,
+          "rules": {
+            "coverage": "complete",
+            "criteria": [
+              {
+                "check": "quote_rework",
+                "expected": "97dd9d4d24b41230d345e45afd21a2b473cd40aec40a92cf9b829bfbfbeecfd3",
+                "id": "quote-rework",
+                "step_id": "step-1"
+              }
+            ],
+            "requirements": [
+              {
+                "criterion_ids": [
+                  "quote-rework"
+                ],
+                "id": "rework-domain",
+                "kind": "quote_rework",
+                "text": "继承已核对版本的全部有效要求，仅按明确变更修订，独立核对本次报价结果"
+              }
+            ]
+          }
+        },
+        "checks": [
+          {
+            "id": "quote-rework",
+            "step_id": "step-1",
+            "status": "unknown"
+          }
+        ],
+        "condition_score": null,
+        "score_scope": "declared_conditions_only",
+        "outcome_id": null,
+        "requirement_coverage": {
+          "version": "declared-requirements-1",
+          "state": "INCOMPLETE",
+          "requirements": [
+            {
+              "criterion_ids": [
+                "quote-rework"
+              ],
+              "id": "rework-domain",
+              "kind": "quote_rework",
+              "text": "继承已核对版本的全部有效要求，仅按明确变更修订，独立核对本次报价结果",
+              "status": "unknown",
+              "reason": "linked_checks"
+            }
+          ],
+          "complete": false,
+          "scope": "explicitly_declared_requirements",
+          "semantic_goal_verified": false
+        },
+        "evidence_ready": false,
+        "feedback": null,
+        "method": null,
+        "method_available": false,
+        "feedback_history": [],
+        "assessment_history": []
+      },
+      "closure": {
+        "version": "work-closure-1.4.0",
+        "root_goal": "goal-aa49eab73ec1490fab126c4576bf545e",
+        "current_goal": "goal-ee83d03a899e489492e6493d9517fe6b",
+        "current_task": "task-baaccbf5e5fe4cb3a6fb666fe98475a5",
+        "state": "IN_PROGRESS",
+        "complete": false,
+        "reasons": [
+          "current_execution_pending"
+        ],
+        "completion_state": "WAITING",
+        "condition_score": null,
+        "score_scope": "current_declared_conditions_only",
+        "quality_score": null,
+        "requirement_coverage": {
+          "version": "declared-requirements-1",
+          "state": "INCOMPLETE",
+          "requirements": [
+            {
+              "criterion_ids": [
+                "quote-rework"
+              ],
+              "id": "rework-domain",
+              "kind": "quote_rework",
+              "text": "继承已核对版本的全部有效要求，仅按明确变更修订，独立核对本次报价结果",
+              "status": "unknown",
+              "reason": "linked_checks"
+            }
+          ],
+          "complete": false,
+          "scope": "explicitly_declared_requirements",
+          "semantic_goal_verified": false
+        },
+        "assessment_fingerprint": "50d419dd63abe77b5dc3d2199676f581fbb4361da365e7cecbe0b4e0a8291e20",
+        "spent_cost_units": 2,
+        "reserved_cost_units": 2
+      }
+    }
+  ]
+}

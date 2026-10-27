@@ -54,6 +54,9 @@ class AssistantGoals(unittest.TestCase):
         finally:store.close()
         self.assertEqual(result['turns'][0]['linked_goal']['output'],'JARVIS 中文')
         self.assertEqual(result['turns'][0]['linked_goal']['status'],'SUCCEEDED')
+        self.assertEqual(result['turns'][0]['linked_goal']['outcome']['state'],'PARTIAL')
+        self.assertIsNone(result['turns'][0]['linked_goal']['outcome']['score'])
+        self.assertEqual(result['turns'][0]['linked_goal']['outcome'],self.detail(one['id'])['outcome'])
         from modules.workspace.sessions import Sessions
         folders=Sessions(self.root)
         try:
@@ -187,6 +190,17 @@ class AssistantGoals(unittest.TestCase):
         self.code('invalid_state',assistant.accept,self.root,{'turn_id':'cancel-finished'})
         self.assertEqual(self.core.tasks.get(tid)['status'],'SUCCEEDED')
         self.assertIsNone(self.core.db.one('SELECT * FROM assistant_operations WHERE turn_id=?',('cancel-finished',)))
+
+    def test_task_output_carries_memory_dependencies_and_respects_memory_off(self):
+        Memory(self.core.db).save(fact('偏好','保留中文'),0)
+        view={**Memory(self.core.db).view('personal','openai'),'scope':'personal','provider':'openai','enabled':True}
+        chat=self.chat(view=view);ident=assistant.goal_from_turn(self.root,'chat-turn-1')['id']
+        self.plan(ident);self.core.run_task(self.approve(ident))
+        allowed=assistant.context(self.root,chat,'openai')[0]
+        self.assertEqual(len(allowed['memory_dependencies']),1)
+        denied=assistant.context(self.root,chat,'openai',False)[0]
+        self.assertFalse(denied['context_current']);self.assertEqual(denied['confirmed_output'],'')
+        self.assertEqual(denied['memory_dependencies'],[])
 
 
 if __name__=='__main__':unittest.main()

@@ -1,0 +1,59 @@
+{
+  "case_id": "learning-past",
+  "domain": "learning",
+  "arm": "workflow_on",
+  "turn": 2,
+  "freeze_digest": "6cc071169f4fdcc13865485eb587313ffcbbefdc9dc6b35076d6390c18412b57",
+  "status": "FAILED",
+  "error": "assistant_invalid",
+  "reply": null,
+  "skill_id": "english-coach",
+  "skill_version": "1.0.0",
+  "action_kind": null,
+  "task_count": 0,
+  "flow_valid": false,
+  "elapsed_seconds": 3.6395,
+  "attempts": [
+    {
+      "status": "INVALID",
+      "usage": {
+        "completion_tokens": 68,
+        "prompt_tokens": 1351,
+        "total_tokens": 1419
+      },
+      "error": "assistant_invalid",
+      "estimate": {
+        "amount": 0.00126825,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [],
+  "assessment": {
+    "state": "FAIL",
+    "checks": [
+      {
+        "id": "response_delivery",
+        "status": "failed"
+      }
+    ],
+    "condition_score": null,
+    "quality_score": null
+  },
+  "failure_stage": "assistant_protocol",
+  "business_quality": null,
+  "record_digest": "3cba8c5affe6665112434b1a8c6db9f126763ff215eac686df81713075ecb63e"
+}

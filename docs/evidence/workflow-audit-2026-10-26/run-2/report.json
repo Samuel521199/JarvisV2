@@ -1,0 +1,150 @@
+{
+  "version": "workflow-audit-1",
+  "python": "3.13.0",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "observations": [
+    {
+      "id": "WF-01",
+      "title": "Reviewed proposal still requires admission",
+      "observed": {
+        "status": "REVIEW",
+        "tasks": 0
+      },
+      "expected_current_behavior": {
+        "status": "REVIEW",
+        "tasks": 0
+      },
+      "reproduced": true,
+      "interpretation": "Existing explicit admission boundary; no standing routine-task mandate here"
+    },
+    {
+      "id": "WF-02",
+      "title": "Durable gap between approval and separate queue request",
+      "observed": {
+        "task_status": "READY",
+        "queued": 0
+      },
+      "expected_current_behavior": {
+        "task_status": "READY",
+        "queued": 0
+      },
+      "reproduced": true,
+      "interpretation": "UI normally issues a second start call; missing that call leaves admitted work unqueued after reopen"
+    },
+    {
+      "id": "WF-03",
+      "title": "Exact declared result can be verified",
+      "observed": "VERIFIED",
+      "expected_current_behavior": "VERIFIED",
+      "reproduced": true,
+      "interpretation": "Supported local execution and declared-condition verification, not general source research"
+    },
+    {
+      "id": "WF-04",
+      "title": "Late constraint cannot amend admitted/completed goal",
+      "observed": {
+        "error": "conflict",
+        "actions_unchanged": true
+      },
+      "expected_current_behavior": {
+        "error": "conflict",
+        "actions_unchanged": true
+      },
+      "reproduced": true,
+      "interpretation": "Correctly preserves history; linked selective rework still needs implementation"
+    },
+    {
+      "id": "WF-05",
+      "title": "Report goal does not enter text-statistics method reuse",
+      "observed": {
+        "method_available": false,
+        "reuse_error": "experience_changed",
+        "goal_memory_source_available": true
+      },
+      "expected_current_behavior": {
+        "method_available": false,
+        "reuse_error": "experience_changed",
+        "goal_memory_source_available": true
+      },
+      "reproduced": true,
+      "interpretation": "Existing goal memory candidate is distinct from a verified, reusable report method"
+    },
+    {
+      "id": "WF-06-weak",
+      "title": "Same insufficient business result under different declared conditions",
+      "observed": {
+        "completion": "VERIFIED",
+        "actual": "最低报价：B\nA|120|5|source-A\nB|90|8|source-B",
+        "business_conditions_satisfied": false
+      },
+      "expected_current_behavior": {
+        "completion": "VERIFIED",
+        "actual": "最低报价：B\nA|120|5|source-A\nB|90|8|source-B",
+        "business_conditions_satisfied": false
+      },
+      "reproduced": true,
+      "interpretation": "Weak declared coverage can pass a known-inadequate business result; stronger requirements reject it; no criteria leaves it unspecified"
+    },
+    {
+      "id": "WF-07",
+      "title": "Late feedback changes closure without rewriting execution",
+      "observed": {
+        "execution": "SUCCEEDED",
+        "completion": "NEEDS_CORRECTION"
+      },
+      "expected_current_behavior": {
+        "execution": "SUCCEEDED",
+        "completion": "NEEDS_CORRECTION"
+      },
+      "reproduced": true,
+      "interpretation": "Feedback propagation exists; automatic selective repair is a separate missing step"
+    },
+    {
+      "id": "WF-06-strong",
+      "title": "Same insufficient business result under different declared conditions",
+      "observed": {
+        "completion": "NEEDS_CORRECTION",
+        "actual": "最低报价：B\nA|120|5|source-A\nB|90|8|source-B",
+        "business_conditions_satisfied": false
+      },
+      "expected_current_behavior": {
+        "completion": "NEEDS_CORRECTION",
+        "actual": "最低报价：B\nA|120|5|source-A\nB|90|8|source-B",
+        "business_conditions_satisfied": false
+      },
+      "reproduced": true,
+      "interpretation": "Weak declared coverage can pass a known-inadequate business result; stronger requirements reject it; no criteria leaves it unspecified"
+    },
+    {
+      "id": "WF-06-unspecified",
+      "title": "Same insufficient business result under different declared conditions",
+      "observed": {
+        "completion": "UNSPECIFIED",
+        "actual": "最低报价：B\nA|120|5|source-A\nB|90|8|source-B",
+        "business_conditions_satisfied": false
+      },
+      "expected_current_behavior": {
+        "completion": "UNSPECIFIED",
+        "actual": "最低报价：B\nA|120|5|source-A\nB|90|8|source-B",
+        "business_conditions_satisfied": false
+      },
+      "reproduced": true,
+      "interpretation": "Weak declared coverage can pass a known-inadequate business result; stronger requirements reject it; no criteria leaves it unspecified"
+    },
+    {
+      "id": "WF-08",
+      "title": "Flat unanswered questions block all admission",
+      "observed": "conflict",
+      "expected_current_behavior": "plan_incomplete",
+      "reproduced": false,
+      "interpretation": "Current plan has no per-question dependency or optionality; fixture intentionally supplies an optional question"
+    }
+  ],
+  "diagnostics_reproduced": false,
+  "source_unchanged": true,
+  "model_calls": 0,
+  "production_deployed": false,
+  "full_workflow_complete": false,
+  "quality_gain": null,
+  "interpretation": "A reproduced limitation is a finding, not a product acceptance pass."
+}

@@ -1,0 +1,61 @@
+{
+  "schema": "jarvis.settings-sidebar.evidence.v1",
+  "recorded_at": "2026-10-23T12:36:40.694328+00:00",
+  "version": "v0.1.0 workspace increment, settings category sidebar",
+  "scope": "Seven category links, single moving selection frame, active-only breathing and sweep, hover and keyboard focus, semantic theme variables",
+  "source_sha256": {
+    "apps/workbench/settings.js": "6465aedbe778d4b223f18ed57347e3b4ce91b9c21bb6ce815a2346e25c7afe4b",
+    "apps/workbench/theme.css": "22bc172db1fcff477dc0a39f259151ed9e9e4870fead17c4594201e999409c8f",
+    "apps/workbench/brand/core.png": "3d66ab1a1d125e12ef289eaca563e37bc12b762b0c9d135f5f5c42902f610e4a"
+  },
+  "browser": {
+    "url": "http://127.0.0.1:18282/settings#modules",
+    "viewport": [
+      1280,
+      720
+    ],
+    "theme_final": "dark",
+    "motion_final": true,
+    "console_errors_or_warnings": []
+  },
+  "verified_routes": [
+    "home",
+    "appearance",
+    "memory",
+    "connections",
+    "skill",
+    "devices",
+    "modules"
+  ],
+  "verified_interactions": [
+    "All seven routes have exactly one aria-current link and one selection track; aligned within 1px while paused; no desktop horizontal overflow",
+    "System to Cognition measured moving transform from y=366 toward y=122, observed intermediate y=137.385, transition 0.38s",
+    "Tab from Cognition focused Model and costs with 2px focus-visible outline; Return opened connections",
+    "Paused icon and rail pseudo-element animations are none; sweep hidden; track transition 0s",
+    "Light theme applied and visually inspected; dark and motion restored",
+    "Final active animation names: nav-core-breathe, nav-rail-breathe, nav-selection-sweep"
+  ],
+  "screenshots": [
+    "sidebar-dark.png",
+    "sidebar-light.png"
+  ],
+  "runtime_note": "Service was absent during final visual check; confirmed port unused, launched existing D:/Jarvis server on 18282 using existing data. Did not stop other processes.",
+  "checks": {
+    "javascript_syntax": "passed: node --check apps/workbench/settings.js",
+    "navigation": "passed: 0 updated",
+    "documentation": {
+      "status": "passed",
+      "documents": 26,
+      "chapters": 23,
+      "diagrams": 39,
+      "local_links": 2248,
+      "errors": 0
+    },
+    "diff": "passed for settings.js, theme.css, interaction-persona.md, delivery-validation.md"
+  },
+  "limitations": [
+    "No full narrow-device matrix, OS reduced-motion setting, screen-reader, audio or prolonged performance validation",
+    "No model calls, dependency installs, business task execution or model/credential setting changes",
+    "Backend regressions from second round not repeated for this sidebar-only change"
+  ]
+}

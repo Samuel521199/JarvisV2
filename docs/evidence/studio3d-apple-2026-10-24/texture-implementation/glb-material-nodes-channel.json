@@ -1,0 +1,102 @@
+{
+  "Baked static PBR": {
+    "nodes": [
+      [
+        "Principled BSDF",
+        "BSDF_PRINCIPLED"
+      ],
+      [
+        "Material Output",
+        "OUTPUT_MATERIAL"
+      ],
+      [
+        "Group",
+        "GROUP"
+      ],
+      [
+        "Image Texture",
+        "TEX_IMAGE"
+      ],
+      [
+        "Separate Color",
+        "SEPARATE_COLOR"
+      ],
+      [
+        "Image Texture.001",
+        "TEX_IMAGE"
+      ],
+      [
+        "Normal Map",
+        "NORMAL_MAP"
+      ],
+      [
+        "Image Texture.002",
+        "TEX_IMAGE"
+      ],
+      [
+        "Separate Color.001",
+        "SEPARATE_COLOR"
+      ],
+      [
+        "Image Texture.003",
+        "TEX_IMAGE"
+      ]
+    ],
+    "links": [
+      [
+        "Principled BSDF",
+        "BSDF",
+        "Material Output",
+        "Surface"
+      ],
+      [
+        "Image Texture",
+        "Color",
+        "Principled BSDF",
+        "Base Color"
+      ],
+      [
+        "Separate Color",
+        "Blue",
+        "Principled BSDF",
+        "Metallic"
+      ],
+      [
+        "Separate Color",
+        "Green",
+        "Principled BSDF",
+        "Roughness"
+      ],
+      [
+        "Image Texture.001",
+        "Color",
+        "Separate Color",
+        "Color"
+      ],
+      [
+        "Normal Map",
+        "Normal",
+        "Principled BSDF",
+        "Normal"
+      ],
+      [
+        "Image Texture.002",
+        "Color",
+        "Normal Map",
+        "Color"
+      ],
+      [
+        "Separate Color.001",
+        "Red",
+        "Group",
+        "Occlusion"
+      ],
+      [
+        "Image Texture.003",
+        "Color",
+        "Separate Color.001",
+        "Color"
+      ]
+    ]
+  }
+}

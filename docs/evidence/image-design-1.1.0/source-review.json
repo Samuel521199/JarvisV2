@@ -1,0 +1,37 @@
+{
+  "checked_at": "2026-10-25",
+  "sources": [
+    "https://ai.google.dev/gemini-api/docs/generate-content/image-generation",
+    "https://ai.google.dev/gemini-api/docs/models/gemini-3.1-flash-lite-image",
+    "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/nano-banana-2-1",
+    "https://ai.google.dev/gemini-api/docs/pricing",
+    "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+  ],
+  "conflicts": [
+    {
+      "topic": "2.1 4K output tokens",
+      "guide": 2520,
+      "both_price_pages": 3780,
+      "decision": "Quote uses 3780; completed-call estimate uses returned modality usage."
+    },
+    {
+      "topic": "Lite 512",
+      "guide_table": "listed",
+      "model_card": "1K only",
+      "decision": "Keep Lite at 1K."
+    },
+    {
+      "topic": "512 21:9 pixels",
+      "guide_table": [
+        792,
+        168
+      ],
+      "half_1k_size": [
+        792,
+        336
+      ],
+      "decision": "Use half 1K as nominal target; live actual dimensions unverified."
+    }
+  ],
+  "code_origin": "First-party implementation, no external graphic-design package copied or installed"
+}

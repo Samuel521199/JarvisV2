@@ -1,0 +1,30 @@
+{
+  "scope": "acceptance runner negative controls; separate from the 170 product tests",
+  "checks": [
+    {
+      "case": "PassCase",
+      "accepted": true,
+      "exitcode": 0,
+      "as_expected": true
+    },
+    {
+      "case": "FailCase",
+      "accepted": false,
+      "exitcode": 1,
+      "as_expected": true
+    },
+    {
+      "case": "SkipCase",
+      "accepted": false,
+      "exitcode": 1,
+      "as_expected": true
+    },
+    {
+      "case": "ExpectedFailureCase",
+      "accepted": false,
+      "exitcode": 1,
+      "as_expected": true
+    }
+  ],
+  "passed": true
+}

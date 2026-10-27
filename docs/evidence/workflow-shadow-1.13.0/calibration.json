@@ -1,0 +1,824 @@
+{
+  "counts": {
+    "true_alert": 6,
+    "false_alert": 3,
+    "missed_alert": 3,
+    "correct_no_alert": 3
+  },
+  "cases": [
+    {
+      "id": "comparison-exact",
+      "domain": "comparison",
+      "basis": {
+        "revision": 1,
+        "entries": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "quote": "甲方案价格90元，交期3天。",
+            "source_turn": "calibration-source",
+            "start": 0,
+            "end": 14
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "quote": "明天10点询问保修，不下单。",
+            "source_turn": "calibration-source",
+            "start": 15,
+            "end": 29
+          }
+        ],
+        "source_turn": "calibration-source",
+        "digest": "0bd5d2cda227bb9dff98f5a11da94a92f8258c550a4d29fd0cab331b069f4a8e"
+      },
+      "reply": "甲方案价格90元，交期3天。\n明天10点询问保修，不下单。",
+      "preset_semantic_defect": false,
+      "review": {
+        "version": "delivery-shadow-1",
+        "basis_digest": "0bd5d2cda227bb9dff98f5a11da94a92f8258c550a4d29fd0cab331b069f4a8e",
+        "basis_revision": 1,
+        "reply_digest": "d2107ec4e285625ea91fa8b41d12e5ecc437dfaac1ee19ed4148fcee35269c0a",
+        "mode": "shadow",
+        "would_block": false,
+        "quality_score": null,
+        "checks": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "status": "literal_found"
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "status": "literal_found"
+          }
+        ],
+        "state": "PROSE_UNVERIFIED",
+        "method": "literal_presence",
+        "reason": "missing_quote_may_be_paraphrase_or_omission; additions_and_semantics_unverified"
+      },
+      "classification": "correct_no_alert"
+    },
+    {
+      "id": "comparison-paraphrase",
+      "domain": "comparison",
+      "basis": {
+        "revision": 1,
+        "entries": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "quote": "甲方案价格90元，交期3天。",
+            "source_turn": "calibration-source",
+            "start": 0,
+            "end": 14
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "quote": "明天10点询问保修，不下单。",
+            "source_turn": "calibration-source",
+            "start": 15,
+            "end": 29
+          }
+        ],
+        "source_turn": "calibration-source",
+        "digest": "0bd5d2cda227bb9dff98f5a11da94a92f8258c550a4d29fd0cab331b069f4a8e"
+      },
+      "reply": "甲报价九十元，三天交货；次日上午十时问保修，暂不购买。",
+      "preset_semantic_defect": false,
+      "review": {
+        "version": "delivery-shadow-1",
+        "basis_digest": "0bd5d2cda227bb9dff98f5a11da94a92f8258c550a4d29fd0cab331b069f4a8e",
+        "basis_revision": 1,
+        "reply_digest": "ffc733cc86749e9d88828231a09c0688ee67083e05c63208102b7bba9ca81d6f",
+        "mode": "shadow",
+        "would_block": false,
+        "quality_score": null,
+        "checks": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "status": "literal_not_found"
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "status": "literal_not_found"
+          }
+        ],
+        "state": "REVIEW",
+        "method": "literal_presence",
+        "reason": "missing_quote_may_be_paraphrase_or_omission; additions_and_semantics_unverified"
+      },
+      "classification": "false_alert"
+    },
+    {
+      "id": "comparison-missing-plan",
+      "domain": "comparison",
+      "basis": {
+        "revision": 1,
+        "entries": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "quote": "甲方案价格90元，交期3天。",
+            "source_turn": "calibration-source",
+            "start": 0,
+            "end": 14
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "quote": "明天10点询问保修，不下单。",
+            "source_turn": "calibration-source",
+            "start": 15,
+            "end": 29
+          }
+        ],
+        "source_turn": "calibration-source",
+        "digest": "0bd5d2cda227bb9dff98f5a11da94a92f8258c550a4d29fd0cab331b069f4a8e"
+      },
+      "reply": "甲方案价格90元，交期3天。",
+      "preset_semantic_defect": true,
+      "review": {
+        "version": "delivery-shadow-1",
+        "basis_digest": "0bd5d2cda227bb9dff98f5a11da94a92f8258c550a4d29fd0cab331b069f4a8e",
+        "basis_revision": 1,
+        "reply_digest": "93d8316e749c23f660d4c8703f5cba5fc6e98d6bd1f007ebe487e2ce5c78cfe5",
+        "mode": "shadow",
+        "would_block": false,
+        "quality_score": null,
+        "checks": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "status": "literal_found"
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "status": "literal_not_found"
+          }
+        ],
+        "state": "REVIEW",
+        "method": "literal_presence",
+        "reason": "missing_quote_may_be_paraphrase_or_omission; additions_and_semantics_unverified"
+      },
+      "classification": "true_alert"
+    },
+    {
+      "id": "comparison-changed-time",
+      "domain": "comparison",
+      "basis": {
+        "revision": 1,
+        "entries": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "quote": "甲方案价格90元，交期3天。",
+            "source_turn": "calibration-source",
+            "start": 0,
+            "end": 14
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "quote": "明天10点询问保修，不下单。",
+            "source_turn": "calibration-source",
+            "start": 15,
+            "end": 29
+          }
+        ],
+        "source_turn": "calibration-source",
+        "digest": "0bd5d2cda227bb9dff98f5a11da94a92f8258c550a4d29fd0cab331b069f4a8e"
+      },
+      "reply": "甲方案价格90元，交期3天。\n今天15点询问保修，不下单。",
+      "preset_semantic_defect": true,
+      "review": {
+        "version": "delivery-shadow-1",
+        "basis_digest": "0bd5d2cda227bb9dff98f5a11da94a92f8258c550a4d29fd0cab331b069f4a8e",
+        "basis_revision": 1,
+        "reply_digest": "2b3abbc354b45ce77772df0c9b8f236bd42341f4f4b432c94b249b00b9a4ebb3",
+        "mode": "shadow",
+        "would_block": false,
+        "quality_score": null,
+        "checks": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "status": "literal_found"
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "status": "literal_not_found"
+          }
+        ],
+        "state": "REVIEW",
+        "method": "literal_presence",
+        "reason": "missing_quote_may_be_paraphrase_or_omission; additions_and_semantics_unverified"
+      },
+      "classification": "true_alert"
+    },
+    {
+      "id": "comparison-unsupported-addition",
+      "domain": "comparison",
+      "basis": {
+        "revision": 1,
+        "entries": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "quote": "甲方案价格90元，交期3天。",
+            "source_turn": "calibration-source",
+            "start": 0,
+            "end": 14
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "quote": "明天10点询问保修，不下单。",
+            "source_turn": "calibration-source",
+            "start": 15,
+            "end": 29
+          }
+        ],
+        "source_turn": "calibration-source",
+        "digest": "0bd5d2cda227bb9dff98f5a11da94a92f8258c550a4d29fd0cab331b069f4a8e"
+      },
+      "reply": "甲方案价格90元，交期3天。\n明天10点询问保修，不下单。\n该方案已经确认终身保修。",
+      "preset_semantic_defect": true,
+      "review": {
+        "version": "delivery-shadow-1",
+        "basis_digest": "0bd5d2cda227bb9dff98f5a11da94a92f8258c550a4d29fd0cab331b069f4a8e",
+        "basis_revision": 1,
+        "reply_digest": "b9bcd913284d87dc64a2cd6dd26014c9012c0598ad47c971aa523c2ed13874d2",
+        "mode": "shadow",
+        "would_block": false,
+        "quality_score": null,
+        "checks": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "status": "literal_found"
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "status": "literal_found"
+          }
+        ],
+        "state": "PROSE_UNVERIFIED",
+        "method": "literal_presence",
+        "reason": "missing_quote_may_be_paraphrase_or_omission; additions_and_semantics_unverified"
+      },
+      "classification": "missed_alert"
+    },
+    {
+      "id": "documents-exact",
+      "domain": "documents",
+      "basis": {
+        "revision": 1,
+        "entries": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "quote": "数据导出失败，原因未知。",
+            "source_turn": "calibration-source",
+            "start": 0,
+            "end": 12
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "quote": "明天10点检查日志，不重跑导出。",
+            "source_turn": "calibration-source",
+            "start": 13,
+            "end": 29
+          }
+        ],
+        "source_turn": "calibration-source",
+        "digest": "05e6a5b374340199525340fa96f2eff8bb57f888f5c17a4aaa7a6ad69323cc80"
+      },
+      "reply": "数据导出失败，原因未知。\n明天10点检查日志，不重跑导出。",
+      "preset_semantic_defect": false,
+      "review": {
+        "version": "delivery-shadow-1",
+        "basis_digest": "05e6a5b374340199525340fa96f2eff8bb57f888f5c17a4aaa7a6ad69323cc80",
+        "basis_revision": 1,
+        "reply_digest": "bd790d6633bf97678dbf268d1e2e09de3c1d1bb44252a6b3bb47740753c4f63a",
+        "mode": "shadow",
+        "would_block": false,
+        "quality_score": null,
+        "checks": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "status": "literal_found"
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "status": "literal_found"
+          }
+        ],
+        "state": "PROSE_UNVERIFIED",
+        "method": "literal_presence",
+        "reason": "missing_quote_may_be_paraphrase_or_omission; additions_and_semantics_unverified"
+      },
+      "classification": "correct_no_alert"
+    },
+    {
+      "id": "documents-paraphrase",
+      "domain": "documents",
+      "basis": {
+        "revision": 1,
+        "entries": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "quote": "数据导出失败，原因未知。",
+            "source_turn": "calibration-source",
+            "start": 0,
+            "end": 12
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "quote": "明天10点检查日志，不重跑导出。",
+            "source_turn": "calibration-source",
+            "start": 13,
+            "end": 29
+          }
+        ],
+        "source_turn": "calibration-source",
+        "digest": "05e6a5b374340199525340fa96f2eff8bb57f888f5c17a4aaa7a6ad69323cc80"
+      },
+      "reply": "导出没成功且原因尚不清楚；次日上午十时查日志，不重新执行。",
+      "preset_semantic_defect": false,
+      "review": {
+        "version": "delivery-shadow-1",
+        "basis_digest": "05e6a5b374340199525340fa96f2eff8bb57f888f5c17a4aaa7a6ad69323cc80",
+        "basis_revision": 1,
+        "reply_digest": "cf4fc9e8ab38657a8d2f0d957677cdf4396987a2d87996bb753e13c822005814",
+        "mode": "shadow",
+        "would_block": false,
+        "quality_score": null,
+        "checks": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "status": "literal_not_found"
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "status": "literal_not_found"
+          }
+        ],
+        "state": "REVIEW",
+        "method": "literal_presence",
+        "reason": "missing_quote_may_be_paraphrase_or_omission; additions_and_semantics_unverified"
+      },
+      "classification": "false_alert"
+    },
+    {
+      "id": "documents-missing-plan",
+      "domain": "documents",
+      "basis": {
+        "revision": 1,
+        "entries": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "quote": "数据导出失败，原因未知。",
+            "source_turn": "calibration-source",
+            "start": 0,
+            "end": 12
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "quote": "明天10点检查日志，不重跑导出。",
+            "source_turn": "calibration-source",
+            "start": 13,
+            "end": 29
+          }
+        ],
+        "source_turn": "calibration-source",
+        "digest": "05e6a5b374340199525340fa96f2eff8bb57f888f5c17a4aaa7a6ad69323cc80"
+      },
+      "reply": "数据导出失败，原因未知。",
+      "preset_semantic_defect": true,
+      "review": {
+        "version": "delivery-shadow-1",
+        "basis_digest": "05e6a5b374340199525340fa96f2eff8bb57f888f5c17a4aaa7a6ad69323cc80",
+        "basis_revision": 1,
+        "reply_digest": "6ca3b63e4a19e69f4d35c7d9e334aa65b8b90a29beba19e89b9d69f7ed3bae02",
+        "mode": "shadow",
+        "would_block": false,
+        "quality_score": null,
+        "checks": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "status": "literal_found"
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "status": "literal_not_found"
+          }
+        ],
+        "state": "REVIEW",
+        "method": "literal_presence",
+        "reason": "missing_quote_may_be_paraphrase_or_omission; additions_and_semantics_unverified"
+      },
+      "classification": "true_alert"
+    },
+    {
+      "id": "documents-changed-time",
+      "domain": "documents",
+      "basis": {
+        "revision": 1,
+        "entries": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "quote": "数据导出失败，原因未知。",
+            "source_turn": "calibration-source",
+            "start": 0,
+            "end": 12
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "quote": "明天10点检查日志，不重跑导出。",
+            "source_turn": "calibration-source",
+            "start": 13,
+            "end": 29
+          }
+        ],
+        "source_turn": "calibration-source",
+        "digest": "05e6a5b374340199525340fa96f2eff8bb57f888f5c17a4aaa7a6ad69323cc80"
+      },
+      "reply": "数据导出失败，原因未知。\n今天15点检查日志，不重跑导出。",
+      "preset_semantic_defect": true,
+      "review": {
+        "version": "delivery-shadow-1",
+        "basis_digest": "05e6a5b374340199525340fa96f2eff8bb57f888f5c17a4aaa7a6ad69323cc80",
+        "basis_revision": 1,
+        "reply_digest": "27cccf428e5a047b5926a484a69da5b5a9f6c356bf95ede85d98788023063617",
+        "mode": "shadow",
+        "would_block": false,
+        "quality_score": null,
+        "checks": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "status": "literal_found"
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "status": "literal_not_found"
+          }
+        ],
+        "state": "REVIEW",
+        "method": "literal_presence",
+        "reason": "missing_quote_may_be_paraphrase_or_omission; additions_and_semantics_unverified"
+      },
+      "classification": "true_alert"
+    },
+    {
+      "id": "documents-unsupported-addition",
+      "domain": "documents",
+      "basis": {
+        "revision": 1,
+        "entries": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "quote": "数据导出失败，原因未知。",
+            "source_turn": "calibration-source",
+            "start": 0,
+            "end": 12
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "quote": "明天10点检查日志，不重跑导出。",
+            "source_turn": "calibration-source",
+            "start": 13,
+            "end": 29
+          }
+        ],
+        "source_turn": "calibration-source",
+        "digest": "05e6a5b374340199525340fa96f2eff8bb57f888f5c17a4aaa7a6ad69323cc80"
+      },
+      "reply": "数据导出失败，原因未知。\n明天10点检查日志，不重跑导出。\n失败原因已经确定为内存不足。",
+      "preset_semantic_defect": true,
+      "review": {
+        "version": "delivery-shadow-1",
+        "basis_digest": "05e6a5b374340199525340fa96f2eff8bb57f888f5c17a4aaa7a6ad69323cc80",
+        "basis_revision": 1,
+        "reply_digest": "a87d958fcf48de1a6c38014eecc0c601e80895c60f28027a12b81e7b97ddd89d",
+        "mode": "shadow",
+        "would_block": false,
+        "quality_score": null,
+        "checks": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "status": "literal_found"
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "status": "literal_found"
+          }
+        ],
+        "state": "PROSE_UNVERIFIED",
+        "method": "literal_presence",
+        "reason": "missing_quote_may_be_paraphrase_or_omission; additions_and_semantics_unverified"
+      },
+      "classification": "missed_alert"
+    },
+    {
+      "id": "learning-exact",
+      "domain": "learning",
+      "basis": {
+        "revision": 1,
+        "entries": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "quote": "学习者只看过讲解，尚未独立作答。",
+            "source_turn": "calibration-source",
+            "start": 0,
+            "end": 16
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "quote": "明天10点独立复测，不给提示。",
+            "source_turn": "calibration-source",
+            "start": 17,
+            "end": 32
+          }
+        ],
+        "source_turn": "calibration-source",
+        "digest": "29dfac57b07c67071bb3b9f2f82506237f742bf80123ec7b39fd2bfa13606772"
+      },
+      "reply": "学习者只看过讲解，尚未独立作答。\n明天10点独立复测，不给提示。",
+      "preset_semantic_defect": false,
+      "review": {
+        "version": "delivery-shadow-1",
+        "basis_digest": "29dfac57b07c67071bb3b9f2f82506237f742bf80123ec7b39fd2bfa13606772",
+        "basis_revision": 1,
+        "reply_digest": "f41c2871d719f42019316392e9da24c7d439953556f7ac8ece8cd5fa4d48bdf4",
+        "mode": "shadow",
+        "would_block": false,
+        "quality_score": null,
+        "checks": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "status": "literal_found"
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "status": "literal_found"
+          }
+        ],
+        "state": "PROSE_UNVERIFIED",
+        "method": "literal_presence",
+        "reason": "missing_quote_may_be_paraphrase_or_omission; additions_and_semantics_unverified"
+      },
+      "classification": "correct_no_alert"
+    },
+    {
+      "id": "learning-paraphrase",
+      "domain": "learning",
+      "basis": {
+        "revision": 1,
+        "entries": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "quote": "学习者只看过讲解，尚未独立作答。",
+            "source_turn": "calibration-source",
+            "start": 0,
+            "end": 16
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "quote": "明天10点独立复测，不给提示。",
+            "source_turn": "calibration-source",
+            "start": 17,
+            "end": 32
+          }
+        ],
+        "source_turn": "calibration-source",
+        "digest": "29dfac57b07c67071bb3b9f2f82506237f742bf80123ec7b39fd2bfa13606772"
+      },
+      "reply": "学生仅阅读了解释、没有自己回答；次日上午十时无提示复习测验。",
+      "preset_semantic_defect": false,
+      "review": {
+        "version": "delivery-shadow-1",
+        "basis_digest": "29dfac57b07c67071bb3b9f2f82506237f742bf80123ec7b39fd2bfa13606772",
+        "basis_revision": 1,
+        "reply_digest": "729da590aca3a97d465acd681f98b25837c9d6c4fb52700f1a95e6c4a8495764",
+        "mode": "shadow",
+        "would_block": false,
+        "quality_score": null,
+        "checks": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "status": "literal_not_found"
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "status": "literal_not_found"
+          }
+        ],
+        "state": "REVIEW",
+        "method": "literal_presence",
+        "reason": "missing_quote_may_be_paraphrase_or_omission; additions_and_semantics_unverified"
+      },
+      "classification": "false_alert"
+    },
+    {
+      "id": "learning-missing-plan",
+      "domain": "learning",
+      "basis": {
+        "revision": 1,
+        "entries": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "quote": "学习者只看过讲解，尚未独立作答。",
+            "source_turn": "calibration-source",
+            "start": 0,
+            "end": 16
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "quote": "明天10点独立复测，不给提示。",
+            "source_turn": "calibration-source",
+            "start": 17,
+            "end": 32
+          }
+        ],
+        "source_turn": "calibration-source",
+        "digest": "29dfac57b07c67071bb3b9f2f82506237f742bf80123ec7b39fd2bfa13606772"
+      },
+      "reply": "学习者只看过讲解，尚未独立作答。",
+      "preset_semantic_defect": true,
+      "review": {
+        "version": "delivery-shadow-1",
+        "basis_digest": "29dfac57b07c67071bb3b9f2f82506237f742bf80123ec7b39fd2bfa13606772",
+        "basis_revision": 1,
+        "reply_digest": "0554a63e4fb257fd12fe3c4253c1173f15be08e52a9dd8cfb2c2a1533cdfa3d4",
+        "mode": "shadow",
+        "would_block": false,
+        "quality_score": null,
+        "checks": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "status": "literal_found"
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "status": "literal_not_found"
+          }
+        ],
+        "state": "REVIEW",
+        "method": "literal_presence",
+        "reason": "missing_quote_may_be_paraphrase_or_omission; additions_and_semantics_unverified"
+      },
+      "classification": "true_alert"
+    },
+    {
+      "id": "learning-changed-time",
+      "domain": "learning",
+      "basis": {
+        "revision": 1,
+        "entries": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "quote": "学习者只看过讲解，尚未独立作答。",
+            "source_turn": "calibration-source",
+            "start": 0,
+            "end": 16
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "quote": "明天10点独立复测，不给提示。",
+            "source_turn": "calibration-source",
+            "start": 17,
+            "end": 32
+          }
+        ],
+        "source_turn": "calibration-source",
+        "digest": "29dfac57b07c67071bb3b9f2f82506237f742bf80123ec7b39fd2bfa13606772"
+      },
+      "reply": "学习者只看过讲解，尚未独立作答。\n今天15点独立复测，不给提示。",
+      "preset_semantic_defect": true,
+      "review": {
+        "version": "delivery-shadow-1",
+        "basis_digest": "29dfac57b07c67071bb3b9f2f82506237f742bf80123ec7b39fd2bfa13606772",
+        "basis_revision": 1,
+        "reply_digest": "1c115a9bd20c779f355cf4fb453f24e9d4b32963cfbe4daeb6fa3c9620c3c33b",
+        "mode": "shadow",
+        "would_block": false,
+        "quality_score": null,
+        "checks": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "status": "literal_found"
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "status": "literal_not_found"
+          }
+        ],
+        "state": "REVIEW",
+        "method": "literal_presence",
+        "reason": "missing_quote_may_be_paraphrase_or_omission; additions_and_semantics_unverified"
+      },
+      "classification": "true_alert"
+    },
+    {
+      "id": "learning-unsupported-addition",
+      "domain": "learning",
+      "basis": {
+        "revision": 1,
+        "entries": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "quote": "学习者只看过讲解，尚未独立作答。",
+            "source_turn": "calibration-source",
+            "start": 0,
+            "end": 16
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "quote": "明天10点独立复测，不给提示。",
+            "source_turn": "calibration-source",
+            "start": 17,
+            "end": 32
+          }
+        ],
+        "source_turn": "calibration-source",
+        "digest": "29dfac57b07c67071bb3b9f2f82506237f742bf80123ec7b39fd2bfa13606772"
+      },
+      "reply": "学习者只看过讲解，尚未独立作答。\n明天10点独立复测，不给提示。\n学习者已经全面掌握该知识。",
+      "preset_semantic_defect": true,
+      "review": {
+        "version": "delivery-shadow-1",
+        "basis_digest": "29dfac57b07c67071bb3b9f2f82506237f742bf80123ec7b39fd2bfa13606772",
+        "basis_revision": 1,
+        "reply_digest": "01c8b3ef8caabdcbf44e4e6d683e0ccc1dde5c81a84f3bb8fb866e37eda2012a",
+        "mode": "shadow",
+        "would_block": false,
+        "quality_score": null,
+        "checks": [
+          {
+            "id": "F1",
+            "kind": "facts",
+            "status": "literal_found"
+          },
+          {
+            "id": "P1",
+            "kind": "plans",
+            "status": "literal_found"
+          }
+        ],
+        "state": "PROSE_UNVERIFIED",
+        "method": "literal_presence",
+        "reason": "missing_quote_may_be_paraphrase_or_omission; additions_and_semantics_unverified"
+      },
+      "classification": "missed_alert"
+    }
+  ],
+  "population_inference": false,
+  "would_block_count": 0,
+  "quality_score": null,
+  "conclusion": "Literal review both overflags paraphrases and misses unsupported additions when original quotes remain. It must not be used as an automatic semantic completion gate."
+}

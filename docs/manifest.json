@@ -43,6 +43,7 @@
         "title": "第四篇 · 自主成长与维护",
         "chapters": [
           "docs-evolution-release",
+          "docs-studio3d-learning",
           "docs-toolchains",
           "docs-health-maintenance",
           "docs-self-model"
@@ -54,6 +55,7 @@
         "chapters": [
           "docs-delivery-validation",
           "docs-decisions-review",
+          "docs-grok-bot-comparison",
           "docs-architecture-atlas",
           "docs-references",
           "docs-maintenance"
@@ -63,11 +65,29 @@
   },
   "documents": [
     {
+      "id": "3d-asset-workflow",
+      "path": "3DModels/AGENTS.md",
+      "title": "3D asset workflow",
+      "owns": [
+        "3d-asset-review-and-cost-recording"
+      ],
+      "status": "implemented",
+      "kind": "entry",
+      "reader_summary": ""
+    },
+    {
       "id": "project-entry",
       "path": "README.md",
       "title": "JARVIS",
       "owns": [
-        "project-entry-scope"
+        "project-entry-scope",
+        "desktop-companion-overview",
+        "desktop-companion-transparent",
+        "desktop-companion-scenarios",
+        "desktop-companion-motion",
+        "desktop-companion-previews",
+        "desktop-companion-integration",
+        "conversation-first-concurrency"
       ],
       "status": "proposed",
       "kind": "entry",
@@ -94,7 +114,8 @@
         "personal-life-capabilities",
         "personal-life-autonomous-outcomes",
         "autonomous-companion-baseline",
-        "autonomy-definition-index"
+        "autonomy-definition-index",
+        "autonomous-assistant-north-star"
       ],
       "status": "proposed",
       "kind": "chapter",
@@ -115,11 +136,34 @@
         "published-tool-operation",
         "goal-planning-operation",
         "goal-growth-operation",
-        "conversation-operation"
+        "conversation-operation",
+        "task-learning-stage-placement",
+        "core-modernization-plan",
+        "modernization-code-map",
+        "modernization-work-packages",
+        "modernization-reference-slice",
+        "modernization-migration-switch",
+        "modernization-next-implementation",
+        "closure-stage-integration",
+        "outcome-observer-runtime",
+        "completion-loop-runtime",
+        "workflow-handoff-runtime",
+        "workflow-rework-runtime",
+        "workflow-budget-runtime",
+        "workflow-closure-runtime",
+        "workflow-domain-runtime",
+        "workflow-requirements-runtime",
+        "workflow-sources-runtime",
+        "workflow-changes-runtime",
+        "workflow-inheritance-runtime",
+        "workflow-recovery-runtime",
+        "workflow-trials-runtime",
+        "workflow-fidelity-runtime",
+        "workflow-shadow-runtime"
       ],
       "status": "proposed",
       "kind": "chapter",
-      "reader_summary": "个人助手与自主成长核心从哪里开始，怎样沿 K0—K6 扩展？"
+      "reader_summary": "最小核心怎样起步；现有代码如何按 K0—K6 改造并保持三位一体、自愈与持续成长？"
     },
     {
       "id": "docs-development-guide",
@@ -150,7 +194,11 @@
         "continuity-facets",
         "continuity-layered-view",
         "continuity-genesis",
-        "clean-core-architecture"
+        "clean-core-architecture",
+        "unified-system-principle",
+        "desktop-presence-architecture",
+        "embodied-multi-agent-brain",
+        "trinity-change-invariants"
       ],
       "status": "proposed",
       "kind": "chapter",
@@ -170,7 +218,12 @@
         "anatomy-output-boundary",
         "mcp-runtime-boundary",
         "memory-private-storage",
-        "memory-contamination-defense"
+        "memory-contamination-defense",
+        "studio3d-boundary",
+        "studio3d-viewer-boundary",
+        "image-studio-boundary",
+        "gmail-boundary",
+        "autonomous-decision-boundary"
       ],
       "status": "proposed",
       "kind": "chapter",
@@ -206,11 +259,23 @@
         "conversation-action-interface",
         "mcp-interface",
         "companion-context-policy",
-        "session-folder-interface"
+        "session-folder-interface",
+        "sidebar-management",
+        "gmail-workbench",
+        "desktop-presence-design",
+        "desktop-presence-scenarios",
+        "desktop-presence-previews",
+        "desktop-presence-transparency",
+        "desktop-robot-form",
+        "desktop-face-display",
+        "desktop-face-expression-map",
+        "desktop-face-settings",
+        "task-companion-experience",
+        "companion-learning-outcome-closure"
       ],
       "status": "proposed",
       "kind": "chapter",
-      "reader_summary": "怎样自然交流、延续人格，并在需要时展开工作台？"
+      "reader_summary": "怎样通过透明精灵按需交流，并把工作台作为特殊补充？"
     },
     {
       "id": "docs-tasks-agents",
@@ -234,7 +299,30 @@
         "anatomy-runtime",
         "conversation-action-runtime",
         "mcp-runtime",
-        "context-aware-task-selection"
+        "context-aware-task-selection",
+        "anatomy-structure-runtime",
+        "anatomy-physics-feasibility",
+        "anatomy-engineering-runtime",
+        "studio3d-runtime",
+        "studio3d-viewer",
+        "studio3d-static-assets",
+        "studio3d-reference-workflow",
+        "studio3d-production-workflow",
+        "studio3d-hard-surface-review",
+        "studio3d-image-workflow",
+        "image-studio-workflow",
+        "gmail-runtime",
+        "personal-workflows-runtime",
+        "resource-admission-loop",
+        "bounded-concurrency-runtime",
+        "task-owner-collaboration",
+        "goal-outcome-closure",
+        "goal-completion-reconciliation",
+        "durable-wait-resumption",
+        "business-remediation-closure",
+        "module-wait-runtime",
+        "real-work-routine-decisions",
+        "real-work-revision-repair"
       ],
       "status": "proposed",
       "kind": "chapter",
@@ -249,7 +337,11 @@
         "growth-fallback-policy",
         "growth-budget-policy",
         "portable-model-settings",
-        "price-snapshot-runtime"
+        "price-snapshot-runtime",
+        "local-model-manager-runtime",
+        "local-model-calibration",
+        "local-model-purpose-interface",
+        "nano-banana-models"
       ],
       "status": "proposed",
       "kind": "chapter",
@@ -277,12 +369,30 @@
         "goal-directed-understanding",
         "memory-workbench-runtime",
         "goal-memory-runtime",
+        "memory-retrieval-runtime",
         "memory-context-design",
         "memory-context-records",
         "memory-branch-context",
         "memory-context-retrieval",
         "memory-knowledge-promotion",
-        "memory-lifecycle-completion"
+        "memory-lifecycle-completion",
+        "knowledge-library-runtime",
+        "memory-final-gap-register",
+        "knowledge-transfer-runtime",
+        "knowledge-cycle-runtime",
+        "memory-continuity-runtime",
+        "family-private-runtime",
+        "task-experience-learning",
+        "knowledge-compounding",
+        "knowledge-value-layers",
+        "experience-consolidation",
+        "conditional-experience-routing",
+        "knowledge-anti-dogmatism",
+        "knowledge-order-and-health",
+        "knowledge-token-economics",
+        "experience-delayed-outcome",
+        "conditional-method-runtime",
+        "report-experience-boundaries"
       ],
       "status": "proposed",
       "kind": "chapter",
@@ -313,7 +423,16 @@
         "composition-change-recovery",
         "continuity-upgrade-protocol",
         "autonomous-evolution-policy",
-        "growth-release-runtime"
+        "growth-release-runtime",
+        "local-model-foundation-evolution",
+        "harness-learning-loop",
+        "growth-regression-policy",
+        "growth-three-evidence-views",
+        "growth-regression-triage",
+        "growth-stable-candidate",
+        "growth-recovery-vector",
+        "modernization-autonomy-adoption",
+        "cumulative-evolution-guard"
       ],
       "status": "proposed",
       "kind": "chapter",
@@ -366,7 +485,33 @@
         "goal-growth-contract",
         "conversation-contracts",
         "mcp-contracts",
-        "session-folder-contracts"
+        "session-folder-contracts",
+        "knowledge-library-contract",
+        "memory-continuity-contract",
+        "gmail-contracts",
+        "desktop-presence-contract",
+        "scheduling-contract",
+        "task-learning-records",
+        "modernization-integration-contracts",
+        "modernization-port-map",
+        "modernization-durable-projections",
+        "closure-handoff-records",
+        "outcome-observer-contract",
+        "completion-loop-contract",
+        "real-work-handoff-contracts",
+        "workflow-handoff-runtime-contract",
+        "workflow-rework-contract",
+        "workflow-budget-contract",
+        "workflow-closure-contract",
+        "workflow-domain-contract",
+        "workflow-requirements-contract",
+        "workflow-sources-contract",
+        "workflow-changes-contract",
+        "workflow-inheritance-contract",
+        "workflow-recovery-contract",
+        "workflow-trials-contract",
+        "workflow-fidelity-contract",
+        "workflow-shadow-contract"
       ],
       "status": "proposed",
       "kind": "chapter",
@@ -392,7 +537,10 @@
         "mcp-layout",
         "memory-desktop-selection",
         "memory-context-migration",
-        "session-folder-layout"
+        "session-folder-layout",
+        "local-model-layout",
+        "gmail-layout",
+        "desktop-presence-shell"
       ],
       "status": "proposed",
       "kind": "chapter",
@@ -409,7 +557,10 @@
         "healing-incident-policy",
         "dialogue-runtime-monitoring",
         "self-observation",
-        "clean-module-governance"
+        "clean-module-governance",
+        "task-causal-diagnostics",
+        "modernization-health-integration",
+        "multi-loop-recovery-coordination"
       ],
       "status": "proposed",
       "kind": "chapter",
@@ -448,6 +599,7 @@
         "portable-settings-evidence",
         "workbench-parity-evidence",
         "settings-parity-evidence",
+        "settings-control-evidence",
         "memory-development-evidence",
         "published-tool-evidence",
         "goal-planning-evidence",
@@ -458,8 +610,75 @@
         "anatomy-initial-evidence",
         "mcp-evidence",
         "memory-context-acceptance",
+        "memory-retrieval-evidence",
         "anatomy-studio-evidence",
-        "session-folder-evidence"
+        "session-folder-evidence",
+        "anatomy-structure-evidence",
+        "anatomy-engineering-evidence",
+        "local-model-manager-evidence",
+        "local-model-assessments-evidence",
+        "local-model-categories-evidence",
+        "sidebar-management-evidence",
+        "studio3d-evidence",
+        "studio3d-viewer-evidence",
+        "studio3d-panzer2-evidence",
+        "studio3d-production-evidence",
+        "knowledge-library-evidence",
+        "memory-quality-thresholds",
+        "knowledge-transfer-evidence",
+        "knowledge-cycle-evidence",
+        "memory-continuity-evidence",
+        "family-private-evidence",
+        "studio3d-apple-evidence",
+        "nano-banana-evidence",
+        "gmail-evidence",
+        "desktop-presence-validation",
+        "personal-workflows-evidence",
+        "bounded-concurrency-evidence",
+        "task-outcome-scoring",
+        "task-score-rubric",
+        "task-score-learning-validation",
+        "forecast-validation-protocol",
+        "forecast-metric-definitions",
+        "forecast-experiment-freeze",
+        "forecast-gap-judgement",
+        "forecast-actual-register",
+        "forecast-calibration-review",
+        "learning-value-validation",
+        "knowledge-value-ablation",
+        "learning-transfer-cases",
+        "learning-nonregression-gates",
+        "learning-validation-cases",
+        "trinity-preservation-validation",
+        "trinity-design-impact-assessment",
+        "trinity-validation-cases",
+        "trinity-implementation-evidence",
+        "closure-validation-protocol",
+        "evaluator-calibration-closure",
+        "closure-validation-cases",
+        "closure-validation-register",
+        "outcome-observer-evidence",
+        "completion-loop-evidence",
+        "completion-acceptance-runbook",
+        "completion-acceptance-command",
+        "completion-real-work-acceptance",
+        "completion-product-acceptance-map",
+        "completion-acceptance-evidence",
+        "real-work-diagnostic-evidence",
+        "real-work-upgrade-validation",
+        "workflow-handoff-evidence",
+        "workflow-rework-evidence",
+        "workflow-budget-evidence",
+        "workflow-closure-evidence",
+        "workflow-domain-evidence",
+        "workflow-requirements-evidence",
+        "workflow-sources-evidence",
+        "workflow-changes-evidence",
+        "workflow-inheritance-evidence",
+        "workflow-recovery-evidence",
+        "workflow-trials-evidence",
+        "workflow-fidelity-evidence",
+        "workflow-shadow-evidence"
       ],
       "status": "proposed",
       "kind": "chapter",
@@ -476,11 +695,36 @@
         "renewal-three-options",
         "renewal-reuse-boundaries",
         "renewal-benefits",
-        "renewal-scope-decision"
+        "renewal-scope-decision",
+        "adr-030",
+        "grok-bot-comparison-entry",
+        "closed-loop-audit",
+        "closure-audit-method",
+        "closure-current-evidence",
+        "closure-gap-register",
+        "closure-composite-counterexample",
+        "closure-audit-priorities",
+        "closure-gap-01",
+        "closure-gap-02",
+        "closure-gap-03",
+        "closure-gap-04",
+        "closure-gap-05",
+        "closure-gap-06",
+        "closure-gap-07",
+        "closure-gap-08",
+        "closure-gap-09",
+        "closure-gap-10",
+        "real-work-deep-audit",
+        "real-work-causal-gaps",
+        "real-work-preservation-audit",
+        "real-work-followup-analysis",
+        "post-closure-next-delivery",
+        "post-closure-parallel-experience",
+        "post-closure-effect-decisions"
       ],
       "status": "proposed",
       "kind": "chapter",
-      "reader_summary": "当前实现离伙伴核心有多远，工程评分和架构取舍依据是什么？"
+      "reader_summary": "关键架构取舍是否合理；自主助手哪些链条已有基础、哪些交接和长期闭环仍缺证据？"
     },
     {
       "id": "docs-references",
@@ -506,7 +750,13 @@
         "autonomous-development-sources",
         "native-model-sources",
         "mcp-runtime-sources",
-        "memory-context-sources"
+        "memory-context-sources",
+        "studio3d-viewer-sources",
+        "gmail-sources",
+        "desktop-companion-sources",
+        "grok-bot-research-sources",
+        "harness2-research-sources",
+        "learning-compounding-sources"
       ],
       "status": "proposed",
       "kind": "chapter",
@@ -517,7 +767,14 @@
       "path": "docs/architecture-atlas.md",
       "title": "架构与流程图册",
       "owns": [
-        "docs-architecture-atlas-scope"
+        "docs-architecture-atlas-scope",
+        "figure-assistant-decision-map",
+        "figure-assistant-improvement-effects",
+        "figure-assistant-forecast-validation",
+        "figure-assistant-growth-regression",
+        "figure-assistant-knowledge-reuse",
+        "figure-assistant-trinity-integration",
+        "figure-assistant-loop-closure"
       ],
       "status": "proposed",
       "kind": "chapter",
@@ -528,7 +785,8 @@
       "path": "docs/MAINTENANCE.md",
       "title": "文档维护规范",
       "owns": [
-        "docs-maintenance-scope"
+        "docs-maintenance-scope",
+        "forecast-followup-maintenance"
       ],
       "status": "proposed",
       "kind": "chapter",
@@ -541,7 +799,8 @@
       "owns": [
         "self-model-views",
         "self-model-discovery",
-        "self-model-context-selection"
+        "self-model-context-selection",
+        "local-model-self-knowledge"
       ],
       "status": "proposed",
       "kind": "chapter",
@@ -557,6 +816,81 @@
       "kind": "entry",
       "status": "accepted",
       "reader_summary": "按篇查阅与常用专题"
+    },
+    {
+      "id": "docs-grok-bot-comparison",
+      "path": "docs/grok-bot-comparison.md",
+      "title": "Grok Bot 功能、界面与运行机制：Jarvis 对比研究（2026-10-26）",
+      "owns": [
+        "grok-comparison-scope",
+        "grok-product-boundary",
+        "grok-capabilities",
+        "grok-interface",
+        "grok-operation",
+        "jarvis-current-baseline",
+        "grok-jarvis-matrix",
+        "grok-deep-analysis",
+        "grok-scenario-comparison",
+        "grok-borrowing-priorities",
+        "grok-cost-comparison",
+        "grok-unknowns-validation",
+        "grok-research-recommendation",
+        "jarvis-autonomy-deepening",
+        "jarvis-goal-advantage",
+        "jarvis-current-gaps-update",
+        "jarvis-multi-bot-design",
+        "jarvis-autonomy-and-diagnostics",
+        "jarvis-scoring-and-memory",
+        "harness2-analysis",
+        "jarvis-change-impact",
+        "jarvis-companion-robot-direction",
+        "jarvis-followup-evidence",
+        "grok-conclusion-map",
+        "grok-improvement-preview",
+        "grok-forecast-dashboard",
+        "grok-prediction-review",
+        "jpf-01",
+        "jpf-02",
+        "jpf-03",
+        "jpf-04",
+        "jpf-05",
+        "jpf-06",
+        "jpf-07",
+        "jpf-08",
+        "jpf-09",
+        "jarvis-learning-deepening",
+        "jarvis-learning-definition",
+        "jarvis-regression-analysis",
+        "jarvis-knowledge-contribution",
+        "jarvis-conditional-learning",
+        "jarvis-knowledge-cost-and-order",
+        "jarvis-learning-implementation",
+        "jarvis-implementation-preservation",
+        "jarvis-trinity-integration",
+        "jarvis-modernization-reading-map",
+        "jarvis-closure-audit-summary"
+      ],
+      "status": "proposed",
+      "kind": "chapter",
+      "reader_summary": "先看结论、闭环缺口、实施与预测；对比 Grok、多 Bot 与 Harness²，并核对原目标保持和知识收益。"
+    },
+    {
+      "id": "docs-studio3d-learning",
+      "path": "docs/studio3d-learning.md",
+      "title": "火炮类游戏资产制作与经验学习实施手册",
+      "owns": [
+        "studio3d-learning-scope",
+        "studio3d-learning-packages",
+        "studio3d-learning-runtime",
+        "studio3d-learning-methods",
+        "studio3d-learning-review-loop",
+        "studio3d-learning-curriculum",
+        "studio3d-learning-evidence",
+        "studio3d-learning-commands"
+      ],
+      "status": "proposed",
+      "kind": "chapter",
+      "reader_summary": "怎样把火炮游戏资产经验接成可执行工具、条件方法与可验证的练习闭环？"
     }
   ],
   "generated_diagrams": [
@@ -1261,6 +1595,132 @@
       ],
       "status": "proposed",
       "origin": "memory-context-2026-10-23-r2"
+    },
+    {
+      "id": "diagram-assistant-decision-map",
+      "source_document": "docs/diagrams/assistant-decision-map.mmd",
+      "owner_document": "docs/grok-bot-comparison.md",
+      "source_sha256": "bd398fe4ef62e640184ca03dda11bab471298130dd95fef8fb7d5fde8d1ce21c",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/assistant-decision-map.svg",
+          "sha256": "46c0442c08a5e48644927343b9210e08a508f998853e04e028f26c8f782bce04"
+        },
+        {
+          "path": "docs/diagrams/assistant-decision-map.png",
+          "sha256": "9519c341ef2f7831242a40408d706b6b2a60a9aac22b91481c1f1c934fdaa414"
+        }
+      ],
+      "status": "proposed",
+      "origin": "assistant-forecast-2026-10-26-r1"
+    },
+    {
+      "id": "diagram-assistant-improvement-effects",
+      "source_document": "docs/diagrams/assistant-improvement-effects.mmd",
+      "owner_document": "docs/grok-bot-comparison.md",
+      "source_sha256": "827b2f8d8be5ee0f94edc8faaeb165b97bce524009e881d1e01333a69c6735fb",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/assistant-improvement-effects.svg",
+          "sha256": "8874c6b853be91083decb00f7da46a7cb81fee57f6c87ecd9c0bb9e33b4ea0e7"
+        },
+        {
+          "path": "docs/diagrams/assistant-improvement-effects.png",
+          "sha256": "755bfa563bfb69a331b93342a0bb6c2ce33567951668f4ee94367b31bd7cc396"
+        }
+      ],
+      "status": "proposed",
+      "origin": "assistant-forecast-2026-10-26-r1"
+    },
+    {
+      "id": "diagram-assistant-forecast-validation",
+      "source_document": "docs/diagrams/assistant-forecast-validation.mmd",
+      "owner_document": "docs/grok-bot-comparison.md",
+      "source_sha256": "de71ddb62fc418086e41fa898f6611d3fa86d1f6efa522a79f844d68f9198d39",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/assistant-forecast-validation.svg",
+          "sha256": "3d93f628440246138595888519ed0517fa2399a575f53d2eeb1d75267c9c629b"
+        },
+        {
+          "path": "docs/diagrams/assistant-forecast-validation.png",
+          "sha256": "f325e70b8df65a313df9b5c3953031f2e8346f9cf951a2c1f7b849b8fa242784"
+        }
+      ],
+      "status": "proposed",
+      "origin": "assistant-forecast-2026-10-26-r1"
+    },
+    {
+      "id": "diagram-assistant-growth-regression",
+      "source_document": "docs/diagrams/assistant-growth-regression.mmd",
+      "owner_document": "docs/grok-bot-comparison.md",
+      "source_sha256": "20f98306cab4963b1d0545097e7f808bcd341ee023f44c51e7e8f2f41d64ab38",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/assistant-growth-regression.svg",
+          "sha256": "d84a960492a82694abae682825d8d33a77aea0cb2c016158408703905df84795"
+        },
+        {
+          "path": "docs/diagrams/assistant-growth-regression.png",
+          "sha256": "309a3a6c0b0908ce88394c4d14905296c4f3d13cebd4749e28229b15fc5118c1"
+        }
+      ],
+      "status": "proposed",
+      "origin": "learning-knowledge-2026-10-26"
+    },
+    {
+      "id": "diagram-assistant-knowledge-reuse",
+      "source_document": "docs/diagrams/assistant-knowledge-reuse.mmd",
+      "owner_document": "docs/grok-bot-comparison.md",
+      "source_sha256": "973a6531522a1c340fcfaabc717ad7378547edc1aefa441b1fb519ae6c2aec3f",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/assistant-knowledge-reuse.svg",
+          "sha256": "c383f64090d755388ce1c9fd57e4db37c59248ed36f00ceddc1787fa40724fc1"
+        },
+        {
+          "path": "docs/diagrams/assistant-knowledge-reuse.png",
+          "sha256": "aef35c4a985dc7c13c5d13fcdb5777c7ad21c75ee565ec7ba9dc0ef5a3722466"
+        }
+      ],
+      "status": "proposed",
+      "origin": "learning-knowledge-2026-10-26"
+    },
+    {
+      "id": "diagram-assistant-trinity-integration",
+      "source_document": "docs/diagrams/assistant-trinity-integration.mmd",
+      "owner_document": "docs/architecture.md",
+      "source_sha256": "fd68ca1f9106f0de6a6eee6483be6b02b39479ad8d26e2f9c2614bf2f157bdf5",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/assistant-trinity-integration.svg",
+          "sha256": "472a57cbf8fb2f0c406826ccc50597b2cac2373f08e86263a2157a35e37d767b"
+        },
+        {
+          "path": "docs/diagrams/assistant-trinity-integration.png",
+          "sha256": "5c72579303fa671e3dc681c80a60b5939a65174429a3ac3fe6e3502b69125ce6"
+        }
+      ],
+      "status": "proposed",
+      "origin": "trinity-implementation-2026-10-26"
+    },
+    {
+      "id": "diagram-assistant-loop-closure",
+      "source_document": "docs/diagrams/assistant-loop-closure.mmd",
+      "owner_document": "docs/decisions-review.md",
+      "source_sha256": "503ac96264492bf12cdef6e709cf42584e63c61158dce672a651bcb94147f98a",
+      "artifacts": [
+        {
+          "path": "docs/diagrams/assistant-loop-closure.svg",
+          "sha256": "c50986f807196bec84e90adbf138fd5b1e6752f7ce2237c7b933c1fa2526b345"
+        },
+        {
+          "path": "docs/diagrams/assistant-loop-closure.png",
+          "sha256": "e81797a286240ff08e26626fcc74b67b6bc5c2b8ebd37d709e9d3080436d9962"
+        }
+      ],
+      "status": "proposed",
+      "origin": "closed-loop-audit-2026-10-26"
     }
   ],
   "assets": [],
@@ -1797,6 +2257,17 @@
       "memory-guide-start",
       "memory-guide-cases",
       "memory-guide-maintenance"
+    ],
+    "docs/grok-bot-comparison.md": [
+      "jpf-01",
+      "jpf-02",
+      "jpf-03",
+      "jpf-04",
+      "jpf-05",
+      "jpf-06",
+      "jpf-07",
+      "jpf-08",
+      "jpf-09"
     ]
   },
   "required_identifiers": {
@@ -2061,7 +2532,39 @@
       "V-UI-13",
       "V-UI-14",
       "V-UI-15",
-      "V-UI-16"
+      "V-UI-16",
+      "V-KLG-01",
+      "V-KLG-02",
+      "V-KLG-03",
+      "V-KLG-04",
+      "V-KLG-05",
+      "V-KLG-06",
+      "V-KLG-07",
+      "V-KLG-08",
+      "V-KLG-09",
+      "V-KLG-10",
+      "V-TRI-01",
+      "V-TRI-02",
+      "V-TRI-03",
+      "V-TRI-04",
+      "V-TRI-05",
+      "V-TRI-06",
+      "V-TRI-07",
+      "V-TRI-08",
+      "V-TRI-09",
+      "V-TRI-10",
+      "V-TRI-11",
+      "V-TRI-12",
+      "V-CLC-01",
+      "V-CLC-02",
+      "V-CLC-03",
+      "V-CLC-04",
+      "V-CLC-05",
+      "V-CLC-06",
+      "V-CLC-07",
+      "V-CLC-08",
+      "V-CLC-09",
+      "V-CLC-10"
     ],
     "docs/health-maintenance.md": []
   }

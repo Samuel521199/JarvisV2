@@ -1,0 +1,16 @@
+{
+  "input": {
+    "schema": "jarvis.quote-input.v1",
+    "currency": "CNY",
+    "max_price_minor": 10000,
+    "max_delivery_days": 5,
+    "offers": [
+      {"id": "A", "price_minor": 9000, "delivery_days": 5, "source": "provided:A"},
+      {"id": "B", "price_minor": 8000, "delivery_days": 4, "source": "provided:B"},
+      {"id": "C", "price_minor": 7000, "delivery_days": 6, "source": "provided:C"},
+      {"id": "D", "price_minor": 10001, "delivery_days": 1, "source": "provided:D"}
+    ]
+  },
+  "correct": {"schema": "jarvis.quote-result.v1", "eligible_ids": ["A", "B"], "selected_id": "B", "selected_source": "provided:B"},
+  "wrong_cheapest": {"schema": "jarvis.quote-result.v1", "eligible_ids": ["A", "B"], "selected_id": "A", "selected_source": "provided:A"}
+}

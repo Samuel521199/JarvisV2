@@ -1,0 +1,107 @@
+{
+  "case_id": "reserved-math-reschedule",
+  "domain": "learning",
+  "arm": "workflow_on",
+  "turn": 1,
+  "freeze_digest": "ccbd127c5b9f78239d72b467867c2d71bca5edb93d918ce7bb0a0899557626a5",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\"independent_mastery\":false,\"retention\":null,\"evidence\":{\"facts\":[{\"source\":\"F1\",\"quote\":\"学习者阅读了分数加法例题，没有独立计算。\"}],\"plans\":[{\"source\":\"P2\",\"quote\":\"周日14点独立完成一道分数加法题。\"}],\"suggestions\":[]},\"document\":\"## 事实\\n- [F1] 学习者阅读了分数加法例题，没有独立计算。\\n\\n## 已确认计划\\n- [P2] 周日14点独立完成一道分数加法题。\\n\\n## 建议（未采纳）\\n- 无\"}",
+  "skill_id": "english-coach",
+  "skill_version": "1.0.0",
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 5.9111,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 181,
+        "prompt_tokens": 2039,
+        "total_tokens": 2220
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.002208,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/reserved-math-reschedule-workflow_on-1.native.json",
+      "sha256": "ab1b4c6c06c8ce20f32c0243eea636d2ea3c290b423b5da4751d4e41cb891ff4",
+      "kind": "native_protocol_response"
+    },
+    {
+      "file": "artifacts/reserved-math-reschedule-workflow_on-1.reply.md.txt",
+      "sha256": "f4d0ffbb2097870ce3b197404bde25da9bbcd248b4689f3c1666e055f7391cce",
+      "kind": "original_session_reply"
+    },
+    {
+      "file": "artifacts/reserved-math-reschedule-workflow_on-1.document.md.txt",
+      "sha256": "b83c320d426f5bc6c0f2a716d569286db22dcc29b2d77fe1059e97efae1c7474",
+      "kind": "verbatim_document_field_from_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "independent_mastery",
+        "status": "passed"
+      },
+      {
+        "id": "retention",
+        "status": "passed"
+      },
+      {
+        "id": "document_present",
+        "status": "passed"
+      },
+      {
+        "id": "body_shape",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_document_parity",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "record_digest": "c93882a80244050a9bb075291ae524007e50d730e8912b45966f5a75037f9a30"
+}

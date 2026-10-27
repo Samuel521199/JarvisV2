@@ -1,0 +1,82 @@
+{
+  "date": "2026-10-25",
+  "component": "image-studio 1.1.0",
+  "results": [
+    {
+      "name": "image-workflow",
+      "exit_code": 0,
+      "output": "...........................\n----------------------------------------------------------------------\nRan 27 tests in 3.069s\n\nOK\n"
+    },
+    {
+      "name": "ui-dom-contract",
+      "exit_code": 0,
+      "output": "PASS: mounted three panels, restored defaults, constrained model sizes, preview makes no generation call, saved backend defaults. DOM contract only.\n"
+    },
+    {
+      "name": "navigation",
+      "exit_code": 0,
+      "output": "OK navigation: 2 updated\n"
+    },
+    {
+      "name": "documentation",
+      "exit_code": 0,
+      "output": "OK documents=27 chapters=23 diagrams=39 local_links=2536 errors=0\n"
+    },
+    {
+      "name": "architecture",
+      "exit_code": 0,
+      "output": "{\"python_files\": 157, \"errors\": []}\n"
+    },
+    {
+      "name": "syntax:apps/workbench/settings-images.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "name": "syntax:apps/workbench/settings-models.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "name": "syntax:apps/workbench/settings-studio3d.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "name": "syntax:apps/workbench/settings.js",
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "name": "diff-whitespace",
+      "exit_code": 0,
+      "output": ""
+    }
+  ],
+  "source_sha256": {
+    "modules/image_generation/catalog.py": "83852395810d39e9b58108f0e7ae7dd8f442fab09b51d0d6342981b1c77c088b",
+    "modules/image_generation/settings.py": "6469b0a8a1809cc908d1dcba6d54da0f3345ca75168f7e6ef5b5fb6065d06c74",
+    "modules/image_generation/rates.py": "a90363e050e2d557b68fb546471e2b8a949f450df8d561a184568d43cf565caa",
+    "modules/image_generation/design.py": "c252e31cce00c6211561e8e32af19c26c9eff9c9cb3a1d1e689dce6a2e855d07",
+    "sdk/image_pricing.py": "3ab2f9fce2546d9f69d3393dd5db1ec8fe6286032bb169ecf6b3b3784fb2e094",
+    "sdk/pricing.py": "904dca0263a7717fbf73c2df6fe402010d63433940444583256dc276757df30a",
+    "host/image_generation.py": "9c4033cf2e338037062e232d6ac9d01843ab2bae9156212a3f5595a0c70da335",
+    "adapters/models/images.py": "b8ab21ff420be2991063be8638e8bdff5525d2cf0736d41784fd538bc2d1b9ed",
+    "adapters/models/image_transport.py": "8fb89cb40979fcb6ac7fc7347bfa46a7617586cf0144aa9cc3816338fa4c9b55",
+    "apps/workbench/server.py": "767ca09e7c161782ca974487d74836cfd9bb7949055f56119eedabba40a640c9",
+    "apps/workbench/settings-images.js": "c7859eb15b965f611c69c6e7e32310c698ae47b4ed907771deaa530e5a48958d",
+    "apps/workbench/image-studio.css": "1d956240091fbc536785219bc05a2f64d55c13f57f5758a145882ebf22a92701",
+    "apps/workbench/settings-models.js": "2157d4f80ab772d7a2c1018cb93f0608404a443ad324251d9eee8861e882e318",
+    "seed/skills/conversation.json": "7d93a89f783483064e78f3b0856698d53b98878fe550fc95192cbb39cc11c70f",
+    "tests/test_image_generation.py": "af293efd4fa6a223a1ccc4bb77dd7e46376f34b8d4ab22fe9ff33c27aae0b983",
+    "tests/test_image_workflow.py": "44b89633675c1229bf73a45c34dff83680234a57b5677867cc5f1ab3282e781e",
+    "tests/image_studio_ui.mjs": "98c06b3409cc978dafa27de7712a9bd7a8e695f9aea6b0886aa802c00866664b",
+    "tools/eval_image_studio.py": "438723ed5c6431b58e405e3f8b6a23e1a0d77aab20bce00c2ff92f9c8bb5039e"
+  },
+  "regression": {
+    "total": 93,
+    "detail": "regression.json",
+    "failures": 0
+  },
+  "browser_visual_acceptance": false
+}

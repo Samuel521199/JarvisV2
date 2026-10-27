@@ -1,0 +1,207 @@
+{
+  "schema_version": 1,
+  "models": [
+    {
+      "id": "e5-multilingual-small-int8",
+      "kind": "embedding",
+      "title": "Multilingual E5 Small · int8",
+      "source": "https://huggingface.co/intfloat/multilingual-e5-small",
+      "revision": "614241f622f53c4eeff9890bdc4f31cfecc418b3",
+      "license": "MIT",
+      "languages": [
+        "zh",
+        "en",
+        "multilingual"
+      ],
+      "dimension": 384,
+      "dimensions": [
+        384
+      ],
+      "max_tokens": 512,
+      "runtime": "onnx-e5-v1",
+      "files": [
+        {
+          "name": "model.onnx",
+          "path": "onnx/model_qint8_avx512_vnni.onnx",
+          "bytes": 118346824,
+          "sha256": "dd476dd0c2514e9b9be83aeb3853fac0763e0bdf4a71645407587d77c48a2d88"
+        },
+        {
+          "name": "tokenizer.json",
+          "path": "tokenizer.json",
+          "bytes": 17082730,
+          "sha256": "0b44a9d7b51c3c62626640cda0e2c2f70fdacdc25bbbd68038369d14ebdf4c39"
+        }
+      ],
+      "recipe": "e5-prefix-mean-l2-v1"
+    },
+    {
+      "id": "e5-multilingual-small-fp32",
+      "kind": "embedding",
+      "title": "Multilingual E5 Small · fp32",
+      "source": "https://huggingface.co/intfloat/multilingual-e5-small",
+      "revision": "614241f622f53c4eeff9890bdc4f31cfecc418b3",
+      "license": "MIT",
+      "languages": [
+        "zh",
+        "en",
+        "multilingual"
+      ],
+      "dimension": 384,
+      "dimensions": [
+        384
+      ],
+      "max_tokens": 512,
+      "runtime": "onnx-e5-v1",
+      "files": [
+        {
+          "name": "model.onnx",
+          "path": "onnx/model.onnx",
+          "bytes": 470268510,
+          "sha256": "ca456c06b3a9505ddfd9131408916dd79290368331e7d76bb621f1cba6bc8665"
+        },
+        {
+          "name": "tokenizer.json",
+          "path": "tokenizer.json",
+          "bytes": 17082730,
+          "sha256": "0b44a9d7b51c3c62626640cda0e2c2f70fdacdc25bbbd68038369d14ebdf4c39"
+        }
+      ],
+      "recipe": "e5-prefix-mean-l2-v1"
+    },
+    {
+      "id": "qwen3-embedding-06b-q8",
+      "kind": "embedding",
+      "title": "Qwen3 Embedding 0.6B Q8 · 增强候选",
+      "source": "https://huggingface.co/Qwen/Qwen3-Embedding-0.6B-GGUF",
+      "revision": "370f27d7550e0def9b39c1f16d3fbaa13aa67728",
+      "license": "Apache-2.0",
+      "languages": [
+        "zh",
+        "en",
+        "multilingual"
+      ],
+      "dimension": 1024,
+      "dimensions": [
+        32,
+        64,
+        128,
+        256,
+        512,
+        768,
+        1024
+      ],
+      "max_tokens": 32768,
+      "runtime": "llama-embedding-v1",
+      "files": [
+        {
+          "name": "model.gguf",
+          "path": "Qwen3-Embedding-0.6B-Q8_0.gguf",
+          "bytes": 639150592,
+          "sha256": "06507c7b42688469c4e7298b0a1e16deff06caf291cf0a5b278c308249c3e439"
+        }
+      ],
+      "recipe": "qwen3-last-token-instruct-l2-v1"
+    },
+    {
+      "id": "bge-small-zh-reference",
+      "kind": "embedding",
+      "title": "BGE Small 中文 · 对照候选",
+      "source": "https://huggingface.co/BAAI/bge-small-zh-v1.5",
+      "revision": "7999e1d3359715c523056ef9478215996d62a620",
+      "license": "MIT",
+      "languages": [
+        "zh"
+      ],
+      "dimension": 512,
+      "dimensions": [
+        512
+      ],
+      "max_tokens": 512,
+      "runtime": "unavailable",
+      "files": [],
+      "recipe": "not_prepared"
+    },
+    {
+      "id": "embeddinggemma-reference",
+      "kind": "embedding",
+      "title": "EmbeddingGemma 300M · 多语候选",
+      "source": "https://huggingface.co/google/embeddinggemma-300m",
+      "revision": "unresolved",
+      "license": "Gemma terms",
+      "languages": [
+        "zh",
+        "en",
+        "multilingual"
+      ],
+      "dimension": 768,
+      "dimensions": [
+        128,
+        256,
+        512,
+        768
+      ],
+      "max_tokens": 2048,
+      "runtime": "unavailable",
+      "files": [],
+      "recipe": "not_prepared"
+    },
+    {
+      "id": "qwen3-06b-reference",
+      "kind": "llm",
+      "title": "Qwen3 0.6B · 应急对话参考",
+      "source": "https://huggingface.co/Qwen/Qwen3-0.6B",
+      "revision": "unresolved",
+      "license": "Apache-2.0",
+      "languages": [
+        "zh",
+        "en",
+        "multilingual"
+      ],
+      "dimension": 0,
+      "dimensions": [],
+      "max_tokens": 0,
+      "runtime": "unavailable",
+      "files": [],
+      "recipe": "not_prepared"
+    },
+    {
+      "id": "qwen3-tts-reference",
+      "kind": "tts",
+      "title": "Qwen3 TTS · 语音适配待接入",
+      "source": "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice",
+      "revision": "unresolved",
+      "license": "verify-upstream",
+      "languages": [
+        "zh",
+        "en",
+        "multilingual"
+      ],
+      "dimension": 0,
+      "dimensions": [],
+      "max_tokens": 0,
+      "runtime": "unavailable",
+      "files": [],
+      "recipe": "not_prepared"
+    },
+    {
+      "id": "qwen3-asr-reference",
+      "kind": "stt",
+      "title": "Qwen3 ASR · 语音适配待接入",
+      "source": "https://huggingface.co/Qwen/Qwen3-ASR-0.6B",
+      "revision": "unresolved",
+      "license": "verify-upstream",
+      "languages": [
+        "zh",
+        "en",
+        "multilingual"
+      ],
+      "dimension": 0,
+      "dimensions": [],
+      "max_tokens": 0,
+      "runtime": "unavailable",
+      "files": [],
+      "recipe": "not_prepared"
+    }
+  ]
+}
