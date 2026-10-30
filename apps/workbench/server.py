@@ -6,6 +6,7 @@ import sys
 import re
 import secrets
 import sqlite3
+import threading
 from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -138,6 +139,11 @@ class Handler(BaseHTTPRequestHandler):
         try:
             if not family_http.gate(self, route.path): return
             if family_http.get(self, route.path): return
+            if route.path == '/api/environment':
+                from control.development_profile import read as development_profile
+                profile = development_profile(self.server.data_root)
+                return self.json({'kind': 'development' if profile else 'stable',
+                                  'shared_google_models': bool(profile), 'real_account_actions': not bool(profile)})
             if mail_http.get(self, route.path): return
         except (CoreError, OSError, ValueError, sqlite3.Error): return self.json({'error': 'family_unavailable'}, 503)
         if route.path.startswith('/vendor/three/'):
@@ -287,6 +293,18 @@ class Handler(BaseHTTPRequestHandler):
                 body=decode_transfer(raw)
             else:body=decode(raw)
             root = data_root(self.server.data_root)
+            from control.development_profile import read as development_profile
+            if route.path == '/api/development/shutdown' and development_profile(root):
+                chats = self.server.dialogues.state()
+                work = self.server.task_runner.state()
+                if (chats['queued'] or chats['running'] or work['active'] or work['queued']
+                        or self.server.background_lane.state()['status'] == 'running'):
+                    return self.json({'error': 'development_busy'}, 409)
+                threading.Thread(target=self.server.shutdown, daemon=True).start()
+                self.json({'stopping': True})
+                return
+            if development_profile(root) and route.path.startswith('/api/mail'):
+                return self.json({'error': 'development_external_denied'}, 403)
             if family_http.post(self, route.path, body): return
             if mail_http.post(self, route.path, body): return
             if route.path.startswith('/api/image-studio/'):

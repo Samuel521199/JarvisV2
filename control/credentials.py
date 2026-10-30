@@ -51,6 +51,8 @@ class Credentials:
         self.path = child(root, 'private/model-credentials.dpapi')
 
     def get(self, connection, key_id=None):
+        from control.development_profile import deny_external
+        deny_external(self.path.parent.parent)
         data = load_envelope(self.path)
         if key_id:
             item = data.get('_managed', {}).get(key_id, {})
@@ -64,6 +66,9 @@ class Credentials:
         return value
 
     def available(self, connection, key_id=None):
+        from control.development_profile import read
+        profile = read(self.path.parent.parent)
+        if profile: return connection in profile['allowed_providers']
         try: return bool(self.get(connection, key_id))
         except CoreError: return False
 
@@ -73,6 +78,8 @@ class Credentials:
         self.save(data)
 
     def save(self, data):
+        from control.development_profile import deny_external
+        deny_external(self.path.parent.parent)
         self.path.parent.mkdir(parents=True, exist_ok=True)
         write_json(self.path, {'schema_version': 1, 'format': 'windows-dpapi-current-user',
                               'payload': base64.b64encode(crypt(canonical(data).encode())).decode('ascii')})

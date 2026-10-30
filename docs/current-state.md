@@ -13,6 +13,7 @@ Jarvis 现在是一个**本机网页工作台 + 模块化 Python 服务**：能�
 | 能力 | 代码位置 | 验证情况与限制 |
 |---|---|---|
 | 网页工作台、设置、项目与会话目录 | `apps/workbench/`、`host/workbench.py`、`modules/workspace/` | 单测与浏览器探针；仅监听 127.0.0.1，0.1.1 起需本机访问钥匙 |
+| 单机日用／开发分离 | `apps/development/`、`host/development_bridge.py`、`host/development_runtime.py` | GitHub 开发检查点、独立 worktree／数据、受限 Google 代发与开发单独重启已核验；未部署完整应用 A/B 自动更新；[证据](delivery-validation.md#pc-environments-evidence) |
 | 多模型聊天、持久会话、费用快照 | `host/dialogue.py`、`modules/dialogue/`、`adapters/models/` | 少量真实调用；回退顺序由设置决定，只有一家供应商时没有真正的备用线路 |
 | 分域记忆、检索、资料库（FTS + 语义） | `modules/context_knowledge/`、`host/memory.py`、`host/knowledge*.py` | 单测与合成评估；多语留出集回答 79/90，低于自定 90% 门槛；语义检索需本地 E5 模型 |
 | 目标 → 计划 → 审批 → 执行 → 原会话交付 | `host/goals.py`、`host/task_scheduler.py`、`modules/task_resource/` | 通用执行两路并行（同类插件任务互斥）；“目标逐项结案”目前只覆盖文本统计与结构化报价两种判定 |

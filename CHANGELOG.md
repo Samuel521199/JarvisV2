@@ -1,5 +1,7 @@
 # 版本记录
 
+2026-10-30 单机双环境第一阶段（开发检查点，未发稳定版本）：已推送 `codex/pc-environments` 并建立独立开发工作树／数据；新增固定版本的 Google 受限代理、DPAPI 许可、调用账本、开发启动器和真实停止核验。真实开发对话、拒绝邮箱动作及单独重启通过，日用服务未重启；完整应用 A/B 更新、正式数据共享和原有 3D 架构问题尚未完成。[实现](docs/stack-project-layout.md#single-pc-development-runtime)／[验收](docs/delivery-validation.md#pc-environments-evidence)。
+
 2026-10-30 单机边用边开发方案（proposed）：明确稳定／开发环境分离、正式数据单一权威与受控共享，具体化 A/B 槽、MCP 局部更新及检查点接续；核对现有启动参数与缺口，未移动数据、建立第二实例或启用自动更新。[布局](docs/stack-project-layout.md#single-pc-development)／[更新接续](docs/evolution-release.md#single-pc-ab-upgrade)。
 
 2026-10-30 PaK38 后部 C 形外缘（工作候选）：Jarvis 在作者提供的工具中选参并实际执行，保留倒向三角形、邻物距离与回执缺项失败；作者修复原生报告后验证与 Jarvis 实际表面相同，再做高模贴图和 GLB 回读。13 项相关测试通过；案例限本资产，原炮口缺陷及整体材质问题未解，不称自主建模或高模验收。[实施与边界](docs/studio3d-learning.md#studio3d-teacher-demonstration)。

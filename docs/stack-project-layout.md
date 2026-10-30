@@ -48,9 +48,10 @@
 - [记忆组件升级、索引重建与换机协议（proposed）](#memory-context-migration)
 - [本地模型模块与资产归属](#local-model-layout)
 - [Gmail 模块与本地数据（1.0.0）](#gmail-layout)
-- [同一台 PC 边使用边开发：分离环境、通过接口共享（2026-10-30，proposed）](#single-pc-development)
+- [同一台 PC 边使用边开发：分离环境、通过接口共享（2026-10-30，第一阶段已实测）](#single-pc-development)
   - [哪些必须分离，哪些通过接口共享](#single-pc-development-layout)
   - [推荐目录与启动方式](#single-pc-development-paths)
+  - [第一阶段运行接口、维护与限制](#single-pc-development-runtime)
   - [并行使用的实际边界与第一批落地](#single-pc-development-resources)
 <!-- book-nav:end -->
 
@@ -726,11 +727,11 @@ SQLite 仅明文索引对象 ID、种类、修订；内容、地址、令牌、c
 无新增第三方 Python 包或常驻数据库。读取与写入按需联网，展示与本地分类不消耗 token，明确 AI 分析才调用模型。当前加密仅 Windows verified；其他系统不降级明文，后续需平台密钥适配与真机验收。
 
 <a id="single-pc-development"></a>
-## 同一台 PC 边使用边开发：分离环境、通过接口共享（2026-10-30，proposed）
+## 同一台 PC 边使用边开发：分离环境、通过接口共享（2026-10-30，第一阶段已实测）
 
 **一个持续的个人助手，稳定／候选两个发布通道，独立开发工作区；不是两套都能修改正式记忆的主助手。** 日用 Host 持有正式数据与动作控制权，开发代码只拥有测试数据与有限调用许可；按需启动开发服务或候选工具，不常驻复制整套模型栈。代码升级与接续规则归[单机 A/B 与 MCP 更新](evolution-release.md#single-pc-ab-upgrade)。
 
-本次只读核对：18282 服务从当前工程运行；`StartJarvis.bat` 转交启动器，已支持 `--port`、`--data-root`、`--no-browser`；前端资源按磁盘文件提供，后端多数模块在进程导入时加载。运行目录中边改代码会出现新界面／旧后端混用。当前 Git 有未提交与未跟踪内容，只有一个工作树；直接从旧 HEAD 开新工作树不会继承这些未提交功能。以上是现状，不表示稳定／开发隔离已经部署。
+本机第一阶段已执行：保留 18282 日用服务，盘点并保存当前源码检查点，推送现有 GitHub 的 `codex/pc-environments` 分支，再建立 `D:/Jarvis-dev` 工作树和 18283 开发服务。检查点包含原先未完成的 3D 工作，不是稳定发布。日用目录仍是原运行目录，尚未迁入不可变 A/B 安装槽；继续直接编辑该目录仍可能出现新界面／旧后端混用，因此后续研发在独立工作树进行。[核验和未通过项](delivery-validation.md#pc-environments-evidence)。
 
 <a id="single-pc-development-layout"></a>
 ### 哪些必须分离，哪些通过接口共享
@@ -752,37 +753,59 @@ SQLite 仅明文索引对象 ID、种类、修订；内容、地址、令牌、c
 <a id="single-pc-development-paths"></a>
 ### 推荐目录与启动方式
 
-下面是计划布局，尚未创建、迁移或启动第二套环境。保留现有正式数据位置；A/B 槽只保存代码与运行依赖，不装入第二份个人记忆。
+保留现有正式数据位置；已创建开发工作树与独立数据根。下表的完整应用 A/B 槽仍是计划；已运行的冻结代理包不等于整个应用的 A/B 升级器。
 
 | 路径示例 | 用途 |
 |---|---|
 | `D:/Jarvis/user-data/` | 当前正式记忆、配置、账号、任务和交付；唯一正式写入者 |
-| `D:/Jarvis/runtime/releases/A/`、`B/` | 当前／候选代码槽，内容验签后按摘要固定 |
-| `D:/Jarvis/runtime/active.json` | 受控版本选择与代际记录；不是可任意改路径的跳转文件 |
-| `D:/Jarvis/runtime/staging/` | 下载／构建及安装验证；不在活动槽上覆盖文件 |
-| `D:/Jarvis-dev/` | 独立开发工作区，开发分支使用 `codex/` 前缀；不代表已经创建 worktree |
+| `D:/Jarvis/runtime/releases/A/`、`B/` | 计划中的完整应用当前／候选槽，尚未部署 |
+| `D:/Jarvis/runtime/active.json` | 计划中的完整应用版本选择与代际记录，尚未部署 |
+| `D:/Jarvis/runtime/staging/` | 计划中的应用安装验证区，不在活动槽上覆盖文件 |
+| `D:/Jarvis-dev/` | 已建立的开发工作树，跟踪 `codex/pc-environments` |
 | `D:/Jarvis-dev/user-data/` | 开发配置、合成记忆、测试任务与日志 |
+| `D:/Jarvis/user-data/development/proxy-releases/<hash>/` | 已冻结的第一方 Google 代理代码，不放个人业务数据库 |
+| `D:/Jarvis/user-data/development/proxy-active.json` | 当前已核对代理包的摘要选择；普通开发启动不自动采用源码变化 |
 | `D:/jarvisTest/<run-id>/` | 用后可按归属管理的集成测试工程，沿现有非系统盘规则 |
 
 Git worktree 可以共享仓库对象而分别检出源码；它不会自动复制当前工作区的未提交／未跟踪内容，也不隔离运行权限。[S412](references.md#s412) 先盘点当前变更、形成可恢复且包含必要本机功能的源码基线，再建立开发工作区；不擅自 reset、clean、整体提交或复制私人资料。测试和日用页面分别使用 18283／18282，真实测试按需另占空闲端口；端口不同不意味着数据、文件和桌面资源已隔离。
 
-启动器现有的命令形式如下。第二条仅在独立开发目录与测试配置已经准备好之后使用；当前命令没有自动禁止真实账号动作的 dev profile，不能将换端口当作全部防护。
+本机已完成配置后的启动入口如下。开发启动器读取自己的 profile，使用独立数据根、18283 端口和 18482 代理；不停止日用服务。双击开发批处理会打开带本机访问钥匙的页面，该链接不得公开。
 
 ```bat
 D:\Jarvis\StartJarvis.bat --port 18282 --data-root D:\Jarvis\user-data
-D:\Jarvis-dev\StartJarvis.bat --port 18283 --data-root D:\Jarvis-dev\user-data
+D:\Jarvis-dev\StartJarvisDev.bat
 ```
 
 正式数据如需创建测试快照，采用 SQLite backup 等一致性方式，不热拷贝单个活跃 `.sqlite3` 后就认为完整。[S413](references.md#s413) 单库 backup 不保证多个数据库、附件和外部动作之间的全局一致性，必要时短暂停写并记录清单与恢复条件。默认使用脱敏／合成资料；副本不自动带入 Gmail 授权或重新执行原队列。
+
+<a id="single-pc-development-runtime"></a>
+### 第一阶段运行接口、维护与限制
+
+**Windows／Python 3.13 下局部 implemented／verified。** `control/development_profile.py` 定义开发策略；`adapters/development_bridge.py` 是受限客户接口；`host/development_bridge.py` 持正式凭据代发 Google 请求；`host/development_runtime.py` 负责冻结包选择、启动和开发实例停止。`apps/development/` 只是入口，工作台、领域模块和模型适配器仍沿用同一套实现，没有另建聊天或邮件业务系统。
+
+| 接口与策略 | 当前实现 |
+|---|---|
+| 代理端点 | 仅 loopback 的 `/status`、`/catalog`、`/model`、`/shutdown`；绑定客户端及 DPAPI 保存的随机许可，拒绝网页 Origin 和重定向 |
+| 可共享内容 | 正式设置中已配置的 Google 路由、公开型号／价格元数据，以及代发文字／JSON 模型请求；本机是 Vertex，Skill 不固定型号 |
+| 不共享内容 | 不导出厂商密钥、正式记忆、邮箱令牌、邮件正文或正式任务；开发配置最初使用公开目录快照，选择独立于日用选择，尚无实时目录推送 |
+| 默认外部动作 | 开发 profile 禁止适配器直连网络、读取／保存厂商凭据及工作台邮件写操作；只有明确的 Google 代理通路；不是任意开发代码的 OS 网络沙箱 |
+| 限流与费用 | 一次代理模型请求、滚动 24 小时最多 64 次、单次输出最多 4096 tokens；与正式设置取更严上限。次数账本持久化，重启不清零；不是美元金额硬上限 |
+| 不确定结果 | 同一请求 ID／相同内容返回加密回执；同 ID 改内容拒绝；已派发未知结果不自动补发。取消后已发出的模型请求仍可能计费 |
+| 采用代理更新 | 默认只运行已选中的冻结包并复核文件摘要；修改开发源码不会在下一次普通启动自动变成持凭据服务。核对候选后显式 `--adopt-proxy`；代理更新先排空和停止，摘要核对不等于供应链签名 |
+| 开发停止 | 工作台检查聊天、核心任务及后台模型通道；忙时拒绝。正常停止走本机认证接口，并检查监听端口真正关闭，不结束日用进程 |
+
+首次准备用 `python -m tools.setup_development --production-data <正式数据根> --development-data <空开发数据根>`；它不启动服务，不复制业务库，Windows 上双方许可均用 DPAPI 保存，中断可续装。审阅和相关测试通过后，显式运行 `python -m tools.development_runtime start --adopt-proxy` 核对并采用代理。以后双击开发批处理，或用 `python -m tools.development_runtime start`／`status`／`stop`。设置和许可在各自 `user-data` 内，不能提交到公开仓库。
+
+显式检查为 `python -m tools.probe_development`；增加 `--live-model` 才创建合成开发对话并消耗一次真实 Google 请求。适用本机默认端口，其他端口应使用相应的客户端配置；不能把该脚本当作跨平台、全业务或长时性能验收。当前 DPAPI 代理只在 Windows 上核验，Linux／macOS 密钥适配还未完成。
 
 <a id="single-pc-development-resources"></a>
 ### 并行使用的实际边界与第一批落地
 
 普通聊天、代码编辑、Mock 和部分工具研发可以并行；真实桌面键鼠与同一微信会话按全机资源租约串行。控件接口是否能后台操作须逐应用验证。当前 RunLock 仅按数据根加锁，两个数据根不提供跨实例设备仲裁；不能直接启动两个微信 MCP 就保证不冲突。
 
-开发重任务先限制为一项，按需启动浏览器／Blender／模型 Worker；稳定交互优先。共用 API key 仍共用供应商配额与余额，不同本地数据根的费用上限不能自动合并为账户总上限。全机调度、共享预算和稳定代理尚待实现，未测 RAM／CPU／延迟，不声称“完全不影响”。
+开发重任务先限制为一项，按需启动浏览器／Blender／模型 Worker；稳定交互优先。共用 API key 仍共用供应商配额与余额，不同本地数据根的费用上限不能自动合并为账户总上限。Google 受限代理已经运行；全机设备调度、账户总预算和正式数据只读视图仍待实现。开发服务与代理的单点工作集实测见[验收记录](delivery-validation.md#pc-environments-evidence)，不代表峰值、长期或 8 GiB PC 表现，不声称完全没有影响。
 
-落地顺序：确认可恢复基线 → 分离源码／数据／依赖 → 补测试 profile 与受限共享接口 → Mock 和只读联调 → 在文件传输助手等限定对象验证 → 建立 A/B 交接与故障恢复 → 有效维护授权覆盖后开放自动更新。现有启动参数已具备；安装槽、独立 supervisor、跨实例设备／费用仲裁和自动升级不是本轮已实现能力。本节不授权移动数据、重启日用服务、注册持续更新任务或连接真实微信。
+落地顺序：确认可恢复基线 → 分离源码／数据／依赖 → 补测试 profile 与受限共享接口 → Mock 和只读联调 → 在文件传输助手等限定对象验证 → 建立 A/B 交接与故障恢复 → 有效维护授权覆盖后开放自动更新。前三项的本机种子已落地；当前共用现有 Python 可执行文件，不执行包安装或原地依赖升级。完整应用安装槽、独立 supervisor、跨实例设备／费用仲裁、微信接线和自动升级不是本轮已实现能力。本轮用户授权建立双环境，不据此扩大到重启日用服务或注册持续更新任务。
 
 <!-- book-footer:start -->
 [返回工程主入口](../README.md) · [全书目录](../README.md#book-tree) · [上一章：公共接口与数据契约](contracts.md) · [下一章：模型路由、本地模型与离线生存](models-offline.md)

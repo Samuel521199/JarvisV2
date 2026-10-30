@@ -31,4 +31,6 @@ class NetworkGate:
         return self.read()
 
     def require_online(self):
+        from control.development_profile import deny_external
+        deny_external(self.path.parent.parent)
         if self.read()['blocked']:raise CoreError('network_disabled','Jarvis model and connector networking is disabled')

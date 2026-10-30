@@ -193,6 +193,8 @@ SWE-agent 说明工具界面设计与软件修复能力有关；实际发布仍�
 
 **2026-10-30 具体化，proposed。** 环境和共享边界归[单机开发布局](stack-project-layout.md#single-pc-development)。稳定／候选是发布通道；A/B 是可轮换安装槽，不代表同时运行两个正式主人身份。平时一个活动 Host；B 在独立测试数据上验收，备用代码可只占磁盘。此处沿用[连续性等级](#service-continuity-1)和[唯一 Host 代际](#service-continuity-2)，不增加 K0—K6 之外的路线。
 
+**同日实施进度：开发分离与冻结 Google 代理已落地，完整应用 A/B 仍 proposed。** 现有 GitHub 可推送，源码检查点与开发工作树已经建立；日用服务未重启。开发实例可单独停止、启动，已完成真实模型通路与持久记录核对；这不等于生产在途任务跨版本迁移。代理包按摘要冻结、默认固定已采用版本，显式采用候选才变更；没有启用 GitHub 轮询、自动安装、应用活动槽切换或旧库恢复。操作与边界见[实现](stack-project-layout.md#single-pc-development-runtime)，结果及原有架构门失败见[本轮验收](delivery-validation.md#pc-environments-evidence)。
+
 | 修改对象 | 采用方式 | 继续原工作的条件 |
 |---|---|---|
 | Skill／提示／规则资料 | 发布不可变版本；新轮次／新任务选新版本 | 旧任务保持已固定的方法与当前有效权限，不能中途静默混入新指令 |

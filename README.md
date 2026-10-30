@@ -21,6 +21,8 @@
 
 **先读这一页：[当前真实状态](docs/current-state.md)**：能运行什么、哪些只是设计、证据边界与已知风险都在一页内。按版本的变更流水见 [CHANGELOG](CHANGELOG.md)。
 
+**边用边开发：**日用目录保留原服务；已配置的独立开发工作树用 `StartJarvisDev.bat` 启动，不共用正式业务数据。新克隆还需准备独立 profile，不能直接把两个 Host 指向同一个数据根。[双环境入口与操作](docs/stack-project-layout.md#single-pc-development-paths) · [本轮核验及未完成项](docs/delivery-validation.md#pc-environments-evidence)。
+
 **项目级准则：精灵与工作台是同一个 Jarvis 的两种表现和工作形式。** 精灵侧重自动化、简洁和低打扰，工作台侧重任务的详细展示、设置与控制；共用能力、配置、任务及成果，避免重复实现。这也是未来跨平台入口和远程机器人执行的桌面雏形。[架构准则](docs/architecture.md#unified-system-principle) · [透明精灵、场景呼出与预览图](#desktop-companion-overview)。准则已采纳，原生桌面与跨平台完整闭环仍待实现。
 
 [阅读起点](#start-here) · [全部章节](#book-tree) · [图表预览](#architecture-preview) · [维护方法](#maintaining)

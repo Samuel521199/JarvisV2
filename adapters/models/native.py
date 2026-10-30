@@ -16,6 +16,10 @@ class NativeModel:
         self.network = NetworkGate(temp_dir.parent) if temp_dir else None
 
     def available(self):
+        if self.temp_dir:
+            from control.development_profile import read
+            profile = read(self.temp_dir.parent)
+            if profile: return self.config['id'] in profile['allowed_providers']
         # Do not silently use the old application's local-model process.
         if self.config['adapter'] == 'local': return False
         try: return bool(self.credential_loader(self.config['id'], self.config.get('credential_id')))
@@ -37,6 +41,12 @@ class NativeModel:
             raise CoreError('model_context', 'Invalid conversation context')
         if len(canonical(messages).encode()) > self.config.get('max_prompt_bytes', 50000):
             raise CoreError('model_input_limit', 'Conversation exceeds the selected model context budget')
+        if self.temp_dir:
+            from control.development_profile import read
+            if read(self.temp_dir.parent):
+                from adapters.development_bridge import complete
+                return complete(self.temp_dir.parent, self.config, messages, checkpoint, json_mode=json_mode,
+                                reference_png=reference_png, reference_pngs=reference_pngs)
         images = []
         if reference_png is not None or reference_pngs is not None:
             from adapters.models.vision import encode_png,validate_encoded

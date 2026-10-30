@@ -61,9 +61,11 @@ def gate(handler, path, write=False):
 def get(handler, path):
     if path == '/api/instance':
         from pathlib import Path
+        from control.development_profile import read as development_profile
         root = str(Path(handler.server.data_root).resolve()).casefold()
         handler.json({'service': 'jarvis-workbench', 'root_digest': hashlib.sha256(root.encode()).hexdigest(),
-                      'boot_id': getattr(handler.server, 'boot_id', ''), 'family_version': '1.0.0'})
+                      'boot_id': getattr(handler.server, 'boot_id', ''), 'family_version': '1.0.0',
+                      'environment': 'development' if development_profile(handler.server.data_root) else 'stable'})
         return True
     if path == '/api/family/status':
         family = service(handler)
