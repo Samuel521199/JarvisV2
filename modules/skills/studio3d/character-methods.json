@@ -1,0 +1,12 @@
+{
+  "schema": "jarvis.studio3d.character.methods.v1",
+  "version": "1.0.0",
+  "family": "stylized_character",
+  "methods": [
+    {"id":"character-four-view-proportions","scope":"stylized_character","status":"authored_seed","rule":"Compare head/body proportion and front/rear silhouettes; side views constrain depth. Uncalibrated reference lighting and occlusion do not establish geometry errors."},
+    {"id":"character-continuous-body","scope":"stylized_character","status":"authored_seed","rule":"A static body surface must be continuous at neck, shoulders and hips. Voxel fusion is a sculpting base, not animation-ready topology."},
+    {"id":"character-hair-face-separation","scope":"stylized_character","status":"authored_seed","rule":"Keep eyes and hair separately editable. Check fringe, side locks, rear hair length and facial silhouette against the respective reference."},
+    {"id":"character-deformation-gate","scope":"stylized_character","status":"authored_seed","rule":"Do not apply rigid-owner batching to a deformable body. Rigging, skin weights, expression shapes and motion tests require a separate stage and evidence."},
+    {"id":"character-local-learning","scope":"stylized_character","status":"authored_seed","rule":"A review produces only an asset-scoped candidate lesson with source hashes; model opinion is not user acceptance or cross-asset validation."}
+  ]
+}

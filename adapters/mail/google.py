@@ -71,7 +71,7 @@ class Gmail:
     def __init__(self,credentials,guard):self.credentials=credentials;self.guard=guard
     def api(self,path,*,params=None,body=None,method='GET',needed='read'):
         if not capabilities(self.credentials.get('scope',''))[needed]:raise CoreError('mail_scope','This operation needs additional Gmail permission')
-        allowed=path=='/profile' or path=='/messages' or path=='/messages/send' or path=='/drafts' or re.fullmatch(r'/messages/[A-Za-z0-9_-]{1,180}(/modify|/trash|/untrash)?',path)
+        allowed=path=='/profile' or path=='/labels/INBOX' or path=='/messages' or path=='/messages/send' or path=='/drafts' or re.fullmatch(r'/messages/[A-Za-z0-9_-]{1,180}(/modify|/trash|/untrash)?',path)
         if not allowed or method not in {'GET','POST'}:raise CoreError('mail_endpoint','Unsupported Gmail operation')
         url=BASE+path+('?' +urlencode(params,doseq=True) if params else '')
         try:return request(url,self.guard,body=body,token=self.credentials['access_token'],method=method)
@@ -96,6 +96,14 @@ class Gmail:
         value=self.api('/messages',params=params);rows=[]
         for item in value.get('messages',[])[:10]:rows.append(self.read(item['id'],False))
         return {'messages':rows,'next_page':value.get('nextPageToken','')}
+    def inbox_counts(self):
+        value=self.api('/labels/INBOX')
+        result={}
+        for key in ('messagesTotal','messagesUnread','threadsTotal','threadsUnread'):
+            count=value.get(key)
+            if type(count) is not int or count<0:raise CoreError('mail_response','Invalid Gmail inbox count')
+            result[key]=count
+        return result
     def read(self,ident,full=True):
         identifier(ident);params=[('format','full' if full else 'metadata')]
         if not full:params.extend(('metadataHeaders',h) for h in ['Subject','From','To','Reply-To','Date','Message-ID'])

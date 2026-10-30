@@ -41,7 +41,21 @@ def _readiness(root):
     except (OSError,ValueError,KeyError):return {'ready':False,'adapter_version':'1.6.0','contract':CONTRACT,'error':'studio3d_not_prepared'}
 def readiness(root):
     from modules.skills.studio3d.production import PROFILES,BRIEF,CATEGORY_GUIDANCE
-    return {**_readiness(root),'production_profiles':PROFILES,'production_brief':BRIEF,'category_guidance':CATEGORY_GUIDANCE}
+    from modules.skills.studio3d.blender_workflow import WORKFLOW
+    return {**_readiness(root),'production_profiles':PROFILES,'production_brief':BRIEF,'category_guidance':CATEGORY_GUIDANCE,'blender_workflow':WORKFLOW}
+
+def edit_candidate(root,body):
+    from modules.skills.studio3d.blender_workflow import apply_changes
+    prior=state(root,body['edit'])
+    if prior['status']!='DELIVERED':raise CoreError('studio3d_invalid','Edit a delivered model')
+    raw,_=file(root,body['edit'],'scene.json')
+    if hashlib.sha256(raw).hexdigest()!=body['source_sha256']:raise CoreError('conflict','Source scene changed; load its current receipt')
+    original=decode(raw)
+    if digest(original)!=digest(prior['receipt']['configuration']):raise CoreError('studio3d_changed','Scene and receipt differ')
+    scene,audit=apply_changes(original,body['changes'])
+    if 'render' in body:scene['render']=body['render'];scene=validate(scene)
+    audit.update(source_job=prior['id'],source_scene_sha256=body['source_sha256'],after_scene_sha256=digest(scene))
+    return scene,audit
 
 def update(root,ident,**changes):
     d=db(root)
@@ -109,15 +123,20 @@ def model_candidate(raw):
     except (ValueError,TypeError):raise CoreError('studio3d_invalid','Model did not return valid scene data') from None
 def start(root,body,dialogues):
     enabled(root)
-    if not isinstance(body,dict) or set(body)-{'id','preset','scene','prompt','provider','model','render','asset','reuse_candidate','prepare_asset','texture_size','reference','production','vision_reference','refine','focus','reuse_review'} or not isinstance(body.get('id'),str) or not re.fullmatch('[a-f0-9]{32}',body['id']):raise CoreError('studio3d_invalid','Expected request ID')
+    if not isinstance(body,dict) or set(body)-{'id','preset','scene','prompt','provider','model','render','asset','reuse_candidate','prepare_asset','texture_size','reference','production','vision_reference','refine','focus','reuse_review','edit','changes','source_sha256'} or not isinstance(body.get('id'),str) or not re.fullmatch('[a-f0-9]{32}',body['id']):raise CoreError('studio3d_invalid','Expected request ID')
+    if 'edit' in body:
+        if set(body)-{'id','edit','changes','source_sha256','render'} or not {'changes','source_sha256'}<=body.keys() or not isinstance(body['source_sha256'],str) or not re.fullmatch('[a-f0-9]{64}',body['source_sha256']):raise CoreError('studio3d_invalid','Expected a source hash and bounded edit only')
+    elif {'changes','source_sha256'}&body.keys():raise CoreError('studio3d_invalid','Changes require a source job')
     if 'reuse_review' in body and 'refine' not in body:raise CoreError('studio3d_invalid','Review reuse requires explicit refinement')
-    if sum(k in body for k in ('preset','scene','prompt','asset','reuse_candidate','prepare_asset','refine'))!=1:raise CoreError('studio3d_invalid','Choose one 3D operation')
+    if sum(k in body for k in ('preset','scene','prompt','asset','reuse_candidate','prepare_asset','refine','edit'))!=1:raise CoreError('studio3d_invalid','Choose one 3D operation')
     if 'focus' in body and ('refine' not in body or not isinstance(body['focus'],str) or len(body['focus'])>1000):raise CoreError('studio3d_invalid','Focus belongs to bounded refinement')
     if 'texture_size' in body and 'prepare_asset' not in body:raise CoreError('studio3d_invalid','Texture size belongs to asset preparation')
     if 'production' in body and 'prepare_asset' not in body:raise CoreError('studio3d_invalid','Production requires a delivered high master')
     if 'vision_reference' in body and (type(body['vision_reference']) is not bool or not {'prompt','refine'}&body.keys() or body['vision_reference'] and 'reference' not in body):raise CoreError('studio3d_invalid','Image planning requires prompt and attached reference')
     scene=None
-    if 'preset' in body:
+    if 'edit' in body:
+        scene,_=edit_candidate(root,body)
+    elif 'preset' in body:
         if not isinstance(body['preset'],str) or body['preset'] not in PRESETS:raise CoreError('studio3d_invalid','Unknown preset')
         scene=PRESETS[body['preset']]()
     elif 'scene' in body:scene=validate(body['scene'])
@@ -177,13 +196,14 @@ def start(root,body,dialogues):
 
 def run(root,body,scene,dialogues):
     from host.studio3d_reference import record
-    ident=body['id'];model_receipt=None;review=None
+    ident=body['id'];model_receipt=None;review=None;edit_audit=None
     try:
         if 'reuse_candidate' in body:
             prior=state(root,body['reuse_candidate']);model_receipt={'source_job':prior['id'],'chat_id':prior['chat_id'],'turn_id':prior['turn_id'],'status':'SUCCEEDED','new_model_calls':0,'visual_review':False}
             model_receipt['reference_image_sent']=bool(prior.get('planning_reference'))
             if prior.get('planning_reference'):model_receipt['reference_sha256']=record(root,prior['planning_reference'])[0]['sha256']
         check(root,ident)
+        if 'edit' in body:scene,edit_audit=edit_candidate(root,body)
         if 'refine' in body:
             from host.studio3d_refinement import begin
             scene,model_receipt,review=begin(root,body,dialogues)
@@ -195,7 +215,7 @@ def run(root,body,scene,dialogues):
                 example=wheel_example()
                 prompt='You plan original editable Blender visual assets as bounded DATA. Return one strict JSON object only. Do not output code, file paths, URLs or change schema. Use metres, Euler degrees. Prefer curved loft/lathe/mesh over stacked blocks. IDs lowercase letters/digits/hyphens. Maximum 24 objects for model output; keep geometry compact. Only supported fields. Materials require id/color; unspecified numeric values default. Objects require id/kind/material; optional position, rotation, scale, params, modifiers. Loft rings all have same width; closed rings/caps form solid. Lathe profile is radius,Z around local Z. Rotation [90,0,0] puts shaft along Y. Bezier curve points form a smooth tube. Cutters must precede target, visible=false. Report all unmet details honestly in unfulfilled. Do not claim OEM accuracy, full vehicle internals, 3A quality, mechanics/fluids/collision validation. Choose render quality=preview engine=CYCLES. Contract: '+canonical(CONTRACT)+'\nExample: '+canonical(example)+'\nUSER REQUEST:\n'+body['prompt']
                 if len(prompt)>12000:raise CoreError('studio3d_invalid','Planning context budget exceeded')
-                dialogues.submit_background({'chat_id':chat,'request_id':turn,'text':prompt,'provider':body['provider'],'model':body['model'],'reasoning':'default','skill':'none','memory_enabled':False,**({'reference_image':body['reference']} if body.get('vision_reference') else {})})
+                dialogues.submit_background({'chat_id':chat,'request_id':turn,'text':prompt,'provider':body['provider'],'model':body['model'],'reasoning':'default','skill':'studio3d','memory_enabled':False,**({'reference_image':body['reference']} if body.get('vision_reference') else {})})
                 deadline=time.monotonic()+160
                 while True:
                     check(root,ident);r=store.turn(turn)
@@ -208,6 +228,9 @@ def run(root,body,scene,dialogues):
                 if 'reference' in body:scene['reference']=body['reference']
             finally:store.close()
         check(root,ident);update(root,ident,status='BUILDING',phase='Blender 曲面建模与渲染');receipt=build(root,ident,scene,model_receipt)
+        if edit_audit is not None:
+            receipt['derived_from']=body['edit'];receipt['edit']=edit_audit
+            child(root,'artifacts/studio3d/'+ident+'/receipt.json').write_text(canonical(receipt),encoding='utf-8')
         if review is not None:
             from host.studio3d_refinement import finish
             receipt=finish(root,body,dialogues,receipt,review)
@@ -237,7 +260,7 @@ def build(root,ident,scene,model_receipt=None):
     folder=child(root,'artifacts/studio3d/'+ident);folder.mkdir(parents=True,exist_ok=False)
     source_paths=['host/studio3d.py',RUNTIME['worker'],RUNTIME['bootstrap'],'adapters/studio3d/asset_pipeline.py','adapters/studio3d/projection.py','modules/skills/studio3d/production.py','modules/skills/studio3d/contract.py','modules/skills/studio3d/presets.py','modules/skills/studio3d/tracked_vehicle.py','host/studio3d_reference.py','adapters/models/vision.py','adapters/models/native.py','adapters/models/native_transport.py','host/dialogue.py','modules/dialogue/store.py','adapters/studio3d/organic.py','adapters/studio3d/framing.py','modules/skills/studio3d/assets.py','modules/skills/studio3d/runtime.json']
     source_snapshot={p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in source_paths}
-    for p in ('host/studio3d_refinement.py','modules/skills/studio3d/refinement.py','adapters/studio3d/weathering.py'):source_snapshot[p]=hashlib.sha256((ROOT/p).read_bytes()).hexdigest()
+    for p in ('host/studio3d_refinement.py','modules/skills/studio3d/refinement.py','adapters/studio3d/weathering.py','modules/skills/studio3d/blender_workflow.py','modules/skills/studio3d/SKILL.md'):source_snapshot[p]=hashlib.sha256((ROOT/p).read_bytes()).hexdigest()
     asset=None;reference=None;surface_texture=None
     frozen_master=None
     if 'master' in scene:

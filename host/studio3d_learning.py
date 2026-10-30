@@ -90,15 +90,22 @@ def cancel(root, ident):
     return current
 
 
-def _process(root, folder, executable, wall_seconds=300):
+def _process(root, folder, executable, wall_seconds=300, *, operation='learning'):
     from host.studio3d import enabled
+    entries={'learning':'apps/studio3d/learning_worker.py','high_finish':'apps/studio3d/high_finish_worker.py','inspection':'apps/studio3d/inspection_worker.py','character':'apps/studio3d/character_worker.py','demonstration':'apps/studio3d/demonstration_worker.py','roundtrip':'apps/studio3d/roundtrip_worker.py'}
+    entries['surface_material']='apps/studio3d/surface_material_worker.py'
+    entries['tyre_surface']='apps/studio3d/tyre_surface_worker.py'
+    entries['attachment_seat']='apps/studio3d/attachment_seat_worker.py'
+    entries['annular_detail']='apps/studio3d/annular_detail_worker.py'
+    entries['panel_corner']='apps/studio3d/panel_corner_worker.py'
+    if operation not in entries:raise ValueError('Unregistered fixed Blender operation')
     env = {k:v for k,v in os.environ.items() if k.upper() in ('SYSTEMROOT','WINDIR')}
     config = folder/'config'; config.mkdir()
     env.update(TEMP=str(folder),TMP=str(folder),BLENDER_USER_CONFIG=str(config),BLENDER_USER_SCRIPTS=str(config),OMP_NUM_THREADS='4')
     native = job = None; began = time.monotonic()
     with (folder/'stdout.log').open('wb') as stdout, (folder/'stderr.log').open('wb') as stderr:
         process = subprocess.Popen([str(executable),'--background','--factory-startup','--disable-autoexec','--threads','4',
-            '--python-exit-code','2','--python',str(ROOT/'apps/studio3d/learning_worker.py'),'--',str(folder)],
+            '--python-exit-code','2','--python',str(ROOT/entries[operation]),'--',str(folder)],
             cwd=folder,env=env,stdin=subprocess.DEVNULL,stdout=stdout,stderr=stderr,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
         try:
             if os.name == 'nt':

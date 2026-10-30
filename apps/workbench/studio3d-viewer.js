@@ -128,3 +128,32 @@ for(const [v,label] of [['front','前'],['rear','后'],['left','左'],['right','
 if(receipt.reference&&receipt.files['reference.png']){$('guide-panel').hidden=false;$('guide-image').src=receipt.files['reference.png'].url;$('guide-source').textContent=receipt.reference.source+' · '+receipt.reference.mode;}
 $('lod').options[0].textContent=receipt.configuration.asset_pipeline?.method==='project'?'LOD0 · 游戏低模':receipt.report.asset_pipeline?'LOD0 · 烘焙副本':'原始模型';$('reference-image').src=receipt.files['preview.png'].url;$('blend-link').href=receipt.files['model.blend'].url;for(const [name,label] of [['model-lod1.glb','LOD1 · 待视觉验收'],['model-lod2.glb','LOD2 · 待视觉验收']])if(receipt.files[name])$('lod').add(new Option(label,name));await loadModel();for(const label of inventory.profile.human_checks){const l=el('label'),c=el('input');c.type='checkbox';c.dataset.label=label;l.append(c,el('span',label));$('human-checks').append(l);}}
 init().catch(e=>status(e.message,true));
+
+// live-follow:start
+// Opt-in, authenticated project read. The ordinary inspector never polls.
+function startLiveFollow(){
+ const match=/^#follow=(project-[a-f0-9]{32})$/.exec(location.hash);
+ if(!match)return;
+ const project=match[1],toolbar=document.querySelector('.header-actions');
+ const label=el('span','正在跟随最新保留版本');label.setAttribute('role','status');
+ const stop=el('button','停止跟随');stop.type='button';stop.setAttribute('aria-label','停止自动跟随最新模型');
+ toolbar.prepend(label,stop);let stopped=false;
+ stop.onclick=()=>{stopped=true;history.replaceState(null,'',location.pathname);label.textContent='已停止自动跟随';stop.remove();};
+ async function check(){
+  if(stopped)return;
+  try{
+   const response=await post('/api/project/read',{id:project,path:'metadata/current-model.json'});
+   const current=JSON.parse(response.text), candidate=current.working_candidate?.viewer_job_id, next=candidate||current.job_id;
+   if(typeof next!=='string'||!/^[a-f0-9]{32}$/.test(next))throw Error('当前版本记录无效');
+   if(stopped)return;
+   if(next!==id){
+    if(preparing||$('review-notes').value.trim()){label.textContent='新版本已就绪；请先保存或清空验收说明';}
+    else{location.replace('/api/studio3d/view/'+next+'#follow='+project);return;}
+   }else label.textContent=candidate?'正在跟随最新工作候选 · 尚未验收':'正在跟随最新保留版本';
+  }catch(error){session=null;label.textContent='自动跟随暂不可用：'+String(error.message||error).slice(0,120);}
+  if(!stopped)setTimeout(check,10000);
+ }
+ check();
+}
+startLiveFollow();
+// live-follow:end

@@ -48,6 +48,8 @@ ASSETS['/settings'] = ('settings.html', 'text/html')
 ASSETS['/login'] = ('login.html', 'text/html')
 ASSETS['/family'] = ('family.html', 'text/html')
 ASSETS['/brand/'] = ('brand-preview.html', 'text/html')
+ASSETS['/companion'] = ('companion.html', 'text/html')
+ASSETS['/companion/'] = ('companion.html', 'text/html')
 for asset in Path(__file__).parent.glob('*'):
     if asset.suffix in {'.js', '.css', '.svg'}:
         ASSETS['/' + asset.name] = (asset.name, {'.js':'text/javascript', '.css':'text/css', '.svg':'image/svg+xml'}[asset.suffix])

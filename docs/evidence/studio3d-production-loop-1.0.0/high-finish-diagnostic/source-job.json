@@ -1,0 +1,130 @@
+{
+  "id": "f9759aeb60444f029ada1cd92ba544b7",
+  "scene": {
+    "schema": "jarvis.studio3d.v1",
+    "units": "m",
+    "title": "Rigid high finish diagnostic coupon",
+    "materials": [
+      {
+        "id": "paint",
+        "color": "#45494b",
+        "detail": "weathered_paint",
+        "mottle_contrast": 0.1,
+        "speckle_strength": 0.1,
+        "bump_distance": 3e-05,
+        "metallic": 0,
+        "roughness": 0.35,
+        "coat": 0,
+        "transmission": 0
+      },
+      {
+        "id": "steel",
+        "color": "#73777a",
+        "metallic": 1,
+        "roughness": 0.35,
+        "coat": 0,
+        "transmission": 0
+      },
+      {
+        "id": "rubber",
+        "color": "#202122",
+        "roughness": 0.8,
+        "metallic": 0,
+        "coat": 0,
+        "transmission": 0
+      }
+    ],
+    "objects": [
+      {
+        "id": "body",
+        "kind": "box",
+        "material": "paint",
+        "params": {
+          "size": [
+            1,
+            0.4,
+            0.35
+          ]
+        },
+        "position": [
+          0,
+          0,
+          0.35
+        ],
+        "modifiers": {
+          "bevel": 0.03,
+          "bevel_segments": 4
+        },
+        "rotation": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "id": "wheel",
+        "kind": "cylinder",
+        "material": "rubber",
+        "params": {
+          "radius": 0.25,
+          "depth": 0.13,
+          "segments": 48
+        },
+        "rotation": [
+          90,
+          0,
+          0
+        ],
+        "position": [
+          0.23,
+          0.29,
+          0.25
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "modifiers": {}
+      },
+      {
+        "id": "handle",
+        "kind": "torus",
+        "material": "steel",
+        "params": {
+          "radius": 0.14,
+          "tube": 0.022
+        },
+        "rotation": [
+          90,
+          0,
+          0
+        ],
+        "position": [
+          -0.23,
+          0.29,
+          0.4
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "modifiers": {}
+      }
+    ],
+    "render": {
+      "engine": "CYCLES",
+      "quality": "preview",
+      "view": "rear"
+    },
+    "unfulfilled": [
+      "Diagnostic only; does not count as an independent artistic learning asset"
+    ]
+  }
+}

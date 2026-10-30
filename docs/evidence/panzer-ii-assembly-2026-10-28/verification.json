@@ -1,0 +1,206 @@
+{
+  "date": "2026-10-28",
+  "version": "1.0.0",
+  "project_version": "0.1.1-unreleased",
+  "run_id": "c305cb25291341b5aa99ecd8e861396e",
+  "status": "REFERENCE_ASSEMBLY_BUILT_AND_REVIEWED",
+  "local_artifact": "3DModels/PanzerII-reference-assembly",
+  "source_files": [
+    {
+      "sha256": "93e51bf5e50cf13e280b683be8d251679576c5e8b4e81952ab4516fe0025b0e3",
+      "bytes": 67130012,
+      "triangles": 1976848,
+      "materials": 1,
+      "textures": 3,
+      "generator": "Tripo",
+      "file": "Panzer II车身.glb"
+    },
+    {
+      "sha256": "2f9fb09e7136e94b523b0d3cb0dc89fd01cc007e54651650649c6566ff91601c",
+      "bytes": 63819356,
+      "triangles": 1934275,
+      "materials": 1,
+      "textures": 3,
+      "generator": "Tripo",
+      "file": "Panzer II炮塔.glb"
+    },
+    {
+      "sha256": "fe8736d73652fd4dcd599c3aa9e4ee9191825a69b46316177ac0d5718738696d",
+      "bytes": 64487416,
+      "triangles": 1921954,
+      "materials": 1,
+      "textures": 3,
+      "generator": "Tripo",
+      "file": "Panzer II火炮(2 cm KwK 30 L55).glb"
+    },
+    {
+      "sha256": "372039d52dcac91f47dee582a0a55c8e8a8432f38186f6d4aa409f686fd6f674",
+      "bytes": 61492744,
+      "triangles": 1904354,
+      "materials": 1,
+      "textures": 3,
+      "generator": "Tripo",
+      "file": "Panzer II炮盾.glb"
+    },
+    {
+      "sha256": "44175cd5af0aac441918820b767ddae7ea23962b8a358cf9c04b1e3680ecd0a8",
+      "bytes": 68267960,
+      "triangles": 1965924,
+      "materials": 1,
+      "textures": 3,
+      "generator": "Tripo",
+      "file": "Panzer II履带和车轮.glb"
+    }
+  ],
+  "rendered_triangles": 11669279,
+  "mesh_instances": 6,
+  "original_pbr_images": 15,
+  "image_dimensions": [
+    4096,
+    4096
+  ],
+  "all_original_image_bytes_retained": true,
+  "glb_roundtrip": {
+    "meshes": 6,
+    "triangles": 11669279,
+    "bounds_error": 2.384185791015625e-07,
+    "uv_layers": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "images": 15,
+    "passed": true
+  },
+  "source_unchanged": true,
+  "peak_memory_bytes": 13369495552,
+  "elapsed_seconds": 105.67604119999987,
+  "source_code_sha256": {
+    "modules/skills/studio3d/assembly_contract.py": "3671629c95857a24688449e4a003fe2de81f86021da3b1b08774622afae03829",
+    "host/studio3d_assembly.py": "62e8308e8c34e36498e5054f3084ce6327bc3cb56d3de90d742a23a8545bee4f",
+    "adapters/studio3d/assembly_worker.py": "148fedebd88e94a72929cf6da5f0fdba69c1aa3e0620572770b3fae586af766c",
+    "apps/studio3d/assembly_worker.py": "c0728cd7951e5ee556402bbf2dc09c303f063c438f731b870215de8fe2e4c890",
+    "control/studio3d_lane.py": "d9a67dfd43b41643e09113066878fe7784f31f7c8472aab21ad308a6f8f48916"
+  },
+  "asset_sha256": {
+    "assembled.blend": {
+      "bytes": 393548286,
+      "sha256": "9e28847834e811152bb0245b23805c53b395c1c31fd85d84fe4f193b538c473c"
+    },
+    "assembled.glb": {
+      "bytes": 418041260,
+      "sha256": "0ebbfb088768583307c11c4e37201ef8b1e800197c3e26bc3a62010a15478f45"
+    },
+    "hero.png": {
+      "bytes": 2453920,
+      "sha256": "fd354f1aed209746be8cca6fc877426376d7a525dab715375051353f7d5afbce"
+    },
+    "exploded.png": {
+      "bytes": 2638366,
+      "sha256": "87d30343609bdf76ee97d4b9bd7fee272a1d838ba1fb40dd38c9a2c6c534dd0f"
+    }
+  },
+  "authoring": "Author-calibrated transforms after real multi-view review; not independently model-generated assembly",
+  "native_trials": [
+    "7e629555f3c24d4482021b94e564cc31",
+    "b88342910b714b39a52dccd9fda4c17e",
+    "204af458918549d2b5a7f6d174698c59",
+    "48de801316aa4c358f06703a0c0c3fe6",
+    "c305cb25291341b5aa99ecd8e861396e"
+  ],
+  "method_retrieval": {
+    "positive_cases": 4,
+    "counterexample_returned": 0,
+    "automatic_promotion": false
+  },
+  "tests": {
+    "count": 23,
+    "status": "passed"
+  },
+  "model_reviews": [
+    {
+      "model": "gemini-4-argon",
+      "status": "UNKNOWN",
+      "request_id": "assembly-review-b1da99763cf041b9b31fd6a2a1f65fe4",
+      "error": "model_timeout",
+      "billing": [
+        {
+          "amount": null,
+          "currency": "USD",
+          "price": {
+            "cache_read": 0.2,
+            "cache_write": null,
+            "checked_at": "2026-10-16",
+            "currency": "USD",
+            "fee_percent": 0,
+            "input": 4,
+            "max_input_tokens": 1000000,
+            "output": 20,
+            "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing"
+          },
+          "reason": "missing_usage_or_price"
+        }
+      ]
+    },
+    {
+      "model": "gemini-3.8-flash",
+      "status": "SUCCEEDED",
+      "request_id": "assembly-review-0ca594ea1d8240c7899fdcce9fbc76dd",
+      "error": null,
+      "billing": [
+        {
+          "amount": 0.01048725,
+          "currency": "USD",
+          "price": {
+            "cache_read": 0.075,
+            "cache_write": null,
+            "checked_at": "2026-10-16",
+            "currency": "USD",
+            "fee_percent": 0,
+            "input": 0.75,
+            "max_input_tokens": 1000000,
+            "output": 3.75,
+            "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+            "valid_until": "2026-12-31"
+          },
+          "reason": "token_rates"
+        }
+      ]
+    }
+  ],
+  "total_cost": "unknown because Argon request timed out; known Flash estimate USD 0.01048725; local and authoring costs unknown",
+  "limits": [
+    "Clean original paint differs from weathered reference; no new weathering added",
+    "Headlamp and some accessories in concept reference are not present or differ in supplied parts",
+    "Image-based relative fit only, no true dimensions/collision/tolerance/rig certification",
+    "11.67M rendered triangles; game topology, high-low baking and LOD not performed",
+    "Mirrored rigid track assemblies, no wheel/track animation",
+    "No model-weight training or independent cross-asset improvement proven"
+  ],
+  "model_review_triage": {
+    "model_review": "jarvis-flash-review.json",
+    "status": "REVIEWED_AS_ADVISORY",
+    "accepted": [
+      "Missing front headlamp is visibly supported by provided concept and assembled mesh render",
+      "Clean paint lacks reference camouflage/weathering/mud; adding polygons alone will not resolve it"
+    ],
+    "not_promoted": [
+      "Rubber is already visibly differentiated as dark wheel rims; a single textured material can represent several surface types. Do not require separate material slots as a universal rule.",
+      "A transverse reflection preserves front/back direction; specific track-pin/guide-tooth engineering handedness has not been checked. Model suspicion is not a verified error.",
+      "Residual turret-gap and track-sag comparisons need matched views and source geometry checks; do not treat one-image claims as measurements."
+    ],
+    "model_weight_training": false,
+    "automatic_promotion": false
+  },
+  "post_run_admission_fix": {
+    "description": "Budget source mesh instances rather than mesh definitions; regression passed. User sources each contain one node, so this does not change assembled output.",
+    "sha256": "8a4e948f3d9a11be5df9b948ba2975ba96d431e02061ea3c15311a6f2b335d6d"
+  },
+  "report_ui": {
+    "url": "http://127.0.0.1:18307/",
+    "state": "loaded; reference/render/downloads/real review states observed; exploded selector switched"
+  }
+}

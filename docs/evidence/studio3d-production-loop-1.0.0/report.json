@@ -1,0 +1,1397 @@
+{
+  "date": "2026-10-27",
+  "status": "IN_PROGRESS",
+  "scope": "Bounded PaK38 recipe actions selected by Jarvis, real Blender builds, fresh five-view re-reviews; not general arbitrary reconstruction",
+  "unit_tests": {
+    "command": "python -m unittest discover -s tests -p test_studio3d*.py",
+    "passed": 137,
+    "initial_wrong_invocation": "tests package import names failed; corrected with discovery, no tests disabled",
+    "verification_scope": "Studio3D test discovery; full workspace suite not run",
+    "corrected_integration_error": "An initially reused inspection module filename shadowed existing GLB inventory; tests detected import failure. Restored original inventory module and placed new contract in render_inspection.py; full Studio3D discovery passed."
+  },
+  "native_iterations": [
+    {
+      "id": "r0",
+      "job_id": "8b661aa290964fdcb51bf4b53acf4948",
+      "status": "REVIEWED",
+      "recipe_version": "1.1.0",
+      "triangles": 177796,
+      "native_elapsed_seconds": 14.089994499998284,
+      "adoption": null,
+      "ordinal_diagnostic": null,
+      "gate": {
+        "all_five_reviewed": true,
+        "model_based_near_match": false,
+        "user_approval": false,
+        "lod_authorized": false,
+        "scope": "Visual model opinion only; inspect renders and conflicts independently."
+      },
+      "model_sha256": "0ce5570660c0fb5f700f7a0f8a87e49ca6c1f3af6366c35552ebe043e28eca6d",
+      "proposed_actions": null,
+      "source_iteration": null,
+      "inspection": null,
+      "evidence_source": null
+    },
+    {
+      "id": "r1",
+      "job_id": "ffa3b59201bc4c41b6634a3bc983052c",
+      "status": "REVIEWED",
+      "recipe_version": "1.1.0",
+      "triangles": 193592,
+      "native_elapsed_seconds": 8.51021910000054,
+      "adoption": {
+        "accepted": true,
+        "reason": "model_review_improvement_without_new_high_severity",
+        "before_score": 105,
+        "after_score": 102,
+        "metric_scope": "ordinal reviewer findings, NOT percentage image similarity",
+        "user_approval": false,
+        "lod_authorized": false
+      },
+      "ordinal_diagnostic": null,
+      "gate": {
+        "all_five_reviewed": true,
+        "model_based_near_match": false,
+        "user_approval": false,
+        "lod_authorized": false,
+        "scope": "Visual model opinion only; inspect renders and conflicts independently."
+      },
+      "model_sha256": "a564b6c6e9ce5869a230e9529164de1ef3bc44b6bf1f455717b3825611594b06",
+      "proposed_actions": [
+        {
+          "parameter": "wheel_form",
+          "value": 1,
+          "group": "wheels",
+          "evidence": [
+            {
+              "view": "right",
+              "correction": 0
+            },
+            {
+              "view": "top",
+              "correction": 2
+            }
+          ],
+          "reason": "Reference views exhibit pressed dished wheel discs with stamped recess transitions rather than simple raised ribs and plain hemispherical hub caps.",
+          "before": 0,
+          "tool": "set_exterior_parameter"
+        },
+        {
+          "parameter": "spade_detail",
+          "value": 1,
+          "group": "trails",
+          "evidence": [
+            {
+              "view": "front",
+              "correction": 2
+            },
+            {
+              "view": "right",
+              "correction": 2
+            },
+            {
+              "view": "top",
+              "correction": 1
+            }
+          ],
+          "reason": "Trail ends in references feature curved spade blades with articulated mounting cheeks and locking clamp seating rather than thin flat plates.",
+          "before": 0,
+          "tool": "set_exterior_parameter"
+        },
+        {
+          "parameter": "shield_profile",
+          "value": 1,
+          "group": "shield",
+          "evidence": [
+            {
+              "view": "front",
+              "correction": 0
+            }
+          ],
+          "reason": "Front perspective review shows angled upper shoulder chamfers and an inverted-U arched gun clearance bridge instead of a rectangular cutout and straight crest.",
+          "before": 0,
+          "tool": "set_exterior_parameter"
+        }
+      ],
+      "source_iteration": null,
+      "inspection": null,
+      "evidence_source": null
+    },
+    {
+      "id": "r2",
+      "job_id": "0e3076e07af8436a8a1d241d76bd58c6",
+      "status": "REVIEWED",
+      "recipe_version": "1.1.0",
+      "triangles": 200636,
+      "native_elapsed_seconds": 8.681624699998792,
+      "adoption": {
+        "accepted": true,
+        "reason": "model_review_improvement_without_new_high_severity",
+        "before_score": 102,
+        "after_score": 81,
+        "metric_scope": "ordinal reviewer findings, NOT percentage image similarity",
+        "user_approval": false,
+        "lod_authorized": false
+      },
+      "ordinal_diagnostic": null,
+      "gate": {
+        "all_five_reviewed": true,
+        "model_based_near_match": false,
+        "user_approval": false,
+        "lod_authorized": false,
+        "scope": "Visual model opinion only; inspect renders and conflicts independently."
+      },
+      "model_sha256": "f6d78ba732efcbac95eb44ddaf1c851ac389268286bcb1d23f9cb35a29021ba9",
+      "proposed_actions": [
+        {
+          "parameter": "breech_detail",
+          "value": 1,
+          "group": "breech",
+          "evidence": [
+            {
+              "view": "right",
+              "correction": 0
+            }
+          ],
+          "reason": "Right view observes breech currently appears as a simplified box cover lacking layered protective housing and recoil cylinder detail; switching breech_detail to 1 activates shaped compact exterior housing topology.",
+          "before": 0,
+          "tool": "set_exterior_parameter"
+        },
+        {
+          "parameter": "trail_spread",
+          "value": 1.45,
+          "group": "trails",
+          "evidence": [
+            {
+              "view": "top",
+              "correction": 1
+            }
+          ],
+          "reason": "Top view indicates trail spread angle is too narrow; increasing trail_spread widens rear trail stance within the bounded 30% limit.",
+          "before": 1.3,
+          "tool": "set_exterior_parameter"
+        }
+      ],
+      "source_iteration": null,
+      "inspection": null,
+      "evidence_source": null
+    },
+    {
+      "id": "r3",
+      "job_id": "30f4b0b2222f4c1d8c5c732220d65516",
+      "status": "REVIEWED",
+      "recipe_version": "1.2.0",
+      "triangles": 248056,
+      "native_elapsed_seconds": 14.591662999999244,
+      "adoption": {
+        "accepted": false,
+        "reason": "new_high_severity_regression"
+      },
+      "ordinal_diagnostic": null,
+      "gate": {
+        "all_five_reviewed": true,
+        "model_based_near_match": false,
+        "user_approval": false,
+        "lod_authorized": false,
+        "scope": "Visual model opinion only; inspect renders and conflicts independently."
+      },
+      "model_sha256": "956339b8982ca64156628b1119b90251cbaa8675f7ae18bb87e3aea4ec302770",
+      "proposed_actions": [
+        {
+          "parameter": "spade_detail",
+          "value": 2,
+          "group": "trails",
+          "evidence": [
+            {
+              "view": "left",
+              "correction": 1
+            },
+            {
+              "view": "right",
+              "correction": 1
+            },
+            {
+              "view": "rear",
+              "correction": 2
+            }
+          ],
+          "reason": "Visible evidence in left, right, and rear views shows the trail spade ends lack the outward ergonomic handle curvature and flared ground blade profiles; upgrading spade_detail selects the flared curved ground blade and outward handle topology.",
+          "before": 1,
+          "tool": "set_exterior_parameter"
+        },
+        {
+          "parameter": "wheel_form",
+          "value": 2,
+          "group": "wheels",
+          "evidence": [
+            {
+              "view": "left",
+              "correction": 2
+            },
+            {
+              "view": "right",
+              "correction": 2
+            },
+            {
+              "view": "top",
+              "correction": 1
+            }
+          ],
+          "reason": "Left, right, and top reviews indicate wheel ribs are overly convex/pill-shaped rather than pressed recessed flutes with inset dish and layered rim stepping; switching wheel_form to variant 2 provides pressed flutes and layered rim geometry.",
+          "before": 1,
+          "tool": "set_exterior_parameter"
+        },
+        {
+          "parameter": "assembly_detail",
+          "value": 1,
+          "group": "cradle",
+          "evidence": [
+            {
+              "view": "front",
+              "correction": 0
+            }
+          ],
+          "reason": "Front view review notes central cradle and gun mount beneath the barrel are simplified primitive blocks lacking layered support cheeks and fastener hardware; enabling assembly_detail provides contoured support cheeks and layered saddles.",
+          "before": 0,
+          "tool": "set_exterior_parameter"
+        },
+        {
+          "parameter": "rear_detail",
+          "value": 1,
+          "group": "breech",
+          "evidence": [
+            {
+              "view": "rear",
+              "correction": 1
+            }
+          ],
+          "reason": "Rear view review identifies the breech rear cover as a plain box stack lacking rear cover recesses and side guards; enabling rear_detail applies the continuous C-profile rear cover with visible inset.",
+          "before": 0,
+          "tool": "set_exterior_parameter"
+        }
+      ],
+      "source_iteration": null,
+      "inspection": null,
+      "evidence_source": null
+    },
+    {
+      "id": "r4",
+      "job_id": "cceef95131a945e09854366e79e02f8a",
+      "status": "REVIEWED",
+      "recipe_version": "1.3.0",
+      "triangles": 157740,
+      "native_elapsed_seconds": 57.5775622000001,
+      "adoption": {
+        "accepted": false,
+        "method": "direct_three_image_five_view_comparison",
+        "user_approval": false,
+        "lod_authorized": false,
+        "metric_scope": "visual model opinion; no numeric similarity claim",
+        "reason": "visible_paired_regression"
+      },
+      "ordinal_diagnostic": {
+        "accepted": false,
+        "reason": "new_high_severity_regression"
+      },
+      "gate": {
+        "all_five_reviewed": true,
+        "model_based_near_match": false,
+        "user_approval": false,
+        "lod_authorized": false,
+        "scope": "Visual model opinion only; inspect renders and conflicts independently."
+      },
+      "model_sha256": "5d611c24c942829ef97f8006614315db917fae2e243ba940446bc3c57bb57eae",
+      "proposed_actions": [
+        {
+          "parameter": "spade_detail",
+          "value": 2,
+          "group": "trails",
+          "evidence": [
+            {
+              "view": "left",
+              "correction": 1
+            },
+            {
+              "view": "right",
+              "correction": 1
+            }
+          ],
+          "reason": "Equips the trail ends with flared curved ground blades and collar catches, addressing the missing spade footings and locking mechanism noted in side views.",
+          "before": 1,
+          "tool": "set_exterior_parameter"
+        },
+        {
+          "parameter": "rear_detail",
+          "value": 1,
+          "group": "breech",
+          "evidence": [
+            {
+              "view": "rear",
+              "correction": 1
+            }
+          ],
+          "reason": "Replaces the simplified box breech cover with a continuous C-profile rear cover, visible inset, and slotted side guard to provide the requested mechanical recessing.",
+          "before": 0,
+          "tool": "set_exterior_parameter"
+        },
+        {
+          "parameter": "wheel_form",
+          "value": 2,
+          "group": "wheels",
+          "evidence": [
+            {
+              "view": "top",
+              "correction": 1
+            }
+          ],
+          "reason": "Upgrades wheels to broad full-radius pressed flutes with an inset dish and layered rim, addressing the lack of rim recess depth and disc stiffening.",
+          "before": 1,
+          "tool": "set_exterior_parameter"
+        },
+        {
+          "parameter": "finish_detail",
+          "value": 1,
+          "group": "finish",
+          "evidence": [
+            {
+              "view": "left",
+              "correction": 5
+            },
+            {
+              "view": "rear",
+              "correction": 5
+            }
+          ],
+          "reason": "Enables Cycles coating grain, curvature edge wear, and material differentiation between steel paint and matte tire rubber across all exterior surfaces.",
+          "before": 0,
+          "tool": "set_exterior_parameter"
+        }
+      ],
+      "source_iteration": null,
+      "inspection": null,
+      "evidence_source": null
+    },
+    {
+      "id": "r5",
+      "job_id": "aafb519ddff44e3e8eee5d54a651e163",
+      "status": "REVIEWED",
+      "recipe_version": "1.3.0",
+      "triangles": 156764,
+      "native_elapsed_seconds": 11.895637000001443,
+      "adoption": {
+        "accepted": false,
+        "method": "direct_three_image_five_view_comparison",
+        "user_approval": false,
+        "lod_authorized": false,
+        "metric_scope": "visual model opinion; no numeric similarity claim",
+        "reason": "visible_paired_regression"
+      },
+      "ordinal_diagnostic": {
+        "accepted": false,
+        "reason": "new_high_severity_regression"
+      },
+      "gate": {
+        "all_five_reviewed": true,
+        "model_based_near_match": false,
+        "user_approval": false,
+        "lod_authorized": false,
+        "scope": "Visual model opinion only; inspect renders and conflicts independently."
+      },
+      "model_sha256": "fa9550bc5b3c580da977404c74d6c5326e1492f4ae35c66bd75398e722a0e6ad",
+      "proposed_actions": [
+        {
+          "parameter": "spade_detail",
+          "value": 2,
+          "group": "trails",
+          "evidence": [
+            {
+              "view": "left",
+              "correction": 1
+            },
+            {
+              "view": "right",
+              "correction": 1
+            }
+          ],
+          "reason": "左右视图均指出大架末端缺少弧形下沉铲板及锁紧机构；隔离上一轮测试中被跨视角确认有效的驻锄改进，将变体切换至具备外扩弧面接地板、锁止卡扣和外弯手柄的拓扑。",
+          "before": 1,
+          "tool": "set_exterior_parameter"
+        }
+      ],
+      "source_iteration": null,
+      "inspection": null,
+      "evidence_source": null
+    },
+    {
+      "id": "r6",
+      "job_id": "767f8499618e4635ab013a0cb11d8a87",
+      "status": "REVIEWED",
+      "recipe_version": "1.3.0",
+      "triangles": 143276,
+      "native_elapsed_seconds": 57.43523719999939,
+      "adoption": {
+        "accepted": false,
+        "method": "direct_three_image_five_view_comparison",
+        "user_approval": false,
+        "lod_authorized": false,
+        "metric_scope": "visual model opinion; no numeric similarity claim",
+        "reason": "visible_paired_regression"
+      },
+      "ordinal_diagnostic": {
+        "accepted": false,
+        "reason": "new_high_severity_regression"
+      },
+      "gate": {
+        "all_five_reviewed": true,
+        "model_based_near_match": false,
+        "user_approval": false,
+        "lod_authorized": false,
+        "scope": "Visual model opinion only; inspect renders and conflicts independently."
+      },
+      "model_sha256": "4fcb71dac673098956cc36116fa8d0ef2946e04886cdf870a662d32fd3ca2789",
+      "proposed_actions": [
+        {
+          "parameter": "finish_detail",
+          "value": 1,
+          "group": "finish",
+          "evidence": [
+            {
+              "view": "left",
+              "correction": 5
+            },
+            {
+              "view": "front",
+              "correction": 5
+            },
+            {
+              "view": "rear",
+              "correction": 5
+            }
+          ],
+          "reason": "Enables Cycles coating grain, curvature edge wear, and distinct steel/rubber material response to separate tyre and painted metal surfaces across all views.",
+          "before": 0,
+          "tool": "set_exterior_parameter"
+        }
+      ],
+      "source_iteration": null,
+      "inspection": null,
+      "evidence_source": null
+    },
+    {
+      "id": "r7",
+      "job_id": "21dc2ec634c742c9bdb656efb0a41671",
+      "status": "REVIEWED",
+      "recipe_version": "1.3.0",
+      "triangles": 143276,
+      "native_elapsed_seconds": 11.349824400000216,
+      "adoption": {
+        "accepted": true,
+        "method": "direct_three_image_five_view_comparison",
+        "user_approval": false,
+        "lod_authorized": false,
+        "metric_scope": "visual model opinion; no numeric similarity claim",
+        "reason": "visible_improvement_without_paired_regression",
+        "improved_views": [
+          "right",
+          "top"
+        ]
+      },
+      "ordinal_diagnostic": {
+        "accepted": false,
+        "reason": "no_observed_improvement",
+        "before_score": 81,
+        "after_score": 90
+      },
+      "gate": {
+        "all_five_reviewed": true,
+        "model_based_near_match": false,
+        "user_approval": false,
+        "lod_authorized": false,
+        "scope": "Visual model opinion only; inspect renders and conflicts independently."
+      },
+      "model_sha256": "dcaad968993e5ab97f675d7fede0ed5438787923441888093c879a6fefd77116",
+      "proposed_actions": [
+        {
+          "parameter": "shield_curve",
+          "value": 0.2,
+          "group": "shield",
+          "evidence": [
+            {
+              "view": "left",
+              "correction": 0
+            },
+            {
+              "view": "right",
+              "correction": 0
+            },
+            {
+              "view": "top",
+              "correction": 0
+            }
+          ],
+          "reason": "Top, right, and left reviews consistently report that the shield plates are overly flat and straight, lacking the characteristic rearward curved double-sheet profile established for the PaK38.",
+          "before": 0.15,
+          "tool": "set_exterior_parameter"
+        }
+      ],
+      "source_iteration": null,
+      "inspection": null,
+      "evidence_source": null
+    },
+    {
+      "id": "r8",
+      "job_id": "df9af300d293428284802e8af7d6715b",
+      "status": "REVIEWED",
+      "recipe_version": "1.4.0",
+      "triangles": 148220,
+      "native_elapsed_seconds": 10.91092849999768,
+      "adoption": {
+        "accepted": false,
+        "method": "direct_three_image_five_view_comparison",
+        "user_approval": false,
+        "lod_authorized": false,
+        "metric_scope": "visual model opinion; no numeric similarity claim",
+        "reason": "visible_paired_regression"
+      },
+      "ordinal_diagnostic": {
+        "accepted": true,
+        "reason": "model_review_improvement_without_new_high_severity",
+        "before_score": 90,
+        "after_score": 87,
+        "metric_scope": "ordinal reviewer findings, NOT percentage image similarity",
+        "user_approval": false,
+        "lod_authorized": false
+      },
+      "gate": {
+        "all_five_reviewed": true,
+        "model_based_near_match": false,
+        "user_approval": false,
+        "lod_authorized": false,
+        "scope": "Visual model opinion only; inspect renders and conflicts independently."
+      },
+      "model_sha256": "a480feaa7304b33575294d981802d48d5df821a240e7f1c661bfa94bc148109a",
+      "proposed_actions": [
+        {
+          "parameter": "assembly_detail",
+          "value": 1,
+          "group": "cradle",
+          "evidence": [
+            {
+              "view": "right",
+              "correction": 1
+            },
+            {
+              "view": "front",
+              "correction": 0
+            }
+          ],
+          "reason": "Both right and front view reviews observe that the cradle and trunnion support structure currently appears as an unarticulated rectangular box lacking casting contours and fasteners. Enabling variant 1 supplies contoured cheeks, layered saddles, and mechanical fasteners without adding unsupported external piping.",
+          "before": 0,
+          "tool": "set_exterior_parameter"
+        }
+      ],
+      "source_iteration": "r7",
+      "inspection": null,
+      "evidence_source": null
+    },
+    {
+      "id": "r9",
+      "job_id": "0fc53912910d4ab8bf1fdb91b82220b3",
+      "status": "REVIEWED",
+      "recipe_version": "1.4.0",
+      "triangles": 156764,
+      "native_elapsed_seconds": 11.491310299999896,
+      "adoption": {
+        "accepted": true,
+        "method": "direct_three_image_five_view_comparison",
+        "user_approval": false,
+        "lod_authorized": false,
+        "metric_scope": "visual model opinion; no numeric similarity claim",
+        "reason": "visible_improvement_without_paired_regression",
+        "improved_views": [
+          "left",
+          "right",
+          "front",
+          "rear",
+          "top"
+        ]
+      },
+      "ordinal_diagnostic": {
+        "accepted": true,
+        "reason": "model_review_improvement_without_new_high_severity",
+        "before_score": 90,
+        "after_score": 84,
+        "metric_scope": "ordinal reviewer findings, NOT percentage image similarity",
+        "user_approval": false,
+        "lod_authorized": false
+      },
+      "gate": {
+        "all_five_reviewed": true,
+        "model_based_near_match": false,
+        "user_approval": false,
+        "lod_authorized": false,
+        "scope": "Visual model opinion only; inspect renders and conflicts independently."
+      },
+      "model_sha256": "ae924ce2d3a7e5e1ce8bec1d4c3b0c7dc0593286bdb9af9634819a8349972c8d",
+      "proposed_actions": [
+        {
+          "parameter": "spade_detail",
+          "value": 2,
+          "group": "trails",
+          "evidence": [
+            {
+              "view": "top",
+              "correction": 0
+            },
+            {
+              "view": "right",
+              "correction": 0
+            }
+          ],
+          "reason": "Top and right views observe that the trail ends lack downward-flared ground blade silhouettes and outward-curved handle profiles; upgrading spade_detail to variant 2 provides the flared curved ground blade, collar catches, and outward handle.",
+          "before": 1,
+          "tool": "set_exterior_parameter"
+        }
+      ],
+      "source_iteration": "r7",
+      "inspection": null,
+      "evidence_source": null
+    },
+    {
+      "id": "r10",
+      "job_id": "59ebe831c2de41d0a72768497d7b8962",
+      "status": "REVIEWED",
+      "recipe_version": "1.4.0",
+      "triangles": 156764,
+      "native_elapsed_seconds": 11.162851599998248,
+      "adoption": {
+        "accepted": true,
+        "method": "direct_three_image_five_view_comparison",
+        "user_approval": false,
+        "lod_authorized": false,
+        "metric_scope": "visual model opinion; no numeric similarity claim",
+        "reason": "visible_improvement_without_paired_regression",
+        "improved_views": [
+          "left",
+          "right",
+          "top"
+        ]
+      },
+      "ordinal_diagnostic": {
+        "accepted": false,
+        "reason": "no_observed_improvement",
+        "before_score": 84,
+        "after_score": 86
+      },
+      "gate": {
+        "all_five_reviewed": true,
+        "model_based_near_match": false,
+        "user_approval": false,
+        "lod_authorized": false,
+        "scope": "Visual model opinion only; inspect renders and conflicts independently."
+      },
+      "model_sha256": "97791fdc34bbc897f350982d2c0cb7c4182f448a4b690e313de46e2a9e6e6d35",
+      "proposed_actions": [
+        {
+          "parameter": "shield_rake",
+          "value": 0.44,
+          "group": "shield",
+          "evidence": [
+            {
+              "view": "left",
+              "correction": 1
+            },
+            {
+              "view": "right",
+              "correction": 1
+            }
+          ],
+          "reason": "Both left and right views indicate the shield profile is overly upright with insufficient rearward slope compared to reference; increasing shield_rake increases the top rearward displacement to provide proper rake angle.",
+          "before": 0.36,
+          "tool": "set_exterior_parameter"
+        }
+      ],
+      "source_iteration": "r9",
+      "inspection": null,
+      "evidence_source": null
+    },
+    {
+      "id": "r11",
+      "job_id": "cfb73e1b419b47638701d29f22cf118b",
+      "status": "REVIEWED",
+      "recipe_version": "1.4.0",
+      "triangles": 155740,
+      "native_elapsed_seconds": 11.677438700000494,
+      "adoption": {
+        "accepted": false,
+        "method": "direct_three_image_five_view_comparison",
+        "user_approval": false,
+        "lod_authorized": false,
+        "metric_scope": "visual model opinion; no numeric similarity claim",
+        "reason": "visible_paired_regression"
+      },
+      "ordinal_diagnostic": {
+        "accepted": true,
+        "reason": "model_review_improvement_without_new_high_severity",
+        "before_score": 86,
+        "after_score": 75,
+        "metric_scope": "ordinal reviewer findings, NOT percentage image similarity",
+        "user_approval": false,
+        "lod_authorized": false
+      },
+      "gate": {
+        "all_five_reviewed": true,
+        "model_based_near_match": false,
+        "user_approval": false,
+        "lod_authorized": false,
+        "scope": "Visual model opinion only; inspect renders and conflicts independently."
+      },
+      "model_sha256": "d596447eef0b6e8adf41b5a71a8c7dae88f0237cf75e5fd1d68bbef49f16002c",
+      "proposed_actions": [
+        {
+          "parameter": "wheel_form",
+          "value": 2,
+          "group": "wheels",
+          "evidence": [
+            {
+              "view": "left",
+              "correction": 1
+            },
+            {
+              "view": "right",
+              "correction": 1
+            }
+          ],
+          "reason": "Both left and right reviews identify that current wheel stiffening ribs appear as raised pill or petal bulges rather than recessed pressed flutes; switching to variant 2 provides broad full-radius pressed flutes with an inset dish and layered rim.",
+          "before": 1,
+          "tool": "set_exterior_parameter"
+        }
+      ],
+      "source_iteration": "r10",
+      "inspection": null,
+      "evidence_source": null
+    },
+    {
+      "id": "r12",
+      "job_id": "e22cb0d017d447eaaeef9195cb6bef09",
+      "status": "REVIEWED",
+      "recipe_version": "1.5.0",
+      "triangles": 155740,
+      "native_elapsed_seconds": 11.500345100001141,
+      "adoption": {
+        "accepted": true,
+        "method": "direct_three_image_five_view_comparison",
+        "user_approval": false,
+        "lod_authorized": false,
+        "metric_scope": "visual model opinion; no numeric similarity claim",
+        "reason": "visible_improvement_without_paired_regression",
+        "improved_views": [
+          "left",
+          "right"
+        ]
+      },
+      "ordinal_diagnostic": {
+        "accepted": true,
+        "reason": "model_review_improvement_without_new_high_severity",
+        "before_score": 86,
+        "after_score": 85,
+        "metric_scope": "ordinal reviewer findings, NOT percentage image similarity",
+        "user_approval": false,
+        "lod_authorized": false
+      },
+      "gate": {
+        "all_five_reviewed": true,
+        "model_based_near_match": false,
+        "user_approval": false,
+        "lod_authorized": false,
+        "scope": "Visual model opinion only; inspect renders and conflicts independently."
+      },
+      "model_sha256": "96d2dee837ab111d8c969fdb25614442022bda51a5bd3429e88885c2f09f3358",
+      "proposed_actions": [
+        {
+          "parameter": "wheel_form",
+          "value": 3,
+          "group": "wheels",
+          "evidence": [
+            {
+              "view": "left",
+              "correction": 1
+            },
+            {
+              "view": "right",
+              "correction": 1
+            }
+          ],
+          "reason": "Replaces current convex pill ridges with shallower pressed radial flutes matching the stamped wheel disc in side references, while applying dense shoulder marks to avoid the coarse tyre silhouette regression observed with variant 2.",
+          "before": 1,
+          "tool": "set_exterior_parameter"
+        }
+      ],
+      "source_iteration": "r10",
+      "inspection": null,
+      "evidence_source": null
+    },
+    {
+      "id": "r13",
+      "job_id": "6081f26bb8ff4980b84f3e235c3adfe3",
+      "status": "REVIEWED",
+      "recipe_version": "1.5.0",
+      "triangles": 167236,
+      "native_elapsed_seconds": 11.88728220000121,
+      "adoption": {
+        "accepted": true,
+        "method": "direct_three_image_five_view_comparison",
+        "user_approval": false,
+        "lod_authorized": false,
+        "metric_scope": "visual model opinion; no numeric similarity claim",
+        "reason": "visible_improvement_without_paired_regression",
+        "improved_views": [
+          "rear",
+          "top"
+        ]
+      },
+      "ordinal_diagnostic": {
+        "accepted": false,
+        "reason": "new_high_severity_regression"
+      },
+      "gate": {
+        "all_five_reviewed": true,
+        "model_based_near_match": false,
+        "user_approval": false,
+        "lod_authorized": false,
+        "scope": "Visual model opinion only; inspect renders and conflicts independently."
+      },
+      "model_sha256": "327e809a0f6f22def021c0f3b572150c0180bb8c99bbc70f0208e5655a825437",
+      "proposed_actions": [
+        {
+          "parameter": "control_detail",
+          "value": 1,
+          "group": "controls",
+          "evidence": [
+            {
+              "view": "rear",
+              "correction": 1
+            }
+          ],
+          "reason": "Rear view review notes with high confidence that the left elevating handwheel and sight mounting bracket lack layered mechanical details; variant 1 activates the concentric connected handwheel shaft, rounded side housing, and sight mount to resolve this blocky appearance.",
+          "before": 0,
+          "tool": "set_exterior_parameter"
+        }
+      ],
+      "source_iteration": "r12",
+      "inspection": null,
+      "evidence_source": null
+    },
+    {
+      "id": "r14",
+      "job_id": "e36fe744b44441b0ba29987fbc8688a0",
+      "status": "REVIEWED",
+      "recipe_version": "1.5.0",
+      "triangles": 170172,
+      "native_elapsed_seconds": 11.764688799998112,
+      "adoption": {
+        "accepted": true,
+        "method": "direct_three_image_five_view_comparison",
+        "user_approval": false,
+        "lod_authorized": false,
+        "metric_scope": "visual model opinion; no numeric similarity claim",
+        "reason": "visible_improvement_without_paired_regression",
+        "improved_views": [
+          "left",
+          "rear",
+          "top"
+        ]
+      },
+      "ordinal_diagnostic": {
+        "accepted": false,
+        "reason": "new_high_severity_regression"
+      },
+      "gate": {
+        "all_five_reviewed": true,
+        "model_based_near_match": false,
+        "user_approval": false,
+        "lod_authorized": false,
+        "scope": "Visual model opinion only; inspect renders and conflicts independently."
+      },
+      "model_sha256": "c11cf467230d23f64c6bf53feb5539a80f66be6dff0da6842e67e6d7a13cdc4d",
+      "proposed_actions": [
+        {
+          "parameter": "rear_detail",
+          "value": 2,
+          "group": "breech",
+          "evidence": [
+            {
+              "view": "left",
+              "correction": 1
+            }
+          ],
+          "reason": "Left view high-confidence review confirms the breech side guard plate in reference displays regular circular perforations rather than a plain flat sheet; variant 2 incorporates the rounded perforated side guard and shallow C-profile rear face.",
+          "before": 0,
+          "tool": "set_exterior_parameter"
+        }
+      ],
+      "source_iteration": "r13",
+      "inspection": {
+        "id": "52599c3db8cf4e94ae15406eb9a75acd",
+        "status": "REVIEWED",
+        "contract": {
+          "bounds": [
+            [
+              -3.1996042728424072,
+              -1.6636005640029907,
+              -0.003942213486880064
+            ],
+            [
+              2.299999952316284,
+              1.6636005640029907,
+              1.4341877698898315
+            ]
+          ],
+          "views": [
+            {
+              "id": "left",
+              "direction": [
+                0.2,
+                1,
+                0.12
+              ]
+            },
+            {
+              "id": "right",
+              "direction": [
+                0.12,
+                -1,
+                0.12
+              ]
+            },
+            {
+              "id": "front",
+              "direction": [
+                1,
+                0,
+                0.08
+              ]
+            },
+            {
+              "id": "rear",
+              "direction": [
+                -1,
+                0,
+                0.23
+              ]
+            },
+            {
+              "id": "top",
+              "direction": [
+                0,
+                0,
+                1
+              ]
+            }
+          ],
+          "resolution": [
+            1536,
+            1024
+          ],
+          "samples": 16,
+          "regions": {
+            "wheel-left": [
+              "tire-left",
+              "disc-left",
+              "ribs-left",
+              "rim-steps-left",
+              "hub-left",
+              "tread-left",
+              "fasteners-wheel-left"
+            ],
+            "breech": [
+              "breech-top-cover",
+              "breech-recess",
+              "breech-top-grip",
+              "shaped-rear-cover",
+              "rear-cover-body",
+              "external-arm",
+              "rear-cover-mounts",
+              "rear-upper-latch",
+              "fasteners-breech"
+            ],
+            "controls": [
+              "handwheel-left",
+              "connected-control-housing",
+              "sight-mounted",
+              "fasteners-controls"
+            ],
+            "trail-left": [
+              "trail-tube-left",
+              "trail-collars-left",
+              "trail-handle-left-0",
+              "trail-handle-left-1",
+              "trail-handle-left-2",
+              "spade-seat-left",
+              "spade-blade-left",
+              "spade-lever-left",
+              "trail-pivot-left",
+              "spade-pivot-seat-left",
+              "spade-retainer-left",
+              "spade-catches-left",
+              "fasteners-trail-left"
+            ],
+            "shield": [
+              "shield-left-0",
+              "shield-right-0",
+              "shield-left-1",
+              "shield-right-1",
+              "shield-upper-bridge",
+              "shield-lower-apron",
+              "shield-struts",
+              "fasteners-shield"
+            ]
+          }
+        },
+        "source_job": "e36fe744b44441b0ba29987fbc8688a0",
+        "version": "1.0.0",
+        "elapsed_seconds": 196.70568442344666,
+        "started_at": 1793128554.1570945,
+        "finished_at": 1793128750.862779,
+        "gate": {
+          "all_five_reviewed": true,
+          "model_based_near_match": false,
+          "user_approval": false,
+          "lod_authorized": false,
+          "scope": "Visual model opinion only; inspect renders and conflicts independently."
+        }
+      },
+      "evidence_source": null
+    },
+    {
+      "id": "r15",
+      "job_id": "524724908d4d44dcabadacdb20198970",
+      "status": "REVIEWED",
+      "recipe_version": "1.5.0",
+      "triangles": 170172,
+      "native_elapsed_seconds": 11.829413399998884,
+      "adoption": {
+        "accepted": true,
+        "method": "direct_three_image_five_view_comparison",
+        "user_approval": false,
+        "lod_authorized": false,
+        "metric_scope": "visual model opinion; no numeric similarity claim",
+        "reason": "visible_improvement_without_paired_regression",
+        "improved_views": [
+          "left",
+          "right",
+          "top"
+        ]
+      },
+      "ordinal_diagnostic": {
+        "accepted": false,
+        "reason": "new_high_severity_regression"
+      },
+      "gate": {
+        "all_five_reviewed": true,
+        "model_based_near_match": false,
+        "user_approval": false,
+        "lod_authorized": false,
+        "scope": "Visual model opinion only; inspect renders and conflicts independently."
+      },
+      "model_sha256": "2dfde5e9ffd585bb202d9560ffd9f466e9468a544ce8ea7823a450a2f41236f5",
+      "proposed_actions": [
+        {
+          "parameter": "paint_value",
+          "value": 48,
+          "group": "finish",
+          "evidence": [
+            {
+              "view": "left",
+              "correction": 5
+            },
+            {
+              "view": "right",
+              "correction": 4
+            },
+            {
+              "view": "front",
+              "correction": 5
+            },
+            {
+              "view": "rear",
+              "correction": 6
+            },
+            {
+              "view": "top",
+              "correction": 4
+            }
+          ],
+          "reason": "All five views consistently report that the overall surface coating is too light, washed out, and uniform, requesting a darker German gray base paint tone.",
+          "before": 62,
+          "tool": "set_exterior_parameter"
+        }
+      ],
+      "source_iteration": "r14",
+      "inspection": {
+        "id": "6d96558826904167b9e64a38cf4a0193",
+        "status": "SUBMITTING",
+        "contract": {
+          "bounds": [
+            [
+              -3.1996042728424072,
+              -1.6636005640029907,
+              -0.003942213486880064
+            ],
+            [
+              2.299999952316284,
+              1.6636005640029907,
+              1.4341877698898315
+            ]
+          ],
+          "views": [
+            {
+              "id": "left",
+              "direction": [
+                0.2,
+                1,
+                0.12
+              ]
+            },
+            {
+              "id": "right",
+              "direction": [
+                0.12,
+                -1,
+                0.12
+              ]
+            },
+            {
+              "id": "front",
+              "direction": [
+                1,
+                0,
+                0.08
+              ]
+            },
+            {
+              "id": "rear",
+              "direction": [
+                -1,
+                0,
+                0.23
+              ]
+            },
+            {
+              "id": "top",
+              "direction": [
+                0,
+                0,
+                1
+              ]
+            }
+          ],
+          "resolution": [
+            1536,
+            1024
+          ],
+          "samples": 16,
+          "regions": {
+            "wheel-left": [
+              "tire-left",
+              "disc-left",
+              "ribs-left",
+              "rim-steps-left",
+              "hub-left",
+              "tread-left",
+              "fasteners-wheel-left"
+            ],
+            "breech": [
+              "breech-top-cover",
+              "breech-recess",
+              "breech-top-grip",
+              "shaped-rear-cover",
+              "rear-cover-body",
+              "external-arm",
+              "rear-cover-mounts",
+              "rear-upper-latch",
+              "fasteners-breech"
+            ],
+            "controls": [
+              "handwheel-left",
+              "connected-control-housing",
+              "sight-mounted",
+              "fasteners-controls"
+            ],
+            "trail-left": [
+              "trail-tube-left",
+              "trail-collars-left",
+              "trail-handle-left-0",
+              "trail-handle-left-1",
+              "trail-handle-left-2",
+              "spade-seat-left",
+              "spade-blade-left",
+              "spade-lever-left",
+              "trail-pivot-left",
+              "spade-pivot-seat-left",
+              "spade-retainer-left",
+              "spade-catches-left",
+              "fasteners-trail-left"
+            ],
+            "shield": [
+              "shield-left-0",
+              "shield-right-0",
+              "shield-left-1",
+              "shield-right-1",
+              "shield-upper-bridge",
+              "shield-lower-apron",
+              "shield-struts",
+              "fasteners-shield"
+            ]
+          }
+        },
+        "source_job": "524724908d4d44dcabadacdb20198970",
+        "version": "1.0.0"
+      },
+      "evidence_source": "inspection"
+    }
+  ],
+  "author_interventions": [
+    {
+      "kind": "tool_and_recipe_implementation",
+      "author": "Codex",
+      "scope": "Original parameterized exterior recipe and controller authored before independent trial; not learned autonomously"
+    },
+    {
+      "author": "Codex",
+      "kind": "capability_extension",
+      "version": "1.1.0",
+      "reason": "Jarvis reported four unsupported topology edits; implemented four bounded shape variants. Existing baseline scene hash verified unchanged."
+    },
+    {
+      "at": "2026-10-27T17:47:38.229430+00:00",
+      "author": "Codex",
+      "kind": "tool_extension",
+      "recipe_version": "1.2.0",
+      "scope": "Concave outline extrusion, pressed wheel variant2, curved spade variant2, contoured cradle/connected control/compact C-profile exterior tools; fixed curved_double policy and shield-fastener surface attachment. 118 Studio3D tests passed. Not autonomous code learning."
+    },
+    {
+      "at": "2026-10-27T17:59:17.859101+00:00",
+      "author": "Codex",
+      "kind": "tool_extension",
+      "recipe_version": "1.3.0",
+      "scope": "Added surface-finish rendering, visible front fittings and shield hinge-tab tools; independent three-image comparison replaces issue-count-only adoption for future candidates; old r3 rejection preserved. Increased bounded cumulative call cap to80 while keeping3USD known estimate cap. No user acceptance inferred."
+    },
+    {
+      "at": "2026-10-27T18:11:09.435119+00:00",
+      "author": "Codex",
+      "kind": "controller_extension",
+      "scope": "Paired checker identified regressions in mixed patch r4. Added bounded rollback-and-replan with retained failure evidence and duplicate-rejected-parameter prevention. Did not override r4 rejection or accept it manually. Fixed transport by lossless two-row sheet within two-image contract; original failed request reconciled as zero model invocations."
+    },
+    {
+      "at": "2026-10-27T18:29:56.659608+00:00",
+      "author": "Codex",
+      "kind": "tool_and_verification_extension",
+      "recipe_version": "1.4.0",
+      "scope": "Retained r7 on direct comparison evidence. Added parent-frame spade orientation, restrained coating variant and semantic patch merger preserving unchanged scene objects/materials. Pre-r8 cross-version whole-recipe tests were not fully isolated causal experiments; their rejection/adoption evidence remains unchanged. Cumulative request-record cap120 with known API estimate cap3USD; no new model type."
+    },
+    {
+      "at": "2026-10-27T18:48:31.183953+00:00",
+      "author": "Codex",
+      "kind": "bounded_continuation",
+      "scope": "Continue two bounded autonomous trials from retained r9 with existing registered tools. High surface atlas diagnostic passed geometry/format checks; not yet adopted for this asset. No high approval or LOD."
+    },
+    {
+      "at": "2026-10-27T19:00:53.785185+00:00",
+      "author": "Codex",
+      "kind": "tool_extension_from_failure",
+      "recipe_version": "1.5.0",
+      "scope": "r11 broad wheel improvement was rejected for coarse shoulder silhouette. Added bounded variant3 with shallower pressed ribs and finer tread, upright curved spade option and shallow rear-cover option. No rejection overridden. Supplemental actual oblique render/crop tool verified on r9; independent high atlas/reimport coupon verified. Continue three autonomous rounds; cumulative request-record cap180, known API estimate cap3USD unchanged."
+    },
+    {
+      "at": "2026-10-27T19:15:53.523918+00:00",
+      "author": "Codex",
+      "kind": "verification_and_controller_extension",
+      "controller_version": "1.2.0",
+      "scope": "Enabled receipt-verified supplemental 1536x1024 native render/crop review as autonomous planning evidence, preserved canonical five-view gate. Added bounded --resume, retained-version delivery, under-addressed material-work scheduling, and unknown-request guard. Fixed cradle tool dependent carriage-seat replacement. 137 Studio3D tests pass. Cumulative request cap240, known API estimate cap3USD. No user high acceptance, reduction or LOD."
+    }
+  ],
+  "user_approval": false,
+  "cross_asset_gain_verified": false,
+  "unknown_costs": [
+    "Codex authoring tokens and dollars",
+    "local compute dollars"
+  ],
+  "failed_attempts": [
+    "Two local workbench starts rejected by existing executor lock; reused authenticated 18282 instance",
+    "Client initially lacked existing local session; fixed with built-in install_client",
+    "Planner context budget rejected locally; retained five-view evidence, compressed priority findings without paid retry"
+  ],
+  "read_only_document_paths_not_modified": [
+    "docs/manifest.json",
+    "docs/delivery-validation.md"
+  ],
+  "updated_at": "2026-10-27T18:14:32.002967+00:00",
+  "controller_version": "1.2.0",
+  "recipe_version": "1.5.0",
+  "model_requests": 48,
+  "runtime": {
+    "origin": "http://127.0.0.1:18282",
+    "model_route": {
+      "provider": "vertex",
+      "model": "gemini-3.8-flash"
+    },
+    "auth": "existing local-user DPAPI session exchange, no disabled gates"
+  },
+  "limits": {
+    "call_records": 80,
+    "known_api_estimate_usd": 3,
+    "max_candidates_per_invocation": 5,
+    "unknown_costs": "remain null"
+  },
+  "remaining": [
+    "PaK38 high-model target fidelity",
+    "camera matching",
+    "high GLB procedural-material parity",
+    "actual motion rig and grouping",
+    "independent cross-asset improvement study"
+  ],
+  "current_best": "r15",
+  "observed_at": "2026-10-27T19:25:17.323337+00:00",
+  "model_usage_snapshot": {
+    "known_model_calls": 165,
+    "known_tokens": 865028,
+    "known_api_estimated_usd": 1.48506,
+    "known_model_call_seconds": 3630.371187599997,
+    "known_native_seconds": 663.6921305766264,
+    "unknown_api_cost_stages": 0,
+    "codex_author_tokens": null,
+    "codex_author_usd": null,
+    "local_compute_usd": null,
+    "complete_total_usd": null,
+    "basis": "Known API subtotal only; image generation, authoring and local compute may be unknown. Sequential work durations are not end-to-end wall time."
+  },
+  "high_user_approved": false,
+  "AAA_verified": false,
+  "cross_asset_quality_gain_verified": false,
+  "additional_evidence": {
+    "high_surface_diagnostic": "high-finish-diagnostic/verification.json",
+    "supplemental_inspection": {
+      "source_iteration": "r9",
+      "run_id": "b16521d41b7b4559a000bd4aec5f9642",
+      "elapsed_seconds": 190.63042545318604,
+      "resolution": [
+        1536,
+        1024
+      ],
+      "source_unchanged": true,
+      "native_region_crops": true,
+      "automatic_camera_calibration": false
+    },
+    "local_asset_resume": "3DModels/PaK38/metadata/continuation.json"
+  },
+  "closed_loop_demonstration": {
+    "source": "r14",
+    "supplemental_tool_run": "52599c3db8cf4e94ae15406eb9a75acd",
+    "candidate": "r15",
+    "model_selected_action": "paint_value 62 -> 48",
+    "retained_by_five_view_comparison": true,
+    "full_asset_near_match": false,
+    "user_approval": false
+  }
+}

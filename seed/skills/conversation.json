@@ -293,25 +293,111 @@
     },
     {
       "id": "studio3d",
-      "name": "3D 工作室",
+      "name": "Blender 3D 制作与修改",
       "category": "建模与创作",
       "kind": "组合技能",
       "state": "ready",
       "adapter": "blender-studio",
       "version": "1.6.0",
-      "description": "参考识图、底色贴图与曲面展开、对照修正、逐级独立投射与PBR/LOD检视。",
+      "description": "参考与分件建模 → 局部改形/改材质 → 真实渲染对比 → .blend/GLB 与游戏资产。",
       "output": ".blend / GLB / 五视图 / 贴图 / LOD / 验收记录",
       "triggers": [
-        "3d建模",
+        "用 Blender 制作",
+        "Blender建模",
+        "3D建模",
         "三维建模",
-        "写实模型"
+        "修改3D模型",
+        "Charakuru"
       ],
-      "guidance": "需要可编辑3D、车辆/机械/有机道具或游戏资产时使用。先看参考并标明推测区域，制作高模，实际渲染后对照轮廓、附件、材质和高光，再局部修正复核。主人明确选择对照修正才把参考与渲染发给所选视觉模型；一轮最多两次调用、一次改模，无自动重试。通用与类别规则由工作室production提供。模型仅输出受限数据，不运行模型代码。底色图须无高光阴影，图片来源与材质绑定由主人明确选择；旋转体使用曲面展开减少果肩拉伸。每级游戏LOD独立UV与烘焙，覆盖漏射时调整投射距离并复查实际GLB。高模相似度验收后再投射到低模，格式检查不能替代各级LOD视觉检查或AAA验收。普通聊天不自动渲染或付费。 火炮及硬表面学习流程见 docs/studio3d-learning.md；经验方法通过 /api/studio3d/learning/plan 按条件选择，/run 只接受已交付模型和明确声明的修复范围，/feedback 保留采用反例。知识、工具检查与高模美术验收分别记录；不因本地检查通过自动生成 LOD。",
+      "guidance": "先依据参考和用途分件建模，再用 Blender 渲染核验；本工作室数据模型可按部件修改并保留原版。现有图片、模型线路、费用、任务取消、PBR/LOD与查看器继续复用。完整步骤在选中技能后按需加载；普通聊天不自动执行。角色绑定、物理、表情与VRM是外部 Charakuru 分支，尚未接入 Jarvis 自动执行。",
       "source": {
         "name": "Blender / Jarvis 第一方适配",
         "url": "https://www.blender.org/",
         "license": "Blender GPL-2.0-or-later；适配器独立编写"
-      }
+      },
+      "icon": "🧊",
+      "use_when": "明确要制作或修改可编辑 3D 模型、车辆机械或游戏资产；沿当前模型继续修改。",
+      "avoid_when": "仅要一张图片、机械运动科普或制造 CAD；任意 BLEND/FBX 编辑、角色自动绑定与 VRM 表情尚未接入此执行器。",
+      "examples": [
+        "用 Blender 制作一个带金属外壳的机械模型。",
+        "修改3D模型：只加宽轮毂并降低金属粗糙度，保留其他零件。"
+      ],
+      "workflow": {
+        "version": "1.0.0",
+        "name": "Blender 3D 制作与修改",
+        "stages": [
+          {
+            "name": "参考与目标",
+            "status": "ready",
+            "detail": "登记参考图、尺寸、用途及来源；需要新图时复用图片工作室。"
+          },
+          {
+            "name": "建立模型",
+            "status": "ready",
+            "detail": "Jarvis 模型输出受限曲面/网格数据，Blender 制作 .blend 和 GLB。"
+          },
+          {
+            "name": "局部修改",
+            "status": "ready",
+            "detail": "对本工作室的未烘焙数据模型修改部件尺寸、变换、材质或支持的修改器，保留原版。"
+          },
+          {
+            "name": "渲染比较",
+            "status": "ready",
+            "detail": "查看真实渲染与五视图；参考识图修正使用明确选择的视觉模型。"
+          },
+          {
+            "name": "游戏资产",
+            "status": "ready",
+            "detail": "现有高模→低模、静态 PBR 烘焙、LOD 流程；外观验收另行判断。"
+          },
+          {
+            "name": "角色绑定、表情、VRM",
+            "status": "external_only",
+            "detail": "Charakuru 外部套件可用；尚未接入 Jarvis 的自动执行，不因安装而宣称完成。"
+          }
+        ],
+        "outputs": [
+          "model.blend",
+          "model.glb",
+          "preview.png",
+          "scene.json",
+          "report.json"
+        ],
+        "edit_scope": "本工作室已交付、未烘焙的声明式模型；外部 GLB 仅支持原有导入渲染，任意 BLEND/FBX 编辑未接入。",
+        "sources": [
+          {
+            "name": "kokushin/charakuru-claude-code · 非官方流程参考",
+            "url": "https://github.com/kokushin/charakuru-claude-code/tree/28eddac5fe4bcb8f78f0d375fd7aedc824d7becb",
+            "commit": "28eddac5fe4bcb8f78f0d375fd7aedc824d7becb",
+            "license": "MIT"
+          },
+          {
+            "name": "Nano / Charakuru · 原始套件",
+            "url": "https://github.com/nanocle/Charakuru/releases/tag/v1.1.0",
+            "version": "1.1.0",
+            "license": "Charakuru Source-Available License；不随本工程分发"
+          },
+          {
+            "name": "Blender · 本地建模引擎",
+            "url": "https://www.blender.org/",
+            "license": "GPL-2.0-or-later"
+          }
+        ],
+        "runtime": "Jarvis Studio3D；不启动 Claude/Codex 子代理，不依赖 Tripo，不执行外来 Python。"
+      },
+      "components": [
+        "参考与目标",
+        "分件建模",
+        "局部修改",
+        "渲染比较",
+        "游戏资产"
+      ],
+      "auto_patterns": [
+        "^(?:请\\s*)?(?:帮我\\s*)?用\\s*(?:Blender|Charakuru)\\s*(?:制作|创建|修改|建模)(?!不了|不|吗)",
+        "^(?:请\\s*)?(?:帮我\\s*)?(?:做\\s*|进行\\s*)?(?:Blender\\s*建模|3D\\s*建模|三维建模|修改\\s*3D\\s*模型)(?:[：:，,。.!！?？\\s]|$)",
+        "^(?:please\\s+)?(?:create|edit|build)\\s+(?:a\\s+|the\\s+)?(?:blender|3d)\\s+model\\b"
+      ]
     },
     {
       "id": "image-studio",

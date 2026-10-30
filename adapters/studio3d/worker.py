@@ -226,6 +226,10 @@ def main():
         (folder/'source.glb').replace(folder/'model.glb')
     else:
         bpy.ops.export_scene.gltf(filepath=str(folder/'model.glb'),export_format='GLB',use_selection=True,export_apply=True,export_materials='EXPORT',export_cameras=False,export_lights=False,export_tangents=bool(asset_report or 'asset' in scene),**({'export_extras':True,'export_animation_mode':'NLA_TRACKS'} if 'asset' in scene and not asset_report else {}))
+    export_material_fallback=None
+    if not asset_report and 'asset' not in scene and 'master' not in scene:
+        from modules.skills.studio3d.export_materials import preserve_base_pbr
+        output=folder/'model.glb';repaired,export_material_fallback=preserve_base_pbr(output.read_bytes(),scene['materials']);output.write_bytes(repaired)
     imported_tangent_frames=None
     if 'asset' in scene and not asset_report and not preserve_game_high:
         from adapters.studio3d.asset_pipeline import pack_occlusion
@@ -264,6 +268,7 @@ def main():
     delta=max(abs(ibounds[j][i]-[low,high][j][i]) for j in range(2) for i in range(3)) if ibounds else None
     report={'schema':'jarvis.studio3d.report.v1','blender':bpy.app.version_string,'visible_objects':len(visible),'triangles':triangles,'objects':rows,'bounds_m':[list(low),list(high)],'render':{'engine':engine,'requested_engine':scene['render']['engine'],'device':'CPU' if engine=='CYCLES' else 'AUTO','resolution':hero_resolution,'samples':(64 if final else 24) if engine=='CYCLES' else None},'glb_roundtrip':{'mesh_objects':len(imported),'bounds_m':ibounds,'max_bound_error_m':delta,'passed':bool(ic and delta<.001)},'elapsed_seconds':time.monotonic()-start,'unverified':['OEM mechanical accuracy','manufacturing','production topology','UV quality','baked PBR textures','LODs','engine performance'],'warnings':['GLB contains base PBR; procedural bump detail stays in Blender/render.','Automatic UV presence is not UV quality certification.']}
     report['orthographic_views']=views
+    report['export_material_fallback']=export_material_fallback
     report['game_high_source_preserved']=preserve_game_high
     if imported_tangent_frames is not None:
         report['imported_tangent_frames']=imported_tangent_frames

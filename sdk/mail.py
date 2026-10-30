@@ -115,7 +115,9 @@ def classify(mail,rules=()):
     if 'SPAM' in mail.get('labels',[]):return {'category':'spam','reason':'Gmail 垃圾邮件标签'}
     if any(x in text for x in ['密码过期','验证密码','中奖','钱包助记词','seed phrase','verify your password']):
         return {'category':'suspicious','reason':'命中可疑内容提示；不代表已证实欺诈'}
-    if any(x in text for x in ['账单','航班','会议','面试','invoice','flight','security alert','验证码']):
+    if any(x in text for x in ['账单','收据','消费成功','扣款','付款失败','航班','会议','面试','invoice','receipt','payment failed','flight','security alert','验证码']):
         return {'category':'important','reason':'命中通知类关键词；可能误判'}
+    if 'IMPORTANT' in mail.get('labels',[]):return {'category':'important','reason':'Gmail 重要标签；可由主人规则纠正'}
+    if 'CATEGORY_PROMOTIONS' in mail.get('labels',[]):return {'category':'promotion','reason':'Gmail 推广分类；不证明邮件可信或有害'}
     if any(x in text for x in ['unsubscribe','退订','优惠','促销','sale ends']):return {'category':'promotion','reason':'命中推广类关键词'}
     return {'category':'normal','reason':'暂无特别规则'}

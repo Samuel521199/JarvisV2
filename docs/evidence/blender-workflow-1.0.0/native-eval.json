@@ -1,0 +1,1401 @@
+{
+  "schema": "jarvis.blender-workflow-eval.v1",
+  "data_root": "D:\\Jarvis\\user-data\\evals\\blender-workflow-20261028",
+  "paid_calls": 0,
+  "results": {
+    "before": {
+      "request": {
+        "id": "3dc5ce1d22994d2d8e13d633ccc01523",
+        "scene": {
+          "schema": "jarvis.studio3d.v1",
+          "units": "m",
+          "title": "Blender 工作流验收 · 分件机械壳体",
+          "materials": [
+            {
+              "id": "shell-metal",
+              "color": "#507b9c",
+              "metallic": 0.75,
+              "roughness": 0.32
+            },
+            {
+              "id": "steel",
+              "color": "#aeb9c6",
+              "metallic": 0.9,
+              "roughness": 0.22
+            }
+          ],
+          "objects": [
+            {
+              "id": "housing",
+              "kind": "lathe",
+              "material": "shell-metal",
+              "params": {
+                "profile": [
+                  [
+                    0.14,
+                    -0.25
+                  ],
+                  [
+                    0.2,
+                    -0.2
+                  ],
+                  [
+                    0.21,
+                    0.15
+                  ],
+                  [
+                    0.17,
+                    0.25
+                  ]
+                ],
+                "segments": 48
+              },
+              "modifiers": {
+                "bevel": 0.004
+              }
+            },
+            {
+              "id": "shaft",
+              "kind": "cylinder",
+              "material": "steel",
+              "position": [
+                0,
+                0,
+                0.35
+              ],
+              "params": {
+                "radius": 0.055,
+                "depth": 0.3,
+                "segments": 32
+              },
+              "modifiers": {
+                "bevel": 0.003
+              }
+            },
+            {
+              "id": "mount",
+              "kind": "box",
+              "material": "steel",
+              "position": [
+                0,
+                0,
+                -0.29
+              ],
+              "params": {
+                "size": [
+                  0.5,
+                  0.4,
+                  0.06
+                ]
+              },
+              "modifiers": {
+                "bevel": 0.008
+              }
+            }
+          ],
+          "render": {
+            "quality": "preview",
+            "engine": "CYCLES",
+            "view": "front",
+            "five_views": true
+          },
+          "unfulfilled": [
+            "流程诊断模型，不对应真实机械尺寸、载荷或 AAA 美术验收。"
+          ]
+        }
+      },
+      "job": {
+        "id": "3dc5ce1d22994d2d8e13d633ccc01523",
+        "status": "DELIVERED",
+        "phase": "已交付可编辑模型、渲染与检查回执",
+        "created": 1793236229.3956559,
+        "chat_id": null,
+        "turn_id": null,
+        "error": null,
+        "cancel": 0,
+        "receipt": {
+          "adapter_version": "1.6.0",
+          "configuration": {
+            "materials": [
+              {
+                "coat": 0,
+                "color": "#507b9c",
+                "id": "shell-metal",
+                "metallic": 0.75,
+                "roughness": 0.32,
+                "transmission": 0
+              },
+              {
+                "coat": 0,
+                "color": "#aeb9c6",
+                "id": "steel",
+                "metallic": 0.9,
+                "roughness": 0.22,
+                "transmission": 0
+              }
+            ],
+            "objects": [
+              {
+                "id": "housing",
+                "kind": "lathe",
+                "material": "shell-metal",
+                "modifiers": {
+                  "bevel": 0.004
+                },
+                "params": {
+                  "profile": [
+                    [
+                      0.14,
+                      -0.25
+                    ],
+                    [
+                      0.2,
+                      -0.2
+                    ],
+                    [
+                      0.21,
+                      0.15
+                    ],
+                    [
+                      0.17,
+                      0.25
+                    ]
+                  ],
+                  "segments": 48
+                },
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              {
+                "id": "shaft",
+                "kind": "cylinder",
+                "material": "steel",
+                "modifiers": {
+                  "bevel": 0.003
+                },
+                "params": {
+                  "depth": 0.3,
+                  "radius": 0.055,
+                  "segments": 32
+                },
+                "position": [
+                  0,
+                  0,
+                  0.35
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              {
+                "id": "mount",
+                "kind": "box",
+                "material": "steel",
+                "modifiers": {
+                  "bevel": 0.008
+                },
+                "params": {
+                  "size": [
+                    0.5,
+                    0.4,
+                    0.06
+                  ]
+                },
+                "position": [
+                  0,
+                  0,
+                  -0.29
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              }
+            ],
+            "render": {
+              "engine": "CYCLES",
+              "five_views": true,
+              "quality": "preview",
+              "view": "front"
+            },
+            "schema": "jarvis.studio3d.v1",
+            "title": "Blender 工作流验收 · 分件机械壳体",
+            "unfulfilled": [
+              "流程诊断模型，不对应真实机械尺寸、载荷或 AAA 美术验收。"
+            ],
+            "units": "m"
+          },
+          "files": {
+            "model.blend": {
+              "bytes": 103862,
+              "sha256": "dbcd21190f6e9de285d0d5e3cdc476d81da85ac90624eae617bcf4bb72d4a74c",
+              "url": "/api/studio3d/files/3dc5ce1d22994d2d8e13d633ccc01523/model.blend"
+            },
+            "model.glb": {
+              "bytes": 47912,
+              "sha256": "da76866874b11e581cb58962765129baa0aba563fc67942b7adf9992dee813ce",
+              "url": "/api/studio3d/files/3dc5ce1d22994d2d8e13d633ccc01523/model.glb"
+            },
+            "preview.png": {
+              "bytes": 532561,
+              "sha256": "e0f013743eb3af84ff54ad6890ef229a78e7aabc2df3942f1ee26fb8dd8f934e",
+              "url": "/api/studio3d/files/3dc5ce1d22994d2d8e13d633ccc01523/preview.png"
+            },
+            "report.json": {
+              "bytes": 5275,
+              "sha256": "aff20c8713b249f39527c2bbf3a212b80b1bf80e0ffb5c3ce0e9b3f2e5274eab",
+              "url": "/api/studio3d/files/3dc5ce1d22994d2d8e13d633ccc01523/report.json"
+            },
+            "scene.json": {
+              "bytes": 1074,
+              "sha256": "c8c6e8b5d83d0714054982bfbd453b6ac73f28f776dce2ef5893e03a43975cb5",
+              "url": "/api/studio3d/files/3dc5ce1d22994d2d8e13d633ccc01523/scene.json"
+            },
+            "view-front.png": {
+              "bytes": 517151,
+              "sha256": "9d979398aca3dc689c2a712ddcb209e4d3fb5ea98904045bf6fca65058adaa7d",
+              "url": "/api/studio3d/files/3dc5ce1d22994d2d8e13d633ccc01523/view-front.png"
+            },
+            "view-left.png": {
+              "bytes": 515587,
+              "sha256": "8913e826ef884ca03dd26bfd21add95c542e089de80c918a6694efd6739ba979",
+              "url": "/api/studio3d/files/3dc5ce1d22994d2d8e13d633ccc01523/view-left.png"
+            },
+            "view-rear.png": {
+              "bytes": 519305,
+              "sha256": "276c17e9ffe1f1db33049f8718a747428b6fe1779622dfaf585e9598756101da",
+              "url": "/api/studio3d/files/3dc5ce1d22994d2d8e13d633ccc01523/view-rear.png"
+            },
+            "view-right.png": {
+              "bytes": 519648,
+              "sha256": "271e02b6a942f49cf201bf1fc75b165dc2e3b91aa3cab639fd2fe3a1e53087b4",
+              "url": "/api/studio3d/files/3dc5ce1d22994d2d8e13d633ccc01523/view-right.png"
+            },
+            "view-top.png": {
+              "bytes": 540469,
+              "sha256": "e6293bfac68688bac6d0d3aaaa141805743bd94b4bef130fd3f9ea129bf38d9e",
+              "url": "/api/studio3d/files/3dc5ce1d22994d2d8e13d633ccc01523/view-top.png"
+            }
+          },
+          "frozen_master": null,
+          "id": "3dc5ce1d22994d2d8e13d633ccc01523",
+          "input_asset": null,
+          "model_receipt": null,
+          "quality": {
+            "AAA_certified": false,
+            "mechanical_validation": false,
+            "status": "visual_asset_export_checked",
+            "visual_score": null
+          },
+          "reference": null,
+          "report": {
+            "blender": "5.2.0 LTS",
+            "bounds_m": [
+              [
+                -0.25,
+                -0.20999999344348907,
+                -0.3199999928474426
+              ],
+              [
+                0.25,
+                0.20999999344348907,
+                0.5
+              ]
+            ],
+            "elapsed_seconds": 30.63567590000457,
+            "export_material_fallback": {
+              "binary_unchanged": true,
+              "changed": []
+            },
+            "game_high_source_preserved": false,
+            "glb_roundtrip": {
+              "bounds_m": [
+                [
+                  -0.25,
+                  -0.20999999344348907,
+                  -0.3199999928474426
+                ],
+                [
+                  0.25,
+                  0.20999999344348907,
+                  0.5
+                ]
+              ],
+              "max_bound_error_m": 0.0,
+              "mesh_objects": 3,
+              "passed": true
+            },
+            "gltf_validation": {
+              "files": {
+                "model.glb": {
+                  "info": {
+                    "animationCount": 0,
+                    "drawCallCount": 3,
+                    "extensionsUsed": [
+                      "KHR_materials_clearcoat"
+                    ],
+                    "generator": "Khronos glTF Blender I/O v5.2.39",
+                    "hasDefaultScene": true,
+                    "hasMorphTargets": false,
+                    "hasSkins": false,
+                    "hasTextures": false,
+                    "materialCount": 2,
+                    "maxAttributes": 3,
+                    "maxInfluences": 0,
+                    "maxUVs": 1,
+                    "resources": [
+                      {
+                        "byteLength": 44592,
+                        "mimeType": "application/gltf-buffer",
+                        "pointer": "/buffers/0",
+                        "storage": "glb"
+                      }
+                    ],
+                    "totalTriangleCount": 1272,
+                    "totalVertexCount": 1155,
+                    "version": "2.0"
+                  },
+                  "issues": {
+                    "messages": [
+                      {
+                        "code": "UNUSED_OBJECT",
+                        "message": "This object may be unused.",
+                        "pointer": "/meshes/0/primitives/0/attributes/TEXCOORD_0",
+                        "severity": 2
+                      },
+                      {
+                        "code": "UNUSED_OBJECT",
+                        "message": "This object may be unused.",
+                        "pointer": "/meshes/1/primitives/0/attributes/TEXCOORD_0",
+                        "severity": 2
+                      },
+                      {
+                        "code": "UNUSED_OBJECT",
+                        "message": "This object may be unused.",
+                        "pointer": "/meshes/2/primitives/0/attributes/TEXCOORD_0",
+                        "severity": 2
+                      }
+                    ],
+                    "numErrors": 0,
+                    "numHints": 0,
+                    "numInfos": 3,
+                    "numWarnings": 0,
+                    "truncated": false
+                  },
+                  "mimeType": "model/gltf-binary",
+                  "uri": "model.glb",
+                  "validatedAt": "2026-10-29T01:11:01.450Z",
+                  "validatorVersion": "2.0.0-dev.3.10"
+                }
+              },
+              "implementation": "Khronos glTF-Validator",
+              "version": "2.0.0-dev.3.10"
+            },
+            "objects": [
+              {
+                "id": "housing",
+                "triangles": 576,
+                "uv": true,
+                "vertices": 336,
+                "zero_area_faces": 0
+              },
+              {
+                "id": "shaft",
+                "triangles": 508,
+                "uv": true,
+                "vertices": 256,
+                "zero_area_faces": 0
+              },
+              {
+                "id": "mount",
+                "triangles": 188,
+                "uv": true,
+                "vertices": 96,
+                "zero_area_faces": 0
+              }
+            ],
+            "orthographic_views": [
+              {
+                "axis_convention": "X forward, Y left, Z up",
+                "file": "view-front.png",
+                "frame_check_passed": true,
+                "frame_extent_ndc": [
+                  0.2893758604563069,
+                  0.8474577802498287
+                ],
+                "look_from": [
+                  1.6399999856948853,
+                  0.0,
+                  0.09000000357627869
+                ],
+                "ortho_scale_m": 1.4514000415802002,
+                "projection": "ORTHOGRAPHIC",
+                "resolution": [
+                  960,
+                  640
+                ],
+                "view": "front"
+              },
+              {
+                "axis_convention": "X forward, Y left, Z up",
+                "file": "view-rear.png",
+                "frame_check_passed": true,
+                "frame_extent_ndc": [
+                  0.2893758604563069,
+                  0.8474577802498287
+                ],
+                "look_from": [
+                  -1.6399999856948853,
+                  0.0,
+                  0.09000000357627869
+                ],
+                "ortho_scale_m": 1.4514000415802002,
+                "projection": "ORTHOGRAPHIC",
+                "resolution": [
+                  960,
+                  640
+                ],
+                "view": "rear"
+              },
+              {
+                "axis_convention": "X forward, Y left, Z up",
+                "file": "view-left.png",
+                "frame_check_passed": true,
+                "frame_extent_ndc": [
+                  0.3444950426382229,
+                  0.8474579650513264
+                ],
+                "look_from": [
+                  0.0,
+                  1.6399999856948853,
+                  0.09000000357627869
+                ],
+                "ortho_scale_m": 1.4514000415802002,
+                "projection": "ORTHOGRAPHIC",
+                "resolution": [
+                  960,
+                  640
+                ],
+                "view": "left"
+              },
+              {
+                "axis_convention": "X forward, Y left, Z up",
+                "file": "view-right.png",
+                "frame_check_passed": true,
+                "frame_extent_ndc": [
+                  0.3444949605042239,
+                  0.8474582114533233
+                ],
+                "look_from": [
+                  0.0,
+                  -1.6399999856948853,
+                  0.09000000357627869
+                ],
+                "ortho_scale_m": 1.4514000415802002,
+                "projection": "ORTHOGRAPHIC",
+                "resolution": [
+                  960,
+                  640
+                ],
+                "view": "right"
+              },
+              {
+                "axis_convention": "X forward, Y left, Z up",
+                "file": "view-top.png",
+                "frame_check_passed": true,
+                "frame_extent_ndc": [
+                  0.4745762614834916,
+                  0.8474576362508314
+                ],
+                "look_from": [
+                  0.0,
+                  0.0,
+                  1.7300000190734863
+                ],
+                "ortho_scale_m": 0.8849999904632568,
+                "projection": "ORTHOGRAPHIC",
+                "resolution": [
+                  960,
+                  640
+                ],
+                "view": "top"
+              }
+            ],
+            "phase_timings": [
+              {
+                "api_cost_usd": 0,
+                "api_tokens": 0,
+                "elapsed_seconds": 0.035339500005648006,
+                "model_calls": 0,
+                "phase": "initialization"
+              },
+              {
+                "api_cost_usd": 0,
+                "api_tokens": 0,
+                "elapsed_seconds": 0.01050089999625925,
+                "model_calls": 0,
+                "phase": "modelling"
+              },
+              {
+                "api_cost_usd": 0,
+                "api_tokens": 0,
+                "elapsed_seconds": 0.0019640000027720816,
+                "model_calls": 0,
+                "phase": "studio lighting"
+              },
+              {
+                "api_cost_usd": 0,
+                "api_tokens": 0,
+                "elapsed_seconds": 0.006544799995026551,
+                "model_calls": 0,
+                "phase": "saving blend"
+              },
+              {
+                "api_cost_usd": 0,
+                "api_tokens": 0,
+                "elapsed_seconds": 0.07358160000148928,
+                "model_calls": 0,
+                "phase": "exporting glb"
+              },
+              {
+                "api_cost_usd": 0,
+                "api_tokens": 0,
+                "elapsed_seconds": 8.720141000005242,
+                "model_calls": 0,
+                "phase": "rendering"
+              },
+              {
+                "api_cost_usd": 0,
+                "api_tokens": 0,
+                "elapsed_seconds": 3.518164399996749,
+                "model_calls": 0,
+                "phase": "orthographic front"
+              },
+              {
+                "api_cost_usd": 0,
+                "api_tokens": 0,
+                "elapsed_seconds": 3.3878335999979754,
+                "model_calls": 0,
+                "phase": "orthographic rear"
+              },
+              {
+                "api_cost_usd": 0,
+                "api_tokens": 0,
+                "elapsed_seconds": 3.600811500000418,
+                "model_calls": 0,
+                "phase": "orthographic left"
+              },
+              {
+                "api_cost_usd": 0,
+                "api_tokens": 0,
+                "elapsed_seconds": 3.5007027000028756,
+                "model_calls": 0,
+                "phase": "orthographic right"
+              },
+              {
+                "api_cost_usd": 0,
+                "api_tokens": 0,
+                "elapsed_seconds": 7.715613100001065,
+                "model_calls": 0,
+                "phase": "orthographic top"
+              },
+              {
+                "api_cost_usd": 0,
+                "api_tokens": 0,
+                "elapsed_seconds": 0.06448239999735961,
+                "model_calls": 0,
+                "phase": "checking glb roundtrip"
+              }
+            ],
+            "render": {
+              "device": "CPU",
+              "engine": "CYCLES",
+              "requested_engine": "CYCLES",
+              "resolution": [
+                960,
+                640
+              ],
+              "samples": 24
+            },
+            "schema": "jarvis.studio3d.report.v1",
+            "triangles": 1272,
+            "unverified": [
+              "OEM mechanical accuracy",
+              "manufacturing",
+              "production topology",
+              "UV quality",
+              "baked PBR textures",
+              "LODs",
+              "engine performance"
+            ],
+            "visible_objects": 3,
+            "warnings": [
+              "GLB contains base PBR; procedural bump detail stays in Blender/render.",
+              "Automatic UV presence is not UV quality certification."
+            ]
+          },
+          "resources": {
+            "cpu_seconds": 1200,
+            "elapsed_seconds": 31.86969439999666,
+            "exit_code": 0,
+            "isolation": "Trusted fixed first-party worker with resource Job; not an OS security sandbox. No model Python, external imports or external BLEND loading. Only host-hash-verified first-party masters load with scripts disabled.",
+            "memory_bytes": 4294967296,
+            "output_bytes": 268435456,
+            "peak_memory_bytes": 1011302400,
+            "threads": 4,
+            "wall_seconds": 300
+          },
+          "runtime": {
+            "executable_sha256": "e27fbfea8564aa645d4463cb0949695fd85562b9de6df9561b06859a1074adf7",
+            "license": "GPL-2.0-or-later",
+            "source": "https://www.blender.org/",
+            "version": "Blender 5.2.0 LTS"
+          },
+          "skill": "studio3d",
+          "source_sha256": {
+            "adapters/models/native.py": "794070c292146ceb52950f8a10fc49c02197f1427baf470b88d1b0b923870583",
+            "adapters/models/native_transport.py": "dd9eabb5fbfd968fe45f20fe47720e8d3299d5a8e6d32c1fa7bbc7c8e9d74a9d",
+            "adapters/models/vision.py": "9bd86d2dc0b1ba2d8bf8b38edd7f550bd2abb761f4ae2a1f81db476eccb3591e",
+            "adapters/studio3d/asset_pipeline.py": "2b9bba545f5a4e2917b82e1a981596833226d2dacb94e7d729d0520f75db3c36",
+            "adapters/studio3d/framing.py": "7575830d0367d4d07d0fb09859c7cc9bf9ae21e21c9f4cb0fdcb279b24b75ab0",
+            "adapters/studio3d/organic.py": "5bbd521a5a70de5b8b2dea71f6ca6afc6d7e47714128fac8e6da9b181af270b1",
+            "adapters/studio3d/projection.py": "45547f32e01c7c44ea13e2e1f2803dad6f2863894ddb88f29112934742975a23",
+            "adapters/studio3d/weathering.py": "670e216abe575ab737919069480ca84987abdf84c29a71cec797007d171d9789",
+            "adapters/studio3d/worker.py": "3959b8dabc8dac4c0baf63273b8173055824da70bda4b62814d54a481937ecc2",
+            "apps/studio3d/worker.py": "07f12f369c67e2c61ed189dc208eebabe9d86226349caf09b12e13b15b1d4ae1",
+            "host/dialogue.py": "4a013ce55a2368a02f570fd1bd3cd60aa6f0310c9517da46741c37f74c72482f",
+            "host/studio3d.py": "c7374882432deab228be81a314f9c548d7292395d8f39fee44c4ef7dac54ebda",
+            "host/studio3d_reference.py": "e4abd3aa1a0463c7a6e1b158b250731702f0b71853ba5034fd1d947699faefc5",
+            "host/studio3d_refinement.py": "d67d7fd61bd55f651dd6b486ec73c981aab92e7b7c46b5cb4e4dc8f238165990",
+            "modules/dialogue/store.py": "58b53856a4f1aaa02dfd876b7d02eb76c2e290d356fa0517fff6358306fd17fc",
+            "modules/skills/studio3d/SKILL.md": "70a80ab3fd2d2e2c01e7b301cc27f4e292feed26b2c38660745058087e31fb1f",
+            "modules/skills/studio3d/assets.py": "b3028d08057f513158dc3c58add0ebdeb7a3b78ff18e66111b3e57bdf0201bc8",
+            "modules/skills/studio3d/blender_workflow.py": "2fb293d9c79e617088d220b4a9dece60e586b53066660b51bf7534eb95d638ea",
+            "modules/skills/studio3d/contract.py": "89610f711542b98db4ae3c737bad7abe54d3aa8bb1d9862b9fb944655afacefa",
+            "modules/skills/studio3d/presets.py": "f7d18d601f36920cff52d3f26fe21cd943ad1a63fc14ad91decdd78e4865b3a4",
+            "modules/skills/studio3d/production.py": "687a044d25b0f4261afb4eacf0edea84b5d0434250dc6ccd575ca7b9d8d06213",
+            "modules/skills/studio3d/refinement.py": "4d3c7bf8f59f17725af0a9b82f15bb314a1a76ee981190d4739aab377c6364df",
+            "modules/skills/studio3d/runtime.json": "81da224f6d53fb41c5a24288ca7d2e4bf7befd874d64f3a54f577fbb6b12e545",
+            "modules/skills/studio3d/tracked_vehicle.py": "24716810b044cf85d4cb497e9330da2bccd5d9437afe6c891da83908f60566f8"
+          },
+          "surface_texture": null,
+          "title": "Blender 工作流验收 · 分件机械壳体",
+          "unfulfilled": [
+            "流程诊断模型，不对应真实机械尺寸、载荷或 AAA 美术验收。"
+          ],
+          "url": "/api/studio3d/view/3dc5ce1d22994d2d8e13d633ccc01523"
+        }
+      }
+    },
+    "after": {
+      "request": {
+        "id": "6df651487fb94fb6a45f625ebd45d1b8",
+        "edit": "3dc5ce1d22994d2d8e13d633ccc01523",
+        "source_sha256": "c8c6e8b5d83d0714054982bfbd453b6ac73f28f776dce2ef5893e03a43975cb5",
+        "changes": {
+          "objects": [
+            {
+              "id": "housing",
+              "set": {
+                "scale": [
+                  1.25,
+                  1.25,
+                  1
+                ]
+              }
+            }
+          ],
+          "materials": [
+            {
+              "id": "shell-metal",
+              "set": {
+                "color": "#ba5938",
+                "roughness": 0.18
+              }
+            }
+          ]
+        }
+      },
+      "job": {
+        "id": "6df651487fb94fb6a45f625ebd45d1b8",
+        "status": "DELIVERED",
+        "phase": "已交付可编辑模型、渲染与检查回执",
+        "created": 1793236261.7561216,
+        "chat_id": null,
+        "turn_id": null,
+        "error": null,
+        "cancel": 0,
+        "receipt": {
+          "adapter_version": "1.6.0",
+          "configuration": {
+            "materials": [
+              {
+                "coat": 0,
+                "color": "#ba5938",
+                "id": "shell-metal",
+                "metallic": 0.75,
+                "roughness": 0.18,
+                "transmission": 0
+              },
+              {
+                "coat": 0,
+                "color": "#aeb9c6",
+                "id": "steel",
+                "metallic": 0.9,
+                "roughness": 0.22,
+                "transmission": 0
+              }
+            ],
+            "objects": [
+              {
+                "id": "housing",
+                "kind": "lathe",
+                "material": "shell-metal",
+                "modifiers": {
+                  "bevel": 0.004
+                },
+                "params": {
+                  "profile": [
+                    [
+                      0.14,
+                      -0.25
+                    ],
+                    [
+                      0.2,
+                      -0.2
+                    ],
+                    [
+                      0.21,
+                      0.15
+                    ],
+                    [
+                      0.17,
+                      0.25
+                    ]
+                  ],
+                  "segments": 48
+                },
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ],
+                "scale": [
+                  1.25,
+                  1.25,
+                  1
+                ]
+              },
+              {
+                "id": "shaft",
+                "kind": "cylinder",
+                "material": "steel",
+                "modifiers": {
+                  "bevel": 0.003
+                },
+                "params": {
+                  "depth": 0.3,
+                  "radius": 0.055,
+                  "segments": 32
+                },
+                "position": [
+                  0,
+                  0,
+                  0.35
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              },
+              {
+                "id": "mount",
+                "kind": "box",
+                "material": "steel",
+                "modifiers": {
+                  "bevel": 0.008
+                },
+                "params": {
+                  "size": [
+                    0.5,
+                    0.4,
+                    0.06
+                  ]
+                },
+                "position": [
+                  0,
+                  0,
+                  -0.29
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ]
+              }
+            ],
+            "render": {
+              "engine": "CYCLES",
+              "five_views": true,
+              "quality": "preview",
+              "view": "front"
+            },
+            "schema": "jarvis.studio3d.v1",
+            "title": "Blender 工作流验收 · 分件机械壳体",
+            "unfulfilled": [
+              "流程诊断模型，不对应真实机械尺寸、载荷或 AAA 美术验收。"
+            ],
+            "units": "m"
+          },
+          "derived_from": "3dc5ce1d22994d2d8e13d633ccc01523",
+          "edit": {
+            "affected_objects": [
+              "housing"
+            ],
+            "after_scene_sha256": "bbf4e0a4537b4528ec3c2aa7e8c659df7fcdb662fbf3745a0cac9fe1184ae4db",
+            "before_scene_sha256": "c8c6e8b5d83d0714054982bfbd453b6ac73f28f776dce2ef5893e03a43975cb5",
+            "changes": {
+              "materials": [
+                {
+                  "id": "shell-metal",
+                  "set": {
+                    "color": "#ba5938",
+                    "roughness": 0.18
+                  }
+                }
+              ],
+              "objects": [
+                {
+                  "id": "housing",
+                  "set": {
+                    "scale": [
+                      1.25,
+                      1.25,
+                      1
+                    ]
+                  }
+                }
+              ]
+            },
+            "new_model_calls": 0,
+            "source_job": "3dc5ce1d22994d2d8e13d633ccc01523",
+            "source_scene_sha256": "c8c6e8b5d83d0714054982bfbd453b6ac73f28f776dce2ef5893e03a43975cb5",
+            "unchanged_object_data_sha256": {
+              "mount": "e1d34e2d1977ba151df939e012de22aa7ba6303d0c8eb8be75244d14b8857523",
+              "shaft": "94860bb57157e3a80e3ff212fcd2d9d5ee435bafd58382844851d54bd8336f13"
+            },
+            "visual_acceptance": "pending",
+            "workflow_version": "1.0.0"
+          },
+          "files": {
+            "model.blend": {
+              "bytes": 103866,
+              "sha256": "3068153e8ba76ecbca4f637b4c07feea6439379d8ec27ddc436ae803a26f8599",
+              "url": "/api/studio3d/files/6df651487fb94fb6a45f625ebd45d1b8/model.blend"
+            },
+            "model.glb": {
+              "bytes": 47936,
+              "sha256": "2ba9171eb4f0515cb12c6dc87d4e02bc317795750de1d60f55875e667f9af949",
+              "url": "/api/studio3d/files/6df651487fb94fb6a45f625ebd45d1b8/model.glb"
+            },
+            "preview.png": {
+              "bytes": 541644,
+              "sha256": "cba194eb296727ac3b00288dc655494e64813d1522d6c52395ab1add4309c6cb",
+              "url": "/api/studio3d/files/6df651487fb94fb6a45f625ebd45d1b8/preview.png"
+            },
+            "report.json": {
+              "bytes": 5332,
+              "sha256": "4c8d87e133e2cea2f1a3585bb13bdc56054cf87f45f3658825b1b10e32848341",
+              "url": "/api/studio3d/files/6df651487fb94fb6a45f625ebd45d1b8/report.json"
+            },
+            "scene.json": {
+              "bytes": 1080,
+              "sha256": "bbf4e0a4537b4528ec3c2aa7e8c659df7fcdb662fbf3745a0cac9fe1184ae4db",
+              "url": "/api/studio3d/files/6df651487fb94fb6a45f625ebd45d1b8/scene.json"
+            },
+            "view-front.png": {
+              "bytes": 522498,
+              "sha256": "43a6689a70f706a80b91e4224b686ced77ba5058a842942958bbdaeb8345c3f3",
+              "url": "/api/studio3d/files/6df651487fb94fb6a45f625ebd45d1b8/view-front.png"
+            },
+            "view-left.png": {
+              "bytes": 526496,
+              "sha256": "315db4b6ccfbb5663a3cef5393d5e3a3c3a88cc7dd1a275e4d03f9bc68a9cc72",
+              "url": "/api/studio3d/files/6df651487fb94fb6a45f625ebd45d1b8/view-left.png"
+            },
+            "view-rear.png": {
+              "bytes": 524941,
+              "sha256": "a06246affc4de01e1e069b803f64931c048a27c4b5f655adc580c49712c6b40d",
+              "url": "/api/studio3d/files/6df651487fb94fb6a45f625ebd45d1b8/view-rear.png"
+            },
+            "view-right.png": {
+              "bytes": 526222,
+              "sha256": "4d9272b7ed64b4fa415b3b146338b1a35a11a4f50303bdca2e39edefb02ac916",
+              "url": "/api/studio3d/files/6df651487fb94fb6a45f625ebd45d1b8/view-right.png"
+            },
+            "view-top.png": {
+              "bytes": 551296,
+              "sha256": "e7a04136052555394f629de1ebf038341338f22c178dad0ed2b0209718dcdd50",
+              "url": "/api/studio3d/files/6df651487fb94fb6a45f625ebd45d1b8/view-top.png"
+            }
+          },
+          "frozen_master": null,
+          "id": "6df651487fb94fb6a45f625ebd45d1b8",
+          "input_asset": null,
+          "model_receipt": null,
+          "quality": {
+            "AAA_certified": false,
+            "mechanical_validation": false,
+            "status": "visual_asset_export_checked",
+            "visual_score": null
+          },
+          "reference": null,
+          "report": {
+            "blender": "5.2.0 LTS",
+            "bounds_m": [
+              [
+                -0.26249998807907104,
+                -0.26249998807907104,
+                -0.3199999928474426
+              ],
+              [
+                0.26249998807907104,
+                0.26249998807907104,
+                0.5
+              ]
+            ],
+            "elapsed_seconds": 32.45692099999724,
+            "export_material_fallback": {
+              "binary_unchanged": true,
+              "changed": []
+            },
+            "game_high_source_preserved": false,
+            "glb_roundtrip": {
+              "bounds_m": [
+                [
+                  -0.26249998807907104,
+                  -0.26249998807907104,
+                  -0.3199999928474426
+                ],
+                [
+                  0.26249998807907104,
+                  0.26249998807907104,
+                  0.5
+                ]
+              ],
+              "max_bound_error_m": 0.0,
+              "mesh_objects": 3,
+              "passed": true
+            },
+            "gltf_validation": {
+              "files": {
+                "model.glb": {
+                  "info": {
+                    "animationCount": 0,
+                    "drawCallCount": 3,
+                    "extensionsUsed": [
+                      "KHR_materials_clearcoat"
+                    ],
+                    "generator": "Khronos glTF Blender I/O v5.2.39",
+                    "hasDefaultScene": true,
+                    "hasMorphTargets": false,
+                    "hasSkins": false,
+                    "hasTextures": false,
+                    "materialCount": 2,
+                    "maxAttributes": 3,
+                    "maxInfluences": 0,
+                    "maxUVs": 1,
+                    "resources": [
+                      {
+                        "byteLength": 44592,
+                        "mimeType": "application/gltf-buffer",
+                        "pointer": "/buffers/0",
+                        "storage": "glb"
+                      }
+                    ],
+                    "totalTriangleCount": 1272,
+                    "totalVertexCount": 1155,
+                    "version": "2.0"
+                  },
+                  "issues": {
+                    "messages": [
+                      {
+                        "code": "UNUSED_OBJECT",
+                        "message": "This object may be unused.",
+                        "pointer": "/meshes/0/primitives/0/attributes/TEXCOORD_0",
+                        "severity": 2
+                      },
+                      {
+                        "code": "UNUSED_OBJECT",
+                        "message": "This object may be unused.",
+                        "pointer": "/meshes/1/primitives/0/attributes/TEXCOORD_0",
+                        "severity": 2
+                      },
+                      {
+                        "code": "UNUSED_OBJECT",
+                        "message": "This object may be unused.",
+                        "pointer": "/meshes/2/primitives/0/attributes/TEXCOORD_0",
+                        "severity": 2
+                      }
+                    ],
+                    "numErrors": 0,
+                    "numHints": 0,
+                    "numInfos": 3,
+                    "numWarnings": 0,
+                    "truncated": false
+                  },
+                  "mimeType": "model/gltf-binary",
+                  "uri": "model.glb",
+                  "validatedAt": "2026-10-29T01:11:35.813Z",
+                  "validatorVersion": "2.0.0-dev.3.10"
+                }
+              },
+              "implementation": "Khronos glTF-Validator",
+              "version": "2.0.0-dev.3.10"
+            },
+            "objects": [
+              {
+                "id": "housing",
+                "triangles": 576,
+                "uv": true,
+                "vertices": 336,
+                "zero_area_faces": 0
+              },
+              {
+                "id": "shaft",
+                "triangles": 508,
+                "uv": true,
+                "vertices": 256,
+                "zero_area_faces": 0
+              },
+              {
+                "id": "mount",
+                "triangles": 188,
+                "uv": true,
+                "vertices": 96,
+                "zero_area_faces": 0
+              }
+            ],
+            "orthographic_views": [
+              {
+                "axis_convention": "X forward, Y left, Z up",
+                "file": "view-front.png",
+                "frame_check_passed": true,
+                "frame_extent_ndc": [
+                  0.3617197742366343,
+                  0.8474577802498287
+                ],
+                "look_from": [
+                  1.6399999856948853,
+                  0.0,
+                  0.09000000357627869
+                ],
+                "ortho_scale_m": 1.4514000415802002,
+                "projection": "ORTHOGRAPHIC",
+                "resolution": [
+                  960,
+                  640
+                ],
+                "view": "front"
+              },
+              {
+                "axis_convention": "X forward, Y left, Z up",
+                "file": "view-rear.png",
+                "frame_check_passed": true,
+                "frame_extent_ndc": [
+                  0.3617197742366343,
+                  0.8474577802498287
+                ],
+                "look_from": [
+                  -1.6399999856948853,
+                  0.0,
+                  0.09000000357627869
+                ],
+                "ortho_scale_m": 1.4514000415802002,
+                "projection": "ORTHOGRAPHIC",
+                "resolution": [
+                  960,
+                  640
+                ],
+                "view": "rear"
+              },
+              {
+                "axis_convention": "X forward, Y left, Z up",
+                "file": "view-left.png",
+                "frame_check_passed": true,
+                "frame_extent_ndc": [
+                  0.3617196921026353,
+                  0.8474579650513264
+                ],
+                "look_from": [
+                  0.0,
+                  1.6399999856948853,
+                  0.09000000357627869
+                ],
+                "ortho_scale_m": 1.4514000415802002,
+                "projection": "ORTHOGRAPHIC",
+                "resolution": [
+                  960,
+                  640
+                ],
+                "view": "left"
+              },
+              {
+                "axis_convention": "X forward, Y left, Z up",
+                "file": "view-right.png",
+                "frame_check_passed": true,
+                "frame_extent_ndc": [
+                  0.3617196921026353,
+                  0.8474582114533233
+                ],
+                "look_from": [
+                  0.0,
+                  -1.6399999856948853,
+                  0.09000000357627869
+                ],
+                "ortho_scale_m": 1.4514000415802002,
+                "projection": "ORTHOGRAPHIC",
+                "resolution": [
+                  960,
+                  640
+                ],
+                "view": "right"
+              },
+              {
+                "axis_convention": "X forward, Y left, Z up",
+                "file": "view-top.png",
+                "frame_check_passed": true,
+                "frame_extent_ndc": [
+                  0.5649717608345279,
+                  0.8474576412517919
+                ],
+                "look_from": [
+                  0.0,
+                  0.0,
+                  1.7300000190734863
+                ],
+                "ortho_scale_m": 0.9292499423027039,
+                "projection": "ORTHOGRAPHIC",
+                "resolution": [
+                  960,
+                  640
+                ],
+                "view": "top"
+              }
+            ],
+            "phase_timings": [
+              {
+                "api_cost_usd": 0,
+                "api_tokens": 0,
+                "elapsed_seconds": 0.03598219999548746,
+                "model_calls": 0,
+                "phase": "initialization"
+              },
+              {
+                "api_cost_usd": 0,
+                "api_tokens": 0,
+                "elapsed_seconds": 0.011592500006372575,
+                "model_calls": 0,
+                "phase": "modelling"
+              },
+              {
+                "api_cost_usd": 0,
+                "api_tokens": 0,
+                "elapsed_seconds": 0.002300799998920411,
+                "model_calls": 0,
+                "phase": "studio lighting"
+              },
+              {
+                "api_cost_usd": 0,
+                "api_tokens": 0,
+                "elapsed_seconds": 0.007442199996148702,
+                "model_calls": 0,
+                "phase": "saving blend"
+              },
+              {
+                "api_cost_usd": 0,
+                "api_tokens": 0,
+                "elapsed_seconds": 0.0814782000015839,
+                "model_calls": 0,
+                "phase": "exporting glb"
+              },
+              {
+                "api_cost_usd": 0,
+                "api_tokens": 0,
+                "elapsed_seconds": 9.226061599998502,
+                "model_calls": 0,
+                "phase": "rendering"
+              },
+              {
+                "api_cost_usd": 0,
+                "api_tokens": 0,
+                "elapsed_seconds": 3.5441671000007773,
+                "model_calls": 0,
+                "phase": "orthographic front"
+              },
+              {
+                "api_cost_usd": 0,
+                "api_tokens": 0,
+                "elapsed_seconds": 3.499564500001725,
+                "model_calls": 0,
+                "phase": "orthographic rear"
+              },
+              {
+                "api_cost_usd": 0,
+                "api_tokens": 0,
+                "elapsed_seconds": 4.01426370000263,
+                "model_calls": 0,
+                "phase": "orthographic left"
+              },
+              {
+                "api_cost_usd": 0,
+                "api_tokens": 0,
+                "elapsed_seconds": 3.4170021999962046,
+                "model_calls": 0,
+                "phase": "orthographic right"
+              },
+              {
+                "api_cost_usd": 0,
+                "api_tokens": 0,
+                "elapsed_seconds": 8.549804900001618,
+                "model_calls": 0,
+                "phase": "orthographic top"
+              },
+              {
+                "api_cost_usd": 0,
+                "api_tokens": 0,
+                "elapsed_seconds": 0.06726469999557594,
+                "model_calls": 0,
+                "phase": "checking glb roundtrip"
+              }
+            ],
+            "render": {
+              "device": "CPU",
+              "engine": "CYCLES",
+              "requested_engine": "CYCLES",
+              "resolution": [
+                960,
+                640
+              ],
+              "samples": 24
+            },
+            "schema": "jarvis.studio3d.report.v1",
+            "triangles": 1272,
+            "unverified": [
+              "OEM mechanical accuracy",
+              "manufacturing",
+              "production topology",
+              "UV quality",
+              "baked PBR textures",
+              "LODs",
+              "engine performance"
+            ],
+            "visible_objects": 3,
+            "warnings": [
+              "GLB contains base PBR; procedural bump detail stays in Blender/render.",
+              "Automatic UV presence is not UV quality certification."
+            ]
+          },
+          "resources": {
+            "cpu_seconds": 1200,
+            "elapsed_seconds": 33.837286800000584,
+            "exit_code": 0,
+            "isolation": "Trusted fixed first-party worker with resource Job; not an OS security sandbox. No model Python, external imports or external BLEND loading. Only host-hash-verified first-party masters load with scripts disabled.",
+            "memory_bytes": 4294967296,
+            "output_bytes": 268435456,
+            "peak_memory_bytes": 1011240960,
+            "threads": 4,
+            "wall_seconds": 300
+          },
+          "runtime": {
+            "executable_sha256": "e27fbfea8564aa645d4463cb0949695fd85562b9de6df9561b06859a1074adf7",
+            "license": "GPL-2.0-or-later",
+            "source": "https://www.blender.org/",
+            "version": "Blender 5.2.0 LTS"
+          },
+          "skill": "studio3d",
+          "source_sha256": {
+            "adapters/models/native.py": "794070c292146ceb52950f8a10fc49c02197f1427baf470b88d1b0b923870583",
+            "adapters/models/native_transport.py": "dd9eabb5fbfd968fe45f20fe47720e8d3299d5a8e6d32c1fa7bbc7c8e9d74a9d",
+            "adapters/models/vision.py": "9bd86d2dc0b1ba2d8bf8b38edd7f550bd2abb761f4ae2a1f81db476eccb3591e",
+            "adapters/studio3d/asset_pipeline.py": "2b9bba545f5a4e2917b82e1a981596833226d2dacb94e7d729d0520f75db3c36",
+            "adapters/studio3d/framing.py": "7575830d0367d4d07d0fb09859c7cc9bf9ae21e21c9f4cb0fdcb279b24b75ab0",
+            "adapters/studio3d/organic.py": "5bbd521a5a70de5b8b2dea71f6ca6afc6d7e47714128fac8e6da9b181af270b1",
+            "adapters/studio3d/projection.py": "45547f32e01c7c44ea13e2e1f2803dad6f2863894ddb88f29112934742975a23",
+            "adapters/studio3d/weathering.py": "670e216abe575ab737919069480ca84987abdf84c29a71cec797007d171d9789",
+            "adapters/studio3d/worker.py": "3959b8dabc8dac4c0baf63273b8173055824da70bda4b62814d54a481937ecc2",
+            "apps/studio3d/worker.py": "07f12f369c67e2c61ed189dc208eebabe9d86226349caf09b12e13b15b1d4ae1",
+            "host/dialogue.py": "4a013ce55a2368a02f570fd1bd3cd60aa6f0310c9517da46741c37f74c72482f",
+            "host/studio3d.py": "c7374882432deab228be81a314f9c548d7292395d8f39fee44c4ef7dac54ebda",
+            "host/studio3d_reference.py": "e4abd3aa1a0463c7a6e1b158b250731702f0b71853ba5034fd1d947699faefc5",
+            "host/studio3d_refinement.py": "d67d7fd61bd55f651dd6b486ec73c981aab92e7b7c46b5cb4e4dc8f238165990",
+            "modules/dialogue/store.py": "58b53856a4f1aaa02dfd876b7d02eb76c2e290d356fa0517fff6358306fd17fc",
+            "modules/skills/studio3d/SKILL.md": "70a80ab3fd2d2e2c01e7b301cc27f4e292feed26b2c38660745058087e31fb1f",
+            "modules/skills/studio3d/assets.py": "b3028d08057f513158dc3c58add0ebdeb7a3b78ff18e66111b3e57bdf0201bc8",
+            "modules/skills/studio3d/blender_workflow.py": "2fb293d9c79e617088d220b4a9dece60e586b53066660b51bf7534eb95d638ea",
+            "modules/skills/studio3d/contract.py": "89610f711542b98db4ae3c737bad7abe54d3aa8bb1d9862b9fb944655afacefa",
+            "modules/skills/studio3d/presets.py": "f7d18d601f36920cff52d3f26fe21cd943ad1a63fc14ad91decdd78e4865b3a4",
+            "modules/skills/studio3d/production.py": "687a044d25b0f4261afb4eacf0edea84b5d0434250dc6ccd575ca7b9d8d06213",
+            "modules/skills/studio3d/refinement.py": "4d3c7bf8f59f17725af0a9b82f15bb314a1a76ee981190d4739aab377c6364df",
+            "modules/skills/studio3d/runtime.json": "81da224f6d53fb41c5a24288ca7d2e4bf7befd874d64f3a54f577fbb6b12e545",
+            "modules/skills/studio3d/tracked_vehicle.py": "24716810b044cf85d4cb497e9330da2bccd5d9437afe6c891da83908f60566f8"
+          },
+          "surface_texture": null,
+          "title": "Blender 工作流验收 · 分件机械壳体",
+          "unfulfilled": [
+            "流程诊断模型，不对应真实机械尺寸、载荷或 AAA 美术验收。"
+          ],
+          "url": "/api/studio3d/view/6df651487fb94fb6a45f625ebd45d1b8"
+        }
+      }
+    }
+  },
+  "stale_source_rejected": true,
+  "status": "passed",
+  "source_preserved": true,
+  "untouched_parts_preserved": true,
+  "visual_acceptance": "pending_manual_review",
+  "scope": "native scene build, bounded part/material edit, actual five-view renders, GLB roundtrip; no character rig or arbitrary external BLEND editing"
+}

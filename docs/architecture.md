@@ -283,6 +283,9 @@ Agent、Bot、Skill、Tool 和蓝图继续采用既有定义：Bot 是职责绑�
 | Worker / ModelDeployment | Worker 承载实际执行与隔离；模型服务可供多个实例共享，按资源加载/卸载 | 不因角色改变就复制权重；普通进程边界不等于权限隔离 |
 | PersonaProfile / World | PersonaProfile 决定交流表现，World 拥有虚构世界状态；两者可供 Agent 引用 | 虚构关系、NPC 经历不能写入主人现实记忆，模拟世界不能获得现实工具权限 |
 
+
+**2026-10-30 主人明确的模型解耦规则（accepted）：**Skill 只声明方法、所需工具／能力和输入输出约束，不指定某个提供者或模型 ID。模型由 Runtime 根据当前任务、主人设置、资料许可、真实能力和预算选择；主人指定“使用 Google”时，这是该次用途的运行路由约束，不写进 Skill，更不能以备选名义自行改用其他提供者。模型调用与 MCP 工具执行分层，MCP 由本机受控客户端调用，不把“某模型专用 Skill”作为接入前提。微信应用与真实探针见[模型无关的 Google／MCP 路径](tasks-agents.md#weixin-model-neutral-routing)。
+
 Agent Skills 的包格式作为导入约定，运行所需的版本、能力和验证引用由本机 manifest 补充；不污染通用 SKILL.md 格式。[S275](references.md#s275) 单 Agent 按需加载与隔离子 Agent 两种方式都保留，选择条件由任务决定。[S276](references.md#s276)
 
 <a id="composition-object-relations"></a>

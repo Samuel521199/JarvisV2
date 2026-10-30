@@ -18,7 +18,10 @@ def painted(material,row):
   return m.outputs[0]
  broad=noise(6,3);grain=noise(row.get('micro_scale',185),3);chips=noise(84,2)
  pigment=node('ValToRGB')
- for e,f,pos in zip(pigment.color_ramp.elements,(.55,1.35),(.25,.75)):
+ factors=(.55,1.35)
+ if 'mottle_contrast' in row:
+  contrast=row['mottle_contrast'];factors=(1-contrast,1+contrast)
+ for e,f,pos in zip(pigment.color_ramp.elements,factors,(.25,.75)):
   e.position=pos;e.color=tuple(min(1,c*f) for c in base[:3])+(1,)
  links.new(broad.outputs['Fac'],pigment.inputs[0])
  edge=node('MapRange');edge.clamp=True;edge.inputs['From Min'].default_value=.515;edge.inputs['From Max'].default_value=.570
@@ -28,9 +31,12 @@ def painted(material,row):
   scratches=node('TexVoronoi');scratches.feature='DISTANCE_TO_EDGE';scratches.inputs['Scale'].default_value=12;links.new(geo.outputs['Position'],scratches.inputs['Vector'])
   thin=mathop('LESS_THAN',scratches.outputs['Distance'],.018);sparse=mathop('GREATER_THAN',chips.outputs['Fac'],.53)
   wear=mathop('MAXIMUM',wear,mathop('MULTIPLY',mathop('MULTIPLY',thin,sparse),row['streak_strength']))
+ # Optional bounded coverage controls prevent pointiness on small curved
+ # fittings from turning the entire fitting into a speckled metal surface.
+ if 'speckle_strength' in row:wear=mathop('MULTIPLY',wear,row['speckle_strength'])
  # Broken fine scratches supplement curvature wear on broad shield surfaces.
  edgecolor=node('MixRGB');links.new(wear,edgecolor.inputs[0]);links.new(pigment.outputs[0],edgecolor.inputs[1]);edgecolor.inputs[2].default_value=(.16,.135,.10,1)
  links.new(edgecolor.outputs[0],p.inputs['Base Color']);links.new(wear,p.inputs['Metallic'])
  rough=node('MapRange');rough.inputs['To Min'].default_value=max(.05,row.get('roughness',.60)-row.get('roughness_variation',.17));rough.inputs['To Max'].default_value=min(.95,row.get('roughness',.60)+row.get('roughness_variation',.16));links.new(grain.outputs['Fac'],rough.inputs['Value']);links.new(rough.outputs['Result'],p.inputs['Roughness'])
- bump=node('Bump');bump.inputs['Strength'].default_value=.22;bump.inputs['Distance'].default_value=.00022;links.new(grain.outputs['Fac'],bump.inputs['Height']);links.new(bump.outputs['Normal'],p.inputs['Normal'])
+ bump=node('Bump');bump.inputs['Strength'].default_value=.22;bump.inputs['Distance'].default_value=row.get('bump_distance',.00022);links.new(grain.outputs['Fac'],bump.inputs['Height']);links.new(bump.outputs['Normal'],p.inputs['Normal'])
  p.inputs['Coat Weight'].default_value=.06;p.inputs['Coat Roughness'].default_value=.38

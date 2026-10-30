@@ -19,7 +19,7 @@ from control import logs
 LOG=logs.get('mail')
 
 WRITES={'send','remote_draft','change','undo'}
-OPERATIONS={'check','list','read','analyze','send','remote_draft','change','undo','reconcile'}
+OPERATIONS={'check','list','sync','read','analyze','send','remote_draft','change','undo','reconcile'}
 
 
 def public_job(row):
@@ -62,6 +62,14 @@ class Mailbox:
             if generation:
                 a=store.get('account',True)
                 if not a or a.get('generation')!=generation or not a.get('credentials'):raise CoreError('mail_account_changed','Mailbox connection changed')
+        finally:store.close()
+    def companion(self):
+        from modules.mail.companion import project
+        store=MailStore(self.root)
+        try:
+            return project(store.get('account',True),store.get('client',True),store.listing('job',100),
+                           store.listing('rule',100),store.listing('message',200),self.auth or {},
+                           NetworkGate(self.root).read()['blocked'])
         finally:store.close()
     def save_account(self,store,generation,**patch):
         with self.lock,store.transaction():
@@ -218,8 +226,9 @@ class Mailbox:
                 with store.transaction():store.put({'id':key,'kind':'message','message':m,'account_generation':generation},old['revision'] if old else 0)
                 return {**m,'classification':classify(m,store.listing('rule'))}
             if operation=='check':result=api.profile()
-            elif operation=='list':
+            elif operation in {'list','sync'}:
                 result=api.listing(payload['query'],payload['page']);result['messages']=[cache(m) for m in result['messages']]
+                if operation=='sync':result['counts']=api.inbox_counts()
             elif operation=='read':result=cache(api.read(payload['message_id']))
             elif operation=='analyze':
                 m=api.read(payload['message_id']);cache(m)
@@ -295,11 +304,12 @@ class Mailbox:
         return {'original_job':job_id,'status':'SUCCEEDED','result':result}
     def validate(self,operation,payload):
         if not isinstance(payload,dict):raise CoreError('mail_invalid','Expected mail parameters')
-        expected={'check':set(),'list':{'query','page'},'read':{'message_id'},'analyze':{'message_id','instruction'},
+        expected={'check':set(),'list':{'query','page'},'sync':{'query','page'},'read':{'message_id'},'analyze':{'message_id','instruction'},
                   'send':{'draft_id','revision'},'remote_draft':{'draft_id','revision'},'change':{'message_id','change'},'undo':{'job_id'},'reconcile':{'job_id'}}
         if operation not in expected or set(payload)!=expected[operation]:raise CoreError('mail_invalid','Unexpected operation parameters')
         if 'message_id' in payload:identifier(payload['message_id'])
-        if operation=='list' and any(not isinstance(v,str) or len(v)>1000 for v in payload.values()):raise CoreError('mail_invalid','Invalid search')
+        if operation in {'list','sync'} and any(not isinstance(v,str) or len(v)>1000 for v in payload.values()):raise CoreError('mail_invalid','Invalid search')
+        if operation=='sync' and payload!={'query':'in:inbox','page':''}:raise CoreError('mail_invalid','Companion sync is limited to the first inbox page')
         if operation=='analyze' and (not isinstance(payload['instruction'],str) or len(payload['instruction'])>2000):raise CoreError('mail_invalid','Instruction is too long')
         if operation=='change' and payload['change'] not in CHANGES:raise CoreError('mail_invalid','Unknown label change')
         return payload

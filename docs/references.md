@@ -51,12 +51,15 @@
 - [本地凭据与原生模型协议依据（2026-10-22）](#native-model-sources)
 - [MCP 子集实现依据（2026-10-23）](#mcp-runtime-sources)
 - [综合记忆与桌面端选型复核（2026-10-23）](#memory-context-sources)
+- [Charakuru 工作流与 Blender 适配来源（2026-10-28）](#charakuru-blender-sources)
 - [3D 查看与资产检查来源（2026-10-23）](#studio3d-viewer-sources)
 - [Gmail 官方接口与授权依据（2026-10-25）](#gmail-sources)
 - [桌面常驻伙伴参考（2026-10-25）](#desktop-companion-sources)
 - [Grok Bot 功能、界面与运行机制研究（2026-10-26）](#grok-bot-research-sources)
 - [Harness² 与多机器人主脑研究来源（2026-10-26）](#harness2-research-sources)
 - [经验成长、知识治理与退化控制的研究依据（2026-10-26）](#learning-compounding-sources)
+- [微信通道与桌面协作来源（2026-10-30）](#weixin-integration-sources)
+- [单机开发、共享与 A/B 更新来源（2026-10-30）](#single-pc-development-sources)
 <!-- book-nav:end -->
 
 <a id="references"></a>
@@ -691,6 +694,13 @@ DPAPI 的范围与同账户限制继续引用 [S244](#s244)，不重复建立来
 
 本轮方案正文见[综合入口](knowledge-learning.md#memory-context-design)，组件比较归[技术选型](stack-project-layout.md#memory-desktop-selection)，测试与资源阈值归[验收](delivery-validation.md#memory-context-acceptance)。所有“推荐”是基于职责与部署约束的工程判断，缺少同条件测量的指标保持未测。
 
+<a id="charakuru-blender-sources"></a>
+## Charakuru 工作流与 Blender 适配来源（2026-10-28）
+
+[非官方 charakuru-claude-code](https://github.com/kokushin/charakuru-claude-code/tree/28eddac5fe4bcb8f78f0d375fd7aedc824d7becb) 固定提交 `28eddac5fe4bcb8f78f0d375fd7aedc824d7becb`，MIT。已阅读中文说明、Skill、阶段/设置笔记及若干关键脚本：原流程以 Claude 编排、Codex 出图、Tripo 生成与处理网格、Blender 整理角色及导出。它不是独立的三维生成模型。Jarvis 只借鉴分阶段、保持原版、查明朝向/姿态原因和真实渲染比较的做法，执行代码独立编写。
+
+原始 [Nano / Charakuru 1.1.0](https://github.com/nanocle/Charakuru/releases/tag/v1.1.0) 使用单独的 Source-Available License；本工程未包含套件或素体，也未将其许可改称 MIT。`ea_run.py` 的任意片段执行和 `codex_img.sh` 的外部代理/覆盖输出行为未作为 Jarvis 运行入口。准确阅读范围、Git blob 摘要及未验证项保留于[来源核查](evidence/blender-workflow-1.0.0/source-review.json)。本地核心引擎继续使用 [Blender](https://www.blender.org/)；[实现与限制](tasks-agents.md#blender-workflow-runtime)。
+
 <a id="studio3d-viewer-sources"></a>
 ## 3D 查看与资产检查来源（2026-10-23）
 
@@ -790,6 +800,52 @@ Jarvis 的确定性权限、根预算、任务所有权和发布约束继续以�
 | <a id="s389"></a>S389 | [Google SRE：Canarying Releases](https://sre.google/workbook/canarying-releases/) | 有限范围/时间的变更评估与对照污染风险；借鉴发布方法，不据此宣称本地候选、经验和数据库已实现隔离 |
 
 本轮结论、适用范围和检查见[成长与知识治理记录](evidence/learning-knowledge-strategy-2026-10-26.json)。隐私/污染边界仍归安全主题，不能借“学习更聪明”扩大资料用途或运行权限。
+
+<a id="weixin-integration-sources"></a>
+## 微信通道与桌面协作来源（2026-10-30）
+
+用于[微信接入评估](tasks-agents.md#weixin-integration-plan)。只读文档、仓库 README、公开 npm 元数据及本工程相关代码；未安装、运行、绑定或发送，未完成依赖链安全审计。检索未命中不等于功能不存在；当前账号权限与跨平台表现待实测。
+
+| 编号 | 一手来源 | 支撑与边界 |
+|---|---|---|
+| <a id="s390"></a>S390 | [OpenAI Computer Use](https://learn.chatgpt.com/docs/computer-use) | Windows／macOS 可视桌面控制、Windows 前台限制与结构化接口优先；未找到 Codex 官方 WeChat 专用条目 |
+| <a id="s391"></a>S391 | [腾讯 ClawBot 接入指南](https://cloud.tencent.com/document/product/1831/137450) | 扫码绑定、手机向电脑助手发任务及接收结果；这是 CodeBuddy 产品路径，不等于 Jarvis 已接通 |
+| <a id="s392"></a>S392 | [Weixin channel npm](https://www.npmjs.com/package/%40tencent-weixin/openclaw-weixin?activeTab=code)、[公开版本元数据](https://registry.npmjs.org/@tencent-weixin%2fopenclaw-weixin/latest) | 核查为 2.4.10、MIT、Node >=22.13.0、peer OpenClaw >=2026.5.12；npm 页面直接打开 403，版本与依赖由 registry 读取确认；不是独立 Python SDK 或服务端永久契约 |
+| <a id="s393"></a>S393 | [wxauto 当前安装与兼容文档](https://docs.wxauto.org/docs/install.html) | Windows 微信 4.1；免费 wxauto4 为 Python 3.9–3.12、当次客户端上限 4.1.8.107，Plus 3.9–3.13；声明非本机实测 |
+| <a id="s394"></a>S394 | [wxauto 仓库 README](https://github.com/cluic/wxauto/blob/main/README.md) | 旧公开仓库的 3.9 客户端与使用说明；不能与新发行版的许可、收费、支持范围混为一谈 |
+| <a id="s395"></a>S395 | [WeChat-MCP README](https://github.com/BiboyQG/WeChat-MCP/blob/master/README.md) | macOS Accessibility、近期消息／回复工具、Codex 配置及可选 HTTP 传输；未做安全审计，不用于证明 Windows 可运行 |
+| <a id="s396"></a>S396 | [腾讯企微机器人说明](https://cloud.tencent.com.cn/document/product/1759/121473) | 长连接免公网入口、@机器人／私聊、单机器人连接范围；不是普通个人微信聊天读取接口 |
+| <a id="s397"></a>S397 | [Wechaty README](https://github.com/wechaty/wechaty/blob/main/README.md) | 多 Puppet 与 Mock 抽象；各后端不同能力与依赖，不对其服务作统一稳定性保证 |
+| <a id="s398"></a>S398 | [hermes-wxauto README](https://github.com/doingSthing/hermes-wxauto) | 作者记录新版 Qt Quick／QML 控件树兼容问题；仅作为探测与视觉兜底研究线索，未独立复现或引入代码 |
+| <a id="s399"></a>S399 | [wxauto 可接受使用政策](https://docs.wxauto.org/legal/acceptable-use.html) | 本人设备与指定会话的低频辅助、目标核验、记录与停止；非腾讯授权或无风险保证 |
+| <a id="s400"></a>S400 | [GPT-6.1 Terra 官方模型页](https://developers.openai.com/api/docs/models/gpt-6.1-terra) | 模型 ID、文本／图片、computer_use 与 Responses 工具调用要求；不证明本机账号已可调用 |
+| <a id="s401"></a>S401 | [OpenAI Computer use 指南](https://developers.openai.com/api/docs/guides/tools-computer-use) | SDK Toolset＋应用 driver，以及原生 computer_call／截图回传循环；本次只读文档，不安装 SDK 或执行示例 |
+| <a id="s402"></a>S402 | [GPT-6 指南中的 Terra](https://developers.openai.com/api/docs/guides/latest-model#gpt-6-astra-gpt-61-terra) | 视觉与操作用途、medium 起步与代表性比较；档位建议不等于质量或费用实测 |
+
+
+| <a id="s403"></a>S403 | [RungePei README](https://github.com/RungePei/wechat-mcp/blob/main/README.md)、[项目清单](https://github.com/RungePei/wechat-mcp/blob/main/pyproject.toml)、[工具注册源码](https://github.com/RungePei/wechat-mcp/blob/main/src/wechat_mcp/server.py) | 1.0.0、微信 4.1+ UIA、Python、HTTP／stdio、14 类工具；作者 mock 测试和本机实测需区分 |
+| <a id="s404"></a>S404 | [wxauto-mcp README](https://github.com/cluic/wxauto-mcp/blob/main/README.md)、[项目清单](https://github.com/cluic/wxauto-mcp/blob/main/pyproject.toml) | 1.0.2、Python >=3.11、wxautox4 激活依赖、stdio／HTTP 入口；封装与底层许可分别核查 |
+| <a id="s405"></a>S405 | [iLink 型 wechat-mcp README](https://github.com/jimingyuan7/wechat-mcp/blob/main/README.md)、[项目清单](https://github.com/jimingyuan7/wechat-mcp/blob/main/package.json) | 第三方 0.2.0 移植、Node >=20、stdio、扫码与 bot 消息／媒体；未核验官方独立服务契约或完整凭据实现 |
+| <a id="s406"></a>S406 | [sbroenne Windows MCP README](https://github.com/sbroenne/mcp-windows/blob/main/README.md) | .NET 自带运行时发行包、通用控件优先及截图／输入／CLI；作者任务与 token 比较未在 Jarvis 复现 |
+| <a id="s407"></a>S407 | [desk-mcp README](https://github.com/DigitalDog1/desk-mcp/blob/main/README.md) | Node＋PowerShell、UIA／MSAA／OCR／CDP、stdio；作者的性能与后台操作范围不能推为微信保证 |
+| <a id="s408"></a>S408 | [CursorTouch Windows-MCP](https://github.com/CursorTouch/Windows-MCP)、[项目清单](https://github.com/CursorTouch/Windows-MCP/blob/main/pyproject.toml)、[发行与安全修复](https://github.com/CursorTouch/Windows-MCP/releases) | 0.8.8、Python >=3.14、传输／工具控制，历史 CORS／DNS rebinding 修复；不安装旧教程任意版本 |
+| <a id="s409"></a>S409 | [Microsoft Playwright MCP README](https://github.com/microsoft/playwright-mcp/blob/main/README.md) | 网页可访问性与浏览器工具、Node >=18；不是个人微信桌面执行器 |
+
+| <a id="s410"></a>S410 | [Gemini API 函数调用与 Remote MCP](https://ai.google.dev/gemini-api/docs/function-calling) | 工具调用／返回与 Interactions Remote MCP；远程仅 Streamable HTTP，不能据此让云端连接本机 localhost |
+| <a id="s411"></a>S411 | [Google Cloud 函数调用](https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/tools/function-calling) | 模型产生 functionCall，应用执行并返回 functionResponse；映射调用与结果、保留必要回合信息 |
+
+<a id="single-pc-development-sources"></a>
+## 单机开发、共享与 A/B 更新来源（2026-10-30）
+
+支撑[单机环境布局](stack-project-layout.md#single-pc-development)与[单机版本接续](evolution-release.md#single-pc-ab-upgrade)。本次只读核查启动器、数据根、执行锁、Git 状态及监听端口；没有建立 worktree、移动正式数据、下载更新器或重启服务。
+
+| 编号 | 一手来源 | 采用与边界 |
+|---|---|---|
+| <a id="s412"></a>S412 | [Git worktree](https://git-scm.com/docs/git-worktree) | 同仓库多个工作树、共享对象和独立检出；不是未提交内容迁移工具或运行沙箱 |
+| <a id="s413"></a>S413 | [SQLite Online Backup API](https://sqlite.org/backup.html) | 在线单库一致备份；不自动提供多库、附件、授权和外部动作的一致回退 |
+| <a id="s414"></a>S414 | [MCP 2025-11-25 生命周期](https://modelcontextprotocol.io/specification/2025-11-25/basic/lifecycle) | 初始化／能力协商／运行／关闭；不把连接协议解释为发布、热更新或任务恢复框架 |
+| <a id="s415"></a>S415 | [TUF 概览](https://theupdateframework.io/docs/overview/) | 包分发元数据、签名／哈希、过期与版本防护；安装及业务接续由应用负责，未安装或实现 |
+| <a id="s416"></a>S416 | [Tauri updater](https://v2.tauri.app/plugin/updater/) | 条件性原生壳更新候选；不是当前 Python Host 已采用，也不提供业务任务的自动正确恢复 |
 
 <!-- book-footer:start -->
 [返回工程主入口](../README.md) · [全书目录](../README.md#book-tree) · [上一章：架构与流程图册](architecture-atlas.md) · [下一章：文档维护规范](MAINTENANCE.md)

@@ -1,0 +1,722 @@
+{
+  "id": "06a2207224714f7aaa372ba86013e90d",
+  "status": "BUILT_AWAITING_VISUAL_COMPARISON",
+  "version": "1.0.0",
+  "started_at": 1793126488.0071795,
+  "source_job": "f9759aeb60444f029ada1cd92ba544b7",
+  "owner_pid": 31620,
+  "signature": "f7621202656e5848380b69c25f08aede82da5f98b0dd237fb4970ded79625ab6",
+  "source_code_sha256": {
+    "host/studio3d_high_finish.py": "b43b982baf4cbee9786aad113fb180887d4f16e4fd8000da6b9aac0684ed0154",
+    "host/studio3d_learning.py": "e2a0d0683079618c6884ff180854123899fb7939c0d8410f1b4557f7501f8507",
+    "modules/skills/studio3d/high_finish.py": "fe9a65ae7ef265f50362e230c7ec858dbc94dedfc8613c7e1817cf2347e47024",
+    "apps/studio3d/high_finish_worker.py": "9edf19192fbca1ec3416eab6ef26321e3a266001e6c5027df85f0e3a5d7bf9c0",
+    "adapters/studio3d/high_finish_worker.py": "ce50ea795dc726111757d4364f42920e201fc41ca521350de69fe491c2a6d129",
+    "adapters/studio3d/asset_pipeline.py": "2b9bba545f5a4e2917b82e1a981596833226d2dacb94e7d729d0520f75db3c36"
+  },
+  "request": {
+    "source_job": "f9759aeb60444f029ada1cd92ba544b7",
+    "source_sha256": "47d39bf437eb01627448a78cd628b0df97cc28e03a3a87ca635faa0324bcd8c5",
+    "visible_names": [
+      "body",
+      "wheel",
+      "handle"
+    ],
+    "contract": {
+      "texture_size": 512,
+      "groups": [
+        {
+          "id": "body",
+          "members": [
+            "body"
+          ],
+          "parent": null,
+          "pivot": [
+            0,
+            0,
+            0.35
+          ],
+          "motion": "fixed"
+        },
+        {
+          "id": "wheel",
+          "members": [
+            "wheel"
+          ],
+          "parent": "body",
+          "pivot": [
+            0.23,
+            0.29,
+            0.25
+          ],
+          "motion": "visual_rotation"
+        },
+        {
+          "id": "handle",
+          "members": [
+            "handle"
+          ],
+          "parent": "body",
+          "pivot": [
+            -0.23,
+            0.29,
+            0.4
+          ],
+          "motion": "visual_rotation"
+        }
+      ]
+    }
+  },
+  "report": {
+    "version": "1.0.0",
+    "source_sha256": "47d39bf437eb01627448a78cd628b0df97cc28e03a3a87ca635faa0324bcd8c5",
+    "groups": [
+      {
+        "group": "body",
+        "motion": "fixed",
+        "members": [
+          "body"
+        ],
+        "surface_check": {
+          "max_distance_m": 0.0,
+          "samples": 304,
+          "method": "two-direction sampled vertex-to-triangle nearest distance; not continuous Hausdorff proof"
+        },
+        "atlas": {
+          "schema": "jarvis.studio3d.asset-pipeline.v1",
+          "kind": "static merged review asset",
+          "source_part_names": [
+            "body"
+          ],
+          "part_hierarchy_preserved": false,
+          "part_origins_preserved": false,
+          "projection": null,
+          "topology_raw": {
+            "vertices": 152,
+            "triangles": 300,
+            "polygons": 150,
+            "ngons": 0,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "loose_edges": 0,
+            "degenerate_faces": 0,
+            "uv_present": true,
+            "uv_outside_01_loops": 0,
+            "uv_triangle_area_sum": 0.7386120951366951,
+            "uv_overlap": "not exactly tested",
+            "edge_flow_artist_review": "required"
+          },
+          "cleanup": {
+            "merge_distance_m": 1e-06,
+            "degenerate_distance_m": 1e-08,
+            "vertices_removed": 0
+          },
+          "topology_before": {
+            "vertices": 152,
+            "triangles": 300,
+            "polygons": 300,
+            "ngons": 0,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "loose_edges": 0,
+            "degenerate_faces": 0,
+            "uv_present": true,
+            "uv_outside_01_loops": 0,
+            "uv_triangle_area_sum": 0.8467098538356607,
+            "uv_overlap": "not exactly tested",
+            "edge_flow_artist_review": "required"
+          },
+          "baking": {
+            "basecolor": {
+              "file": "basecolor.png",
+              "resolution": [
+                512,
+                512
+              ],
+              "pixel_min": 0.0,
+              "pixel_max": 0.29411765933036804,
+              "bake": "Cycles material surface, no high-to-low geometric projection"
+            },
+            "normal": {
+              "file": "normal.png",
+              "resolution": [
+                512,
+                512
+              ],
+              "pixel_min": 0.501960813999176,
+              "pixel_max": 0.5058823823928833,
+              "bake": "Cycles material surface, no high-to-low geometric projection"
+            },
+            "orm": {
+              "file": "orm.png",
+              "resolution": [
+                512,
+                512
+              ],
+              "pixel_min": 0.0,
+              "pixel_max": 1.0,
+              "bake": "Cycles material surface, no high-to-low geometric projection"
+            },
+            "ao": {
+              "file": "ao.png",
+              "resolution": [
+                512,
+                512
+              ],
+              "pixel_min": 0.0,
+              "pixel_max": 1.0,
+              "bake": "Cycles material surface, no high-to-low geometric projection"
+            }
+          },
+          "lods": [
+            {
+              "level": 0,
+              "file": "model.glb",
+              "ratio_requested": 1,
+              "topology": {
+                "vertices": 152,
+                "triangles": 300,
+                "polygons": 300,
+                "ngons": 0,
+                "boundary_edges": 0,
+                "nonmanifold_edges": 0,
+                "loose_edges": 0,
+                "degenerate_faces": 0,
+                "uv_present": true,
+                "uv_outside_01_loops": 0,
+                "uv_triangle_area_sum": 0.8467098538356607,
+                "uv_overlap": "not exactly tested",
+                "edge_flow_artist_review": "required"
+              },
+              "distance": {
+                "max_distance_m": 0,
+                "samples": 0
+              },
+              "visual_status": "unverified"
+            }
+          ],
+          "checks": [
+            {
+              "id": "degenerate-faces",
+              "status": "pass",
+              "message": "0"
+            },
+            {
+              "id": "mesh-boundary",
+              "status": "pass",
+              "message": "0 boundary edges; 0 nonmanifold edges"
+            },
+            {
+              "id": "uv-atlas",
+              "status": "pass",
+              "message": "UV present and in 0..1; exact overlap and density unverified"
+            },
+            {
+              "id": "lod-reduction",
+              "status": "pass",
+              "message": "Actual triangle counts checked"
+            },
+            {
+              "id": "lod-sampled-distance",
+              "status": "pass",
+              "message": "Two-direction sampled distance; silhouette popping requires view check"
+            },
+            {
+              "id": "lod-visual-review",
+              "status": "warn",
+              "message": "Each LOD needs separate visual inspection; format, counts and sampled distance do not certify appearance."
+            },
+            {
+              "id": "uv-area-utilization",
+              "status": "pass",
+              "message": "84.67% summed triangle UV area; not exact union area or density uniformity"
+            },
+            {
+              "id": "singular-uv-tangent",
+              "status": "pass",
+              "message": "0 singular UV tangent frames use orthogonal fallback; artist review required"
+            }
+          ],
+          "elapsed_seconds": 2.096050500000274,
+          "unverified": [
+            "artist retopology and deformation edge flow",
+            "exact UV overlap/density",
+            "per-texel projection and photo fidelity",
+            "LOD silhouette popping",
+            "material coat/transmission and anisotropy preservation",
+            "full target-engine performance"
+          ],
+          "AAA_certified": false
+        },
+        "mesh_reduction_requested": false
+      },
+      {
+        "group": "wheel",
+        "motion": "visual_rotation",
+        "members": [
+          "wheel"
+        ],
+        "surface_check": {
+          "max_distance_m": 4.4704091095582044e-08,
+          "samples": 192,
+          "method": "two-direction sampled vertex-to-triangle nearest distance; not continuous Hausdorff proof"
+        },
+        "atlas": {
+          "schema": "jarvis.studio3d.asset-pipeline.v1",
+          "kind": "static merged review asset",
+          "source_part_names": [
+            "wheel"
+          ],
+          "part_hierarchy_preserved": false,
+          "part_origins_preserved": false,
+          "projection": null,
+          "topology_raw": {
+            "vertices": 96,
+            "triangles": 188,
+            "polygons": 50,
+            "ngons": 2,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "loose_edges": 0,
+            "degenerate_faces": 0,
+            "uv_present": true,
+            "uv_outside_01_loops": 0,
+            "uv_triangle_area_sum": 0.5607081492930399,
+            "uv_overlap": "not exactly tested",
+            "edge_flow_artist_review": "required"
+          },
+          "cleanup": {
+            "merge_distance_m": 1e-06,
+            "degenerate_distance_m": 1e-08,
+            "vertices_removed": 0
+          },
+          "topology_before": {
+            "vertices": 96,
+            "triangles": 188,
+            "polygons": 188,
+            "ngons": 0,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "loose_edges": 0,
+            "degenerate_faces": 0,
+            "uv_present": true,
+            "uv_outside_01_loops": 0,
+            "uv_triangle_area_sum": 0.7543316509726828,
+            "uv_overlap": "not exactly tested",
+            "edge_flow_artist_review": "required"
+          },
+          "baking": {
+            "basecolor": {
+              "file": "basecolor.png",
+              "resolution": [
+                512,
+                512
+              ],
+              "pixel_min": 0.0,
+              "pixel_max": 0.125490203499794,
+              "bake": "Cycles material surface, no high-to-low geometric projection"
+            },
+            "normal": {
+              "file": "normal.png",
+              "resolution": [
+                512,
+                512
+              ],
+              "pixel_min": 0.501960813999176,
+              "pixel_max": 0.501960813999176,
+              "bake": "Cycles material surface, no high-to-low geometric projection"
+            },
+            "orm": {
+              "file": "orm.png",
+              "resolution": [
+                512,
+                512
+              ],
+              "pixel_min": 0.0,
+              "pixel_max": 1.0,
+              "bake": "Cycles material surface, no high-to-low geometric projection"
+            },
+            "ao": {
+              "file": "ao.png",
+              "resolution": [
+                512,
+                512
+              ],
+              "pixel_min": 0.0,
+              "pixel_max": 1.0,
+              "bake": "Cycles material surface, no high-to-low geometric projection"
+            }
+          },
+          "lods": [
+            {
+              "level": 0,
+              "file": "model.glb",
+              "ratio_requested": 1,
+              "topology": {
+                "vertices": 96,
+                "triangles": 188,
+                "polygons": 188,
+                "ngons": 0,
+                "boundary_edges": 0,
+                "nonmanifold_edges": 0,
+                "loose_edges": 0,
+                "degenerate_faces": 0,
+                "uv_present": true,
+                "uv_outside_01_loops": 0,
+                "uv_triangle_area_sum": 0.7543316509726828,
+                "uv_overlap": "not exactly tested",
+                "edge_flow_artist_review": "required"
+              },
+              "distance": {
+                "max_distance_m": 0,
+                "samples": 0
+              },
+              "visual_status": "unverified"
+            }
+          ],
+          "checks": [
+            {
+              "id": "degenerate-faces",
+              "status": "pass",
+              "message": "0"
+            },
+            {
+              "id": "mesh-boundary",
+              "status": "pass",
+              "message": "0 boundary edges; 0 nonmanifold edges"
+            },
+            {
+              "id": "uv-atlas",
+              "status": "pass",
+              "message": "UV present and in 0..1; exact overlap and density unverified"
+            },
+            {
+              "id": "lod-reduction",
+              "status": "pass",
+              "message": "Actual triangle counts checked"
+            },
+            {
+              "id": "lod-sampled-distance",
+              "status": "pass",
+              "message": "Two-direction sampled distance; silhouette popping requires view check"
+            },
+            {
+              "id": "lod-visual-review",
+              "status": "warn",
+              "message": "Each LOD needs separate visual inspection; format, counts and sampled distance do not certify appearance."
+            },
+            {
+              "id": "uv-area-utilization",
+              "status": "pass",
+              "message": "75.43% summed triangle UV area; not exact union area or density uniformity"
+            },
+            {
+              "id": "singular-uv-tangent",
+              "status": "pass",
+              "message": "0 singular UV tangent frames use orthogonal fallback; artist review required"
+            }
+          ],
+          "elapsed_seconds": 1.1953202999975474,
+          "unverified": [
+            "artist retopology and deformation edge flow",
+            "exact UV overlap/density",
+            "per-texel projection and photo fidelity",
+            "LOD silhouette popping",
+            "material coat/transmission and anisotropy preservation",
+            "full target-engine performance"
+          ],
+          "AAA_certified": false
+        },
+        "mesh_reduction_requested": false
+      },
+      {
+        "group": "handle",
+        "motion": "visual_rotation",
+        "members": [
+          "handle"
+        ],
+        "surface_check": {
+          "max_distance_m": 6.664001972467304e-08,
+          "samples": 3072,
+          "method": "two-direction sampled vertex-to-triangle nearest distance; not continuous Hausdorff proof"
+        },
+        "atlas": {
+          "schema": "jarvis.studio3d.asset-pipeline.v1",
+          "kind": "static merged review asset",
+          "source_part_names": [
+            "handle"
+          ],
+          "part_hierarchy_preserved": false,
+          "part_origins_preserved": false,
+          "projection": null,
+          "topology_raw": {
+            "vertices": 3072,
+            "triangles": 6144,
+            "polygons": 3072,
+            "ngons": 0,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "loose_edges": 0,
+            "degenerate_faces": 0,
+            "uv_present": true,
+            "uv_outside_01_loops": 0,
+            "uv_triangle_area_sum": 0.2703883985539609,
+            "uv_overlap": "not exactly tested",
+            "edge_flow_artist_review": "required"
+          },
+          "cleanup": {
+            "merge_distance_m": 1e-06,
+            "degenerate_distance_m": 1e-08,
+            "vertices_removed": 0
+          },
+          "topology_before": {
+            "vertices": 3072,
+            "triangles": 6144,
+            "polygons": 6144,
+            "ngons": 0,
+            "boundary_edges": 0,
+            "nonmanifold_edges": 0,
+            "loose_edges": 0,
+            "degenerate_faces": 0,
+            "uv_present": true,
+            "uv_outside_01_loops": 0,
+            "uv_triangle_area_sum": 0.2995446603306089,
+            "uv_overlap": "not exactly tested",
+            "edge_flow_artist_review": "required"
+          },
+          "baking": {
+            "basecolor": {
+              "file": "basecolor.png",
+              "resolution": [
+                512,
+                512
+              ],
+              "pixel_min": 0.0,
+              "pixel_max": 0.45098042488098145,
+              "bake": "Cycles material surface, no high-to-low geometric projection"
+            },
+            "normal": {
+              "file": "normal.png",
+              "resolution": [
+                512,
+                512
+              ],
+              "pixel_min": 0.501960813999176,
+              "pixel_max": 0.501960813999176,
+              "bake": "Cycles material surface, no high-to-low geometric projection"
+            },
+            "orm": {
+              "file": "orm.png",
+              "resolution": [
+                512,
+                512
+              ],
+              "pixel_min": 0.0,
+              "pixel_max": 1.0,
+              "bake": "Cycles material surface, no high-to-low geometric projection"
+            },
+            "ao": {
+              "file": "ao.png",
+              "resolution": [
+                512,
+                512
+              ],
+              "pixel_min": 0.0,
+              "pixel_max": 1.0,
+              "bake": "Cycles material surface, no high-to-low geometric projection"
+            }
+          },
+          "lods": [
+            {
+              "level": 0,
+              "file": "model.glb",
+              "ratio_requested": 1,
+              "topology": {
+                "vertices": 3072,
+                "triangles": 6144,
+                "polygons": 6144,
+                "ngons": 0,
+                "boundary_edges": 0,
+                "nonmanifold_edges": 0,
+                "loose_edges": 0,
+                "degenerate_faces": 0,
+                "uv_present": true,
+                "uv_outside_01_loops": 0,
+                "uv_triangle_area_sum": 0.2995446603306089,
+                "uv_overlap": "not exactly tested",
+                "edge_flow_artist_review": "required"
+              },
+              "distance": {
+                "max_distance_m": 0,
+                "samples": 0
+              },
+              "visual_status": "unverified"
+            }
+          ],
+          "checks": [
+            {
+              "id": "degenerate-faces",
+              "status": "pass",
+              "message": "0"
+            },
+            {
+              "id": "mesh-boundary",
+              "status": "pass",
+              "message": "0 boundary edges; 0 nonmanifold edges"
+            },
+            {
+              "id": "uv-atlas",
+              "status": "pass",
+              "message": "UV present and in 0..1; exact overlap and density unverified"
+            },
+            {
+              "id": "lod-reduction",
+              "status": "pass",
+              "message": "Actual triangle counts checked"
+            },
+            {
+              "id": "lod-sampled-distance",
+              "status": "pass",
+              "message": "Two-direction sampled distance; silhouette popping requires view check"
+            },
+            {
+              "id": "lod-visual-review",
+              "status": "warn",
+              "message": "Each LOD needs separate visual inspection; format, counts and sampled distance do not certify appearance."
+            },
+            {
+              "id": "uv-area-utilization",
+              "status": "pass",
+              "message": "29.95% summed triangle UV area; not exact union area or density uniformity"
+            },
+            {
+              "id": "singular-uv-tangent",
+              "status": "pass",
+              "message": "0 singular UV tangent frames use orthogonal fallback; artist review required"
+            }
+          ],
+          "elapsed_seconds": 1.0412501999999222,
+          "unverified": [
+            "artist retopology and deformation edge flow",
+            "exact UV overlap/density",
+            "per-texel projection and photo fidelity",
+            "LOD silhouette popping",
+            "material coat/transmission and anisotropy preservation",
+            "full target-engine performance"
+          ],
+          "AAA_certified": false
+        },
+        "mesh_reduction_requested": false
+      }
+    ],
+    "rigid_mesh_count": 3,
+    "material_atlases": 3,
+    "roundtrip_group_names": [
+      "body",
+      "handle",
+      "wheel"
+    ],
+    "tangents": {
+      "singular_tangent_frames": 0,
+      "meaning": "Orthogonal fallback at singular UVs; UV quality still requires review"
+    },
+    "elapsed_seconds": 43.847782000000734,
+    "posed_bound_error_m": 2.9802322387695312e-08,
+    "reduction": false,
+    "high_to_low_projection": false,
+    "lods_generated": false,
+    "user_approval": false,
+    "AAA_certified": false,
+    "unverified": [
+      "atlas visual equivalence",
+      "exact UV overlap/density",
+      "animation collision",
+      "target engine draw calls and frame time"
+    ]
+  },
+  "official_format_issues": {
+    "numErrors": 0,
+    "numWarnings": 0,
+    "numInfos": 0,
+    "numHints": 0,
+    "messages": [],
+    "truncated": false
+  },
+  "user_approval": false,
+  "lod_authorized": false,
+  "files": {
+    "after.png": {
+      "sha256": "036c2f690ee316e4a52f263e8d11ba3de6b78f75a83d35af51099c0522b66798",
+      "bytes": 569391
+    },
+    "before.png": {
+      "sha256": "6a51ab5922f2c4ba5c8f16ae3e1a09b7a823b6fb1349e8b33432a71d2ac9e839",
+      "bytes": 576110
+    },
+    "model.blend": {
+      "sha256": "82f4d1be6eebcb15e0030ec4b91ccd387e38200e14d2f303633fb442f5506b35",
+      "bytes": 1557811
+    },
+    "model.glb": {
+      "sha256": "ac18e282ad36c3bf076f676ee6f81d62d0730567f8f66851c6ed53b34571b0de",
+      "bytes": 1125244
+    },
+    "source.blend": {
+      "sha256": "47d39bf437eb01627448a78cd628b0df97cc28e03a3a87ca635faa0324bcd8c5",
+      "bytes": 216903
+    },
+    "body/ao.png": {
+      "sha256": "c3831db99c28441496da40626dde010a120cb377103683d4479518bf36e05a67",
+      "bytes": 108890
+    },
+    "body/basecolor.png": {
+      "sha256": "8aad5e14f01ef651fff1a701e53d3b34db74ea3a00e5bdaf7c08308b7ff0b4b9",
+      "bytes": 145522
+    },
+    "body/normal.png": {
+      "sha256": "ea831cf7ebcb1547120dffd02dd7e408509a5956565363bb3bab37c3403df9fb",
+      "bytes": 4664
+    },
+    "body/orm.png": {
+      "sha256": "7fa7f48bb643dcc1cd02d9558c08ab860dec5e1e6acb614ee3d257af54a10762",
+      "bytes": 386735
+    },
+    "handle/ao.png": {
+      "sha256": "7a2800a010a5f4e90e4fb691dfdddef089c21f078ef8867eeb725795a258ebd4",
+      "bytes": 139710
+    },
+    "handle/basecolor.png": {
+      "sha256": "a91f16dfc04e10b703bde6aea9e0fc2588f627bba21da83834049a6a91ef1da4",
+      "bytes": 24936
+    },
+    "handle/normal.png": {
+      "sha256": "3b8dfb8c3b14effa2ec38e69ef1a4882de1fa69c367859e73cbedef159afbe90",
+      "bytes": 4588
+    },
+    "handle/orm.png": {
+      "sha256": "a9f909a8f7d4c55503de4db4ad918e16bf268185dfb911a3c6706ad8236c89db",
+      "bytes": 148079
+    },
+    "wheel/ao.png": {
+      "sha256": "d743dd4a7b7dcb48ef6412c47bc6786a7d33289001efa1624da44daf23b12747",
+      "bytes": 150673
+    },
+    "wheel/basecolor.png": {
+      "sha256": "e31d358eec389357b7dcee1f40f7f093ad96d2af0ef1a3026f2435a04edf8489",
+      "bytes": 11489
+    },
+    "wheel/normal.png": {
+      "sha256": "3b8dfb8c3b14effa2ec38e69ef1a4882de1fa69c367859e73cbedef159afbe90",
+      "bytes": 4588
+    },
+    "wheel/orm.png": {
+      "sha256": "4444c25cedccfc9952c8e8694c411826272e633536752479f85f7e6d2048ebdd",
+      "bytes": 160146
+    }
+  },
+  "finished_at": 1793126532.9747899,
+  "elapsed_seconds": 44.967610359191895,
+  "model_calls": 0,
+  "api_usd": 0,
+  "local_compute_usd": null
+}

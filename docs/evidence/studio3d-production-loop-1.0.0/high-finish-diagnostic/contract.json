@@ -1,0 +1,44 @@
+{
+  "texture_size": 512,
+  "groups": [
+    {
+      "id": "body",
+      "members": [
+        "body"
+      ],
+      "parent": null,
+      "pivot": [
+        0,
+        0,
+        0.35
+      ],
+      "motion": "fixed"
+    },
+    {
+      "id": "wheel",
+      "members": [
+        "wheel"
+      ],
+      "parent": "body",
+      "pivot": [
+        0.23,
+        0.29,
+        0.25
+      ],
+      "motion": "visual_rotation"
+    },
+    {
+      "id": "handle",
+      "members": [
+        "handle"
+      ],
+      "parent": "body",
+      "pivot": [
+        -0.23,
+        0.29,
+        0.4
+      ],
+      "motion": "visual_rotation"
+    }
+  ]
+}

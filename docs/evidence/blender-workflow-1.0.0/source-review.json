@@ -1,0 +1,56 @@
+{
+  "source": "https://github.com/kokushin/charakuru-claude-code",
+  "commit": "28eddac5fe4bcb8f78f0d375fd7aedc824d7becb",
+  "reviewed": [
+    {
+      "path": "README.zh-CN.md",
+      "git_blob_sha": "03ef893f21ca3ee799c2e65179e946290bffeb6c"
+    },
+    {
+      "path": "SKILL.md",
+      "git_blob_sha": "f14b8dd4659eac59ec1764e29c171ebca589bf76"
+    },
+    {
+      "path": "references/stages.md",
+      "git_blob_sha": "304ced12ca7c243203051570931fdbb497d9b15e"
+    },
+    {
+      "path": "references/setup.md",
+      "git_blob_sha": "1acef3702d1453b0e5bd590d6586a1708ec6503f"
+    },
+    {
+      "path": "scripts/inspect_rig.py",
+      "git_blob_sha": "74c6559f0d56755768146563c3a27b3294e2fe25"
+    },
+    {
+      "path": "scripts/rotate_fbx.py",
+      "git_blob_sha": "8bbe4ff8a4961ce915615cdcd3ea2649e4ab4a40"
+    },
+    {
+      "path": "scripts/ea_run.py",
+      "git_blob_sha": "2fc45f294ca5ccc4c3ad18da4d89bc0da1efe342"
+    },
+    {
+      "path": "scripts/codex_img.sh",
+      "git_blob_sha": "fcd90c704c71c217ecedc6e83320ba7bc0840fd0"
+    },
+    {
+      "path": "LICENSE",
+      "git_blob_sha": "05f07b2c5747d685e55ab46010b51a73a4868d70"
+    }
+  ],
+  "license": "MIT",
+  "original_kit": "Charakuru 1.1.0; separately licensed; not redistributed",
+  "admission": {
+    "executed_upstream_scripts": false,
+    "copied_upstream_executable_code": false,
+    "adapted": "stage routing, preserve-source edits, real multi-view review and honest completion reporting",
+    "replaced": "Claude/Codex/Tripo orchestration with existing Jarvis Image Studio and bounded Blender worker",
+    "not_adopted": "ea_run.py executes arbitrary snippets; codex_img.sh deletes the old output and uses another agent; neither is admitted as a Jarvis executor"
+  },
+  "limitations": [
+    "No exhaustive dependency/vulnerability scan",
+    "Character rig, expressions and VRM runtime not integrated",
+    "No full figure/AAA quality claim"
+  ]
+}

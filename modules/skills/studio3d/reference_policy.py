@@ -12,6 +12,7 @@ def guidance(policy):
         'unspecified': 'Shield configuration is unestablished; report uncertainty.',
         'rearward_folded': 'User-approved asset intent requires rearward/inward shield side wings: preserve those folds and report conflicting references.',
         'flat': 'Asset intent specifies a flat shield; do not add folded side wings from another asset.',
+        'curved_double': 'Asset intent specifies a low curved double-sheet shield with separated layers; this arrangement is established. Refine its continuous curvature and silhouette against the references, without adding leFH18-style folded wings.',
         'none': 'Asset intent has no shield; do not add one from a related asset.',
     }
     if shield not in options: raise ValueError('Unknown shield configuration')

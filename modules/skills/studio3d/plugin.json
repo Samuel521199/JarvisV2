@@ -69,5 +69,110 @@
       "seat_attachment"
     ],
     "automatic_promotion": false
-  }
+  },
+  "production_loop": {
+    "version": "1.3.0",
+    "entry": "python -m tools.studio3d_autopilot",
+    "recipe": "modules/skills/studio3d/artillery_recipe.py",
+    "policy": "modules/skills/studio3d/production_loop.py",
+    "tools": [
+      "set_exterior_parameter"
+    ],
+    "capabilities": [
+      "semantic part inventory",
+      "actual five-view render review",
+      "evidence-bound bounded parameter edits",
+      "regression rejection",
+      "persistent idempotent model and native job observation",
+      "candidate-only experience episodes",
+      "direct before-after visual comparison",
+      "bounded rollback and replanning",
+      "actual usage and package receipts",
+      "semantic patch isolation with unchanged-object hashes",
+      "supplemental native oblique inspection and lossless projected region crops",
+      "bounded production resume without user reconfirmation",
+      "non-starving surface-work scheduling with geometry freeze"
+    ],
+    "scope": "Parameterized PaK38 exterior recipe; broader reconstruction and cross-model art transfer unverified",
+    "automatic_promotion": false,
+    "recipe_version": "1.7.0"
+  },
+  "high_surface_export": {
+    "version": "1.0.0",
+    "entry": "python -m tools.studio3d_high_finish",
+    "scope": "receipt-verified native BLEND, per-rigid-owner surface maps, no decimation/high-to-low projection/LOD",
+    "verified": "three-group diagnostic with GLB reimport rendering",
+    "full_asset_quality_verified": false
+  },
+  "inspection_render": {
+    "version": "1.0.0",
+    "entry": "python -m tools.studio3d_inspection",
+    "scope": "bounded fixed-camera actual renders and unresampled projected crops",
+    "automatic_camera_calibration": false
+  },
+  "blender_workflow": {
+    "version": "1.0.0",
+    "name": "Blender 3D 制作与修改",
+    "stages": [
+      {
+        "name": "参考与目标",
+        "status": "ready",
+        "detail": "登记参考图、尺寸、用途及来源；需要新图时复用图片工作室。"
+      },
+      {
+        "name": "建立模型",
+        "status": "ready",
+        "detail": "Jarvis 模型输出受限曲面/网格数据，Blender 制作 .blend 和 GLB。"
+      },
+      {
+        "name": "局部修改",
+        "status": "ready",
+        "detail": "对本工作室的未烘焙数据模型修改部件尺寸、变换、材质或支持的修改器，保留原版。"
+      },
+      {
+        "name": "渲染比较",
+        "status": "ready",
+        "detail": "查看真实渲染与五视图；参考识图修正使用明确选择的视觉模型。"
+      },
+      {
+        "name": "游戏资产",
+        "status": "ready",
+        "detail": "现有高模→低模、静态 PBR 烘焙、LOD 流程；外观验收另行判断。"
+      },
+      {
+        "name": "角色绑定、表情、VRM",
+        "status": "external_only",
+        "detail": "Charakuru 外部套件可用；尚未接入 Jarvis 的自动执行，不因安装而宣称完成。"
+      }
+    ],
+    "outputs": [
+      "model.blend",
+      "model.glb",
+      "preview.png",
+      "scene.json",
+      "report.json"
+    ],
+    "edit_scope": "本工作室已交付、未烘焙的声明式模型；外部 GLB 仅支持原有导入渲染，任意 BLEND/FBX 编辑未接入。",
+    "sources": [
+      {
+        "name": "kokushin/charakuru-claude-code · 非官方流程参考",
+        "url": "https://github.com/kokushin/charakuru-claude-code/tree/28eddac5fe4bcb8f78f0d375fd7aedc824d7becb",
+        "commit": "28eddac5fe4bcb8f78f0d375fd7aedc824d7becb",
+        "license": "MIT"
+      },
+      {
+        "name": "Nano / Charakuru · 原始套件",
+        "url": "https://github.com/nanocle/Charakuru/releases/tag/v1.1.0",
+        "version": "1.1.0",
+        "license": "Charakuru Source-Available License；不随本工程分发"
+      },
+      {
+        "name": "Blender · 本地建模引擎",
+        "url": "https://www.blender.org/",
+        "license": "GPL-2.0-or-later"
+      }
+    ],
+    "runtime": "Jarvis Studio3D；不启动 Claude/Codex 子代理，不依赖 Tripo，不执行外来 Python。"
+  },
+  "skill_entry": "modules/skills/studio3d/SKILL.md"
 }

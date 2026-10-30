@@ -82,10 +82,13 @@
 - [3D 工作室验证（1.0.0—1.3.0）](#studio3d-evidence)
   - [1.1.0 交互验收查看器、贴图与 LOD](#studio3d-viewer-evidence)
   - [1.2.0 五视图坦克与图集改进](#studio3d-panzer2-evidence)
+  - [二号坦克用户分件装配与候选经验（2026-10-28）](#panzer-assembly-evidence)
+  - [Blender 工作流与保留原版的局部修改（1.0.0）](#blender-workflow-evidence)
   - [1.3.0 高模到游戏低模的生产流程](#studio3d-production-evidence)
   - [苹果参考图、高低模与贴图修复实测（1.4—1.6）](#studio3d-apple-evidence)
 - [Nano Banana 图片工作室验收 · 1.0.0](#nano-banana-evidence)
 - [Gmail 1.0.0 验收（2026-10-25）](#gmail-evidence)
+  - [精灵真实邮件轻视图验收（2026-10-30）](#gmail-companion-evidence)
 - [英语学习与日志复盘验收（2026-10-26）](#personal-workflows-evidence)
 - [每次任务的结果评价与持续改进验收（proposed）](#task-outcome-scoring)
   - [先看硬条件，再看质量与成本](#task-score-rubric)
@@ -135,6 +138,7 @@
   - [环境与方法](#maintenance-0-1-1-environment)
   - [结果](#maintenance-0-1-1-results)
   - [未验证与后续](#maintenance-0-1-1-unverified)
+- [Google 模型与本机 MCP 兼容验证（2026-10-30）](#google-mcp-probe-evidence)
 <!-- book-nav:end -->
 
 <a id="open-source-adoption-validation"></a>
@@ -1689,6 +1693,28 @@ Jarvis 正式 Google Vertex / Gemini 3.8 Flash 实际评审一次。[原始评�
 
 未验收：参考板跨视角的严格测量一致性、Jarvis模型看图、交互重拓扑、高低模笼罩投射、精确UV与全mipmap接缝、分件UV/LOD转移、真实内部装置、运动、目标游戏引擎帧率以及完整3A美术质量。[使用与后续流程](tasks-agents.md#studio3d-reference-workflow)为唯一操作权威。
 
+<a id="panzer-assembly-evidence"></a>
+### 二号坦克用户分件装配与候选经验（2026-10-28）
+
+**implemented / 分项 verified，工程 v0.1.1 未发布。** 实现、输入及经验边界归[用户高模分件案例](studio3d-learning.md#studio3d-part-assembly-case)。固定工具 1.0.0 实际执行一次分件检查、三轮安装修正及一次最终重渲；最终 6 个网格实例共 11,669,279 三角面，五个原文件摘要不变，15 张 4K 贴图字节不变。独立空场景 GLB 回读通过；装配多视图、爆炸图已目视检查，23 项相关测试通过，4 项候选经验检索及反例拒绝通过。大文件只留本机，摘要、版本、资源和限制见[验证记录](evidence/panzer-ii-assembly-2026-10-28/verification.json)、[测试日志](evidence/panzer-ii-assembly-2026-10-28/tests.log)。
+
+Google Argon 审阅超时（UNKNOWN，费用未确认）；Google Flash 审阅成功，账本估算 USD 0.01048725。模型建议经复核后作为辅助意见保存，不自动应用。当前是作者校准、Jarvis 固定工具执行与模型审阅的本资产案例，未验证独立组装、权重训练、跨资产迁移、工程装配精度、游戏低模/LOD 或 AAA 美术质量；未经用户最终外观签收。没有重启或替换主工作台进程。
+
+**2026-10-29 用户反证与 r2 修订。** 首轮整车目视和格式检查遗漏炮盾埋入前板，用户反馈后局部完成判断撤回。修订保留原网格/UV和主体变换，炮盾/炮管协同平移，新增可编辑衬座与前灯；8 个外框点由遮挡变为可见，支承采样、底座拟合后检查及 GLB 空场景回读通过，15 张原始贴图字节不变。原生生成保留 5 轮试作及实际底座干涉拒绝；不能把局部采样当作完整碰撞或工程认证。最终 8 组／44 个网格／11,683,119 三角面；两项修订经验按条件检索与反例拒绝通过。本轮无新增模型 API 调用，仍待用户外观确认。[修订证据](evidence/panzer-ii-assembly-2026-10-28/revision-r2.json)。
+
+**2026-10-29 接缝反证与 r3 炮塔改造。** 按用户要求撤下 r2 衬座，局部改造原炮塔前壳。386,249 个受影响三角面的方向/面积检查通过；同相机近景与 124 点周边检查通过，五个其他原网格及前灯、15 张 PBR 图保持。真实 GLB 回读为 43 个网格／11,682,931 三角面；错误网格和装配坐标被固定配方拒绝。安装案例 revision 3 的适用检索与不可编辑主体反例通过，仍为作者校准的局部视觉候选。本轮无新增模型 API 调用；不能把采样扩张计作全表面无穿插或历史尺寸认证。[r3 修订证据](evidence/panzer-ii-assembly-2026-10-28/revision-r3.json)。
+
+<a id="blender-workflow-evidence"></a>
+### Blender 工作流与保留原版的局部修改（1.0.0）
+
+2026-10-28，工程 v0.1.1 未发布工作树，**implemented / 分项 verified**。规则归[Blender 工作流](tasks-agents.md#blender-workflow-runtime)。新目录 `user-data/evals/blender-workflow-20261028` 独立执行，未改变主数据和主服务。使用本机 Blender 5.2.0 LTS、固定 Worker 和 Cycles CPU；诊断输入为三个语义部件的机械壳体，不是用户真实资产或高级机械验收。
+
+- 原生链：Jarvis 建模 → 只加宽外壳并改颜色/粗糙度 → 新 .blend、GLB、预览与前后左右俯视五图。两个任务均 DELIVERED，GLB 空场景回读通过；原 scene.json 字节及轴/底座数据保持，旧源摘要被拒绝。零付费调用。[原生记录](evidence/blender-workflow-1.0.0/native-eval.json)。
+- 界面链：独立测试工作台的目录、使用条件、出处及编辑表单可见；通过表单选择轴并将 Z 比例改为 1.2，经真实 HTTP/Host/Blender 交付第三个版本。共享材质影响名单可见，原外壳与底座保持。[界面与交付记录](evidence/blender-workflow-1.0.0/ui-eval.json)。
+- 自动检查：65 项相关测试通过，覆盖新增部件编辑、拒绝未授权字段/无效值/重复目标、源摘要、停用、按需加载、对话指导冻结和模拟模型规划接线，并回归原工作室、项目、参考修正、投射与五视图逻辑。模拟规划测试不等于真实模型质量验证。[测试日志](evidence/blender-workflow-1.0.0/tests.log)。
+
+实际观看前后渲染可确认外壳变宽、蓝色改为橙色及高光变化；只作为诊断效果观察，不给 AAA 或照片相似度评分。没有新增真实模型调用、角色重建、自动骨架/表情/VRM、任意外部 Blend 编辑、跨模型质量、全漏洞扫描或低内存压力验证。主服务 18282 未重载，界面端按运行能力隐藏未加载的新编辑操作；正常重启才载入新增宿主逻辑。源码、测试服务和主服务状态分别记录。
+
 <a id="studio3d-production-evidence"></a>
 ### 1.3.0 高模到游戏低模的生产流程
 
@@ -1821,6 +1847,7 @@ Codex内置image_gen先生成单苹果参考，Jarvis经Vertex gemini-4-argon实
 <a id="gmail-evidence"></a>
 ## Gmail 1.0.0 验收（2026-10-25）
 
+
 独立实现，参考旧工程经验。产品发布号仍以 VERSION 为准，本地增量不是新的 GitHub 发布。[证据索引](evidence/gmail-1.0.0-2026-10-25/verification.json)。
 
 | 验证 | 实际结果 |
@@ -1835,6 +1862,20 @@ Codex内置image_gen先生成单苹果参考，Jarvis经Vertex gemini-4-argon实
 | 正式服务 | 空闲时停止旧进程；后台 Start-Process 被自动审批拒绝，仅返回 blocked by policy；既有 StartJarvis.bat 在受控终端成功启动，末次正常重启已加载恢复修复，/api/mail 返回已连接 |
 
 真实发送、Google 草稿、标签变更本轮未执行；写入与撤回使用模拟适配器测试，不算真实发送通过。未将真实邮件交模型，未部署周期拉取、提醒、自主生成邮箱技能。当前 DPAPI 为 Windows，其他系统未真机验收。
+
+<a id="gmail-companion-evidence"></a>
+### 精灵真实邮件轻视图验收（2026-10-30）
+
+实现范围归[邮件轻视图](tasks-agents.md#gmail-companion)，产品对比归[官方方案比较](tasks-agents.md#mail-automation-comparison)。本轮发布号仍为 v0.1.1；未创建 GitHub 发布。
+
+- 真实检查发现旧凭据在本地存在，但 Google 返回授权失效；复用既有配置发起同范围重连，主人完成 Google 本人步骤后恢复读取。没有重新索取 JSON、输出令牌或扩大 scope。
+- 主服务加载新接口后，有限同步十封真实收件箱摘要，使用 Gmail INBOX 标签取得真实全箱未读数，并读取单封纯文本；证据不保存邮箱地址、主题、正文或令牌。没有发送、归档、标读、删除和模型分析。
+- 32 项邮件测试通过，覆盖原审阅／恢复与新增投影账号隔离、正文和令牌不外泄、精确计数与抽样计数区别、分类纠正、首批读取边界、HTTP 身份门及独立静态资源。
+- 相关回归：家庭私密 12 项、工作台 2 项通过；本机访问 7 项中 6 项通过，1 项按平台条件跳过。没有运行全部领域测试，不继承本轮之外的 3D 验收。
+- 实际浏览器显示真实计数和十封摘要，可打开正文；本轮页面仍是浏览器中的桌面场景，原生透明、跨屏、持续后台通知、自动日程与自动回复尚未实现。完整自动化目标不因此变为 verified。
+
+可重复的真实只读检查：在工程根运行 `python -m tools.probe_mail_companion --live`。该显式命令读取当前连接邮箱，详细本机记录保存在 user-data/mail-proof，不自动创建计划任务。网页轻视图的两分钟检查默认关闭，只在主人勾选且列表可见时工作；未做长期运行与真实发送验收。
+
 
 <a id="personal-workflows-evidence"></a>
 ## 英语学习与日志复盘验收（2026-10-26）
@@ -2882,6 +2923,23 @@ JPF/r1 不改写；本轮是 V-TRI/V-CLC 的局部接线证据，完整场景仍
 - 浏览器端：访问钥匙解锁与“服务重启后自动重试”只做了 HTTP 层测试，未做浏览器探针；`tools/` 下依赖已运行服务的评估脚本需改为 `python -m tools.<名称>` 运行。
 - 未修复：Blender/工程 Worker 启动后才挂 Job、Codex 子进程无 Job；结果评价投影在读接口中写库；host 层导入环。原因与取舍见[当前真实状态](current-state.md#current-state-risks)。
 - 本轮没有真实模型调用，也没有部署到正在运行的服务。
+
+<a id="google-mcp-probe-evidence"></a>
+## Google 模型与本机 MCP 兼容验证（2026-10-30）
+
+**探针 1.0.0 工作树，局部 verified；不代表生产微信 Agent 已实现。** 需求与模型解耦规则见[Google／MCP 路径](tasks-agents.md#weixin-model-neutral-routing)。
+
+| 核对项 | 本轮证据与边界 |
+|---|---|
+| 运行方式 | 工程根执行 `python -X utf8 -B -m tools.probe_google_mcp --live`；默认不运行，显式标志允许至多 2 次 Google 请求 |
+| 模型选择 | 使用本机已有 Google 设置，本次解析为 Vertex／gemini-3.8-flash；型号来自配置，探针和 Skill 不固定该型号 |
+| 工具往返 | Google 返回 echo 函数请求 → 既有本地 HTTP MCP 客户端初始化／发现 → 模拟 echo 执行一次 → functionResponse 回传 |
+| 结果核验 | 工具调用后才生成的随机回执由第二次模型请求正确报告；函数参数、工具数量与 MCP 调用次数逐项检查 |
+| 实际用量 | 2 次模型请求，1 次合成 MCP 调用；Google totalTokenCount 合计 412，模型用量原字段保留，不推算未来费用 |
+| 本机与资料 | 本工程 Windows／Python3.13；只用合成数据，无第三方安装、微信访问或外发；运行前及调用前核对停止与网络开关 |
+| 不覆盖项 | 无真实微信、角色／Skill 自动匹配、生产任务账本接线、连续多轮操作、异常恢复或能力质量验收；不将强制一次函数调用当自主行为通过 |
+
+[机器可读回执与源文件摘要](evidence/google-mcp-probe-2026-10-30.json)。本机同一回执保存在 `user-data/google-mcp-proof/verification.json`；不含凭据、私人消息、截图或模型原始回复。未改正在运行的工作台服务，无需以重启服务作为该探针验收条件。
 
 <!-- book-footer:start -->
 [返回工程主入口](../README.md) · [全书目录](../README.md#book-tree) · [上一章：系统自身模型与能力认知](self-model.md) · [下一章：架构决策、批判性评审与评分](decisions-review.md)

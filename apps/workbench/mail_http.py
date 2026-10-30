@@ -14,8 +14,8 @@ def service(handler):
 
 
 def get(handler,path):
-    if path!='/api/mail':return False
-    try:handler.json(service(handler).state())
+    if path not in {'/api/mail','/api/mail/companion'}:return False
+    try:handler.json(service(handler).companion() if path.endswith('/companion') else service(handler).state())
     except (CoreError,OSError,ValueError,sqlite3.Error) as exc:
         handler.json({'error':exc.code if isinstance(exc,CoreError) else 'mail_store_unavailable'},503)
     return True

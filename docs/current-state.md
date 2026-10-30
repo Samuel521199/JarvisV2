@@ -18,9 +18,9 @@ Jarvis 现在是一个**本机网页工作台 + 模块化 Python 服务**：能�
 | 目标 → 计划 → 审批 → 执行 → 原会话交付 | `host/goals.py`、`host/task_scheduler.py`、`modules/task_resource/` | 通用执行两路并行（同类插件任务互斥）；“目标逐项结案”目前只覆盖文本统计与结构化报价两种判定 |
 | 受限自写工具与 Codex 候选 | `modules/autonomous_development/`、`modules/release_recovery/`、`adapters/models/codex_cli.py` | 只生成纯文本 Python 工具；在 Windows LPAC 隔离进程中验证；人工审阅节点在测试中曾由 Codex 代为核对 |
 | 受控 HTTP MCP | `adapters/mcp/http.py`、`modules/registry_composer/connectors.py` | 只对接过本机模拟服务；端点由主人登记，无目的地白名单 |
-| Gmail 助手 | `host/mailbox.py`、`adapters/mail/` | 真实 OAuth、读取过 10 封摘要；发送与草稿未做真实发送验证 |
+| Gmail 助手 | `host/mailbox.py`、`adapters/mail/` | 真实 OAuth、有限读信；2026-10-30 接入[精灵邮件轻视图](tasks-agents.md#gmail-companion)，真实计数／摘要／正文与共享 API 已检查；发送未做真实验收，完整自动化尚未实现 |
 | 英语练习、日志复盘 | `seed/skills/conversation.json` | 47 项单测 + 7 次真实调用，短文本 |
-| 图片设计、3D 工作室、机械科普 | `host/image_generation.py`、`host/studio3d*.py`、`host/anatomy*.py` | 可用但属专业侧线；3D 参考还原与美术验收未通过；高分辨率出图未完成真实验证 |
+| 图片设计、3D 工作室、机械科普 | `host/image_generation.py`、`host/studio3d*.py`、`host/anatomy*.py` | [Blender 制作与局部改模](tasks-agents.md#blender-workflow-runtime)已在独立测试服务验证，主服务待正常重载；可用但属专业侧线；leFH18 已获用户视觉验收；PaK38 完整保留基线为 r25，最新工作候选见资产 current-model；[局部示范、Jarvis 复做与核验](studio3d-learning.md#studio3d-teacher-delivery)已记录清理拒收和未解三角化缺陷，未完成高模验收；[人物独立草模试验](studio3d-learning.md#studio3d-character-trial)尚未验收，跨资产独立制作收益未验证；高分辨率出图未完成真实验证 |
 | 家庭私密空间 | `control/family_identity.py`、`host/family.py` | 可选登录、DPAPI 加密、成员隔离；规则为“主人可查看全部、成员只看自己和共享内容”（主人 2026-10-24 选定并向成员明示） |
 
 <a id="current-state-design-only"></a>

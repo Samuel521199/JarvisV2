@@ -1,0 +1,92 @@
+{
+  "runs": [
+    {
+      "id": "3e4bf5b55a1749e5b694e032c4b361e2",
+      "status": "FAILED",
+      "started_at": 1793126314.0591,
+      "finished_at": 1793126360.9812698,
+      "elapsed_seconds": 46.92216992378235,
+      "model_calls": 0,
+      "api_usd": 0,
+      "local_compute_usd": null,
+      "error": "Fixed learning worker failed; inspect retained logs",
+      "format_issues": null,
+      "posed_bound_error_m": null,
+      "roundtrip_origin_error_m": null,
+      "groups": null
+    },
+    {
+      "id": "06a2207224714f7aaa372ba86013e90d",
+      "status": "BUILT_AWAITING_VISUAL_COMPARISON",
+      "started_at": 1793126488.0071795,
+      "finished_at": 1793126532.9747899,
+      "elapsed_seconds": 44.967610359191895,
+      "model_calls": 0,
+      "api_usd": 0,
+      "local_compute_usd": null,
+      "error": null,
+      "format_issues": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 0,
+        "numHints": 0,
+        "messages": [],
+        "truncated": false
+      },
+      "posed_bound_error_m": 2.9802322387695312e-08,
+      "roundtrip_origin_error_m": null,
+      "groups": [
+        "body",
+        "handle",
+        "wheel"
+      ]
+    },
+    {
+      "id": "162925cfd7a04c66a0767dfa095c3ea9",
+      "status": "BUILT_AWAITING_VISUAL_COMPARISON",
+      "started_at": 1793127002.3562515,
+      "finished_at": 1793127068.1419046,
+      "elapsed_seconds": 65.78565311431885,
+      "model_calls": 0,
+      "api_usd": 0,
+      "local_compute_usd": null,
+      "error": null,
+      "format_issues": {
+        "numErrors": 0,
+        "numWarnings": 0,
+        "numInfos": 0,
+        "numHints": 0,
+        "messages": [],
+        "truncated": false
+      },
+      "posed_bound_error_m": 2.9802322387695312e-08,
+      "roundtrip_origin_error_m": 0.0,
+      "groups": [
+        "body",
+        "handle",
+        "wheel"
+      ],
+      "pixel_diagnostics": {
+        "before.png vs after.png": {
+          "mean_absolute_rgb_difference_0_255": [
+            0.3123193359375,
+            0.3009847005208333,
+            0.29449544270833333
+          ],
+          "scope": "identical camera/stage; includes sampling noise, not photographic similarity"
+        },
+        "after.png vs roundtrip.png": {
+          "mean_absolute_rgb_difference_0_255": [
+            0.00031412760416666666,
+            0.000283203125,
+            0.00024739583333333335
+          ],
+          "scope": "identical camera/stage; includes sampling noise, not photographic similarity"
+        }
+      }
+    }
+  ],
+  "manual_visual_review": "Same coupon silhouette and placement preserved; no prominent new seams or missing surfaces in before/after/reimported GLB views. Fine surface differences remain; this coupon is not proof for PaK38 or all materials.",
+  "automatic_quality_approval": false,
+  "recipe_quality_transfer_verified": false
+}

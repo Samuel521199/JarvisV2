@@ -28,10 +28,24 @@ class Skills:
         usable = [x for x in self.list() if x['enabled'] and x['state'] == 'ready']
         if ident == 'auto':
             # Narrow, explainable matching; ordinary chat loads no guidance.
-            return next((x for x in usable if self.matches(x, text)), None)
+            match = next((x for x in usable if self.matches(x, text)), None)
+            return self.load_guidance(match) if match else None
         match = next((x for x in usable if x['id'] == ident), None)
         if match is None: raise CoreError('skill_unavailable', 'Skill disabled or adapter not ready')
-        return match
+        return self.load_guidance(match)
+
+    @staticmethod
+    def load_guidance(item):
+        """Load only the selected, first-party registered workflow body."""
+        registered = {'studio3d': Path(__file__).parent / 'studio3d/SKILL.md'}
+        if item['id'] not in registered:
+            return item
+        path = registered[item['id']]
+        body = path.read_text(encoding='utf-8')
+        if not body.startswith('---\n') or len(body) > 12000:
+            raise CoreError('skill_unavailable', 'Invalid registered skill body')
+        body = body.split('---', 2)[2].strip()
+        return {**item, 'guidance': body, 'guidance_loaded': True}
 
     @staticmethod
     def matches(item, text):
