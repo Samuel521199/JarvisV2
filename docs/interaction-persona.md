@@ -59,7 +59,7 @@ Jarvis 首先是可以自然交流的个人伙伴，无需打开项目才能聊�
 
 **主人确认的定位及[统一系统准则](architecture.md#unified-system-principle)为 accepted；原生接入与完整跨入口闭环仍 proposed。** 精灵与工作台是整套系统中的两种表现和工作形式：精灵侧重自动化、简洁和低打扰，工作台侧重详细、直观地展示与控制同一批任务及设置。精灵采用[当前纯头部形象](#desktop-robot-form)，也可完全隐藏后由托盘／热键找回；没有默认常开的基础窗口或任务列表，需要交流、决策、查看状态或交付时仅出现对应内容。工作台按需展开同一助手、原会话和任务，不另起业务流程。两端共用配置与表现语义，入口精简只改变展示深度，不减少底层功能或另设自动化权限。当前基线、硬件及上游查阅范围见[设计研究记录](evidence/desktop-companion-2026-10-25/research.json)。
 
-设计取舍：借鉴 Grok Bot 的交办、并行工作和按需回问；借鉴 OpenMausBot 的事件汇总与问题卡；借鉴 OpenClaw 的常驻入口与多端共享状态。它们的运行栈不整体迁入本项目，开源声明也不等于已审计或可直接兼容。名为 OpenBot 的机器人项目与桌面助手不是同一用途；主人尚未提供所指仓库的准确链接。[来源与区别](references.md#desktop-companion-sources)。首轮窗口布局预览已被本轮按需卡片方向替代；[当前预览记录](evidence/desktop-companion-2026-10-25/on-demand-checks.json)仅验证浏览器内示例交互，不能当作原生桌面功能验收。
+设计取舍：借鉴 Grok Bot 的交办、并行工作和按需回问；借鉴 OpenMausBot 的事件汇总与问题卡；借鉴 OpenClaw 的常驻入口与多端共享状态。它们的运行栈不整体迁入本项目，开源声明也不等于已审计或可直接兼容。名为 OpenBot 的机器人项目与桌面助手不是同一用途；主人尚未提供所指仓库的准确链接。[来源与区别](references.md#desktop-companion-sources)。v0.1.3 网页实现已接真实会话、项目、工作和邮件，复用同一 API 与聊天／任务组件，见[共享呈现实现](contracts.md#desktop-presence-web-runtime)。原生窗口仍未落地。首轮窗口布局预览已被本轮按需卡片方向替代；[当前预览记录](evidence/desktop-companion-2026-10-25/on-demand-checks.json)仅验证浏览器内示例交互，不能当作原生桌面功能验收。
 
 <a id="desktop-presence-surfaces"></a>
 #### 一个入口，按需要展开

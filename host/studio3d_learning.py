@@ -20,6 +20,7 @@ SOURCES = ('host/studio3d_learning.py', 'modules/context_knowledge/studio3d_expe
            'modules/skills/studio3d/learning_contract.py', 'modules/skills/studio3d/experience-cards.json',
            'adapters/studio3d/learning_worker.py', 'apps/studio3d/learning_worker.py', 'modules/skills/studio3d/worker-programs.json', 'sdk/blender_api.py', 'sdk/native_programs.py')
 ADMISSION = threading.Lock()
+ACTIVE = set()
 
 
 def save(path, value):
@@ -226,9 +227,16 @@ def start(root, body):
         folder.mkdir(parents=True,exist_ok=False)
         save(folder/'accepted.json',{'signature':signature,'source_job':body['source_job']})
         save(folder/'status.json',{'id':ident,'status':'QUEUED','source_job':body['source_job'],'owner_pid':os.getpid()})
+    key=(str(data_root(root)),ident)
+    with ADMISSION: ACTIVE.add(key)
     def work():
         try: run(root,source,contract,repair=repair,render=render,ident=ident,reserved=True)
         except Exception as exc:
             if not (folder/'receipt.json').exists(): save(folder/'status.json',{'id':ident,'status':'FAILED','error':str(exc)})
-    threading.Thread(target=work,daemon=True,name='studio3d-learning-'+ident[:8]).start()
+        finally:
+            with ADMISSION: ACTIVE.discard(key)
+    try: threading.Thread(target=work,daemon=True,name='studio3d-learning-'+ident[:8]).start()
+    except BaseException:
+        with ADMISSION: ACTIVE.discard(key)
+        raise
     return {'id':ident,'status':'QUEUED'}

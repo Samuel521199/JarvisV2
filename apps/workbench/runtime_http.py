@@ -37,9 +37,8 @@ def post(handler, path, body):
     elif path == '/api/runtime/drain':
         if current['phase'] != 'draining':
             raise CoreError('application_phase', 'A durable drain request is required')
-        chats, work = server.dialogues.state(), server.task_runner.state()
-        busy = bool(chats['running'] or work['active'] or server.background_lane.state()['status'] == 'running')
-        handler.json({'drained': not busy})
+        from host.runtime_participants import snapshot
+        handler.json(snapshot(server.data_root, server))
     elif path == '/api/runtime/shutdown':
         if current['phase'] not in {'draining', 'starting', 'blocked', 'stopped'}:
             raise CoreError('application_phase', 'Host is not scheduled to stop')
@@ -55,3 +54,14 @@ def post(handler, path, body):
     else:
         raise CoreError('application_route', 'Unknown runtime operation')
     return True
+
+
+def cancellation(path, body):
+    """Only already-authorized stop operations may pass a maintenance barrier."""
+    if not isinstance(body, dict): return False
+    if path == '/api/operations':
+        return set(body) == {'action', 'id'} and body.get('action') in {'task_cancel', 'dev_cancel'}
+    if path == '/api/mail':
+        return ((set(body) == {'action', 'id'} and body.get('action') == 'cancel') or
+                (set(body) == {'action'} and body.get('action') == 'cancel_authorization'))
+    return path in {'/api/studio3d/cancel', '/api/studio3d/learning/cancel', '/api/image-studio/cancel'} and set(body) == {'id'}

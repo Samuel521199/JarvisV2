@@ -49,6 +49,7 @@ ASSETS['/settings'] = ('settings.html', 'text/html')
 ASSETS['/login'] = ('login.html', 'text/html')
 ASSETS['/family'] = ('family.html', 'text/html')
 ASSETS['/brand/'] = ('brand-preview.html', 'text/html')
+ASSETS['/conversation'] = ('index.html', 'text/html')
 ASSETS['/companion'] = ('companion.html', 'text/html')
 ASSETS['/companion/'] = ('companion.html', 'text/html')
 for asset in Path(__file__).parent.glob('*'):
@@ -107,7 +108,11 @@ class Handler(BaseHTTPRequestHandler):
 
     def _guarded(self, handler):
         try:
-            handler()
+            from contextlib import nullcontext
+            activity = getattr(self.server, 'request_activity', None)
+            tracked = self.command == 'POST' and not urlsplit(self.path).path.startswith('/api/runtime/') and urlsplit(self.path).path != '/api/development/shutdown'
+            with activity.track() if activity is not None and tracked else nullcontext():
+                handler()
         except (BrokenPipeError, ConnectionResetError, ConnectionAbortedError, TimeoutError):
             pass  # client went away; nothing to answer
         except Exception:
@@ -255,12 +260,17 @@ class Handler(BaseHTTPRequestHandler):
         if route.path == '/api/chats' or re.fullmatch(r'/api/chats/chat-[0-9a-f]{32}', route.path):
             store = Dialogues(data_root(self.server.data_root))
             try:
-                return self.json(store.list() if route.path == '/api/chats' else assistant.projection(data_root(self.server.data_root),store.read(route.path.rsplit('/', 1)[-1])))
+                return self.json(store.list() if route.path == '/api/chats' else self.chat_projection(store, route.path.rsplit('/', 1)[-1]))
             except CoreError as exc: return self.json({'error': exc.code}, 404)
             finally: store.close()
         if route.path not in ASSETS: return self.reply(404, b"Not found", "text/plain")
         filename, mime = ASSETS[route.path]
-        self.reply(200, (Path(__file__).parent / filename).read_bytes(), mime)
+        self.reply(200, (Path(__file__).parent / filename).read_bytes(), mime, conversation=route.path == '/conversation')
+
+    def chat_projection(self, store, ident):
+        from host.work_status import decorate_chat
+        root = data_root(self.server.data_root)
+        return decorate_chat(root, assistant.projection(root, store.read(ident)))
 
     def _do_POST(self):
         route = urlsplit(self.path)
@@ -299,15 +309,15 @@ class Handler(BaseHTTPRequestHandler):
             else:body=decode(raw)
             root = data_root(self.server.data_root)
             if runtime_http.post(self, route.path, body): return
-            if route.path not in {'/api/local-access', '/api/family/login', '/api/chat/cancel'}:
+            if route.path not in {'/api/local-access', '/api/family/login', '/api/chat/cancel'} and not runtime_http.cancellation(route.path, body):
                 from control.application_runtime import require_accepting
                 require_accepting(root)
             from control.development_profile import read as development_profile
             if route.path == '/api/development/shutdown' and development_profile(root):
                 chats = self.server.dialogues.state()
                 work = self.server.task_runner.state()
-                if (chats['queued'] or chats['running'] or work['active'] or work['queued']
-                        or self.server.background_lane.state()['status'] == 'running'):
+                from host.runtime_participants import snapshot as runtime_activity
+                if (chats['queued'] or work['queued'] or not runtime_activity(root, self.server)['drained']):
                     return self.json({'error': 'development_busy'}, 409)
                 threading.Thread(target=self.server.shutdown, daemon=True).start()
                 self.json({'stopping': True})
@@ -393,6 +403,9 @@ class Handler(BaseHTTPRequestHandler):
                 store=Extensions(root)
                 try:return self.json(store.command(body))
                 finally:store.close()
+            if route.path == '/api/work-status':
+                from host.work_status import acknowledge
+                return self.json(acknowledge(root, self.server, body))
             if route.path == '/api/operations':return self.json(settings_command(root,body))
             if route.path == '/api/task-runner':return self.json(self.server.task_runner.start(body),202)
             if route.path == '/api/scheduler/policy':return self.json(self.server.task_runner.configure(body))
@@ -432,7 +445,7 @@ class Handler(BaseHTTPRequestHandler):
         except CoreError as exc: return self.json({'error': exc.code}, 401 if exc.code in {'family_session','local_access'} else 403 if exc.code=='family_forbidden' else 429 if exc.code in {'family_rate','local_access_rate'} else 409 if exc.code in {'conflict','chat_busy','chat_capacity'} else 400)
         except (OSError, ValueError, TypeError, sqlite3.Error): return self.json({'error': 'local_io_or_config'}, 400)
 
-    def reply(self, status, body, mime, anatomy=False,download=None,viewer=False):
+    def reply(self, status, body, mime, anatomy=False,download=None,viewer=False,conversation=False):
         self.send_response(status)
         self.send_header("Content-Type", mime + ("; charset=utf-8" if mime.startswith("text/") or mime == "application/json" else ""))
         self.send_header("Content-Length", str(len(body)))
@@ -452,7 +465,7 @@ class Handler(BaseHTTPRequestHandler):
             from host.studio3d_viewer import CSP
             self.send_header('Content-Security-Policy',CSP)
         else:
-            self.send_header("Content-Security-Policy", ("sandbox allow-scripts allow-downloads; default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; base-uri 'none'; form-action 'none'" if anatomy else "default-src 'self'; connect-src 'self'; img-src 'self'; script-src 'self'; style-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'"))
+            self.send_header("Content-Security-Policy", ("sandbox allow-scripts allow-downloads; default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; base-uri 'none'; form-action 'none'" if anatomy else "default-src 'self'; connect-src 'self'; img-src 'self'; script-src 'self'; style-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'".replace("frame-ancestors 'none'", "frame-ancestors 'self'" if conversation else "frame-ancestors 'none'")))
         self.end_headers(); self.wfile.write(body)
 
 
@@ -487,6 +500,8 @@ def _serve(args):
     print("Diagnostic log: " + str(logs.configure(server.data_root)), flush=True)
     server.nonce = secrets.token_urlsafe(32)
     server.boot_id = secrets.token_hex(12)
+    from control.runtime_activity import RequestActivity
+    server.request_activity = RequestActivity()
     if not args.insecure_no_access_key:
         from control.local_access import LocalAccess
         server.access = LocalAccess(server.data_root, persist_sessions=bool(args.application_build))

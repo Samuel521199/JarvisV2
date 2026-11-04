@@ -48,12 +48,12 @@ def gate(handler, path, write=False):
     if write and path == '/api/family/login': return True
     principal, _ = actor(handler)
     if not principal:
-        if not write and path in {'/', '/settings'}: handler.redirect('/login')
+        if not write and path in {'/', '/settings', '/companion', '/companion/', '/conversation'}: handler.redirect('/login')
         else: handler.json({'error': 'family_session'}, 401)
         return False
     if principal['role'] == 'owner': return True
     if path in (MEMBER_POST if write else MEMBER_GET): return True
-    if not write and path in {'/', '/settings'}: handler.redirect('/family')
+    if not write and path in {'/', '/settings', '/companion', '/companion/', '/conversation'}: handler.redirect('/family')
     else: handler.json({'error': 'family_forbidden'}, 403)
     return False
 

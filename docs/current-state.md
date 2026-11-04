@@ -1,6 +1,6 @@
 # 当前真实状态
 
-> v0.1.2 · 2026-11-04。本页只写已经在本工程代码里存在、可以运行的东西，以及明确的空白。设计目标见各章正文，逐项证据见[能力验收](delivery-validation.md)，版本流水见[版本记录](../CHANGELOG.md)。本页与正文冲突时，以代码和验收记录为准，并修正本页。
+> v0.1.3 · 2026-11-04。本页只写已经在本工程代码里存在、可以运行的东西，以及明确的空白。设计目标见各章正文，逐项证据见[能力验收](delivery-validation.md)，版本流水见[版本记录](../CHANGELOG.md)。本页与正文冲突时，以代码和验收记录为准，并修正本页。
 
 <a id="current-state-summary"></a>
 ## 一句话
@@ -14,7 +14,8 @@ Jarvis 现在是一个**本机网页工作台 + 模块化 Python 服务**：能�
 |---|---|---|
 | 网页工作台、设置、项目与会话目录 | `apps/workbench/`、`host/workbench.py`、`modules/workspace/` | 单测与浏览器探针；仅监听 127.0.0.1，0.1.1 起需本机访问钥匙 |
 | 单机日用／开发分离 | `apps/development/`、`host/development_bridge.py`、`host/development_runtime.py` | GitHub 开发检查点、独立 worktree／数据、受限 Google 代发与开发单独重启已核验；受控代码包已日用采用，未启用 GitHub 自动拉取或定时更新；[证据](delivery-validation.md#pc-environments-evidence) |
-| 应用级准入、A/B 交接与代码恢复 | `modules/release_recovery/application.py`、`adapters/application_host.py` | 隔离测试完成真实进程切换／失败恢复，真实工作台完成托管与浏览器接续；原有 253 项诊断修复、独立包与日用接口通过，v0.1.2 已采用；首次日用没有已采用上一版；[证据](delivery-validation.md#architecture-repair-evidence) |
+| 应用级准入、A/B 交接与代码恢复 | `modules/release_recovery/application.py`、`adapters/application_host.py` | 隔离测试完成真实进程切换／失败恢复，真实工作台完成托管与浏览器接续；原有 253 项诊断修复；v0.1.3 已采用，保留 v0.1.2 为上一版，新增专用通道排空与跨入口核验见[精灵共享验收](delivery-validation.md#companion-shared-evidence)；[证据](delivery-validation.md#architecture-repair-evidence) |
+| 网页精灵与工作台共享入口 | `apps/workbench/companion-shell.js`、`work-client.js`、`conversation-groups.js` | 真实聊天／模型／技能／项目／工作与邮件，不再用演示任务；共享已阅标记和单项停止；[接口与限制](contracts.md#desktop-presence-web-runtime)、[核验](delivery-validation.md#companion-shared-evidence)；原生透明壳未实现 |
 | 多模型聊天、持久会话、费用快照 | `host/dialogue.py`、`modules/dialogue/`、`adapters/models/` | 少量真实调用；回退顺序由设置决定，只有一家供应商时没有真正的备用线路 |
 | 分域记忆、检索、资料库（FTS + 语义） | `modules/context_knowledge/`、`host/memory.py`、`host/knowledge*.py` | 单测与合成评估；多语留出集回答 79/90，低于自定 90% 门槛；语义检索需本地 E5 模型 |
 | 目标 → 计划 → 审批 → 执行 → 原会话交付 | `host/goals.py`、`host/task_scheduler.py`、`modules/task_resource/` | 通用执行两路并行（同类插件任务互斥）；“目标逐项结案”目前只覆盖文本统计与结构化报价两种判定 |
@@ -49,15 +50,15 @@ Jarvis 现在是一个**本机网页工作台 + 模块化 Python 服务**：能�
 | 自写工具静态检查可绕过 | 0.1.1 已收紧；实际边界仍是 LPAC |
 | Blender/工程 Worker 先启动后挂 Job，Codex 子进程无 Job | 未修复，需在 Windows 上实现与验证 |
 | 部分读接口会写库（结果评价投影） | 未改：评价依据随文件变化即时失效是现有设计，改为纯读需单独设计 |
-| 应用升级排空尚未覆盖全部专用工作通道 | 聊天、通用任务与后台模型已接；专用邮箱/3D/出图等须统一登记并做在途故障验收，见[采用后核对](decisions-review.md#v012-post-release-audit) |
+| 专用通道排空与外部进程边界 | v0.1.3 补齐受管理的邮箱／授权、私密聊天、3D、出图、知识、本地模型操作及在途 HTTP；未知检查阻止交接。任意外部 CLI、原生窗口和业务级长时故障恢复仍未验证，见[共享实现](contracts.md#desktop-presence-web-runtime) |
 | host 层 20 个模块的既有导入环 | 未拆；已加检查防止继续扩大 |
 | 工作曾只在本机工作区 | 2026-10-30 已保存源码检查点并推送 GitHub 开发分支；运行数据和私密凭据仍不入库 |
 
 <a id="current-state-next"></a>
 ## 下一步
 
-1. v0.1.2 已修复 253 项架构诊断并完成受控日用采用；按[本轮证据](delivery-validation.md#architecture-repair-evidence)保留基线、备份及后续反例。
-2. 先补跨通道升级/恢复与轻量监督，再接邮件待办、日程提醒和记忆纠正这条个人助手工作；优先级和出口见[剩余缺口](decisions-review.md#v012-next-work-order)。
+1. v0.1.3 网页精灵与工作台共享能力已采用；沿[本轮证据](delivery-validation.md#companion-shared-evidence)保留基线、备份和后续反例。
+2. 接原生轻量精灵窗口／多屏及轻量监督，再接邮件待办、日程提醒和记忆纠正这条个人助手工作；优先级和出口见[剩余缺口](decisions-review.md#v012-next-work-order)。
 3. 回到真实日常请求的委托、要求、核验与低打扰推进，按原 K0—K6 路线补齐；3D 等专业侧线先修已有缺陷。
 
 <a id="current-state-owner-decisions"></a>

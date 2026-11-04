@@ -1,4 +1,5 @@
 """Local source library commands and one bounded, cancellable index rebuild per root."""
+import uuid
 from concurrent.futures import ThreadPoolExecutor
 import threading
 
@@ -70,7 +71,7 @@ def index_command(root,action):
         job=JOBS.get(key)
         if action in {'rebuild','rebuild_vectors'}:
             if job and job['state'] in {'queued','running'}:return public(job)
-            job={'state':'queued','processed':0,'cancel':threading.Event(),'error':None,'kind':'vectors' if action=='rebuild_vectors' else 'fts'};JOBS[key]=job
+            job={'generation':uuid.uuid4().hex,'state':'queued','processed':0,'cancel':threading.Event(),'error':None,'kind':'vectors' if action=='rebuild_vectors' else 'fts'};JOBS[key]=job
             job['future']=POOL.submit(rebuild,root,job)
         if action=='cancel_rebuild' and job:job['cancel'].set()
         result=public(job) if job else {'state':'idle','processed':0,'error':None}

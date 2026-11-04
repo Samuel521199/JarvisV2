@@ -18,7 +18,8 @@ export function mountMailCompanion(){
  const dock=document.getElementById('mail-dock'),toggle=document.getElementById('dock-button'),panel=document.getElementById('mail-dialog');
  let state=null,detail=null,filter='all',busy=false,checking=false,auto=false,buffer=null,draftId='',draftRevision=0,controller=new AbortController(),generation='',message='';
  function open(){
-  for(const id of ['card','project-dialog','workbench'])document.getElementById(id).hidden=true;
+  document.dispatchEvent(new Event('jarvis:mail-opened'));
+  for(const id of ['card','project-dialog'])document.getElementById(id).hidden=true;
   document.getElementById('project-dock').classList.remove('is-open');
   panel.hidden=false;dock.classList.add('is-open');toggle.setAttribute('aria-expanded','true');render();
   if(!checking&&!detail&&!buffer)sync();
