@@ -28,13 +28,13 @@ Jarvis 现在是一个**本机网页工作台 + 模块化 Python 服务**：能�
 <a id="current-state-design-only"></a>
 ## 只有设计、没有代码
 
-透明桌面精灵与原生壳（Tauri 方案未落地）；语音（STT/TTS）；本地对话大模型（只有 E5 嵌入可运行）；多 Bot / 负责人任期 / Agent 工厂；资源租约与跨模块额度；自检—自愈—进化流水线、incident 与自身模型六视图；公开发布者签名及跨模式通用状态交接；多设备共同体、联邦同步；NPC 世界；机器人。`contracts.md` 前半部分的概念接口（如 ContinuityRecord、BotBinding、MemoryStore、TaskOwnership）在代码中都还不存在，见[契约实现索引](contracts.md#contracts-implementation-index)。
+透明桌面精灵与原生壳（Tauri 方案未落地）；语音（STT/TTS）；本地对话大模型（只有 E5 嵌入可运行）；多 Bot / 负责人任期 / Agent 工厂；资源租约与跨模块额度；统一的自检—自愈—进化流水线、incident 与自身模型六视图（已有局部重试、模块恢复等待及包回退）；公开发布者签名及跨模式通用状态交接；多设备共同体、联邦同步；NPC 世界；机器人。`contracts.md` 前半部分的概念接口（如 ContinuityRecord、BotBinding、MemoryStore、TaskOwnership）在代码中都还不存在，见[契约实现索引](contracts.md#contracts-implementation-index)。
 
 <a id="current-state-evidence"></a>
 ## 证据边界
 
 - 验收几乎全部来自本工程自建的测试、探针和合成数据。真实个人数据只用过一次（Gmail 读信），真实模型调用累计数百次。
-- 工作流 1.1～1.13 都在合成“报价”任务上验证，台账写明“生产未部署”；尚未做“实际运行的代码 = 测试通过的代码”的交付核对，这也是[决策评审](decisions-review.md#real-work-followup-analysis)排在第一位的工作。
+- 工作流 1.1～1.13 都在合成“报价”任务上验证，台账写明“生产未部署”；v0.1.2 已核对 601 个运行文件与日用构建；真实开放业务、跨域在途交接与长期收益仍不能由这些合成试验代替。
 - 隔离（LPAC/Job）、DPAPI、文件锁只在 Windows 上有效；Linux 环境下的回归会跳过这些用例。
 - G0 主人利益原则目前**没有自动判定器**；停机锁存只能用命令行手动设置，存于数据根 `state/LATCH`，解除尚未实现。安全章节中“独立监督发现即锁存”描述的是目标设计。
 
@@ -49,6 +49,7 @@ Jarvis 现在是一个**本机网页工作台 + 模块化 Python 服务**：能�
 | 自写工具静态检查可绕过 | 0.1.1 已收紧；实际边界仍是 LPAC |
 | Blender/工程 Worker 先启动后挂 Job，Codex 子进程无 Job | 未修复，需在 Windows 上实现与验证 |
 | 部分读接口会写库（结果评价投影） | 未改：评价依据随文件变化即时失效是现有设计，改为纯读需单独设计 |
+| 应用升级排空尚未覆盖全部专用工作通道 | 聊天、通用任务与后台模型已接；专用邮箱/3D/出图等须统一登记并做在途故障验收，见[采用后核对](decisions-review.md#v012-post-release-audit) |
 | host 层 20 个模块的既有导入环 | 未拆；已加检查防止继续扩大 |
 | 工作曾只在本机工作区 | 2026-10-30 已保存源码检查点并推送 GitHub 开发分支；运行数据和私密凭据仍不入库 |
 
@@ -56,7 +57,7 @@ Jarvis 现在是一个**本机网页工作台 + 模块化 Python 服务**：能�
 ## 下一步
 
 1. v0.1.2 已修复 253 项架构诊断并完成受控日用采用；按[本轮证据](delivery-validation.md#architecture-repair-evidence)保留基线、备份及后续反例。
-2. 在真实日常任务中继续观察多轮收益、恢复和资源占用；新包仍经同一准入，不自动改写检查规则。
+2. 先补跨通道升级/恢复与轻量监督，再接邮件待办、日程提醒和记忆纠正这条个人助手工作；优先级和出口见[剩余缺口](decisions-review.md#v012-next-work-order)。
 3. 回到真实日常请求的委托、要求、核验与低打扰推进，按原 K0—K6 路线补齐；3D 等专业侧线先修已有缺陷。
 
 <a id="current-state-owner-decisions"></a>

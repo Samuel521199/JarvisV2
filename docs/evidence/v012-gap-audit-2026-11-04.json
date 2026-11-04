@@ -1,0 +1,55 @@
+{
+  "basis_commit": "11a9e4b5ec014036aae9f779c3a6eba93519d45b",
+  "version": "0.1.2",
+  "audit_kind": "read-only source inspection and pure handler simulation",
+  "drain_probe": {
+    "synthetic_mail_active": true,
+    "generic_lanes_idle": true,
+    "reported_drained": true,
+    "scope": "Handler-only simulation; no production work stopped and no mail sent; demonstrates omitted participant, not an end-to-end loss claim"
+  },
+  "daily_snapshot": {
+    "epoch": 1,
+    "phase": "active",
+    "previous_available": false,
+    "active_build": "7ed0d75d87bf70fc35f7b73e4d1af91a00d00c78425e7d80d57920c46a2637ed"
+  },
+  "source_sha256": {
+    "apps/workbench/runtime_http.py": "60c86ca07bf71f75f0372d67d5ed61bf39094515afa630965c8bc16bd9c58305",
+    "host/assistant.py": "01897346bd54e980c9a5f983d0f9d59fe2fa89ecd3870561b44704451bffd510",
+    "modules/task_resource/scheduling.py": "fdb69d7b5e8935a4b5aee3f88047c5626eae740f0687439de27ad03287032ec2",
+    "modules/continuity/__init__.py": "50136b5f221f9b3556e6d7b61e2d2a27b34ed7871a92ac43369c04b304ed749e",
+    "host/goal_growth.py": "bb57fbcb607c78785046dcec8ffc368882e9350478cb27b3d1e22c12df24eec3",
+    "host/task_scheduler.py": "932e2e2db2c06b47d5ce66c4a35036728be9302925485b1f374c5e8c80b95b27",
+    "control/local_access.py": "a80f5fee55aaec303dab7c24e094494b24eb5ec062342d0ad405f333fa66659c",
+    "control/recovery/gate.py": "7f1c41c7302c0db886dfec82a59e6e0ac413ce6f71d27cc3a9643c0960bdc874"
+  },
+  "png_decode_probe": {
+    "stdlib": {
+      "median_seconds": 0.1592705000002752,
+      "samples": [
+        0.15860219999922265,
+        0.16032799999993586,
+        0.1592705000002752
+      ],
+      "pixels": [
+        960,
+        640
+      ]
+    },
+    "existing_test_oracle": {
+      "median_seconds": 0.0059571000001596985,
+      "samples": [
+        0.016583999999056687,
+        0.0059571000001596985,
+        0.00577530000009574
+      ],
+      "pixels": [
+        960,
+        640
+      ]
+    },
+    "ratio": 26.736247502309087,
+    "scope": "One synthetic Blender PNG, three local decodes; not application latency, memory-pressure or low-end-PC validation. Pillow remains test-only."
+  }
+}
