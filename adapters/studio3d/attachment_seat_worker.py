@@ -1,10 +1,11 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Translate only selected disconnected fasteners; support stays immutable."""
+from sdk.blender_api import require_blender
 import hashlib,json,sys,time,math
 from pathlib import Path
-import bpy
-from mathutils import Vector
-from mathutils.bvhtree import BVHTree
+bpy = require_blender().bpy
+Vector = require_blender().mathutils.Vector
+BVHTree = require_blender().bvhtree.BVHTree
 from modules.skills.studio3d.attachment_seat import validate,components,axial_translation,VERSION
 from adapters.studio3d.demonstration_worker import digest_object,topology
 from adapters.studio3d.inspection_worker import render_scene
@@ -130,6 +131,9 @@ def main():
  folder=Path(sys.argv[sys.argv.index('--')+1]);req=json.loads((folder/'request.json').read_text());source=folder/'source.blend';began=time.monotonic()
  if hashlib.sha256(source.read_bytes()).hexdigest()!=req['source_sha256']:raise ValueError('Source changed')
  c=validate(req['contract'],req['visible_names'])
+ if c['schema']=='jarvis.studio3d.control-face-roll.v1':
+  from adapters.studio3d.control_face_roll_worker import run
+  return run(folder,req,c,source)
  if c['schema']=='jarvis.studio3d.rear-contour.v1':
   from adapters.studio3d.rear_contour_worker import run
   return run(folder,req,c,source)

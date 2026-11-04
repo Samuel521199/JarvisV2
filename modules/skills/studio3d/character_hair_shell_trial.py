@@ -1,10 +1,11 @@
 """Disposable shell reshaping and layered ends on a known FBX derivative."""
+from sdk.blender_api import require_blender
 import math
 
 
 def apply(*, tails=False):
-    import bpy
-    from mathutils import Vector
+    bpy = require_blender().bpy
+    Vector = require_blender().mathutils.Vector
     scene = bpy.context.scene
     shell = bpy.data.objects.get('headend')
     material = bpy.data.materials.get('character-hair-procedural')

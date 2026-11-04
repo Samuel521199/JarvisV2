@@ -29,6 +29,9 @@ def read(root, route):
 
 def command(root, route, value):
     if not isinstance(value, dict): raise CoreError('invalid_request', 'Expected an object')
+    if route == '/api/skill/studio3d-inspection':
+        from host.studio3d_view_control import command as inspect_view
+        return inspect_view(root, value)
     fields = {
         '/api/chat/workspace': ({'id','action'}, {'config','revision'}),
         '/api/project/create': ({'parent','name'}, {'test'}),

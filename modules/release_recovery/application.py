@@ -20,6 +20,7 @@ from sdk.protocol import CoreError, canonical, read_json
 ENTRY = 'apps/workbench/server.py'
 LIMIT = 256 * 1024 * 1024
 TOPS = {'sdk', 'control', 'adapters', 'modules', 'host', 'apps', 'config', 'contracts', 'seed', 'external', 'packaging'}
+RUNTIME_DATA = {'evals/text-analyzer.json'}
 
 
 def relative(name):
@@ -34,7 +35,7 @@ def relative(name):
                       'COM¹', 'COM²', 'COM³', 'LPT¹', 'LPT²', 'LPT³'} for p in path.parts)
             or path.as_posix() != name or len(name) > 240):
         raise CoreError('application_path', 'Invalid application package path')
-    if name not in {'VERSION', 'tools/architecture-baseline.json'} and path.parts[0] not in TOPS:
+    if name not in {'VERSION', 'tools/architecture-baseline.json', *RUNTIME_DATA} and path.parts[0] not in TOPS:
         raise CoreError('application_path', 'Path is outside the application runtime')
     return path
 
@@ -48,6 +49,9 @@ def inspect_package(folder):
             or not isinstance(manifest['files'], dict) or not 2 <= len(manifest['files']) <= 10000
             or ENTRY not in manifest['files'] or 'VERSION' not in manifest['files']):
         raise CoreError('application_manifest', 'Invalid application manifest or unsupported data schema')
+    if ('modules/registry_composer/registry.py' in manifest['files']
+            and not RUNTIME_DATA <= set(manifest['files'])):
+        raise CoreError('application_dependency', 'Registry lifecycle evaluation data is missing')
     total = 0
     for name, metadata in manifest['files'].items():
         relative(name)

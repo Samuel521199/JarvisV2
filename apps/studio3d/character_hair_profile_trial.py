@@ -1,16 +1,23 @@
 """Attach an approximate reference-derived rear-hair volume in a trial copy."""
+from pathlib import Path as _BootstrapPath
+import sys as _bootstrap_sys
+_bootstrap_sys.path.insert(0,str(_BootstrapPath(__file__).resolve().parents[2]))
+from adapters.studio3d.learning_worker import install_runtime
+install_runtime(__file__)
+from sdk.runtime_paths import project_path, reference_path, optional_character_tool
+from sdk.blender_api import require_blender
 import hashlib,json,sys
 from pathlib import Path
-import bpy
-from mathutils import Vector
+bpy = require_blender().bpy
+Vector = require_blender().mathutils.Vector
 ROOT=Path(__file__).resolve().parents[2];sys.path.insert(0,str(ROOT))
 from control.studio3d_lane import render_lane
-src=ROOT/'3DModels/SilverHairCharacter/user-fbx-detachable-hair-01';blend=src/'replaceable-hair.blend'
+src=project_path('3DModels/SilverHairCharacter/user-fbx-detachable-hair-01');blend=src/'replaceable-hair.blend'
 man=json.loads((src/'manifest.json').read_text(encoding='utf8'))
 if hashlib.sha256(blend.read_bytes()).hexdigest()!=man['files'][blend.name]:raise ValueError('Source changed')
-hull=ROOT/'user-data/artifacts/studio3d-character/hair-profile-study-01/rear-hair.obj'
+hull=project_path('user-data/artifacts/studio3d-character/hair-profile-study-01/rear-hair.obj')
 if not hull.is_file():raise FileNotFoundError(hull)
-out=ROOT/'user-data/artifacts/studio3d-character/hair-profile-study-02'
+out=project_path('user-data/artifacts/studio3d-character/hair-profile-study-02')
 if out.exists():raise ValueError('Existing trial needs inspection')
 out.mkdir(parents=True)
 with render_lane(out):

@@ -1,11 +1,18 @@
+from pathlib import Path as _BootstrapPath
+import sys as _bootstrap_sys
+_bootstrap_sys.path.insert(0,str(_BootstrapPath(__file__).resolve().parents[2]))
+from adapters.studio3d.learning_worker import install_runtime
+install_runtime(__file__)
+from sdk.runtime_paths import project_path, reference_path, optional_character_tool
+from sdk.blender_api import require_blender
 import json,sys
 from pathlib import Path
-import bpy
-from mathutils import Vector
-ROOT=Path('D:/Jarvis');sys.path.insert(0,str(ROOT))
+bpy = require_blender().bpy
+Vector = require_blender().mathutils.Vector
+ROOT=Path(__file__).resolve().parents[2];sys.path.insert(0,str(ROOT))
 from control.studio3d_lane import render_lane
-src=ROOT/'user-data/artifacts/studio3d-character/eye-detail-reference-03/candidate.blend'
-out=ROOT/'user-data/artifacts/studio3d-character/eye-detail-reference-03-bald-evaluation-02'
+src=project_path('user-data/artifacts/studio3d-character/eye-detail-reference-03/candidate.blend')
+out=project_path('user-data/artifacts/studio3d-character/eye-detail-reference-03-bald-evaluation-02')
 if out.exists():raise ValueError('Evaluation exists')
 out.mkdir(parents=True)
 with render_lane(out):

@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Read actual cover meshes, replace only their continuous exterior profiles."""
-import bpy,bmesh,json,hashlib,time,math
-from mathutils import Vector
+from sdk.blender_api import require_blender
+import json, hashlib, time, math; bpy = require_blender().bpy; bmesh = require_blender().bmesh
+Vector = require_blender().mathutils.Vector
 from modules.skills.studio3d.collar_profile import TARGETS,fit,build,profile,face_uv
 from adapters.studio3d.attachment_seat_worker import world_tree
 from adapters.studio3d.exterior_closure_worker import inside

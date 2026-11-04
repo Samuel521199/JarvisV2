@@ -1,5 +1,7 @@
 # 版本记录
 
+2026-11-04 **v0.1.2（日用受控采用）**：修复原有 253 项架构诊断，原检查器及白名单不变；集中原生能力所有权、参数化路径、去除 Host／领域的 Pillow 与 NumPy 必需依赖、保留旧入口兼容，并合入日用目录新增的 LOD／材质／检视功能。补齐代码包运行数据与独立测试支持、固定恢复控制器和根启动器。完整回归 1456 项无失败／错误，独立包 93 项核验、真实 Blender／工程原生和进程回退通过；保留正式数据与原源树后采用。首次托管无已采用上一版，完整限制见[验收](docs/delivery-validation.md#architecture-repair-evidence)与[运行边界](docs/stack-project-layout.md#native-capability-boundary)。
+
 2026-11-04 应用级安装与恢复控制器 v1（开发检查点）：新增独立候选包、当前控制器持有的验证、本机准入回执、逻辑 A/B、排空与代际、启动／失败恢复／回退、可恢复退役和浏览器会话接续；完成隔离进程与真实工作台接口检查。当前源码仍有原有 253 项架构诊断，实际准入正确拒绝，未升级日用版本或启用公开自动更新。[实施与命令](docs/evolution-release.md#single-pc-application-runtime)／[核验](docs/delivery-validation.md#application-release-evidence)。
 
 2026-10-30 单机双环境第一阶段（开发检查点，未发稳定版本）：已推送 `codex/pc-environments` 并建立独立开发工作树／数据；新增固定版本的 Google 受限代理、DPAPI 许可、调用账本、开发启动器和真实停止核验。真实开发对话、拒绝邮箱动作及单独重启通过，日用服务未重启；完整应用 A/B 更新、正式数据共享和原有 3D 架构问题尚未完成。[实现](docs/stack-project-layout.md#single-pc-development-runtime)／[验收](docs/delivery-validation.md#pc-environments-evidence)。

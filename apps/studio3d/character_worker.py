@@ -1,5 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Character trial uses the existing bounded scene worker and shared lane."""
+from pathlib import Path as _BootstrapPath
+import sys as _bootstrap_sys
+_bootstrap_sys.path.insert(0,str(_BootstrapPath(__file__).resolve().parents[2]))
+from adapters.studio3d.learning_worker import install_runtime
+install_runtime(__file__)
 from pathlib import Path
 import sys
 sys.path.insert(0,str(Path(__file__).resolve().parents[2]))

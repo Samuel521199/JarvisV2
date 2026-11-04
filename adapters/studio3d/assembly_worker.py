@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Fixed Blender assembly of admitted meshes; geometry/UV/images remain untouched."""
+from sdk.blender_api import require_blender
 import hashlib,json,math,time
-import bpy
-from mathutils import Vector
+bpy = require_blender().bpy
+Vector = require_blender().mathutils.Vector
 from modules.skills.studio3d.assembly_contract import validate
 
 

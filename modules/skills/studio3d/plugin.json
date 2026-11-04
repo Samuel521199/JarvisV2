@@ -174,5 +174,24 @@
     ],
     "runtime": "Jarvis Studio3D；不启动 Claude/Codex 子代理，不依赖 Tripo，不执行外来 Python。"
   },
-  "skill_entry": "modules/skills/studio3d/SKILL.md"
+  "skill_entry": "modules/skills/studio3d/SKILL.md",
+  "game_lod": {
+    "version": "1.2.0",
+    "entry": "python -m tools.studio3d_game_lod",
+    "scope": "PaK38 accepted high and asset caps; triangle-only LOD0-1 projection, LOD2 principal-component budgets/rebuilt tyres, or LOD3 coarse silhouette; independent UV/bakes and retained surviving origins",
+    "arbitrary_blend_input": false,
+    "requires_high_approval_and_lod_authorization": true,
+    "target_engine_verified": false
+  },
+  "viewer_inspection": {
+    "version": "1.0.1",
+    "host": "host/studio3d_view_control.py",
+    "cli": "python -m tools.studio3d_view_control",
+    "route": "/api/skill/studio3d-inspection",
+    "requires": "An authenticated opt-in live viewer matching the current model SHA256",
+    "mutates_model": false,
+    "paid_calls": false,
+    "evidence": "Bound camera, mode, visible object list, render calls and optional actual viewport capture",
+    "autonomous_diagnosis_verified": false
+  }
 }

@@ -259,6 +259,7 @@ def build(root,ident,scene,model_receipt=None):
     if hashlib.sha256(exe.read_bytes()).hexdigest()!=lock['executable_sha256']:raise CoreError('studio3d_changed','Blender changed; prepare and review again')
     folder=child(root,'artifacts/studio3d/'+ident);folder.mkdir(parents=True,exist_ok=False)
     source_paths=['host/studio3d.py',RUNTIME['worker'],RUNTIME['bootstrap'],'adapters/studio3d/asset_pipeline.py','adapters/studio3d/projection.py','modules/skills/studio3d/production.py','modules/skills/studio3d/contract.py','modules/skills/studio3d/presets.py','modules/skills/studio3d/tracked_vehicle.py','host/studio3d_reference.py','adapters/models/vision.py','adapters/models/native.py','adapters/models/native_transport.py','host/dialogue.py','modules/dialogue/store.py','adapters/studio3d/organic.py','adapters/studio3d/framing.py','modules/skills/studio3d/assets.py','modules/skills/studio3d/runtime.json']
+    source_paths.extend(['modules/skills/studio3d/worker-programs.json','sdk/blender_api.py','sdk/native_programs.py'])
     source_snapshot={p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in source_paths}
     for p in ('host/studio3d_refinement.py','modules/skills/studio3d/refinement.py','adapters/studio3d/weathering.py','modules/skills/studio3d/blender_workflow.py','modules/skills/studio3d/SKILL.md'):source_snapshot[p]=hashlib.sha256((ROOT/p).read_bytes()).hexdigest()
     asset=None;reference=None;surface_texture=None
@@ -280,7 +281,7 @@ def build(root,ident,scene,model_receipt=None):
         import shutil
         asset=asset_record(root,scene['asset']);shutil.copyfile(child(root,'artifacts/studio3d-assets/'+scene['asset']+'.glb'),folder/'source.glb')
     (folder/'scene.json').write_text(canonical(scene),encoding='utf-8');(folder/'config').mkdir();out=folder/'stdout.log';err=folder/'stderr.log'
-    env={k:v for k,v in os.environ.items() if k.upper() in ('SYSTEMROOT','WINDIR')};env.update(TEMP=str(folder),TMP=str(folder),BLENDER_USER_CONFIG=str(folder/'config'),BLENDER_USER_SCRIPTS=str(folder/'config'),OMP_NUM_THREADS='4')
+    env={k:v for k,v in os.environ.items() if k.upper() in ('SYSTEMROOT','WINDIR')};env.update(JARVIS_DATA_ROOT=str(root),TEMP=str(folder),TMP=str(folder),BLENDER_USER_CONFIG=str(folder/'config'),BLENDER_USER_SCRIPTS=str(folder/'config'),OMP_NUM_THREADS='4')
     job=None;native=None;began=time.monotonic();phase=''
     with out.open('wb') as stdout,err.open('wb') as stderr:
         process=subprocess.Popen([str(exe),'--background','--factory-startup','--disable-autoexec','--threads','4','--python-exit-code','2','--python',str(ROOT/RUNTIME['bootstrap']),'--',str(folder)],cwd=folder,env=env,stdin=subprocess.DEVNULL,stdout=stdout,stderr=stderr,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))

@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Preserve actual evaluated geometry/UV, shade only rounded bevel bands smooth."""
-import bpy,json,hashlib,time
+from sdk.blender_api import require_blender
+import json, hashlib, time; bpy = require_blender().bpy
 from modules.skills.studio3d.evaluated_shading import SOURCES,retained_plane
 from modules.skills.studio3d.attachment_seat import VERSION
 from adapters.studio3d.demonstration_worker import digest_object

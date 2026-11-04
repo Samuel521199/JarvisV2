@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Source-bound lower shield silhouette and original attachment co-movement."""
-import bpy,json,hashlib,time
-from mathutils import Vector
+from sdk.blender_api import require_blender
+import json, hashlib, time; bpy = require_blender().bpy
+Vector = require_blender().mathutils.Vector
 from modules.skills.studio3d.panel_lower_band import PANELS,FLAPS,HARDWARE,TARGETS,shift,displacement,validate_sheet
 from modules.skills.studio3d.attachment_seat import components
 from adapters.studio3d.attachment_seat_worker import world_tree

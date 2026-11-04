@@ -1,4 +1,10 @@
 """Apply the reusable character-authoring skill to this asset's hair guides."""
+from pathlib import Path as _BootstrapPath
+import sys as _bootstrap_sys
+_bootstrap_sys.path.insert(0,str(_BootstrapPath(__file__).resolve().parents[2]))
+from adapters.studio3d.learning_worker import install_runtime
+install_runtime(__file__)
+from sdk.runtime_paths import project_path, reference_path, optional_character_tool
 import hashlib
 import importlib.util
 import json
@@ -8,11 +14,11 @@ import sys
 
 ROOT=Path(__file__).resolve().parents[2];sys.path.insert(0,str(ROOT))
 from control.studio3d_lane import render_lane
-TOOL=Path('C:/Users/samuel/.codex/skills/blender-character-authoring/scripts/character_tools.py')
+TOOL=optional_character_tool()
 spec=importlib.util.spec_from_file_location('character_authoring_tools',TOOL)
 tools=importlib.util.module_from_spec(spec);spec.loader.exec_module(tools)
-source=ROOT/'user-data/artifacts/studio3d-character/silver-hair-rebuild-study-03/candidate.blend'
-out=ROOT/'user-data/artifacts/studio3d-character/character-authoring-hair-03'
+source=project_path('user-data/artifacts/studio3d-character/silver-hair-rebuild-study-03/candidate.blend')
+out=project_path('user-data/artifacts/studio3d-character/character-authoring-hair-03')
 if out.exists():raise ValueError('Trial exists')
 out.mkdir(parents=True)
 binding={'armature':'Armature','bone':'J_Bip_C_Head'}

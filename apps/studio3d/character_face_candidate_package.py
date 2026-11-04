@@ -1,13 +1,20 @@
 """Render and package the editable face-only trial as a separate candidate."""
+from pathlib import Path as _BootstrapPath
+import sys as _bootstrap_sys
+_bootstrap_sys.path.insert(0,str(_BootstrapPath(__file__).resolve().parents[2]))
+from adapters.studio3d.learning_worker import install_runtime
+install_runtime(__file__)
+from sdk.runtime_paths import project_path, reference_path, optional_character_tool
+from sdk.blender_api import require_blender
 import hashlib,json,shutil,sys
 from pathlib import Path
-import bpy
-from mathutils import Vector
+bpy = require_blender().bpy
+Vector = require_blender().mathutils.Vector
 ROOT=Path(__file__).resolve().parents[2];sys.path.insert(0,str(ROOT))
 from control.studio3d_lane import render_lane
-source=ROOT/'user-data/artifacts/studio3d-character/face-expression-study-01/candidate.blend'
-out=ROOT/'3DModels/SilverHairCharacter/user-fbx-face-study-01'
-lane=ROOT/'user-data/artifacts/studio3d-character/face-expression-package-01'
+source=project_path('user-data/artifacts/studio3d-character/face-expression-study-01/candidate.blend')
+out=project_path('3DModels/SilverHairCharacter/user-fbx-face-study-01')
+lane=project_path('user-data/artifacts/studio3d-character/face-expression-package-01')
 if out.exists() or lane.exists():raise ValueError('Existing package needs inspection')
 identity=hashlib.sha256(source.read_bytes()).hexdigest();lane.mkdir(parents=True)
 with render_lane(lane):

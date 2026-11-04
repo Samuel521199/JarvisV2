@@ -1,8 +1,15 @@
 """Check the saved body trial preserves the prior face, hair and armature."""
-import bpy,hashlib,json
+from pathlib import Path as _BootstrapPath
+import sys as _bootstrap_sys
+_bootstrap_sys.path.insert(0,str(_BootstrapPath(__file__).resolve().parents[2]))
+from sdk.runtime_paths import project_path
+from adapters.studio3d.learning_worker import install_runtime
+install_runtime(__file__)
+from sdk.blender_api import require_blender
+import hashlib, json; bpy = require_blender().bpy
 from pathlib import Path
-root=Path('D:/Jarvis');src=root/'3DModels/SilverHairCharacter/user-fbx-detachable-hair-01/replaceable-hair.blend'
-trial=root/'user-data/artifacts/studio3d-character/body-silhouette-refine-01/candidate.blend'
+root=Path(__file__).resolve().parents[2];src=project_path('3DModels/SilverHairCharacter/user-fbx-detachable-hair-01/replaceable-hair.blend')
+trial=project_path('user-data/artifacts/studio3d-character/body-silhouette-refine-01/candidate.blend')
 def digest_coords(vertices):
  return hashlib.sha256(';'.join(','.join(f'{v.co[i]:.7f}' for i in range(3)) for v in vertices).encode()).hexdigest()
 def read(path):

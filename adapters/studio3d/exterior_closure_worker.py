@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Add only bounded external art surfaces to a receipt-bound static group."""
+from sdk.blender_api import require_blender
 import hashlib,json,time
-import bpy,bmesh
-from mathutils import Vector
+bpy = require_blender().bpy; bmesh = require_blender().bmesh
+Vector = require_blender().mathutils.Vector
 from modules.skills.studio3d.exterior_closure import build,check_source,notch_from_surface
 from modules.skills.studio3d.attachment_seat import components,VERSION
 from adapters.studio3d.attachment_seat_worker import world_tree
@@ -67,7 +68,7 @@ def run(folder,req,c,source):
  final_tree=world_tree(ob,deps)
  # Every sampled original support anchor must also be enclosed by the new body.
  # Exclude the original rail vertices so this cannot pass using the rail itself.
- from mathutils.bvhtree import BVHTree
+ BVHTree = require_blender().bvhtree.BVHTree
  added_tree=BVHTree.FromPolygons([ob.matrix_world@v.co for v in mesh.vertices],[list(p.vertices) for p in list(mesh.polygons)[len(original_f):]],all_triangles=False)
  for row in contacts:row['new_shell']=inside(added_tree,row['point'])
  clearance=[]

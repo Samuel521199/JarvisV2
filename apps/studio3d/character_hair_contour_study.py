@@ -1,18 +1,25 @@
 """Reversible rear-hair silhouette and layered tips on one FBX derivative."""
+from pathlib import Path as _BootstrapPath
+import sys as _bootstrap_sys
+_bootstrap_sys.path.insert(0,str(_BootstrapPath(__file__).resolve().parents[2]))
+from adapters.studio3d.learning_worker import install_runtime
+install_runtime(__file__)
+from sdk.runtime_paths import project_path, reference_path, optional_character_tool
+from sdk.blender_api import require_blender
 import hashlib, json, math, sys
 from pathlib import Path
-import bpy
-from mathutils import Vector
+bpy = require_blender().bpy
+Vector = require_blender().mathutils.Vector
 
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT))
 from control.studio3d_lane import render_lane
 from modules.skills.studio3d.character_hair_shell_trial import apply as reshape_shell
 
-source_dir=ROOT/'3DModels/SilverHairCharacter/user-fbx-detachable-hair-01'
+source_dir=project_path('3DModels/SilverHairCharacter/user-fbx-detachable-hair-01')
 source=source_dir/'replaceable-hair.blend'; manifest=json.loads((source_dir/'manifest.json').read_text(encoding='utf8'))
 if hashlib.sha256(source.read_bytes()).hexdigest()!=manifest['files'][source.name]:raise ValueError('Source changed')
-out=ROOT/'user-data/artifacts/studio3d-character/hair-contour-study-01'
+out=project_path('user-data/artifacts/studio3d-character/hair-contour-study-01')
 if out.exists():raise ValueError('Candidate already exists')
 out.mkdir(parents=True)
 with render_lane(out):

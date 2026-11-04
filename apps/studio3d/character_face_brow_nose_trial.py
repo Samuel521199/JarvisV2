@@ -1,12 +1,19 @@
 """Reversible ear and brow study on the mature-face experiment."""
+from pathlib import Path as _BootstrapPath
+import sys as _bootstrap_sys
+_bootstrap_sys.path.insert(0,str(_BootstrapPath(__file__).resolve().parents[2]))
+from adapters.studio3d.learning_worker import install_runtime
+install_runtime(__file__)
+from sdk.runtime_paths import project_path, reference_path, optional_character_tool
+from sdk.blender_api import require_blender
 import hashlib,json,sys
 from pathlib import Path
-import bpy
-from mathutils import Vector
+bpy = require_blender().bpy
+Vector = require_blender().mathutils.Vector
 ROOT=Path(__file__).resolve().parents[2];sys.path.insert(0,str(ROOT))
 from control.studio3d_lane import render_lane
-src=ROOT/'user-data/artifacts/studio3d-character/face-proportion-design-study-01/candidate.blend';identity=hashlib.sha256(src.read_bytes()).hexdigest()
-out=ROOT/'user-data/artifacts/studio3d-character/face-proportion-design-study-03'
+src=project_path('user-data/artifacts/studio3d-character/face-proportion-design-study-01/candidate.blend');identity=hashlib.sha256(src.read_bytes()).hexdigest()
+out=project_path('user-data/artifacts/studio3d-character/face-proportion-design-study-03')
 if out.exists():raise ValueError('Existing candidate')
 out.mkdir(parents=True)
 def sm(a,b,x):

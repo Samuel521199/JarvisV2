@@ -3,11 +3,12 @@
 This is an artist-authored approximation. It does not claim reference fidelity,
 animation binding, or a valid hair topology. Apply only to a disposable scene.
 """
+from sdk.blender_api import require_blender
 import math
 
 
 def apply():
-    import bpy
+    bpy = require_blender().bpy
 
     scene = bpy.context.scene
     required = {'Body', 'Face', 'hair-scalp-refined', 'bang-refined-center'}

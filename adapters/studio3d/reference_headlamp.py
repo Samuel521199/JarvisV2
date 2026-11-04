@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Editable reference headlamp, front -Y, foot Z=0; art dimensions, not CAD."""
+from sdk.blender_api import require_blender
 import math
-import bpy
+bpy = require_blender().bpy
 
 
 def build():

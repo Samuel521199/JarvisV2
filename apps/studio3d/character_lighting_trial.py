@@ -1,17 +1,24 @@
 """Reversible comparison of lighting on the current character candidate."""
+from pathlib import Path as _BootstrapPath
+import sys as _bootstrap_sys
+_bootstrap_sys.path.insert(0,str(_BootstrapPath(__file__).resolve().parents[2]))
+from adapters.studio3d.learning_worker import install_runtime
+install_runtime(__file__)
+from sdk.runtime_paths import project_path, reference_path, optional_character_tool
+from sdk.blender_api import require_blender
 import hashlib
 import json
 import sys
 from pathlib import Path
-import bpy
-from mathutils import Vector
+bpy = require_blender().bpy
+Vector = require_blender().mathutils.Vector
 
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT))
 from control.studio3d_lane import render_lane
 
-source=ROOT/'3DModels/SilverHairCharacter/user-fbx-detachable-hair-01/replaceable-hair.blend'
-out=ROOT/'user-data/artifacts/studio3d-character/reference-lighting-study-01'
+source=project_path('3DModels/SilverHairCharacter/user-fbx-detachable-hair-01/replaceable-hair.blend')
+out=project_path('user-data/artifacts/studio3d-character/reference-lighting-study-01')
 if out.exists():raise ValueError('Existing trial must be inspected')
 identity=hashlib.sha256(source.read_bytes()).hexdigest();out.mkdir(parents=True)
 with render_lane(out):

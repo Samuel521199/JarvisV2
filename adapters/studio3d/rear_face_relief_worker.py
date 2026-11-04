@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Change one evaluated rear face; retain the rest of the bound art asset."""
-import bpy,bmesh,json,hashlib,time
-from mathutils import Vector
+from sdk.blender_api import require_blender
+import json, hashlib, time; bpy = require_blender().bpy; bmesh = require_blender().bmesh
+Vector = require_blender().mathutils.Vector
 from modules.skills.studio3d.rear_face_relief import patch
 from modules.skills.studio3d.attachment_seat import VERSION
 from adapters.studio3d.attachment_seat_worker import world_tree

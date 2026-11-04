@@ -21,7 +21,7 @@
   - [连续性分级](#service-continuity-1)
   - [新旧版本并行](#service-continuity-2)
   - [单机 A/B 与 MCP：测试后采用、保留任务接续](#single-pc-ab-upgrade)
-  - [应用级安装与恢复控制器 v1（2026-11-04）](#single-pc-application-runtime)
+  - [应用级安装与恢复控制器 v1（v0.1.2，2026-11-04）](#single-pc-application-runtime)
   - [长任务与会话](#service-continuity-3)
   - [状态迁移](#service-continuity-4)
   - [恢复底座自身升级](#service-continuity-5)
@@ -220,16 +220,17 @@ MCP 标准提供初始化、协议／能力协商、运行和关闭的连接生�
 首批验收应包含：正在聊天时准备候选、MCP 调用中断、外发结果未知、写库交接、B 启动失败、切换时断电／进程崩溃、旧 Worker 迟到、schema 不兼容、费用不重置及记忆纠正不复活。现版受限能力包发布／恢复继续保持其既有已验范围，不能计为整机双版本安装器已通过。
 
 <a id="single-pc-application-runtime"></a>
-### 应用级安装与恢复控制器 v1（2026-11-04）
+### 应用级安装与恢复控制器 v1（v0.1.2，2026-11-04）
 
-**implemented；Windows 隔离模拟与真实工作台托管接口局部 verified，日用版本未采用。** 本节将应用级流程落到独立组件；先前的 Google 代理更新保持独立。当前源码仍被原有架构诊断阻止准入，[核验](delivery-validation.md#application-release-evidence)保留真实失败。
+**implemented；Windows 隔离演练、独立包和 v0.1.2 日用接口局部 verified。** 本节将应用级流程落到独立组件；先前的 Google 代理更新保持独立。[首次核验](delivery-validation.md#application-release-evidence)保留 253 项诊断导致拒绝的历史；[修复与采用登记](delivery-validation.md#architecture-repair-evidence)说明后续结果，不覆盖失败记录。
 
 | 组件 | 责任与替换边界 |
 |---|---|
 | `modules/release_recovery/application.py` | 包清单、逐文件摘要、准入回执、逻辑 A/B、持久事件、失败恢复和可恢复退役；不复制／恢复业务数据库 |
-| `host/application_release.py` | 构建 Git 已登记的运行文件；检查器、导入环基线和固定回归取自当前控制器，候选不能提供自己的宽松评估器 |
+| `host/application_release.py` | 构建 Git 已登记的运行文件；检查器、导入环基线和固定回归（含所需核心支持测试）取自当前控制器，候选不能提供自己的宽松评估器；失败日志限本地数据根保存 |
 | `adapters/application_host.py` | 可替换进程端口：start、health、drain、stop、activate、running；当前适配 CPython 工作台，核对数据根、构建及代际，不强制结束旧进程 |
 | `control/application_runtime.py` | 接单协调快照和本机 HMAC 证明；密钥 DPAPI 保存，生命周期证明绑定构建、epoch、boot_id 与动作 |
+| `host/application_installation.py` | 只为已采用包安装根启动器，保存旧入口并冻结独立恢复控制器；[位置与运行方式](stack-project-layout.md#daily-managed-installation) |
 | 工作台与调度接入 | `runtime_http.py` 提供托管接口；交接时暂停聊天队列、后台模型通道及核心任务的新派发，采用后恢复；同一数据根有 Host 独占锁 |
 
 流程为：构建 → 解包与摘要复核 → 来源审阅和独立检查 → 本机准入回执 → 固定当前代际 → 排空并确认旧 Host 退出 → 以同一数据根启动候选 → 健康检查 → 提交活动代际并恢复接单。候选不健康时先确认它退出，再以更大代际恢复原版本；退出不确定时进入 blocked，禁止启动第二个写入者。失败候选的准入回执失效，不能无检查反复采用。停止锁／锁存优先，代码恢复不清除它们。
@@ -242,7 +243,9 @@ MCP 标准提供初始化、协议／能力协商、运行和关闭的连接生�
 
 **范围：**仅支持已审阅的本地第一方源码、Core schema 7 的无迁移代码更新。其他业务库兼容仍须独立核验；不提供任意代码沙箱、公开发布者签名／TUF、GitHub 自动拉取、定时更新、常驻崩溃监管、跨语言／跨模式在途迁移。固定回归不能代替完整业务验收，3D 原有诊断不能靠放宽白名单获得发布资格。 现有非托管服务不会被自动接管；首次迁入要另作兼容与受控切换核验。浏览器免重连证据限于托管 Host 之间，旧非托管版本首次迁入可能仍需重新打开入口。
 
-入口：`python -I -B apps/development/releases.py <操作> --data-root <数据根>`。支持 build、stage、validate、adopt、update、start、stop、status、rollback、recover、retire、unretire；构建指定 `--archive`、与源码 VERSION 一致的 `--version`，验证／采用／退役指定 `--build <摘要>`。`update --source <本地工程> --reviewed-source` 串起构建、验证及采用；检查失败退出码 2，维持原版本。`--reviewed-source` 表示已有源码审阅，不能由模型自评分代替；条件不满足时不运行候选测试，没有向未知网络程序开放自动安装。
+入口：`python -I -B apps/development/releases.py <操作> --data-root <数据根>`。支持 build、stage、validate、adopt、update、start、stop、status、rollback、recover、retire、unretire、install-launcher；构建指定 `--archive`、与源码 VERSION 一致的 `--version`，验证／采用／退役指定 `--build <摘要>`。`update --source <本地工程> --reviewed-source` 串起构建、验证及采用；检查失败退出码 2，维持原版本。`--reviewed-source` 表示已有源码审阅，不能由模型自评分代替；条件不满足时不运行候选测试，没有向未知网络程序开放自动安装。
+
+首次采用并核对健康后，可执行 `install-launcher --data-root <安装目录>/user-data --port 18282`。原根启动器被保存在 `deployment/launcher-backups/`；新入口启动已采用包，不加载原工作树的可变业务代码。恢复控制器保留自己的验证器和测试，摘要不符则停止启动。首次托管没有已采用的上一版，不能伪造旧版准入回执：自动 `rollback` 从第二个经过验收的采用版本开始可用；首次迁入的旧入口、原源码和数据备份单独保留，必要时先合作停止托管 Host，再按备份恢复入口。备份数据不会因代码回退自动还原。
 
 <a id="service-continuity-3"></a>
 ### 长任务与会话

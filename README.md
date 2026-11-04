@@ -6,7 +6,7 @@
 <p align="center"><strong>与你交流 · 为你办事 · 与你一同成长</strong></p>
 <p align="center">A personal AI companion, built around your computer and your context.</p>
 <p align="center">
-  <img src="https://img.shields.io/badge/release-v0.1.1-38bdf8?style=for-the-badge" alt="Release v0.1.1">
+  <img src="https://img.shields.io/badge/release-v0.1.2-38bdf8?style=for-the-badge" alt="Release v0.1.2">
   <img src="https://img.shields.io/badge/Local_First-0f172a?style=for-the-badge" alt="Local first">
   <img src="https://img.shields.io/badge/Python-3.13-3776AB?style=for-the-badge" alt="Python 3.13">
   <img src="https://img.shields.io/badge/Stage-Early_Preview-8b5cf6?style=for-the-badge" alt="Early preview">
@@ -17,11 +17,11 @@
 
 一个以普通 PC 为主要载体、以个人为主、以其家庭或以其为中心的小团体为辅，能够长期相处、自主工作并持续成长的 AI 助手与伙伴。最终目标是在明确目标与有效授权内独立完成任务、验证结果并交付。
 
-**这里是工程与文档的主入口。** 当前版本 **v0.1.1 · 早期预览**（首个 GitHub 发布为 v0.1.0），历史开发证据保持原编号，版本号规则见 [CHANGELOG](CHANGELOG.md#changelog-rules)。本版把自然聊天、分域记忆、目标计划、受限自主编程和原会话交付串联起来；缺少能力时可拟订规格、生成候选，经独立检查与审阅后回到原目标。[受控 MCP 接入](docs/tasks-agents.md#mcp-runtime)复用原任务体系。当前自主研发仍受限于纯文本能力，完整助手与 K0—K6 按分项证据判断。
+**这里是工程与文档的主入口。** 当前版本 **v0.1.2 · 早期预览**（首个 GitHub 发布为 v0.1.0），历史开发证据保持原编号，版本号规则见 [CHANGELOG](CHANGELOG.md#changelog-rules)。本版把自然聊天、分域记忆、目标计划、受限自主编程和原会话交付串联起来；缺少能力时可拟订规格、生成候选，经独立检查与审阅后回到原目标。[受控 MCP 接入](docs/tasks-agents.md#mcp-runtime)复用原任务体系。当前自主研发仍受限于纯文本能力，完整助手与 K0—K6 按分项证据判断。
 
 **先读这一页：[当前真实状态](docs/current-state.md)**：能运行什么、哪些只是设计、证据边界与已知风险都在一页内。按版本的变更流水见 [CHANGELOG](CHANGELOG.md)。
 
-**边用边开发：**日用目录保留原服务；已配置的独立开发工作树用 `StartJarvisDev.bat` 启动，不共用正式业务数据。新克隆还需准备独立 profile，不能直接把两个 Host 指向同一个数据根。[双环境入口与操作](docs/stack-project-layout.md#single-pc-development-paths) · [本轮核验及未完成项](docs/delivery-validation.md#pc-environments-evidence)。
+**边用边开发：**日用数据保留原位；托管代码与恢复入口见[安装与恢复](docs/stack-project-layout.md#daily-managed-installation)。已配置的独立开发工作树用 `StartJarvisDev.bat` 启动，不共用正式业务数据。新克隆还需准备独立 profile，不能直接把两个 Host 指向同一个数据根。[双环境入口与操作](docs/stack-project-layout.md#single-pc-development-paths) · [本轮核验及未完成项](docs/delivery-validation.md#pc-environments-evidence)。
 
 **项目级准则：精灵与工作台是同一个 Jarvis 的两种表现和工作形式。** 精灵侧重自动化、简洁和低打扰，工作台侧重任务的详细展示、设置与控制；共用能力、配置、任务及成果，避免重复实现。这也是未来跨平台入口和远程机器人执行的桌面雏形。[架构准则](docs/architecture.md#unified-system-principle) · [透明精灵、场景呼出与预览图](#desktop-companion-overview)。准则已采纳，原生桌面与跨平台完整闭环仍待实现。
 

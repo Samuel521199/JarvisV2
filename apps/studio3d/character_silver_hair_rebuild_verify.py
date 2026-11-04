@@ -1,7 +1,13 @@
 """Read back source and candidate; verify static data without editing either."""
+from pathlib import Path as _BootstrapPath
+import sys as _bootstrap_sys
+_bootstrap_sys.path.insert(0,str(_BootstrapPath(__file__).resolve().parents[2]))
+from adapters.studio3d.learning_worker import install_runtime
+install_runtime(__file__)
+from sdk.blender_api import require_blender
 import hashlib, json, struct
 from pathlib import Path
-import bpy
+bpy = require_blender().bpy
 
 root=Path(__file__).resolve().parents[2]/'user-data/artifacts/studio3d-character'
 source=root/'reference-eye-width-study-02/candidate.blend'

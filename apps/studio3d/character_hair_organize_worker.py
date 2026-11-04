@@ -3,21 +3,28 @@
 This is not an arbitrary BLEND importer. It opens one SHA-verified local source
 with scripts disabled and keeps geometry and the user's original file intact.
 """
+from pathlib import Path as _BootstrapPath
+import sys as _bootstrap_sys
+_bootstrap_sys.path.insert(0,str(_BootstrapPath(__file__).resolve().parents[2]))
+from adapters.studio3d.learning_worker import install_runtime
+install_runtime(__file__)
+from sdk.runtime_paths import project_path, reference_path, optional_character_tool
+from sdk.blender_api import require_blender
 import hashlib
 import json
 import math
 import struct
 import sys
 from pathlib import Path
-import bpy
-from mathutils import Vector
+bpy = require_blender().bpy
+Vector = require_blender().mathutils.Vector
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 from control.studio3d_lane import render_lane
 
 OUT = Path(sys.argv[sys.argv.index('--') + 1]).resolve()
-SOURCE = ROOT / 'user-data/artifacts/studio3d-character/face-atlas-refine-20261027/narrow-24.blend'
+SOURCE = project_path('user-data/artifacts/studio3d-character/face-atlas-refine-20261027/narrow-24.blend')
 source_hash = hashlib.sha256(SOURCE.read_bytes()).hexdigest()
 if source_hash != '4f591a474d45b104f6a85448d9195c3be40bbf928ae779b0e6466a4ff8ce89e2':
     raise ValueError('Face-refined source identity changed')

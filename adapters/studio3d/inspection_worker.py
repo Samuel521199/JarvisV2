@@ -1,10 +1,11 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Actual fixed-camera supplemental renders; never change the source asset."""
+from sdk.blender_api import require_blender
 import hashlib,itertools,json,sys,time
 from contextlib import contextmanager
 from pathlib import Path
-import bpy
-from mathutils import Vector
+bpy = require_blender().bpy
+Vector = require_blender().mathutils.Vector
 from modules.skills.studio3d.render_inspection import validate,VERSION
 
 

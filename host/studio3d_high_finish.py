@@ -123,16 +123,17 @@ def native_asset_operation(root,source_job,contract, *, ident=None,operation,sou
                 target=folder/name;target.parent.mkdir(exist_ok=True);target.write_bytes(raw_map)
         save(folder/'request.json',request)
     if operation=='surface_material':
-        from modules.skills.studio3d.surface_material import TEXTURES
-        for role,(path,sha) in TEXTURES.items():
-            texture=(ROOT/path).read_bytes()
+        from modules.skills.studio3d.surface_material import textures
+        for role,(path,sha) in textures(config).items():
+            texture=(child(Path(root).parent,path) if path.startswith('3DModels/') else ROOT/path).read_bytes()
             if hashlib.sha256(texture).hexdigest()!=sha:raise ValueError('Pinned coating texture changed')
             (folder/('texture-'+role+'.png')).write_bytes(texture)
     sources=['host/studio3d_high_finish.py','host/studio3d_learning.py','modules/skills/studio3d/'+('render_inspection' if operation in ('inspection','roundtrip') else operation)+'.py','apps/studio3d/'+operation+'_worker.py','adapters/studio3d/'+operation+'_worker.py']
     if operation=='roundtrip':sources.append('adapters/studio3d/inspection_worker.py')
-    if operation=='high_finish':sources.extend(['adapters/studio3d/asset_pipeline.py','adapters/studio3d/high_finish_reuse.py','tools/studio3d_blender_material_projection.py'])
+    if operation=='high_finish':sources.extend(['adapters/studio3d/asset_pipeline.py','adapters/studio3d/high_finish_reuse.py','adapters/studio3d/material_projection.py'])
     if operation=='demonstration':sources.append('modules/skills/studio3d/radial_profile.py')
-    if operation=='surface_material':sources.extend(['adapters/studio3d/demonstration_worker.py','tools/studio3d_blender_material_projection.py'])
+    if operation=='surface_material':sources.extend(['adapters/studio3d/demonstration_worker.py','adapters/studio3d/material_projection.py'])
+    if operation=='surface_material' and config['schema']=='jarvis.studio3d.surface-material.v4':sources.extend(['modules/skills/studio3d/paint_feature.py','adapters/studio3d/paint_feature_worker.py','adapters/studio3d/spade_frame_worker.py','adapters/studio3d/panel_corner_worker.py','adapters/studio3d/high_finish_reuse.py','adapters/studio3d/inspection_worker.py'])
     if operation=='tyre_surface':sources.extend(['adapters/studio3d/demonstration_worker.py','adapters/studio3d/inspection_worker.py','modules/skills/studio3d/render_inspection.py'])
     if operation=='attachment_seat':sources.extend(['modules/skills/studio3d/fastener_layout.py','modules/skills/studio3d/component_seat.py','modules/skills/studio3d/exterior_closure.py','modules/skills/studio3d/pedestal_profile.py','modules/skills/studio3d/saddle_fascia.py','modules/skills/studio3d/assembly_geometry.py','adapters/studio3d/exterior_closure_worker.py','adapters/studio3d/pedestal_profile_worker.py','adapters/studio3d/saddle_fascia_worker.py','adapters/studio3d/demonstration_worker.py','adapters/studio3d/inspection_worker.py','modules/skills/studio3d/render_inspection.py'])
     if operation=='attachment_seat':sources.extend(['modules/skills/studio3d/rear_face_relief.py','adapters/studio3d/rear_face_relief_worker.py'])
@@ -144,12 +145,14 @@ def native_asset_operation(root,source_job,contract, *, ident=None,operation,sou
     if operation=='attachment_seat':sources.extend(['modules/skills/studio3d/curve_grip.py','adapters/studio3d/curve_grip_worker.py'])
     if operation=='attachment_seat':sources.extend(['modules/skills/studio3d/curve_foot.py','adapters/studio3d/curve_foot_worker.py'])
     if operation=='attachment_seat':sources.extend(['modules/skills/studio3d/rear_contour.py','adapters/studio3d/rear_contour_worker.py'])
+    if operation=='attachment_seat':sources.extend(['modules/skills/studio3d/control_face_roll.py','adapters/studio3d/control_face_roll_worker.py'])
     if operation=='attachment_seat':sources.extend(['modules/skills/studio3d/trail_pad.py','adapters/studio3d/trail_pad_worker.py'])
     if operation=='attachment_seat':sources.extend(['modules/skills/studio3d/trail_tab.py','adapters/studio3d/trail_tab_worker.py'])
     if operation in ('annular_detail','panel_corner'):sources.extend(['modules/skills/studio3d/attachment_seat.py','adapters/studio3d/attachment_seat_worker.py','adapters/studio3d/demonstration_worker.py','adapters/studio3d/inspection_worker.py','modules/skills/studio3d/render_inspection.py'])
     if operation=='panel_corner':sources.extend(['modules/skills/studio3d/panel_aperture.py','modules/skills/studio3d/panel_lower_band.py','adapters/studio3d/panel_lower_band_worker.py'])
     if operation=='annular_detail':sources.extend(['modules/skills/studio3d/collar_profile.py','adapters/studio3d/collar_profile_worker.py','adapters/studio3d/exterior_closure_worker.py','modules/skills/studio3d/exterior_closure.py','modules/skills/studio3d/assembly_geometry.py'])
     if operation=='annular_detail':sources.extend(['modules/skills/studio3d/trail_band.py','adapters/studio3d/trail_band_worker.py','adapters/studio3d/spade_frame_worker.py','modules/skills/studio3d/spade_frame.py','adapters/studio3d/panel_corner_worker.py'])
+    sources.extend(['modules/skills/studio3d/worker-programs.json','sdk/blender_api.py','sdk/native_programs.py','sdk/raster.py'])
     status={'id':ident,'status':'RUNNING','version':version,'operation':operation,'started_at':time.time(),'source_job':source_job,'owner_pid':os.getpid(),'signature':signature,
             'source_code_sha256':{n:hashlib.sha256((ROOT/n).read_bytes()).hexdigest() for n in sources},'request':request}
     save(folder/'status.json',status)
@@ -160,16 +163,15 @@ def native_asset_operation(root,source_job,contract, *, ident=None,operation,sou
             official=validate_export(folder/'model.glb');save(folder/'format-validation.json',official)
             status['official_format_issues']=official['issues']
         elif operation=='inspection':
-            from PIL import Image
+            from sdk.raster import load_png
             for view in report['views']:
-                with Image.open(folder/view['file']) as source_image:
-                    if source_image.format!='PNG' or list(source_image.size)!=config['resolution']:raise ValueError('Invalid native inspection image')
-                    for name,region in view['regions'].items():
-                        target='crop-'+view['view']+'-'+name+'.png'
-                        crop=source_image.crop(region['rect']);crop.save(folder/target)
-                        with Image.open(folder/target) as loaded:
-                            if loaded.tobytes()!=crop.tobytes():raise ValueError('Crop evidence pixels changed')
-                        region.update(file=target,crop_sha256=hashlib.sha256((folder/target).read_bytes()).hexdigest(),resampled=False)
+                source_image=load_png(folder/view['file'])
+                if list(source_image.size)!=config['resolution']:raise ValueError('Invalid native inspection image')
+                for name,region in view['regions'].items():
+                    target='crop-'+view['view']+'-'+name+'.png'
+                    crop=source_image.crop(region['rect']);crop.save(folder/target)
+                    if load_png(folder/target).pixels!=crop.pixels:raise ValueError('Crop evidence pixels changed')
+                    region.update(file=target,crop_sha256=hashlib.sha256((folder/target).read_bytes()).hexdigest(),resampled=False)
             save(folder/'report.json',report)
         status.update(status='BUILT_AWAITING_VISUAL_COMPARISON',report=report,user_approval=False,lod_authorized=False)
         status['files']={p.relative_to(folder).as_posix():{'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'bytes':p.stat().st_size} for p in folder.rglob('*') if p.is_file() and p.suffix in ('.glb','.blend','.png')}

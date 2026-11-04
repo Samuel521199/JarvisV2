@@ -1,12 +1,18 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Fixed local user-asset refinement. Input is a hash-frozen derived copy."""
+from pathlib import Path as _BootstrapPath
+import sys as _bootstrap_sys
+_bootstrap_sys.path.insert(0,str(_BootstrapPath(__file__).resolve().parents[2]))
+from adapters.studio3d.learning_worker import install_runtime
+install_runtime(__file__)
+from sdk.blender_api import require_blender
 import hashlib
 import json
 import sys
 import time
 from pathlib import Path
-import bpy
-from mathutils import Vector
+bpy = require_blender().bpy
+Vector = require_blender().mathutils.Vector
 
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT))
@@ -44,7 +50,7 @@ def main():
             evaluated=obj.evaluated_get(deps)
             mesh=bpy.data.meshes.new_from_object(evaluated,preserve_all_data_layers=True,depsgraph=deps)
             if obj.name=='Face':
-                import bmesh
+                bmesh = require_blender().bmesh
                 excluded={i for i,m in enumerate(mesh.materials) if m and any(k in m.name.casefold() for k in ('facebrow','faceeyelash','faceeyeline','eyehighlight'))}
                 bm=bmesh.new();bm.from_mesh(mesh)
                 bmesh.ops.delete(bm,geom=[f for f in bm.faces if f.material_index in excluded],context='FACES')

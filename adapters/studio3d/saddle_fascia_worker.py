@@ -1,14 +1,15 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Preserve evaluated carriage box and append supported shallow art relief."""
-import bpy,json,hashlib,time
-from mathutils import Vector
+from sdk.blender_api import require_blender
+import json, hashlib, time; bpy = require_blender().bpy
+Vector = require_blender().mathutils.Vector
 from modules.skills.studio3d.saddle_fascia import build
 from modules.skills.studio3d.attachment_seat import VERSION
 from adapters.studio3d.exterior_closure_worker import shaped,inside
 from adapters.studio3d.attachment_seat_worker import world_tree
 from adapters.studio3d.demonstration_worker import digest_object
 from adapters.studio3d.inspection_worker import render_scene
-from mathutils.bvhtree import BVHTree
+BVHTree = require_blender().bvhtree.BVHTree
 
 def run(folder,req,c,source):
  start=time.monotonic();bpy.ops.wm.open_mainfile(filepath=str(source),load_ui=False,use_scripts=False);objects={n:bpy.data.objects.get(n) for n in req['visible_names']}

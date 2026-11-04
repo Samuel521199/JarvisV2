@@ -2,7 +2,7 @@
 import math
 import re
 
-VERSION='1.2.2'
+VERSION='1.2.3'
 
 def uv_independent_shader(signature):
     """Conservative whitelist for the existing explicit world-space coating.
@@ -10,7 +10,10 @@ def uv_independent_shader(signature):
     UV-dependent nodes, nested groups and implicit image coordinates fail closed.
     Actual Principled anisotropy is checked by the Blender adapter as well.
     """
-    allowed={'ShaderNodeAmbientOcclusion','ShaderNodeBsdfPrincipled','ShaderNodeBump','ShaderNodeCombineXYZ','ShaderNodeMapRange','ShaderNodeMath','ShaderNodeMixRGB','ShaderNodeNewGeometry','ShaderNodeOutputMaterial','ShaderNodeRGBToBW','ShaderNodeSeparateColor','ShaderNodeSeparateXYZ','ShaderNodeTexImage','ShaderNodeTexNoise','ShaderNodeVectorMath','ShaderNodeValue','ShaderNodeRGB','ShaderNodeValToRGB','ShaderNodeBevel'}
+    # Clamp consumes only scalar sockets/defaults; it has no implicit texture
+    # coordinates. Its inputs/properties remain in the full shader fingerprint.
+    # All coordinate ancestors are still checked by this same closed whitelist.
+    allowed={'ShaderNodeAmbientOcclusion','ShaderNodeBsdfPrincipled','ShaderNodeBump','ShaderNodeClamp','ShaderNodeCombineXYZ','ShaderNodeMapRange','ShaderNodeMath','ShaderNodeMixRGB','ShaderNodeNewGeometry','ShaderNodeOutputMaterial','ShaderNodeRGBToBW','ShaderNodeSeparateColor','ShaderNodeSeparateXYZ','ShaderNodeTexImage','ShaderNodeTexNoise','ShaderNodeVectorMath','ShaderNodeValue','ShaderNodeRGB','ShaderNodeValToRGB','ShaderNodeBevel'}
     for n in signature['nodes']:
         if n['type'] not in allowed or 'group' in n:return False
         if n['type']=='ShaderNodeTexImage' and not any(l[2]==n['name'] and l[3]==0 for l in signature['links']):return False

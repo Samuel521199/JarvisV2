@@ -1,9 +1,10 @@
 """Reversible, bang-only depth compression on the known character derivative."""
+from sdk.blender_api import require_blender
 
 
 def apply():
-    import bpy
-    from mathutils import Vector
+    bpy = require_blender().bpy
+    Vector = require_blender().mathutils.Vector
     scene = bpy.context.scene
     names = sorted(o.name for o in scene.objects if o.name.startswith('bang-refined-'))
     if len(names) != 7 or not bpy.data.objects.get('headend'):

@@ -1,6 +1,6 @@
 """Authored stylized-character data recipe; not autonomous reconstruction."""
 import math
-from modules.skills.studio3d.character_contract import validate_parameters
+from sdk.character_contract import validate_parameters
 from modules.skills.studio3d.character_surface import body
 from modules.skills.studio3d.contract import validate
 

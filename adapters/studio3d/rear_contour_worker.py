@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Source-bound external cosmetic C silhouette; no internal mechanism changes."""
-import bpy,json,hashlib,time,math
-from mathutils import Vector
+from sdk.blender_api import require_blender
+import json, hashlib, time, math; bpy = require_blender().bpy
+Vector = require_blender().mathutils.Vector
 from modules.skills.studio3d.rear_contour import outline
 from modules.skills.studio3d.assembly_geometry import Mesh
 from modules.skills.studio3d.attachment_seat import VERSION

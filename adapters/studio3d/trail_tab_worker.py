@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Append bound, supported exterior silhouettes to existing static straps."""
-import bpy,bmesh,json,hashlib,time
-from mathutils import Vector
-from mathutils.bvhtree import BVHTree
+from sdk.blender_api import require_blender
+import json, hashlib, time; bpy = require_blender().bpy; bmesh = require_blender().bmesh
+Vector = require_blender().mathutils.Vector
+BVHTree = require_blender().bvhtree.BVHTree
 from modules.skills.studio3d.trail_tab import shape
 from modules.skills.studio3d.attachment_seat import VERSION,components
 from adapters.studio3d.spade_frame_worker import dependency,containment

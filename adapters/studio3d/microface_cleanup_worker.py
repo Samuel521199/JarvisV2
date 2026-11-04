@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Repair only measured bevel microfaces in a frozen cosmetic art surface."""
-import bpy,bmesh,json,hashlib,time
-from mathutils import Vector
-from mathutils.kdtree import KDTree
+from sdk.blender_api import require_blender
+import json, hashlib, time; bpy = require_blender().bpy; bmesh = require_blender().bmesh
+Vector = require_blender().mathutils.Vector
+KDTree = require_blender().kdtree.KDTree
 from adapters.studio3d.spade_frame_worker import dependency
 from adapters.studio3d.panel_corner_worker import inventory
 from adapters.studio3d.demonstration_worker import digest_object

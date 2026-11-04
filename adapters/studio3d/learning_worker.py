@@ -11,6 +11,23 @@ import bpy
 import bmesh
 from mathutils import Vector
 from mathutils.bvhtree import BVHTree
+import mathutils
+import mathutils.bvhtree
+import mathutils.geometry
+import mathutils.kdtree
+
+
+def install_runtime(entry):
+    """Bind native handles only from the existing approved Blender owner.
+
+    Inventory verification precedes loading consumers. The Host still starts a
+    fixed entry with its existing resource limits and disabled BLEND autoexec.
+    """
+    from sdk.blender_api import BlenderAPI, bind_blender
+    from sdk.native_programs import verify_program
+    verify_program(Path(__file__).resolve().parents[2], entry)
+    bind_blender(BlenderAPI(bpy, bmesh, mathutils, mathutils.bvhtree,
+                           mathutils.geometry, mathutils.kdtree))
 
 
 def digest(path): return hashlib.sha256(Path(path).read_bytes()).hexdigest()

@@ -1,8 +1,14 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Render a fresh import of a locally verified static candidate GLB."""
-import bpy,sys,json,hashlib
+from pathlib import Path as _BootstrapPath
+import sys as _bootstrap_sys
+_bootstrap_sys.path.insert(0,str(_BootstrapPath(__file__).resolve().parents[2]))
+from adapters.studio3d.learning_worker import install_runtime
+install_runtime(__file__)
+from sdk.blender_api import require_blender
+import sys, json, hashlib; bpy = require_blender().bpy
 from pathlib import Path
-from mathutils import Vector
+Vector = require_blender().mathutils.Vector
 ROOT=Path(__file__).resolve().parents[2];sys.path.insert(0,str(ROOT))
 from control.studio3d_lane import render_lane
 folder=Path(sys.argv[sys.argv.index('--')+1]).resolve()

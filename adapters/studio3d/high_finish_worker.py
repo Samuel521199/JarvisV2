@@ -6,10 +6,11 @@ Keeps a separate atlas/mesh per movable owner and verifies its surface against
 the original evaluated parts. Origins are declared visual animation origins,
 not measured physical joints. The editable source blend is never overwritten.
 """
+from sdk.blender_api import require_blender
 import hashlib,json,sys,time
 from pathlib import Path
-import bpy
-from mathutils import Matrix,Vector
+bpy = require_blender().bpy
+Matrix = require_blender().mathutils.Matrix; Vector = require_blender().mathutils.Vector
 from adapters.studio3d.asset_pipeline import prepare,surface_error,pack_occlusion
 from modules.skills.studio3d.high_finish import validate,VERSION
 from adapters.studio3d.high_finish_reuse import verify_source,load_groups
@@ -29,7 +30,7 @@ def main():
     if any(m.type=='DECIMATE' for o in originals.values() for m in o.modifiers):raise ValueError('High finish does not accept reduction modifiers')
     # Explicit world-normal triplanar weights survive joining rotated parts.
     # Blender BOX axis selection otherwise changes when mesh owners change.
-    from tools.studio3d_blender_material_projection import replace_world_box_projection
+    from adapters.studio3d.material_projection import replace_world_box_projection
     projection_repairs={m.name:replace_world_box_projection(m) for m in {m for o in originals.values() for m in o.data.materials}}
     reused=load_groups(folder,config,originals)
     def phase(text):

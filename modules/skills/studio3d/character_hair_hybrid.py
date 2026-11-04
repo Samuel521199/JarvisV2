@@ -4,14 +4,15 @@
 All existing scalp and fringe objects remain untouched. The source scene is
 an editable local copy; this procedure modifies no model-selected path.
 """
+from sdk.blender_api import require_blender
 import math
 
 VERSION='0.1.0'
 
 
 def apply():
-    import bpy
-    from mathutils import Vector
+    bpy = require_blender().bpy
+    Vector = require_blender().mathutils.Vector
     scene=bpy.context.scene
     names={o.name for o in scene.objects}
     if not {'Body','Face','headend','hair-scalp-refined','bang-refined-center'}<=names:

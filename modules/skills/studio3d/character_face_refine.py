@@ -1,9 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Small, reversible eyelid/iris proportion trial for one known character."""
+from sdk.blender_api import require_blender
 
 
 def apply():
-    import bpy
+    bpy = require_blender().bpy
     records=[]
     for side in ('r','l'):
         for kind in ('iris','pupil'):

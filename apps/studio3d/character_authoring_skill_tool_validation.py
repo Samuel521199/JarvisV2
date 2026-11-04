@@ -1,16 +1,23 @@
 """Behavior checks for new mesh creation, morphing and edit rejection in Blender."""
+from pathlib import Path as _BootstrapPath
+import sys as _bootstrap_sys
+_bootstrap_sys.path.insert(0,str(_BootstrapPath(__file__).resolve().parents[2]))
+from adapters.studio3d.learning_worker import install_runtime
+install_runtime(__file__)
+from sdk.runtime_paths import project_path, reference_path, optional_character_tool
+from sdk.blender_api import require_blender
 import copy
 import hashlib
 import importlib.util
 import json
 from pathlib import Path
 import sys
-import bpy
+bpy = require_blender().bpy
 ROOT=Path(__file__).resolve().parents[2];sys.path.insert(0,str(ROOT))
 from control.studio3d_lane import render_lane
-tool=Path('C:/Users/samuel/.codex/skills/blender-character-authoring/scripts/character_tools.py')
+tool=optional_character_tool()
 spec=importlib.util.spec_from_file_location('authoring_validation',tool);t=importlib.util.module_from_spec(spec);spec.loader.exec_module(t)
-out=ROOT/'user-data/artifacts/studio3d-character/authoring-tool-validation-01'
+out=project_path('user-data/artifacts/studio3d-character/authoring-tool-validation-01')
 if out.exists():raise ValueError('Validation exists')
 out.mkdir(parents=True)
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()

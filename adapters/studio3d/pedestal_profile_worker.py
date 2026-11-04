@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Replace one cosmetic box profile; preserve upper/lower neighboring contacts."""
+from sdk.blender_api import require_blender
 import hashlib,json,time
-import bpy
-from mathutils import Vector
+bpy = require_blender().bpy
+Vector = require_blender().mathutils.Vector
 from modules.skills.studio3d.pedestal_profile import build,check_original
 from modules.skills.studio3d.attachment_seat import VERSION
 from adapters.studio3d.attachment_seat_worker import world_tree

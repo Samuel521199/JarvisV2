@@ -1,9 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Appearance-only blind recess; no functional chamber or internal mechanism."""
-import bpy,json,hashlib,time,math
-from mathutils import Vector
-from mathutils.bvhtree import BVHTree
-from mathutils.kdtree import KDTree
+from sdk.blender_api import require_blender
+import json, hashlib, time, math; bpy = require_blender().bpy
+Vector = require_blender().mathutils.Vector
+BVHTree = require_blender().bvhtree.BVHTree
+KDTree = require_blender().kdtree.KDTree
 from modules.skills.studio3d.facade_pocket import placement
 from modules.skills.studio3d.attachment_seat import VERSION,components
 from adapters.studio3d.demonstration_worker import digest_object,topology

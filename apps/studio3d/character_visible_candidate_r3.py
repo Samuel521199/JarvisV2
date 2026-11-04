@@ -1,21 +1,28 @@
 """Combine reviewed, reversible character experiments into a new Blender file."""
+from pathlib import Path as _BootstrapPath
+import sys as _bootstrap_sys
+_bootstrap_sys.path.insert(0,str(_BootstrapPath(__file__).resolve().parents[2]))
+from adapters.studio3d.learning_worker import install_runtime
+install_runtime(__file__)
+from sdk.runtime_paths import project_path, reference_path, optional_character_tool
+from sdk.blender_api import require_blender
 import hashlib
 import json
 import sys
 from pathlib import Path
 
-import bpy
-from mathutils import Vector
+bpy = require_blender().bpy
+Vector = require_blender().mathutils.Vector
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 from control.studio3d_lane import render_lane
 from modules.skills.studio3d.character_atlas_materials import apply
 
-source = ROOT / 'user-data/artifacts/studio3d-character/body-proportion-revision-20261027-r3/character-proportions-trial.blend'
-atlas = Path('C:/Users/samuel/Desktop/模型/Atlas_00001/Female_01.png')
-out = ROOT / '3DModels/SilverHairCharacter/user-fbx-proportions-atlas-03'
-lane = ROOT / 'user-data/artifacts/studio3d-character/proportions-atlas-03'
+source = project_path('user-data/artifacts/studio3d-character/body-proportion-revision-20261027-r3/character-proportions-trial.blend')
+atlas = reference_path('模型/Atlas_00001/Female_01.png')
+out = project_path('3DModels/SilverHairCharacter/user-fbx-proportions-atlas-03')
+lane = project_path('user-data/artifacts/studio3d-character/proportions-atlas-03')
 if out.exists():
     raise ValueError('Candidate already exists; never overwrite it')
 source_hash = hashlib.sha256(source.read_bytes()).hexdigest()

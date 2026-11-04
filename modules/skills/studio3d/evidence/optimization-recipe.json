@@ -1,0 +1,70 @@
+{
+  "asset_kind": "game exterior with optional visual articulation",
+  "status": "active refinement; not approved",
+  "reference_policy": {
+    "immutable_views": [
+      "left",
+      "right",
+      "front",
+      "rear",
+      "top"
+    ],
+    "single_shared_mesh": true,
+    "folded_shield_authority": "User explicitly requires rearward/inward side wings",
+    "conflicts": "Record mutually inconsistent concept features. Do not alternate deleting shared features to satisfy one view.",
+    "latest_user_correction": "Latest candidate62 corrections: red-circled floating sleeves/caps and accumulated control rings/rods are unsupported artifacts, not required complexity. Candidate63 removes them including old fasteners and both invented long breech slide bars. Clean control housings have short coaxial handwheel shafts and fixed mounting flanges. Compact exterior breech operating lever is simplified game art, not an exact historic mechanism. Prefer clean supported external geometry over matching contradictory decorative concept details. Do NOT restore the two false shield-edge pods."
+  },
+  "iteration_order": [
+    "Use actual reference/render pairs in Jarvis, with immutable model and render hashes",
+    "Separate camera, geometry, material and lighting findings",
+    "Verify the criticized pixel corresponds to the intended actual mesh before editing",
+    "Change the largest visible discrepancy, keeping reversible candidate files",
+    "Render all five views from the same mesh; reject regressions visible in another view",
+    "Check declared closed surfaces and nonzero shader attributes on rebuilt parts",
+    "Check attachment seating and ground contact independently",
+    "Bake base color, normal, roughness/metallic/AO for the actual high model",
+    "Reload exported GLB, render five views and closeups, and compare again in Jarvis",
+    "Import through Jarvis and verify the actual WebGL model, parts and maps",
+    "Record decisions, failures, API receipts and measured stage time",
+    "Request user high-model approval before generating any LOD"
+  ],
+  "learned_failure_checks": [
+    "Increasing global wear cannot affect a rebuilt part whose edge attribute is missing",
+    "Moving only a hole boundary can cross the surrounding plate edge; use valid solid topology",
+    "Passing attachment checks does not prove face topology or visual similarity",
+    "Widening a wheel can detach rib endpoints from the fixed hub; preserve a blended transition",
+    "A low fill light can introduce a visible foreground illumination band",
+    "A generated paint tile must not substitute for localized edge wear and independent exposed-metal reflectance",
+    "A generic repeated grip does not match a layered catch; compare component type and placement",
+    "Keep center-cover spacing when changing the depth of its surrounding cap",
+    "Before changing wheel width or adding missing ribs, compare which wheel face is actually visible. A reversed yaw can expose the outer face instead of the reference inner dish.",
+    "Latest explicit user corrections must be serialized before bounded general scene facts so they cannot be truncated out of Jarvis review prompts.",
+    "Keep a forbidden-mesh list for user-rejected parts; check actual scene objects including hidden and Blender-suffixed duplicates.",
+    "When geometry orientation changes, update dependent procedural material coordinates; inspect final shader composition so texture blends do not erase diagnostic details.",
+    "Trace floating ornaments to their original parents and source operations. Remove all associated washers, caps and rods, not just the large part.",
+    "Historical owner/museum photos can establish exterior type; record variant, restoration and missing-part caveats. Simplification is not exact historical reconstruction.",
+    "Use world-normal triplanar projection when procedural maps use world positions. Compare native, atlas input and actual exported near-camera views.",
+    "Preserve EMPTY animation ancestors through selected-object exports and verify the actual Jarvis viewer clip, not only the source blend.",
+    "After exporting tangents, formally validate the actual Jarvis GLB. Singular-UV fallback must be recorded and must not overwrite an imported AO texture or strength.",
+    "Do not restore unsupported complexity merely because automatic reference critique asks for it. Latest user correction takes priority."
+  ],
+  "tools": {
+    "paired_jarvis_review": "tools/studio3d_reference_review.py",
+    "native_surface_audit": "tools/studio3d_blender_surface_audit.py",
+    "current_asset_pipeline": "3DModels/leFH18/_work/high-r7-20261026/run_candidate_pipeline.py",
+    "cost_ledger": "3DModels/leFH18/costs.json"
+  },
+  "limits": {
+    "pixel_exact_from_inconsistent_generated_views": false,
+    "triangle_count_is_quality_score": false,
+    "automatic_review_is_user_approval": false,
+    "unknown_authoring_and_image_costs_are_zero": false,
+    "render_retouch_allowed": false
+  },
+  "game_high_batching": {
+    "rule": "Merge by rigid motion owner and material, not by individual decorative bolt; keep the editable high master. Preserve pivots, parent-child transforms, UV/normals and original clips. Match fixed/coupled/moving labels to the exported scene.",
+    "evidence": "delivery/high-r7/evidence/game-batch-report.json",
+    "approval_gate": "User-approved high master before low model / projection bake / LOD",
+    "limits": "This asset uses authored membership plus reviewed nearest-surface assignment for remaining small hardware; not a universal automatic rig."
+  }
+}

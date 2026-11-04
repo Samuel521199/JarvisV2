@@ -1,6 +1,6 @@
 # 当前真实状态
 
-> v0.1.1 · 2026-10-27。本页只写已经在本工程代码里存在、可以运行的东西，以及明确的空白。设计目标见各章正文，逐项证据见[能力验收](delivery-validation.md)，版本流水见[版本记录](../CHANGELOG.md)。本页与正文冲突时，以代码和验收记录为准，并修正本页。
+> v0.1.2 · 2026-11-04。本页只写已经在本工程代码里存在、可以运行的东西，以及明确的空白。设计目标见各章正文，逐项证据见[能力验收](delivery-validation.md)，版本流水见[版本记录](../CHANGELOG.md)。本页与正文冲突时，以代码和验收记录为准，并修正本页。
 
 <a id="current-state-summary"></a>
 ## 一句话
@@ -13,8 +13,8 @@ Jarvis 现在是一个**本机网页工作台 + 模块化 Python 服务**：能�
 | 能力 | 代码位置 | 验证情况与限制 |
 |---|---|---|
 | 网页工作台、设置、项目与会话目录 | `apps/workbench/`、`host/workbench.py`、`modules/workspace/` | 单测与浏览器探针；仅监听 127.0.0.1，0.1.1 起需本机访问钥匙 |
-| 单机日用／开发分离 | `apps/development/`、`host/development_bridge.py`、`host/development_runtime.py` | GitHub 开发检查点、独立 worktree／数据、受限 Google 代发与开发单独重启已核验；未部署完整应用 A/B 自动更新；[证据](delivery-validation.md#pc-environments-evidence) |
-| 应用级准入、A/B 交接与代码恢复 | `modules/release_recovery/application.py`、`adapters/application_host.py` | 隔离测试完成真实进程切换／失败恢复，真实工作台完成托管与浏览器接续；实际源码包因原有 253 项诊断被拒绝，日用版本未替换；[证据](delivery-validation.md#application-release-evidence) |
+| 单机日用／开发分离 | `apps/development/`、`host/development_bridge.py`、`host/development_runtime.py` | GitHub 开发检查点、独立 worktree／数据、受限 Google 代发与开发单独重启已核验；受控代码包已日用采用，未启用 GitHub 自动拉取或定时更新；[证据](delivery-validation.md#pc-environments-evidence) |
+| 应用级准入、A/B 交接与代码恢复 | `modules/release_recovery/application.py`、`adapters/application_host.py` | 隔离测试完成真实进程切换／失败恢复，真实工作台完成托管与浏览器接续；原有 253 项诊断修复、独立包与日用接口通过，v0.1.2 已采用；首次日用没有已采用上一版；[证据](delivery-validation.md#architecture-repair-evidence) |
 | 多模型聊天、持久会话、费用快照 | `host/dialogue.py`、`modules/dialogue/`、`adapters/models/` | 少量真实调用；回退顺序由设置决定，只有一家供应商时没有真正的备用线路 |
 | 分域记忆、检索、资料库（FTS + 语义） | `modules/context_knowledge/`、`host/memory.py`、`host/knowledge*.py` | 单测与合成评估；多语留出集回答 79/90，低于自定 90% 门槛；语义检索需本地 E5 模型 |
 | 目标 → 计划 → 审批 → 执行 → 原会话交付 | `host/goals.py`、`host/task_scheduler.py`、`modules/task_resource/` | 通用执行两路并行（同类插件任务互斥）；“目标逐项结案”目前只覆盖文本统计与结构化报价两种判定 |
@@ -22,7 +22,7 @@ Jarvis 现在是一个**本机网页工作台 + 模块化 Python 服务**：能�
 | 受控 HTTP MCP | `adapters/mcp/http.py`、`modules/registry_composer/connectors.py` | 只对接过本机模拟服务；端点由主人登记，无目的地白名单 |
 | Gmail 助手 | `host/mailbox.py`、`adapters/mail/` | 真实 OAuth、有限读信；2026-10-30 接入[精灵邮件轻视图](tasks-agents.md#gmail-companion)，真实计数／摘要／正文与共享 API 已检查；发送未做真实验收，完整自动化尚未实现 |
 | 英语练习、日志复盘 | `seed/skills/conversation.json` | 47 项单测 + 7 次真实调用，短文本 |
-| 图片设计、3D 工作室、机械科普 | `host/image_generation.py`、`host/studio3d*.py`、`host/anatomy*.py` | [Blender 制作与局部改模](tasks-agents.md#blender-workflow-runtime)已在独立测试服务验证，主服务待正常重载；可用但属专业侧线；leFH18 已获用户视觉验收；PaK38 完整保留基线为 r25，最新工作候选见资产 current-model；[局部示范、Jarvis 复做与核验](studio3d-learning.md#studio3d-teacher-delivery)已记录清理拒收和未解三角化缺陷，未完成高模验收；[人物独立草模试验](studio3d-learning.md#studio3d-character-trial)尚未验收，跨资产独立制作收益未验证；高分辨率出图未完成真实验证 |
+| 图片设计、3D 工作室、机械科普 | `host/image_generation.py`、`host/studio3d*.py`、`host/anatomy*.py` | [Blender 制作与局部改模](tasks-agents.md#blender-workflow-runtime)已进入日用代码包，本轮核验限合成建模／裁切及接口，资产视觉验收分别判断；可用但属专业侧线；leFH18 已获用户视觉验收；PaK38 完整保留基线为 r25，最新工作候选见资产 current-model；[局部示范、Jarvis 复做与核验](studio3d-learning.md#studio3d-teacher-delivery)已记录清理拒收和未解三角化缺陷，未完成高模验收；[人物独立草模试验](studio3d-learning.md#studio3d-character-trial)尚未验收，跨资产独立制作收益未验证；高分辨率出图未完成真实验证 |
 | 家庭私密空间 | `control/family_identity.py`、`host/family.py` | 可选登录、DPAPI 加密、成员隔离；规则为“主人可查看全部、成员只看自己和共享内容”（主人 2026-10-24 选定并向成员明示） |
 
 <a id="current-state-design-only"></a>
@@ -49,19 +49,19 @@ Jarvis 现在是一个**本机网页工作台 + 模块化 Python 服务**：能�
 | 自写工具静态检查可绕过 | 0.1.1 已收紧；实际边界仍是 LPAC |
 | Blender/工程 Worker 先启动后挂 Job，Codex 子进程无 Job | 未修复，需在 Windows 上实现与验证 |
 | 部分读接口会写库（结果评价投影） | 未改：评价依据随文件变化即时失效是现有设计，改为纯读需单独设计 |
-| host 层 16 个模块的导入环 | 未拆；已加检查防止继续扩大 |
+| host 层 20 个模块的既有导入环 | 未拆；已加检查防止继续扩大 |
 | 工作曾只在本机工作区 | 2026-10-30 已保存源码检查点并推送 GitHub 开发分支；运行数据和私密凭据仍不入库 |
 
 <a id="current-state-next"></a>
 ## 下一步
 
-1. 按模块修复阻塞日用版本采用的 253 项架构诊断；保留现有依赖边界和检查，不扩白名单。
-2. 源码通过准入后，再进行应用级工作台业务核验和受控日用采用；控制器当前证据见[本轮核验](delivery-validation.md#application-release-evidence)。
+1. v0.1.2 已修复 253 项架构诊断并完成受控日用采用；按[本轮证据](delivery-validation.md#architecture-repair-evidence)保留基线、备份及后续反例。
+2. 在真实日常任务中继续观察多轮收益、恢复和资源占用；新包仍经同一准入，不自动改写检查规则。
 3. 回到真实日常请求的委托、要求、核验与低打扰推进，按原 K0—K6 路线补齐；3D 等专业侧线先修已有缺陷。
 
 <a id="current-state-owner-decisions"></a>
 ## 需要主人决定
 
-- `control/bootstrap`（Rust 停止控制）目前没有入口在用，功能与 Python 版重复：保留并改造成真正的进程监管器，还是删除。
+- `control/bootstrap`（Rust 停止控制）尚未作为日用默认监管器，部分 CLI 故障测试有使用，控制语义与 Python 版部分重复：保留并改造成真正的进程监管器，还是删除。
 - 验收截图、贴图与 CAD 导出（约 200 MB PNG）已不再进入 Git：是否改用 GitHub Release 附件或 Git LFS 对外发布。
 - G0 锁存是否投入实现“工作负载不可写”的受保护存放位置。

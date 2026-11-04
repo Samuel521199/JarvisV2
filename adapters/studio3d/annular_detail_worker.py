@@ -1,9 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Actual source-derived exterior bead smoothing and sampled support seating."""
+from sdk.blender_api import require_blender
 import hashlib,json,sys,time,math
 from pathlib import Path
-import bpy,bmesh
-from mathutils import Vector
+bpy = require_blender().bpy; bmesh = require_blender().bmesh
+Vector = require_blender().mathutils.Vector
 from modules.skills.studio3d.annular_detail import validate,fit_rings,geometry,VERSION
 from adapters.studio3d.attachment_seat_worker import world_tree
 from adapters.studio3d.demonstration_worker import digest_object,topology

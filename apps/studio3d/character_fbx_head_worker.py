@@ -4,14 +4,20 @@
 Fixed first-party operations only. Run in background with autoexec disabled;
 the input is a local copy of a known diagnostic, never a model-supplied path.
 """
-import bpy,sys,json,hashlib,time
+from pathlib import Path as _BootstrapPath
+import sys as _bootstrap_sys
+_bootstrap_sys.path.insert(0,str(_BootstrapPath(__file__).resolve().parents[2]))
+from adapters.studio3d.learning_worker import install_runtime
+install_runtime(__file__)
+from sdk.blender_api import require_blender
+import sys, json, hashlib, time; bpy = require_blender().bpy
 from pathlib import Path
-from mathutils import Matrix,Vector
+Matrix = require_blender().mathutils.Matrix; Vector = require_blender().mathutils.Vector
 
 ROOT=Path(__file__).resolve().parents[2];sys.path.insert(0,str(ROOT))
 from control.studio3d_lane import render_lane
 from modules.skills.studio3d.character_head import head_objects
-from modules.skills.studio3d.character_contract import parameters
+from sdk.character_contract import parameters
 from modules.skills.studio3d.character_recipe import scene as initial_scene
 from modules.skills.studio3d.contract import validate
 from modules.skills.studio3d.character_fbx_face import apply as apply_face
@@ -61,7 +67,7 @@ with render_lane(folder):
             # The original face-overlay rectangles require missing alpha maps.
             # GLB cannot encode a standalone Transparent-BSDF node reliably,
             # so remove those faces only from the detached static export copy.
-            import bmesh
+            bmesh = require_blender().bmesh
             excluded={i for i,m in enumerate(mesh.materials) if m and any(k in m.name.casefold() for k in ('facebrow','faceeyelash','faceeyeline','eyehighlight'))}
             bm=bmesh.new();bm.from_mesh(mesh)
             bmesh.ops.delete(bm,geom=[f for f in bm.faces if f.material_index in excluded],context='FACES')

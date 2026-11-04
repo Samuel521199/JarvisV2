@@ -18,7 +18,7 @@ from sdk.protocol import CoreError
 ROOT = Path(__file__).resolve().parents[1]
 SOURCES = ('host/studio3d_learning.py', 'modules/context_knowledge/studio3d_experience.py',
            'modules/skills/studio3d/learning_contract.py', 'modules/skills/studio3d/experience-cards.json',
-           'adapters/studio3d/learning_worker.py', 'apps/studio3d/learning_worker.py')
+           'adapters/studio3d/learning_worker.py', 'apps/studio3d/learning_worker.py', 'modules/skills/studio3d/worker-programs.json', 'sdk/blender_api.py', 'sdk/native_programs.py')
 ADMISSION = threading.Lock()
 
 
@@ -98,10 +98,12 @@ def _process(root, folder, executable, wall_seconds=300, *, operation='learning'
     entries['attachment_seat']='apps/studio3d/attachment_seat_worker.py'
     entries['annular_detail']='apps/studio3d/annular_detail_worker.py'
     entries['panel_corner']='apps/studio3d/panel_corner_worker.py'
+    entries['game_lod']='apps/studio3d/game_lod_worker.py'
+    entries['game_lod_package']='apps/studio3d/game_lod_package_worker.py'
     if operation not in entries:raise ValueError('Unregistered fixed Blender operation')
     env = {k:v for k,v in os.environ.items() if k.upper() in ('SYSTEMROOT','WINDIR')}
     config = folder/'config'; config.mkdir()
-    env.update(TEMP=str(folder),TMP=str(folder),BLENDER_USER_CONFIG=str(config),BLENDER_USER_SCRIPTS=str(config),OMP_NUM_THREADS='4')
+    env.update(JARVIS_DATA_ROOT=str(root),TEMP=str(folder),TMP=str(folder),BLENDER_USER_CONFIG=str(config),BLENDER_USER_SCRIPTS=str(config),OMP_NUM_THREADS='4')
     native = job = None; began = time.monotonic()
     with (folder/'stdout.log').open('wb') as stdout, (folder/'stderr.log').open('wb') as stderr:
         process = subprocess.Popen([str(executable),'--background','--factory-startup','--disable-autoexec','--threads','4',

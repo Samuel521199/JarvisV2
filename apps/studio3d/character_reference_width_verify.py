@@ -1,6 +1,13 @@
-import bpy,hashlib,json,struct
+from pathlib import Path as _BootstrapPath
+import sys as _bootstrap_sys
+_bootstrap_sys.path.insert(0,str(_BootstrapPath(__file__).resolve().parents[2]))
+from adapters.studio3d.learning_worker import install_runtime
+install_runtime(__file__)
+from sdk.runtime_paths import project_path, reference_path, optional_character_tool
+from sdk.blender_api import require_blender
+import hashlib, json, struct; bpy = require_blender().bpy
 from pathlib import Path
-root=Path('D:/Jarvis/user-data/artifacts/studio3d-character')
+root=project_path('user-data/artifacts/studio3d-character')
 src=root/'face-studio-adapter-test-01/draft.blend';out=root/'reference-eye-width-study-02/candidate.blend'
 def snap(path):
  bpy.ops.wm.open_mainfile(filepath=str(path),load_ui=False,use_scripts=False);col=bpy.data.collections['Hair_SilverHair_Replaceable_01'];f=bpy.data.objects['Face'];d={}

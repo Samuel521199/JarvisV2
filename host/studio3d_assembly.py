@@ -48,17 +48,16 @@ def run(root,contract,sources,reference=None):
     if reference:
         p=Path(reference)
         if p.suffix.lower()!='.png' or p.stat().st_size>20*1024**2:raise ValueError('Reference PNG required')
-        from PIL import Image
-        with Image.open(p) as im:
-            if im.format!='PNG' or im.width*im.height>20000000:raise ValueError('Reference image budget')
-            im.verify()
+        from sdk.raster import load_png
+        load_png(p,max_pixels=20000000)
         shutil.copyfile(p,folder/'reference.png');reference_row={'path':str(p),'sha256':hashlib.sha256(p.read_bytes()).hexdigest()}
     save(folder/'request.json',{'contract':config,'sources':rows,'reference':reference_row})
     source_paths=['modules/skills/studio3d/assembly_contract.py','host/studio3d_assembly.py','adapters/studio3d/assembly_worker.py','apps/studio3d/assembly_worker.py','control/studio3d_lane.py']
+    source_paths.extend(['modules/skills/studio3d/worker-programs.json','sdk/blender_api.py','sdk/native_programs.py','sdk/raster.py'])
     receipt={'schema':'jarvis.studio3d.assembly.receipt.v1','id':ident,'version':VERSION,'status':'RUNNING','folder':str(folder),'sources':rows,'contract':config,'reference':reference_row,'limits':LIMITS,'source_code_sha256':{p:hashlib.sha256((ROOT/p).read_bytes()).hexdigest() for p in source_paths},'model_calls':0,'api_usd':0,'authoring_cost':None,'mechanical_certified':False,'AAA_certified':False}
     save(folder/'receipt.json',receipt);print(json.dumps({'id':ident,'folder':str(folder),'status':'RUNNING'}),flush=True)
     env={k:v for k,v in os.environ.items() if k.upper() in ('SYSTEMROOT','WINDIR')}
-    (folder/'config').mkdir();env.update(TEMP=str(folder),TMP=str(folder),BLENDER_USER_CONFIG=str(folder/'config'),BLENDER_USER_SCRIPTS=str(folder/'config'),OMP_NUM_THREADS='4')
+    (folder/'config').mkdir();env.update(JARVIS_DATA_ROOT=str(root),TEMP=str(folder),TMP=str(folder),BLENDER_USER_CONFIG=str(folder/'config'),BLENDER_USER_SCRIPTS=str(folder/'config'),OMP_NUM_THREADS='4')
     started=time.monotonic();job=None;native=None;process=None
     try:
         with (folder/'stdout.log').open('wb') as out,(folder/'stderr.log').open('wb') as err:

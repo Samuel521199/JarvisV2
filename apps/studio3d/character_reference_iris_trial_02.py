@@ -1,13 +1,20 @@
 """Reference-inspired procedural iris material; independent reversible trial."""
+from pathlib import Path as _BootstrapPath
+import sys as _bootstrap_sys
+_bootstrap_sys.path.insert(0,str(_BootstrapPath(__file__).resolve().parents[2]))
+from adapters.studio3d.learning_worker import install_runtime
+install_runtime(__file__)
+from sdk.runtime_paths import project_path, reference_path, optional_character_tool
+from sdk.blender_api import require_blender
 import hashlib,json,sys
 from pathlib import Path
-import bpy
-from mathutils import Vector
+bpy = require_blender().bpy
+Vector = require_blender().mathutils.Vector
 ROOT=Path(__file__).resolve().parents[2];sys.path.insert(0,str(ROOT))
 from control.studio3d_lane import render_lane
-src=ROOT/'user-data/artifacts/studio3d-character/face-studio-adapter-test-01/draft.blend';expected='118d2ca638af3b02fa0d56467aeb4c81f7a624c453f2349559a0b7c0b75a7f17'
+src=project_path('user-data/artifacts/studio3d-character/face-studio-adapter-test-01/draft.blend');expected='118d2ca638af3b02fa0d56467aeb4c81f7a624c453f2349559a0b7c0b75a7f17'
 if hashlib.sha256(src.read_bytes()).hexdigest()!=expected:raise RuntimeError('Source changed')
-out=ROOT/'user-data/artifacts/studio3d-character/reference-iris-study-02'
+out=project_path('user-data/artifacts/studio3d-character/reference-iris-study-02')
 if out.exists():raise RuntimeError('Study already exists')
 out.mkdir(parents=True)
 with render_lane(out):

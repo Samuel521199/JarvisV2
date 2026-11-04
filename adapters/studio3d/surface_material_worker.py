@@ -1,11 +1,12 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Material-only authored weathering, with unchanged geometry and paired renders."""
+from sdk.blender_api import require_blender
 import hashlib,json,sys,time
 from pathlib import Path
-import bpy
-from mathutils import Vector
+bpy = require_blender().bpy
+Vector = require_blender().mathutils.Vector
 from adapters.studio3d.demonstration_worker import digest_object
-from modules.skills.studio3d.surface_material import validate,VERSION,TEXTURES
+from modules.skills.studio3d.surface_material import validate,VERSION,TEXTURES,textures
 
 def overlay_damage(mat,regions):
  """Add sparse bounded wear without reconstructing the source paint graph."""
@@ -141,7 +142,7 @@ def coating(mat,role,folder,c,local_wear=None,damage_regions=None):
  rough=mathop('ADD',rough,mathop('MULTIPLY',mathop('SUBTRACT',noise(220),.5),.24));links.new(rough,p.inputs['Roughness'])
  bump=node('Bump');bump.inputs['Distance'].default_value=c['bump_distance'];bump.inputs['Strength'].default_value=.24;links.new(mathop('SUBTRACT',grain,mathop('MULTIPLY',damage,.75)) if damage_regions else grain,bump.inputs['Height']);links.new(bump.outputs[0],p.inputs['Normal'])
  p.inputs['Coat Weight'].default_value=0
- from tools.studio3d_blender_material_projection import replace_world_box_projection
+ from adapters.studio3d.material_projection import replace_world_box_projection
  replace_world_box_projection(mat)
  mat['jarvis_coating_role']=role;mat['jarvis_finish_scope']='Authored visual wear; not a measured historic surface'
 
@@ -149,11 +150,14 @@ def main():
  folder=Path(sys.argv[sys.argv.index('--')+1]);req=json.loads((folder/'request.json').read_text());source=folder/'source.blend';began=time.monotonic()
  if hashlib.sha256(source.read_bytes()).hexdigest()!=req['source_sha256']:raise ValueError('Source changed')
  c=validate(req['contract'],req['visible_names'])
- for role,(_,expected) in TEXTURES.items():
+ for role,(_,expected) in textures(c).items():
   if hashlib.sha256((folder/('texture-'+role+'.png')).read_bytes()).hexdigest()!=expected:raise ValueError('Texture source changed')
  bpy.ops.wm.open_mainfile(filepath=str(source),load_ui=False,use_scripts=False)
  objects={n:bpy.data.objects.get(n) for n in req['visible_names']}
  if any(o is None or o.type not in ('MESH','CURVE') for o in objects.values()):raise ValueError('Inventory mismatch')
+ if c['schema']=='jarvis.studio3d.surface-material.v4':
+  from adapters.studio3d.paint_feature_worker import run
+  return run(folder,req,c,objects,source,began)
  before={n:digest_object(o) for n,o in objects.items()};materials={m for o in objects.values() for m in o.data.materials}
  geometry_before={n:digest_object(o,material_slots=False) for n,o in objects.items()};scoped=c['schema']!='jarvis.studio3d.surface-material.v1';overlay=c['schema']=='jarvis.studio3d.surface-material.v3'
  if not scoped and {m.name for m in materials}!={'paint','steel','dark','rubber'}:raise ValueError('Unsupported source material roles')

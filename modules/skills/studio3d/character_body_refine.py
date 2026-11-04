@@ -1,11 +1,12 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Small, reversible shoulder pose trial for the explicitly selected asset."""
+from sdk.blender_api import require_blender
 import math
 
 
 def apply():
-    import bpy
-    from mathutils import Matrix,Vector
+    bpy = require_blender().bpy
+    Matrix = require_blender().mathutils.Matrix; Vector = require_blender().mathutils.Vector
     arm=next((o for o in bpy.context.scene.objects if o.type=='ARMATURE'),None)
     if not arm or len(arm.data.bones)!=93:raise ValueError('Expected 93-bone source rig')
     changes=[]

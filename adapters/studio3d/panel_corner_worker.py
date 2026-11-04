@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Round only source-bound open surface corners; preserve cutters and shell."""
-import bpy,bmesh,sys,json,hashlib,time
+from sdk.blender_api import require_blender
+import sys, json, hashlib, time; bpy = require_blender().bpy; bmesh = require_blender().bmesh
 from pathlib import Path
-from mathutils import Vector
+Vector = require_blender().mathutils.Vector
 from modules.skills.studio3d.panel_corner import validate,VERSION
 from adapters.studio3d.attachment_seat_worker import world_tree
 from adapters.studio3d.demonstration_worker import digest_object

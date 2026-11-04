@@ -64,6 +64,8 @@ def prepare(folder,objects,size,phase,options=None,_lods=True):
     else:
         for source in objects:
             mesh=bpy.data.meshes.new_from_object(source.evaluated_get(deps),preserve_all_data_layers=True,depsgraph=deps);obj=bpy.data.objects.new(source.name+'-static',mesh);bpy.context.collection.objects.link(obj);obj.matrix_world=source.matrix_world.copy();copies.append(obj)
+            if options.get('_retain_rigid_groups'):
+                for group in source.vertex_groups:obj.vertex_groups.new(name=group.name)
     bpy.ops.object.select_all(action='DESELECT')
     for obj in copies:obj.select_set(True)
     bpy.context.view_layer.objects.active=copies[0];bpy.ops.object.join();low=bpy.context.object;low.name='Static asset LOD0';bpy.ops.object.transform_apply(location=True,rotation=True,scale=True)

@@ -14,19 +14,16 @@ VERSION='1.0.0'
 
 def make_sheet(before,after,destination):
     """Lossless layout of two renders; no resampling, repainting or inference."""
-    from PIL import Image,ImageDraw
-    sources=[]
-    for path in (before,after):
-        with Image.open(path) as im:
-            if im.format!='PNG' or im.width*im.height>4000000:raise ValueError('Unexpected render evidence')
-            sources.append(im.convert('RGB'))
+    from sdk.raster import load_png, Board
+    sources=[load_png(path,max_pixels=4000000).rgb() for path in (before,after)]
     if sources[0].size!=sources[1].size:raise ValueError('Compare equal-resolution renders')
-    w,h=sources[0].size;sheet=Image.new('RGB',(w,2*h+64),(245,245,245));draw=ImageDraw.Draw(sheet)
+    w,h=sources[0].size;sheet=Board(w,2*h+64)
     for i,(im,label) in enumerate(zip(sources,('BEFORE - retained model','AFTER - candidate model'))):
-        top=i*(h+32);draw.text((8,top+8),label,fill=(0,0,0));sheet.paste(im,(0,top+32))
-        if sheet.crop((0,top+32,w,top+32+h)).tobytes()!=im.tobytes():raise ValueError('Evidence pixels changed')
-    sheet.save(destination)
-    return {'composition':'top BEFORE / bottom AFTER, original RGB pixels, no resizing','source_sha256':[hashlib.sha256(p.read_bytes()).hexdigest() for p in (before,after)],'sheet_sha256':hashlib.sha256(destination.read_bytes()).hexdigest(),'size':list(sheet.size)}
+        top=i*(h+32);sheet.text(8,top+8,label,scale=1);sheet.paste(im,0,top+32)
+        if sheet.image().crop((0,top+32,w,top+32+h)).pixels!=im.pixels:raise ValueError('Evidence pixels changed')
+    sheet.image().save(destination)
+    return {'composition':'top BEFORE / bottom AFTER, original RGB pixels, no resizing','source_sha256':[hashlib.sha256(p.read_bytes()).hexdigest() for p in (before,after)],'sheet_sha256':hashlib.sha256(destination.read_bytes()).hexdigest(),'size':list(sheet.image().size)}
+
 
 
 def prompt(view, actions, policy):

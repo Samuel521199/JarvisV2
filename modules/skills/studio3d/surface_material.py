@@ -2,7 +2,7 @@
 import math
 from modules.skills.studio3d.demonstration import validate as validate_demo
 
-VERSION='1.6.0'
+VERSION='1.7.0'
 TEXTURES={
  'paint':('3DModels/leFH18/textures/source/worn-painted-steel-basecolor.png','3bebaf27d958b40eaec999f20601f0e35e26c497b4602669f80f1169a880da74'),
  'rubber':('3DModels/leFH18/textures/source/aged-rubber-basecolor.png','229dcfc899619a82e54cdced483a124c0f31897a25b5f821f4ccb2a78b364709'),
@@ -10,6 +10,9 @@ TEXTURES={
 
 def validate(value,names):
  if not isinstance(value,dict):raise ValueError('Unexpected coating fields')
+ if value.get('schema')=='jarvis.studio3d.surface-material.v4':
+  from modules.skills.studio3d.paint_feature import validate as validate_feature
+  return validate_feature(value,names)
  overlay=value.get('schema')=='jarvis.studio3d.surface-material.v3'
  scoped=value.get('schema') in ('jarvis.studio3d.surface-material.v2','jarvis.studio3d.surface-material.v3')
  fields={'schema','author','goal','evidence','views','resolution','samples'}|({'targets','damage_regions'} if overlay else {'settings'}|({'targets','local_wear'} if scoped else {'spades'}))
@@ -45,3 +48,10 @@ def validate(value,names):
   spades=value['spades']
   if not isinstance(spades,list) or len(spades)>8 or len(set(spades))!=len(spades) or any(n not in names for n in spades):raise ValueError('Invalid spade targets')
  return value
+
+def textures(contract):
+ result=dict(TEXTURES)
+ if contract['schema']=='jarvis.studio3d.surface-material.v4':
+  from modules.skills.studio3d.paint_feature import MASK
+  result['feature-mask']=MASK
+ return result

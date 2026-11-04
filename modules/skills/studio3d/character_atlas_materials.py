@@ -3,11 +3,12 @@
 Materials are copied before editing; procedural face accents are hidden, not
 deleted.  A renderer must visually validate alpha, UVs and face overlap.
 """
+from sdk.blender_api import require_blender
 from pathlib import Path
 
 
 def apply(atlas_path, include_body_texture=False):
-    import bpy
+    bpy = require_blender().bpy
 
     atlas_path = Path(atlas_path)
     if not atlas_path.is_file():

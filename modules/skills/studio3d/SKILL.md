@@ -15,9 +15,14 @@ description: 在 Jarvis 中用 Blender 制作和修改可编辑 3D 模型，组�
 - 需要局部修改：优先选定原任务与部件，修改位置、角度、比例、几何参数、材质或支持的修改器。接口为 POST /api/studio3d/jobs，字段 edit=源任务ID、source_sha256=源 scene.json 摘要、changes={objects:[{id,set:{...}}],materials:[{id,set:{...}}]}，另带新任务 id。仅接受本工作室已交付的未烘焙数据模型。使用源摘要检查过期输入，生成新版本，保留原版和改动回执；共享材质会影响所有引用部件。
 - 需要按图改形：已有参考与明确模型选择后，使用工作室“参考图对照修正”；这会发送参考/渲染给所选模型并计费。没有执行回执不得说“已经修改”。
 - 需要游戏资产：先完成高模外观比较，再进入已有分件减面、UV、投射烘焙与 LOD。面数统计使用三角面；低模检查轮廓、法线接缝、投射漏射、材质和目标引擎表现。面数达标与 AAA 美术质量分开报告。
+- 对已明确验收并授权的当前高模，使用 `python -m tools.studio3d_game_lod --asset-root 3DModels/PaK38 --package PaK38_LOD_v2 --level 0 --budget 20000 --texture-size 2048` 有界入口，读取资产各档上限。LOD0–1独立UV和高低模投射；LOD2可选 `--mode structured --level 2 --budget 3000 --texture-size 512`，对主体语义部件分别分配预算、重建闭合轮胎并烘焙其表面；LOD3可选 `--mode silhouette --level 3 --budget 900 --texture-size 512` 构建粗轮廓与远景表面。后两者不能称高模细节投射。保留高模和旧包；LOD0–2有11个刚性总成，轮廓LOD3有9个主体。交付BLEND实际重载后逐面检查，GLB全部三角图元，格式成功后仍检查实际图像；2995面失去管梁和轮胎破损是拒收反例。四个真实模型页面可切换，目标引擎距离/性能仍需实测；不接受任意BLEND路径或重放请求。
 - 需要角色绑定、头发物理或表情：这些是有条件的角色分支。外部 Charakuru 安装不等于 Jarvis 已接通自动绑定。当前 Jarvis 工作室不支持任意 .blend/FBX 编辑、自动人形绑定或 VRM 表情导出，明确说明缺口；不要以无绑定静态 GLB 代替请求结果。
 
 ## 操作与完成标准
+
+用户要“查看模型”时，打开真实 GLB 交互查看器，不能以 preview.png 或五视图替代。先读取资产 current-model.json 的 working_candidate.viewer 和 model_sha256，核对实际模型；让用户可旋转、缩放、线框/素模、隔离对象、剖切及查看 PBR 通道。游戏高模中网格名是导出总成，不能冒称编辑母版的全部语义零件；无运动元数据时不可把所有件判为固定。
+
+已授权检视时，复用 `python -m tools.studio3d_view_control --asset-root 3DModels/资产 --list` 查看已打开且勾选“Jarvis 检视”的页面；再用 `--view 视图JSON` 调用同一渲染器。视图例：`{"mode":"wire","camera":"left","part":"wheel-left","isolate":true,"overlay":false}`；部件必须从实际清单选，不能猜名字。支持的有界字段和状态规则统一见 docs/tasks-agents.md#studio3d-viewer。每次保留模型摘要、相机、模式、实际可见对象、绘制调用和视口回执，结合 PBR/线框/素模/材质通道定位问题后再改模型。图片是该次三维检视的证据，不代替三维页面或原网格检查。命令超时、断连或 UNKNOWN 先查原 ID，不自动重放。不把作者选视角、静态截图或工具接通算成模型自主诊断、迁移或学习成功。
 
 先从已有要求提取用途、参考、目标部件、比例/单位和交付格式，缺少会实质影响结果的信息才询问。保留语义部件名称及运动归属，不为减少对象数合死关节。普通模型交付 .blend 和 GLB；只有角色任务明确需要时才讨论 VRM。
 

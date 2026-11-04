@@ -1,8 +1,15 @@
 """Check the face trial remains reversible and preserves the hair collection."""
-import bpy,hashlib,json
+from pathlib import Path as _BootstrapPath
+import sys as _bootstrap_sys
+_bootstrap_sys.path.insert(0,str(_BootstrapPath(__file__).resolve().parents[2]))
+from adapters.studio3d.learning_worker import install_runtime
+install_runtime(__file__)
+from sdk.runtime_paths import project_path, reference_path, optional_character_tool
+from sdk.blender_api import require_blender
+import hashlib, json; bpy = require_blender().bpy
 from pathlib import Path
-ROOT=Path('D:/Jarvis');src=ROOT/'3DModels/SilverHairCharacter/user-fbx-face-study-01/candidate.blend'
-out=ROOT/'user-data/artifacts/studio3d-character/face-outline-study-01';trial=out/'candidate.blend'
+ROOT=Path(__file__).resolve().parents[2];src=project_path('3DModels/SilverHairCharacter/user-fbx-face-study-01/candidate.blend')
+out=project_path('user-data/artifacts/studio3d-character/face-outline-study-01');trial=out/'candidate.blend'
 def hashcoords(vs):return hashlib.sha256(';'.join(','.join(f'{v.co[i]:.7f}' for i in range(3)) for v in vs).encode()).hexdigest()
 def read(path):
  bpy.ops.wm.open_mainfile(filepath=str(path),load_ui=False,use_scripts=False)

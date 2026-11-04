@@ -1,9 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Repair only declared exterior tyres, preserving current editable artwork."""
+from sdk.blender_api import require_blender
 import hashlib,json,math,sys,time
 from pathlib import Path
-import bpy,bmesh
-from mathutils import Vector
+bpy = require_blender().bpy; bmesh = require_blender().bmesh
+Vector = require_blender().mathutils.Vector
 from modules.skills.studio3d.tyre_surface import validate,geometry,VERSION
 from adapters.studio3d.demonstration_worker import digest_object,topology
 from adapters.studio3d.inspection_worker import render_scene,region_inventory

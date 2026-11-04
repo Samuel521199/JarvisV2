@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Append shallow exterior pads to existing strap objects over actual tubes."""
-import bpy,json,hashlib,time
-from mathutils import Vector
+from sdk.blender_api import require_blender
+import json, hashlib, time; bpy = require_blender().bpy
+Vector = require_blender().mathutils.Vector
 from modules.skills.studio3d.trail_pad import footprint
 from modules.skills.studio3d.attachment_seat import VERSION,components
 from adapters.studio3d.spade_frame_worker import dependency

@@ -1,13 +1,14 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Record and execute one local Blender demonstration with true paired renders."""
+from sdk.blender_api import require_blender
 import hashlib
 import json
 import struct
 import sys
 import time
 from pathlib import Path
-import bpy
-from mathutils import Vector
+bpy = require_blender().bpy
+Vector = require_blender().mathutils.Vector
 from modules.skills.studio3d.demonstration import validate, displacement, VERSION
 from modules.skills.studio3d.radial_profile import reprofile
 

@@ -1,6 +1,13 @@
-import bpy,json
-from mathutils import Vector
-bpy.ops.wm.open_mainfile(filepath='D:/Jarvis/user-data/artifacts/studio3d-character/reference-iris-study-03/candidate.blend',load_ui=False,use_scripts=False)
+from pathlib import Path as _BootstrapPath
+import sys as _bootstrap_sys
+_bootstrap_sys.path.insert(0,str(_BootstrapPath(__file__).resolve().parents[2]))
+from adapters.studio3d.learning_worker import install_runtime
+install_runtime(__file__)
+from sdk.runtime_paths import project_path, reference_path, optional_character_tool
+from sdk.blender_api import require_blender
+import json; bpy = require_blender().bpy
+Vector = require_blender().mathutils.Vector
+bpy.ops.wm.open_mainfile(filepath=str(project_path('user-data/artifacts/studio3d-character/reference-iris-study-03/candidate.blend')),load_ui=False,use_scripts=False)
 o=bpy.data.objects['Face'];dg=bpy.context.evaluated_depsgraph_get();ev=o.evaluated_get(dg);me=ev.to_mesh();pts=[ev.matrix_world@v.co for v in me.vertices];adj=[[] for _ in me.vertices]
 for e in me.edges:a,b=e.vertices;adj[a].append(b);adj[b].append(a)
 seen={1633};st=[1633]

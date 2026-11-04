@@ -1,10 +1,11 @@
 """Experimental character-only rear hair volume; never promoted automatically."""
+from sdk.blender_api import require_blender
 import math
 
 
 def apply():
-    import bpy
-    from mathutils import Vector
+    bpy = require_blender().bpy
+    Vector = require_blender().mathutils.Vector
     required={'Body','Face','headend','hair-scalp-refined','bang-refined-center'}
     if not required <= {o.name for o in bpy.context.scene.objects}:
         raise ValueError('Unexpected hair source')

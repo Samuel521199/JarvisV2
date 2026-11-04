@@ -2,6 +2,9 @@ import * as THREE from 'three';
 import {GLTFLoader} from '/vendor/three/examples/jsm/loaders/GLTFLoader.js';
 import {OrbitControls} from '/vendor/three/examples/jsm/controls/OrbitControls.js';
 import {RoomEnvironment} from '/vendor/three/examples/jsm/environments/RoomEnvironment.js';
+import {connectViewerInspection} from '/studio3d-inspection-client.js';
+import {keyLightOffset} from '/studio3d-lighting.js';
+import {gameLodEntries,gameLodLabel} from '/studio3d-lod-links.js';
 
 const $=id=>document.getElementById(id), el=(tag,text)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;return n;};
 const id=location.pathname.split('/').at(-1), valid=/^[a-f0-9]{32}$/.test(id);let inventory=null,receipt=null,session=null,preparing=null;
@@ -13,8 +16,9 @@ $('mode').add(new Option('固定 / 可动总成','game-rig'));
 function readGameAsset(){
  let meta=null;root.traverse(o=>{const value=o.userData?.jarvis_game_asset;if(typeof value!=='string'||value.length>24000)return;try{const candidate=JSON.parse(value);if(candidate.schema==='jarvis.game-high.v1'&&Array.isArray(candidate.groups)&&candidate.groups.length<=48)meta=candidate;}catch{}});
  state.gameAsset=meta;gameNotice.hidden=gameGroups.hidden=!meta;$('explode').parentElement.hidden=!!meta;gameGroups.replaceChildren();
- if(!meta)return;
- $('lod').options[0].textContent='游戏高模 · 未减面';
+ const motionOption=Array.from($('mode').options).find(o=>o.value==='game-rig');motionOption.disabled=!meta;
+ if(!meta){motionOption.textContent='固定 / 可动总成 · 本文件未标注';return;}
+ if(!receipt.game_lods)$('lod').options[0].textContent='游戏高模 · 未减面';
  $('runtime-stats').nextElementSibling.textContent='保留游戏可动层级；未进行低模减面或 LOD 制作';
  gameNotice.textContent='游戏高模 · '+meta.rigid_groups+' 个运动总成 · '+meshes.length+' 个渲染网格 · 灰色固定 / 蓝色旋转 / 橙色平移';
  gameGroups.append(el('h2','固定与可动总成'),el('p','螺栓、盖板与焊接件随所属总成运动。动画为游戏外观预览，尚待高模验收。'));
@@ -22,7 +26,7 @@ function readGameAsset(){
  if(meta.high_model_approved!==true||meta.lod_allowed!==true){$('prepare-asset').disabled=true;$('prepare-status').textContent='高模尚未确认；低模减面、投射烘焙与 LOD 未开放。';}
 }
 const ownedURLs=new Set(),variants=new Set(), original=new Map(),basePositions=new Map(),wireLines=new Map();
-const state={viewer_version:'1.6.0',three_revision:THREE.REVISION,ready:false,mode:'pbr',file:loadedFile,selection:null,frames:0,errors:[],network:'same-origin-only',textures:0,triangles:0,importedObjects:0};window.studio3dViewerState=state;
+const state={viewer_version:'1.7.3',three_revision:THREE.REVISION,ready:false,mode:'pbr',file:loadedFile,selection:null,frames:0,errors:[],network:'same-origin-only',textures:0,triangles:0,importedObjects:0};window.studio3dViewerState=state;
 const productionBox=$('prepare-asset').parentElement;
 productionBox.querySelector('p').textContent='先完成高模与照片对照，再生成分件游戏低模并投射PBR贴图。机械、车辆、有机道具共用流程；生成新的独立产物。';
 for(const [id,label,values] of [['production-mode','处理方式',[['surface','原有静态表面烘焙'],['project','高模 → 游戏低模 → 投射烘焙']]],['production-category','资产大类',[['vehicle','车辆'],['machine','机械设备'],['prop','硬表面道具'],['organic','果实与有机道具']]],['production-budget','LOD0 三角面预算',[['1000','1,000'],['5000','5,000'],['10000','10,000'],['20000','20,000'],['30000','30,000'],['40000','40,000']]]]){const l=el('label',label),s=el('select');s.id=id;s.setAttribute('aria-label',label);for(const [v,t]of values)s.add(new Option(t,v));if(id==='production-budget')s.value='30000';l.append(s);productionBox.insertBefore(l,$('prepare-asset'));}
@@ -41,6 +45,11 @@ function checkGLB(buffer){
 let renderer,scene,camera,controls,plane,checker,inspectionFloor;const inspectionLights={};
 const lightLabel=el('label','检视灯光 '),lightProfile=el('select');lightProfile.setAttribute('aria-label','检视灯光');lightProfile.add(new Option('柔和单主光','neutral'));lightProfile.add(new Option('多灯摄影棚','studio'));lightLabel.append(lightProfile);$('fit').parentElement.insertBefore(lightLabel,$('fit'));
 lightProfile.add(new Option('灰底对照光','reference'));
+const lightAngleLabel=el('label','主光方位 '),lightAngle=el('input'),lightAngleValue=el('output','0°');
+lightAngle.type='range';lightAngle.min='-180';lightAngle.max='180';lightAngle.step='any';lightAngle.value='0';lightAngle.setAttribute('aria-label','主光方位');lightAngleLabel.append(lightAngle,lightAngleValue);$('fit').parentElement.insertBefore(lightAngleLabel,$('fit'));
+function positionInspectionKey(){if(!inspectionLights.key)return;inspectionLights.key.position.copy(center).add(new THREE.Vector3(...keyLightOffset(Number(lightAngle.value),span)));inspectionLights.key.target.position.copy(center);lightAngleValue.value=lightAngle.value+'°';}
+lightAngle.oninput=positionInspectionKey;
+$('reset').addEventListener('click',()=>{lightAngle.value='0';positionInspectionKey();});
 function inspectionLighting(){if(!scene||!inspectionLights.key)return;const neutral=lightProfile.value==='neutral',reference=lightProfile.value==='reference';scene.environmentIntensity=reference?.45:neutral?.18:1;inspectionLights.key.intensity=reference?2.5:neutral?1.5:3;inspectionLights.rim.intensity=reference?.45:neutral?.15:1.8;inspectionLights.hemi.intensity=reference?.65:neutral?.55:1;renderer.toneMapping=neutral||reference?THREE.AgXToneMapping:THREE.ACESFilmicToneMapping;scene.background.set(reference?'#b7b9ba':'#1a2633');if(inspectionFloor)inspectionFloor.visible=reference;inspectionLights.key.castShadow=reference;state.lighting=lightProfile.value;state.lighting_note='Realtime inspection lights; use Blender still for source lighting comparison.';}
 lightProfile.onchange=inspectionLighting;
 const rearView=el('button','后视');rearView.type='button';rearView.id='rear';rearView.title='查看模型后侧';rearView.setAttribute('aria-label','查看模型后侧');rearView.onclick=()=>fit(new THREE.Vector3(-1,0,0));$('side').parentElement.insertBefore(rearView,$('side'));
@@ -69,7 +78,7 @@ function fit(direction=new THREE.Vector3(1,-1,0.7)){
  // can otherwise make the real object occupy less than half the viewport.
  let distance=span*.05;const q=new THREE.Vector3();for(const mesh of meshes){if(!mesh.visible)continue;const positions=mesh.geometry.attributes.position;for(let i=0;i<positions.count;i++){q.fromBufferAttribute(positions,i).applyMatrix4(mesh.matrixWorld).sub(center);const depth=q.dot(d);distance=Math.max(distance,depth+Math.abs(q.dot(right))*1.12/tanH,depth+Math.abs(q.dot(vertical))*1.12/tanV);}}
  camera.up.copy(up);camera.position.copy(center).add(d.multiplyScalar(distance));camera.near=Math.max(span/1000,.0001);camera.far=span*100;camera.updateProjectionMatrix();controls.minDistance=span*.03;controls.maxDistance=span*20;controls.update();
- inspectionFloor.position.set(center.x,b.min.y-span*.0003,center.z);inspectionFloor.scale.setScalar(span*12);const key=inspectionLights.key;key.shadow.normalBias=span*.0002;key.position.copy(center).add(new THREE.Vector3(-.5,1.2,.8).multiplyScalar(span));key.target.position.copy(center);Object.assign(key.shadow.camera,{left:-span,right:span,top:span,bottom:-span,near:span*.05,far:span*5});key.shadow.camera.updateProjectionMatrix();state.fit={distance,span,aspect:camera.aspect,method:'visible-vertices',lowestVertexY:b.min.y,floorY:inspectionFloor.position.y};
+ inspectionFloor.position.set(center.x,b.min.y-span*.0003,center.z);inspectionFloor.scale.setScalar(span*12);const key=inspectionLights.key;key.shadow.normalBias=span*.0002;positionInspectionKey();Object.assign(key.shadow.camera,{left:-span,right:span,top:span,bottom:-span,near:span*.05,far:span*5});key.shadow.camera.updateProjectionMatrix();state.fit={distance,span,aspect:camera.aspect,method:'visible-vertices',lowestVertexY:b.min.y,floorY:inspectionFloor.position.y};
 }
 function setSelection(mesh){chosen=mesh;state.selection=mesh?.name||null;$('selection-label').textContent=mesh?mesh.name+' · '+Math.round((mesh.geometry.index?.count||mesh.geometry.attributes.position.count)/3)+' 三角面':'全部对象';if(selectionBox){scene.remove(selectionBox);selectionBox.geometry.dispose();selectionBox.material.dispose();selectionBox=null;}if(mesh){selectionBox=new THREE.BoxHelper(mesh,0x58dce0);scene.add(selectionBox);}for(const row of $('objects').children)row.classList.toggle('active',row.dataset.name===mesh?.name);if($('mode').value==='uv')drawUV();}
 function disposeModel(){animationMixer?.stopAllAction();if(root)animationMixer?.uncacheRoot(root);animationMixer=null;animationAction=null;animationClips=[];animationPlaying=false;animationTime=0;motionPanel.hidden=true;delete state.animation;state.animationClips=[];if(root){scene.remove(root);for(const mesh of meshes)mesh.geometry.dispose();for(const mat of new Set([...original.values()].flat())){for(const v of Object.values(mat))if(v?.isTexture)v.dispose();mat.dispose();}}for(const m of variants)m.dispose();for(const w of wireLines.values()){w.geometry.dispose();w.material.dispose();}variants.clear();wireLines.clear();original.clear();basePositions.clear();meshes=[];setSelection(null);for(const url of ownedURLs)URL.revokeObjectURL(url);ownedURLs.clear();}
@@ -110,7 +119,7 @@ async function loadModel(name='model.glb'){
  readGameAsset();
  state.importedObjects=meshes.length;state.file=name;loadedFile=name;lastRaw=buffer;showInventory(info);thumbnails(buffer,info);$('objects').replaceChildren();for(const mesh of meshes){const row=el('div');row.className='object-row';row.dataset.name=mesh.name;const check=el('input');check.type='checkbox';check.checked=true;check.setAttribute('aria-label','显示 '+mesh.name);check.onchange=()=>{mesh.visible=check.checked;if(state.mode==='uv')drawUV();};const b=el('button',mesh.name);b.onclick=()=>setSelection(mesh);row.append(check,b,el('small',String(Math.round((mesh.geometry.index?.count||mesh.geometry.attributes.position.count)/3))));$('objects').append(row);}isolated=false;$('explode').value=0;$('clip').value=-1;$('wire-overlay').checked=false;plane.constant=1e6;resize();fit(new THREE.Vector3(1,.7,1.4));applyMode();$('loading').hidden=true;state.ready=true;state.sha256=sha;resize();
 }
-$('mode').onchange=()=>applyMode();$('lod').onchange=()=>loadModel($('lod').value).catch(e=>status(e.message,true));$('fit').onclick=()=>fit(new THREE.Vector3(1,.7,1.4));$('front').onclick=()=>fit(new THREE.Vector3(1,0,0));$('side').onclick=()=>fit(new THREE.Vector3(0,0,-1));$('top').onclick=()=>{fit(new THREE.Vector3(0,1,.0001));camera.up.set(1,0,0);controls.update();};
+$('mode').onchange=()=>applyMode();$('lod').onchange=()=>{const value=$('lod').value;if(value.startsWith('game:')){const rows=gameLodEntries(receipt.game_lods,id,receipt.files['model.glb'].sha256),row=rows.find(r=>'game:'+r.job_id===value);if(!row)throw Error('未登记LOD');location.href='/api/studio3d/view/'+row.job_id;return;}loadModel(value).catch(e=>status(e.message,true));};$('fit').onclick=()=>fit(new THREE.Vector3(1,.7,1.4));$('front').onclick=()=>fit(new THREE.Vector3(1,0,0));$('side').onclick=()=>fit(new THREE.Vector3(0,0,-1));$('top').onclick=()=>{fit(new THREE.Vector3(0,1,.0001));camera.up.set(1,0,0);controls.update();};
 $('wire-overlay').onchange=()=>{for(const mesh of meshes){let lines=wireLines.get(mesh);if($('wire-overlay').checked&&!lines){lines=new THREE.LineSegments(new THREE.WireframeGeometry(mesh.geometry),new THREE.LineBasicMaterial({color:0x48b1c5,transparent:true,opacity:.45}));lines.raycast=()=>{};mesh.add(lines);wireLines.set(mesh,lines);}if(lines)lines.visible=$('wire-overlay').checked;}};
 $('explode').oninput=()=>{const value=Number($('explode').value);for(const mesh of meshes){mesh.position.copy(basePositions.get(mesh));const wc=new THREE.Box3().setFromObject(mesh).getCenter(new THREE.Vector3()),delta=wc.sub(center);if(delta.length()<1e-6)delta.set(0,span*.2,0);const inv=new THREE.Matrix4().copy(mesh.parent.matrixWorld).invert();const local=delta.clone().transformDirection(inv).multiplyScalar(delta.length()*value);mesh.position.add(local);}selectionBox?.update();};
 $('clip').oninput=()=>{const value=Number($('clip').value);plane.constant=value<=-.99?1e6:-center.x-span*.6*value;};$('exposure').oninput=()=>{renderer.toneMappingExposure=Number($('exposure').value);};
@@ -126,7 +135,7 @@ let lastTime=0;function frame(now){requestAnimationFrame(frame);if(!renderer||do
 async function init(){if(!valid)throw Error('资产编号无效');if(!renderer)return;const r=await get('/api/studio3d/jobs/'+id);if(r.status!=='DELIVERED')throw Error('尚无可交付模型');receipt=r.receipt;if(receipt.configuration.materials.some(m=>m.detail==='fruit_skin')){$('production-category').value='organic';$('production-budget').value='1000';rayDistance.value='4';}lightProfile.value=receipt.configuration.materials.some(m=>m.detail==='fruit_skin')?'neutral':receipt.configuration.asset?'reference':'studio';inspectionLighting();const runtime=await get('/api/studio3d');if(!runtime.production_profiles){$('production-mode').options[1].disabled=true;$('prepare-status').textContent='当前服务尚未加载1.3生产流程；可使用原有静态处理。';}if(receipt.configuration.asset_pipeline){$('production-mode').options[1].disabled=true;if(receipt.derived_from){const source=el('a','返回高模/源模型');source.href='/api/studio3d/view/'+receipt.derived_from;productionBox.append(source);}}else if(runtime.production_profiles)$('production-mode').value='project';
 for(const [v,label] of [['front','前'],['rear','后'],['left','左'],['right','右'],['top','俯视']]){const f=receipt.files['view-'+v+'.png'];if(!f)continue;$('five-views').hidden=false;const a=el('a');a.href=f.url;a.target='_blank';a.rel='noopener';const im=el('img');im.src=f.url;im.alt=label+'正交渲染';im.loading='lazy';a.append(im,el('span',label+' · 正交'));$('view-gallery').append(a);}
 if(receipt.reference&&receipt.files['reference.png']){$('guide-panel').hidden=false;$('guide-image').src=receipt.files['reference.png'].url;$('guide-source').textContent=receipt.reference.source+' · '+receipt.reference.mode;}
-$('lod').options[0].textContent=receipt.configuration.asset_pipeline?.method==='project'?'LOD0 · 游戏低模':receipt.report.asset_pipeline?'LOD0 · 烘焙副本':'原始模型';$('reference-image').src=receipt.files['preview.png'].url;$('blend-link').href=receipt.files['model.blend'].url;for(const [name,label] of [['model-lod1.glb','LOD1 · 待视觉验收'],['model-lod2.glb','LOD2 · 待视觉验收']])if(receipt.files[name])$('lod').add(new Option(label,name));await loadModel();for(const label of inventory.profile.human_checks){const l=el('label'),c=el('input');c.type='checkbox';c.dataset.label=label;l.append(c,el('span',label));$('human-checks').append(l);}}
+$('lod').options[0].textContent=receipt.configuration.asset_pipeline?.method==='project'?'LOD0 · 游戏低模':receipt.report.asset_pipeline?'LOD0 · 烘焙副本':'原始模型';const gameLods=gameLodEntries(receipt.game_lods,id,receipt.files['model.glb'].sha256);if(gameLods.length){$('lod').replaceChildren();for(const row of gameLods){const option=new Option(gameLodLabel(row),'game:'+row.job_id);option.selected=row.job_id===id;$('lod').add(option);}$('prepare-asset').disabled=true;$('prepare-status').textContent=gameLods.some(r=>r.kind==='high')?'原始高模与 LOD0–3 可在模型层级中切换。':'四档游戏LOD已制作；原高模保留。';}$('reference-image').src=receipt.files['preview.png'].url;$('blend-link').href=receipt.files['model.blend'].url;for(const [name,label] of [['model-lod1.glb','LOD1 · 待视觉验收'],['model-lod2.glb','LOD2 · 待视觉验收']])if(receipt.files[name])$('lod').add(new Option(label,name));await loadModel();for(const label of inventory.profile.human_checks){const l=el('label'),c=el('input');c.type='checkbox';c.dataset.label=label;l.append(c,el('span',label));$('human-checks').append(l);}}
 init().catch(e=>status(e.message,true));
 
 // live-follow:start
@@ -157,3 +166,43 @@ function startLiveFollow(){
 }
 startLiveFollow();
 // live-follow:end
+
+// Human and Jarvis use the same renderer and controls. Only view state changes.
+const focusViewer=el('button','专注模型');focusViewer.type='button';focusViewer.setAttribute('aria-pressed','false');
+focusViewer.onclick=()=>{const active=document.body.classList.toggle('model-focus');focusViewer.setAttribute('aria-pressed',String(active));focusViewer.textContent=active?'显示检查面板':'专注模型';resize();};$('fit').parentElement.append(focusViewer);
+const viewDirections={iso:[1,.7,1.4],front:[1,0,0],rear:[-1,0,0],left:[0,0,-1],right:[0,0,1],top:[0,1,.0001],bottom:[0,-1,.0001]};
+function viewObservation(){
+ return {asset_id:id,sha256:state.sha256,file:loadedFile,viewer_version:state.viewer_version,mode:state.mode,lighting:lightProfile.value,
+  light_angle:Number(lightAngle.value),light_state:{key:{position:inspectionLights.key.position.toArray(),target:inspectionLights.key.target.position.toArray(),intensity:inspectionLights.key.intensity,color:inspectionLights.key.color.toArray(),shadow:inspectionLights.key.castShadow},rim:{position:inspectionLights.rim.position.toArray(),target:inspectionLights.rim.target.position.toArray(),intensity:inspectionLights.rim.intensity,color:inspectionLights.rim.color.toArray()},hemisphere:{intensity:inspectionLights.hemi.intensity,color:inspectionLights.hemi.color.toArray(),ground:inspectionLights.hemi.groundColor.toArray()},environment_intensity:scene.environmentIntensity,tone_mapping:renderer.toneMapping},
+  selection:chosen?.name||null,isolated,overlay:$('wire-overlay').checked,clip:Number($('clip').value),exposure:renderer.toneMappingExposure,
+  camera:{position:camera.position.toArray(),target:controls.target.toArray(),up:camera.up.toArray(),fov:camera.fov,projection:'perspective'},
+  objects:meshes.map(m=>({name:m.name,visible:m.visible,triangles:(m.geometry.index?.count||m.geometry.attributes.position.count)/3})),
+  triangles:state.triangles,draw_calls:renderer.info.render.calls,render_triangles:renderer.info.render.triangles,
+  timestamp:new Date().toISOString(),scope:'Actual browser view; not topology, motion or quality certification'};
+}
+function viewCapture(){
+ if(state.mode==='uv')drawUV();else renderer.render(scene,camera);
+ const source=state.mode==='uv'?$('uv-canvas'):$('viewport'),c=document.createElement('canvas'),scale=Math.min(1,768/source.width,512/source.height);
+ c.width=Math.max(1,Math.round(source.width*scale));c.height=Math.max(1,Math.round(source.height*scale));c.getContext('2d').drawImage(source,0,0,c.width,c.height);
+ for(const quality of [.82,.65,.45]){const image=c.toDataURL('image/jpeg',quality);if(image.length<160000)return {image,capture:{width:c.width,height:c.height,mime:'image/jpeg',quality,viewport_only:true}};}
+ throw Error('视图超过回执图像预算；请使用本页保存视图');
+}
+async function applyInspection(view){
+ if(!state.ready||loadedFile!=='model.glb')throw Error('需要已加载的源模型');
+ const allowed=['mode','camera','part','isolate','overlay','clip','exposure','lighting','zoom','light_angle'];
+ if(Object.keys(view).some(k=>!allowed.includes(k)))throw Error('未知检视字段');
+ if(view.mode&&!Array.from($('mode').options).some(x=>x.value===view.mode&&!x.disabled))throw Error('未知或当前模型未支持的显示模式');
+ if(view.camera&&!viewDirections[view.camera])throw Error('未知相机预设');
+ if(view.part&&!meshes.some(m=>m.name===view.part))throw Error('部件不存在');
+ animationPlaying=false;motionPlay.textContent='播放';
+ if(Object.hasOwn(view,'part'))setSelection(meshes.find(m=>m.name===view.part)||null);
+ if(Object.hasOwn(view,'isolate')){isolated=view.isolate;for(const m of meshes)m.visible=!isolated||m===chosen;for(const row of $('objects').children){const m=meshes.find(m=>m.name===row.dataset.name);if(m)row.querySelector('input').checked=m.visible;}}
+ if(view.mode){$('mode').value=view.mode;applyMode();}
+ if(Object.hasOwn(view,'overlay')){$('wire-overlay').checked=view.overlay;$('wire-overlay').onchange();}
+ for(const key of ['clip','exposure'])if(Object.hasOwn(view,key)){$(key).value=String(view[key]);$(key).oninput();}
+ if(view.lighting){lightProfile.value=view.lighting;inspectionLighting();}
+ if(view.camera||view.zoom){fit(new THREE.Vector3(...viewDirections[view.camera||'iso']));if(view.zoom)camera.position.sub(controls.target).divideScalar(view.zoom).add(controls.target);controls.update();}
+ if(Object.hasOwn(view,'light_angle')){keyLightOffset(view.light_angle,span);lightAngle.value=String(view.light_angle);positionInspectionKey();}
+ renderer.render(scene,camera);
+}
+connectViewerInspection({post,identity:()=>({asset_id:id,sha256:state.ready&&loadedFile==='model.glb'?state.sha256:null}),objects:()=>meshes.map(m=>m.name),apply:applyInspection,observe:viewObservation,capture:viewCapture,parent:document.querySelector('.stage-controls')});

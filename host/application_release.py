@@ -11,18 +11,17 @@ import uuid
 
 from adapters.application_host import WorkbenchProcess
 from control.paths import data_root, reject_links
-from modules.release_recovery.application import Applications, build, inspect_package, TOPS
+from modules.release_recovery.application import Applications, build, inspect_package, TOPS, RUNTIME_DATA
 from sdk.protocol import CoreError
 
 ROOT = Path(__file__).resolve().parents[1]
-TESTS = ['test_model_transport.py', 'test_settings_management.py', 'test_preferences_dialogue.py',
-         'test_workbench.py', 'test_local_access.py', 'test_application_runtime.py']
+from sdk.application_policy import TESTS, TEST_SUPPORT
 
 
 def tracked_runtime(source):
     result = subprocess.run(['git', '-C', str(source), 'ls-files', '-z'], check=True, capture_output=True)
     return [name for name in result.stdout.decode().split('\0') if name and (
-        name.split('/')[0] in TOPS or name in {'VERSION', 'tools/architecture-baseline.json'})
+        name.split('/')[0] in TOPS or name in {'VERSION', 'tools/architecture-baseline.json', *RUNTIME_DATA})
         and not name.endswith(('.pyc', '.blend', '.glb', '.fbx'))]
 
 
@@ -46,7 +45,7 @@ def validator(root, *, reviewed_source=False):
                   'architecture_error_count': len(errors), 'architecture_sample': errors[:8],
                   'policy_sha256': hashlib.sha256((ROOT / 'tools/check_architecture.py').read_bytes()
                            + (ROOT / 'tools/architecture-baseline.json').read_bytes()
-                           + b''.join((ROOT / 'tests' / name).read_bytes() for name in TESTS)).hexdigest()}
+                           + b''.join((ROOT / 'tests' / name).read_bytes() for name in TESTS + TEST_SUPPORT)).hexdigest()}
         if not report['architecture_passed'] or not reviewed_source:
             return report
         base = root / 'deployment/validation'
@@ -56,8 +55,11 @@ def validator(root, *, reviewed_source=False):
             shutil.copytree(package, workspace, dirs_exist_ok=True)
             tests = workspace / 'tests'
             tests.mkdir()
-            for name in TESTS:
+            for name in TESTS + TEST_SUPPORT:
                 (tests / name).write_bytes((ROOT / 'tests' / name).read_bytes())
+            # Model the independent installed controller's support files. The
+            # checker is our own byte-for-byte policy, never candidate supplied.
+            (workspace / 'tools/check_architecture.py').write_bytes((ROOT / 'tools/check_architecture.py').read_bytes())
             script = ('import sys,unittest;sys.path.insert(0,' + repr(str(workspace)) + ');'
                       'loader=unittest.TestLoader();suite=unittest.TestSuite(loader.discover("tests",pattern=n) for n in '
                       + repr(TESTS) + ');r=unittest.TextTestRunner().run(suite);'
@@ -70,8 +72,13 @@ def validator(root, *, reviewed_source=False):
             intact = all(hashlib.sha256((workspace / name).read_bytes()).hexdigest() == meta['sha256']
                          for name, meta in manifest['files'].items())
             counts = result.stdout.rsplit('RESULT ', 1)[-1].strip()
+            logs = root / 'deployment/validation-logs'
+            logs.mkdir(exist_ok=True)
+            log = logs / (manifest['version'] + '-' + uuid.uuid4().hex + '.log')
+            log.write_text((result.stdout + '\n' + result.stderr)[-200000:], encoding='utf-8')
             report.update(tests_passed=result.returncode == 0, tests_summary=counts[:100], runtime_intact=intact,
-                          passed=result.returncode == 0 and intact)
+                          passed=result.returncode == 0 and intact,
+                          test_log=log.name, test_log_sha256=hashlib.sha256(log.read_bytes()).hexdigest())
             return report
         finally:
             # Only this freshly generated validation copy is disposable.
@@ -84,7 +91,7 @@ def validator(root, *, reviewed_source=False):
 
 def main(arguments=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('action', choices=['build', 'stage', 'validate', 'adopt', 'update', 'rollback', 'recover', 'start', 'stop', 'status', 'retire', 'unretire'])
+    parser.add_argument('action', choices=['build', 'stage', 'validate', 'adopt', 'update', 'rollback', 'recover', 'start', 'stop', 'status', 'retire', 'unretire', 'install-launcher'])
     parser.add_argument('--data-root', type=Path, required=True)
     parser.add_argument('--source', type=Path, default=ROOT)
     parser.add_argument('--archive', type=Path)
@@ -116,6 +123,11 @@ def main(arguments=None):
     elif args.action == 'validate':
         if not args.build: parser.error('validate requires --build')
         value = app.validate(args.build, validator(root, reviewed_source=args.reviewed_source))
+    elif args.action == 'install-launcher':
+        from host.application_installation import install
+        selected = app.state()['active']
+        if not selected: raise CoreError('application_installation', 'Adopt a healthy build first')
+        value = install(root, root.parent, Path(app.record(selected['build'])['path']), port=args.port)
     elif args.action == 'status':
         value = app.state()
     elif args.action in {'retire', 'unretire'}:

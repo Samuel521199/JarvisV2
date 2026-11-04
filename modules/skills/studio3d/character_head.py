@@ -5,7 +5,7 @@ only, for use with the existing pinned Blender worker.  The shapes are a
 manually authored approximation, not a claim of reference reconstruction.
 """
 import math
-from modules.skills.studio3d.character_contract import validate_parameters
+from sdk.character_contract import validate_parameters
 
 VERSION='0.4.0'
 

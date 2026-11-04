@@ -1,10 +1,10 @@
 {
   "schema": "jarvis.studio3d.experience.v1",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "methods": [
     {
       "id": "remove-rejected-family",
-      "revision": 1,
+      "revision": 2,
       "title": "禁止零件及关联残留清理",
       "families": [
         "hard_surface",
@@ -25,7 +25,7 @@
       "exclusions": "没有明确否定清单时只报告；保留部件不能在删除树内。",
       "sources": [
         {
-          "path": "3DModels/leFH18/metadata/evidence/mechanism-cleanup.json",
+          "path": "modules/skills/studio3d/evidence/mechanism-cleanup.json",
           "scope": "local implementation or single-asset evidence; not independent transfer validation",
           "sha256": "430fe67ebd4b60e13a12c529c7e77b1859efabbb1a8691ab145086ebf60d7e0e",
           "bytes": 26158
@@ -36,7 +36,7 @@
     },
     {
       "id": "seat-declared-attachment",
-      "revision": 1,
+      "revision": 2,
       "title": "按已确认目标定位附件",
       "families": [
         "hard_surface",
@@ -57,7 +57,7 @@
       "exclusions": "没有目标位置就不猜测；接近表面不证明结构真实、没有穿插或具有承载能力。",
       "sources": [
         {
-          "path": "3DModels/leFH18/metadata/evidence/attachment-audit.json",
+          "path": "modules/skills/studio3d/evidence/attachment-audit.json",
           "scope": "local implementation or single-asset evidence; not independent transfer validation",
           "sha256": "50080fe7c825f2dfe63989a508e5ccd128971ecb5c5dff5e71c6d7c3d88a5c58",
           "bytes": 20001
@@ -68,7 +68,7 @@
     },
     {
       "id": "projection-coordinate-consistency",
-      "revision": 1,
+      "revision": 2,
       "title": "纹理投影坐标一致",
       "families": [
         "hard_surface",
@@ -86,7 +86,7 @@
       "exclusions": "有意的铸造颗粒不能因看起来斑驳被删除；未诊断根因不能自动换贴图。",
       "sources": [
         {
-          "path": "tools/studio3d_blender_material_projection.py",
+          "path": "adapters/studio3d/material_projection.py",
           "scope": "local implementation or single-asset evidence; not independent transfer validation",
           "sha256": "d162beffdf58160d3113926204522ceccf13355621d4619228f4bd9c4d9339a5",
           "bytes": 3860
@@ -97,7 +97,7 @@
     },
     {
       "id": "reference-conflict",
-      "revision": 1,
+      "revision": 2,
       "title": "参考图矛盾登记",
       "families": [
         "hard_surface",
@@ -114,7 +114,7 @@
       "exclusions": "一张图未显示被遮挡零件，不代表零件不存在。",
       "sources": [
         {
-          "path": "3DModels/leFH18/metadata/optimization-recipe.json",
+          "path": "modules/skills/studio3d/evidence/optimization-recipe.json",
           "scope": "local implementation or single-asset evidence; not independent transfer validation",
           "sha256": "74afa0068244229f9f0d33e3316e6e4a34aee8fe4664f155e2de099437c20736",
           "bytes": 5678
@@ -125,7 +125,7 @@
     },
     {
       "id": "camera-first",
-      "revision": 1,
+      "revision": 2,
       "title": "相机与轮廓分诊",
       "families": [
         "hard_surface",
@@ -142,7 +142,7 @@
       "exclusions": "轮胎径向厚度、轴向宽度和内外盘面不可混淆。",
       "sources": [
         {
-          "path": "3DModels/leFH18/metadata/evidence/game-render-comparison.json",
+          "path": "modules/skills/studio3d/evidence/game-render-comparison.json",
           "scope": "local implementation or single-asset evidence; not independent transfer validation",
           "sha256": "ab403665a42a050be2d1bc540a544df0f626268f55bc77686fb460f06389d9f5",
           "bytes": 908
@@ -153,7 +153,7 @@
     },
     {
       "id": "coating-metal",
-      "revision": 1,
+      "revision": 2,
       "title": "漆面和金属分区",
       "families": [
         "hard_surface",
@@ -170,7 +170,7 @@
       "exclusions": "不要把完整漆面的金属度统一设成 1；照片高光不能唯一反演材质。",
       "sources": [
         {
-          "path": "3DModels/leFH18/metadata/optimization-recipe.json",
+          "path": "modules/skills/studio3d/evidence/optimization-recipe.json",
           "scope": "local implementation or single-asset evidence; not independent transfer validation",
           "sha256": "74afa0068244229f9f0d33e3316e6e4a34aee8fe4664f155e2de099437c20736",
           "bytes": 5678
@@ -210,7 +210,7 @@
     },
     {
       "id": "rigid-owner-batching",
-      "revision": 1,
+      "revision": 2,
       "title": "按运动归属合批",
       "families": [
         "hard_surface",
@@ -227,7 +227,7 @@
       "exclusions": "最近表面匹配只能辅助归属；不能自动证明可动性或真实引擎性能。",
       "sources": [
         {
-          "path": "3DModels/leFH18/metadata/evidence/game-batch-report.json",
+          "path": "modules/skills/studio3d/evidence/game-batch-report.json",
           "scope": "local implementation or single-asset evidence; not independent transfer validation",
           "sha256": "5d876876e62a66fbf6029f770315ac04ab8075a8d312a5e990693237d4c069a2",
           "bytes": 43479
@@ -238,7 +238,7 @@
     },
     {
       "id": "declared-openings",
-      "revision": 1,
+      "revision": 2,
       "title": "声明开口和遮挡检查",
       "families": [
         "hard_surface",
@@ -256,7 +256,7 @@
       "exclusions": "不能把所有边界填满；可见通道不证明隐藏内部构造真实。",
       "sources": [
         {
-          "path": "tools/studio3d_blender_surface_audit.py",
+          "path": "modules/skills/studio3d/evidence/surface-audit-source.txt",
           "scope": "local implementation or single-asset evidence; not independent transfer validation",
           "sha256": "e4c84464d4af5eccd5d44ec6edbaf4da7ba958b45f72e9f6aaae1d9dc5cf974b",
           "bytes": 5344
@@ -267,7 +267,7 @@
     },
     {
       "id": "lefh18-folded-shield",
-      "revision": 1,
+      "revision": 2,
       "title": "leFH18 当前美术规范：内折侧翼",
       "families": [
         "towed_artillery"
@@ -287,7 +287,7 @@
       "exclusions": "这是当前资产的美术要求，不能推广成所有火炮的历史事实。",
       "sources": [
         {
-          "path": "3DModels/leFH18/metadata/optimization-recipe.json",
+          "path": "modules/skills/studio3d/evidence/optimization-recipe.json",
           "scope": "local implementation or single-asset evidence; not independent transfer validation",
           "sha256": "74afa0068244229f9f0d33e3316e6e4a34aee8fe4664f155e2de099437c20736",
           "bytes": 5678

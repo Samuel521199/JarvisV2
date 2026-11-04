@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Read-only, receipt-bound comparison of BLEND and its actual GLB export."""
+from sdk.blender_api import require_blender
 import hashlib,json,sys,time
 from pathlib import Path
-import bpy
+bpy = require_blender().bpy
 from adapters.studio3d.inspection_worker import render_scene
 from modules.skills.studio3d.render_inspection import validate
 

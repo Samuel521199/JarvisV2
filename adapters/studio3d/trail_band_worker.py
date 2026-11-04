@@ -1,7 +1,8 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 """Revolve measured original cross sections and retain non-target surfaces."""
-import bpy,json,hashlib,time,math
-from mathutils import Vector
+from sdk.blender_api import require_blender
+import json, hashlib, time, math; bpy = require_blender().bpy
+Vector = require_blender().mathutils.Vector
 from modules.skills.studio3d.trail_band import fit,geometry,sub
 from modules.skills.studio3d.attachment_seat import components
 from adapters.studio3d.spade_frame_worker import dependency

@@ -5,6 +5,7 @@ No model-generated code, paths, expressions or native-library objects accepted.
 import copy, json, math, re
 from pathlib import Path
 from sdk.protocol import CoreError
+from sdk.runtime_paths import data_root as installation_data_root
 
 ROOT=Path(__file__).resolve().parents[1]
 HOME=ROOT/'modules/skills/anatomy'
@@ -12,12 +13,12 @@ CONTRACT=json.loads((HOME/'engineering-contract.json').read_text(encoding='utf-8
 
 from modules.skills.anatomy.engineering_model import validate_engineering,assembly_poses,ports,rotation
 
-def runtime_python():return ROOT/'.venv/anatomy'/('Scripts/python.exe' if __import__('os').name=='nt' else 'bin/python')
+def runtime_python():return installation_data_root().parent/'.venv/anatomy'/('Scripts/python.exe' if __import__('os').name=='nt' else 'bin/python')
 def readiness():
-    # The engineering runtime (.venv/anatomy) belongs to this installation, not to a data root;
-    # tools/prepare_anatomy_runtime.py records it under <project>/user-data whatever --data-root is used.
+    # Optional libraries stay in the installation environment; code-package
+    # replacement must not redirect them into an immutable package's .venv.
     import hashlib
-    lock=ROOT/'user-data/optional/anatomy/prepared.json';ready=False
+    lock=installation_data_root()/'optional/anatomy/prepared.json';ready=False
     try:ready=runtime_python().is_file() and json.loads(lock.read_text(encoding='utf-8'))['lock_sha256']==hashlib.sha256((HOME/'runtime-lock.json').read_bytes()).hexdigest()
     except (OSError,ValueError,KeyError):pass
     return {'schema':CONTRACT['schema'],'native_runtime':ready,'assembly':ready,'cad':ready,'combustion':ready,'limits':'Trusted optional native code, not an LPAC sandbox. Static interference and explicitly listed numerical models only.'}

@@ -1,9 +1,12 @@
 """Bounded exterior fastener seating on a receipt-bound rendered support surface."""
 import math
 from modules.skills.studio3d.render_inspection import validate as inspect_validate
-VERSION='1.18.2'
+VERSION='1.19.0'
 
 def validate(c,names):
+ if isinstance(c,dict) and c.get('schema')=='jarvis.studio3d.control-face-roll.v1':
+  from modules.skills.studio3d.control_face_roll import validate as roll_validate
+  return roll_validate(c,names)
  if isinstance(c,dict) and c.get('schema')=='jarvis.studio3d.rear-contour.v1':
   from modules.skills.studio3d.rear_contour import validate as contour_validate
   return contour_validate(c,names)

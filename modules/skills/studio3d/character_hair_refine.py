@@ -5,14 +5,15 @@ Called on a separately opened copy of the reviewed A-pose BLEND. No image,
 path, generated code, body, face, material atlas or armature is modified.
 The added locks are editable geometry, not evidence of visual acceptance.
 """
+from sdk.blender_api import require_blender
 import math
 
 VERSION='0.1.0'
 
 
 def apply():
-    import bpy
-    from mathutils import Vector
+    bpy = require_blender().bpy
+    Vector = require_blender().mathutils.Vector
     present={o.name for o in bpy.context.scene.objects}
     if not {'Body','Face','headend','hair-scalp-refined'} <= present:
         raise ValueError('Expected reviewed character v4 objects')

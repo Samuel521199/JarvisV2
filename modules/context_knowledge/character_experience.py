@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 import sqlite3
 from contextlib import closing
-from modules.skills.studio3d.character_contract import FAMILY
+from sdk.character_contract import FAMILY
 
 ROOT=Path(__file__).resolve().parents[2]
 CATALOG=ROOT/'modules/skills/studio3d/character-methods.json'

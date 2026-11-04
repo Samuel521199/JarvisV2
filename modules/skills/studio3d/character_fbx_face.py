@@ -6,12 +6,13 @@ helper makes only the affected face materials transparent and adds procedural
 eye accents. It never loads or packs the source texture atlas. Call only on a
 user-authorized in-memory copy after validating the model identity and frame.
 """
+from sdk.blender_api import require_blender
 
 VERSION='0.2.0'
 
 
 def apply():
-    import bpy
+    bpy = require_blender().bpy
     hidden=[]
     for mat in bpy.data.materials:
         name=mat.name.casefold()

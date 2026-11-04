@@ -63,6 +63,30 @@ def open_browser(url):
     except webbrowser.Error: print('[Jarvis] Open this address in your browser: ' + url, flush=True)
 
 
+def managed_start(root, port):
+    """Resume the selected code package; never fall back to stale checkout code."""
+    if not ((root / 'deployment/control.sqlite3').exists() or (root / 'state/application-host.json').exists()):
+        return False
+    if str(ROOT) not in sys.path: sys.path.insert(0, str(ROOT))
+    from modules.release_recovery.application import Applications
+    from adapters.application_host import WorkbenchProcess
+    app = Applications(root)
+    state = app.state()
+    if not state['active'] and not state['pending']:
+        # A staged package alone has never changed the running installation.
+        return False
+    driver = WorkbenchProcess(root, port)
+    if state['phase'] in {'draining', 'starting', 'blocked'}:
+        state = app.recover(driver)
+    if state['phase'] != 'active' or not driver.running(state['active'], state['epoch']):
+        state = app.start(driver)
+    else:
+        driver.health(state['active'], state['epoch'])
+        driver.activate(state['active'], state['epoch'])
+    print('[Jarvis] Managed version is ready; background work continues after this launcher closes.', flush=True)
+    return True
+
+
 def main():
     parser = argparse.ArgumentParser(description='Start Jarvis and open its local workbench.')
     parser.add_argument('--port', type=int, default=18282)
@@ -73,6 +97,9 @@ def main():
     if sys.version_info < (3, 13): parser.error('Python 3.13 or newer is required.')
     if not 1024 <= args.port <= 65535: parser.error('Port must be between 1024 and 65535.')
     root = args.data_root.resolve(); url = f'http://127.0.0.1:{args.port}/'
+    if not args.check and managed_start(root, args.port):
+        if not args.no_browser: open_browser(access_url(url, root))
+        return 0
     if running(args.port, root):
         print('[Jarvis] Already running with this data folder: ' + url, flush=True)
         if not args.no_browser and not args.check: open_browser(access_url(url, root))

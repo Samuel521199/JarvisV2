@@ -4,8 +4,9 @@
 This is a conservative cache gate, not a shader-equivalence theorem. Any
 changed source property, unsupported shader or unpacked image rejects reuse.
 """
+from sdk.blender_api import require_blender
 import hashlib,json,math
-import bpy
+bpy = require_blender().bpy
 from modules.skills.studio3d.high_finish import uv_independent_shader
 
 def digest(value):return hashlib.sha256(json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False).encode()).hexdigest()

@@ -1,10 +1,11 @@
 """Disposable hair trial fitted to the original headend surface via ray casts."""
+from sdk.blender_api import require_blender
 import math
 
 
 def apply():
-    import bpy
-    from mathutils import Vector
+    bpy = require_blender().bpy
+    Vector = require_blender().mathutils.Vector
     scene = bpy.context.scene
     source = bpy.data.objects.get('headend')
     mat = bpy.data.materials.get('character-hair-procedural')

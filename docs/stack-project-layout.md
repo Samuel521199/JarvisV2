@@ -53,6 +53,8 @@
   - [推荐目录与启动方式](#single-pc-development-paths)
   - [第一阶段运行接口、维护与限制](#single-pc-development-runtime)
   - [并行使用的实际边界与第一批落地](#single-pc-development-resources)
+- [原生能力边界与可部署文件（v0.1.2）](#native-capability-boundary)
+  - [日用安装、开发与恢复控制器](#daily-managed-installation)
 <!-- book-nav:end -->
 
 <a id="technology-selection"></a>
@@ -731,7 +733,7 @@ SQLite 仅明文索引对象 ID、种类、修订；内容、地址、令牌、c
 
 **一个持续的个人助手，稳定／候选两个发布通道，独立开发工作区；不是两套都能修改正式记忆的主助手。** 日用 Host 持有正式数据与动作控制权，开发代码只拥有测试数据与有限调用许可；按需启动开发服务或候选工具，不常驻复制整套模型栈。代码升级与接续规则归[单机 A/B 与 MCP 更新](evolution-release.md#single-pc-ab-upgrade)。
 
-本机第一阶段已执行：保留 18282 日用服务，盘点并保存当前源码检查点，推送现有 GitHub 的 `codex/pc-environments` 分支，再建立 `D:/Jarvis-dev` 工作树和 18283 开发服务。检查点包含原先未完成的 3D 工作，不是稳定发布。日用目录仍是原运行目录，尚未迁入不可变 A/B 安装槽；继续直接编辑该目录仍可能出现新界面／旧后端混用，因此后续研发在独立工作树进行。[核验和未通过项](delivery-validation.md#pc-environments-evidence)。
+本机第一阶段已执行：保留 18282 日用服务，盘点并保存当前源码检查点，推送现有 GitHub 的 `codex/pc-environments` 分支，再建立 `D:/Jarvis-dev` 工作树和 18283 开发服务。检查点包含原先未完成的 3D 工作，不是稳定发布。该段保留第一阶段情况；后续按[日用托管安装](#daily-managed-installation)迁入按摘要保存的代码包，原目录及数据保持原位。继续开发使用独立工作树。[核验和未通过项](delivery-validation.md#pc-environments-evidence)。
 
 <a id="single-pc-development-layout"></a>
 ### 哪些必须分离，哪些通过接口共享
@@ -753,7 +755,7 @@ SQLite 仅明文索引对象 ID、种类、修订；内容、地址、令牌、c
 <a id="single-pc-development-paths"></a>
 ### 推荐目录与启动方式
 
-保留现有正式数据位置；已创建开发工作树与独立数据根。2026-11-04 的应用控制器以逻辑 A/B 引用按摘要保存的代码目录，取代早期可变 A/B 文件夹计划；只在独立测试数据根核验，尚未用于日用数据。[应用级流程](evolution-release.md#single-pc-application-runtime)。
+保留现有正式数据位置；已创建开发工作树与独立数据根。2026-11-04 的应用控制器以逻辑 A/B 引用按摘要保存的代码目录，取代早期可变 A/B 文件夹计划；独立测试与后续日用采用状态见[本轮登记](delivery-validation.md#architecture-repair-evidence)。[应用级流程](evolution-release.md#single-pc-application-runtime)。
 
 | 路径示例 | 用途 |
 |---|---|
@@ -808,6 +810,41 @@ D:\Jarvis-dev\StartJarvisDev.bat
 开发重任务先限制为一项，按需启动浏览器／Blender／模型 Worker；稳定交互优先。共用 API key 仍共用供应商配额与余额，不同本地数据根的费用上限不能自动合并为账户总上限。Google 受限代理已经运行；全机设备调度、账户总预算和正式数据只读视图仍待实现。开发服务与代理的单点工作集实测见[验收记录](delivery-validation.md#pc-environments-evidence)，不代表峰值、长期或 8 GiB PC 表现，不声称完全没有影响。
 
 落地顺序：确认可恢复基线 → 分离源码／数据／依赖 → 补测试 profile 与受限共享接口 → Mock 和只读联调 → 在文件传输助手等限定对象验证 → 建立 A/B 交接与故障恢复 → 有效维护授权覆盖后开放自动更新。前三项已落地，应用级控制器增加了隔离验收；日用采用仍受架构检查阻塞。当前共用既有 Python，未原地升级依赖；独立 supervisor、跨实例设备／费用仲裁、微信接线与无人值守更新仍未完成。不据此移走业务数据或注册持续更新任务。
+
+<a id="native-capability-boundary"></a>
+## 原生能力边界与可部署文件（v0.1.2）
+
+本节是原生依赖、入口与可移动路径的实现权威；验收结果归[架构修复登记](delivery-validation.md#architecture-repair-evidence)。这是现有模块边界的修复，不引入常驻数据库、容器或大型调度平台。
+
+| 位置 | 负责什么 | 边界 |
+|---|---|---|
+| `sdk/character_contract.py` | 人物共享数据契约；旧 Skill 路径保留兼容导出 | 知识领域不再导入 Skill 的实现；不改变原契约版本和字段 |
+| `sdk/blender_api.py` | `BlenderAPI` 能力句柄与上下文绑定 | 普通 Python 缺少绑定就拒绝，不能按需下载或导入原生库 |
+| `adapters/studio3d/learning_worker.py` | 现有获准原生所有者的 `install_runtime` | 校验固定入口与源码清单后装配 bpy、bmesh、mathutils；未扩大原导入白名单 |
+| `modules/skills/studio3d/worker-programs.json` | 86 个已有原生入口及 220 个 Python 源文件摘要 | 运行时只读；不自动接受新增入口或刷新摘要，不是执行权限书 |
+| `tools/sync_studio3d_programs.py` | 编辑后的显式构建步骤 | 先审阅真实改动、再更新摘要与独立验收；不由 Worker 自行调用 |
+| `adapters/studio3d/material_projection.py` 与 body proportion adapters | 正式运行的材质与比例实现 | tools 旧位置为兼容薄入口；运行模块不再反向导入开发工具 |
+| `sdk/raster.py` | 有界 PNG 校验、解码、裁切和对照板 | 标准库；校验 CRC、尺寸、解压上限、滤波与 Adam7；无需 Pillow 常驻依赖 |
+| `sdk/point_cloud.py`、`adapters/studio3d/reference_turret_front.py` | 点云主轴与固定资产局部变形 | 数值使用标准库；NumPy 仅在独立测试中作为参照 |
+| `modules/skills/studio3d/evidence/` | 小型、已固定摘要的原有种子证据 | 不含模型、用户业务库或凭据；`provenance.json` 保留原位置与摘要；旧记录不重写 |
+| `sdk/runtime_paths.py` | 代码、数据、工作资产与可选工具位置 | `--data-root`／`JARVIS_DATA_ROOT`、`--workspace-root`／`JARVIS_WORKSPACE_ROOT`；不再固定某台电脑盘符或桌面字体 |
+
+这份清单覆盖手工试验入口，不等于 HTTP 新增 86 种可执行操作；Host 仍只派发原固定映射。
+
+原生应用入口先设置代码搜索路径，再调用固定装配器，最后加载消费者；消费者显式取得 `require_blender()` 的句柄。已有 Blender 进程边界、禁用 BLEND 自动脚本、Job／时间／输出限额与 render lane 保留。这是依赖所有权和完整性管理，**不能替代操作系统隔离，也不能防住拥有相同 OS 用户权限的任意恶意程序**。
+
+实际渲染的 8 位 RGB／RGBA PNG 裁切逐样本保留；前后比较板核对两块原 RGB 像素，不缩放。普通概念预览板的缩放与镜像是显式操作，标签使用自带字形，不依赖 Windows Arial。16 位 PNG 参考图会转为 8 位显示样本，不作为 16 位定量测量证据。JPEG 转 PNG 的可选开发工具仍可使用其原有 Pillow 环境；工作台和领域运行不导入该工具。
+
+可选人物作者工具只在已有本地安装的文件与 `external-tools.json` 固定摘要相符时使用；可通过 `--skill-tool` 或 `JARVIS_CHARACTER_TOOL` 指定位置，不自动安装或升级。此固定摘要表示已核对的版本，不是无漏洞或无病毒保证。
+
+冻结代码包保留模块启停所需的固定 `evals/text-analyzer.json`，缺失则拒绝准入；其他任意 evals 文件仍不被允许。代码包不携带 `3DModels`、`.venv` 或业务数据：专业素材从实际安装的数据根旁读取，Python 工程原生环境沿安装位置查找 `.venv/anatomy` 与原准备记录，不到新代码包里重新寻找依赖。新部署、换系统或环境变化仍须准备和验证相应原生环境。
+
+<a id="daily-managed-installation"></a>
+### 日用安装、开发与恢复控制器
+
+日用 `user-data` 保持原位；被采用的代码位于 `deployment/packages/<sha>`。`host/application_installation.py` 仅在候选已被采用后安装根启动器，先保存原 `StartJarvis.bat`，再安装 `JarvisLaunch.py`。它先逐项核对恢复控制器摘要，随后通过同一应用账本启动当前已采用版本，避免重启后误用旧工作树。
+
+恢复控制器放在 `deployment/controllers/<build>`，带自己的检查器及回归测试；应用包退役不删除它。控制器本身的自动更新尚未实现，源码修改不会让它自动采用新规则。原工作树和未提交内容保留；开发仍在独立 worktree，Google 代理继续使用原已批准冻结版本。完整命令与恢复语义见[应用级交接](evolution-release.md#single-pc-application-runtime)。
 
 <!-- book-footer:start -->
 [返回工程主入口](../README.md) · [全书目录](../README.md#book-tree) · [上一章：公共接口与数据契约](contracts.md) · [下一章：模型路由、本地模型与离线生存](models-offline.md)
