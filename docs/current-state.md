@@ -5,7 +5,7 @@
 <a id="current-state-summary"></a>
 ## 一句话
 
-Jarvis 现在是一个**本机网页工作台 + 模块化 Python 服务**：能聊天、按域记住和检索、把一句话目标做成计划并在受限执行器里完成纯文本任务、生成和审阅受限的自写工具，另有 Gmail、出图、3D 资产、机械科普等独立模块。透明桌面精灵、多 Bot、自愈、自身模块替换、多设备共同体和语音都还**只有设计**。
+Jarvis 现在是一个**本机网页工作台 + 模块化 Python 服务**：能聊天、按域记住和检索、把一句话目标做成计划并在受限执行器里完成纯文本任务、生成和审阅受限的自写工具，另有 Gmail、出图、3D 资产、机械科普等独立模块。透明桌面精灵、多 Bot、自愈、通用自身模块替换、多设备共同体和语音都还**只有设计**。
 
 <a id="current-state-runs"></a>
 ## 能运行的部分
@@ -14,6 +14,7 @@ Jarvis 现在是一个**本机网页工作台 + 模块化 Python 服务**：能�
 |---|---|---|
 | 网页工作台、设置、项目与会话目录 | `apps/workbench/`、`host/workbench.py`、`modules/workspace/` | 单测与浏览器探针；仅监听 127.0.0.1，0.1.1 起需本机访问钥匙 |
 | 单机日用／开发分离 | `apps/development/`、`host/development_bridge.py`、`host/development_runtime.py` | GitHub 开发检查点、独立 worktree／数据、受限 Google 代发与开发单独重启已核验；未部署完整应用 A/B 自动更新；[证据](delivery-validation.md#pc-environments-evidence) |
+| 应用级准入、A/B 交接与代码恢复 | `modules/release_recovery/application.py`、`adapters/application_host.py` | 隔离测试完成真实进程切换／失败恢复，真实工作台完成托管与浏览器接续；实际源码包因原有 253 项诊断被拒绝，日用版本未替换；[证据](delivery-validation.md#application-release-evidence) |
 | 多模型聊天、持久会话、费用快照 | `host/dialogue.py`、`modules/dialogue/`、`adapters/models/` | 少量真实调用；回退顺序由设置决定，只有一家供应商时没有真正的备用线路 |
 | 分域记忆、检索、资料库（FTS + 语义） | `modules/context_knowledge/`、`host/memory.py`、`host/knowledge*.py` | 单测与合成评估；多语留出集回答 79/90，低于自定 90% 门槛；语义检索需本地 E5 模型 |
 | 目标 → 计划 → 审批 → 执行 → 原会话交付 | `host/goals.py`、`host/task_scheduler.py`、`modules/task_resource/` | 通用执行两路并行（同类插件任务互斥）；“目标逐项结案”目前只覆盖文本统计与结构化报价两种判定 |
@@ -27,7 +28,7 @@ Jarvis 现在是一个**本机网页工作台 + 模块化 Python 服务**：能�
 <a id="current-state-design-only"></a>
 ## 只有设计、没有代码
 
-透明桌面精灵与原生壳（Tauri 方案未落地）；语音（STT/TTS）；本地对话大模型（只有 E5 嵌入可运行）；多 Bot / 负责人任期 / Agent 工厂；资源租约与跨模块额度；自检—自愈—进化流水线、incident 与自身模型六视图；签名更新与有状态交接；多设备共同体、联邦同步；NPC 世界；机器人。`contracts.md` 前半部分的概念接口（如 ContinuityRecord、BotBinding、MemoryStore、TaskOwnership）在代码中都还不存在，见[契约实现索引](contracts.md#contracts-implementation-index)。
+透明桌面精灵与原生壳（Tauri 方案未落地）；语音（STT/TTS）；本地对话大模型（只有 E5 嵌入可运行）；多 Bot / 负责人任期 / Agent 工厂；资源租约与跨模块额度；自检—自愈—进化流水线、incident 与自身模型六视图；公开发布者签名及跨模式通用状态交接；多设备共同体、联邦同步；NPC 世界；机器人。`contracts.md` 前半部分的概念接口（如 ContinuityRecord、BotBinding、MemoryStore、TaskOwnership）在代码中都还不存在，见[契约实现索引](contracts.md#contracts-implementation-index)。
 
 <a id="current-state-evidence"></a>
 ## 证据边界
@@ -49,14 +50,14 @@ Jarvis 现在是一个**本机网页工作台 + 模块化 Python 服务**：能�
 | Blender/工程 Worker 先启动后挂 Job，Codex 子进程无 Job | 未修复，需在 Windows 上实现与验证 |
 | 部分读接口会写库（结果评价投影） | 未改：评价依据随文件变化即时失效是现有设计，改为纯读需单独设计 |
 | host 层 16 个模块的导入环 | 未拆；已加检查防止继续扩大 |
-| 4 天工作曾只在本机工作区 | 需按 0.1.1 说明提交到 Git；大文件已排除 |
+| 工作曾只在本机工作区 | 2026-10-30 已保存源码检查点并推送 GitHub 开发分支；运行数据和私密凭据仍不入库 |
 
 <a id="current-state-next"></a>
 ## 下一步
 
-1. Windows 全量回归已通过并已提交 Git（2026-10-28）；打 `v0.1.1` 标签、重启服务，确认运行中的版本与提交一致。
-2. 用一周真实日常请求代替新增合成验收，按真实卡点排序后续开发。
-3. 回到主链：委托 → 完整要求 → 独立核验 → 低打扰推进；专业侧线（3D、机械、出图）只修缺陷。
+1. 按模块修复阻塞日用版本采用的 253 项架构诊断；保留现有依赖边界和检查，不扩白名单。
+2. 源码通过准入后，再进行应用级工作台业务核验和受控日用采用；控制器当前证据见[本轮核验](delivery-validation.md#application-release-evidence)。
+3. 回到真实日常请求的委托、要求、核验与低打扰推进，按原 K0—K6 路线补齐；3D 等专业侧线先修已有缺陷。
 
 <a id="current-state-owner-decisions"></a>
 ## 需要主人决定

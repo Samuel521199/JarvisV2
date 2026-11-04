@@ -52,24 +52,26 @@ def optional_import(tree, target):
     return False
 
 
-def check():
+def check(root=None, policy_root=None):
+    scan_root = Path(root).resolve() if root is not None else ROOT
+    policy_root = Path(policy_root).resolve() if policy_root is not None else ROOT
     errors = []
     count = 0
     # Optional inference libraries are confined to the declared subprocess worker.
     # This explicit exception does not permit imports into the Host or core.
-    runtime = json.loads((ROOT / 'modules/local_models/runtime.json').read_text(encoding='utf-8'))
+    runtime = json.loads((scan_root / 'modules/local_models/runtime.json').read_text(encoding='utf-8'))
     worker = 'adapters/models/local_embedding_worker.py'
     allowed = {item['import'] for item in runtime['dependencies']}
     if runtime['worker'] != worker or allowed != {'numpy', 'onnxruntime', 'tokenizers'}:
         errors.append('Invalid optional local-runtime dependency declaration')
         allowed = set()
-    engineering = json.loads((ROOT/'modules/skills/anatomy/runtime-boundary.json').read_text(encoding='utf-8'))
+    engineering = json.loads((scan_root/'modules/skills/anatomy/runtime-boundary.json').read_text(encoding='utf-8'))
     engineering_worker = 'adapters/engineering/worker.py'
     engineering_allowed = {item['import'] for item in engineering['dependencies']}
     if engineering['worker'] != engineering_worker or engineering['bootstrap'] != 'apps/engineering/worker.py' or engineering_allowed != {'OCP','cantera'}:
         errors.append('Invalid optional engineering-runtime dependency declaration')
         engineering_allowed = set()
-    studio=json.loads((ROOT/'modules/skills/studio3d/runtime.json').read_text(encoding='utf-8'))
+    studio=json.loads((scan_root/'modules/skills/studio3d/runtime.json').read_text(encoding='utf-8'))
     studio_worker='adapters/studio3d/worker.py'
     studio_allowed={x['import'] for x in studio['dependencies']}
     studio_support={'adapters/studio3d/asset_pipeline.py','adapters/studio3d/projection.py'}
@@ -88,16 +90,16 @@ def check():
     # try/except ImportError fallback so a stdlib-only install keeps working.
     accelerated = {'modules/context_knowledge/vectors.py': {'numpy'} & allowed}
     for layer in sorted(LAYERS):
-        for path in (ROOT / layer).rglob("*.py"):
+        for path in (scan_root / layer).rglob("*.py"):
             count += 1
             tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
             for node in ast.walk(tree):
                 names = [n.name for n in node.names] if isinstance(node, ast.Import) else ([node.module] if isinstance(node, ast.ImportFrom) and node.module else [])
                 for name in names:
                     top = name.split(".")[0]
-                    relative = path.relative_to(ROOT).as_posix()
+                    relative = path.relative_to(scan_root).as_posix()
                     if top not in sys.stdlib_module_names and top not in LAYERS and not (relative == worker and top in allowed) and not (relative == engineering_worker and top in engineering_allowed) and not (relative in {studio_worker,*studio_support} and top in studio_allowed) and not (relative == learning_worker and top in learning_allowed) and not (top in accelerated.get(relative, set()) and optional_import(tree, node)):
-                        errors.append(f"Unapproved dependency: {path.relative_to(ROOT)} -> {name}")
+                        errors.append(f"Unapproved dependency: {path.relative_to(scan_root)} -> {name}")
                     if layer == "sdk" and top in LAYERS - {"sdk"}:
                         errors.append(f"SDK depends on implementation: {name}")
                     if layer == "control" and top in {"host", "modules", "adapters", "apps"}:
@@ -105,16 +107,16 @@ def check():
                     if layer in {"modules", "adapters", "host"} and top == "apps" or layer in {"modules", "adapters"} and top == "host":
                         errors.append(f"Runtime dependency cycle: {name}")
                     if layer == "modules" and top == "modules":
-                        own = path.relative_to(ROOT).parts[1]
+                        own = path.relative_to(scan_root).parts[1]
                         if len(name.split(".")) > 1 and name.split(".")[1] != own:
                             errors.append(f"Cross-domain implementation import: {name}")
             for node in ast.walk(tree):
                 if isinstance(node, ast.Constant) and isinstance(node.value, str) and re.match(r"^[A-Za-z]:[/\\]", node.value):
-                    errors.append(f"Hardcoded machine runtime path: {path.relative_to(ROOT)}")
+                    errors.append(f"Hardcoded machine runtime path: {path.relative_to(scan_root)}")
     # Ratchet: known host import cycles may shrink, never grow or multiply.
-    baseline_path = ROOT / 'tools/architecture-baseline.json'
+    baseline_path = policy_root / 'tools/architecture-baseline.json'
     known = [set(c) for c in json.loads(baseline_path.read_text(encoding='utf-8'))['host_import_cycles']] if baseline_path.exists() else []
-    cycles = host_cycles(ROOT) if (ROOT / 'host').is_dir() else []
+    cycles = host_cycles(scan_root) if (scan_root / 'host').is_dir() else []
     for cycle in cycles:
         if not any(set(cycle) <= allowed for allowed in known):
             errors.append('New or grown host import cycle: ' + ', '.join(cycle))
@@ -123,4 +125,9 @@ def check():
 
 
 if __name__ == "__main__":
-    raise SystemExit(check())
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--root', type=Path)
+    parser.add_argument('--policy-root', type=Path)
+    args = parser.parse_args()
+    raise SystemExit(check(args.root, args.policy_root))

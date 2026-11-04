@@ -19,6 +19,7 @@ could read the session cookie. Household login has the same limitation.
 from __future__ import annotations
 
 import base64
+import hashlib
 import os
 import secrets
 import threading
@@ -100,14 +101,38 @@ def cookie_value(header, port) -> str:
 class LocalAccess:
     """Exchange the access key for short-lived, in-memory browser sessions."""
 
-    def __init__(self, root, key: str | None = None):
+    def __init__(self, root, key: str | None = None, *, persist_sessions=False):
         self.key = key or load_or_create_key(root)
+        self.session_path = child(root, 'private/workbench-sessions.dpapi') if persist_sessions else None
+        self.now = lambda: time.time() if self.session_path is not None else time.monotonic()
+        self.saved_at = 0
         self.lock = threading.Lock()
         self.sessions: dict[str, float] = {}
         self.attempts: list[float] = []
+        if self.session_path is not None and self.session_path.exists():
+            from control.credentials import load_envelope
+            try:
+                value = load_envelope(self.session_path)
+                if value.get('key_hash') == hashlib.sha256(self.key.encode()).hexdigest():
+                    self.sessions = {token: expiry for token, expiry in value.get('sessions', {}).items()
+                                     if isinstance(token, str) and token.isascii() and 32 <= len(token) <= 128
+                                     and isinstance(expiry, (int, float)) and self.now() < expiry <= self.now() + SESSION_SECONDS}
+            except (OSError, ValueError, TypeError, CoreError):
+                self.sessions = {}  # unreadable session state cannot unlock a host
+
+    def _save(self, *, force=False):
+        if self.session_path is None or not force and self.now() - self.saved_at < 300:
+            return
+        from control.credentials import crypt
+        import json
+        self.session_path.parent.mkdir(exist_ok=True)
+        value = {'key_hash': hashlib.sha256(self.key.encode()).hexdigest(), 'sessions': self.sessions}
+        write_json(self.session_path, {'schema_version': 1, 'format': 'windows-dpapi-current-user',
+                   'payload': base64.b64encode(crypt(json.dumps(value).encode())).decode()})
+        self.saved_at = self.now()
 
     def unlock(self, candidate) -> str:
-        now = time.monotonic()
+        now = self.now()
         with self.lock:
             self.attempts = [t for t in self.attempts if now - t < 60]
             if len(self.attempts) >= UNLOCK_ATTEMPTS_PER_MINUTE:
@@ -118,6 +143,7 @@ class LocalAccess:
             self.sessions = {k: v for k, v in self.sessions.items() if v > now}
             token = secrets.token_urlsafe(32)
             self.sessions[token] = now + SESSION_SECONDS
+            self._save(force=True)
             return token
 
     def valid(self, token) -> bool:
@@ -128,11 +154,12 @@ class LocalAccess:
             expires = self.sessions.get(token)
             if expires is None:
                 return False
-            now = time.monotonic()
+            now = self.now()
             if expires <= now:
                 del self.sessions[token]
                 return False
             self.sessions[token] = now + SESSION_SECONDS
+            self._save()
             return True
 
 

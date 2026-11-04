@@ -753,14 +753,16 @@ SQLite 仅明文索引对象 ID、种类、修订；内容、地址、令牌、c
 <a id="single-pc-development-paths"></a>
 ### 推荐目录与启动方式
 
-保留现有正式数据位置；已创建开发工作树与独立数据根。下表的完整应用 A/B 槽仍是计划；已运行的冻结代理包不等于整个应用的 A/B 升级器。
+保留现有正式数据位置；已创建开发工作树与独立数据根。2026-11-04 的应用控制器以逻辑 A/B 引用按摘要保存的代码目录，取代早期可变 A/B 文件夹计划；只在独立测试数据根核验，尚未用于日用数据。[应用级流程](evolution-release.md#single-pc-application-runtime)。
 
 | 路径示例 | 用途 |
 |---|---|
 | `D:/Jarvis/user-data/` | 当前正式记忆、配置、账号、任务和交付；唯一正式写入者 |
-| `D:/Jarvis/runtime/releases/A/`、`B/` | 计划中的完整应用当前／候选槽，尚未部署 |
-| `D:/Jarvis/runtime/active.json` | 计划中的完整应用版本选择与代际记录，尚未部署 |
-| `D:/Jarvis/runtime/staging/` | 计划中的应用安装验证区，不在活动槽上覆盖文件 |
+| `<数据根>/deployment/packages/<sha>/` | 应用代码包；逻辑 A/B 引用摘要，不覆盖活动包 |
+| `<数据根>/deployment/control.sqlite3` | 包、准入回执、活动／上一／候选版本、代际和控制事件 |
+| `<数据根>/state/application-host.json` | 从控制事务发布的接单／代际协调快照 |
+| `<数据根>/deployment/staging/`、`validation/` | 本次解包与独立验证的临时副本，只清理本次拥有的目录 |
+| `<数据根>/deployment/retired/<sha>/` | 可恢复的旧代码退役区，不保存旧业务数据库快照 |
 | `D:/Jarvis-dev/` | 已建立的开发工作树，跟踪 `codex/pc-environments` |
 | `D:/Jarvis-dev/user-data/` | 开发配置、合成记忆、测试任务与日志 |
 | `D:/Jarvis/user-data/development/proxy-releases/<hash>/` | 已冻结的第一方 Google 代理代码，不放个人业务数据库 |
@@ -805,7 +807,7 @@ D:\Jarvis-dev\StartJarvisDev.bat
 
 开发重任务先限制为一项，按需启动浏览器／Blender／模型 Worker；稳定交互优先。共用 API key 仍共用供应商配额与余额，不同本地数据根的费用上限不能自动合并为账户总上限。Google 受限代理已经运行；全机设备调度、账户总预算和正式数据只读视图仍待实现。开发服务与代理的单点工作集实测见[验收记录](delivery-validation.md#pc-environments-evidence)，不代表峰值、长期或 8 GiB PC 表现，不声称完全没有影响。
 
-落地顺序：确认可恢复基线 → 分离源码／数据／依赖 → 补测试 profile 与受限共享接口 → Mock 和只读联调 → 在文件传输助手等限定对象验证 → 建立 A/B 交接与故障恢复 → 有效维护授权覆盖后开放自动更新。前三项的本机种子已落地；当前共用现有 Python 可执行文件，不执行包安装或原地依赖升级。完整应用安装槽、独立 supervisor、跨实例设备／费用仲裁、微信接线和自动升级不是本轮已实现能力。本轮用户授权建立双环境，不据此扩大到重启日用服务或注册持续更新任务。
+落地顺序：确认可恢复基线 → 分离源码／数据／依赖 → 补测试 profile 与受限共享接口 → Mock 和只读联调 → 在文件传输助手等限定对象验证 → 建立 A/B 交接与故障恢复 → 有效维护授权覆盖后开放自动更新。前三项已落地，应用级控制器增加了隔离验收；日用采用仍受架构检查阻塞。当前共用既有 Python，未原地升级依赖；独立 supervisor、跨实例设备／费用仲裁、微信接线与无人值守更新仍未完成。不据此移走业务数据或注册持续更新任务。
 
 <!-- book-footer:start -->
 [返回工程主入口](../README.md) · [全书目录](../README.md#book-tree) · [上一章：公共接口与数据契约](contracts.md) · [下一章：模型路由、本地模型与离线生存](models-offline.md)

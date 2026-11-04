@@ -1,5 +1,7 @@
 # 版本记录
 
+2026-11-04 应用级安装与恢复控制器 v1（开发检查点）：新增独立候选包、当前控制器持有的验证、本机准入回执、逻辑 A/B、排空与代际、启动／失败恢复／回退、可恢复退役和浏览器会话接续；完成隔离进程与真实工作台接口检查。当前源码仍有原有 253 项架构诊断，实际准入正确拒绝，未升级日用版本或启用公开自动更新。[实施与命令](docs/evolution-release.md#single-pc-application-runtime)／[核验](docs/delivery-validation.md#application-release-evidence)。
+
 2026-10-30 单机双环境第一阶段（开发检查点，未发稳定版本）：已推送 `codex/pc-environments` 并建立独立开发工作树／数据；新增固定版本的 Google 受限代理、DPAPI 许可、调用账本、开发启动器和真实停止核验。真实开发对话、拒绝邮箱动作及单独重启通过，日用服务未重启；完整应用 A/B 更新、正式数据共享和原有 3D 架构问题尚未完成。[实现](docs/stack-project-layout.md#single-pc-development-runtime)／[验收](docs/delivery-validation.md#pc-environments-evidence)。
 
 2026-10-30 单机边用边开发方案（proposed）：明确稳定／开发环境分离、正式数据单一权威与受控共享，具体化 A/B 槽、MCP 局部更新及检查点接续；核对现有启动参数与缺口，未移动数据、建立第二实例或启用自动更新。[布局](docs/stack-project-layout.md#single-pc-development)／[更新接续](docs/evolution-release.md#single-pc-ab-upgrade)。

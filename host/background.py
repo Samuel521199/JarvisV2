@@ -5,11 +5,15 @@ from sdk.protocol import CoreError
 
 
 class BackgroundLane:
-    def __init__(self):
+    def __init__(self, root=None):
+        self.root = root
         self.lock=threading.Lock();self.pool=ThreadPoolExecutor(max_workers=1,thread_name_prefix='jarvis-background-model')
         self.future=None;self.active=None;self.kind=None;self.closed=False
 
     def submit(self, kind, ident, fn, *args):
+        if self.root is not None:
+            from control.application_runtime import require_accepting
+            require_accepting(self.root)
         with self.lock:
             if self.closed or self.future is not None and not self.future.done():raise CoreError('development_busy','Background model lane is occupied')
             self.kind=kind;self.active=ident;self.future=self.pool.submit(fn,*args)

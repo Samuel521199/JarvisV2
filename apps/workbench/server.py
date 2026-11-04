@@ -36,7 +36,7 @@ from control.paths import child, data_root
 from control.recovery.gate import StopGate
 from sdk.protocol import CoreError, canonical, decode, read_json
 from sdk.pricing import estimate
-from apps.workbench import family_http,mail_http
+from apps.workbench import family_http,mail_http,runtime_http
 from control import logs
 import logging
 
@@ -264,8 +264,13 @@ class Handler(BaseHTTPRequestHandler):
 
     def _do_POST(self):
         route = urlsplit(self.path)
+        if not self.origin_allowed(write=True): return self.json({'error': 'page_session'}, 403)
+        try:
+            runtime_owner = runtime_http.owner_control(self, route.path)
+        except (CoreError, OSError, ValueError, TypeError):
+            return self.json({'error': 'application_authorization'}, 403)
         token = self.headers.get('X-Jarvis-Token', '')
-        if (not self.origin_allowed(write=True) or (route.path not in {'/api/family/login', '/api/local-access'} and (not token or not token.isascii()
+        if (not self.origin_allowed(write=True) or (not runtime_owner and route.path not in {'/api/family/login', '/api/local-access'} and (not token or not token.isascii()
             or not getattr(self.server, 'nonce', '') or not secrets.compare_digest(token, self.server.nonce)))):
             return self.json({'error': 'page_session'}, 403)
         if route.query or self.headers.get('Transfer-Encoding') or self.headers.get('Content-Type') != 'application/json':
@@ -278,7 +283,7 @@ class Handler(BaseHTTPRequestHandler):
                 limit=MAX_GLB_UPLOAD_BYTES
             if not 0 < size <= limit: return self.json({'error': 'request_size'}, 413)
             # Authorize before accepting up to 40 MB from the client.
-            if not family_http.gate(self, route.path, write=True): return
+            if not runtime_owner and not family_http.gate(self, route.path, write=True): return
             self.connection.settimeout(10)
             raw = self.rfile.read(size)
             if len(raw) != size: return self.json({'error': 'request_size'}, 400)
@@ -293,6 +298,10 @@ class Handler(BaseHTTPRequestHandler):
                 body=decode_transfer(raw)
             else:body=decode(raw)
             root = data_root(self.server.data_root)
+            if runtime_http.post(self, route.path, body): return
+            if route.path not in {'/api/local-access', '/api/family/login', '/api/chat/cancel'}:
+                from control.application_runtime import require_accepting
+                require_accepting(root)
             from control.development_profile import read as development_profile
             if route.path == '/api/development/shutdown' and development_profile(root):
                 chats = self.server.dialogues.state()
@@ -451,17 +460,36 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--data-root", default=str(ROOT / "user-data")); parser.add_argument("--port", type=int, default=18282)
     parser.add_argument("--insecure-no-access-key", action="store_true", help="Only for disposable test data roots: rely on Host/Origin/nonce checks alone, as before 0.1.1.")
+    parser.add_argument('--application-build', default='')
+    parser.add_argument('--application-epoch', type=int, default=0)
     args = parser.parse_args()
     if not 1024 <= args.port <= 65535: parser.error("port out of range")
+    from control.application_runtime import coordination
+    from control.recovery.gate import RunLock
+    root = data_root(args.data_root)
+    current = coordination(root)
+    if args.application_build:
+        if (not current or current['phase'] != 'starting' or current['build'] != args.application_build
+                or current['epoch'] != args.application_epoch):
+            raise CoreError('application_epoch', 'A current managed launch reservation is required')
+    elif current is not None:
+        raise CoreError('application_managed', 'Start this data root through the managed application launcher')
+    with RunLock(root, 'workbench-host'):
+        _serve(args)
+
+
+def _serve(args):
     snapshot(args.data_root)
     server = ThreadingHTTPServer(("127.0.0.1", args.port), Handler)
     server.data_root = data_root(args.data_root)
+    server.application_build = args.application_build
+    server.application_epoch = args.application_epoch
     print("Diagnostic log: " + str(logs.configure(server.data_root)), flush=True)
     server.nonce = secrets.token_urlsafe(32)
     server.boot_id = secrets.token_hex(12)
     if not args.insecure_no_access_key:
         from control.local_access import LocalAccess
-        server.access = LocalAccess(server.data_root)
+        server.access = LocalAccess(server.data_root, persist_sessions=bool(args.application_build))
     try:
         from host.family import FamilyHost
         server.dialogues = DialogueHost(server.data_root)
@@ -475,13 +503,15 @@ def main():
             pass  # optional skill; its own readiness endpoint reports the problem
         server.local_models = create_manager(server.data_root)
         server.task_runner = TaskRunner(server.data_root, foreground_pending=lambda: any(r["lane"] == "foreground" for r in server.dialogues.state()["queued"]))
-        server.background_lane = BackgroundLane()
+        server.background_lane = BackgroundLane(server.data_root)
         server.development_runner = DevelopmentRunner(server.data_root,server.background_lane)
         server.goal_runner = GoalRunner(server.data_root,server.background_lane)
         server.growth_runner = GrowthRunner(server.data_root,server.background_lane)
         server.dialogues.on_goal=lambda ident:server.goal_runner.start({'id':ident,'retry_unknown':False})
     except BaseException: server.server_close(); raise
-    if hasattr(server, 'access'):
+    if hasattr(server, 'access') and args.application_build:
+        print('Jarvis managed workbench: http://127.0.0.1:' + str(server.server_port) + '/', flush=True)
+    elif hasattr(server, 'access'):
         print("Jarvis core workbench: http://127.0.0.1:" + str(server.server_port) + "/#access=" + server.access.key, flush=True)
         print("Keep this link private: it unlocks the workbench for this OS user.", flush=True)
     else:

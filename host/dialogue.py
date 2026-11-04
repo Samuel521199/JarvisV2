@@ -90,6 +90,8 @@ class DialogueHost:
         finally: store.close(); prefs.close()
 
     def _pump(self):
+        from control.application_runtime import accepting
+        if not accepting(self.root): return
         if self.closing.is_set(): return
         chats = {v['chat_id'] for v in self.running.values()}
         counts = {lane: sum(v['lane'] == lane for v in self.running.values()) for lane in ('foreground', 'background')}

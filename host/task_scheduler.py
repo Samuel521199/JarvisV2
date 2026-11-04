@@ -157,10 +157,13 @@ class TaskRunner:
             core = Core(self.root); store = Scheduling(core.db)
             while True:
                 self.wake.clear()
+                from control.application_runtime import accepting
+                admitted = accepting(self.root)
                 from host.outcomes import observe
-                observe(core, limit=32)
+                if admitted: observe(core, limit=32)
                 from host.completion import pump
-                try:pump(core)
+                try:
+                    if admitted: pump(core)
                 except Exception:  # Optional reconciliation cannot stop the execution scheduler.
                     logs.throttled(LOG, 'completion-pump', 'Completion reconciliation failed; dispatch continues')
                 with self.lock:
@@ -173,7 +176,7 @@ class TaskRunner:
                         self.results.append(result); self.results = self.results[-100:]
                         entry['permit'].close(); del self.active[ident]
                     rows = store.pending()
-                    if not self.closed:
+                    if not self.closed and admitted:
                         store.admit_waiting()
                         from host.waiting import advance
                         advance(core,store)
@@ -189,6 +192,7 @@ class TaskRunner:
                         if row['status'] in TERMINAL or row['cancel']:
                             store.mark(ident, finished=True); continue
                         if self.closed and not self.drain: continue
+                        if not admitted: continue
                         if core.gate.state() != 'ready':
                             store.mark(ident, reason='助手当前未允许执行'); continue
                         if core.db.one("SELECT 1 FROM actions WHERE task_id=? AND status='UNKNOWN'", (ident,)):
