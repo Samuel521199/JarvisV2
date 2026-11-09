@@ -1,0 +1,126 @@
+{
+  "passed": true,
+  "steps": [
+    {
+      "case": "normal_drain_and_stop",
+      "passed": true
+    },
+    {
+      "case": "stopped_backup_and_integrity",
+      "passed": true
+    },
+    {
+      "case": "compatible_baseline_adopted_and_launcher_installed",
+      "passed": true
+    },
+    {
+      "case": "stable_adopted_and_launcher_installed",
+      "passed": true
+    },
+    {
+      "case": "installed_launcher_and_shared_http_endpoints",
+      "passed": true
+    },
+    {
+      "case": "existing_business_settings_credentials_and_asset_metadata_preserved",
+      "passed": true
+    }
+  ],
+  "backup": {
+    "files": 1978,
+    "bytes": 56097642,
+    "databases": 16,
+    "tables": 88,
+    "asset_metadata_files": 10812,
+    "backup": "D:\\Jarvis-backups\\native-mail-20261109-a",
+    "integrity": "all ok"
+  },
+  "preservation": {
+    "passed": true,
+    "existing_tables_checked": 88,
+    "business_table_changes": [],
+    "derived_only_changes": [
+      {
+        "database": "state/core.sqlite3",
+        "table": "task_completion",
+        "only_changed_column": "checked"
+      }
+    ],
+    "dpapi_files_changed": [],
+    "dpapi_credential_files_checked": 4,
+    "browser_sessions": {
+      "passed": true,
+      "key_binding_unchanged": true,
+      "previous_valid_sessions_preserved": true,
+      "previous_valid_session_count": 1,
+      "previous_expired_session_count": 0,
+      "expired_sessions_revived": false,
+      "bounded_expiry": true,
+      "new_sessions": 1,
+      "expected_new_sessions": 1,
+      "scope": "semantic DPAPI payload check; never prints session tokens"
+    },
+    "config_session_files_checked": 1939,
+    "config_session_files_changed": [],
+    "stop_and_latch_presence_unchanged": true,
+    "asset_metadata_files_checked": 10812,
+    "assets_metadata_changed": [],
+    "scope": "all backed-up existing tables; encrypted DPAPI files; no claim of full asset-byte hashing"
+  },
+  "before": {
+    "active": {
+      "build": "9c873ed4efb46356c642a98c3c2d7b63f92e27497ebb5de51d4c9486e15f7b04",
+      "epoch": 6,
+      "slot": "B",
+      "version": "0.1.4"
+    },
+    "epoch": 6,
+    "error": null,
+    "pending": null,
+    "pending_epoch": null,
+    "phase": "active",
+    "previous": {
+      "build": "d208c2dd1f7ac12d792d9b435ff5256e26363466df94777c17b921331973e150",
+      "epoch": 5,
+      "slot": "A",
+      "version": "0.1.4-rc.1"
+    },
+    "schema": 1
+  },
+  "http": {
+    "/": 200,
+    "/companion": 200,
+    "/settings": 200,
+    "/api/instance": 200,
+    "/api/commitments": 200,
+    "/api/work-status": 200,
+    "/assistant-commitments.js": 200,
+    "/commitments.js": 200
+  },
+  "catalog": {
+    "sha256": "d98061349b09de1cd453ef0d83a41881d613d0491267249d280f61e087b33619",
+    "connections": 7,
+    "models": 21,
+    "unchanged": true
+  },
+  "after": {
+    "active": {
+      "build": "75dba9ce4e1b9e8ba2a49e9c575ce9d5abe29580b2099669fd270801b714b1d8",
+      "epoch": 8,
+      "slot": "B",
+      "version": "0.1.5"
+    },
+    "epoch": 8,
+    "error": null,
+    "pending": null,
+    "pending_epoch": null,
+    "phase": "active",
+    "previous": {
+      "build": "1c8659bb8c7d969a32eaf8a3bfb149f2375ae66ae9b8058e2c535dd5464859df",
+      "epoch": 7,
+      "slot": "A",
+      "version": "0.1.5-rc.1"
+    },
+    "schema": 1
+  }
+}

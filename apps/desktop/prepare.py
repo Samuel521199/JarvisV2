@@ -19,9 +19,11 @@ def prepare(root,binary):
     target=folder/(digest+'.exe')
     if not target.exists():shutil.copy2(binary,target)
     if hashlib.sha256(target.read_bytes()).hexdigest()!=digest:raise ValueError('Copy changed')
-    record={'schema':1,'protocol':1,'file':target.name,'sha256':digest,'reviewed_local_source':True,
-        'source_sha256':{str(path.relative_to(ROOT)):hashlib.sha256(path.read_bytes()).hexdigest()
-            for path in [ROOT/'apps/desktop/Cargo.toml',ROOT/'apps/desktop/Cargo.lock',ROOT/'apps/desktop/src/main.rs']}}
+    record={'schema':1,'protocol':2,'file':target.name,'sha256':digest,'reviewed_local_source':True,
+        'source_sha256':{path.relative_to(ROOT).as_posix():hashlib.sha256(path.read_bytes()).hexdigest()
+            for path in [ROOT/'apps/desktop/Cargo.toml',ROOT/'apps/desktop/Cargo.lock',ROOT/'apps/desktop/build.rs',
+                ROOT/'apps/desktop/tauri.conf.json',*(ROOT/'apps/desktop/src').glob('*.rs'),
+                *(ROOT/'apps/desktop/assets').glob('*')] if path.is_file()}}
     write_json(folder/'prepared.json',record);return {'prepared':True,'bytes':target.stat().st_size,'sha256':digest}
 
 

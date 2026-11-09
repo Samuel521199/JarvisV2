@@ -1,7 +1,7 @@
 """Personal durable commitments; no executor, model, external notification or grant.
 
-Schema 1 is additive in its own database. A future schema is never opened for
-writes. Revision is the user's schedule generation; becoming due doesn't change it.
+Schema 1 remains readable. A mail-source association atomically advances to 2;
+unknown versions are never written. Revision is the user's schedule generation.
 """
 from contextlib import contextmanager
 from datetime import datetime
@@ -21,9 +21,11 @@ def check_compatible(root):
     if not path.exists(): return
     db=sqlite3.connect(path.as_uri()+'?mode=ro',uri=True,timeout=5)
     try:
-        if db.execute('PRAGMA user_version').fetchone()[0] != 1:
+        version=db.execute('PRAGMA user_version').fetchone()[0]
+        if version not in (1,2):
             raise CoreError('commitment_schema','Unsupported commitment schema')
         db.execute('SELECT id,title,source,due_text,due_at,revision,status,posted_at,created,updated FROM commitments LIMIT 0')
+        if version==2:db.execute('SELECT id,reference,family FROM mail_sources LIMIT 0')
     finally: db.close()
 
 
@@ -49,7 +51,8 @@ class Commitments:
         try:
             with self.tx():
                 version = self.db.execute('PRAGMA user_version').fetchone()[0]
-                if version not in (0, 1): raise CoreError('commitment_schema', 'Unsupported commitment schema; no changes made')
+                if version not in (0, 1, 2): raise CoreError('commitment_schema', 'Unsupported commitment schema; no changes made')
+                if version==2:self.db.execute('SELECT id,reference,family FROM mail_sources LIMIT 0')
                 if version == 0:
                     if self.db.execute("SELECT 1 FROM sqlite_master WHERE type='table'").fetchone():
                         raise CoreError('commitment_schema', 'Unversioned database is not empty')
@@ -102,7 +105,10 @@ class Commitments:
                 if not isinstance(body[key],str) or not body[key].strip() or len(body[key]) > limit or '\x00' in body[key]:
                     invalid('Title and the original user note are required')
         elif type(body['revision']) is not int or body['revision'] < 1: invalid('Expected the current schedule revision')
-        if origin is not None and (not isinstance(origin,dict) or set(origin)!={'chat_id','turn_id','source_digest'}
+        mail_origin=isinstance(origin,dict) and set(origin)=={'mail_reference','mail_family'}
+        if mail_origin and (action!='create' or any(not isinstance(v,str) or not re.fullmatch('[a-f0-9]{64}',v) for v in origin.values())):
+            invalid('Invalid internal mail origin')
+        if origin is not None and not mail_origin and (not isinstance(origin,dict) or set(origin)!={'chat_id','turn_id','source_digest'}
                 or any(not isinstance(v,str) or not v or len(v)>200 for v in origin.values())):
             invalid('Invalid internal conversation origin')
         request_digest=digest(body) if origin is None else digest({'command':body,'origin':origin})
@@ -133,7 +139,12 @@ class Commitments:
             current = self.read(body['id'])
             self.db.execute('INSERT INTO operations VALUES(?,?,?,?)',
                 (body['request_id'],request_digest,body['id'],current['revision']))
-            if origin is not None:
+            if mail_origin:
+                self.db.execute('CREATE TABLE IF NOT EXISTS mail_sources(id TEXT PRIMARY KEY,reference TEXT NOT NULL,family TEXT NOT NULL)')
+                self.db.execute('CREATE INDEX IF NOT EXISTS mail_family ON mail_sources(family)')
+                self.db.execute('INSERT INTO mail_sources VALUES(?,?,?)',(body['id'],origin['mail_reference'],origin['mail_family']))
+                self.db.execute('PRAGMA user_version=2')
+            elif origin is not None:
                 # Additive schema-1 extension: the previous reader/writer ignores
                 # this provenance table and retains all base records unchanged.
                 self.db.execute('''CREATE TABLE IF NOT EXISTS conversation_operations(
@@ -146,6 +157,15 @@ class Commitments:
     def operation(self, request_id):
         row=self.db.execute('SELECT * FROM operations WHERE request_id=?',(request_id,)).fetchone()
         return {**dict(row),'current':self.read(row['id'])} if row else None
+
+    def mail_source(self,ident):
+        if self.db.execute('PRAGMA user_version').fetchone()[0]!=2:return None
+        row=self.db.execute('SELECT * FROM mail_sources WHERE id=?',(ident,)).fetchone()
+        return dict(row) if row else None
+
+    def mail_items(self,family):
+        if self.db.execute('PRAGMA user_version').fetchone()[0]!=2:return []
+        return [dict(row) for row in self.db.execute('SELECT c.* FROM commitments c JOIN mail_sources s ON s.id=c.id WHERE s.family=? ORDER BY c.created DESC LIMIT 100',(family,))]
 
     def origin(self, ident):
         if not self.db.execute("SELECT 1 FROM sqlite_master WHERE name='conversation_operations'").fetchone():return None

@@ -26,7 +26,8 @@ def advance(root):
 
 def projection(root):
     if not exists(root): return []
-    with Commitments(root) as store: rows=store.listing()
+    with Commitments(root) as store:
+        rows=store.listing();mail_ids={row['id'] for row in rows if store.mail_source(row['id'])}
     items=[]
     for row in rows:
         state={'OPEN':'waiting','DUE':'needs_input','DONE':'finished','CANCELLED':'cancelled'}[row['status']]
@@ -35,7 +36,7 @@ def projection(root):
             'DUE':'已到期并进入本地提醒视图；已阅不等于事项已完成','DONE':'主人已标记完成','CANCELLED':'主人已取消'}[row['status']],
             'result_revision':row['revision'],'revision':row['revision'],'due_at':row['due_at'],
             'due_text':row['due_text'],'posted_at':row['posted_at'],'source_note':row['source'],
-            'cancelable':row['status'] in ('OPEN','DUE')})
+            'cancelable':row['status'] in ('OPEN','DUE'),'source_kind':'mail' if row['id'] in mail_ids else 'personal'})
     return items
 
 
@@ -54,4 +55,5 @@ def detail(root, ident):
         origin=store.origin(ident)
         return {'current':store.read(ident),'history':store.history(ident),'source_kind':'chat_turn' if origin else 'user_note',
                 'conversation_origin':origin,
+                'mail_origin':store.mail_source(ident),
                 'completion_evidence':'user_marked_only','delivery':'local_work_view_only'}

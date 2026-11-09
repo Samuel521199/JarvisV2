@@ -1,0 +1,188 @@
+{
+  "schema": 1,
+  "version": "0.1.5",
+  "source_base": "0eec39237497a76fc4b21a2ab54e9f359964ed35",
+  "runtime_build": "75dba9ce4e1b9e8ba2a49e9c575ce9d5abe29580b2099669fd270801b714b1d8",
+  "runtime_files": 636,
+  "adopted": true,
+  "full_regression": {
+    "passed": true,
+    "tests": 1543,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 11,
+    "seconds": 618.5519991000001
+  },
+  "independent_candidate_gate": {
+    "tests": 190,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1
+  },
+  "runtime_closure": {
+    "passed": true,
+    "real_host_and_dispatcher": true,
+    "gmail_adapter": "synthetic, never Google",
+    "model_calls": 0,
+    "real_mail_writes": 0,
+    "steps": [
+      {
+        "case": "cached_read_to_one_shared_commitment",
+        "passed": true
+      },
+      {
+        "case": "actual_dispatcher_reminder_and_read_is_not_done",
+        "passed": true
+      },
+      {
+        "case": "encrypted_local_draft_has_no_remote_effect",
+        "passed": true
+      },
+      {
+        "case": "exact_review_one_synthetic_effect_and_linked_receipt",
+        "passed": true
+      },
+      {
+        "case": "owner_feedback_updates_same_mail_and_work_record",
+        "passed": true
+      },
+      {
+        "case": "restart_disconnect_and_replay_preserve_feedback_without_old_body",
+        "passed": true
+      },
+      {
+        "case": "shared_routes_and_components_served",
+        "passed": true
+      }
+    ],
+    "all_owned_hosts_stopped": true
+  },
+  "controller": {
+    "passed": true,
+    "steps": 6,
+    "same_code_recovery_baseline": true
+  },
+  "native": {
+    "schema": 1,
+    "root_cause": "Tauri remote application commands had no AppManifest permissions; native handler was never called. CSP unchanged.",
+    "initial_native_route_pass": {
+      "controls": 4,
+      "blank_samples": 459,
+      "blank_hits": 0
+    },
+    "robot_independence_counterexample": "Owner reported dragging the single window moved all four labels.",
+    "manual_feedback": {
+      "raw_answer": "1",
+      "recorded_as": "first option: independent dragging and clicking normal, multi-monitor deferred",
+      "automated_user_input": false
+    },
+    "final_native": {
+      "separate_windows": [
+        "presence",
+        "robot"
+      ],
+      "dock_control_hits": 3,
+      "dock_blank_samples": 465,
+      "dock_blank_hits": 0,
+      "robot_control_hits": 1,
+      "robot_blank_samples": 5,
+      "robot_blank_hits": 0,
+      "protocol": 2,
+      "profile": "<data-root>/optional/desktop-presence/webview",
+      "binary_sha256": "8c3d52501cefb62159af72aebc387465bb110d344b9dcc2636a992e6d9ac2fbf",
+      "unverified": [
+        "actual multi-monitor/DPI crossing",
+        "long-term resource behavior",
+        "tray and keyboard interaction beyond owner feedback"
+      ]
+    }
+  },
+  "native_local_binary_bytes": 17714688,
+  "resource_sample": {
+    "processes": 9,
+    "working_set_sum_bytes": 549367808,
+    "private_memory_sum_bytes": 294875136,
+    "scope": "one observation; shared pages may be double counted; not long-term or 8 GiB PC qualification"
+  },
+  "architecture": {
+    "python_files": 438,
+    "existing_host_cycle_modules": 20,
+    "errors": 0,
+    "baseline_relaxed": false
+  },
+  "documents": {
+    "documents": 32,
+    "chapters": 25,
+    "diagrams": 46,
+    "local_links": 4518,
+    "errors": 0
+  },
+  "production_backup": {
+    "files": 1978,
+    "bytes": 56097642,
+    "databases": 16,
+    "tables": 88,
+    "asset_metadata_files": 10812,
+    "backup": "D:\\Jarvis-backups\\native-mail-20261109-a",
+    "integrity": "all ok"
+  },
+  "post_native_preservation": {
+    "passed": true,
+    "existing_tables_checked": 88,
+    "business_table_changes": [],
+    "derived_only_changes": [
+      {
+        "database": "state/core.sqlite3",
+        "table": "task_completion",
+        "only_changed_column": "checked"
+      }
+    ],
+    "dpapi_files_changed": [],
+    "dpapi_credential_files_checked": 4,
+    "browser_sessions": {
+      "passed": true,
+      "key_binding_unchanged": true,
+      "previous_valid_sessions_preserved": true,
+      "previous_valid_session_count": 1,
+      "previous_expired_session_count": 0,
+      "expired_sessions_revived": false,
+      "bounded_expiry": true,
+      "new_sessions": 3,
+      "expected_new_sessions": 3,
+      "scope": "semantic DPAPI payload check; never prints session tokens"
+    },
+    "config_session_files_checked": 1939,
+    "config_session_files_changed": [],
+    "stop_and_latch_presence_unchanged": true,
+    "asset_metadata_files_checked": 10812,
+    "assets_metadata_changed": [],
+    "scope": "all backed-up existing tables; encrypted DPAPI files; no claim of full asset-byte hashing"
+  },
+  "instances": {
+    "18282": {
+      "service": "jarvis-workbench",
+      "application_build": "75dba9ce4e1b9e8ba2a49e9c575ce9d5abe29580b2099669fd270801b714b1d8",
+      "application_epoch": 8,
+      "presence_protocol": 2,
+      "root_digest": "9a4acbf34631da92ab695aafcae71614795c697adaff2e7da372b79442d04199"
+    },
+    "18283": {
+      "service": "jarvis-workbench",
+      "application_build": "",
+      "application_epoch": 0,
+      "presence_protocol": 2,
+      "root_digest": "37ccebd7c5e8a42dc51477bd309cd06d7f3aad550c1b24d1be48a7986b529e9f"
+    }
+  },
+  "cloud_model_calls_in_this_round": 0,
+  "real_mail_writes": 0,
+  "first_formal_stage_failure": "Windows directory rename returned access denied; normal bounded retry succeeded; no permissions/security settings or validation policy changed",
+  "remaining": [
+    "actual multi-monitor and DPI crossing",
+    "full tray/keyboard acceptance",
+    "long-term/low-memory behavior",
+    "real Gmail writes",
+    "broad autonomous mail delegation and independently validated business completion"
+  ],
+  "raw_logs": "Retained byte-for-byte; source whitespace checks do not rewrite evidence logs"
+}

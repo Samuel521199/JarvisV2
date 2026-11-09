@@ -8,7 +8,11 @@
     "windows": [],
     "security": { "capabilities": [
       { "identifier": "presence-local", "windows": ["presence"],
-        "remote": { "urls": ["http://127.0.0.1:*/*"] }, "permissions": [] }
+        "remote": { "urls": ["http://127.0.0.1:*/companion/native"] },
+        "permissions": ["allow-presence-regions", "allow-presence-status", "allow-presence-workbench"] },
+      { "identifier": "presence-robot", "windows": ["robot"],
+        "remote": { "urls": ["http://127.0.0.1:*/companion/native-robot"] },
+        "permissions": ["allow-presence-regions", "allow-presence-drag", "allow-presence-toggle"] }
     ] }
   },
   "bundle": { "active": false }

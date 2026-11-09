@@ -3,3 +3,9 @@
 .native-presence .companion{right:14px;bottom:14px}
 .native-presence .robot{animation:none}
 .native-presence .floating-card,.native-presence .project-dialog,.native-presence .mail-dialog{bottom:20px}
+.native-presence:not(.native-robot) .companion{display:none}
+.native-robot .desktop{min-height:0;height:100dvh;width:100vw}
+.native-robot .desktop>:not(.companion),.native-robot>body>#error,.native-robot dialog{display:none!important}
+.native-robot .companion{inset:0;display:grid;place-items:center}
+.native-robot .robot{width:74px;height:74px}
+.native-robot .presence-dot{right:10px;top:14px}

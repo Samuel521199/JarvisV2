@@ -64,7 +64,7 @@ class ApplicationCompatibility(unittest.TestCase):
     def test_unknown_store_version_rejects_even_current_package(self):
         current=self.candidate('current',True,True);self.note()
         db=sqlite3.connect(self.root/'state/commitments.sqlite3')
-        try:db.execute('PRAGMA user_version=2');db.commit()
+        try:db.execute('PRAGMA user_version=3');db.commit()
         finally:db.close()
         with self.assertRaises(CoreError):self.app.adopt(current,self.driver)
         self.assertEqual(self.driver.events,[])

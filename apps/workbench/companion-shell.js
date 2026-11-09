@@ -86,4 +86,4 @@ async function boot(){
  document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh();});if(location.pathname==='/companion/native')await import('./native-presence.js');await refresh();const timer=setInterval(refresh,5000);
  window.addEventListener('pagehide',()=>{clearInterval(timer);cleanup();},{once:true});
 }
-run(boot);
+if(location.pathname==='/companion/native-robot')import('./native-presence.js');else run(boot);

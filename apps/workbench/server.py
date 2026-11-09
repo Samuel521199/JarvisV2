@@ -52,6 +52,7 @@ ASSETS['/brand/'] = ('brand-preview.html', 'text/html')
 ASSETS['/conversation'] = ('index.html', 'text/html')
 ASSETS['/companion'] = ('companion.html', 'text/html')
 ASSETS['/companion/native'] = ('companion.html', 'text/html')
+ASSETS['/companion/native-robot'] = ('companion.html', 'text/html')
 ASSETS['/companion/'] = ('companion.html', 'text/html')
 for asset in Path(__file__).parent.glob('*'):
     if asset.suffix in {'.js', '.css', '.svg'}:

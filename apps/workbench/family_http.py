@@ -67,6 +67,7 @@ def get(handler, path):
                       'boot_id': getattr(handler.server, 'boot_id', ''), 'family_version': '1.0.0',
                       'environment': 'development' if development_profile(handler.server.data_root) else 'stable',
                       'application_build': getattr(handler.server, 'application_build', ''),
+                      'presence_protocol': 2,
                       'application_epoch': getattr(handler.server, 'application_epoch', 0)})
         return True
     if path == '/api/family/status':

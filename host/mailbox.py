@@ -12,6 +12,7 @@ from adapters.mail.oauth import authorize
 from control.network import NetworkGate
 from control.recovery.gate import StopGate,RunLock
 from modules.mail.store import MailStore
+from modules.mail.provenance import fingerprint
 from sdk.mail import CHANGES,LEVELS,address,capabilities,classify,client_configuration,draft,encoded_message,identifier
 from sdk.protocol import CoreError,digest
 from control import logs
@@ -47,10 +48,10 @@ class Mailbox:
         try:
             a=store.get('account',True);client=store.get('client',True)
             return {'version':'1.0.0','provider':'gmail','configured':bool(client),'connected':bool(a and a.get('credentials')),
-                    'email':a.get('email','') if a else '', 'health':a.get('health','unchecked') if a else 'disconnected',
+                    'email':a.get('email','') if a else '', 'account_generation':a.get('generation','') if a else '', 'health':a.get('health','unchecked') if a else 'disconnected',
                     'checked_at':a.get('checked_at') if a else None,'capabilities':capabilities(a.get('credentials',{}).get('scope','')) if a else capabilities(''),
                     'authorization':{k:v for k,v in (self.auth or {}).items() if k!='future'},
-                    'jobs':[public_job(j) for j in store.listing('job',40)],'drafts':store.listing('draft',30),
+                    'jobs':[public_job(j) for j in store.listing('job',40) if a and j.get('generation')==a.get('generation')], 'drafts':store.listing('draft',30),
                     'rules':store.listing('rule',100),'network_blocked':NetworkGate(self.root).read()['blocked']}
         finally:store.close()
     def guard(self,job_id=None,generation=None):
@@ -224,7 +225,7 @@ class Mailbox:
             def cache(m):
                 key='message-'+m['id'];old=store.get(key,True)
                 with store.transaction():store.put({'id':key,'kind':'message','message':m,'account_generation':generation},old['revision'] if old else 0)
-                return {**m,'classification':classify(m,store.listing('rule'))}
+                return {**m,'classification':classify(m,store.listing('rule')),'account_generation':generation,'source_digest':fingerprint(m)}
             if operation=='check':result=api.profile()
             elif operation in {'list','sync'}:
                 result=api.listing(payload['query'],payload['page']);result['messages']=[cache(m) for m in result['messages']]

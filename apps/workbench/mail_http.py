@@ -22,5 +22,8 @@ def get(handler,path):
 
 
 def post(handler,path,value):
+    if path=='/api/mail-work':
+        from host.mail_work import command
+        handler.json(command(handler.server.data_root,service(handler),value,getattr(handler.server,'task_runner',None)));return True
     if path!='/api/mail':return False
     handler.json(service(handler).command(value));return True

@@ -65,6 +65,7 @@
 - [三领域对照 1.11.0 的实际契约](#workflow-trials-contract)
 - [正文忠实性 1.12.0 的实际契约](#workflow-fidelity-contract)
 - [交付影子核对 1.13.0 的实际契约](#workflow-shadow-contract)
+- [原生精灵双窗口协议 2](#native-two-window-contract)
 <!-- book-nav:end -->
 
 <a id="contracts-implementation-index"></a>
@@ -1154,6 +1155,23 @@ v1的输入及结果含义保持；新增`jarvis.work-trials.v2`在每轮增加�
 | 隔离与权限 | 仅同聊天依据；不自动读附件、其他聊天或知识库来建真值；不执行计划、不发信、不安排提醒、不写正式知识/业务评分，不额外请求模型 |
 
 工作台的依据编辑草稿复用原会话草稿目录；提交后取消更新勾选，未提交失败时保留。清空当前依据不是删除历史原消息，也不代替正式知识的纠正/遗忘流程。`tools.work_trials --basis-inputs`可加载独立于隐藏答案的用户声明包并冻结，采集真实交付观察；输入声明属于试验条件，不冒充自然语言自动提取成果。[实施](core-bootstrap.md#workflow-shadow-runtime) · [验证](delivery-validation.md#workflow-shadow-evidence)。
+
+<a id="native-two-window-contract"></a>
+## 原生精灵双窗口协议 2
+
+原生进程只有两个呈现窗口：`presence`加载`/companion/native`，负责停靠标签和展开卡片；`robot`加载`/companion/native-robot`，只呈现机器人。两者仍复用同一个`companion.html`及机器人SVG，后者跳过工作/邮件后台轮询，不启动第二套任务或聊天逻辑。拖动只对`robot`调用系统窗口拖动，标签不会跟随；不按标签边界钳制机器人坐标。托盘的屏幕菜单移动标签停靠处，“召回精灵”恢复机器人到主屏；多显示器真实操作仍须分项验收。
+
+宿主`/api/instance.presence_protocol=2`，可选二进制登记也声明协议2；启动器拒绝不匹配组合。启动信息以stdin传递协议、数据根、固定回环地址和访问钥匙，不将钥匙放入进程参数或日志。两个WebView使用数据根下的`optional/desktop-presence/webview`，不会为新版本改用全局应用配置目录。旧原型遗留的试验缓存不在本轮业务数据迁移/清理范围。
+
+| 命令 | 可调用窗口与页面 | 作用 |
+|---|---|---|
+| `presence_regions` | presence/native、robot/native-robot分别授权 | 验证有界矩形和DPI，更新调用者自己的原生区域；没有有效区域前保持窗口隐藏 |
+| `presence_drag`、`presence_toggle` | 仅robot/native-robot | 系统拖动机器人，或通知停靠页开合同一个聊天卡片 |
+| `presence_status`、`presence_workbench` | 仅presence/native | 向机器人转发限定状态枚举，或打开固定工作台地址 |
+
+权限由显式AppManifest生成，按窗口和精确页面路径授予，不授予文件、终端、任意系统操作或通用Tauri核心权限。Root/Robot导航仅允许既定回环源；HTTP的Owner/Cookie/Origin/nonce和家庭隔离继续生效，CSP保持原样。几何更新为单请求在途、后续保留最新值，隐藏/滚动/动画结束重新取样，避免旧区域反向覆盖新区域。
+
+GDI区域与`WindowFromPoint`的自检只说明系统命中路由，不冒充真实点击。当前独立拖动/点击另有主人反馈，多屏/DPI实机移动和长期资源表现仍保留待验。具体证据见[原生及邮件闭环验收](delivery-validation.md#native-mail-20261109)。
 
 <!-- book-footer:start -->
 [返回工程主入口](../README.md) · [全书目录](../README.md#book-tree) · [上一章：主人利益原则、身份授权与停止控制](security-sovereignty.md) · [下一章：技术栈、源码目录与运行数据](stack-project-layout.md)

@@ -56,7 +56,7 @@
 - [原生能力边界与可部署文件（v0.1.2）](#native-capability-boundary)
   - [外部 Worker 生命周期（开发实现，2026-11-08）](#worker-process-lifetime)
   - [日用安装、开发与恢复控制器](#daily-managed-installation)
-- [可选原生薄壳原型（未日用启用）](#native-presence-prototype)
+- [可选原生薄壳与双窗口](#native-presence-prototype)
 <!-- book-nav:end -->
 
 <a id="technology-selection"></a>
@@ -867,13 +867,13 @@ D:\Jarvis-dev\StartJarvisDev.bat
 恢复控制器放在 `deployment/controllers/<build>`，带自己的检查器及回归测试；应用包退役不删除它。控制器本身的自动更新尚未实现，源码修改不会让它自动采用新规则。原工作树和未提交内容保留；开发仍在独立 worktree，Google 代理继续使用原已批准冻结版本。完整命令与恢复语义见[应用级交接](evolution-release.md#single-pc-application-runtime)。
 
 <a id="native-presence-prototype"></a>
-## 可选原生薄壳原型（未日用启用）
+## 可选原生薄壳与双窗口
 
-`apps/desktop/`仅负责本机窗口、托盘、显示器位置和命中区域；实际页面仍为 `/companion/native` → 原 `companion.html`，模型选择、聊天、邮件、待办、停止与结果已阅复用同一组件和API。没有第二套聊天/任务/邮箱服务，也不占用执行器或Host锁。Windows原型使用Tauri 2.11.5、系统WebView2；Rust构建依赖按Cargo.lock固定，只在显式本机构建时使用，不成为Python日用安装前置条件。macOS/Linux尚未做原生命中区域适配。
+`apps/desktop/`负责窗口、托盘、显示器位置与命中区域。双窗口协议2及权限边界唯一维护在[呈现契约](contracts.md#native-two-window-contract)：机器人和标签/卡片独立，仍加载原同一份HTML、SVG及共用API；机器人不启动第二套业务轮询。Windows实现使用固定Tauri 2.11.5和系统WebView2，Cargo.lock固定构建依赖，普通Python日用启动不要求安装Rust编译环境。macOS/Linux的原生命中区域适配未完成。
 
-`launcher.py`先验证同一数据根Host和本地登记的二进制摘要，通过stdin传递本机访问钥匙，不放进进程参数或日志；Rust限制回环源并使用窗口专属单例。`prepare.py --reviewed-source`是人工审阅后登记本地可选二进制的工具，不是自动下载器或任意来源信任证明。`--companion`为显式可选启动参数，未登记时失败，不静默安装依赖；默认工作台启动方式不变。
+`prepare.py --reviewed-source`登记经本机审阅/编译的可选二进制及全部Rust/构建配置来源摘要，不是任意下载文件的安全认证。`launcher.py`验证摘要、同一数据根Host及`presence_protocol=2`，通过stdin传递访问钥匙；WebView数据放在本数据根的`optional/desktop-presence/webview`。旧协议1组合拒绝启动，避免新页面与旧壳混用。`StartJarvis.bat --companion`为显式可选入口；默认工作台启动方式不变。
 
-原型存在[真实透传验收失败](delivery-validation.md#assistant-release-20261109)，因此不得把编译成功、透明可见或关闭窗口不影响后台作为完整桌面验收。完成空白透传、托盘恢复、多屏/DPI、重启/锁屏及资源验证前，不向日用数据根登记二进制。生成的`gen/`、编译`target/`和本机exe不入库。
+首次原型曾透传失败，保留[旧反例](delivery-validation.md#assistant-release-20261109)。本轮补齐AppManifest权限、系统区域自检，并按主人反馈拆出独立机器人；实际验收、当前采用及未验多屏边界见[本轮记录](delivery-validation.md#native-mail-20261109)。编译产物、PDB、`gen/`、自动生成权限文件与测试截图不入Git；日用可选exe只存本地数据根。注册壳、部署Host和恢复业务数据是三个不同动作，不能用复制业务快照来恢复旧代码。
 
 <!-- book-footer:start -->
 [返回工程主入口](../README.md) · [全书目录](../README.md#book-tree) · [上一章：公共接口与数据契约](contracts.md) · [下一章：模型路由、本地模型与离线生存](models-offline.md)

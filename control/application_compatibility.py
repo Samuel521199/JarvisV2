@@ -19,9 +19,10 @@ def required(root):
         db=sqlite3.connect(path.as_uri()+'?mode=ro',uri=True,timeout=5)
         try:
             if name=='commitments':
-                if db.execute('PRAGMA user_version').fetchone()[0]!=1:
+                version=db.execute('PRAGMA user_version').fetchone()[0]
+                if version not in (1,2):
                     raise CoreError('application_data_compatibility','Unknown commitment database version')
-                if db.execute('SELECT 1 FROM commitments LIMIT 1').fetchone():needs['commitments_schema']=1
+                if version==2 or db.execute('SELECT 1 FROM commitments LIMIT 1').fetchone():needs['commitments_schema']=version
             elif db.execute("SELECT 1 FROM sqlite_master WHERE name='turns'").fetchone():
                 columns={row[1] for row in db.execute('PRAGMA table_info(turns)')}
                 if 'assistant_action' not in columns:continue
@@ -43,7 +44,7 @@ def require_compatible(root,package):
             declared=json.loads(path.read_text(encoding='utf-8'))
             if (not isinstance(declared,dict) or set(declared)!={'schema','commitments_schema','assistant_commitments'}
                     or type(declared['schema']) is not int or declared['schema']!=1
-                    or type(declared['commitments_schema']) is not int or declared['commitments_schema'] not in (0,1)
+                    or type(declared['commitments_schema']) is not int or declared['commitments_schema'] not in (0,1,2)
                     or type(declared['assistant_commitments']) is not bool):
                 raise ValueError('Invalid compatibility declaration')
         if (needs['commitments_schema']>declared['commitments_schema'] or

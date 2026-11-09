@@ -1,3 +1,5 @@
+import {mailWorkSection} from './mail-work.js';
+import {localDraftForm} from './mail-draft.js';
 import {mailApi} from './mail-client.js';
 import {el} from './ui.js';
 
@@ -104,7 +106,7 @@ export function mountMailCompanion(){
  function renderDetail(content){
   content.append(action('← 返回邮件',()=>{detail=null;render();}),el('h3',detail.subject||'无主题'),el('p',detail.from+' · '+detail.date,'tiny'));
   if(detail.classification)content.append(el('p',detail.classification.reason,'hint'));
-  const body=el('div',cleanText(detail.body||detail.snippet)||'邮件没有文字内容。','mail-detail-body');content.append(body);
+  const body=el('div',cleanText(detail.body||detail.snippet)||'邮件没有文字内容。','mail-detail-body');content.append(body);void mailWorkSection(content,detail);
   const buttons=el('div',undefined,'actions');buttons.append(action('起草回复',()=>{
    buffer={to:senderAddress(detail.from),subject:/^re:/i.test(detail.subject)?detail.subject:'Re: '+detail.subject,body:''};draftId='';draftRevision=0;render();
   },'action primary'),external('完整管理 ↗','/settings#mail'));
@@ -113,14 +115,8 @@ export function mountMailCompanion(){
  }
  function renderDraft(content){
   content.append(action('← 返回邮件',()=>{buffer=null;render();}),el('h3','起草回复'));
-  for(const [name,label] of [['to','收件人'],['subject','主题'],['body','正文']]){
-   const field=el('label',label,'live-mail-field'),input=el(name==='body'?'textarea':'input');input.value=buffer[name];input.setAttribute('aria-label',label);input.maxLength=name==='body'?30000:name==='to'?254:200;
-   input.oninput=()=>buffer[name]=input.value;field.append(input);content.append(field);
-  }
-  content.append(action('保存本地草稿',async()=>{
-   const d=await mailApi.command({action:'draft',id:draftId,revision:draftRevision,value:buffer});draftId=d.id;draftRevision=d.revision;
-   showError('草稿已加密保存在 Jarvis；到完整管理的“写邮件”中审阅发送。');
-  },'action primary'),external('在工作台审阅发送 ↗','/settings#mail'),el('p','此处保存只写本机，尚未发送到 Google。','hint'));
+  localDraftForm(content,{buffer,draftId,draftRevision,onSaved:record=>{draftId=record.id;draftRevision=record.revision;}});
+  content.append(el('p','草稿、审阅和发送复用工作台接口；保存草稿不会自动结案。','hint'));
  }
  document.addEventListener('jarvis:open-mail',open);
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!panel.hidden)close();});

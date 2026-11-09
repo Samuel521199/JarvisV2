@@ -106,7 +106,7 @@ class CommitmentTests(unittest.TestCase):
     def test_future_schema_rejected_and_core_schema_unchanged(self):
         with Commitments(self.root):pass
         target=self.root/'state/commitments.sqlite3'
-        with closing(sqlite3.connect(target)) as db:db.execute('PRAGMA user_version=2');db.commit()
+        with closing(sqlite3.connect(target)) as db:db.execute('PRAGMA user_version=3');db.commit()
         with self.assertRaises(CoreError):Commitments(self.root)
         with self.assertRaises(CoreError):check_compatible(self.root)
         from apps.workbench import runtime_http
@@ -114,7 +114,7 @@ class CommitmentTests(unittest.TestCase):
         handler=SimpleNamespace(server=SimpleNamespace(data_root=self.root,application_build='a'*64,application_epoch=1))
         with self.assertRaises(CoreError):
             runtime_http.post(handler,'/api/runtime/health',{'build':'a'*64,'epoch':1})
-        with closing(sqlite3.connect(target)) as db:self.assertEqual(db.execute('PRAGMA user_version').fetchone()[0],2)
+        with closing(sqlite3.connect(target)) as db:self.assertEqual(db.execute('PRAGMA user_version').fetchone()[0],3)
         with closing(sqlite3.connect(self.root/'state/core.sqlite3')) as db:self.assertEqual(db.execute('PRAGMA user_version').fetchone()[0],7)
 
     def test_failed_change_rolls_back_record_history_and_idempotency(self):

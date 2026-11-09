@@ -1,0 +1,76 @@
+{
+  "passed": true,
+  "scope": "disposable real controller installation and recovery; synthetic data only",
+  "production_adopted": false,
+  "same_code_baseline": true,
+  "steps": [
+    {
+      "case": "old_pinned_launcher_restart",
+      "passed": true,
+      "version": "0.1.4",
+      "bootstrap_sha256": "9d80f3fe55999e06a07cbde09165d583c21e904a984fd678e3d0bd686836227e"
+    },
+    {
+      "case": "new_controller_installed_and_root_launcher_restarts_with_existing_data",
+      "passed": true,
+      "bootstrap_sha256": "ec5e6e9fd1a3b585be711da449cb12f2fea7741e510a5cad3b9e011c03af9193"
+    },
+    {
+      "case": "actual_legacy_package_refused_with_schema_two_mail_reference",
+      "passed": true
+    },
+    {
+      "case": "stable_adoption_preserves_record",
+      "passed": true
+    },
+    {
+      "case": "compatible_baseline_rollback_preserves_record_and_encrypted_mail_source",
+      "passed": true
+    },
+    {
+      "case": "stable_pinned_launcher_restart_and_config_unchanged",
+      "passed": true,
+      "epoch": 8
+    }
+  ],
+  "packages": {
+    "baseline": {
+      "build": "1c8659bb8c7d969a32eaf8a3bfb149f2375ae66ae9b8058e2c535dd5464859df",
+      "version": "0.1.5-rc.1",
+      "validation": {
+        "architecture_error_count": 0,
+        "architecture_passed": true,
+        "architecture_sample": [],
+        "passed": true,
+        "policy_sha256": "a2949c587a373c7ca536c5b60bba47167b9038c9dd496dae395d657ace0a0f8a",
+        "reviewed_source": true,
+        "runtime_intact": true,
+        "schema": 1,
+        "test_log": "0.1.5-rc.1-2a3a96dcb8ce498fb19b1852ac8b950f.log",
+        "test_log_sha256": "6167d007e7a5f1c613abb08611b448b2603599e747df186e520845e2ca1d5809",
+        "tests_passed": true,
+        "tests_summary": "190 0 0 1"
+      }
+    },
+    "stable": {
+      "build": "75dba9ce4e1b9e8ba2a49e9c575ce9d5abe29580b2099669fd270801b714b1d8",
+      "version": "0.1.5",
+      "validation": {
+        "architecture_error_count": 0,
+        "architecture_passed": true,
+        "architecture_sample": [],
+        "passed": true,
+        "policy_sha256": "a2949c587a373c7ca536c5b60bba47167b9038c9dd496dae395d657ace0a0f8a",
+        "reviewed_source": true,
+        "runtime_intact": true,
+        "schema": 1,
+        "test_log": "0.1.5-399e6a174c104fc78f77fc44f73f8c13.log",
+        "test_log_sha256": "9c3332d7df7e4d6fa8fb52c33f7bb9d602a879f6d95cc6c137f984f883a49e29",
+        "tests_passed": true,
+        "tests_summary": "190 0 0 1"
+      }
+    }
+  },
+  "before_build": "9c873ed4efb46356c642a98c3c2d7b63f92e27497ebb5de51d4c9486e15f7b04",
+  "final_phase": "stopped"
+}
