@@ -1,0 +1,121 @@
+{
+  "date": "2026-11-08",
+  "scope": "development checkout only",
+  "deployed": false,
+  "environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.0"
+  },
+  "checks": [
+    {
+      "command": [
+        "python",
+        "tools/sync_doc_navigation.py",
+        "--root",
+        "."
+      ],
+      "exit_code": 0,
+      "output": "OK navigation: 2 updated\n"
+    },
+    {
+      "command": [
+        "python",
+        "tools/check_docs.py",
+        "--root",
+        "."
+      ],
+      "exit_code": 0,
+      "output": "OK documents=32 chapters=25 diagrams=46 local_links=4411 errors=0\n"
+    },
+    {
+      "command": [
+        "python",
+        "tools/check_architecture.py"
+      ],
+      "exit_code": 0,
+      "output": "{\"python_files\": 431, \"host_cycle_modules\": 20, \"errors\": []}\n"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "output": ""
+    },
+    {
+      "command": [
+        "node",
+        "tests/commitment-time.mjs"
+      ],
+      "exit_code": 0,
+      "output": "Explicit fixed-offset commitment time passed\n"
+    }
+  ],
+  "source_checks": {
+    "runtime_sources_match": true,
+    "all_packaged_sources_match": true,
+    "package_log_matches": true,
+    "policy_matches": true
+  },
+  "regression": {
+    "patterns": [
+      "test_commitments.py",
+      "test_concurrency.py",
+      "test_goal_plans.py",
+      "test_workflow_handoff.py",
+      "test_companion_workflows.py",
+      "test_runtime_shutdown.py"
+    ],
+    "tests": 75,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 59.029
+  },
+  "independent_package": {
+    "schema": 1,
+    "passed": true,
+    "reviewed_source": true,
+    "architecture_passed": true,
+    "architecture_error_count": 0,
+    "architecture_sample": [],
+    "policy_sha256": "6fa9b722615935e47da8cf775084deb0468ac04bacbde72e52774fbab7ad15af",
+    "tests_passed": true,
+    "tests_summary": "134 0 0 1",
+    "runtime_intact": true,
+    "test_log": "0.1.3-6a1a610e78a24386a71f8e2d4737c96e.log",
+    "test_log_sha256": "8ebe4ed6acd197941c1eea1d3d725ec2bbdca8d604f5d546362d5c394dab5f6f"
+  },
+  "screenshot": {
+    "path": "D:/jarvisTest/commitments-20261108-r4/work-view.png",
+    "sha256": "b18a24cc05dda9ef43cd6f1c2b975d9477086ad02ce12be1b22d3ef6c98d4e1a",
+    "inspected": true
+  },
+  "evidence_sha256": {
+    "browser-r1.log": "94edb06a4775bd8168c804be346d3e1630f28d9f5776284300afd172ff2e5dbd",
+    "browser-r2.log": "6fd4d0ab3957f26cdbf1001d87e96b565679a1aa9b51e3aeb75249331c53fe6a",
+    "browser-r3.log": "41575440d1bd4c2ca3350df163f287b6360a369269f64c82e806550e2830843d",
+    "browser.cjs": "abdc5f5af8d8c9d19e4c2d539eb18c6718fa65220bf41a51f8bc52a86b02fd3a",
+    "browser.log": "41575440d1bd4c2ca3350df163f287b6360a369269f64c82e806550e2830843d",
+    "package-result.json": "bd2b0c4091ef20f54c7c9232cabba09eb640687cfd70c56dfed48589ee7d3dcd",
+    "package-tests.log": "8ebe4ed6acd197941c1eea1d3d725ec2bbdca8d604f5d546362d5c394dab5f6f",
+    "regression.json": "726beff43b25e5714530d310f38fd28158d4e614792b9807accfba01144cbb5d",
+    "regression.log": "586cd6fdd27ec0f7f2b830e41680a8aabd6e75f241bf1b215f0b63f6fa12209a",
+    "runtime-result-r1.json": "9df378927550cff941d645389a937578f66bd991878230d428202d1455be4ae7",
+    "runtime-result-r2.json": "8411ffda080fceade23d36e84badc43b31b698c52aa58204b55a867aa6548d33",
+    "runtime-result-r3.json": "56b14de1ba1cd1b8f6f00a6e376f38001f7b89d66cbab7dbef2e55649ea2ed4c",
+    "runtime-result.json": "09dbf6ba1a2f68708d22cea85c09a3be3ec337f899ff45c78acbb493f2c0587b",
+    "run_package.py": "70170d9e56ada1038b2997ef8ebe25cf4ff465880f6ab73e4c501f1a90636caf",
+    "run_regression.py": "10d91cc46aa674842f51253b7cfd27939f5b1d5b686b9ea4940246be0c529850",
+    "run_runtime.py": "113505cd838b49a8c3c49197c67a697a9b472dc027f9f96972db72f8e73b27d6"
+  },
+  "limitations": [
+    "Explicit fixed-offset personal form only; natural-language action adapter not connected",
+    "Local work-view delivery only; no OS notification or external message",
+    "User-marked completion is not independent business verification",
+    "No recurring or IANA/DST scheduling",
+    "No full business regression, long-run soak or deployment; older code without this feature pauses due processing"
+  ]
+}

@@ -1,0 +1,197 @@
+{
+  "status": "passed",
+  "completed_utc": "2026-11-08T17:31:39.751249+00:00",
+  "base_commit": "efe50c7634a965d167e4ae197ed53dc35347d175",
+  "environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.0",
+    "workspace": "D:\\Jarvis-dev"
+  },
+  "checks": {
+    "frozen_runtime_current": true,
+    "frozen_tests_current": true,
+    "holdout_seal_intact": true,
+    "no_duplicate_text_across_160_new_cases": true,
+    "final_eval_source_current": true,
+    "no_shadow_proposal_writes": true,
+    "final_utility_gate": true,
+    "final_safety_gate": true,
+    "original_supported_preserved": true,
+    "controller_nine_cases": true,
+    "controller_packages_intact": true,
+    "controller_no_forced_cleanup": true,
+    "stop_lock_preserved": true,
+    "generator_call_limits": true,
+    "owned_proxies_stopped": true,
+    "related_tests": true,
+    "docs_gate": true,
+    "architecture_gate": true,
+    "diff_gate": true,
+    "navigation_gate": true
+  },
+  "gates": {
+    "docs": {
+      "exit_code": 0,
+      "log": "docs.log"
+    },
+    "architecture": {
+      "exit_code": 0,
+      "log": "architecture.log",
+      "report": {
+        "python_files": 434,
+        "host_cycle_modules": 20,
+        "errors": []
+      }
+    },
+    "diff": {
+      "exit_code": 0,
+      "log": "diff.log"
+    },
+    "navigation": {
+      "exit_code": 0,
+      "log": "navigation.log"
+    }
+  },
+  "packages": {
+    "A": {
+      "build": "2c3c7cdf6e54b7e9166ace99690651bfdcdf437cf8542e1531803dae5e8686ff",
+      "matches_final_source_except_VERSION": true,
+      "tests_summary": "175 0 0 1",
+      "test_log_intact": true
+    },
+    "B": {
+      "build": "d0e4bee3e8bed878696d45a66be239a1f7552375e4ec00b2fee2f96df6928288",
+      "matches_final_source_except_VERSION": true,
+      "tests_summary": "175 0 0 1",
+      "test_log_intact": true
+    },
+    "C": {
+      "build": "7c221d4e8eabe60c5611a3f9babd5b646fa9fe867cfc64573558f92ff966af09",
+      "matches_final_source_except_VERSION": true,
+      "tests_summary": "175 0 0 1",
+      "test_log_intact": true
+    },
+    "D": {
+      "build": "1b4006f60baa33bb8bba935d4ff5e01fcbdb39b84538b3d342fb87b846ecf232",
+      "matches_final_source_except_VERSION": true,
+      "tests_summary": "175 0 0 1",
+      "test_log_intact": true
+    }
+  },
+  "results": {
+    "baseline": {
+      "cases": 40,
+      "clear_requests": 24,
+      "correct_auto": 0,
+      "coverage": 0.0,
+      "unsafe_auto": 0,
+      "wrong_auto_content": 0,
+      "missed_clear": 24
+    },
+    "final_holdout": {
+      "cases": 40,
+      "clear_requests": 24,
+      "correct_auto": 20,
+      "coverage": 0.8333333333333334,
+      "unsafe_auto": 0,
+      "wrong_auto_content": 0,
+      "missed_clear": 4
+    },
+    "development": {
+      "cases": 36,
+      "clear_requests": 18,
+      "correct_auto": 18,
+      "coverage": 1.0,
+      "unsafe_auto": 0,
+      "wrong_auto_content": 0,
+      "missed_clear": 0
+    }
+  },
+  "generation_calls": 5,
+  "generation_successes": 4,
+  "provider_reported_usage_totals": {
+    "completion_tokens": 5571,
+    "prompt_tokens": 11230,
+    "reasoning_tokens": 3844,
+    "total_tokens": 20645
+  },
+  "limitations": [
+    "Model-authored synthetic wording with operator label review, not third-party blind or real-user validation.",
+    "First three holdouts are now development data; their repair scores are not unseen results.",
+    "Final source was amended for a known development-set pronoun regression before the final holdout was read/scored; both freezes retained.",
+    "Forced-candidate admission is not end-to-end model action-selection quality.",
+    "Four runtime variants differ only in VERSION. Faults were injected after actual health, not naturally occurring crashes.",
+    "No production adoption, browser visual re-test, external notification or full data-migration matrix in this round; monetary cost unreconciled."
+  ],
+  "evidence_sha256": {
+    "anchored_frame.py": "76842f77a32bdba393a4da41bbceb75fb35a83be4cb54f823552c8689b8fc4f5",
+    "architecture.log": "c0404fba3ac309df5c73edd4a1ba932be3564864f07a23e97a1e738d95439373",
+    "audit.py": "f567416fbf2fbba6bb12a9286285ef7fc1300ce05a1fc46835049ce51453c8c6",
+    "controller-A-tests.log": "42a183e16fcc3b2e566d9fb5512144c0c08127313f2c99428558ee3b60d25895",
+    "controller-B-tests.log": "aa48aa6152045e052b152dc57ad8ba5c18c28d61840d543ea28f849951a33adb",
+    "controller-C-tests.log": "b22bc843f52c99ac31ff1b925e8a84b5d57c2df1c189e26fd2a55c795b5fc3e5",
+    "controller-complete-A-tests.log": "3454588027bb1f9c964f747afc600fa552cab988e328090d913a5a4eb34763f1",
+    "controller-complete-B-tests.log": "f491f4844d92b744698b6532a5aba69e914066427c271953eeecd2ac916f3218",
+    "controller-complete-C-tests.log": "0e0050a996bf46808541f50a13f0f53942f22f08faee6b7ff3e8e215e0b7d34a",
+    "controller-complete-D-tests.log": "9915135fb75bde655fd93018cf7462be0a80501fdd6888ed1a52cf53100b32d3",
+    "controller-complete-result.json": "d65cf2404371e34228454c8334a34f269084bf1a958494f8bb97613a0e5c2c5d",
+    "controller-D-tests.log": "2859a0826f64ac1d3bc856868f31b50e8d8d3ae41f3ae0fb1d1781be2da2a76d",
+    "controller-final-A-tests.log": "8d108196264b8e3ae7d20c0918398aef501ee83b2ffbf2baa51df48d08212bae",
+    "controller-final-B-tests.log": "7b065f1dec548e99a2964c348df36d2bcd5ef085b1d3c75ff2df5b245fff89ec",
+    "controller-final-C-tests.log": "60152c51b8a812037028616973c1cf2d54b761a182f5825bff18a234eeeea68d",
+    "controller-final-D-tests.log": "523cb580269924ebebf5df4b1b759a415e72953bdc4d802c2474fef5d89a02e2",
+    "controller-final-result.json": "92033693091bfec5f4b58ecf2dfc3da812e5b43d4c282390268141fd6c25d1f1",
+    "controller-result.json": "0206019d67a2743efa3a1998ad40d44dd6f97bab96ae2240606bb4cd7bfade9e",
+    "controller_matrix.py": "9022b1d330af1c7e2f4a79408eb94bbfdaaf3efdccba184f1450714ef4926093",
+    "dev-after.json": "d03286e65ffa6b6264c17cf30a9f65387e3847dc819c3be45d6dbb7116952587",
+    "dev-before.json": "8bad0a23cecd68f34560ec1abd053784b2754d31a0993a74ee228ffc76d46fc9",
+    "dev-complete.json": "7bffacd762cb1422b23f57592a8619bcf7b8d2d7662148f3253b7d080ee19620",
+    "dev-final.json": "8da7dafb5fe72a9ea8441ca82bfd55056e79b06e7d512a2ac5c5a3b83ae736e9",
+    "diff.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs.log": "02fad52c4011d12e3129646496973dda8339ee85cb234124ed8811bd1e798f8b",
+    "evaluate.py": "769058cc3475d9f97a7e392592cb83bff7a5884a5b20a23dca586f0692434e9a",
+    "final-after.json": "1bfc0ea22b57bae11c2b469dbe2215fa0f3743d236acdf258573bab17eebeebb",
+    "final-before.json": "8c47f1e12e9056053592fcc529da0fac38861f9414c66603ebb2461141fd8348",
+    "freeze.py": "324fb372e08c10d20b758f24f823771283b5dc4ce7330bf59615f78b732e0d72",
+    "fresh2-after.json": "1271a0845f6afb7dae8153242e2d55f656b0c17b31046ae388334ea39c5534d2",
+    "fresh3-after.json": "577f2fcd3940c739a47f1c8e12f5f32217aa97c0210e9ad45e0e1ee8d1343ea5",
+    "generate_holdout.py": "c43f48d2014c8adb76224ab3011ce990d57f0f82be99ad6bf86ff71e1b2739e9",
+    "generator-amendment.json": "337dcc4e82c78f476825d833ff9b8f4503b0b198f1ed363cec1fe58a46bbf057",
+    "generator-prompt-final.json": "c165fbfc5e69530b334bddbfe4b0bcede9a0b7c80591fa34d488c6fd9d834b4a",
+    "generator-prompt-fresh.json": "b54d9b560f788a5b885d657a2e9fdfaaea5208daba7fca373adabf4329206c93",
+    "generator-prompt-third.json": "6c4c6cd310a077a0f2163cce3addcb78b91ce308d3ff38dd0e0740bd1541f221",
+    "generator-prompt.json": "80dbcc824b575cc85400b357e65de474291aef7cb78dd72208fcb01fc41cbb32",
+    "generator-result-final.json": "8545765b52b8d090a1a0804218b18f6d1d7a17f2fee24b1aa9b9bc571dc03c9f",
+    "generator-result-fresh.json": "e8b8879b941075b573b738242490c2755a68f2e42597cdf4b377d0bf0a3e87a6",
+    "generator-result-r2.json": "a180db6e8d06f23f0579b261980d14887cbc6c4888edab4bbbc542ecdf5ec663",
+    "generator-result-third.json": "313abd7bb0443336ecb7603a728187973e12004fe5d730346800ad52dea590b8",
+    "generator-result.json": "81c40a225710a9dfcdda7f41dfdf30f80b7ae416d9602dc95da700fe590a40a3",
+    "harness-failures.json": "1bfd8ceccf1d3f1cd6e3957b76dc50680e913dea2e90cc34f84da57ff16020eb",
+    "holdout-after.json": "697fa1df2f040940a31aa3c4deb66d5e058687413635e6a33a256d8f7de9f30d",
+    "holdout-audit.json": "82e8fd9e91f340d92ca1bc7e0eb361dc83d6d75e24611aaf0693cd6fbee9e0c9",
+    "holdout-before.json": "c9f3b2278a10c04aa484eab7517ad235befe58b245305d9621111425d7cd2006",
+    "holdout-final-audit.json": "be94fb0b3aec0344a0ef45b391c0e7eb8139ab44e1c6f05997dafdfd56eaddf1",
+    "holdout-final.json": "6713630d9cd2d9f88f0c3626c2450e551695990d0cf287cc292768cf45ba4d39",
+    "holdout-r2-audit.json": "0b67d88f1a1e2015cc81c7d2c340826e4329b671d4a5070118f573f2aba722c5",
+    "holdout-r2.json": "2b630c78d1a5828ae6220b5ad73c91fc3328ec0dd0c666cc822004721834cb02",
+    "holdout-r3.json": "8232d2b6a0eb67dedaa9e3edccc165dee42537683f83f3dc0c350ca1ce65f81e",
+    "holdout.json": "cdc9e0cfacc645e19ed1d781ba674a6dcf6c2d6e5388fb2a71c17a86787444cc",
+    "holdout1-final.json": "726e6a234897258fc18182b3dc26e671fe1ed0a38cc18abd8dbfb04fa73e476c",
+    "holdout1-repair.json": "811e88f102beb21edd4e80b4ef7875f00a3f6e53c450bf5d6f027b2272872b89",
+    "holdout2-final.json": "e13360149a05ac20f2ceb9d5af2caed7d132cf4cadb0cda801b821ff592ff195",
+    "navigation.log": "09028371838271e84996a3ead63598cfd9e47ec1c4468eddeddfd680b7cb5abf",
+    "plan-final.json": "32b3a1e5b8846de10108bbdc784b88efc412093703b1c804bf21d286581527cd",
+    "plan-r2.json": "04e2421d94a2b6d8bc4ce4be7f9a86fe8fedf27de4e7bf5b289c7c959cdd50c2",
+    "plan-r3.json": "abd078c2add754a4bbff321aeb7815fe3c800fa7dadac78cbd9f58980b4a7e05",
+    "plan-r4.json": "9dd2d3419e8712ec6484049516c14c55c3032162882782292dff24fb9aacbd64",
+    "plan.json": "e2edb8dfff1fc3a201819118a53cd860e274849820eb4ba3cfb5bb60ab067901",
+    "regression-final.json": "b761d66cadaad1b574d04e2fb95b31a0a22d65111e622ae0bbd6d035d3f8a6da",
+    "regression-final.log": "2249dceae0ffea8f83c31d47c0a784205cd70b8b6986af93db3e9eac849defe0",
+    "regression-pre-pronoun.json": "484be98733df40b6559ad265306bfe07b99836125c53771059d40e7635c3f52f",
+    "regression-pre-pronoun.log": "51352b9a99fc8c0d34f69c5a2e89a43405a5b6e79a66b0788718c85a31fe95c5",
+    "regression.json": "b761d66cadaad1b574d04e2fb95b31a0a22d65111e622ae0bbd6d035d3f8a6da",
+    "regression.log": "2249dceae0ffea8f83c31d47c0a784205cd70b8b6986af93db3e9eac849defe0",
+    "run_regression.py": "f34a2599a3bf9233f56d5ce0307254ef6e049063826b811ccbad416caaa519a6",
+    "third-repair.json": "dcc65f5f44b9b73c4cb60b4a96ca7e2e2a9372698ea5f5333a6c2bb6b197ce3b"
+  }
+}

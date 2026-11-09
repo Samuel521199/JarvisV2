@@ -51,7 +51,7 @@ class CodexCandidate(unittest.TestCase):
         self.assertNotIn('--dangerously-bypass-approvals-and-sandbox',args)
 
     def test_binary_change_and_non_candidate_prompt_rejected_before_start(self):
-        with patch.object(cli.subprocess,'Popen') as process:
+        with patch.object(cli,'OwnedProcess') as process:
             self.assertEqual(self.model.generate(canonical({'output_schema':{}}))['code'],'codex_candidate_only')
             self.binary.write_bytes(b'changed');self.assertEqual(self.model.generate(self.prompt)['code'],'codex_binary_changed')
             process.assert_not_called()
@@ -62,21 +62,21 @@ class CodexCandidate(unittest.TestCase):
         with patch.object(cli.shutil,'which',return_value=None):self.assertFalse(cli.discover()['available'])
 
     def process(self,*args,**kwargs):
-        self.seen=kwargs
+        self.seen=kwargs;self.closed=False
         class Process:
             pid=424242;returncode=None
-            def communicate(inner,payload=None,timeout=None):
-                if timeout is None:inner.returncode=0;return
+            def wait(inner,timeout=None):
                 raise subprocess.TimeoutExpired('test',timeout)
+            def close(inner):inner.returncode=-1;self.closed=True
             def poll(inner):return inner.returncode
             def kill(inner):inner.returncode=-1
         return Process()
 
     def test_timeout_kills_owned_process_and_cleans_workspace(self):
-        with patch.object(cli.subprocess,'Popen',side_effect=self.process),patch.object(cli.subprocess,'run') as kill,patch.object(cli.time,'monotonic',side_effect=[0,2]):
+        with patch.object(cli,'OwnedProcess',side_effect=self.process),patch.object(cli.time,'monotonic',side_effect=[0,2]):
             result=self.model.generate(self.prompt)
         self.assertEqual(result['code'],'codex_timeout');self.assertEqual(result['status'],'UNKNOWN')
-        if cli.os.name=='nt':self.assertEqual(kill.call_args.args[0][1:4],['/PID','424242','/T'])
+        self.assertTrue(self.closed)
         self.assertEqual(list((self.root/'temp').iterdir()),[])
         self.assertNotIn('OPENAI_API_KEY',self.seen['env']);self.assertNotIn('shell',self.seen)
 
@@ -86,9 +86,9 @@ class CodexCandidate(unittest.TestCase):
             nonlocal count
             count+=1
             if count>1:raise CoreError('cancelled','cancelled')
-        with patch.object(cli.subprocess,'Popen',side_effect=self.process),patch.object(cli.subprocess,'run') as kill:
+        with patch.object(cli,'OwnedProcess',side_effect=self.process):
             with self.assertRaises(CoreError):self.model.generate(self.prompt,checkpoint)
-        if cli.os.name=='nt':kill.assert_called_once()
+        self.assertTrue(self.closed)
         self.assertEqual(list((self.root/'temp').iterdir()),[])
 
 

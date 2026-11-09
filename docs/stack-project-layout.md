@@ -54,7 +54,9 @@
   - [第一阶段运行接口、维护与限制](#single-pc-development-runtime)
   - [并行使用的实际边界与第一批落地](#single-pc-development-resources)
 - [原生能力边界与可部署文件（v0.1.2）](#native-capability-boundary)
+  - [外部 Worker 生命周期（开发实现，2026-11-08）](#worker-process-lifetime)
   - [日用安装、开发与恢复控制器](#daily-managed-installation)
+- [可选原生薄壳原型（未日用启用）](#native-presence-prototype)
 <!-- book-nav:end -->
 
 <a id="technology-selection"></a>
@@ -839,12 +841,39 @@ D:\Jarvis-dev\StartJarvisDev.bat
 
 冻结代码包保留模块启停所需的固定 `evals/text-analyzer.json`，缺失则拒绝准入；其他任意 evals 文件仍不被允许。代码包不携带 `3DModels`、`.venv` 或业务数据：专业素材从实际安装的数据根旁读取，Python 工程原生环境沿安装位置查找 `.venv/anatomy` 与原准备记录，不到新代码包里重新寻找依赖。新部署、换系统或环境变化仍须准备和验证相应原生环境。
 
+<a id="worker-process-lifetime"></a>
+### 外部 Worker 生命周期（开发实现，2026-11-08）
+
+`control/worker/process.py` 的 `OwnedProcess` 是共享的原生进程生命周期组件。Blender 构建、Blender 学习/修复、工程原生 Worker 与 Codex 候选生成四个调用点复用它；不新增领域调度器、Bot、授权或第二套工作台。定向仍由原目标与权限约束，协作仍由原 Host 派发，观察成长仍使用原回执与核验。本次只加固执行边界，不声称自愈、自评估或自主进化已经闭环。
+
+| 环节 | 当前实现 | 作用与限制 |
+|---|---|---|
+| 创建 | 先建带 `KILL_ON_JOB_CLOSE` 的匿名 Job；`CreateProcessW` 通过 `PROC_THREAD_ATTRIBUTE_JOB_LIST` 原子绑定；暂停态再次检查取消后才恢复主线程 | Windows 上不再先执行后挂 Job；配置、绑定或恢复失败就拒绝启动，不退回无 Job 执行 |
+| 输入与句柄 | 启动前写入有限请求文件；只继承三个标准流的专用副本，不继承 Job 句柄 | 避免宿主阻塞写入 stdin；stdout/stderr 仍是调用点自己的日志，有限输入不成为记忆或知识 |
+| 限额 | Blender 两条路径保留 2 进程、每进程 CPU 1200 秒、每进程/Job 4 GiB；工程保留 2 进程、每进程 CPU 30 秒、每进程/Job 1 GiB；墙钟和输出检查留在原调用点 | Codex 仍用原超时与输出额度，本次只增生命周期 Job，没有宣称新增硬 CPU/内存额度 |
+| 停止和退出 | 取消、超时、异常与正常结束都关闭所有权；终止前取得可等待的成员句柄，按 Job 归属核对，终止整 Job 后等待已捕获成员退出及活动数归零 | 主进程已退出也会清理后代；等待有上限，未确认则报清理失败。成员枚举上限 4096，超过或查询失败不会报告正常清理；不依赖 PID `taskkill` |
+| 宿主崩溃 | 宿主独占 Job 句柄，进程终止时由 OS 关闭，触发成员终止 | Windows 真实强退样本已测；不是任意驱动、任意恶意进程和所有退出竞态的数学保证 |
+| 结果 | Codex 先结束所拥有进程再读回执，退出后再次核对输出额度；原生任务保留原出口和资源回执 | 不把“清理完成”当作“业务成功”；LPAC 纯代码 Worker 继续走原独立启动器 |
+
+采用 Windows 文档定义的[创建时 Job 绑定](https://devblogs.microsoft.com/oldnewthing/20230209-00/?p=107812)和[Job 成员查询](https://learn.microsoft.com/windows/win32/api/winnt/ns-winnt-jobobject_basic_process_id_list)。这是资源与生命周期约束，**不是文件、网络或同用户权限的安全沙箱**。非 Windows 保留普通子进程兼容路径，没有同等 Job/后代清理保证；版本探测、Node 转换/验证、HTTP 与其他模型子进程不在本轮四个接入点范围内。业务补偿、重启接续和长期承诺仍另行设计。
+
+本轮是 v0.1.3 之后的开发工作树改动，尚未采用到日用包。测试结果、失败反例与未验证项统一见[本轮验收](delivery-validation.md#worker-lifetime-evidence)。
+
 <a id="daily-managed-installation"></a>
 ### 日用安装、开发与恢复控制器
 
 日用 `user-data` 保持原位；被采用的代码位于 `deployment/packages/<sha>`。`host/application_installation.py` 仅在候选已被采用后安装根启动器，先保存原 `StartJarvis.bat`，再安装 `JarvisLaunch.py`。它先逐项核对恢复控制器摘要，随后通过同一应用账本启动当前已采用版本，避免重启后误用旧工作树。
 
 恢复控制器放在 `deployment/controllers/<build>`，带自己的检查器及回归测试；应用包退役不删除它。控制器本身的自动更新尚未实现，源码修改不会让它自动采用新规则。原工作树和未提交内容保留；开发仍在独立 worktree，Google 代理继续使用原已批准冻结版本。完整命令与恢复语义见[应用级交接](evolution-release.md#single-pc-application-runtime)。
+
+<a id="native-presence-prototype"></a>
+## 可选原生薄壳原型（未日用启用）
+
+`apps/desktop/`仅负责本机窗口、托盘、显示器位置和命中区域；实际页面仍为 `/companion/native` → 原 `companion.html`，模型选择、聊天、邮件、待办、停止与结果已阅复用同一组件和API。没有第二套聊天/任务/邮箱服务，也不占用执行器或Host锁。Windows原型使用Tauri 2.11.5、系统WebView2；Rust构建依赖按Cargo.lock固定，只在显式本机构建时使用，不成为Python日用安装前置条件。macOS/Linux尚未做原生命中区域适配。
+
+`launcher.py`先验证同一数据根Host和本地登记的二进制摘要，通过stdin传递本机访问钥匙，不放进进程参数或日志；Rust限制回环源并使用窗口专属单例。`prepare.py --reviewed-source`是人工审阅后登记本地可选二进制的工具，不是自动下载器或任意来源信任证明。`--companion`为显式可选启动参数，未登记时失败，不静默安装依赖；默认工作台启动方式不变。
+
+原型存在[真实透传验收失败](delivery-validation.md#assistant-release-20261109)，因此不得把编译成功、透明可见或关闭窗口不影响后台作为完整桌面验收。完成空白透传、托盘恢复、多屏/DPI、重启/锁屏及资源验证前，不向日用数据根登记二进制。生成的`gen/`、编译`target/`和本机exe不入库。
 
 <!-- book-footer:start -->
 [返回工程主入口](../README.md) · [全书目录](../README.md#book-tree) · [上一章：公共接口与数据契约](contracts.md) · [下一章：模型路由、本地模型与离线生存](models-offline.md)

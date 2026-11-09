@@ -1,6 +1,7 @@
 """Durable, single-job 3D plugin; model planning uses the existing dialogue lane."""
 import hashlib,json,os,re,sqlite3,subprocess,threading,time,uuid
 from pathlib import Path
+from control.worker.process import OwnedProcess
 from control.paths import child
 from control.recovery.gate import StopGate
 from modules.skills.catalog import Skills
@@ -253,8 +254,6 @@ def wheel_example():
     return {'schema':'jarvis.studio3d.v1','units':'m','title':'曲面壳体','materials':[{'id':'metal','color':'#617e94','metallic':.8,'roughness':.25}], 'objects':[{'id':'shell','kind':'lathe','material':'metal','params':{'profile':[[.1,0],[.15,.05],[.2,.2],[.18,.4],[.16,.42]],'segments':64},'modifiers':{'thickness':.008}}],'unfulfilled':['没有制造尺寸与载荷验证。'],'render':{'quality':'preview','engine':'CYCLES','view':'front'}}
 
 def build(root,ident,scene,model_receipt=None):
-    import ctypes
-    from ctypes import wintypes as w
     lock=json.loads(child(root,'optional/studio3d/prepared.json').read_text(encoding='utf-8'));exe=Path(lock['executable'])
     if hashlib.sha256(exe.read_bytes()).hexdigest()!=lock['executable_sha256']:raise CoreError('studio3d_changed','Blender changed; prepare and review again')
     folder=child(root,'artifacts/studio3d/'+ident);folder.mkdir(parents=True,exist_ok=False)
@@ -282,15 +281,10 @@ def build(root,ident,scene,model_receipt=None):
         asset=asset_record(root,scene['asset']);shutil.copyfile(child(root,'artifacts/studio3d-assets/'+scene['asset']+'.glb'),folder/'source.glb')
     (folder/'scene.json').write_text(canonical(scene),encoding='utf-8');(folder/'config').mkdir();out=folder/'stdout.log';err=folder/'stderr.log'
     env={k:v for k,v in os.environ.items() if k.upper() in ('SYSTEMROOT','WINDIR')};env.update(JARVIS_DATA_ROOT=str(root),TEMP=str(folder),TMP=str(folder),BLENDER_USER_CONFIG=str(folder/'config'),BLENDER_USER_SCRIPTS=str(folder/'config'),OMP_NUM_THREADS='4')
-    job=None;native=None;began=time.monotonic();phase=''
+    began=time.monotonic();phase=''
     with out.open('wb') as stdout,err.open('wb') as stderr:
-        process=subprocess.Popen([str(exe),'--background','--factory-startup','--disable-autoexec','--threads','4','--python-exit-code','2','--python',str(ROOT/RUNTIME['bootstrap']),'--',str(folder)],cwd=folder,env=env,stdin=subprocess.DEVNULL,stdout=stdout,stderr=stderr,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
+        process=OwnedProcess([str(exe),'--background','--factory-startup','--disable-autoexec','--threads','4','--python-exit-code','2','--python',str(ROOT/RUNTIME['bootstrap']),'--',str(folder)],cwd=folder,env=env,stdout=stdout,stderr=stderr,processes=2,cpu_seconds=1200,memory_bytes=4*1024**3,checkpoint=lambda:check(root,ident))
         try:
-            if os.name=='nt':
-                from control.worker import win32 as n
-                native=n.bind();job=native['CreateJobObjectW'](None,None);limits=n.JobLimit();limits.basic.flags=0x2000|0x8|0x100|0x200|0x2;limits.basic.processes=2;limits.basic.cpu=1200*10_000_000;limits.memory=limits.job_memory=4*1024**3
-                assign=n.api('kernel32','AssignProcessToJobObject',w.BOOL,w.HANDLE,w.HANDLE)
-                if not job or not native['SetInformationJobObject'](job,9,ctypes.byref(limits),ctypes.sizeof(limits)) or not assign(job,int(process._handle)):raise CoreError('studio3d_limit','Resource Job unavailable')
             while process.poll() is None:
                 check(root,ident)
                 if time.monotonic()-began>300 or sum(p.stat().st_size for p in folder.rglob('*') if p.is_file())>256*1024**2 or out.stat().st_size>2*1024**2 or err.stat().st_size>2*1024**2:raise CoreError('studio3d_limit','3D task exceeded resource budget')
@@ -299,12 +293,13 @@ def build(root,ident,scene,model_receipt=None):
                 time.sleep(.15)
             if process.returncode:raise CoreError('studio3d_build_failed','Fixed Blender worker failed')
         finally:
-            if process.poll() is None:process.kill()
-            process.wait();resource={'elapsed_seconds':time.monotonic()-began,'exit_code':process.returncode,**RUNTIME['limits'],'isolation':RUNTIME['isolation']}
-            if job:
-                measured=n.JobLimit()
-                if native['QueryInformationJobObject'](job,9,ctypes.byref(measured),ctypes.sizeof(measured),None):resource['peak_memory_bytes']=measured.job_peak
-                native['CloseHandle'](job)
+            try:
+                if process.poll() is None:process.kill()
+                process.wait(timeout=5)
+                resource={'elapsed_seconds':time.monotonic()-began,'exit_code':process.returncode,**RUNTIME['limits'],'isolation':RUNTIME['isolation']}
+                resource.update(process.resources())
+                resource['peak_memory_bytes']=resource.get('peak_job_memory_bytes')
+            finally:process.close()
             (folder/'execution.json').write_text(canonical(resource),encoding='utf-8')
     check(root,ident);files={}
     if scene['render'].get('five_views') and any(not (folder/('view-'+v+'.png')).is_file() for v in ('front','rear','left','right','top')):raise CoreError('studio3d_build_failed','Five-view delivery incomplete')

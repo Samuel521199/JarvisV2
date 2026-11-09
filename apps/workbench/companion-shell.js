@@ -83,7 +83,7 @@ async function boot(){
   if(message?.type!=='jarvis:companion:navigate')return;
   if(message.target==='work')work();else if(message.target==='projects')run(projects);else if(message.target==='mail')mail.open();
  });
- document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh();});await refresh();const timer=setInterval(refresh,5000);
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh();});if(location.pathname==='/companion/native')await import('./native-presence.js');await refresh();const timer=setInterval(refresh,5000);
  window.addEventListener('pagehide',()=>{clearInterval(timer);cleanup();},{once:true});
 }
 run(boot);

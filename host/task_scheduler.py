@@ -161,6 +161,11 @@ class TaskRunner:
                 admitted = accepting(self.root)
                 from host.outcomes import observe
                 if admitted: observe(core, limit=32)
+                if admitted and not self.closed:
+                    from host.commitments import advance as advance_commitments
+                    try: advance_commitments(self.root)
+                    except (CoreError, OSError, sqlite3.Error):
+                        logs.throttled(LOG, 'commitment-pump', 'Commitment delivery is pending; dispatch continues')
                 from host.completion import pump
                 try:
                     if admitted: pump(core)

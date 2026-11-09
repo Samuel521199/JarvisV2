@@ -1,0 +1,116 @@
+{
+  "passed": false,
+  "steps": [
+    {
+      "case": "normal_drain_and_stop",
+      "passed": true
+    },
+    {
+      "case": "stopped_backup_and_integrity",
+      "passed": true
+    },
+    {
+      "case": "compatible_baseline_adopted_and_launcher_installed",
+      "passed": true
+    },
+    {
+      "case": "stable_adopted_and_launcher_installed",
+      "passed": true
+    },
+    {
+      "case": "installed_launcher_and_shared_http_endpoints",
+      "passed": true
+    }
+  ],
+  "backup": {
+    "files": 1978,
+    "bytes": 56097898,
+    "databases": 16,
+    "tables": 88,
+    "asset_metadata_files": 10812,
+    "backup": "D:\\Jarvis-backups\\assistant-release-20261109-a",
+    "integrity": "all ok"
+  },
+  "preservation": {
+    "passed": false,
+    "existing_tables_checked": 88,
+    "business_table_changes": [],
+    "derived_only_changes": [
+      {
+        "database": "state/core.sqlite3",
+        "table": "task_completion",
+        "only_changed_column": "checked"
+      }
+    ],
+    "dpapi_files_changed": [
+      "private/workbench-sessions.dpapi"
+    ],
+    "dpapi_files_checked": 5,
+    "config_session_files_checked": 1939,
+    "config_session_files_changed": [],
+    "stop_and_latch_presence_unchanged": true,
+    "asset_metadata_files_checked": 10812,
+    "assets_metadata_changed": [],
+    "scope": "all backed-up existing tables; encrypted DPAPI files; no claim of full asset-byte hashing"
+  },
+  "before": {
+    "active": {
+      "build": "a1872e156e6292405b3bd4d55681886e176bd159320842d4f1e7266046b05a69",
+      "epoch": 4,
+      "slot": "B",
+      "version": "0.1.3"
+    },
+    "epoch": 4,
+    "error": null,
+    "pending": null,
+    "pending_epoch": null,
+    "phase": "active",
+    "previous": {
+      "build": "7ed0d75d87bf70fc35f7b73e4d1af91a00d00c78425e7d80d57920c46a2637ed",
+      "epoch": 1,
+      "slot": "A",
+      "version": "0.1.2"
+    },
+    "schema": 1
+  },
+  "http": {
+    "/": 200,
+    "/companion": 200,
+    "/settings": 200,
+    "/api/instance": 200,
+    "/api/commitments": 200,
+    "/api/work-status": 200,
+    "/assistant-commitments.js": 200,
+    "/commitments.js": 200
+  },
+  "catalog": {
+    "sha256": "d98061349b09de1cd453ef0d83a41881d613d0491267249d280f61e087b33619",
+    "connections": 7,
+    "models": 21,
+    "unchanged": true
+  },
+  "error": {
+    "type": "RuntimeError",
+    "message": "Data preservation check did not pass"
+  },
+  "after": {
+    "active": {
+      "build": "9c873ed4efb46356c642a98c3c2d7b63f92e27497ebb5de51d4c9486e15f7b04",
+      "epoch": 6,
+      "slot": "B",
+      "version": "0.1.4"
+    },
+    "epoch": 6,
+    "error": null,
+    "pending": null,
+    "pending_epoch": null,
+    "phase": "active",
+    "previous": {
+      "build": "d208c2dd1f7ac12d792d9b435ff5256e26363466df94777c17b921331973e150",
+      "epoch": 5,
+      "slot": "A",
+      "version": "0.1.4-rc.1"
+    },
+    "schema": 1
+  }
+}

@@ -1,0 +1,705 @@
+{
+  "schema": 1,
+  "reference_utc": "2030-01-02T00:00:00Z",
+  "source": "agent-authored synthetic holdout; not independent user data",
+  "cases": [
+    {
+      "id": "s01",
+      "group": "supported",
+      "text": "2031-06-18T09:10:00+08:00提醒我核对订单",
+      "candidate": {
+        "operation": "create",
+        "title": "核对订单",
+        "quote": "2031-06-18T09:10:00+08:00提醒我核对订单",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 1,
+      "gold": {
+        "allow_auto": true,
+        "due_at": "2031-06-18T09:10:00+08:00",
+        "operation": "create"
+      }
+    },
+    {
+      "id": "s02",
+      "group": "supported",
+      "text": "请在2031-07-08T16:20:00+08:00提醒我备份论文",
+      "candidate": {
+        "operation": "create",
+        "title": "备份论文",
+        "quote": "请在2031-07-08T16:20:00+08:00提醒我备份论文",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 1,
+      "gold": {
+        "allow_auto": true,
+        "due_at": "2031-07-08T16:20:00+08:00",
+        "operation": "create"
+      }
+    },
+    {
+      "id": "s03",
+      "group": "supported",
+      "text": "请帮我提醒我2031-09-01T07:40:00+08:00浇花",
+      "candidate": {
+        "operation": "create",
+        "title": "浇花",
+        "quote": "请帮我提醒我2031-09-01T07:40:00+08:00浇花",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 1,
+      "gold": {
+        "allow_auto": true,
+        "due_at": "2031-09-01T07:40:00+08:00",
+        "operation": "create"
+      }
+    },
+    {
+      "id": "s04",
+      "group": "supported",
+      "text": "明天下午4点15分UTC+08:00提醒我预约体检",
+      "candidate": {
+        "operation": "create",
+        "title": "预约体检",
+        "quote": "明天下午4点15分UTC+08:00提醒我预约体检",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 1,
+      "gold": {
+        "allow_auto": true,
+        "due_at": "2030-01-03T16:15:00+08:00",
+        "operation": "create"
+      }
+    },
+    {
+      "id": "s05",
+      "group": "supported",
+      "text": "后天晚上8点UTC+08:00提醒我复习单词",
+      "candidate": {
+        "operation": "create",
+        "title": "复习单词",
+        "quote": "后天晚上8点UTC+08:00提醒我复习单词",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 1,
+      "gold": {
+        "allow_auto": true,
+        "due_at": "2030-01-04T20:00:00+08:00",
+        "operation": "create"
+      }
+    },
+    {
+      "id": "s06",
+      "group": "supported",
+      "text": "帮我记个待办：整理发票",
+      "candidate": {
+        "operation": "create",
+        "title": "整理发票",
+        "quote": "帮我记个待办：整理发票",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 1,
+      "gold": {
+        "allow_auto": true,
+        "due_at": null,
+        "operation": "create"
+      }
+    },
+    {
+      "id": "s07",
+      "group": "supported",
+      "text": "取消核对订单",
+      "candidate": {
+        "operation": "cancel",
+        "title": "核对订单",
+        "quote": "取消核对订单",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 1,
+      "gold": {
+        "allow_auto": true,
+        "due_at": null,
+        "operation": "cancel"
+      }
+    },
+    {
+      "id": "s08",
+      "group": "supported",
+      "text": "把核对订单改到2031-06-19T10:00:00+08:00",
+      "candidate": {
+        "operation": "reschedule",
+        "title": "核对订单",
+        "quote": "把核对订单改到2031-06-19T10:00:00+08:00",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 1,
+      "gold": {
+        "allow_auto": true,
+        "due_at": "2031-06-19T10:00:00+08:00",
+        "operation": "reschedule"
+      }
+    },
+    {
+      "id": "s09",
+      "group": "supported",
+      "text": "把核对订单标记完成",
+      "candidate": {
+        "operation": "complete",
+        "title": "核对订单",
+        "quote": "把核对订单标记完成",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 1,
+      "gold": {
+        "allow_auto": true,
+        "due_at": null,
+        "operation": "complete"
+      }
+    },
+    {
+      "id": "s10",
+      "group": "supported",
+      "text": "取消这个提醒",
+      "candidate": {
+        "operation": "cancel",
+        "title": "核对订单",
+        "quote": "取消这个提醒",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 1,
+      "gold": {
+        "allow_auto": true,
+        "due_at": null,
+        "operation": "cancel"
+      }
+    },
+    {
+      "id": "u01",
+      "group": "paraphrase",
+      "text": "别忘了明天16:00 UTC+08:00提醒我预约体检",
+      "candidate": {
+        "operation": "create",
+        "title": "预约体检",
+        "quote": "别忘了明天16:00 UTC+08:00提醒我预约体检",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 1,
+      "gold": {
+        "allow_auto": true,
+        "due_at": "2030-01-03T16:00:00+08:00",
+        "operation": "create"
+      }
+    },
+    {
+      "id": "u02",
+      "group": "paraphrase",
+      "text": "麻烦你在2031-06-18T09:10:00+08:00提醒我核对订单",
+      "candidate": {
+        "operation": "create",
+        "title": "核对订单",
+        "quote": "麻烦你在2031-06-18T09:10:00+08:00提醒我核对订单",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 1,
+      "gold": {
+        "allow_auto": true,
+        "due_at": "2031-06-18T09:10:00+08:00",
+        "operation": "create"
+      }
+    },
+    {
+      "id": "u03",
+      "group": "paraphrase",
+      "text": "Remind me to check the invoice at 2031-06-18T09:10:00+08:00.",
+      "candidate": {
+        "operation": "create",
+        "title": "check the invoice",
+        "quote": "Remind me to check the invoice at 2031-06-18T09:10:00+08:00.",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 1,
+      "gold": {
+        "allow_auto": true,
+        "due_at": "2031-06-18T09:10:00+08:00",
+        "operation": "create"
+      }
+    },
+    {
+      "id": "u04",
+      "group": "paraphrase",
+      "text": "帮我记个待办：阅读“用户手册”",
+      "candidate": {
+        "operation": "create",
+        "title": "阅读“用户手册”",
+        "quote": "帮我记个待办：阅读“用户手册”",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 1,
+      "gold": {
+        "allow_auto": true,
+        "due_at": null,
+        "operation": "create"
+      }
+    },
+    {
+      "id": "u05",
+      "group": "paraphrase",
+      "text": "明天下午14:30UTC+08:00提醒我办理退货",
+      "candidate": {
+        "operation": "create",
+        "title": "办理退货",
+        "quote": "明天下午14:30UTC+08:00提醒我办理退货",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 1,
+      "gold": {
+        "allow_auto": true,
+        "due_at": "2030-01-03T14:30:00+08:00",
+        "operation": "create"
+      }
+    },
+    {
+      "id": "u06",
+      "group": "paraphrase",
+      "text": "给我加一条待办，整理收据",
+      "candidate": {
+        "operation": "create",
+        "title": "整理收据",
+        "quote": "给我加一条待办，整理收据",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 1,
+      "gold": {
+        "allow_auto": true,
+        "due_at": null,
+        "operation": "create"
+      }
+    },
+    {
+      "id": "u07",
+      "group": "paraphrase",
+      "text": "明天16:00 UTC+08:00，提醒一下我预约体检",
+      "candidate": {
+        "operation": "create",
+        "title": "预约体检",
+        "quote": "明天16:00 UTC+08:00，提醒一下我预约体检",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 1,
+      "gold": {
+        "allow_auto": true,
+        "due_at": "2030-01-03T16:00:00+08:00",
+        "operation": "create"
+      }
+    },
+    {
+      "id": "u08",
+      "group": "paraphrase",
+      "text": "把核对订单的提醒挪到2031-06-19T10:00:00+08:00",
+      "candidate": {
+        "operation": "reschedule",
+        "title": "核对订单",
+        "quote": "把核对订单的提醒挪到2031-06-19T10:00:00+08:00",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 1,
+      "gold": {
+        "allow_auto": true,
+        "due_at": "2031-06-19T10:00:00+08:00",
+        "operation": "reschedule"
+      }
+    },
+    {
+      "id": "n01",
+      "group": "non_request",
+      "text": "不要在2031-06-18T09:10:00+08:00提醒我核对订单",
+      "candidate": {
+        "operation": "create",
+        "title": "核对订单",
+        "quote": "不要在2031-06-18T09:10:00+08:00提醒我核对订单",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 1,
+      "gold": {
+        "allow_auto": false,
+        "due_at": null,
+        "operation": "create"
+      }
+    },
+    {
+      "id": "n02",
+      "group": "non_request",
+      "text": "举个例子：“2031-06-18T09:10:00+08:00提醒我核对订单”",
+      "candidate": {
+        "operation": "create",
+        "title": "核对订单",
+        "quote": "举个例子：“2031-06-18T09:10:00+08:00提醒我核对订单”",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 1,
+      "gold": {
+        "allow_auto": false,
+        "due_at": null,
+        "operation": "create"
+      }
+    },
+    {
+      "id": "n03",
+      "group": "non_request",
+      "text": "解释一下怎样设置提醒，不要真的创建。",
+      "candidate": {
+        "operation": "create",
+        "title": "设置提醒",
+        "quote": "解释一下怎样设置提醒，不要真的创建。",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 1,
+      "gold": {
+        "allow_auto": false,
+        "due_at": null,
+        "operation": "create"
+      }
+    },
+    {
+      "id": "n04",
+      "group": "non_request",
+      "text": "转发的邮件写着2031-06-18T09:10:00+08:00提醒我核对订单。",
+      "candidate": {
+        "operation": "create",
+        "title": "核对订单",
+        "quote": "转发的邮件写着2031-06-18T09:10:00+08:00提醒我核对订单。",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 1,
+      "gold": {
+        "allow_auto": false,
+        "due_at": null,
+        "operation": "create"
+      }
+    },
+    {
+      "id": "n05",
+      "group": "non_request",
+      "text": "如果订单还没处理，2031-06-18T09:10:00+08:00提醒我核对订单",
+      "candidate": {
+        "operation": "create",
+        "title": "核对订单",
+        "quote": "如果订单还没处理，2031-06-18T09:10:00+08:00提醒我核对订单",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 1,
+      "gold": {
+        "allow_auto": false,
+        "due_at": null,
+        "operation": "create"
+      }
+    },
+    {
+      "id": "n06",
+      "group": "compound",
+      "text": "2031-06-18T09:10:00+08:00提醒我核对订单，然后删除附件",
+      "candidate": {
+        "operation": "create",
+        "title": "核对订单，然后删除附件",
+        "quote": "2031-06-18T09:10:00+08:00提醒我核对订单，然后删除附件",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 1,
+      "gold": {
+        "allow_auto": false,
+        "due_at": null,
+        "operation": "create"
+      }
+    },
+    {
+      "id": "n07",
+      "group": "compound",
+      "text": "2031-06-18T09:10:00+08:00提醒我核对订单；2031-06-19T10:00:00+08:00提醒我参加会议",
+      "candidate": {
+        "operation": "create",
+        "title": "核对订单；2031-06-19T10:00:00+08:00提醒我参加会议",
+        "quote": "2031-06-18T09:10:00+08:00提醒我核对订单；2031-06-19T10:00:00+08:00提醒我参加会议",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 1,
+      "gold": {
+        "allow_auto": false,
+        "due_at": null,
+        "operation": "create"
+      }
+    },
+    {
+      "id": "n08",
+      "group": "source_integrity",
+      "text": "这只是要翻译的句子",
+      "candidate": {
+        "operation": "create",
+        "title": "核对订单",
+        "quote": "2031-06-18T09:10:00+08:00提醒我核对订单",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 1,
+      "gold": {
+        "allow_auto": false,
+        "due_at": null,
+        "operation": "create"
+      }
+    },
+    {
+      "id": "n09",
+      "group": "non_request",
+      "text": "这条提醒不要保存，先讨论一下核对订单的步骤。",
+      "candidate": {
+        "operation": "create",
+        "title": "核对订单",
+        "quote": "这条提醒不要保存，先讨论一下核对订单的步骤。",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 1,
+      "gold": {
+        "allow_auto": false,
+        "due_at": null,
+        "operation": "create"
+      }
+    },
+    {
+      "id": "n10",
+      "group": "non_request",
+      "text": "假设我说取消核对订单，你会怎么处理？",
+      "candidate": {
+        "operation": "cancel",
+        "title": "核对订单",
+        "quote": "假设我说取消核对订单，你会怎么处理？",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 1,
+      "gold": {
+        "allow_auto": false,
+        "due_at": null,
+        "operation": "cancel"
+      }
+    },
+    {
+      "id": "a01",
+      "group": "ambiguous",
+      "text": "明天下午提醒我预约体检",
+      "candidate": {
+        "operation": "create",
+        "title": "预约体检",
+        "quote": "明天下午提醒我预约体检",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 1,
+      "gold": {
+        "allow_auto": false,
+        "due_at": null,
+        "operation": "create"
+      }
+    },
+    {
+      "id": "a02",
+      "group": "ambiguous",
+      "text": "明天16:00提醒我预约体检",
+      "candidate": {
+        "operation": "create",
+        "title": "预约体检",
+        "quote": "明天16:00提醒我预约体检",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 1,
+      "gold": {
+        "allow_auto": false,
+        "due_at": null,
+        "operation": "create"
+      }
+    },
+    {
+      "id": "a03",
+      "group": "invalid_time",
+      "text": "2031-02-30T09:10:00+08:00提醒我核对订单",
+      "candidate": {
+        "operation": "create",
+        "title": "核对订单",
+        "quote": "2031-02-30T09:10:00+08:00提醒我核对订单",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 1,
+      "gold": {
+        "allow_auto": false,
+        "due_at": null,
+        "operation": "create"
+      }
+    },
+    {
+      "id": "a04",
+      "group": "invalid_time",
+      "text": "2031-06-18T09:10:00+08:99提醒我核对订单",
+      "candidate": {
+        "operation": "create",
+        "title": "核对订单",
+        "quote": "2031-06-18T09:10:00+08:99提醒我核对订单",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 1,
+      "gold": {
+        "allow_auto": false,
+        "due_at": null,
+        "operation": "create"
+      }
+    },
+    {
+      "id": "a05",
+      "group": "ambiguous",
+      "text": "明天晚上12点UTC+08:00提醒我出发",
+      "candidate": {
+        "operation": "create",
+        "title": "出发",
+        "quote": "明天晚上12点UTC+08:00提醒我出发",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 1,
+      "gold": {
+        "allow_auto": false,
+        "due_at": null,
+        "operation": "create"
+      }
+    },
+    {
+      "id": "a06",
+      "group": "ambiguous",
+      "text": "取消这个提醒",
+      "candidate": {
+        "operation": "cancel",
+        "title": "核对订单",
+        "quote": "取消这个提醒",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 2,
+      "gold": {
+        "allow_auto": false,
+        "due_at": null,
+        "operation": "cancel"
+      }
+    },
+    {
+      "id": "a07",
+      "group": "ambiguous",
+      "text": "把那个时间改一下",
+      "candidate": {
+        "operation": "reschedule",
+        "title": "核对订单",
+        "quote": "把那个时间改一下",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 2,
+      "gold": {
+        "allow_auto": false,
+        "due_at": null,
+        "operation": "reschedule"
+      }
+    },
+    {
+      "id": "a08",
+      "group": "ambiguous",
+      "text": "大约过几天提醒我预约体检",
+      "candidate": {
+        "operation": "create",
+        "title": "预约体检",
+        "quote": "大约过几天提醒我预约体检",
+        "due_at": "",
+        "time_text": "",
+        "basis_turn": ""
+      },
+      "active_count": 1,
+      "gold": {
+        "allow_auto": false,
+        "due_at": null,
+        "operation": "create"
+      }
+    }
+  ],
+  "live_ids": [
+    "s01",
+    "s04",
+    "s06",
+    "s07",
+    "s08",
+    "u01",
+    "u03",
+    "n01",
+    "n02",
+    "n06",
+    "a01",
+    "a05"
+  ]
+}

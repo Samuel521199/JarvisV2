@@ -1,0 +1,8 @@
+{
+  "evaluation_r1": {
+    "error": "TypeError: sqlite3.Row is not JSON serializable",
+    "phase": "first fixture snapshot, before any scoring",
+    "runs": ["dev-before", "dev-after", "holdout-before", "holdout-after"],
+    "fix": "Serialize each SQLite row as a dict. No product source, case, label or metric changed. Retry in new r2 fixture directories."
+  }
+}

@@ -22,6 +22,7 @@
   - [新旧版本并行](#service-continuity-2)
   - [单机 A/B 与 MCP：测试后采用、保留任务接续](#single-pc-ab-upgrade)
   - [应用级安装与恢复控制器 v1（v0.1.2，2026-11-04）](#single-pc-application-runtime)
+    - [待办与聊天动作的数据兼容门](#application-commitment-compatibility)
   - [长任务与会话](#service-continuity-3)
   - [状态迁移](#service-continuity-4)
   - [恢复底座自身升级](#service-continuity-5)
@@ -234,6 +235,26 @@ MCP 标准提供初始化、协议／能力协商、运行和关闭的连接生�
 | 工作台与调度接入 | `runtime_http.py` 提供托管接口；交接时暂停聊天队列、后台模型通道及核心任务的新派发，采用后恢复；同一数据根有 Host 独占锁 |
 
 流程为：构建 → 解包与摘要复核 → 来源审阅和独立检查 → 本机准入回执 → 固定当前代际 → 排空并确认旧 Host 退出 → 以同一数据根启动候选 → 健康检查 → 提交活动代际并恢复接单。候选不健康时先确认它退出，再以更大代际恢复原版本；退出不确定时进入 blocked，禁止启动第二个写入者。失败候选的准入回执失效，不能无检查反复采用。停止锁／锁存优先，代码恢复不清除它们。
+
+2026-11-08开发补强：`/api/runtime/shutdown` 在检查构建、代际与允许阶段之后，独立复核共享参与者快照；仍忙或未知时返回 `application_not_drained`，不启动关停线程，不能只依赖调用者先执行过 `drain`。持久的维护阶段先阻止新受理，已有任务可完成，既有取消接口仍可使用。`sdk/application_policy.py` 的控制器回归清单增加 Worker 生命周期和关停反例；冻结的旧恢复控制器不会自动取得新规则。真实原生渲染和独立候选包的补验见[本轮证据](delivery-validation.md#native-handoff-evidence)。
+
+<a id="application-commitment-compatibility"></a>
+#### 待办与聊天动作的数据兼容门
+
+2026-11-08起始的影子/回退核验确认：Core schema同为7，不代表旧版能处理新增待办或聊天动作。现控制器在adopt/rollback请求进入排空之前，用`control/application_compatibility.py`只读检查实际数据需求；排空后再查，防止在途任务新增数据；进程适配器启动前及失败恢复重启旧版前也复核。拒绝时不以恢复旧业务备份掩盖问题。
+
+| 已有数据 | 目标代码需要声明 | 不满足时 |
+|---|---|---|
+| 没有待办记录、没有新动作 | 旧包可无新声明 | 原有第一方代码采用规则继续生效 |
+| schema1待办库有记录（含完成/取消） | `commitments_schema: 1` | adopt/rollback在排空前拒绝，当前Host与活动代际不变 |
+| 聊天中持久化过commitment动作 | `assistant_commitments: true` | 仅有存储读取能力仍不够，旧界面不能呈现新回执 |
+| 未知待办schema、未知动作或无法核验的内容 | 当前代码尚无兼容依据 | 拒绝，不尝试降级写入或迁移 |
+
+目标包的`config/runtime-compatibility.json`带schema=1及上面两个声明，纳入已审阅包的文件摘要与控制器固定测试。声明不是任意代码兼容证明，不替代真实组合测试；范围仅补这两项存储/动作需求，未形成全部业务库迁移框架。旧版原来签过的回执不能跳过本次实际数据复核。
+
+2026-11-09补强声明类型核对：只接受对象和整数schema，null/数组/布尔schema不能冒充有效声明。实际控制器已在新合成数据上完成受审包采用、相容回退、失败恢复、接管中断后由新Driver恢复、未知退出阻断第二写入者、浏览器钥匙轮换及STOP优先的[9步组合验收](delivery-validation.md#commitment-coverage-evidence)。它验证当前控制器管理候选包的流程，不等于冻结控制器自身已被更新，也不扩张为全部历史业务库迁移验收。
+
+若候选失败时已经留下旧版无法读取的新状态，先确认候选停止，再将控制状态记为blocked / `baseline_data_incompatible`，不启动不兼容的基线；保留数据等待兼容代码或受控修复。此规则只存在于新控制器，**日用冻结的旧控制器不会自动获得**。两份旧代码的真实进程、恢复新代码和停止锁演练见[本轮核验](delivery-validation.md#commitment-shadow-evidence)；尚未部署到日用。
 
 状态为 `stopped → draining → starting → active`，异常可进入 `blocked`；SQLite 是控制事务和事件的权威，协调 JSON 可由控制事务修复。A/B 为逻辑槽，指向按摘要保存的代码目录，不覆盖活动目录。[目录权威](stack-project-layout.md#single-pc-development-paths)。
 

@@ -1,0 +1,48 @@
+{
+  "scope": "synthetic data, real old/native hosts; characterization bypasses adoption on purpose",
+  "old_versions": [
+    {
+      "commit": "efe50c7634a965d167e4ae197ed53dc35347d175",
+      "version": "0.1.3",
+      "data_unchanged": true,
+      "controller_preflight": "application_data_compatibility",
+      "commitment_endpoint_http": 404,
+      "new_action_refusal": "denied",
+      "new_receipt_projection": false,
+      "due_processing_supported": false,
+      "feature_compatible": false
+    },
+    {
+      "commit": "11a9e4b5ec014036aae9f779c3a6eba93519d45b",
+      "version": "0.1.2",
+      "data_unchanged": true,
+      "controller_preflight": "application_data_compatibility",
+      "commitment_endpoint_http": 404,
+      "new_action_refusal": "denied",
+      "new_receipt_projection": false,
+      "due_processing_supported": false,
+      "feature_compatible": false
+    }
+  ],
+  "production_changed": false,
+  "status": "passed_characterization",
+  "current_preflight": {
+    "compatible": true,
+    "required": {
+      "commitments_schema": 1,
+      "assistant_commitments": true
+    },
+    "declared": {
+      "schema": 1,
+      "commitments_schema": 1,
+      "assistant_commitments": true
+    }
+  },
+  "new_resume": {
+    "pending_caught_up_once": true,
+    "cancelled_and_done_preserved": true,
+    "receipt_readable": true
+  },
+  "stop_preserved": true,
+  "old_rollback_requires_gate": true
+}

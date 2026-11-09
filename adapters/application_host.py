@@ -70,6 +70,8 @@ class WorkbenchProcess:
             connection.close()
         package = Path(record['path'])
         reject_links(package)
+        from control.application_compatibility import require_compatible
+        require_compatible(self.root,package)
         logs = self.root / 'deployment/logs'
         logs.mkdir(exist_ok=True)
         with (logs / (str(epoch) + '.stdout.log')).open('ab') as out, (logs / (str(epoch) + '.stderr.log')).open('ab') as error:

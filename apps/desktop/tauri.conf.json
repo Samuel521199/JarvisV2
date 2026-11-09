@@ -1,0 +1,15 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Jarvis Presence",
+  "version": "0.1.0",
+  "identifier": "local.jarvis.presence",
+  "build": { "frontendDist": "assets" },
+  "app": {
+    "windows": [],
+    "security": { "capabilities": [
+      { "identifier": "presence-local", "windows": ["presence"],
+        "remote": { "urls": ["http://127.0.0.1:*/*"] }, "permissions": [] }
+    ] }
+  },
+  "bundle": { "active": false }
+}

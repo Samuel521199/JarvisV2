@@ -115,7 +115,7 @@ class BlenderWorkflow(unittest.TestCase):
             studio3d.LOCK.acquire()
             studio3d.run(self.root,body,None,None)
         self.assertIsNone(build.call_args.args[3])
-        record=json.loads((folder/'receipt.json').read_text())
+        record=json.loads((folder/'receipt.json').read_text(encoding='utf-8'))
         self.assertEqual(record['derived_from'],body['edit'])
         self.assertEqual(record['edit']['new_model_calls'],0)
         self.assertTrue(any(c.kwargs.get('status')=='DELIVERED' for c in update.call_args_list))

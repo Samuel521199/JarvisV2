@@ -19,6 +19,19 @@ def sha(path):
         return hashlib.file_digest(stream, "sha256").hexdigest()
 
 
+def stdlib_sources(library):
+    """Prune disallowed trees before traversal, not after enumerating their files."""
+    excluded={"site-packages", "__pycache__", "test", "tests", "idlelib", "tkinter", "ensurepip", "turtledemo"}
+    paths=[]
+    for parent,directories,files in os.walk(library,followlinks=False):
+        directories[:]=sorted(name for name in directories if name not in excluded)
+        for name in directories: reject_links(Path(parent)/name)
+        for name in files:
+            path=Path(parent)/name
+            if path.suffix=='.py':reject_links(path);paths.append(path)
+    return sorted(paths)
+
+
 class RestrictedWorker:
     def __init__(self, root):
         self.root = root
@@ -40,12 +53,10 @@ class RestrictedWorker:
             reject_links(origin)
             shutil.copyfile(origin, self.runtime / name)
         # Only standard-library source; no site packages, hooks, binaries from old Jarvis.
-        excluded = {"site-packages", "__pycache__", "test", "tests", "idlelib", "tkinter", "ensurepip", "turtledemo"}
         with zipfile.ZipFile(self.runtime / "stdlib.zip", "w", zipfile.ZIP_DEFLATED) as archive:
-            for path in sorted((source / "Lib").rglob("*.py")):
+            for path in stdlib_sources(source / 'Lib'):
                 rel = path.relative_to(source / "Lib")
-                if not excluded.intersection(rel.parts):
-                    reject_links(path); archive.write(path, rel.as_posix())
+                archive.write(path, rel.as_posix())
         dlls = self.runtime / "DLLs"; dlls.mkdir()
         for path in sorted((source / "DLLs").iterdir()):
             if path.suffix.lower() in {".pyd", ".dll"} and not any(x in path.name for x in ("_tkinter", "tcl", "tk86")):

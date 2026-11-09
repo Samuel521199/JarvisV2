@@ -1,0 +1,166 @@
+{
+  "status": "passed",
+  "completed_utc": "2026-11-08T16:24:40.010519+00:00",
+  "base_commit": "efe50c7634a965d167e4ae197ed53dc35347d175",
+  "environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.0",
+    "workspace": "D:\\Jarvis-dev"
+  },
+  "scope": "new synthetic samples before repairs, bounded real Google proposals, old-code host characterization; no daily adoption",
+  "checks": {
+    "frozen_cases_unchanged": true,
+    "before_sources_bound": true,
+    "after_sources_bound": true,
+    "original_live_responses_unchanged": true,
+    "twelve_real_calls_completed": true,
+    "replay_added_no_calls": true,
+    "owned_proxy_stopped": true,
+    "shadow_kept_seed_state_only": true,
+    "after_safety_gate": true,
+    "supported_formats_non_regression": true,
+    "old_versions_characterized_incompatible": true,
+    "current_resume_and_stop": true,
+    "rollback_sources_current": true,
+    "related_regression": true,
+    "independent_package": true,
+    "package_log_intact": true,
+    "package_archive_intact": true,
+    "controller_policy_intact": true,
+    "docs_gate": true,
+    "architecture_gate": true,
+    "diff_gate": true,
+    "navigation_gate": true
+  },
+  "gates": {
+    "docs": {
+      "exit_code": 0,
+      "log": "docs.log"
+    },
+    "architecture": {
+      "exit_code": 0,
+      "log": "architecture.log",
+      "report": {
+        "python_files": 434,
+        "host_cycle_modules": 20,
+        "errors": []
+      }
+    },
+    "diff": {
+      "exit_code": 0,
+      "log": "diff.log"
+    },
+    "navigation": {
+      "exit_code": 0,
+      "log": "navigation.log"
+    }
+  },
+  "fixture_checks": [
+    {
+      "root": "D:\\jarvisTest\\commitment-shadow-offline-final-metrics",
+      "cases": 36,
+      "seed_rows_only": true,
+      "failures": []
+    },
+    {
+      "root": "D:\\jarvisTest\\commitment-live-shadow-20261108-r2",
+      "cases": 12,
+      "seed_rows_only": true,
+      "failures": []
+    }
+  ],
+  "package_runtime_files": 618,
+  "package_source_mismatches": [],
+  "results": {
+    "offline_before": {
+      "cases": 36,
+      "unsafe_auto": 3,
+      "wrong_auto_time": 0,
+      "clear_single_local_requests": 18,
+      "correct_auto": 10,
+      "automatic_coverage": 0.5555555555555556,
+      "supported_automatic_coverage": 1.0,
+      "missed_clear": 8
+    },
+    "offline_after": {
+      "cases": 36,
+      "unsafe_auto": 0,
+      "wrong_auto_time": 0,
+      "clear_single_local_requests": 18,
+      "correct_auto": 11,
+      "automatic_coverage": 0.6111111111111112,
+      "supported_automatic_coverage": 1.0,
+      "missed_clear": 7
+    },
+    "real_before": {
+      "cases": 12,
+      "unsafe_auto": 1,
+      "wrong_auto_time": 0,
+      "clear_single_local_requests": 7,
+      "correct_auto": 5,
+      "automatic_coverage": 0.7142857142857143,
+      "supported_automatic_coverage": 1.0,
+      "missed_clear": 2
+    },
+    "real_replay_after": {
+      "cases": 12,
+      "unsafe_auto": 0,
+      "wrong_auto_time": 0,
+      "clear_single_local_requests": 7,
+      "correct_auto": 6,
+      "automatic_coverage": 0.8571428571428571,
+      "supported_automatic_coverage": 1.0,
+      "missed_clear": 1
+    },
+    "provider_reported_usage": {
+      "completion_tokens": 1785,
+      "prompt_tokens": 15620,
+      "reasoning_tokens": 7988,
+      "total_tokens": 25393
+    }
+  },
+  "limitations": [
+    "Repair cases are now development/regression data, not new unseen validation.",
+    "Automatic utility is only 11/18 clear requests; English and other paraphrases remain incomplete.",
+    "Twelve synthetic model calls are not a general quality benchmark; currency cost is unreconciled.",
+    "Two old versions preserve data but lack features. This is not a complete migration/UI matrix.",
+    "The current compatibility gate is not installed into the frozen daily controller; production was not adopted."
+  ],
+  "evidence_sha256": {
+    "architecture.log": "c0404fba3ac309df5c73edd4a1ba932be3564864f07a23e97a1e738d95439373",
+    "audit.py": "a68b82c8056fbdce787a1f78c077cdf9f53b62e6f1ece162b2c229d61f81ee5a",
+    "cases.json": "3949b3a5654715038d051b7711a9f832c9e007b4b44356d54b610dff7735b65d",
+    "diff.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs.log": "d201817e37a39b61a0634bc6deb6eea4421a682a62d6a250381045397aab356f",
+    "evaluate.py": "54963805ad6d0272cba1b3e83cd1eb1ac42429e0205460a14286b18928a127e8",
+    "freeze_cases.py": "770a0c735acef8b78ee153c8d044828e57ef00195d1772e52cbe0d6cc6e3ef6a",
+    "live-bootstrap-r1.json": "f6fd8a739fd91a99c7ef27ce64f7c5af73382f00381c0c38ee909a57fcd7b794",
+    "live-replay-after-before-operation-metric.json": "7f5cb657a4475fedd9edde32333f3843ec3a0b7e41b5722f31baa78c5c9d7168",
+    "live-replay-after-safety-only.json": "5785a9da39dae2990708e962dc77cc86b2033111a93eb0096071a5cd96216d4f",
+    "live-replay-after.json": "faa9d85805adb50f063956b3cb3d21b6109ac1f5a7b5afdc0e836f5b54359aab",
+    "live-result.json": "e1804770eb25d699a73d81b884ea17a65bca73a9cb86af6a9c3fbe28deb7721e",
+    "navigation.log": "09028371838271e84996a3ead63598cfd9e47ec1c4468eddeddfd680b7cb5abf",
+    "offline-after-before-operation-metric.json": "83b19d56ba6d07b69d1add28e7ad82b27f9f000fe34e5eb37f1a83cc952a1cd2",
+    "offline-after-safety-only.json": "252ebe18b21bc10baa375459e0788a79ea4a1054aa86fd1186c56fc39ec5e573",
+    "offline-after.json": "ac3124320f38591efe678e8dbe2a3279938e45d98452b3c90c66c6f4e0a64f4a",
+    "offline-before.json": "4e442713939abf20ccdb6c05bf2ad4b6f2e15312625119faa0c2dcf799b22161",
+    "package-result-pre-drain-race.json": "6e35906719714c767f0184f8ab33fe7cb90852463aab2811d46771c246cfba77",
+    "package-result.json": "70a38b5b344c26b00d00f2bd3c2c2352ac27ee4351903213a67906becb3ae1b5",
+    "package-tests-pre-drain-race.log": "2145a4919941c21460726fb5f6d042f914efc802eaa389d870f0f420ea704102",
+    "package-tests.log": "c206706f7c36b476c06a529f7b95cf5d8ac4ac953fd79c723f64d2073a43a8ec",
+    "plan.json": "b64415fd5e95b52dc6d5f93af9fc293bdf10960ae40e5ddf1e0fae320399a6dc",
+    "regression-pre-drain-race.json": "7f32039e902c8934a225d689ea9b850728cfb6cf36759328dc699ad87f6c1ee8",
+    "regression-pre-drain-race.log": "cda5c1c51b606362818100d993697e589fb061619c9f9f0ca3c417eafa2eec8c",
+    "regression.json": "5958d9a1c447610327a9723e7db830b312f6ccb42b5805d3d0a0c3f4150e93cb",
+    "regression.log": "f8cdd02b241c59e00df33a66e4b7c9b75c9c3bf799cfd2f0420ba8bed28f6783",
+    "replay_live.py": "cdaa640cdd7250c6ed7f23ab52c2ad6bc4f0b385848e1541fdc998f837447c87",
+    "rollback-fixture-r1.json": "be5348065dda45faaaccd7fe1bc46cf6d6c2f1457977bf72a65649e5cff3d91f",
+    "rollback-result-pre-drain-race.json": "b49c66651358cccd3a625700e41559024c09bddc66fb8e609aaa0695bfafc3a4",
+    "rollback-result-r2.json": "a5e9f976fe1819d319701f9d7cb64a4e876dc21024f449ba3e1a1773444889d2",
+    "rollback-result.json": "71f82f89485eac62efab8807af5798a7d49b86a2f39c3f21294377c15add96e2",
+    "run_live.py": "35ab3015e157814769dec0b98ec4c9b01c075067d386967bb41402b3a186f029",
+    "run_package.py": "debb2d2fa83b5cf969964e5e63a0e167c690727a7e13d4e1a601922cae92b177",
+    "run_regression.py": "f34a2599a3bf9233f56d5ce0307254ef6e049063826b811ccbad416caaa519a6",
+    "run_rollback.py": "f3a2634ecb899643baad11317cac6f473e6b5760ba567b2f5a797ecd80869b12"
+  }
+}

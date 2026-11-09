@@ -5,7 +5,7 @@ import time
 from control.paths import data_root, child
 from host.core import Core
 from modules.task_resource.scheduling import Scheduling
-from sdk.protocol import decode
+from sdk.protocol import CoreError, decode
 
 LABELS = {'running': '运行中', 'queued': '排队中', 'needs_input': '等待你回答',
           'external': '等待外部', 'waiting': '等待条件', 'unknown': '状态待核对',
@@ -74,6 +74,12 @@ def snapshot(root, server):
         from host.outcomes import status as outcome_status
         outcome_observer = outcome_status(core)
     finally: core.close()
+    from host.commitments import projection as commitments_projection
+    try:
+        items.extend(commitments_projection(root))
+        sources.append({'id':'commitments','status':'connected','limit':200})
+    except (sqlite3.Error, OSError, CoreError):
+        sources.append({'id':'commitments','status':'unavailable'})
     suppressed_turns = set()
     for name, path in [('studio3d', 'state/studio3d.sqlite3'), ('images', 'state/image-generation.sqlite3')]:
         target = child(root, path)

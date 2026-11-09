@@ -1,0 +1,55 @@
+{
+  "date": "2026-11-08",
+  "scope": "development checkout; not deployed",
+  "baseline_head": "efe50c7634a965d167e4ae197ed53dc35347d175",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.13.0",
+  "patterns": [
+    "test_worker_process.py",
+    "test_codex_candidate.py",
+    "test_worker.py",
+    "test_studio3d.py",
+    "test_studio3d_learning.py",
+    "test_anatomy_engineering.py",
+    "test_native_manifest.py",
+    "test_architecture_boundaries.py",
+    "test_application_runtime.py",
+    "test_companion_workflows.py"
+  ],
+  "tests": 99,
+  "failures": 0,
+  "errors": 1,
+  "skipped": [
+    {
+      "test": "test_bad_assembly_order_detected_even_when_static_clear (test_anatomy_engineering.NativeEngineering.test_bad_assembly_order_detected_even_when_static_clear)",
+      "reason": "Optional pinned native runtime not prepared"
+    },
+    {
+      "test": "test_chemistry_conserves_elements_and_enthalpy (test_anatomy_engineering.NativeEngineering.test_chemistry_conserves_elements_and_enthalpy)",
+      "reason": "Optional pinned native runtime not prepared"
+    },
+    {
+      "test": "test_engineering_generation_reuses_existing_lane (test_anatomy_engineering.NativeEngineering.test_engineering_generation_reuses_existing_lane)",
+      "reason": "Optional pinned native runtime not prepared"
+    },
+    {
+      "test": "test_real_assembly_exports_section_and_conservation (test_anatomy_engineering.NativeEngineering.test_real_assembly_exports_section_and_conservation)",
+      "reason": "Optional pinned native runtime not prepared"
+    },
+    {
+      "test": "test_true_intersection_volume_and_safe_text (test_anatomy_engineering.NativeEngineering.test_true_intersection_volume_and_safe_text)",
+      "reason": "Optional pinned native runtime not prepared"
+    }
+  ],
+  "seconds": 33.002,
+  "sources_sha256": {
+    "control/worker/process.py": "41bca6978deb3533ef6a6b6483d9bca9d5ba2b844437b228a889059a51dbbd9f",
+    "adapters/models/codex_cli.py": "eaa24cd3d7cb0366b856e71dcd369493f12fa49be98154b05f8cadbced895fc6",
+    "host/studio3d.py": "23e2cdfbaed771c825fadbfe31b31533846afebd1862d89016dd797d8e625415",
+    "host/studio3d_learning.py": "e4d23753b80ef56ef0e58cae5744c4ee47ac6f186fca3e3c362ada068b97483f",
+    "host/anatomy_engineering.py": "53c43291b29ccda08d6e680fae5bd44acc3eb9d5153f448934c847ff43a834ab",
+    "tests/test_worker_process.py": "26d4bdbdaa301ec55c82b1187f5fca3c065bf4d60da0e1f31d549ae8d5ef42dc",
+    "tests/test_codex_candidate.py": "bbb776b65e247f8cfa5cd27d15b05f3cb696d987eb559ab11dfb38c1fea93ba1"
+  },
+  "tests_log_sha256": "4f9ab0e068c1c7e750b9e37d717add48aacd007e6a355462700b0089a668c3c8"
+}

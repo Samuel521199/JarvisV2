@@ -259,6 +259,8 @@ class Applications:
             candidate = self.approved(ident, fresh=not (rollback or restarting))
             if state['phase'] == 'active' and state['active'] and state['active']['build'] == ident:
                 return state
+            from control.application_compatibility import require_compatible
+            require_compatible(self.root,candidate['path'])
             old = state['active']
             running = state['phase'] == 'active'
             selected = {'build': ident, 'version': candidate['version'],
@@ -278,6 +280,7 @@ class Applications:
             self.save(state, 'candidate_starting')
             try:
                 StopGate(self.root).require_running()
+                require_compatible(self.root,candidate['path'])  # in-flight work may have changed data while draining
                 driver.start(candidate, selected, state['epoch'])
                 driver.health(selected, state['epoch'])
             except Exception:
@@ -308,7 +311,13 @@ class Applications:
             self.save(state, 'initial_install_failed')
             return state
         StopGate(self.root).require_running()
-        self.approved(old['build'], fresh=False)
+        baseline=self.approved(old['build'], fresh=False)
+        from control.application_compatibility import require_compatible
+        try: require_compatible(self.root,baseline['path'])
+        except CoreError:
+            state.update(phase='blocked',error='baseline_data_incompatible')
+            self.save(state,'baseline_restore_blocked')
+            raise CoreError('application_recovery_blocked','Baseline cannot read the current data; no baseline process was started') from None
         old = {**old, 'epoch': state['epoch'] + 1}
         state.update(epoch=state['epoch'] + 1, phase='starting', pending=old, pending_epoch=old['epoch'])
         self.save(state, 'baseline_restoring')

@@ -1,10 +1,12 @@
 import {el,button,post,notice,card,states,errorText} from './ui.js';
 import {outcomeView,completionView} from './ui.js';
 import {workClosure} from './rework-impact.js';
+import {commitmentCard} from './assistant-commitments.js';
 
 export function actionCard(parent,turn,{openGoal,refresh,openMemory}){
  const action=turn.assistant_action,goal=turn.linked_goal;
  if(!action||action.kind==='chat'||turn.status!=='SUCCEEDED')return;
+ if(action.kind==='commitment'){commitmentCard(parent,turn,refresh);return;}
  const goalStates={NEW:'等待规划',PLANNING:'正在规划',NEEDS_INPUT:'待补充能力或条件',REVIEW:'等待核对计划',SUCCEEDED:'执行完成'};
  const closureStates={COMPLETE:'当前版已结案',NEEDS_REVIEW:'当前版待核对',IN_PROGRESS:'当前版进行中',NEEDS_EVIDENCE:'当前版待核验',STOPPED:'已停止接续'};
  const c=card(goal?.work_closure?'此消息关联的工作 · '+closureStates[goal.work_closure.state]:goal?'此消息的目标 · '+(goalStates[goal.status]||states[goal.status]||goal.status):'识别到行动请求','');

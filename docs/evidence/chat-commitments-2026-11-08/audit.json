@@ -1,0 +1,134 @@
+{
+  "date": "2026-11-08",
+  "scope": "development checkout; no daily deployment",
+  "deployed": false,
+  "environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.0"
+  },
+  "checks": [
+    {
+      "command": [
+        "python",
+        "tools/sync_doc_navigation.py",
+        "--root",
+        "."
+      ],
+      "exit_code": 0,
+      "output": "OK navigation: 2 updated\n"
+    },
+    {
+      "command": [
+        "python",
+        "tools/check_docs.py",
+        "--root",
+        "."
+      ],
+      "exit_code": 0,
+      "output": "OK documents=32 chapters=25 diagrams=46 local_links=4430 errors=0\n"
+    },
+    {
+      "command": [
+        "python",
+        "tools/check_architecture.py"
+      ],
+      "exit_code": 0,
+      "output": "{\"python_files\": 433, \"host_cycle_modules\": 20, \"errors\": []}\n"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "output": ""
+    }
+  ],
+  "source_checks": {
+    "runtime_sources_match": true,
+    "all_packaged_sources_match": true,
+    "package_log_matches": true,
+    "policy_matches": true
+  },
+  "regression": {
+    "patterns": [
+      "test_assistant_commitments.py",
+      "test_assistant_goals.py",
+      "test_commitments.py",
+      "test_memory_domains.py",
+      "test_personal_workflows.py",
+      "test_companion_workflows.py"
+    ],
+    "tests": 63,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 39.207
+  },
+  "independent_package": {
+    "schema": 1,
+    "passed": true,
+    "reviewed_source": true,
+    "architecture_passed": true,
+    "architecture_error_count": 0,
+    "architecture_sample": [],
+    "policy_sha256": "03eb3408b587477d80d7d315dd2760789f115f911c7df1be4a981c8ecbd569da",
+    "tests_passed": true,
+    "tests_summary": "151 0 0 1",
+    "runtime_intact": true,
+    "test_log": "0.1.3-0d3710b331ea4cc5b769b94258467d6f.log",
+    "test_log_sha256": "276dcca70ffefc0ee03b688b19e778e31626765cc26ed6a13eb947d916cdb86e"
+  },
+  "storage": {
+    "schema": 1,
+    "records": 3,
+    "conversation_operations": 4
+  },
+  "screenshot": {
+    "path": "D:/jarvisTest/chat-commitments-20261108-r8/receipt.png",
+    "sha256": "bccd216a20cb890d1ced8ba00dc0ad9f66e1bc3da66d92ca04a8122a5be20798",
+    "inspected": true
+  },
+  "evidence_sha256": {
+    "browser-r1.log": "4a3848ee0b0951d375dbb4b5be47886346f230b4a9b7a92fd30d92ad6cef2512",
+    "browser-r2.log": "ef42c3cffcef67445a3a42eb89d31ba31a2df718d13d7f0489678d86c1ab718e",
+    "browser-r3.log": "83de0527bdb253b45b6bd3c770b09e3a6989bb098752236b336314f7269e1fb6",
+    "browser-r4.log": "48613548c48f179e65042b358f5117fa29f79d7d4a1b9f78f465820d1782f64f",
+    "browser-r5.log": "a778227e931ae4d3e8ca533b4a0d90d4f1562dfda76c65037f3a1bbd34254776",
+    "browser-r6.log": "16392d6c80147484d2dfede77a77ed2decd98144391a9546a063ef1312a15cf3",
+    "browser-r7.log": "c4d0c6a3bd0fbd3b9cb091ffb4f9805b508e5d226604a4db8475a2550f5c5180",
+    "browser.cjs": "722ba9a8687121452f956c3a1fc753edc500109e3f30c8d05d854dc8a1a6edb7",
+    "browser.log": "e6e7ce6410e8836d963d95c43cd37948f6313c49d214a1355bbf414fd792726f",
+    "package-result-r1.json": "b49e669e5064e75a7875970d481bc1c45c5a847a5c75119918269fdd407ff7b2",
+    "package-result-r2.json": "79bf14d120762e1ca4208699ea1f55df58a99cf838d119eae0c1cb532ad5aa37",
+    "package-result.json": "3c760d959e327d49e466c56fbb6babd77ce94272db94da07f90be845275a694a",
+    "package-tests-r1.log": "525393f8b7281c0a450d218c91079a7dee19022faca9c337de6822eab3ab1ccd",
+    "package-tests-r2.log": "6adcee93876651eb18f08016f013ea99b1a1ae34b753d301c6ccd95a44438760",
+    "package-tests.log": "276dcca70ffefc0ee03b688b19e778e31626765cc26ed6a13eb947d916cdb86e",
+    "regression-r1.json": "916645b8a9f161711801710440da6db69bb1d2a2b7966db8d567ed013f803d1a",
+    "regression-r1.log": "f30fff3eeda6743cb7b6fb3b8bc41b17097e29c089a6aa4e5fafb07b7fb70ea2",
+    "regression-r2.json": "b78c4eea59e4b0ef4f509fd148b332e44d410246d097f291af8a6c6044b76593",
+    "regression-r2.log": "7bc4da9a6f34f2738ae3a48a5175e8f5854cf64c61434265f99876a4e3e93985",
+    "regression.json": "260b4c1d2f42a3a9522c6699fad7bcb9e29257d3fdec7ef1358a9c72876f327f",
+    "regression.log": "fa15e34e96fe41fd68d00bc8ea4a551f547fccd6d0ab4d5d5fe5d2762eba33aa",
+    "runtime-result-r1.json": "96ba949305d31a2cd673224c2dd3c56b4931d2549fd8ceab157272f45ddd38ca",
+    "runtime-result-r2.json": "ae92f380b5d0d44f348db80b744a3bc47b77374fd838a8ce63c27dcf41a16925",
+    "runtime-result-r3.json": "177b50b10ed2096b273220f6ed685adf539085706dfbb14e7098c7229ab74d23",
+    "runtime-result-r4.json": "9317dd1322e38a5798882a9686bedbae5b008b4947b7389ad754dd5385ea4283",
+    "runtime-result-r5.json": "a6376cf3386138de0335df88a131b7f0576adad8e9c629414b93b3b30ba13592",
+    "runtime-result-r6.json": "ed53269721f90710a0608fc2427a1a93e694af74c9c11437742cbd708aa62c9c",
+    "runtime-result-r7.json": "1de6e531f3d412faac3817e70fd96a39bed927888a742b13ca570b090dd10440",
+    "runtime-result.json": "299025f88fbf345843c6e0c6ad37ce8f8e8b301f55310899fb6f89a95a7c2a4b",
+    "run_package.py": "36c958a69529da16ee8a55842f3353b3430337ddf537ce3554341c6311851c0b",
+    "run_regression.py": "4e49a4c6b3249282d096619f9f61e5623dd41054645a9a85340dd50c6f4592ac",
+    "run_runtime.py": "1535b1a176d9b919e96ea4422a3be1242a86784c43a554a3f5fbc19e9937d339"
+  },
+  "limitations": [
+    "Deterministic model substitutes: no real model understanding/quality measurement",
+    "Finite Chinese intention/time rules; explicit UTC offset, no arbitrary natural language or DST recurrence",
+    "Personal foreground conversations and same-chat bindings only; no mail/private/project source automation",
+    "Local work view only; no external message, OS notice or execution grant added",
+    "New action cards are unsupported by older chat UI; full rollback/data-combination acceptance remains outstanding"
+  ]
+}

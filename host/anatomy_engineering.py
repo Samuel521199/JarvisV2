@@ -24,7 +24,8 @@ def readiness():
     return {'schema':CONTRACT['schema'],'native_runtime':ready,'assembly':ready,'cad':ready,'combustion':ready,'limits':'Trusted optional native code, not an LPAC sandbox. Static interference and explicitly listed numerical models only.'}
 
 def render_engineering(root,scene,source):
-    import contextlib,ctypes,hashlib,os,shutil,subprocess,tempfile,time,uuid
+    import contextlib,hashlib,os,shutil,subprocess,tempfile,time,uuid
+    from control.worker.process import OwnedProcess
     from control.paths import child
     from control.recovery.gate import StopGate
     if not readiness()['native_runtime']:raise CoreError('anatomy_native_missing','Prepare the pinned optional engineering runtime first')
@@ -33,18 +34,12 @@ def render_engineering(root,scene,source):
     with tempfile.TemporaryDirectory(prefix='engineering-',dir=folder) as stage_name:
         stage=Path(stage_name).resolve()
         if folder.resolve() not in stage.parents:raise CoreError('unsafe_path','Invalid engineering work directory')
-        stdout=stage/'worker.stdout';stderr=stage/'worker.stderr';job=None;native=None;resources_used={};started=time.monotonic()
+        stdout=stage/'worker.stdout';stderr=stage/'worker.stderr';resources_used={};started=time.monotonic()
         env={k:v for k,v in os.environ.items() if k.upper() in {'SYSTEMROOT','WINDIR'}};env.update(TEMP=str(stage),TMP=str(stage),OMP_NUM_THREADS='1',OPENBLAS_NUM_THREADS='1',MKL_NUM_THREADS='1')
         with stdout.open('wb') as out,stderr.open('wb') as err:
-            process=subprocess.Popen([str(runtime_python()),'-I','-B',str(ROOT/'apps/engineering/worker.py'),'--folder',str(stage)],stdin=subprocess.PIPE,stdout=out,stderr=err,env=env,cwd=stage,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
+            process=OwnedProcess([str(runtime_python()),'-I','-B',str(ROOT/'apps/engineering/worker.py'),'--folder',str(stage)],input=json.dumps(scene,ensure_ascii=False).encode(),stdout=out,stderr=err,env=env,cwd=stage,processes=2,cpu_seconds=30,memory_bytes=1024**3,checkpoint=lambda:StopGate(root).require_running())
             try:
-                if os.name=='nt':
-                    from control.worker import win32 as n
-                    from ctypes import wintypes as w
-                    native=n.bind();job=native['CreateJobObjectW'](None,None);limits=n.JobLimit();limits.basic.flags=0x2000|0x8|0x100|0x200|0x2;limits.basic.processes=2;limits.basic.cpu=30*10_000_000;limits.memory=limits.job_memory=1024*1024*1024
-                    assign=n.api('kernel32','AssignProcessToJobObject',w.BOOL,w.HANDLE,w.HANDLE)
-                    if not job or not native['SetInformationJobObject'](job,9,ctypes.byref(limits),ctypes.sizeof(limits)) or not assign(job,int(process._handle)):raise CoreError('anatomy_engineering_limit','Native job limits unavailable')
-                process.stdin.write(json.dumps(scene,ensure_ascii=False).encode());process.stdin.close();deadline=time.monotonic()+45
+                deadline=time.monotonic()+45
                 while process.poll() is None:
                     StopGate(root).require_running()
                     if time.monotonic()>=deadline:raise CoreError('anatomy_timeout','Engineering task exceeded 45 seconds')
@@ -52,19 +47,15 @@ def render_engineering(root,scene,source):
                     time.sleep(.05)
                 if process.returncode:
                     diagnostic=child(root,'diagnostics/anatomy');diagnostic.mkdir(parents=True,exist_ok=True)
-                    peaks={}
-                    if job:
-                        measured=n.JobLimit()
-                        if native['QueryInformationJobObject'](job,9,ctypes.byref(measured),ctypes.sizeof(measured),None):peaks={'peak_process_memory_bytes':measured.peak,'peak_job_memory_bytes':measured.job_peak}
+                    peaks=process.resources()
                     (diagnostic/(ident+'-failure.json')).write_text(json.dumps({'id':ident,'exit_code':process.returncode,'resources':peaks,'elapsed_seconds':time.monotonic()-started,'stderr':stderr.read_text(encoding='utf-8',errors='replace')[-6000:],'stdout':stdout.read_text(encoding='utf-8',errors='replace')[-1800:],'successful_artifact':False},ensure_ascii=False,indent=2),encoding='utf-8')
                     raise CoreError('anatomy_engineering_build','Trusted geometry or numerical solver failed; no successful artifact was issued')
             finally:
-                if process.poll() is None:process.kill()
-                process.wait()
-                if job:
-                    measured=n.JobLimit()
-                    if native['QueryInformationJobObject'](job,9,ctypes.byref(measured),ctypes.sizeof(measured),None):resources_used={'peak_process_memory_bytes':measured.peak,'peak_job_memory_bytes':measured.job_peak}
-                    native['CloseHandle'](job)
+                try:
+                    if process.poll() is None:process.kill()
+                    process.wait(timeout=5)
+                    resources_used=process.resources()
+                finally:process.close()
         StopGate(root).require_running()
         data_path=stage/'result.json'
         if not data_path.is_file() or data_path.stat().st_size>8*1024*1024:raise CoreError('anatomy_engineering_limit','Engineering result size invalid')

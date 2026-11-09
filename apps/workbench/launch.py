@@ -92,17 +92,23 @@ def main():
     parser.add_argument('--port', type=int, default=18282)
     parser.add_argument('--data-root', type=Path, default=ROOT / 'user-data')
     parser.add_argument('--no-browser', action='store_true')
+    parser.add_argument('--companion', action='store_true', help='Open the optional native companion instead of a browser')
     parser.add_argument('--check', action='store_true', help='Inspect an existing service without starting or modifying data.')
     args = parser.parse_args()
     if sys.version_info < (3, 13): parser.error('Python 3.13 or newer is required.')
     if not 1024 <= args.port <= 65535: parser.error('Port must be between 1024 and 65535.')
     root = args.data_root.resolve(); url = f'http://127.0.0.1:{args.port}/'
+    def display():
+        if args.companion:
+            from apps.desktop.launcher import start
+            start(root,args.port)
+        else:open_browser(access_url(url,root))
     if not args.check and managed_start(root, args.port):
-        if not args.no_browser: open_browser(access_url(url, root))
+        if not args.no_browser: display()
         return 0
     if running(args.port, root):
         print('[Jarvis] Already running with this data folder: ' + url, flush=True)
-        if not args.no_browser and not args.check: open_browser(access_url(url, root))
+        if not args.no_browser and not args.check: display()
         return 0
     if args.check:
         print('[Jarvis] No running service for this data folder.', flush=True)
@@ -124,7 +130,7 @@ def main():
             try:
                 if running(args.port, root):
                     print('[Jarvis] Ready: ' + url, flush=True)
-                    if not args.no_browser: open_browser(access_url(url, root))
+                    if not args.no_browser: display()
                     return
             except RuntimeError: continue  # Socket may open before the HTTP handler is ready.
         if not done.is_set(): print('[Jarvis] Still starting; see this window for details: ' + url, flush=True)

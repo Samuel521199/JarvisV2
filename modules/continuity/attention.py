@@ -8,6 +8,11 @@ from sdk.protocol import CoreError, canonical
 TERMINAL = {'finished', 'failed', 'cancelled'}
 
 
+def needs_receipt(item):
+    return item['state'] in TERMINAL or (item.get('source') == 'commitments'
+        and item['state'] == 'needs_input' and item.get('raw_status') == 'DUE')
+
+
 def identity(item):
     key = item['source'] + ':' + item['id']
     version = hashlib.sha256(canonical([key, item['state'], item.get('raw_status'),
@@ -35,13 +40,13 @@ class Attention:
         for item in items:
             key, version = identity(item)
             item['attention'] = {'key': key, 'version': version,
-                'unread': item['state'] in TERMINAL and seen.get(key) != version}
+                'unread': needs_receipt(item) and seen.get(key) != version}
 
     def acknowledge(self, item, version):
         key, current = identity(item)
         if current != version:
             raise CoreError('attention_stale', 'The result changed; open its current version')
-        if item['state'] not in TERMINAL:
+        if not needs_receipt(item):
             raise CoreError('attention_pending', 'This work has no terminal result')
         with self.db:
             self.db.execute('INSERT INTO viewed VALUES(?,?,?,?) ON CONFLICT(actor,item) '

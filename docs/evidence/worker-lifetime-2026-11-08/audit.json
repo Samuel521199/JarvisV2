@@ -1,0 +1,67 @@
+{
+  "date": "2026-11-08",
+  "checks": [
+    {
+      "command": [
+        "python",
+        "tools/sync_doc_navigation.py",
+        "--root",
+        "."
+      ],
+      "exit_code": 0,
+      "output": "OK navigation: 0 updated\n"
+    },
+    {
+      "command": [
+        "python",
+        "tools/check_docs.py",
+        "--root",
+        "."
+      ],
+      "exit_code": 0,
+      "output": "OK documents=32 chapters=25 diagrams=46 local_links=4379 errors=0\n"
+    },
+    {
+      "command": [
+        "python",
+        "tools/check_architecture.py"
+      ],
+      "exit_code": 0,
+      "output": "{\"python_files\": 429, \"host_cycle_modules\": 20, \"errors\": []}\n"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "output": ""
+    }
+  ],
+  "tested_sources_unchanged": true,
+  "tests_log_matches": true,
+  "evidence_sha256": {
+    "audit-r3.json": "e9667c2864dd751668332493124d12897145effcaba7df4bf010dda6519234ff",
+    "repeat_failure_cases.py": "79bd29f3c5b775aae13ed81b3ed994688e3cccea853ed48b5776dc5eb772296d",
+    "result-r1.json": "e1f276827af222de5d7d1b204df15ce8f392a3a8b90351c1073402743019cb36",
+    "result-r2.json": "bfb577e933d113972ab0443115a3032b3de44840f99fb58118d63e2938ca8df9",
+    "result-r3.json": "1152f55bdc408dbfd78d0a633d671edab7b1a8e9c0da402c673f72205c40682d",
+    "result.json": "32172ab3aa4d50269a64dd649139e37bdd35b83c0b3b1631b7cff9bde6288929",
+    "run_checks.py": "ebc548195f3d20e064e9ce04fad16cff6467b3ccfc67a4660bd69f15e0a058d3",
+    "stress.json": "26ebd94907dae08891ceabc158c7f313747db151e82bb1061792adaeffbd8345",
+    "stress.log": "01aafb0ddbc8b8ef323599a53a5a76e9a7728942ac94e218a1fea30e20d5dd29",
+    "tests-r1.log": "77a3d2882f3747efff89049298b12e8d50b048867c8ab9e9ee39b83aaa793fe9",
+    "tests-r2.log": "4f9ab0e068c1c7e750b9e37d717add48aacd007e6a355462700b0089a668c3c8",
+    "tests-r3.log": "3d5d06c9d7c1c534ce4ba22e3070590e2cdc237903de803b0f2468a4db309d56",
+    "tests.log": "0f102f9a8ce97b9a4262cc18dea742361bd3ed0037ab37d17671afc724df4285"
+  },
+  "runtime_deployed": false,
+  "limitations": [
+    "Five optional engineering native tests skipped: runtime not prepared",
+    "No real Blender or authenticated Codex end-to-end probe",
+    "No business data changes, native installs or production restart",
+    "Windows Job lifetime is not an LPAC security boundary",
+    "Other subprocess call sites and non-Windows descendants are outside this scope"
+  ]
+}

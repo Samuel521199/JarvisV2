@@ -10,7 +10,7 @@ export const workApi={
   throw Error('此来源需到对应模块停止工作。');
  },
  async record(item){
-  const value=item.source==='tasks'?await post('/api/operations',{action:'task_detail',id:item.id}):item;
+  const value=item.source==='commitments'?await get('/api/commitments/'+encodeURIComponent(item.id)):item.source==='tasks'?await post('/api/operations',{action:'task_detail',id:item.id}):item;
   details('工作记录',value);
   if(item.attention?.unread)await this.viewed(item);
  }

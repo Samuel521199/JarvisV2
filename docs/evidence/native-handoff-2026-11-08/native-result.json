@@ -1,0 +1,147 @@
+{
+  "scope": "development checkout; real native execution with synthetic inputs; not deployment",
+  "work_root": "D:\\jarvisTest\\native-handoff-20261108-r2",
+  "status": "passed",
+  "stages": {
+    "runtime_identity": {
+      "blender_sha256": "e27fbfea8564aa645d4463cb0949695fd85562b9de6df9561b06859a1074adf7",
+      "python_sha256": "6f8c9878450765686ace476d2170b970761d68ace63f16092489c4c8bd5d7018",
+      "package_versions": {
+        "cadquery-ocp": "7.8.1.1.post1",
+        "cantera": "3.2.0",
+        "numpy": "2.5.4"
+      }
+    },
+    "engineering": {
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "native_drain_shutdown": {
+      "busy_snapshot": {
+        "drained": false,
+        "participants": [
+          {
+            "active": 0,
+            "id": "request_activity",
+            "state": "idle"
+          },
+          {
+            "active": 0,
+            "id": "dialogues",
+            "state": "idle"
+          },
+          {
+            "active": 0,
+            "id": "task_runner",
+            "state": "idle"
+          },
+          {
+            "active": 0,
+            "id": "background_lane",
+            "state": "idle"
+          },
+          {
+            "active": 0,
+            "id": "mailbox",
+            "state": "not_started"
+          },
+          {
+            "active": 0,
+            "id": "family",
+            "state": "idle"
+          },
+          {
+            "active": 0,
+            "id": "local_models",
+            "state": "idle"
+          },
+          {
+            "active": 1,
+            "id": "studio3d",
+            "state": "busy"
+          },
+          {
+            "active": 0,
+            "id": "studio3d_learning",
+            "state": "idle"
+          },
+          {
+            "active": 0,
+            "id": "images",
+            "state": "idle"
+          },
+          {
+            "active": 0,
+            "id": "knowledge",
+            "state": "idle"
+          },
+          {
+            "active": 0,
+            "id": "knowledge_extraction",
+            "state": "idle"
+          }
+        ],
+        "scope": "managed host workers and HTTP requests; external processes are not controlled"
+      },
+      "shutdown_refusal": {
+        "error": "application_not_drained"
+      },
+      "new_work_refusal": {
+        "error": "application_maintenance"
+      },
+      "final_status": "DELIVERED",
+      "resources": {
+        "cpu_seconds": 1200,
+        "elapsed_seconds": 7.831239700000879,
+        "exit_code": 0,
+        "isolation": "Trusted fixed first-party worker with resource Job; not an OS security sandbox. No model Python, external imports or external BLEND loading. Only host-hash-verified first-party masters load with scripts disabled.",
+        "memory_bytes": 4294967296,
+        "output_bytes": 268435456,
+        "peak_job_memory_bytes": 987508736,
+        "peak_memory_bytes": 987508736,
+        "peak_process_memory_bytes": 986296320,
+        "threads": 4,
+        "wall_seconds": 300
+      },
+      "host_exit_code": 0
+    },
+    "native_learning": {
+      "status": "REPAIRED_DECLARED_CHECKS",
+      "adoptions": [
+        {
+          "id": "remove-rejected-family",
+          "revision": 2,
+          "tool": "remove_rejected"
+        },
+        {
+          "id": "seat-declared-attachment",
+          "revision": 2,
+          "tool": "seat_attachment"
+        }
+      ],
+      "receipt": "D:\\jarvisTest\\native-handoff-20261108-r2\\data\\artifacts\\studio3d-learning\\74aaa3a8832846199211fa81bfad2146\\receipt.json",
+      "model_calls": 0
+    }
+  },
+  "production_records_read": [
+    {
+      "path": "D:\\Jarvis\\user-data\\optional\\studio3d\\prepared.json",
+      "sha256": "1c59c845e2afd351678ddd5b187d91a5c01352e1fb16f0ce1a987c2f35cc8e20"
+    },
+    {
+      "path": "D:\\Jarvis\\user-data\\optional\\anatomy\\prepared.json",
+      "sha256": "4ef8b32db4b9acf76eafdf50e88d7b2a10f07fbbafe959ea01c77132323231c5"
+    }
+  ],
+  "sources_sha256": {
+    "control/worker/process.py": "05f15a7f81bfe126f0bbab0fa305817df15916e744d741f269ed6000a35844a8",
+    "host/studio3d.py": "23e2cdfbaed771c825fadbfe31b31533846afebd1862d89016dd797d8e625415",
+    "host/studio3d_learning.py": "e4d23753b80ef56ef0e58cae5744c4ee47ac6f186fca3e3c362ada068b97483f",
+    "host/anatomy_engineering.py": "4c5b2cd6e515563ba4b7e923398ff42076c22862b07ac82b45d2348c01b142f9",
+    "apps/workbench/runtime_http.py": "1fbb41942265acadb7ef2cbce9d9de00f81d7f8839d8e65c1b74ca7a9f4eaa95",
+    "sdk/application_policy.py": "1b07f082c6e8a5fb609bef8638fce9bf8e97dbc0642f5a8922c92e8db2736ac1",
+    "modules/skills/studio3d/worker-programs.json": "5dbae9e318d615c66d7ddc11270ae2df716b95a3e216572556fa3a74a441eb93"
+  }
+}

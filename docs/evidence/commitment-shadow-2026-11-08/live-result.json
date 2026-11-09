@@ -1,0 +1,388 @@
+{
+  "scope": "real model proposals through approved Google proxy; synthetic input only; no proposal execution",
+  "calls_started": 12,
+  "rows": [
+    {
+      "id": "s01",
+      "group": "supported",
+      "mode": "AUTO",
+      "action_kind": "commitment",
+      "error": null,
+      "title": "核对订单",
+      "due_at": "2031-06-18T09:10:00+08:00",
+      "unsafe_auto": false,
+      "wrong_auto_time": false,
+      "correct_auto": true,
+      "missed_clear": false,
+      "model_status": "SUCCEEDED"
+    },
+    {
+      "id": "s04",
+      "group": "supported",
+      "mode": "AUTO",
+      "action_kind": "commitment",
+      "error": null,
+      "title": "预约体检",
+      "due_at": "2030-01-03T16:15:00+08:00",
+      "unsafe_auto": false,
+      "wrong_auto_time": false,
+      "correct_auto": true,
+      "missed_clear": false,
+      "model_status": "SUCCEEDED"
+    },
+    {
+      "id": "s06",
+      "group": "supported",
+      "mode": "AUTO",
+      "action_kind": "commitment",
+      "error": null,
+      "title": "整理发票",
+      "due_at": null,
+      "unsafe_auto": false,
+      "wrong_auto_time": false,
+      "correct_auto": true,
+      "missed_clear": false,
+      "model_status": "SUCCEEDED"
+    },
+    {
+      "id": "s07",
+      "group": "supported",
+      "mode": "AUTO",
+      "action_kind": "commitment",
+      "error": null,
+      "title": "核对订单",
+      "due_at": null,
+      "unsafe_auto": false,
+      "wrong_auto_time": false,
+      "correct_auto": true,
+      "missed_clear": false,
+      "model_status": "SUCCEEDED"
+    },
+    {
+      "id": "s08",
+      "group": "supported",
+      "mode": "AUTO",
+      "action_kind": "commitment",
+      "error": null,
+      "title": "核对订单",
+      "due_at": "2031-06-19T10:00:00+08:00",
+      "unsafe_auto": false,
+      "wrong_auto_time": false,
+      "correct_auto": true,
+      "missed_clear": false,
+      "model_status": "SUCCEEDED"
+    },
+    {
+      "id": "u01",
+      "group": "paraphrase",
+      "mode": "NOT_REQUEST",
+      "action_kind": "commitment",
+      "error": null,
+      "title": "预约体检",
+      "due_at": null,
+      "unsafe_auto": false,
+      "wrong_auto_time": false,
+      "correct_auto": false,
+      "missed_clear": true,
+      "model_status": "SUCCEEDED"
+    },
+    {
+      "id": "u03",
+      "group": "paraphrase",
+      "mode": "REVIEW",
+      "action_kind": "commitment",
+      "error": null,
+      "title": "check the invoice",
+      "due_at": null,
+      "unsafe_auto": false,
+      "wrong_auto_time": false,
+      "correct_auto": false,
+      "missed_clear": true,
+      "model_status": "SUCCEEDED"
+    },
+    {
+      "id": "n01",
+      "group": "non_request",
+      "mode": "NOT_REQUEST",
+      "action_kind": "commitment",
+      "error": null,
+      "title": "核对订单",
+      "due_at": null,
+      "unsafe_auto": false,
+      "wrong_auto_time": false,
+      "correct_auto": false,
+      "missed_clear": false,
+      "model_status": "SUCCEEDED"
+    },
+    {
+      "id": "n02",
+      "group": "non_request",
+      "mode": "NO_ACTION",
+      "action_kind": "chat",
+      "error": null,
+      "unsafe_auto": false,
+      "wrong_auto_time": false,
+      "correct_auto": false,
+      "missed_clear": false,
+      "model_status": "SUCCEEDED"
+    },
+    {
+      "id": "n06",
+      "group": "compound",
+      "mode": "NO_ACTION",
+      "action_kind": "goal",
+      "error": null,
+      "unsafe_auto": false,
+      "wrong_auto_time": false,
+      "correct_auto": false,
+      "missed_clear": false,
+      "model_status": "SUCCEEDED"
+    },
+    {
+      "id": "a01",
+      "group": "ambiguous",
+      "mode": "NEEDS_TIME",
+      "action_kind": "commitment",
+      "error": null,
+      "title": "预约体检",
+      "due_at": null,
+      "unsafe_auto": false,
+      "wrong_auto_time": false,
+      "correct_auto": false,
+      "missed_clear": false,
+      "model_status": "SUCCEEDED"
+    },
+    {
+      "id": "a05",
+      "group": "ambiguous",
+      "mode": "AUTO",
+      "action_kind": "commitment",
+      "error": null,
+      "title": "出发",
+      "due_at": "2030-01-03T12:00:00+08:00",
+      "unsafe_auto": true,
+      "wrong_auto_time": false,
+      "correct_auto": false,
+      "missed_clear": false,
+      "model_status": "SUCCEEDED"
+    }
+  ],
+  "outcomes": [
+    {
+      "id": "s01",
+      "status": "SUCCEEDED",
+      "code": null,
+      "text": "{\"schema\":\"jarvis.assistant-turn.v1\",\"reply\":\"已为您生成“核对订单”的本地待办提醒建议，时间为 2031年6月18日 09:10（UTC+8）。确认后将在本地工作视图中为您提醒。\",\"action\":{\"kind\":\"commitment\",\"target\":\"\",\"goal\":\"\",\"input_text\":\"\",\"commitment\":{\"operation\":\"create\",\"title\":\"核对订单\",\"quote\":\"2031-06-18T09:10:00+08:00提醒我核对订单\",\"due_at\":\"2031-06-18T09:10:00+08:00\",\"time_text\":\"2031-06-18T09:10:00+08:00\",\"basis_turn\":\"\"}}}",
+      "usage": {
+        "completion_tokens": 189,
+        "prompt_tokens": 1309,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 1182,
+        "total_tokens": 2680
+      },
+      "seconds": 13.624,
+      "request_id": "05e8fa7d3e0c48e7a31efe96fcd1f294",
+      "prompt_sha256": "ea877e22cf4f9b49f6f30866daa15715469f779278ffac661b5e8b1ba16a43d3"
+    },
+    {
+      "id": "s04",
+      "status": "SUCCEEDED",
+      "code": null,
+      "text": "{\"action\":{\"commitment\":{\"basis_turn\":\"\",\"due_at\":\"2030-01-03T16:15:00+08:00\",\"operation\":\"create\",\"quote\":\"明天下午4点15分UTC+08:00提醒我预约体检\",\"time_text\":\"明天下午4点15分UTC+08:00\",\"title\":\"预约体检\"},\"goal\":\"\",\"input_text\":\"\",\"kind\":\"commitment\",\"target\":\"\"},\"reply\":\"好的，已为你准备在明天（2030年1月3日）下午4点15分（UTC+08:00）提醒“预约体检”。确认后将在本地工作视图为你提醒。\",\"schema\":\"jarvis.assistant-turn.v1\"}",
+      "usage": {
+        "completion_tokens": 168,
+        "prompt_tokens": 1298,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 374,
+        "total_tokens": 1840
+      },
+      "seconds": 7.733,
+      "request_id": "f6f7d2434287437d9e0adecb6500636a",
+      "prompt_sha256": "8b67cb5206dc314b9c24366aff6887373ea5ddea513558e84a667c2065035f38"
+    },
+    {
+      "id": "s06",
+      "status": "SUCCEEDED",
+      "code": null,
+      "text": "{\"action\":{\"commitment\":{\"basis_turn\":\"\",\"due_at\":\"\",\"operation\":\"create\",\"quote\":\"帮我记个待办：整理发票\",\"time_text\":\"\",\"title\":\"整理发票\"},\"goal\":\"\",\"input_text\":\"\",\"kind\":\"commitment\",\"target\":\"\"},\"reply\":\"已为你拟好待办“整理发票”。确认后将记录在本地待办清单中，如需设定提醒时间可以随时告诉我。\",\"schema\":\"jarvis.assistant-turn.v1\"}",
+      "usage": {
+        "completion_tokens": 101,
+        "prompt_tokens": 1289,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 332,
+        "total_tokens": 1722
+      },
+      "seconds": 7.069,
+      "request_id": "c3a1089ff0cc4bb7a02944f442b47876",
+      "prompt_sha256": "2fbd1061fc53d0174c6e28511fe1f6b60f926f7a7896e237c1a9fa831809655a"
+    },
+    {
+      "id": "s07",
+      "status": "SUCCEEDED",
+      "code": null,
+      "text": "{\"schema\":\"jarvis.assistant-turn.v1\",\"reply\":\"好的，已为您准备取消待办事项“核对订单”，请确认。\",\"action\":{\"kind\":\"commitment\",\"goal\":\"\",\"input_text\":\"\",\"target\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"commitment\":{\"operation\":\"cancel\",\"title\":\"核对订单\",\"quote\":\"取消核对订单\",\"due_at\":\"\",\"time_text\":\"\",\"basis_turn\":\"\"}}}",
+      "usage": {
+        "completion_tokens": 85,
+        "prompt_tokens": 1283,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 283,
+        "total_tokens": 1651
+      },
+      "seconds": 7.406,
+      "request_id": "84bbdc13bce047d0b606d62ab881e49d",
+      "prompt_sha256": "32d93976c1e27b03bbba58f11acc3ddf8fd8ba2203e917da7e5adb9460bec8ba"
+    },
+    {
+      "id": "s08",
+      "status": "SUCCEEDED",
+      "code": null,
+      "text": "{\"action\":{\"commitment\":{\"basis_turn\":\"\",\"due_at\":\"2031-06-19T10:00:00+08:00\",\"operation\":\"reschedule\",\"quote\":\"把核对订单改到2031-06-19T10:00:00+08:00\",\"time_text\":\"2031-06-19T10:00:00+08:00\",\"title\":\"核对订单\"},\"goal\":\"\",\"input_text\":\"\",\"kind\":\"commitment\",\"target\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"},\"reply\":\"已为您准备将“核对订单”改期至 2031-06-19 10:00:00+08:00，请确认是否更新。\",\"schema\":\"jarvis.assistant-turn.v1\"}",
+      "usage": {
+        "completion_tokens": 191,
+        "prompt_tokens": 1310,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 397,
+        "total_tokens": 1898
+      },
+      "seconds": 7.13,
+      "request_id": "5c87b060ca134a76b01f277a5f3e39f3",
+      "prompt_sha256": "35f9665fbbc3367d158b79fb2fd684c5bcae0ca3677dce6e96bc3799fd5fbe4c"
+    },
+    {
+      "id": "u01",
+      "status": "SUCCEEDED",
+      "code": null,
+      "text": "{\"action\":{\"commitment\":{\"basis_turn\":\"\",\"due_at\":\"2030-01-03T16:00:00+08:00\",\"operation\":\"create\",\"quote\":\"别忘了明天16:00 UTC+08:00提醒我预约体检\",\"time_text\":\"明天16:00 UTC+08:00\",\"title\":\"预约体检\"},\"goal\":\"\",\"input_text\":\"\",\"kind\":\"commitment\",\"target\":\"\"},\"reply\":\"好的，已为您准备好明天（2030年1月3日）16:00的“预约体检”本地待办提醒，确认后将在工作视图生效（本提醒仅在本地工作视图展示，不会发送系统通知或邮件）。\",\"schema\":\"jarvis.assistant-turn.v1\"}",
+      "usage": {
+        "completion_tokens": 177,
+        "prompt_tokens": 1299,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 351,
+        "total_tokens": 1827
+      },
+      "seconds": 6.721,
+      "request_id": "50f9c2b2fa42482e8986f950b756b23b",
+      "prompt_sha256": "1558bc3bbbd507e4ba491e6d9324694dae73ec149da10b941368355567e97d80"
+    },
+    {
+      "id": "u03",
+      "status": "SUCCEEDED",
+      "code": null,
+      "text": "{\"action\":{\"commitment\":{\"basis_turn\":\"\",\"due_at\":\"2031-06-18T09:10:00+08:00\",\"operation\":\"create\",\"quote\":\"Remind me to check the invoice at 2031-06-18T09:10:00+08:00.\",\"time_text\":\"2031-06-18T09:10:00+08:00\",\"title\":\"check the invoice\"},\"goal\":\"\",\"input_text\":\"\",\"kind\":\"commitment\",\"target\":\"\"},\"reply\":\"好的，已为您拟定提醒事项：将于 2031-06-18 09:10:00 (UTC+8) 提醒“check the invoice”。请确认以添加到本地待办。\",\"schema\":\"jarvis.assistant-turn.v1\"}",
+      "usage": {
+        "completion_tokens": 197,
+        "prompt_tokens": 1314,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 625,
+        "total_tokens": 2136
+      },
+      "seconds": 8.916,
+      "request_id": "db811944ec78486d9a8695f64e9415f6",
+      "prompt_sha256": "86734e313697563bc325368005788bdf807688a3651bcec85758003d152f0ce8"
+    },
+    {
+      "id": "n01",
+      "status": "SUCCEEDED",
+      "code": null,
+      "text": "{\"action\":{\"commitment\":{\"basis_turn\":\"\",\"due_at\":\"2031-06-18T09:10:00+08:00\",\"operation\":\"cancel\",\"quote\":\"不要在2031-06-18T09:10:00+08:00提醒我核对订单\",\"time_text\":\"2031-06-18T09:10:00+08:00\",\"title\":\"核对订单\"},\"goal\":\"\",\"input_text\":\"\",\"kind\":\"commitment\",\"target\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"},\"reply\":\"好的，已为您准备取消 2031-06-18 09:10 的“核对订单”提醒，请在卡片中确认。\",\"schema\":\"jarvis.assistant-turn.v1\"}",
+      "usage": {
+        "completion_tokens": 186,
+        "prompt_tokens": 1311,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 376,
+        "total_tokens": 1873
+      },
+      "seconds": 6.728,
+      "request_id": "3dcbf8a3fc2d44a296cf42ae8572ddc5",
+      "prompt_sha256": "e865702aacbf57eec430096d36e5906d49f8e2ef85817dc850223bab5a341a47"
+    },
+    {
+      "id": "n02",
+      "status": "SUCCEEDED",
+      "code": null,
+      "text": "{\"action\":{\"goal\":\"\",\"input_text\":\"\",\"kind\":\"chat\",\"target\":\"\"},\"reply\":\"这是一个标准的定时提醒示例。如果这是您需要执行的指令，我会为您在本地待办中记录一条定于 2031-06-18 09:10:00+08:00 的“核对订单”提醒（目前您的待办列表中已存在一条相同时间的该事项）。请问您是需要我为您实际添加、调整已有提醒，还是演示其他功能的用法？\",\"schema\":\"jarvis.assistant-turn.v1\"}",
+      "usage": {
+        "completion_tokens": 123,
+        "prompt_tokens": 1314,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 1613,
+        "total_tokens": 3050
+      },
+      "seconds": 16.713,
+      "request_id": "738405c280e64cb7bfbe75a63d5404ed",
+      "prompt_sha256": "c555f8fa3902cc2767bc3cccfcd8e54624cfc026b968c09fce1e530c6d723301"
+    },
+    {
+      "id": "n06",
+      "status": "SUCCEEDED",
+      "code": null,
+      "text": "{\"action\":{\"goal\":\"在 2031-06-18T09:10:00+08:00 提醒用户核对订单，然后删除附件\",\"input_text\":\"\",\"kind\":\"goal\",\"target\":\"\"},\"reply\":\"已为你拟订任务计划：将在 2031-06-18 09:10:00（UTC+8）提醒核对订单，并处理附件删除。请核对计划目标。\",\"schema\":\"jarvis.assistant-turn.v1\"}",
+      "usage": {
+        "completion_tokens": 118,
+        "prompt_tokens": 1313,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 1496,
+        "total_tokens": 2927
+      },
+      "seconds": 15.292,
+      "request_id": "040489d62e894b1ea8f18fab257f858b",
+      "prompt_sha256": "7448abeefed4969d6630b943a80a4494b5a29e7271dfe855546c96173b7e6182"
+    },
+    {
+      "id": "a01",
+      "status": "SUCCEEDED",
+      "code": null,
+      "text": "{\"action\":{\"commitment\":{\"basis_turn\":\"\",\"due_at\":\"\",\"operation\":\"create\",\"quote\":\"明天下午提醒我预约体检\",\"time_text\":\"明天下午\",\"title\":\"预约体检\"},\"goal\":\"\",\"input_text\":\"\",\"kind\":\"commitment\",\"target\":\"\"},\"reply\":\"已为您拟定待办提醒：明天下午预约体检。待确认后将在本地工作视图为您提醒。\",\"schema\":\"jarvis.assistant-turn.v1\"}",
+      "usage": {
+        "completion_tokens": 94,
+        "prompt_tokens": 1286,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 575,
+        "total_tokens": 1955
+      },
+      "seconds": 10.471,
+      "request_id": "e5889ee64d274ec68a8072c2f0c1fbb1",
+      "prompt_sha256": "c6e59686ff389086592350f795a8a009cc08a019442e9a14830c3e69bd481eb2"
+    },
+    {
+      "id": "a05",
+      "status": "SUCCEEDED",
+      "code": null,
+      "text": "{\"action\":{\"commitment\":{\"basis_turn\":\"\",\"due_at\":\"2030-01-04T00:00:00+08:00\",\"operation\":\"create\",\"quote\":\"明天晚上12点UTC+08:00提醒我出发\",\"time_text\":\"明天晚上12点UTC+08:00\",\"title\":\"出发\"},\"goal\":\"\",\"input_text\":\"\",\"kind\":\"commitment\",\"target\":\"\"},\"reply\":\"好的，已为您准备在本地工作视图添加提醒：“出发”，时间为 2030年1月4日 00:00（UTC+08:00）。请确认。\",\"schema\":\"jarvis.assistant-turn.v1\"}",
+      "usage": {
+        "completion_tokens": 156,
+        "prompt_tokens": 1294,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 384,
+        "total_tokens": 1834
+      },
+      "seconds": 7.494,
+      "request_id": "17e8235be8b945cda64650a64d40a0a4",
+      "prompt_sha256": "10c92d4c735723a37f73c19019965f4221b993e13d1cc2a6469d127c779ccdec"
+    }
+  ],
+  "proxy_build": "aa21fe21fb38fe1f385352fd097b82a5dbbabf909f163b65e07a03ba719cdad4",
+  "proxy_started_by_test": true,
+  "status": "completed",
+  "provider": "vertex",
+  "model": "gemini-3.8-flash",
+  "adapter": "vertex",
+  "quota_remaining_before": 64,
+  "summary": {
+    "cases": 12,
+    "unsafe_auto": 1,
+    "wrong_auto_time": 0,
+    "clear_single_local_requests": 7,
+    "correct_auto": 5,
+    "automatic_coverage": 0.7142857142857143,
+    "supported_automatic_coverage": 1.0,
+    "missed_clear": 2
+  },
+  "usage_note": "Provider-reported usage only. Actual currency charge has not been reconciled.",
+  "source_sha256": {
+    "host/assistant.py": "7832366b42568ec0fd3372de6bdd76acf751f540c9abc0bb26dd4bbd21d0b92f",
+    "host/assistant_commitments.py": "fa6e8cd1cab801bbb2e5d8a65950f183721b1df1007542c66bf6bcd44706358b",
+    "modules/task_resource/commitment_intent.py": "74a8a93e6f2bf4ede0b49ba91f3ff240b5a77cb5e0ff445c25292cbca2bac522"
+  },
+  "owned_proxy_stopped": true
+}

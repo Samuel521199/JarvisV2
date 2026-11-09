@@ -1,0 +1,54 @@
+{
+  "date": "2026-11-08",
+  "checks": [
+    {
+      "command": [
+        "python",
+        "tools/check_architecture.py"
+      ],
+      "exit_code": 0,
+      "output": "{\"python_files\": 429, \"host_cycle_modules\": 20, \"errors\": []}\n"
+    },
+    {
+      "command": [
+        "python",
+        "tools/check_docs.py",
+        "--root",
+        "."
+      ],
+      "exit_code": 0,
+      "output": "OK documents=32 chapters=25 diagrams=46 local_links=4379 errors=0\n"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 2,
+      "output": "host/anatomy_engineering.py:27: trailing whitespace.\n+    import contextlib,hashlib,os,shutil,subprocess,tempfile,time,uuid\nhost/anatomy_engineering.py:28: trailing whitespace.\n+    from control.worker.process import OwnedProcess\nhost/anatomy_engineering.py:37: trailing whitespace.\n+        stdout=stage/'worker.stdout';stderr=stage/'worker.stderr';resources_used={};started=time.monotonic()\nhost/anatomy_engineering.py:40: trailing whitespace.\n+            process=OwnedProcess([str(runtime_python()),'-I','-B',str(ROOT/'apps/engineering/worker.py'),'--folder',str(stage)],input=json.dumps(scene,ensure_ascii=False).encode(),stdout=out,stderr=err,env=env,cwd=stage,processes=2,cpu_seconds=30,memory_bytes=1024**3,checkpoint=lambda:StopGate(root).require_running())\nhost/anatomy_engineering.py:42: trailing whitespace.\n+                deadline=time.monotonic()+45\nhost/anatomy_engineering.py:50: trailing whitespace.\n+                    peaks=process.resources()\nhost/anatomy_engineering.py:54: trailing whitespace.\n+                try:\nhost/anatomy_engineering.py:55: trailing whitespace.\n+                    if process.poll() is None:process.kill()\nhost/anatomy_engineering.py:56: trailing whitespace.\n+                    process.wait(timeout=5)\nhost/anatomy_engineering.py:57: trailing whitespace.\n+                    resources_used=process.resources()\nhost/anatomy_engineering.py:58: trailing whitespace.\n+                finally:process.close()\n"
+    }
+  ],
+  "tested_sources_unchanged": true,
+  "tests_log_matches": true,
+  "evidence_sha256": {
+    "repeat_failure_cases.py": "79bd29f3c5b775aae13ed81b3ed994688e3cccea853ed48b5776dc5eb772296d",
+    "result-r1.json": "e1f276827af222de5d7d1b204df15ce8f392a3a8b90351c1073402743019cb36",
+    "result-r2.json": "bfb577e933d113972ab0443115a3032b3de44840f99fb58118d63e2938ca8df9",
+    "result.json": "1152f55bdc408dbfd78d0a633d671edab7b1a8e9c0da402c673f72205c40682d",
+    "run_checks.py": "ebc548195f3d20e064e9ce04fad16cff6467b3ccfc67a4660bd69f15e0a058d3",
+    "stress.json": "26ebd94907dae08891ceabc158c7f313747db151e82bb1061792adaeffbd8345",
+    "stress.log": "01aafb0ddbc8b8ef323599a53a5a76e9a7728942ac94e218a1fea30e20d5dd29",
+    "tests-r1.log": "77a3d2882f3747efff89049298b12e8d50b048867c8ab9e9ee39b83aaa793fe9",
+    "tests-r2.log": "4f9ab0e068c1c7e750b9e37d717add48aacd007e6a355462700b0089a668c3c8",
+    "tests.log": "3d5d06c9d7c1c534ce4ba22e3070590e2cdc237903de803b0f2468a4db309d56"
+  },
+  "runtime_deployed": false,
+  "limitations": [
+    "Five optional engineering native tests skipped: runtime not prepared",
+    "No real Blender or authenticated Codex end-to-end probe",
+    "No business data changes, native installs or production restart",
+    "Windows Job lifetime is not an LPAC security boundary",
+    "Other subprocess call sites and non-Windows descendants are outside this scope"
+  ]
+}

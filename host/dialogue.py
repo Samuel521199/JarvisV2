@@ -184,6 +184,11 @@ class DialogueHost:
                     session_workspace.publish_reply(self.root,store.read(turn['chat_id']),turn)
                 except (CoreError,OSError,sqlite3.Error) as exc:
                     session_workspace.pending(self.root,turn['chat_id'],exc)
+                if result.get('assistant_action',{}).get('kind')=='commitment':
+                    try:
+                        from host.assistant import commitment_from_turn
+                        commitment_from_turn(self.root,ident)
+                    except (CoreError,OSError,sqlite3.Error):pass  # Candidate remains available; only a durable receipt proves acceptance.
                 if result.get('assistant_action',{}).get('kind')=='goal':
                     try:
                         from host.assistant import goal_from_turn

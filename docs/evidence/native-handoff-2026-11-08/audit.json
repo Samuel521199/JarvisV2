@@ -1,0 +1,85 @@
+{
+  "date": "2026-11-08",
+  "environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.13.0"
+  },
+  "production_deployed": false,
+  "checks": [
+    {
+      "command": [
+        "python",
+        "tools/sync_doc_navigation.py",
+        "--root",
+        "."
+      ],
+      "exit_code": 0,
+      "output": "OK navigation: 0 updated\n"
+    },
+    {
+      "command": [
+        "python",
+        "tools/check_docs.py",
+        "--root",
+        "."
+      ],
+      "exit_code": 0,
+      "output": "OK documents=32 chapters=25 diagrams=46 local_links=4393 errors=0\n"
+    },
+    {
+      "command": [
+        "python",
+        "tools/check_architecture.py"
+      ],
+      "exit_code": 0,
+      "output": "{\"python_files\": 429, \"host_cycle_modules\": 20, \"errors\": []}\n"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "output": ""
+    }
+  ],
+  "native_sources_match": true,
+  "all_packaged_sources_match": true,
+  "runtime_records_unchanged": true,
+  "package_test_log_matches": true,
+  "controller_policy_matches": true,
+  "supplemental_regression": {
+    "patterns": [
+      "test_application_release.py",
+      "test_application_checks.py",
+      "test_architecture_boundaries.py",
+      "test_runtime_shutdown.py"
+    ],
+    "tests": 37,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 15.802
+  },
+  "evidence_sha256": {
+    "engineering-r1.log": "5a6cb8da1d59c0ddbc6100cff2cc51790bed994265ef2bb885bce950a7a9c0e9",
+    "engineering.log": "2fd76a90db321948cdda576c4ac1f3389b4a73308da7c299441bb339dbd92868",
+    "native-result-r1.json": "9a20d0033e2a12937d74608d32c403f4a11ca26619529aa53ffedce5474a759a",
+    "native-result.json": "451e980d92bf4eaa6e34f49dcf445ebccb22d52aa8e7477f09b8e75529d7ba5d",
+    "package-result.json": "f3ccae3d173770a9b54fffffdee45dc41034d20adf7cbfaaa97f25a13a0a3aae",
+    "package-tests.log": "5cca9229ea8faf4b49a844df02d135847b2c4ae5521202f0f0a951b53cba86b0",
+    "regression.json": "74cc81af24e4ba98ccfddb8ef322c8c61b26f012f235393b6fb314ccce8923d0",
+    "regression.log": "040f0043ef45c3cc1d13fe54c9f10783a03e99a360f4aeee9e836d2edf860180",
+    "run_native.py": "3701c49082ae1b176ea9215cd553ec07a0a6a3b272b6e694e527b659205d107c",
+    "run_package.py": "de077fc85775ffba250b005f6bcdf21e97cd94f05492ca2b8ecf02c56d198ad9",
+    "run_regression.py": "bf85a92abe67a38f954c191668ad0b57a730bbb37e039ee049bad731926ee54c",
+    "shutdown-before.log": "dec932307ef3c3e6f2618524c9ebce036cc13159321425f56643379bef8211ad"
+  },
+  "limitations": [
+    "Not deployed to the daily adopted package; older frozen controllers do not gain this policy automatically",
+    "Native probes use synthetic small inputs; no art-quality or learning-benefit claim",
+    "No real Codex account/network generation; candidate adapter lifecycle uses Python substitute",
+    "No full business/browser or long-duration resource/fault acceptance"
+  ]
+}

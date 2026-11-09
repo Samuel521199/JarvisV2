@@ -1,0 +1,119 @@
+{
+  "schema": 1,
+  "version": "0.1.4",
+  "source_base": "efe50c7634a965d167e4ae197ed53dc35347d175",
+  "runtime_build": "9c873ed4efb46356c642a98c3c2d7b63f92e27497ebb5de51d4c9486e15f7b04",
+  "runtime_files": 630,
+  "full_regression": {
+    "scope": "entire test_*.py inventory, unchanged assertions, separate process per file, concurrency 2",
+    "passed": true,
+    "tests": 1531,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 11,
+    "seconds": 547.5102903000002
+  },
+  "independent_candidate_checks": {
+    "tests": 178,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 1
+  },
+  "architecture": {
+    "python_files": 436,
+    "existing_host_cycle_modules": 20,
+    "errors": 0,
+    "baseline_relaxed": false
+  },
+  "documents": {
+    "documents": 32,
+    "chapters": 25,
+    "diagrams": 46,
+    "local_links": 4498,
+    "errors": 0
+  },
+  "real_model": {
+    "calls": 8,
+    "passed": true,
+    "retries": 0,
+    "external_mail_actions": 0
+  },
+  "controller_upgrade": {
+    "passed": true,
+    "steps": 5,
+    "same_code_recovery_baseline": true
+  },
+  "daily_adoption": {
+    "passed": true,
+    "epoch": 6,
+    "backup": {
+      "files": 1978,
+      "bytes": 56097898,
+      "databases": 16,
+      "tables": 88,
+      "asset_metadata_files": 10812,
+      "backup": "D:\\Jarvis-backups\\assistant-release-20261109-a",
+      "integrity": "all ok"
+    },
+    "preservation": {
+      "passed": true,
+      "existing_tables_checked": 88,
+      "business_table_changes": [],
+      "derived_only_changes": [
+        {
+          "database": "state/core.sqlite3",
+          "table": "task_completion",
+          "only_changed_column": "checked"
+        }
+      ],
+      "dpapi_files_changed": [],
+      "dpapi_credential_files_checked": 4,
+      "browser_sessions": {
+        "passed": true,
+        "key_binding_unchanged": true,
+        "previous_valid_sessions_preserved": true,
+        "previous_valid_session_count": 0,
+        "previous_expired_session_count": 4,
+        "expired_sessions_revived": false,
+        "bounded_expiry": true,
+        "new_sessions": 1,
+        "expected_new_sessions": 1,
+        "scope": "semantic DPAPI payload check; never prints session tokens"
+      },
+      "config_session_files_checked": 1939,
+      "config_session_files_changed": [],
+      "stop_and_latch_presence_unchanged": true,
+      "asset_metadata_files_checked": 10812,
+      "assets_metadata_changed": [],
+      "scope": "all backed-up existing tables; encrypted DPAPI files; no claim of full asset-byte hashing"
+    }
+  },
+  "native_presence": {
+    "optional_source_only": true,
+    "transparent_render_observed": true,
+    "click_through_passed": false,
+    "daily_binary_prepared": false,
+    "gui_tool_unavailable_after_probe": true
+  },
+  "instances": {
+    "18282": {
+      "service": "jarvis-workbench",
+      "root_digest": "9a4acbf34631da92ab695aafcae71614795c697adaff2e7da372b79442d04199",
+      "application_build": "9c873ed4efb46356c642a98c3c2d7b63f92e27497ebb5de51d4c9486e15f7b04",
+      "application_epoch": 6
+    },
+    "18283": {
+      "service": "jarvis-workbench",
+      "root_digest": "37ccebd7c5e8a42dc51477bd309cd06d7f3aad550c1b24d1be48a7986b529e9f",
+      "application_build": "",
+      "application_epoch": 0
+    }
+  },
+  "unfinished": [
+    "native click-through/tray/multi-monitor/resource acceptance",
+    "mail-to-commitment chain",
+    "broader language and migration coverage",
+    "delegation/resource/evidence growth and multi-Bot/self-module evolution"
+  ],
+  "raw_evidence_logs": "Stored byte-for-byte, including blank lines and trailing spaces. Source whitespace check excludes raw evidence; architecture checker/baseline and test assertions are unchanged."
+}

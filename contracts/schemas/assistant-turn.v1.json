@@ -20,7 +20,8 @@
             "goal",
             "amend",
             "cancel",
-            "resume"
+            "resume",
+            "commitment"
           ]
         },
         "goal": {
@@ -34,6 +35,51 @@
         "target": {
           "type": "string",
           "maxLength": 60
+        },
+        "commitment": {
+          "type": "object",
+          "properties": {
+            "operation": {
+              "type": "string",
+              "enum": [
+                "create",
+                "reschedule",
+                "cancel",
+                "complete"
+              ]
+            },
+            "title": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "quote": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2000
+            },
+            "due_at": {
+              "type": "string",
+              "maxLength": 40
+            },
+            "time_text": {
+              "type": "string",
+              "maxLength": 120
+            },
+            "basis_turn": {
+              "type": "string",
+              "maxLength": 100
+            }
+          },
+          "required": [
+            "operation",
+            "title",
+            "quote",
+            "due_at",
+            "time_text",
+            "basis_turn"
+          ],
+          "additionalProperties": false
         }
       },
       "required": [

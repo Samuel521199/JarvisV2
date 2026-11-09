@@ -30,7 +30,9 @@ def post(handler, path, body):
         raise CoreError('application_epoch', 'Host identity or generation changed')
     if path == '/api/runtime/health':
         from control.recovery.gate import StopGate
+        from modules.task_resource.commitments import check_compatible
         StopGate(server.data_root).require_running()
+        check_compatible(server.data_root)
         if server.dialogues.closing.is_set() or server.task_runner.state()['status'] == 'failed':
             raise CoreError('application_unhealthy', 'Runtime is closing or its dispatcher failed')
         handler.json({'healthy': True})
@@ -42,6 +44,9 @@ def post(handler, path, body):
     elif path == '/api/runtime/shutdown':
         if current['phase'] not in {'draining', 'starting', 'blocked', 'stopped'}:
             raise CoreError('application_phase', 'Host is not scheduled to stop')
+        from host.runtime_participants import snapshot
+        if not snapshot(server.data_root, server)['drained']:
+            raise CoreError('application_not_drained', 'Managed work must finish before shutdown')
         threading.Thread(target=server.shutdown, daemon=True).start()
         handler.json({'stopping': True})
     elif path == '/api/runtime/activate':
@@ -59,6 +64,8 @@ def post(handler, path, body):
 def cancellation(path, body):
     """Only already-authorized stop operations may pass a maintenance barrier."""
     if not isinstance(body, dict): return False
+    if path == '/api/commitments':
+        return body.get('action') == 'cancel' and set(body) == {'action','id','request_id','revision'}
     if path == '/api/operations':
         return set(body) == {'action', 'id'} and body.get('action') in {'task_cancel', 'dev_cancel'}
     if path == '/api/mail':

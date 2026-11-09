@@ -1,0 +1,40 @@
+{
+  "scope": "disposable managed hosts and synthetic user requests",
+  "passed": true,
+  "sources_sha256": {
+    "modules/task_resource/commitments.py": "42db178f17e82e8564642b6a798b2358e1bbefd09aaeb8ca269c63ed05096330",
+    "host/commitments.py": "1d7ad4ce0d4425c1c451be6bb5a56685093d45c5c41359191ea73e4d995e4ccd",
+    "host/task_scheduler.py": "996a48c3a1840288a7280fa37e8490deed798cb0f8de90bb6e5049769152c1ac",
+    "modules/continuity/attention.py": "4f1c7299076c13837e8884ebafc81849d95a00df3d2d1f98859a8bb199a4707a",
+    "apps/workbench/runtime_http.py": "efc3e3473d3d75d47f491cbe4bac7543b6ee69b8cd82a018f5c6ae651328c22e",
+    "apps/workbench/server.py": "2f0d7015c7eec81b149e73176259e41e1929ec64ce85f047e8fdd8eabda364d8",
+    "host/work_status.py": "e5878eb97606010c686f850835692cd0cc3cfe73cbb7641b8a7c6223ff434b1a",
+    "apps/workbench/work-client.js": "c3aa53f62c1c784ff6dc0c9e50b2ab02bd25d7539bd32482fdb7816274e5c0ed",
+    "apps/workbench/work-status.js": "22b46047ec992f475790a3607bf1cf126a256efc195cce58db593f66235dbe6e",
+    "apps/workbench/commitments.js": "7f00e1bb7851171950cc813d6a1ea24ebbc067b09c5aed03921ce63e150b54a3",
+    "apps/workbench/commitment-time.js": "0a4d9413ebd14c2ef50de08d2c5affd304e5203c06916f1091559030fbfae089"
+  },
+  "restart": {
+    "passed": true,
+    "old_schedule_not_posted": true,
+    "offline_due_once": true,
+    "read_receipt_persisted": true,
+    "stale_write_rejected": true,
+    "cancel_not_revived_by_replay": true
+  },
+  "browser": {
+    "passed": true,
+    "errors": [],
+    "scope": "headless real workbench and companion entry; not native shell",
+    "checks": [
+      "create",
+      "due",
+      "explicit-read",
+      "cross-view-read",
+      "reschedule",
+      "complete",
+      "reload"
+    ]
+  },
+  "work_root": "D:\\jarvisTest\\commitments-20261108-r4"
+}

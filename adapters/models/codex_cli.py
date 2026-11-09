@@ -8,6 +8,7 @@ import subprocess
 import tempfile
 import time
 
+from control.worker.process import OwnedProcess
 from control.paths import child, reject_links
 from sdk.protocol import CoreError, canonical, decode
 
@@ -96,17 +97,20 @@ class CodexModel:
             environment.update(TEMP=str(workspace),TMP=str(workspace))
             payload=('Return only the requested JSON candidate. No tools, commands, workspace reads, file edits, installs or external actions are needed. The host will verify the candidate independently.\n'+prompt).encode()
             with (workspace/'events.jsonl').open('w+b') as output, (workspace/'errors.log').open('w+b') as errors:
-                process=subprocess.Popen(arguments(self.config,workspace,schema),stdin=subprocess.PIPE,stdout=output,stderr=errors,
-                                         env=environment,creationflags=subprocess.CREATE_NO_WINDOW if os.name=='nt' else 0)
+                process=OwnedProcess(arguments(self.config,workspace,schema),input=payload,stdout=output,stderr=errors,
+                                     env=environment,cwd=workspace,checkpoint=checkpoint)
                 deadline=time.monotonic()+self.config['timeout_seconds']
                 try:
                     while True:
                         checkpoint()
                         if time.monotonic()>deadline:return {'status':'UNKNOWN','code':'codex_timeout'}
                         if max(os.fstat(output.fileno()).st_size,os.fstat(errors.fileno()).st_size)>2_000_000:return {'status':'UNKNOWN','code':'codex_output_limit'}
-                        try:process.communicate(payload,timeout=.1);break
-                        except subprocess.TimeoutExpired:payload=None
-                    checkpoint();output.seek(0)
+                        try:process.wait(timeout=.1);break
+                        except subprocess.TimeoutExpired:pass
+                    process.close()
+                    checkpoint()
+                    if max(os.fstat(output.fileno()).st_size,os.fstat(errors.fileno()).st_size)>2_000_000:return {'status':'UNKNOWN','code':'codex_output_limit'}
+                    output.seek(0)
                     try:
                         result=parse_events(output.read(2_000_001),process.returncode)
                         if result['status']=='REJECTED':
@@ -116,7 +120,4 @@ class CodexModel:
                         return result
                     except (CoreError,ValueError,AttributeError):return {'status':'UNKNOWN','code':'codex_invalid_receipt'}
                 finally:
-                    if process.poll() is None:
-                        if os.name=='nt':subprocess.run(['taskkill','/PID',str(process.pid),'/T','/F'],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,creationflags=subprocess.CREATE_NO_WINDOW)
-                        else:process.kill()
-                    process.communicate()
+                    process.close()

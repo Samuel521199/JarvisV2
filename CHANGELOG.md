@@ -1,5 +1,25 @@
 # 版本记录
 
+## v0.1.4 · 2026-11-09
+
+已日用采用（epoch 6）：个人待办/一次性本地提醒、聊天补时和改期取消；四处原生/外部进程调用改为创建时Job绑定，收紧关停排空并增加新数据兼容门。原模型/图片凭据和设置保留，上一版为兼容的v0.1.4-rc.1。
+
+全量清单1531项：1520通过、11跳过；独立候选包178项：177通过、1项POSIX跳过；真实Google模型端到端8项和控制器安装/兼容回退5步通过。保留首轮UTF-8测试编码错误和修正记录，未降低断言或架构基线。原生透明精灵只提交可选原型，透传未通过、未启用日用二进制；邮件到待办、自主成长等后续范围没有冒充完成。[完整证据与局限](docs/delivery-validation.md#assistant-release-20261109)。
+
+2026-11-09 **明确请求覆盖与控制器组合验收（开发检查点）**：扩展中英文请求，新增事项/时间固定依据与完整指令结构核对；原开发集11/18升18/18，原格式10/10保留。三轮未见集未达标均保留后转开发，最终新40条中明确请求20/24（83.3%），误受理/自动错内容均0，剩余4条漏处理不掩盖。真实控制器完成9步采用/回退/恢复与STOP、钥匙轮换组合；相关89项通过，4个诊断包各174通过/1项POSIX跳过。5次样本生成请求（1次INVALID），未日用采用。[机制](docs/tasks-agents.md#personal-commitments-chat)／[方法、失败与最终验收](docs/delivery-validation.md#commitment-coverage-evidence)。
+
+2026-11-09 **待办语言影子与回退兼容核验（开发检查点，11月8日起始）**：冻结36条新增合成样本并完成12次真实Google影子调用；修复复合意图缩减、午夜歧义和“别忘了”误判。原集误受理由3降0，明确请求自动处理10/18升11/18；同一真实输出复测由5/7升6/7，不作为新盲测。两份旧版实启保留数据但缺失新功能；新增排空前后、启动及失败恢复兼容门，禁止用旧业务快照掩盖不兼容。相关77项通过，独立包162通过/1项POSIX跳过，未日用采用。[机制](docs/evolution-release.md#application-commitment-compatibility)／[结论与证据](docs/delivery-validation.md#commitment-shadow-evidence)。
+
+2026-11-08 **聊天到本地待办（开发检查点）**：在原助手动作中增加类型化本地受理；原文/时间/会话/版本核对后自动保存，模糊时间保留候选并支持对话或卡片补时；持久来源/幂等回执、改期取消防旧写。修复聊天轮询清空补时草稿；17项新测试与相关63项通过，实际HTTP/Edge闭环通过，独立包150通过/1项POSIX跳过。模型使用固定替身，未日用采用，旧版聊天UI回退兼容待验。[机制](docs/tasks-agents.md#personal-commitments-chat)／[验收](docs/delivery-validation.md#chat-commitments-evidence)。
+
+2026-11-08 **个人待办与一次性本地提醒v1（开发检查点）**：新增版本化长期承诺，复用原调度、工作视图与已阅；支持明确时间、改期/取消、离线补投与主人标记完成，新增schema1兼容检查、托管健康门及独立包必跑测试。10项新测试及相关75项回归通过，真实Host重启/工作台与精灵浏览器闭环通过，独立包133通过/1项POSIX跳过。自然语言自动受理/外部通知未接，日用未升级。[机制](docs/tasks-agents.md#personal-commitments-runtime)／[证据](docs/delivery-validation.md#commitments-evidence)。
+
+2026-11-08 **原生执行与托管关停补验（开发检查点）**：复用现有登记环境完成工程14项无跳过与真实Blender构建/修复；复现并修复直接shutdown漏检在途/未知参与者。控制器固定回归增至14个文件，独立候选包123通过/1项POSIX跳过、运行摘要完整。未部署，日用仍为v0.1.3。[机制](docs/evolution-release.md#single-pc-application-runtime)／[实测、反例与边界](docs/delivery-validation.md#native-handoff-evidence)。
+
+2026-11-08 **外部 Worker 生命周期（开发检查点，日用仍为v0.1.3）**：共享创建时Job绑定接入Blender构建、学习/修复、工程和Codex候选；取消、超时和退出清理进程树，修复快速退出后日志占用的实测反例。主回归94通过、5项原生环境未准备跳过，另10轮/40变体复验通过；未安装、部署或重启日用。[实现](docs/stack-project-layout.md#worker-process-lifetime)／[验收与限制](docs/delivery-validation.md#worker-lifetime-evidence)。
+
+2026-11-07 **文档与源码复核（运行版本保持v0.1.3）**：复核当前任务、核验、记忆、负责人、邮件和恢复边界；调整下一轮为进程生命周期加固与有依据的个人待办/提醒闭环，列出后续委托、经验、多Bot和自愈的采用条件。修正状态页对网页精灵、局部恢复及三域合成试验的概括。[分析与实施顺序](docs/decisions-review.md#v012-next-work-order)。 同日补审类型化能力接线、长期承诺/短执行、交付恢复与多库兼容等14项，补6组联合故障验收；另跑53项现有离线测试通过。[补审](docs/decisions-review.md#assistant-cross-boundary-gaps)。
+
 2026-11-04 **v0.1.3（日用受控采用）**：精灵的聊天、模型选择、技能、项目、并行工作与邮件接入共用页面／组件／API，移除非邮件演示数据；增加主人跨入口的版本化已阅回执、保守自然导航、近期未读完成标签和真实单项停止。升级排空补齐受管理的专用通道和在途 HTTP；原生透明壳与任意外部进程热接续仍未实现。[共享实现](docs/contracts.md#desktop-presence-web-runtime)／[核验](docs/delivery-validation.md#companion-shared-evidence)。
 
 2026-11-04 **v0.1.2（日用受控采用）**：修复原有 253 项架构诊断，原检查器及白名单不变；集中原生能力所有权、参数化路径、去除 Host／领域的 Pillow 与 NumPy 必需依赖、保留旧入口兼容，并合入日用目录新增的 LOD／材质／检视功能。补齐代码包运行数据与独立测试支持、固定恢复控制器和根启动器。完整回归 1456 项无失败／错误，独立包 93 项核验、真实 Blender／工程原生和进程回退通过；保留正式数据与原源树后采用。首次托管无已采用上一版，完整限制见[验收](docs/delivery-validation.md#architecture-repair-evidence)与[运行边界](docs/stack-project-layout.md#native-capability-boundary)。

@@ -1,0 +1,71 @@
+{
+  "passed": true,
+  "scope": "disposable real controller installation and recovery; synthetic data only",
+  "production_adopted": false,
+  "same_code_baseline": true,
+  "steps": [
+    {
+      "case": "old_pinned_launcher_restart",
+      "passed": true,
+      "version": "0.1.3",
+      "bootstrap_sha256": "6c271c9186da26faf9f8c95d6d4e316340a569f2c46203fb07300d469fd66b05"
+    },
+    {
+      "case": "new_controller_installed_and_root_launcher_restarts_with_existing_data",
+      "passed": true,
+      "bootstrap_sha256": "109c3d4b072284c648cd6a8a8d527bc233cce2ac687bd46e33412830dd99e73a"
+    },
+    {
+      "case": "stable_adoption_preserves_record",
+      "passed": true
+    },
+    {
+      "case": "compatible_baseline_rollback_preserves_record",
+      "passed": true
+    },
+    {
+      "case": "stable_pinned_launcher_restart_and_config_unchanged",
+      "passed": true,
+      "epoch": 8
+    }
+  ],
+  "packages": {
+    "baseline": {
+      "build": "d208c2dd1f7ac12d792d9b435ff5256e26363466df94777c17b921331973e150",
+      "version": "0.1.4-rc.1",
+      "validation": {
+        "architecture_error_count": 0,
+        "architecture_passed": true,
+        "architecture_sample": [],
+        "passed": true,
+        "policy_sha256": "82d3e429d496720133b2585d7f06dcd89b21d49b3df50f8a1a168c3acdbf4805",
+        "reviewed_source": true,
+        "runtime_intact": true,
+        "schema": 1,
+        "test_log": "0.1.4-rc.1-542e02c16b7b4548b2add91b1885995b.log",
+        "test_log_sha256": "1c7726fdec35220c90c1948912c088f33f44ad9dd14f766703ca4843319eea08",
+        "tests_passed": true,
+        "tests_summary": "178 0 0 1"
+      }
+    },
+    "stable": {
+      "build": "9c873ed4efb46356c642a98c3c2d7b63f92e27497ebb5de51d4c9486e15f7b04",
+      "version": "0.1.4",
+      "validation": {
+        "architecture_error_count": 0,
+        "architecture_passed": true,
+        "architecture_sample": [],
+        "passed": true,
+        "policy_sha256": "82d3e429d496720133b2585d7f06dcd89b21d49b3df50f8a1a168c3acdbf4805",
+        "reviewed_source": true,
+        "runtime_intact": true,
+        "schema": 1,
+        "test_log": "0.1.4-bc06bb3d9351474eb57ddb1d405da70e.log",
+        "test_log_sha256": "4b0b78184fe6b30b37ca03aa0b1fdb93378e09d1bdec580c069baae57b97266f",
+        "tests_passed": true,
+        "tests_summary": "178 0 0 1"
+      }
+    }
+  },
+  "final_phase": "stopped"
+}

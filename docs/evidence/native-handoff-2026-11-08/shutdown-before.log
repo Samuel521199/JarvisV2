@@ -1,0 +1,26 @@
+test_idle_host_can_shutdown (test_runtime_shutdown.RuntimeShutdown.test_idle_host_can_shutdown) ... ok
+test_inflight_request_blocks_direct_shutdown (test_runtime_shutdown.RuntimeShutdown.test_inflight_request_blocks_direct_shutdown) ... FAIL
+test_unknown_participant_blocks_shutdown_without_details (test_runtime_shutdown.RuntimeShutdown.test_unknown_participant_blocks_shutdown_without_details) ... FAIL
+
+======================================================================
+FAIL: test_inflight_request_blocks_direct_shutdown (test_runtime_shutdown.RuntimeShutdown.test_inflight_request_blocks_direct_shutdown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Jarvis-dev\tests\test_runtime_shutdown.py", line 32, in test_inflight_request_blocks_direct_shutdown
+    with self.assertRaises(CoreError) as error: self.shutdown()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+AssertionError: CoreError not raised
+
+======================================================================
+FAIL: test_unknown_participant_blocks_shutdown_without_details (test_runtime_shutdown.RuntimeShutdown.test_unknown_participant_blocks_shutdown_without_details)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Jarvis-dev\tests\test_runtime_shutdown.py", line 39, in test_unknown_participant_blocks_shutdown_without_details
+    with self.assertRaises(CoreError) as error: self.shutdown()
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+AssertionError: CoreError not raised
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.151s
+
+FAILED (failures=2)

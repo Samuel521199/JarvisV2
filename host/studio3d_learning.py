@@ -9,6 +9,7 @@ import threading
 import time
 import uuid
 from pathlib import Path
+from control.worker.process import OwnedProcess
 from control.paths import child, data_root
 from modules.context_knowledge.studio3d_experience import Studio3DExperience
 from modules.skills.studio3d.learning_contract import validate, context, VERSION
@@ -105,37 +106,29 @@ def _process(root, folder, executable, wall_seconds=300, *, operation='learning'
     env = {k:v for k,v in os.environ.items() if k.upper() in ('SYSTEMROOT','WINDIR')}
     config = folder/'config'; config.mkdir()
     env.update(JARVIS_DATA_ROOT=str(root),TEMP=str(folder),TMP=str(folder),BLENDER_USER_CONFIG=str(config),BLENDER_USER_SCRIPTS=str(config),OMP_NUM_THREADS='4')
-    native = job = None; began = time.monotonic()
+    def checkpoint():
+        enabled(root)
+        if (folder/'cancel').exists(): raise CoreError('studio3d_cancelled','Learning run cancelled')
+    began = time.monotonic()
     with (folder/'stdout.log').open('wb') as stdout, (folder/'stderr.log').open('wb') as stderr:
-        process = subprocess.Popen([str(executable),'--background','--factory-startup','--disable-autoexec','--threads','4',
+        process = OwnedProcess([str(executable),'--background','--factory-startup','--disable-autoexec','--threads','4',
             '--python-exit-code','2','--python',str(ROOT/entries[operation]),'--',str(folder)],
-            cwd=folder,env=env,stdin=subprocess.DEVNULL,stdout=stdout,stderr=stderr,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
+            cwd=folder,env=env,stdout=stdout,stderr=stderr,processes=2,cpu_seconds=1200,memory_bytes=4*1024**3,checkpoint=checkpoint)
         try:
-            if os.name == 'nt':
-                import ctypes
-                from ctypes import wintypes as w
-                from control.worker import win32 as n
-                native = n.bind(); job = native['CreateJobObjectW'](None,None)
-                limits = n.JobLimit(); limits.basic.flags = 0x2000|0x8|0x100|0x200|0x2
-                limits.basic.processes=2; limits.basic.cpu=1200*10_000_000; limits.memory=limits.job_memory=4*1024**3
-                assign=n.api('kernel32','AssignProcessToJobObject',w.BOOL,w.HANDLE,w.HANDLE)
-                if not job or not native['SetInformationJobObject'](job,9,ctypes.byref(limits),ctypes.sizeof(limits)) or not assign(job,int(process._handle)):
-                    raise CoreError('studio3d_limit','Resource Job unavailable')
             while process.poll() is None:
-                enabled(root)
-                if (folder/'cancel').exists(): raise CoreError('studio3d_cancelled','Learning run cancelled')
+                checkpoint()
                 if time.monotonic()-began > wall_seconds or sum(p.stat().st_size for p in folder.rglob('*') if p.is_file()) > 256*1024**2:
                     raise CoreError('studio3d_limit','Learning run exceeded resource budget')
                 time.sleep(.15)
             if process.returncode: raise CoreError('studio3d_build_failed','Fixed learning worker failed; inspect retained logs')
         finally:
-            if process.poll() is None: process.kill()
-            process.wait()
-            resource={'elapsed_seconds':time.monotonic()-began,'exit_code':process.returncode,'wall_limit_seconds':wall_seconds,'memory_limit_bytes':4*1024**3,'output_limit_bytes':256*1024**2}
-            if job:
-                measured=n.JobLimit()
-                if native['QueryInformationJobObject'](job,9,ctypes.byref(measured),ctypes.sizeof(measured),None): resource['peak_memory_bytes']=measured.job_peak
-                native['CloseHandle'](job)
+            try:
+                if process.poll() is None: process.kill()
+                process.wait(timeout=5)
+                resource={'elapsed_seconds':time.monotonic()-began,'exit_code':process.returncode,'wall_limit_seconds':wall_seconds,'memory_limit_bytes':4*1024**3,'output_limit_bytes':256*1024**2}
+                resource.update(process.resources())
+                resource['peak_memory_bytes']=resource.get('peak_job_memory_bytes')
+            finally:process.close()
             save(folder/'execution.json',resource)
 
 

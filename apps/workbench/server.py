@@ -51,6 +51,7 @@ ASSETS['/family'] = ('family.html', 'text/html')
 ASSETS['/brand/'] = ('brand-preview.html', 'text/html')
 ASSETS['/conversation'] = ('index.html', 'text/html')
 ASSETS['/companion'] = ('companion.html', 'text/html')
+ASSETS['/companion/native'] = ('companion.html', 'text/html')
 ASSETS['/companion/'] = ('companion.html', 'text/html')
 for asset in Path(__file__).parent.glob('*'):
     if asset.suffix in {'.js', '.css', '.svg'}:
@@ -223,6 +224,14 @@ class Handler(BaseHTTPRequestHandler):
                 return self.json(listing(data_root(self.server.data_root)) if route.path=='/api/anatomy/compositions' else state(data_root(self.server.data_root),route.path.rsplit('/',1)[-1]))
             except (CoreError,OSError,ValueError,sqlite3.Error):return self.json({'error':'anatomy_missing'},404)
         if route.path == '/api/task-runner':return self.json(self.server.task_runner.state())
+        if re.fullmatch('/api/commitments/[a-f0-9]{32}',route.path):
+            from host.commitments import detail
+            try: return self.json(detail(self.server.data_root,route.path.rsplit('/',1)[-1]))
+            except (CoreError,OSError,sqlite3.Error): return self.json({'error':'commitment_unavailable'},503)
+        if route.path == '/api/commitments':
+            from host.commitments import read
+            try: return self.json(read(self.server.data_root))
+            except (CoreError,OSError,sqlite3.Error): return self.json({'error':'commitment_unavailable'},503)
         if route.path == '/api/work-status':
             from host.work_status import snapshot as work_status
             try: return self.json(work_status(self.server.data_root, self.server))
@@ -368,6 +377,7 @@ class Handler(BaseHTTPRequestHandler):
             if route.path == '/api/anatomy/render':
                 from host.anatomy import render
                 return self.json(render(root,body),201)
+            if route.path == '/api/assistant/commitment':return self.json(assistant.confirm_commitment(root,body))
             if route.path == '/api/assistant/action':return self.json(assistant.accept(root,body))
             if route.path == '/api/connectors':return self.json(connectors.command(root,body))
             if route.path == '/api/connectors/run':return self.json(self.server.task_runner.start_connector(body),202)
@@ -403,6 +413,9 @@ class Handler(BaseHTTPRequestHandler):
                 store=Extensions(root)
                 try:return self.json(store.command(body))
                 finally:store.close()
+            if route.path == '/api/commitments':
+                from host.commitments import command
+                return self.json(command(root,body,getattr(self.server,'task_runner',None)))
             if route.path == '/api/work-status':
                 from host.work_status import acknowledge
                 return self.json(acknowledge(root, self.server, body))

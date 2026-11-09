@@ -1,4 +1,5 @@
 import {workApi} from './work-client.js';
+import {commitmentForm,commitmentActions} from './commitments.js';
 import {el,button,field,input,select,get,post,modal,closeModal,details,notice} from './ui.js';
 import {outcomeView,completionView} from './ui.js';
 
@@ -14,7 +15,7 @@ function editPriority(item,refresh){
 export function workStatusView(body,{settings=false,focusKey=null,onOpenChat=null}={}){
  let closed=false,loading=false,pendingRefresh=false,signature='',policyDrawn=false,observerSelect=null,observerApply=null,observerDrawn=false;
  const summary=el('div',undefined,'work-summary'),note=el('p',undefined,'note'),list=el('div',undefined,'work-status-list'),config=el('section',undefined,'card'),tools=el('div',undefined,'row');
- summary.setAttribute('aria-live','polite');tools.append(button('刷新工作状态',()=>refresh(true)));body.append(tools,summary,note);
+ summary.setAttribute('aria-live','polite');tools.append(button('新增个人待办',()=>commitmentForm(()=>refresh(true))),button('刷新工作状态',()=>refresh(true)));body.append(tools,summary,note);
  if(settings){
   body.append(config);
   const observer=select([['1','启用结果核对'],['0','关闭结果核对']],'1');observerSelect=observer;observer.disabled=true;observer.setAttribute('aria-label','结果核对开关');
@@ -43,6 +44,7 @@ export function workStatusView(body,{settings=false,focusKey=null,onOpenChat=nul
     const rows=data.items.filter(i=>i.state===state&&(!focusKey||i.attention?.key===focusKey));if(!rows.length)continue;
     const section=el('details',undefined,'work-group');section.dataset.state=state;section.open=focusKey?true:expanded.has(state)?expanded.get(state):!['finished','cancelled','failed'].includes(state);section.append(el('summary',data.labels[state]+' · '+rows.length));
     for(const item of rows){const row=el('article',undefined,'card work-item'),actions=el('div',undefined,'row');row.dataset.state=state;row.append(el('strong',item.title+(item.attention?.unread?' · 未读':'')),el('p',item.reason||data.labels[state],'note'));
+     if(item.source==='commitments')commitmentActions(row,actions,item,()=>refresh(true));
      if(item.source==='tasks'&&item.cancelable){row.append(el('small',(priorities[item.priority]?.[1]||'普通')+' · '+item.priority_reason+(item.due_at?' · 期望 '+new Date(item.due_at*1000).toLocaleString():'')));actions.append(button('调整优先级',()=>editPriority(item,()=>refresh(true))),button('停止此任务',async()=>{await workApi.cancel(item);await refresh(true);}));}
      if(item.source==='dialogue'){actions.append(button('打开会话',()=>{if(onOpenChat)onOpenChat(item.chat_id);else location.href='/#chat='+encodeURIComponent(item.chat_id);}));if(['running','queued'].includes(item.state))actions.append(button('停止此回复',async()=>{await workApi.cancel(item);await refresh(true);}));}
      if(item.source==='goals')actions.append(button('查看目标与待答问题',()=>{location.href='/settings#plans';}));

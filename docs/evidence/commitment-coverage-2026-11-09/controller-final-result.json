@@ -1,0 +1,247 @@
+{
+  "status": "passed",
+  "production_adopted": false,
+  "scope": "real lifecycle with synthetic data; driver faults after real health; four code-identical VERSION variants",
+  "steps": [
+    {
+      "case": "initial_adoption",
+      "passed": true
+    },
+    {
+      "case": "adoption_with_offline_catchup_and_receipt",
+      "passed": true,
+      "epoch": 2
+    },
+    {
+      "case": "compatible_rollback_preserves_revisions_terminal_states_and_origins",
+      "passed": true
+    },
+    {
+      "case": "new_controller_and_driver_recover_live_pending_candidate",
+      "passed": true,
+      "epoch": 5
+    },
+    {
+      "case": "unconfirmed_exit_blocks_second_writer_then_recovers",
+      "passed": true
+    },
+    {
+      "case": "failed_health_restores_baseline_at_new_epoch",
+      "passed": true,
+      "epoch": 9
+    },
+    {
+      "case": "revoked_browser_session_not_revived_by_restart",
+      "passed": true
+    },
+    {
+      "case": "historical_compatibility_preflight_leaves_live_host_untouched",
+      "passed": true
+    },
+    {
+      "case": "STOP_during_failure_prevents_automatic_restore_and_due_processing",
+      "passed": true
+    }
+  ],
+  "packages": {
+    "A": {
+      "build": "87ffe5d99d5a2db0f5e372d2dcb8ccdad289e8b7d589fa51f2ddea75f7e4dd4b",
+      "version": "0.1.3-acceptance-a",
+      "validation": {
+        "architecture_error_count": 0,
+        "architecture_passed": true,
+        "architecture_sample": [],
+        "passed": true,
+        "policy_sha256": "dcf54caa233fcadb1086f98f2b0b3876b8f72af6f850ae66e0572104a5a51734",
+        "reviewed_source": true,
+        "runtime_intact": true,
+        "schema": 1,
+        "test_log": "0.1.3-acceptance-a-303e68bee15a427298ab24a9d6e3c291.log",
+        "test_log_sha256": "8d108196264b8e3ae7d20c0918398aef501ee83b2ffbf2baa51df48d08212bae",
+        "tests_passed": true,
+        "tests_summary": "174 0 0 1"
+      },
+      "archive_sha256": "b293842f5614ebb791f7b598ca80b6dc8e9703d3b98a6d302e92999f686b3b31"
+    },
+    "B": {
+      "build": "de94986e7f07bc032e16760c8b806e91e221c5f622358df03536dacd8e21137b",
+      "version": "0.1.3-acceptance-b",
+      "validation": {
+        "architecture_error_count": 0,
+        "architecture_passed": true,
+        "architecture_sample": [],
+        "passed": true,
+        "policy_sha256": "dcf54caa233fcadb1086f98f2b0b3876b8f72af6f850ae66e0572104a5a51734",
+        "reviewed_source": true,
+        "runtime_intact": true,
+        "schema": 1,
+        "test_log": "0.1.3-acceptance-b-078efa08e2124d1683590ec512289ae9.log",
+        "test_log_sha256": "7b065f1dec548e99a2964c348df36d2bcd5ef085b1d3c75ff2df5b245fff89ec",
+        "tests_passed": true,
+        "tests_summary": "174 0 0 1"
+      },
+      "archive_sha256": "a9501a06ef26d28f5225404c8db6093569e56bd590b52e9765201fadc45115a1"
+    },
+    "C": {
+      "build": "3da296b73a169fe585bfe0e72712c621beecc43a23785c90e172a28455f9b682",
+      "version": "0.1.3-acceptance-c",
+      "validation": {
+        "architecture_error_count": 0,
+        "architecture_passed": true,
+        "architecture_sample": [],
+        "passed": true,
+        "policy_sha256": "dcf54caa233fcadb1086f98f2b0b3876b8f72af6f850ae66e0572104a5a51734",
+        "reviewed_source": true,
+        "runtime_intact": true,
+        "schema": 1,
+        "test_log": "0.1.3-acceptance-c-ad773899989d4b8fa80cf63151fd7b23.log",
+        "test_log_sha256": "60152c51b8a812037028616973c1cf2d54b761a182f5825bff18a234eeeea68d",
+        "tests_passed": true,
+        "tests_summary": "174 0 0 1"
+      },
+      "archive_sha256": "4764f91fecc8357c6f22c8b02e8816379571d35dacdd689e6a3dc884a419ba6d"
+    },
+    "D": {
+      "build": "a71b3663e26eeb211116e787e14b386fdbe9a459db80f5997a7f6b55697d5bdf",
+      "version": "0.1.3-acceptance-d",
+      "validation": {
+        "architecture_error_count": 0,
+        "architecture_passed": true,
+        "architecture_sample": [],
+        "passed": true,
+        "policy_sha256": "dcf54caa233fcadb1086f98f2b0b3876b8f72af6f850ae66e0572104a5a51734",
+        "reviewed_source": true,
+        "runtime_intact": true,
+        "schema": 1,
+        "test_log": "0.1.3-acceptance-d-a5810ce0ad474d64be23e6162ed11829.log",
+        "test_log_sha256": "523cb580269924ebebf5df4b1b759a415e72953bdc4d802c2474fef5d89a02e2",
+        "tests_passed": true,
+        "tests_summary": "174 0 0 1"
+      },
+      "archive_sha256": "6ff3d3e5fe9363a6c930f2a5bf968a02d9930bb4541855974b0ae2e72d2d7646"
+    }
+  },
+  "source_freeze": "plan-r4.json",
+  "all_owned_processes_stopped": true,
+  "cleanup_forced_owned_pids": [],
+  "final_phase": "starting",
+  "stop_generation_preserved": true,
+  "driver_events": [
+    [
+      "start",
+      "87ffe5d99d5a2db0f5e372d2dcb8ccdad289e8b7d589fa51f2ddea75f7e4dd4b",
+      1
+    ],
+    [
+      "stop_confirmed",
+      "87ffe5d99d5a2db0f5e372d2dcb8ccdad289e8b7d589fa51f2ddea75f7e4dd4b",
+      1
+    ],
+    [
+      "start",
+      "de94986e7f07bc032e16760c8b806e91e221c5f622358df03536dacd8e21137b",
+      2
+    ],
+    [
+      "stop_confirmed",
+      "de94986e7f07bc032e16760c8b806e91e221c5f622358df03536dacd8e21137b",
+      2
+    ],
+    [
+      "start",
+      "87ffe5d99d5a2db0f5e372d2dcb8ccdad289e8b7d589fa51f2ddea75f7e4dd4b",
+      3
+    ],
+    [
+      "stop_confirmed",
+      "87ffe5d99d5a2db0f5e372d2dcb8ccdad289e8b7d589fa51f2ddea75f7e4dd4b",
+      3
+    ],
+    [
+      "start",
+      "de94986e7f07bc032e16760c8b806e91e221c5f622358df03536dacd8e21137b",
+      4
+    ],
+    [
+      "stop_confirmed",
+      "de94986e7f07bc032e16760c8b806e91e221c5f622358df03536dacd8e21137b",
+      4
+    ],
+    [
+      "start",
+      "87ffe5d99d5a2db0f5e372d2dcb8ccdad289e8b7d589fa51f2ddea75f7e4dd4b",
+      5
+    ],
+    [
+      "stop_confirmed",
+      "87ffe5d99d5a2db0f5e372d2dcb8ccdad289e8b7d589fa51f2ddea75f7e4dd4b",
+      5
+    ],
+    [
+      "start",
+      "de94986e7f07bc032e16760c8b806e91e221c5f622358df03536dacd8e21137b",
+      6
+    ],
+    [
+      "stop_confirmed",
+      "de94986e7f07bc032e16760c8b806e91e221c5f622358df03536dacd8e21137b",
+      6
+    ],
+    [
+      "start",
+      "87ffe5d99d5a2db0f5e372d2dcb8ccdad289e8b7d589fa51f2ddea75f7e4dd4b",
+      7
+    ],
+    [
+      "stop_confirmed",
+      "87ffe5d99d5a2db0f5e372d2dcb8ccdad289e8b7d589fa51f2ddea75f7e4dd4b",
+      7
+    ],
+    [
+      "start",
+      "3da296b73a169fe585bfe0e72712c621beecc43a23785c90e172a28455f9b682",
+      8
+    ],
+    [
+      "stop_confirmed",
+      "3da296b73a169fe585bfe0e72712c621beecc43a23785c90e172a28455f9b682",
+      8
+    ],
+    [
+      "start",
+      "87ffe5d99d5a2db0f5e372d2dcb8ccdad289e8b7d589fa51f2ddea75f7e4dd4b",
+      9
+    ],
+    [
+      "stop_confirmed",
+      "87ffe5d99d5a2db0f5e372d2dcb8ccdad289e8b7d589fa51f2ddea75f7e4dd4b",
+      9
+    ],
+    [
+      "stop_confirmed",
+      "87ffe5d99d5a2db0f5e372d2dcb8ccdad289e8b7d589fa51f2ddea75f7e4dd4b",
+      9
+    ],
+    [
+      "start",
+      "87ffe5d99d5a2db0f5e372d2dcb8ccdad289e8b7d589fa51f2ddea75f7e4dd4b",
+      10
+    ],
+    [
+      "stop_confirmed",
+      "87ffe5d99d5a2db0f5e372d2dcb8ccdad289e8b7d589fa51f2ddea75f7e4dd4b",
+      10
+    ],
+    [
+      "start",
+      "a71b3663e26eeb211116e787e14b386fdbe9a459db80f5997a7f6b55697d5bdf",
+      11
+    ],
+    [
+      "stop_confirmed",
+      "a71b3663e26eeb211116e787e14b386fdbe9a459db80f5997a7f6b55697d5bdf",
+      11
+    ]
+  ],
+  "completed_utc": "2026-11-08T17:25:06.141243+00:00"
+}
