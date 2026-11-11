@@ -537,7 +537,7 @@ Google 明确禁止将 OAuth 授权请求导向开发者控制的嵌入式 user-
 **dev.6 增量：**核心数据库以事务追加升级到 schema 4，新增 `memory_usage`、`memory_candidates`、`development_controls` 与记忆代次；既有身份、授权、任务和事实不重建。对话库追加记忆引用与开关字段。新代码分别位于 `modules/context_knowledge/memory.py`、`host/memory.py`、`host/development.py` 和独立的前端 `memory.js`、`development.js`。数据仍只留本工程 user-data，未增加外部服务或数据库。schema 4 不能直接交给仅识别 schema 3 的旧 Host；纯能力包回退不回滚记忆、撤销或数据库版本。使用语义以[记忆](knowledge-learning.md#memory-workbench-runtime)、[研发](toolchains.md#development-workbench-runtime)为准。
 
 
-默认数据根由程序所在工程定位到 `user-data/`，不依赖启动时的工作目录，也不隐式写入旧工程或用户主目录。原日用根 `D:/Jarvis/user-data/` 已于2026-11-11被用户随旧安装删除；当前源码在 `D:/Jarvis-dev`，其现有user-data仍是独立开发数据，不能直接冒称旧日用数据已恢复。模型库已单独迁至D盘备份目录，范围见[模型库](tasks-agents.md#studio3d-model-library)；重新启用日用需先明确目标数据根并核验备份。源码与可替换程序、可变数据仍分开；安装到不可写目录时必须显式指定可写 `--data-root`，不能悄悄回退或要求管理员启动。
+默认数据根由程序所在工程定位到 `user-data/`，不依赖启动时的工作目录，也不隐式写入旧工程或用户主目录。原日用根 `D:/Jarvis/user-data/` 已于2026-11-11被用户随旧安装删除；2026-11-12经备份校验后恢复到独立 `D:/Jarvis-runtime/user-data`，源码及原开发数据继续留在 `D:/Jarvis-dev`。模型库仍由两个数据根各自的 `model-library/location.json` 指向 `D:/Jarvis-backups/JarvisModelLibrary`，范围见[模型库](tasks-agents.md#studio3d-model-library)。恢复范围和缺失项见[恢复验收](delivery-validation.md#daily-restore-20261112)。源码与可替换程序、可变数据仍分开；安装到不可写目录时必须显式指定可写 `--data-root`，不能悄悄回退或要求管理员启动。
 
 | 当前实际位置（相对数据根） | 内容和所有者 | 保存方式 |
 |---|---|---|
@@ -861,6 +861,8 @@ D:\Jarvis-dev\StartJarvisDev.bat
 
 <a id="daily-managed-installation"></a>
 ### 日用安装、开发与恢复控制器
+
+当前日用入口为 `D:/Jarvis-runtime/StartJarvis.bat`；加 `--companion` 打开已登记的原生精灵。日用端口18282，开发仍使用独立数据根；开发代码不会因修改源码而自动替换日用程序。原日用部署账本未包含在小型业务备份里，因此旧host/PID标记只作恢复证据存档，新安装重新通过包校验建立epoch 1，不能伪造旧代际或以旧状态启动。两个已删除的外部项目路径保持缺失提示，未把内容仓库冒充原项目目录。
 
 日用 `user-data` 保持原位；被采用的代码位于 `deployment/packages/<sha>`。`host/application_installation.py` 仅在候选已被采用后安装根启动器，先保存原 `StartJarvis.bat`，再安装 `JarvisLaunch.py`。它先逐项核对恢复控制器摘要，随后通过同一应用账本启动当前已采用版本，避免重启后误用旧工作树。
 
