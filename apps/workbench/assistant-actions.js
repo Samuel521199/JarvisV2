@@ -2,24 +2,33 @@ import {el,button,post,notice,card,states,errorText} from './ui.js';
 import {outcomeView,completionView} from './ui.js';
 import {workClosure} from './rework-impact.js';
 import {commitmentCard} from './assistant-commitments.js';
+import {standingForm,openStanding} from './standing-work.js';
 
 export function actionCard(parent,turn,{openGoal,refresh,openMemory}){
  const action=turn.assistant_action,goal=turn.linked_goal;
  if(!action||action.kind==='chat'||turn.status!=='SUCCEEDED')return;
  if(action.kind==='commitment'){commitmentCard(parent,turn,refresh);return;}
+ if(action.target?.startsWith('standing-')){
+  const c=card('持续安排 · '+({pause:'暂停',cancel:'取消',resume:'接续'}[action.standing_operation]||'状态控制'),'');
+  if(turn.standing_applied)c.append(el('p','已记录 · '+turn.standing_applied.status),button('查看持续安排',()=>openStanding()));
+  else c.append(el('p','确认后改变这一项安排；保留原结果，不影响其他工作。'),button('确认本次操作',async()=>{await post('/api/assistant/action',{turn_id:turn.id});await refresh();await openStanding();},'primary'));
+  parent.append(c);return;
+ }
  const goalStates={NEW:'等待规划',PLANNING:'正在规划',NEEDS_INPUT:'待补充能力或条件',REVIEW:'等待核对计划',SUCCEEDED:'执行完成'};
  const closureStates={COMPLETE:'当前版已结案',NEEDS_REVIEW:'当前版待核对',IN_PROGRESS:'当前版进行中',NEEDS_EVIDENCE:'当前版待核验',STOPPED:'已停止接续'};
  const c=card(goal?.work_closure?'此消息关联的工作 · '+closureStates[goal.work_closure.state]:goal?'此消息的目标 · '+(goalStates[goal.status]||states[goal.status]||goal.status):'识别到行动请求','');
  if(goal){
   workClosure(c,goal.work_closure);
   if(goal.work){c.append(el('p','负责人：Jarvis 默认 Bot · 共 '+goal.work.versions.length+' 个关联版本','note'));if(goal.work.current_goal!==goal.id)c.append(el('p','下面保留原版本结果，最新进展见当前版本。','note'),button('打开当前工作版本',()=>openGoal(goal.work.current_goal),'primary'));}
-  if(goal.summary)c.append(el('p',goal.summary));
+  if(goal.summary)c.append(el('p',goal.summary));if(action.standing)c.append(el('p','持续安排候选：'+action.standing.quote+' · 尚未启用','note'));
+  for(const work of goal.standing_work||[])c.append(el('p',work.title+' · '+work.status+' · 已开始 '+work.runs_started+' 次'+(work.notice?' · 最近 '+work.notice.status:''),'note'));
   if(goal.error)c.append(el('p',errorText(goal.error),'note'));
   if(goal.output!==null){c.append(el('pre',goal.output),el('p','以下为已确认执行回执中的输出；当前文件状态见结果核对。','note'));
    if(goal.memory_candidate_available===true)c.append(button('整理为待核对经验',async()=>{await post('/api/memory',{action:'propose_goal',goal_id:goal.id});await openMemory();}));}
   outcomeView(c,goal.outcome,{taskId:goal.task_id,refresh});
   completionView(c,goal.completion,{refresh});
   c.append(button('计划、进度与交付',()=>openGoal(goal.id),'primary'));
+  if(!goal.error)c.append(button('安排持续办事',()=>standingForm({goalId:goal.id,suggestion:action.standing})),button('持续安排与处理反馈',()=>openStanding()));
  }else if(turn.applied_action){
   c.append(el('p',action.kind==='amend'?'补充已应用，原目标与历史回执保持关联。':action.kind==='cancel'?'取消已记录。':'已找到原目标。'),button('打开原目标',()=>openGoal(turn.applied_action.id)));
  }else{

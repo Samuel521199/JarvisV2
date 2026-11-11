@@ -9,6 +9,7 @@ description: 在 Jarvis 中用 Blender 制作和修改可编辑 3D 模型，组�
 
 ## 做什么与如何选择
 
+- 先找可复用资产或制作参考：查询 `POST /api/model-library/query`（query/category/kind），或本机 `python -m tools.model_library search --query 轮组 --category wwii --kind part`，再 `show 资产ID` 读取真实文件、关联高模/LOD、来源和条件案例。库入口 `/model-library` 支持真实模型旋转/平移/缩放、线框、版本切换以及持久标签、说明和版本摘要绑定的三维标注。只使用当前登记版本；原件下载和轻量展示预览不冒充游戏LOD。案例须逐项核对前提与反例，不自动执行或晋升通用经验；库页面尚未接入资产专用的实时检视桥，不能冒称已自动检查。详见 docs/tasks-agents.md#studio3d-model-library。
 - 需要图片参考：使用 Jarvis 图片工作室，沿用所选 Google 图片模型、编辑参考和费用账本。确认各视角比例、朝向、材质是否一致；生成图不是测绘数据。
 - 需要新 3D：使用 3D 工作室的模型规划或已支持的场景数据。模型输出受限 JSON，固定 Blender Worker 制作可编辑 .blend、GLB 和真实渲染；不执行模型写出的 Python，不强制调用 Claude、Codex CLI 或 Tripo。
 - 用户给出多个 GLB 要组装：使用本机 `python -m tools.studio3d_assembly --request 请求JSON`，经同一 Jarvis Host/技能启停和共享渲染队列执行；网页组装表单尚未接入。先以 inspect 检查各件原点、尺度、朝向、UV/PBR，再用 assemble 的显式世界坐标变换与父子归属生成新 .blend/GLB、多视图和回读检查。各件独立归一化时不能统一缩放后直接叠放。单侧行走机构复制时保留前后方向；镜像实例不能冒充独立设计或可逐轮运动。每件最多96 MiB、合计最多2000万三角面，限定16 GiB工作进程/20分钟；不扩大普通建模入口的预算。

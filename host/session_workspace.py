@@ -68,6 +68,10 @@ def publish_reply(root,chat,turn):
 def deliver_task(core,task_id):
     link=core.db.one('''SELECT g.chat_id FROM goal_plans p LEFT JOIN work_revisions r ON r.goal_id=p.id
         JOIN chat_goals g ON g.goal_id=COALESCE(r.root_goal,p.id) WHERE p.task_id=?''',(task_id,))
+    if not link and core.db.one("SELECT 1 FROM meta WHERE key='standing_schema'"):
+        link=core.db.one('''SELECT g.chat_id FROM goal_plans p JOIN standing_children c ON c.goal_id=p.id
+            LEFT JOIN work_revisions r ON r.goal_id=c.source_goal
+            JOIN chat_goals g ON g.goal_id=COALESCE(r.root_goal,c.source_goal) WHERE p.task_id=?''',(task_id,))
     if not link: return
     chats=Dialogues(core.root); sessions=Sessions(core.root)
     try:
@@ -105,6 +109,11 @@ def command(root,value):
                 for row in core.db.all('''SELECT p.task_id FROM goal_plans p LEFT JOIN work_revisions r ON r.goal_id=p.id
                     JOIN chat_goals g ON g.goal_id=COALESCE(r.root_goal,p.id) WHERE g.chat_id=? AND p.task_id IS NOT NULL''',(chat['id'],)):
                     deliver_task(core,row['task_id'])
+                if core.db.one("SELECT 1 FROM meta WHERE key='standing_schema'"):
+                    for row in core.db.all('''SELECT p.task_id FROM standing_children c JOIN goal_plans p ON p.id=c.goal_id
+                        LEFT JOIN work_revisions r ON r.goal_id=c.source_goal JOIN chat_goals g ON g.goal_id=COALESCE(r.root_goal,c.source_goal)
+                        WHERE g.chat_id=? AND p.task_id IS NOT NULL''',(chat['id'],)):
+                        deliver_task(core,row['task_id'])
             finally: core.close()
             sessions.delivery_error(chat['id'],None)
             info=sessions.info(chat['id'])

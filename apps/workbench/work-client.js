@@ -7,6 +7,8 @@ export const workApi={
  cancel(item){
   if(item.source==='dialogue')return post('/api/chat/cancel',{request_id:item.id});
   if(item.source==='tasks')return post('/api/operations',{action:'task_cancel',id:item.id});
+  if(item.source==='standing')return post('/api/standing-work',{action:'cancel',id:item.id,revision:item.revision,request_id:crypto.randomUUID()});
+  if(item.source==='mail_standing')return post('/api/mail-standing',{action:'cancel',id:item.id,revision:item.revision,request_id:crypto.randomUUID()});
   throw Error('此来源需到对应模块停止工作。');
  },
  async record(item){

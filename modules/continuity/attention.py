@@ -9,7 +9,8 @@ TERMINAL = {'finished', 'failed', 'cancelled'}
 
 
 def needs_receipt(item):
-    return item['state'] in TERMINAL or (item.get('source') == 'commitments'
+    if item.get('notification_held'):return False
+    return item['state'] in TERMINAL or (item.get('source') in {'standing','mail_standing'} and item.get('raw_status') in {'NEEDS_INPUT','WAITING_AUTH','WAITING_SCOPE'}) or (item.get('source') == 'commitments'
         and item['state'] == 'needs_input' and item.get('raw_status') == 'DUE')
 
 

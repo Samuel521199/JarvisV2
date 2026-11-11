@@ -66,6 +66,10 @@ def cancellation(path, body):
     if not isinstance(body, dict): return False
     if path == '/api/commitments':
         return body.get('action') == 'cancel' and set(body) == {'action','id','request_id','revision'}
+    if path == '/api/standing-work':
+        return body.get('action') in {'pause','cancel'} and set(body)=={'action','id','request_id','revision'}
+    if path == '/api/mail-standing':
+        return body.get('action') in {'pause','cancel'} and set(body)=={'action','id','request_id','revision'}
     if path == '/api/operations':
         return set(body) == {'action', 'id'} and body.get('action') in {'task_cancel', 'dev_cancel'}
     if path == '/api/mail':

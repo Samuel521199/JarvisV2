@@ -58,7 +58,7 @@ export function mountMailCompanion(){
   panel.replaceChildren();const top=el('div',undefined,'top'),title=el('div');
   title.append(el('strong','邮件'),el('div','Gmail · '+(statuses[state?.status]||'正在连接服务')+' · '+stamp(state?.snapshot_at),'tiny'));
   const exit=action('×',close,'close');exit.setAttribute('aria-label','关闭邮件对话框');top.append(title,exit);panel.append(top);
-  const content=el('div',undefined,'content'),error=el('p',message,'mail-live-error');error.id='mail-live-error';error.hidden=!message;error.setAttribute('role','alert');content.append(error);panel.append(content);return content;
+  const content=el('div',undefined,'content'),error=el('p',message,'mail-live-error');error.id='mail-live-error';error.hidden=!message;error.setAttribute('role','alert');content.append(error,action('重要邮件持续助手',async()=>{const {openMailStanding}=await import('./mail-standing.js');await openMailStanding();},'action'));panel.append(content);return content;
  }
  function render(){
   if(panel.hidden)return;const content=head();

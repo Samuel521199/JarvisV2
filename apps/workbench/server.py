@@ -36,7 +36,7 @@ from control.paths import child, data_root
 from control.recovery.gate import StopGate
 from sdk.protocol import CoreError, canonical, decode, read_json
 from sdk.pricing import estimate
-from apps.workbench import family_http,mail_http,runtime_http
+from apps.workbench import family_http,mail_http,runtime_http,model_library_http
 from control import logs
 import logging
 
@@ -152,6 +152,7 @@ class Handler(BaseHTTPRequestHandler):
                 return self.json({'kind': 'development' if profile else 'stable',
                                   'shared_google_models': bool(profile), 'real_account_actions': not bool(profile)})
             if mail_http.get(self, route.path): return
+            if model_library_http.get(self, route.path): return
         except (CoreError, OSError, ValueError, sqlite3.Error): return self.json({'error': 'family_unavailable'}, 503)
         if route.path.startswith('/vendor/three/'):
             from host.studio3d_viewer import vendor
@@ -237,6 +238,9 @@ class Handler(BaseHTTPRequestHandler):
             from host.work_status import snapshot as work_status
             try: return self.json(work_status(self.server.data_root, self.server))
             except (CoreError, OSError, ValueError, sqlite3.Error): return self.json({'error': 'work_status_unavailable'}, 503)
+        if route.path == '/api/standing-work':
+            from host.standing_work import read
+            return self.json(read(self.server.data_root))
         if route.path == '/api/local-models':return self.json(self.server.local_models.snapshot())
         if route.path == '/api/local-models/result':return self.json(self.server.local_models.result())
         if route.path == '/api/connectors':
@@ -298,6 +302,7 @@ class Handler(BaseHTTPRequestHandler):
         try:
             size = int(self.headers.get('Content-Length', '0'))
             limit = 40000000 if route.path in {'/api/knowledge-transfer','/api/memory-transfer'} else 29000000 if route.path in ('/api/studio3d/assets','/api/studio3d/references','/api/image-studio/references') else 2097152 if route.path == '/api/studio3d/jobs' else 1600000 if route.path == '/api/project/write' else 200000
+            if route.path == '/api/model-library/import':limit=90000000
             if route.path == '/api/studio3d/assets':
                 from modules.skills.studio3d.assets import MAX_GLB_UPLOAD_BYTES
                 limit=MAX_GLB_UPLOAD_BYTES
@@ -316,6 +321,9 @@ class Handler(BaseHTTPRequestHandler):
             elif route.path in {'/api/knowledge-transfer','/api/memory-transfer'}:
                 from modules.context_knowledge.transfer import decode_transfer
                 body=decode_transfer(raw)
+            elif route.path == '/api/model-library/import':
+                from host.model_library import decode_import
+                body=decode_import(raw)
             else:body=decode(raw)
             root = data_root(self.server.data_root)
             if runtime_http.post(self, route.path, body): return
@@ -336,6 +344,7 @@ class Handler(BaseHTTPRequestHandler):
                 return self.json({'error': 'development_external_denied'}, 403)
             if family_http.post(self, route.path, body): return
             if mail_http.post(self, route.path, body): return
+            if model_library_http.post(self, route.path, body): return
             if route.path.startswith('/api/image-studio/'):
                 from host import image_generation as images
                 if route.path=='/api/image-studio/settings':return self.json(images.configure(root,body))
@@ -417,6 +426,11 @@ class Handler(BaseHTTPRequestHandler):
             if route.path == '/api/commitments':
                 from host.commitments import command
                 return self.json(command(root,body,getattr(self.server,'task_runner',None)))
+            if route.path == '/api/standing-work':
+                from host.standing_work import command
+                result=command(root,body)
+                if getattr(self.server,'task_runner',None):self.server.task_runner.wake.set()
+                return self.json(result)
             if route.path == '/api/work-status':
                 from host.work_status import acknowledge
                 return self.json(acknowledge(root, self.server, body))
@@ -477,7 +491,7 @@ class Handler(BaseHTTPRequestHandler):
         if download:self.send_header('Content-Disposition','attachment; filename="'+download+'"')
         if viewer:
             from host.studio3d_viewer import CSP
-            self.send_header('Content-Security-Policy',CSP)
+            self.send_header('Content-Security-Policy',CSP.replace("frame-ancestors 'none'","frame-ancestors 'self'") if viewer=='library' else CSP)
         else:
             self.send_header("Content-Security-Policy", ("sandbox allow-scripts allow-downloads; default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; base-uri 'none'; form-action 'none'" if anatomy else "default-src 'self'; connect-src 'self'; img-src 'self'; script-src 'self'; style-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'".replace("frame-ancestors 'none'", "frame-ancestors 'self'" if conversation else "frame-ancestors 'none'")))
         self.end_headers(); self.wfile.write(body)
@@ -531,7 +545,7 @@ def _serve(args):
         except (ImportError, CoreError, OSError, sqlite3.Error):
             pass  # optional skill; its own readiness endpoint reports the problem
         server.local_models = create_manager(server.data_root)
-        server.task_runner = TaskRunner(server.data_root, foreground_pending=lambda: any(r["lane"] == "foreground" for r in server.dialogues.state()["queued"]))
+        server.task_runner = TaskRunner(server.data_root, foreground_pending=lambda: any(r["lane"] == "foreground" for r in server.dialogues.state()["queued"]),maintenance=lambda:mail_http.advance(server))
         server.background_lane = BackgroundLane(server.data_root)
         server.development_runner = DevelopmentRunner(server.data_root,server.background_lane)
         server.goal_runner = GoalRunner(server.data_root,server.background_lane)
@@ -553,8 +567,9 @@ def _serve(args):
         from host.knowledge_extraction import close as close_extraction
         close_extraction(server.data_root)
         server.family.close()
+        server.task_runner.close(drain=False)
         if hasattr(server,'mailbox'):server.mailbox.close()
-        server.server_close(); server.local_models.close(); server.dialogues.close(); server.task_runner.close(drain=False); server.development_runner.close(); server.background_lane.close()
+        server.server_close(); server.local_models.close(); server.dialogues.close(); server.development_runner.close(); server.background_lane.close()
 
 
 if __name__ == "__main__": main()

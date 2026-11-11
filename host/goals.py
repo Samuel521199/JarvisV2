@@ -265,7 +265,7 @@ def execute(root, ident, retry_unknown=False):
                     proposal={'schema':'jarvis.goal-plan.v1','summary':'还没有可使用的已发布纯文本能力。','input_text':row['request']['input_text'],'steps':[],'questions':['先在编码协作中创建并审阅所需能力，或补充一个可由现有工具处理的目标。']}
                 else:
                     routes=row['routes'];providers={digest(r):NativeModel(r,core.credentials.get,child(core.root,'temp')) for r in routes}
-                    gateway=RoutedModels(core.db,providers,list(providers));gateway.network_check=NetworkGate(core.root).require_online
+                    gateway=RoutedModels(core.db,providers,list(providers));gateway.network_check=NetworkGate(core.root).require_model_online
                     gateway.recover(key)
                     if retry_unknown:gateway.acknowledge_unknown(key)
                     capabilities=[{'capability':r['capability'],'name':r['name'][:160],'description':r['description'][:800],

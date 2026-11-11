@@ -38,7 +38,7 @@ def inspect(root,body):
     finally:store.close()
 
 
-def create(root,body,runner=None):
+def create(root,body,runner=None,*,authorization_note=None):
     require_accepting(root);StopGate(root).require_running()
     generation=identifier(body['account_generation']);message_id=identifier(body['message_id'])
     request=body['request_id'];signature=body['source_digest']
@@ -46,7 +46,7 @@ def create(root,body,runner=None):
     if not isinstance(signature,str) or not re.fullmatch('[a-f0-9]{64}',signature):raise CoreError('mail_invalid','Invalid cached-source fingerprint')
     family=digest(['gmail',generation,message_id]);reference=digest([family,signature]);record_id=digest(['mail-work',request])[:32]
     command={'action':'create','id':record_id,'request_id':request,'title':body['title'],'due_at':body['due_at'],
-             'source':'主人从邮件中明确建立的个人待办；邮件正文不是执行授权。'}
+             'source':authorization_note or '主人从邮件中明确建立的个人待办；邮件正文不是执行授权。'}
     origin={'mail_reference':reference,'mail_family':family};store=MailStore(root)
     try:
         # A committed replay returns the original record even after disconnect,

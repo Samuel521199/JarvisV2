@@ -81,7 +81,7 @@ async function boot(){
   if(event.origin!==location.origin||event.source!==frame?.contentWindow)return;const message=event.data;
   if(message?.type==='jarvis:conversation:changed'&&typeof message.chat_id==='string'&&/^chat-[0-9a-f]{32}$/.test(message.chat_id))rememberSelection(message.chat_id);
   if(message?.type!=='jarvis:companion:navigate')return;
-  if(message.target==='work')work();else if(message.target==='projects')run(projects);else if(message.target==='mail')mail.open();
+  if(message.target==='work')work();else if(message.target==='projects')run(projects);else if(message.target==='mail')mail.open();else if(message.target==='mail-standing')run(async()=>{const {openMailStanding}=await import('./mail-standing.js');await openMailStanding();});
  });
  document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh();});if(location.pathname==='/companion/native')await import('./native-presence.js');await refresh();const timer=setInterval(refresh,5000);
  window.addEventListener('pagehide',()=>{clearInterval(timer);cleanup();},{once:true});

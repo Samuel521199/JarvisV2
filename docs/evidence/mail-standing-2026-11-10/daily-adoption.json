@@ -1,0 +1,137 @@
+{
+  "passed": true,
+  "steps": [
+    {
+      "case": "both_candidates_pass_daily_root_bound_independent_gate",
+      "passed": true
+    },
+    {
+      "case": "normal_drain_and_stop_without_forced_termination",
+      "passed": true
+    },
+    {
+      "case": "stopped_business_backup_and_sqlite_integrity",
+      "passed": true
+    },
+    {
+      "case": "adopted_and_installed_0.1.7-rc.1",
+      "passed": true
+    },
+    {
+      "case": "adopted_and_installed_0.1.7",
+      "passed": true
+    },
+    {
+      "case": "pinned_launcher_and_shared_endpoints_live_without_synthetic_business_records",
+      "passed": true
+    },
+    {
+      "case": "existing_tables_settings_credentials_sessions_and_asset_metadata_preserved",
+      "passed": true
+    }
+  ],
+  "before": {
+    "active": {
+      "build": "5083b294d1ca8126f3a23216e419801ed047d377152cf9360328e2b89f6c06ea",
+      "epoch": 12,
+      "slot": "A",
+      "version": "0.1.6-model-library"
+    },
+    "epoch": 12,
+    "error": null,
+    "pending": null,
+    "pending_epoch": null,
+    "phase": "active",
+    "previous": {
+      "build": "81b5c3848c655179d566709b7f0ee49dd3bec095df410df795f23ce1230c072c",
+      "epoch": 11,
+      "slot": "B",
+      "version": "0.1.6"
+    },
+    "schema": 1
+  },
+  "backup": {
+    "files": 1979,
+    "bytes": 56213035,
+    "databases": 17,
+    "tables": 92,
+    "asset_metadata_files": 10812,
+    "backup": "D:\\Jarvis-backups\\mail-standing-20261110-a",
+    "integrity": "all ok"
+  },
+  "model_library": {
+    "present": true,
+    "metadata_tables": 5,
+    "asset_metadata_files": 74,
+    "unchanged": true
+  },
+  "http": {
+    "/": 200,
+    "/companion": 200,
+    "/companion/native": 200,
+    "/settings": 200,
+    "/api/instance": 200,
+    "/api/standing-work": 200,
+    "/api/work-status": 200,
+    "/standing-work.js": 200,
+    "/assistant-actions.js": 200
+  },
+  "preservation": {
+    "passed": true,
+    "existing_tables_checked": 92,
+    "business_table_changes": [],
+    "derived_only_changes": [
+      {
+        "database": "state/core.sqlite3",
+        "table": "task_completion",
+        "only_changed_column": "checked"
+      }
+    ],
+    "dpapi_files_changed": [],
+    "dpapi_credential_files_checked": 4,
+    "browser_sessions": {
+      "passed": true,
+      "key_binding_unchanged": true,
+      "previous_valid_sessions_preserved": true,
+      "previous_valid_session_count": 9,
+      "previous_expired_session_count": 0,
+      "expired_sessions_revived": false,
+      "bounded_expiry": true,
+      "new_sessions": 1,
+      "expected_new_sessions": 1,
+      "scope": "semantic DPAPI payload check; never prints session tokens"
+    },
+    "config_session_files_checked": 1939,
+    "config_session_files_changed": [],
+    "stop_and_latch_presence_unchanged": true,
+    "asset_metadata_files_checked": 10812,
+    "assets_metadata_changed": [],
+    "scope": "all backed-up existing tables; encrypted DPAPI files; no claim of full asset-byte hashing"
+  },
+  "catalog": {
+    "sha256": "d98061349b09de1cd453ef0d83a41881d613d0491267249d280f61e087b33619",
+    "connections": 7,
+    "models": 21,
+    "unchanged": true
+  },
+  "after": {
+    "active": {
+      "build": "9fd6c1f47ec9596ade226eb67b5c62fdb18b4e2de443fa6fd7f2b67d4ddef03c",
+      "epoch": 14,
+      "slot": "A",
+      "version": "0.1.7"
+    },
+    "epoch": 14,
+    "error": null,
+    "pending": null,
+    "pending_epoch": null,
+    "phase": "active",
+    "previous": {
+      "build": "6f056f6518c726a17d182087bbac5e005deb3490be23843d3605d66d384e7ee4",
+      "epoch": 13,
+      "slot": "B",
+      "version": "0.1.7-rc.1"
+    },
+    "schema": 1
+  }
+}

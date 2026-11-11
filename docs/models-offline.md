@@ -296,7 +296,7 @@ LLM、STT、TTS、嵌入和推理引擎分别版本化。替换模型时检查�
 
 普通对话选择“自动路由”才允许按已配置顺序尝试其他连接。明确选定模型时，失败不会悄悄切换供应商。明确拒绝或无效回答可尝试备选；请求已发出而结果不明时记录 UNKNOWN 并停止此轮，不自动重发或换供应商掩盖未知费用。没有凭据或本地运行器未准备的连接跳过；不假报本地可用。当前没有动态价格优化或自动替换模型权重。
 
-自主研发 Core 同样通过 preferences 和独立 NativeModel 使用迁入的全局选择，保留已有持久调用预算。尚未导入配置的全新种子仍可使用 `config/model-routes.json` 的显式环境变量线路；它不是迁入配置的第二个覆盖来源。Codex 的 gpt-6.1-sol/medium 参数已保留，但其新执行适配仍未接通。
+自主研发 Core 同样通过 preferences 和独立 NativeModel 使用迁入的全局选择，保留已有持久调用预算。尚未导入配置的全新种子仍可使用 `config/model-routes.json` 的显式环境变量线路；它不是迁入配置的第二个覆盖来源。Codex 的 gpt-6.1-sol/medium 参数已保留；这里记录迁入当时状态。**后续已有候选专用Codex CLI适配器**，限受控文本候选，不是桌面操控或通用工程开发，当前范围见[运行状态](current-state.md#current-state-runs)及[编码通路](toolchains.md#autonomous-development-providers)。
 
 供应商 HTTP 在按需可信子进程完成；消息及输出有字节上限，宿主墙钟期限 120 秒，传输超时 90 秒。仅对文本/JSON 输出接线，不执行供应商返回的 tool call。结构化研发结果仍经宿主 schema 和独立用例检查，JSON 输出不能代替业务正确性。接口依据见 [S288—S292](references.md#native-model-sources)，实测范围见[本轮验收](delivery-validation.md#portable-settings-evidence)。
 

@@ -20,7 +20,7 @@ RESTART_WINDOW = 600.0
 
 
 class TaskRunner:
-    def __init__(self, root, *, resource_sample=sample, foreground_pending=lambda: False):
+    def __init__(self, root, *, resource_sample=sample, foreground_pending=lambda: False,maintenance=lambda:None):
         self.root = data_root(root)
         self.owner = RunLock(self.root, 'task-runner'); self.owner.__enter__()
         self.cohort = ExecutionCohort(self.root)
@@ -30,6 +30,7 @@ class TaskRunner:
         self.active = {}; self.results = []; self.cached = []; self.error = None
         self.closed = False; self.drain = True; self.resource_sample = resource_sample
         self.foreground_pending = foreground_pending
+        self.maintenance=maintenance
         self.metrics = {}; self.cooldown = 0; self.last_sample = 0
         try:
             core = Core(self.root)
@@ -166,6 +167,10 @@ class TaskRunner:
                     try: advance_commitments(self.root)
                     except (CoreError, OSError, sqlite3.Error):
                         logs.throttled(LOG, 'commitment-pump', 'Commitment delivery is pending; dispatch continues')
+                    from host.standing_work import advance as advance_standing
+                    try: advance_standing(self.root,foreground=self.foreground_pending())
+                    except (CoreError,OSError,sqlite3.Error):
+                        logs.throttled(LOG,'standing-pump','Standing work is pending; unrelated tasks continue')
                 from host.completion import pump
                 try:
                     if admitted: pump(core)
@@ -189,6 +194,11 @@ class TaskRunner:
                     self.cached = [r['task_id'] for r in rows if r['task_id'] not in self.active]
                     if self.closed and (not self.drain or not rows) and not self.active: break
                     policy = store.policy(); capacity, pressure = self._capacity(policy)
+                    total,used=self.metrics.get('memory_total'),self.metrics.get('memory_used')
+                    if (not self.closed and admitted and core.gate.state()=='ready' and not pressure
+                            and (total is None or used is None or (total-used)/1048576>=policy['memory_reserve_mib'])):
+                        try:self.maintenance()
+                        except Exception:logs.throttled(LOG,'maintenance-pump','Optional background work is pending; dispatch continues')
                     keys = set().union(*(e['profile']['conflicts'] for e in self.active.values())) if self.active else set()
                     reserved = sum(e['profile']['memory_mib'] for e in self.active.values())
                     for row in rows:

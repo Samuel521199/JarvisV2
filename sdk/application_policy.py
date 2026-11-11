@@ -3,5 +3,5 @@ TESTS = ['test_model_transport.py', 'test_settings_management.py', 'test_prefere
          'test_workbench.py', 'test_local_access.py', 'test_application_runtime.py',
          'test_native_manifest.py', 'test_managed_launcher.py', 'test_application_installation.py',
          'test_core.py', 'test_companion_workflows.py', 'test_mail_companion.py',
-         'test_worker_process.py', 'test_worker_staging.py', 'test_runtime_shutdown.py', 'test_commitments.py', 'test_assistant_commitments.py', 'test_application_compatibility.py', 'test_mail_work.py', 'test_desktop_presence.py']
+         'test_worker_process.py', 'test_worker_staging.py', 'test_runtime_shutdown.py', 'test_commitments.py', 'test_assistant_commitments.py', 'test_application_compatibility.py', 'test_mail_work.py', 'test_desktop_presence.py', 'test_standing_contracts.py', 'test_mail_standing_contracts.py']
 TEST_SUPPORT = ['crash_worker.py']

@@ -278,6 +278,13 @@ class Core:
             del self._execution_permit
 
     def _goal_memory_check(self, task_id):
+        from modules.task_resource.standing import guard_task
+        source=guard_task(self.db,task_id,time.time())
+        if source:
+            from host.goal_context import check as check_source
+            check_source(self,source)
+            from host.work_revisions import check as check_source_work
+            check_source_work(self,source,execution=True)
         from host.completion import check_use
         check_use(self, task_id)
         from host.quote_sources import check_task

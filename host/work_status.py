@@ -80,6 +80,12 @@ def snapshot(root, server):
         sources.append({'id':'commitments','status':'connected','limit':200})
     except (sqlite3.Error, OSError, CoreError):
         sources.append({'id':'commitments','status':'unavailable'})
+    from host.standing_work import projection as standing_projection
+    try:
+        standing_items,standing_tasks=standing_projection(root)
+        items=[i for i in items if i.get('id') not in standing_tasks]
+        items.extend(standing_items);sources.append({'id':'standing','status':'connected'})
+    except (CoreError,OSError,sqlite3.Error):sources.append({'id':'standing','status':'unavailable'})
     suppressed_turns = set()
     for name, path in [('studio3d', 'state/studio3d.sqlite3'), ('images', 'state/image-generation.sqlite3')]:
         target = child(root, path)
@@ -123,12 +129,17 @@ def snapshot(root, server):
                     items.append(dialogue_item(dict(row)))
         finally: db.close()
     mailbox = getattr(server, 'mailbox', None)
+    from host.mail_standing import projection as mail_standing_projection
+    try:
+        items.extend(mail_standing_projection(root));sources.append({'id':'mail_standing','status':'connected'})
+    except (CoreError,sqlite3.Error,OSError):sources.append({'id':'mail_standing','status':'unavailable'})
     if mailbox:
         try:
             from modules.mail.store import MailStore
             store = MailStore(root)
             try:
                 for row in store.listing('job', 40):
+                    if row.get('mail_watch'):continue
                     items.append({'id': row['id'], 'source': 'mail', 'title': '邮件任务 · '+str(row.get('action', row.get('operation', '处理'))),
                                   'state': category(row['status'], row.get('error')), 'reason': row.get('error') or ''})
             finally: store.close()

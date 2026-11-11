@@ -80,6 +80,39 @@
             "basis_turn"
           ],
           "additionalProperties": false
+        },
+        "standing": {
+          "type": "object",
+          "properties": {
+            "quote": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 2000
+            },
+            "interval_seconds": {
+              "type": "integer",
+              "minimum": 60,
+              "maximum": 2592000
+            },
+            "time_text": {
+              "type": "string",
+              "maxLength": 120
+            }
+          },
+          "required": [
+            "quote",
+            "interval_seconds",
+            "time_text"
+          ],
+          "additionalProperties": false
+        },
+        "standing_operation": {
+          "type": "string",
+          "enum": [
+            "pause",
+            "cancel",
+            "resume"
+          ]
         }
       },
       "required": [

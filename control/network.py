@@ -34,3 +34,13 @@ class NetworkGate:
         from control.development_profile import deny_external
         deny_external(self.path.parent.parent)
         if self.read()['blocked']:raise CoreError('network_disabled','Jarvis model and connector networking is disabled')
+
+    def require_model_online(self):
+        """Model-only gate. NativeModel enforces the frozen development proxy.
+
+        Do not use for MCP/mail/downloads: require_online continues to reject
+        direct external development actions. No credentials or fallback granted.
+        """
+        from control.development_profile import read
+        read(self.path.parent.parent)  # Invalid development profiles fail closed.
+        if self.read()['blocked']:raise CoreError('network_disabled','Jarvis model networking is disabled')

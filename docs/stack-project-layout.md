@@ -537,7 +537,7 @@ Google 明确禁止将 OAuth 授权请求导向开发者控制的嵌入式 user-
 **dev.6 增量：**核心数据库以事务追加升级到 schema 4，新增 `memory_usage`、`memory_candidates`、`development_controls` 与记忆代次；既有身份、授权、任务和事实不重建。对话库追加记忆引用与开关字段。新代码分别位于 `modules/context_knowledge/memory.py`、`host/memory.py`、`host/development.py` 和独立的前端 `memory.js`、`development.js`。数据仍只留本工程 user-data，未增加外部服务或数据库。schema 4 不能直接交给仅识别 schema 3 的旧 Host；纯能力包回退不回滚记忆、撤销或数据库版本。使用语义以[记忆](knowledge-learning.md#memory-workbench-runtime)、[研发](toolchains.md#development-workbench-runtime)为准。
 
 
-默认数据根由程序所在工程定位到 `user-data/`，当前实际为 `D:/Jarvis/user-data/`，不依赖启动时的工作目录，也不隐式写入旧工程或用户主目录。源码与可替换程序、可变数据仍分开；安装到不可写目录时必须显式指定可写 `--data-root`，不能悄悄回退或要求管理员启动。
+默认数据根由程序所在工程定位到 `user-data/`，不依赖启动时的工作目录，也不隐式写入旧工程或用户主目录。原日用根 `D:/Jarvis/user-data/` 已于2026-11-11被用户随旧安装删除；当前源码在 `D:/Jarvis-dev`，其现有user-data仍是独立开发数据，不能直接冒称旧日用数据已恢复。模型库已单独迁至D盘备份目录，范围见[模型库](tasks-agents.md#studio3d-model-library)；重新启用日用需先明确目标数据根并核验备份。源码与可替换程序、可变数据仍分开；安装到不可写目录时必须显式指定可写 `--data-root`，不能悄悄回退或要求管理员启动。
 
 | 当前实际位置（相对数据根） | 内容和所有者 | 保存方式 |
 |---|---|---|

@@ -2,7 +2,7 @@ import {workflowCard,editPanel} from './studio3d-workflow.js';
 import {el,modal,card,button,field,select,link,get,post,details,run,input} from './ui.js';
 const terminal=new Set(['DELIVERED','FAILED','CANCELLED','UNKNOWN']);
 export function studio3d(settings,initialReference=null){
- const body=modal('3D 工作室');document.getElementById('modal').classList.add('studio-dialog');const hero=el('section',undefined,'studio-hero');hero.append(el('span','◈','studio-logo'),el('div','CURVES · MATERIALS · LIGHT','eyebrow'),el('h2','从曲面到可编辑的 3D 资产'),el('p','Blender 建模与真实光照渲染。示例零模型调用；自由制作使用你选择的 Jarvis 模型。'));body.append(hero,workflowCard());
+ const body=modal('3D 工作室');document.getElementById('modal').classList.add('studio-dialog');const hero=el('section',undefined,'studio-hero');hero.append(el('span','◈','studio-logo'),el('div','CURVES · MATERIALS · LIGHT','eyebrow'),el('h2','从曲面到可编辑的 3D 资产'),el('p','Blender 建模与真实光照渲染。示例零模型调用；自由制作使用你选择的 Jarvis 模型。'));body.append(hero,workflowCard());body.append(link('打开模型库 · 预览、LOD、部件与制作参考 →','/model-library'));
  const status=el('p','正在检查 Blender…','note');status.role='status';body.append(status);let active=null,maxUpload=128*1024,supportsEdit=false;
  const output=el('section',undefined,'studio-output'),engine=select([['CYCLES','Cycles · CPU 路径追踪'],['BLENDER_EEVEE_NEXT','EEVEE · 实时渲染']]),quality=select([['preview','预览 · 960 × 640'],['final','精细 · 1280 × 854']]),view=select([['front','前方三分之四'],['rear','后方三分之四'],['side','侧面']]);
  const controls=el('div',undefined,'grid');controls.append(field('渲染器',engine),field('质量',quality),field('观察角度',view));body.append(controls);

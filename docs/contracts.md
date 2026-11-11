@@ -66,6 +66,8 @@
 - [正文忠实性 1.12.0 的实际契约](#workflow-fidelity-contract)
 - [交付影子核对 1.13.0 的实际契约](#workflow-shadow-contract)
 - [原生精灵双窗口协议 2](#native-two-window-contract)
+- [持久委托与持续办事契约（v0.1.6）](#standing-work-contract)
+- [Gmail 持续委托契约（v0.1.7）](#mail-standing-contract)
 <!-- book-nav:end -->
 
 <a id="contracts-implementation-index"></a>
@@ -1172,6 +1174,50 @@ v1的输入及结果含义保持；新增`jarvis.work-trials.v2`在每轮增加�
 权限由显式AppManifest生成，按窗口和精确页面路径授予，不授予文件、终端、任意系统操作或通用Tauri核心权限。Root/Robot导航仅允许既定回环源；HTTP的Owner/Cookie/Origin/nonce和家庭隔离继续生效，CSP保持原样。几何更新为单请求在途、后续保留最新值，隐藏/滚动/动画结束重新取样，避免旧区域反向覆盖新区域。
 
 GDI区域与`WindowFromPoint`的自检只说明系统命中路由，不冒充真实点击。当前独立拖动/点击另有主人反馈，多屏/DPI实机移动和长期资源表现仍保留待验。具体证据见[原生及邮件闭环验收](delivery-validation.md#native-mail-20261109)。
+
+<a id="standing-work-contract"></a>
+## 持久委托与持续办事契约（v0.1.6）
+
+`GET /api/standing-work`及同名POST复用原本机访问、主人身份、Origin、页面nonce、维护排空和停止门；没有精灵专用任务API。创建、修改、批准、暂停、接续、取消、取消本轮和反馈均带request_id；除创建外还带id和预期revision。同键不同请求拒绝；Worker运行状态不冒充主人配置修订。正文和外部模型候选不是授权。[产品流程](tasks-agents.md#standing-work-runtime)。
+
+| 对象 | 实际语义 |
+|---|---|
+| StandingWork | DRAFT/ACTIVE/PAUSED/NEEDS_INPUT/DONE/CANCELLED；固定计划/输入/工具版本与来源指纹、原会话、明确策略、已预留额度、轮数及通知水位 |
+| StandingRun | RUNNING/VERIFIED/NEEDS_REVIEW/CANCELLED；有序游标、有限尝试与原Goal/Task引用。VERIFIED只覆盖原Completion里声明的精确文本要求，不代表通用语义目标已被证明 |
+| 首次授权与修改 | granted在首次明确批准时置真；暂停草稿不能通过resume获取首次权限。修改需暂停、结束或明确取消当前轮，回到DRAFT，再核对启用 |
+| 策略 | start_at带秒与UTC偏移；interval_seconds为0或60—2,592,000；max_runs 1—100；max_action_units 1—1000；max_attempts 1—3；quiet_start/end为分钟、相同表示关闭；utc_offset_minutes在±840内；notification_interval_seconds为60—86400；cloud_model_budget_usd当前只能为0 |
+| 来源检查 | 接纳和动作派发均检查原计划、原记忆/会话、固定插件版本与停止/许可；原记录改变或方法反馈被否定时暂停。模型建议中的quote须逐字来自本轮主人消息，周期提示仍须本人核对 |
+| 原账本交接 | 先持久运行/尝试和额度预留，再以确定请求ID创建原Goal、登记来源、沿原编辑/批准并执行路径入队；崩溃后找回同一Goal/Task，不重复已经确认的前序计划；效果仍只记原Action |
+| 暂停与撤回 | 动作边界停止后续；取消意图先持久，再停止子任务。负面反馈先在同库事务暂停同源安排，再做可失败的反馈投影；UNKNOWN回执保留，禁止通过另起一轮自动重放 |
+| 提醒与已阅 | 合并通知只写统一Attention投影；安静期/频率窗口暂不产生未读徽标。通知、已阅、声明范围的机器验收和本人反馈分别记录 |
+| 经验 | 来源运行、原任务证据、工具版本、声明条件和本人说明；PENDING/WITHDRAWN、automatic_use=false。候选不自动进入个人事实或人格；否定反馈传播到同源安排，重新采用须新核对 |
+
+持久表为原core.sqlite3中的`standing_work`、`standing_runs`、`standing_children`、`standing_operations`及`standing_chat_controls`，`meta.standing_schema=1`登记增量格式；原身份、许可、任务、模型凭据与私密库不重写。聊天控制仍走`/api/assistant/action`，内部进入同一委托服务；限定当前会话可见对象和修订，轮次回执幂等。来源快照包括关联返工的根目标，受理与动作边界都重查原工作状态。产物复用原会话交付/同步服务，不另写私有输出目录。当前GET每份只返回最近5轮摘要，容量上限并不意味着自动删除历史。`config/standing-compatibility.json`声明目标包支持该格式；控制器在排空旧Host之前检查，缺少支持声明的旧包被拒绝，不能恢复旧业务快照掩盖格式不兼容。首次启用前先部署兼容恢复版本；两个同代码不同版本包只能证明技术交接，不能代表领域独立实现。
+
+模型规划在开发profile下走原NativeModel冻结代理，专用`require_model_online`仅用于这一模型通道；通用`require_online`仍禁止开发版直接外部动作。该区分不扩大邮件、MCP、下载、代理额度或供应商权限。
+
+<a id="mail-standing-contract"></a>
+## Gmail 持续委托契约（v0.1.7）
+
+`/api/mail-standing`使用原工作台的主人访问会话、同源和页面nonce；没有给精灵开放另一条账户/权限入口。GET不触发联网，也不创建邮箱库。POST精确字段见下表，`request_id`幂等且内容改变拒绝，`revision`为主人配置的`config_revision`，不随后台游标变化；对象自身的存储revision只用于加密库并发写入。
+
+| 操作 | 字段（另含action） | 作用 |
+|---|---|---|
+| create | request_id、title、policy | 将当前账号代际绑定到DRAFT；不读信/建待办 |
+| edit | id、revision、request_id、title、policy | 暂停/待核对状态下修订，回DRAFT；累计检查/预留/工作不清零 |
+| approve | id、revision、request_id | 核对当前账号及首次范围后启用 |
+| pause / cancel | id、revision、request_id | 先持久撤销下一动作许可，再取消原读取job；维护排空期间也可停止 |
+| resume / check_now | id、revision、request_id | 在原有效授权和累计配额内接续或提前检查；不提升权限、变更账号或重置用量 |
+
+policy精确字段为query、interval_seconds、lookback_hours、due_delay_seconds、followup_seconds、max_followups、max_checks、max_new_items、max_attempts、quiet_start、quiet_end、utc_offset_minutes、notification_interval_seconds。[操作与界限](tasks-agents.md#mail-standing-runtime)给出默认值及真实语义；不支持用户注入approved、工具指令、任意模型、外发动作或无限次数。
+
+邮箱原`private/mail.sqlite3`中新增加密对象种类`mail_watch`和`mail_watch_operation`，前者schema=1保存配置、累计配额、分页水位、有限seen标识、来源到待办的映射、通知和跟进游标。搜索条件、邮件身份及工作映射不会复制到普通记忆/画像；共用待办只含通用名称、不透明来源和主人设置的默认时间。新待办前先保存来源与保守预留，再走原跨库幂等创建；中断重放既不生成第二项也不复活已完成/取消工作。正文刷新改变来源时暂停核对；仅列表元数据刷新保留原完整正文及稳定来源摘要。
+
+远程读取job先提交`mail_watch:{id,revision}`及账号代际，再进入原Mailbox队列。原队列在每次Google请求前检查当前委托状态、修订、账号、停止、网络及版本维护状态；持续委托只接受list/read，不接受analyze、reconcile或写入。UNKNOWN始终要求对账；授权等待交回原OAuth续接，暂停/取消优先于迟到授权及结果。
+
+通知与待办复用原统一工作API、Attention和Commitments；安静时间影响已阅入口的投递资格，不能靠关闭卡片取消安排或把提醒已阅当业务完成。后续处理使用原`/api/mail-work`、草稿、准确审阅和回执，不由常设委托隐式发信。工作台和原生精灵共同挂载同一组件和传输层。
+
+控制器在排空前读取当前加密安排schema，目标包须声明`config/mail-standing-compatibility.json`为`{"schema":1,"mail_watch_schema":1}`；未知加密格式或缺声明均拒绝。先安装具备该兼容门的控制器及兼容基线，再创建正式安排。回退代码不回退用户数据或撤销记录；同源兼容基线只能证明技术接续，不是独立领域实现的正确性证明。
 
 <!-- book-footer:start -->
 [返回工程主入口](../README.md) · [全书目录](../README.md#book-tree) · [上一章：主人利益原则、身份授权与停止控制](security-sovereignty.md) · [下一章：技术栈、源码目录与运行数据](stack-project-layout.md)

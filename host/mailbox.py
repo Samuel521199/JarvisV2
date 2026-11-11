@@ -59,7 +59,14 @@ class Mailbox:
         StopGate(self.root).require_running();NetworkGate(self.root).require_online()
         store=MailStore(self.root)
         try:
-            if job_id and store.get(job_id)['cancel']:raise CoreError('mail_cancelled','Mail operation was cancelled')
+            if job_id:
+                job=store.get(job_id)
+                if job['cancel']:raise CoreError('mail_cancelled','Mail operation was cancelled')
+                from modules.mail.standing import guard as watch_guard
+                watch_guard(store,job)
+                if job.get('mail_watch'):
+                    from control.application_runtime import require_accepting
+                    require_accepting(self.root)
             if generation:
                 a=store.get('account',True)
                 if not a or a.get('generation')!=generation or not a.get('credentials'):raise CoreError('mail_account_changed','Mailbox connection changed')
@@ -124,7 +131,7 @@ class Mailbox:
                     if old and old['kind']!='draft':raise CoreError('mail_invalid','Expected a local draft')
                     return store.put({'id':ident,'kind':'draft','value':data},value['revision'])
             if action in {'rule','remove_rule'}:
-                with store.transaction():
+                with self.lock,store.transaction():
                     if action=='remove_rule':
                         old=store.get(value['id'])
                         if old['kind']!='rule' or old['revision']!=value['revision']:raise CoreError('conflict','Rule changed')
@@ -149,13 +156,34 @@ class Mailbox:
             operation=value['operation'];payload=value['payload']
             if operation not in OPERATIONS-WRITES:raise CoreError('mail_review_required','External writes need an exact reviewed operation')
             payload=self.validate(operation,payload)
-            row,fresh=store.job(value['request_id'],operation,payload)
-            if fresh:
-                a=store.get('account',True)
-                if a:row=store.update(row['id'],generation=a['generation'])
-                self.schedule(row['id'])
-            return public_job(row)
+            return self.submit_read(value['request_id'],operation,payload)
         finally:store.close()
+
+    def submit_read(self,request_id,operation,payload,*,watch=None):
+        """Internal watch binding commits before queueing. It never permits writes."""
+        if operation not in OPERATIONS-WRITES:raise CoreError('mail_review_required','Standing jobs cannot write mail')
+        if watch is not None and (operation not in {'list','read'} or not isinstance(watch,dict)
+                or set(watch)!={'id','revision'} or type(watch['revision']) is not int):
+            raise CoreError('mail_watch_invalid','Standing mail only permits scoped list/read jobs, without models or reconciliation')
+        payload=self.validate(operation,payload)
+        with self.lock:
+            store=MailStore(self.root)
+            try:
+                with store.transaction():
+                    if watch:
+                        from modules.mail.standing import guard as watch_guard
+                        current=store.get('account',True)
+                        watch_guard(store,{'mail_watch':watch,'generation':(current or {}).get('generation')})
+                    row,fresh=store.job(request_id,operation,payload)
+                    if fresh:
+                        a=store.get('account',True)
+                        row=store.put({**row,**({'generation':a['generation']} if a else {}),
+                            **({'mail_watch':watch} if watch else {})},row['revision'])
+                    elif row.get('mail_watch')!=watch:
+                        raise CoreError('conflict','Mail job belongs to another execution mandate')
+                if fresh:self.schedule(row['id'])
+                return public_job(row)
+            finally:store.close()
 
     def start_authorization(self,level):
         if not isinstance(level,str) or level not in LEVELS:raise CoreError('mail_scope','Unknown authorization level')
@@ -188,10 +216,10 @@ class Mailbox:
                 generation=(previous or {}).get('generation') or uuid.uuid4().hex
                 store.put({'id':'account','kind':'account','credentials':credentials,'email':profile['email'],'generation':generation,
                            'health':'connected','checked_at':time.time()},a['revision'] if a else 0)
-            op.update(status='SUCCEEDED',error=None);op.pop('url',None)
             for row in store.listing('job',100):
                 if row['status']=='WAITING_AUTH' and not row['cancel'] and not row['effect_started'] and row.get('generation',generation)==generation:
                     store.update(row['id'],status='READY',error=None);self.schedule(row['id'])
+            op.update(status='SUCCEEDED',error=None);op.pop('url',None)
         except Exception as exc:op.update(status='CANCELLED' if isinstance(exc,CoreError) and exc.code=='mail_cancelled' else 'FAILED',error=exc.code if isinstance(exc,CoreError) else 'mail_authorization_failed');op.pop('url',None)
         finally:store.close()
 
@@ -223,9 +251,13 @@ class Mailbox:
                 guard();a=self.save_account(store,generation,credentials=credentials)
             operation=row['operation'];payload=row['payload']
             def cache(m):
+                metadata='body' not in m
                 key='message-'+m['id'];old=store.get(key,True)
+                from modules.mail.provenance import merge_metadata
+                if old and old.get('account_generation')==generation:m=merge_metadata(m,old['message'])
                 with store.transaction():store.put({'id':key,'kind':'message','message':m,'account_generation':generation},old['revision'] if old else 0)
-                return {**m,'classification':classify(m,store.listing('rule')),'account_generation':generation,'source_digest':fingerprint(m)}
+                visible={k:v for k,v in m.items() if not metadata or k!='body'}
+                return {**visible,'classification':classify(m,store.listing('rule')),'account_generation':generation,'source_digest':fingerprint(m)}
             if operation=='check':result=api.profile()
             elif operation in {'list','sync'}:
                 result=api.listing(payload['query'],payload['page']);result['messages']=[cache(m) for m in result['messages']]
@@ -285,7 +317,18 @@ class Mailbox:
                     except CoreError:pass
         finally:
             store.close()
-            with self.lock:self.active.discard(ident)
+            with self.lock:
+                self.active.discard(ident)
+                # Reauthorization can make this job READY while its previous
+                # attempt is still unwinding. schedule() then sees it active;
+                # transfer the durable intent after releasing that old attempt.
+                if not self.closed.is_set():
+                    pending=MailStore(self.root)
+                    try:
+                        current=pending.get(ident,True)
+                        if current and current['status']=='READY' and not current['cancel'] and not current['effect_started']:
+                            self.schedule(ident)
+                    finally:pending.close()
 
     def reconcile(self,store,api,job_id,generation):
         original=store.get(job_id)

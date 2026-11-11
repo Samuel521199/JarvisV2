@@ -424,6 +424,33 @@
         "url": "https://ai.google.dev/gemini-api/docs/image-generation",
         "license": "Google专有云模型与API条款；宿主适配独立编写"
       }
+    },
+    {
+      "id": "model-library",
+      "name": "模型库与制作参考",
+      "category": "建模与创作",
+      "kind": "独立技能",
+      "state": "ready",
+      "adapter": "model-library",
+      "version": "1.0.0",
+      "description": "检索模型、关联LOD和可复用部件，读取有适用条件的制作案例，提供真实三维展示与游戏文件。",
+      "output": "模型库条目 / GLB / 编辑源 / LOD / 条件案例",
+      "triggers": [
+        "模型库",
+        "参考模型",
+        "查找模型"
+      ],
+      "auto_patterns": [
+        "^(?:请)?(?:从模型库|在模型库|检索模型库|搜索模型库|查找模型)"
+      ],
+      "guidance": "模型库网页 /model-library；实际检索用 POST /api/model-library/query {query,category,kind}，详情 GET /api/model-library/assets/{id}；本机工具 python -m tools.model_library search --query 关键词、show 资产ID、verify。show 返回可用的实际本地文件与来源摘要。先查资产状态、原始高模/游戏LOD/展示预览的区别和部件安装坐标，再引用或导入。展示用真实三维查看器，支持旋转/平移/缩放/线框和版本切换。标签说明与三维标注按资产、版本摘要及对象局部坐标保存；不能把旧LOD标注自动移到另一网格。方法卡仅是本资产候选建议，先核对前提、反例和证据；未独立验证不晋升通用知识或机械重放。读取不调用付费模型；入库不改变原文件，不自动执行模型文件中的脚本。",
+      "icon": "🗃️",
+      "use_when": "查找已有模型、部件和游戏LOD，选择制作参考，保存和查看标签/说明/标注。",
+      "avoid_when": "未经用户授权自动修改模型、重做付费请求或宣称游戏引擎性能已验证。",
+      "examples": [
+        "从模型库找二战德军火炮的游戏LOD。",
+        "在模型库查找轮组，读取部件来源及制作参考。"
+      ]
     }
   ]
 }

@@ -111,6 +111,24 @@ class MailboxTests(unittest.TestCase):
         try:self.code('mail_account_changed',self.box.save_account,s,'fixture-generation',credentials=CREDS,health='connected')
         finally:s.close()
         self.assertFalse(self.box.state()['connected'])
+
+    def test_reconnect_intent_survives_previous_auth_failure_unwinding(self):
+        import threading
+        reached=threading.Event();release=threading.Event();original=self.box.save_account
+        def delayed(store,generation,**changes):
+            value=original(store,generation,**changes)
+            if changes.get('health')=='auth_required':reached.set();release.wait(5)
+            return value
+        self.box.save_account=delayed;FakeGmail.fail='auth'
+        row=self.job('list',{'query':'in:inbox','page':''})
+        try:
+            self.assertTrue(reached.wait(5));FakeGmail.fail=None;self.box.command({'action':'authorize','level':'manage'})
+            end=time.monotonic()+5
+            while time.monotonic()<end and self.box.auth['status'] not in {'SUCCEEDED','FAILED'}:time.sleep(.01)
+            self.assertEqual(self.box.auth['status'],'SUCCEEDED')
+            self.assertIn(row['id'],self.box.active);self.assertEqual(self.box.command({'action':'detail','id':row['id']})['status'],'READY')
+        finally:release.set()
+        self.wait(row['id'],'SUCCEEDED');self.assertEqual(FakeGmail.sent,[])
     def test_mail_network_gate_and_scope_checks(self):
         from control.network import NetworkGate
         gate=NetworkGate(self.root);gate.update({'revision':gate.read()['revision'],'blocked':True})

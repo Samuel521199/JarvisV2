@@ -100,6 +100,10 @@ class WorkbenchProcess:
         raise CoreError('application_health_timeout', 'Candidate health was not confirmed')
 
     def drain(self, selected, epoch):
+        # A previous host may already have exited after an interrupted handoff.
+        # running() still checks identity for a live listener and requires the
+        # original host lease to be free before accepting an absent process.
+        if not self.running(selected,epoch):return
         deadline = time.monotonic() + self.timeout
         while time.monotonic() < deadline:
             if self.request(selected, epoch, 'drain')['drained']:

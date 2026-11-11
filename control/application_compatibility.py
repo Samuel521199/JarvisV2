@@ -31,6 +31,30 @@ def required(root):
                     if not isinstance(action,dict) or action.get('kind') not in {'chat','goal','amend','cancel','resume','commitment'}:
                         raise CoreError('application_data_compatibility','Unknown persisted assistant action')
                     if action['kind']=='commitment':needs['assistant_commitments']=True
+                    if 'standing' in action:needs['standing_schema']=1
+                    if str(action.get('target','')).startswith('standing-'):needs['standing_schema']=1
+        finally:db.close()
+    path=child(root,'state/core.sqlite3')
+    if path.exists():
+        db=sqlite3.connect(path.as_uri()+'?mode=ro',uri=True,timeout=5)
+        try:
+            row=db.execute("SELECT value FROM meta WHERE key='standing_schema'").fetchone()
+            if row:
+                if row[0]!='1':raise CoreError('application_data_compatibility','Unknown standing-work schema')
+                needs['standing_schema']=1
+        finally:db.close()
+    path=child(root,'private/mail.sqlite3')
+    if path.exists():
+        db=sqlite3.connect(path.as_uri()+'?mode=ro',uri=True,timeout=5)
+        try:
+            from control.credentials import crypt
+            watches=list(db.execute("SELECT payload FROM objects WHERE kind='mail_watch' LIMIT 6"))
+            if len(watches)>5:raise CoreError('application_data_compatibility','Unknown mailbox mandate capacity')
+            for row in watches:
+                value=json.loads(crypt(bytes(row[0]),decrypt=True))
+                if type(value.get('schema')) is not int or value['schema']!=1:
+                    raise CoreError('application_data_compatibility','Unknown encrypted mailbox mandate schema')
+            if watches:needs['mail_watch_schema']=1
         finally:db.close()
     return needs
 
@@ -50,6 +74,14 @@ def require_compatible(root,package):
         if (needs['commitments_schema']>declared['commitments_schema'] or
                 needs['assistant_commitments'] and not declared['assistant_commitments']):
             raise CoreError('application_data_compatibility','Target cannot serve existing commitment data/actions')
+        if needs.get('standing_schema'):
+            standing=Path(package)/'config/standing-compatibility.json';reject_links(standing)
+            if not standing.exists() or standing.stat().st_size>1024 or json.loads(standing.read_text(encoding='utf-8'))!={'schema':1,'standing_schema':1}:
+                raise CoreError('application_data_compatibility','Target cannot serve existing standing mandates')
+        if needs.get('mail_watch_schema'):
+            mail=Path(package)/'config/mail-standing-compatibility.json';reject_links(mail)
+            if not mail.exists() or mail.stat().st_size>1024 or json.loads(mail.read_text(encoding='utf-8'))!={'schema':1,'mail_watch_schema':1}:
+                raise CoreError('application_data_compatibility','Target cannot serve existing encrypted mailbox mandates')
         return {'compatible':True,'required':needs,'declared':declared}
     except (OSError,ValueError,sqlite3.Error) as error:
         raise CoreError('application_data_compatibility','Cannot verify local data compatibility') from error

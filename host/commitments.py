@@ -1,4 +1,5 @@
 """Personal local commitments over the existing scheduler and attention projection."""
+import time
 from control.paths import child, data_root
 from control.recovery.gate import StopGate
 from control.application_runtime import require_accepting, accepting
@@ -37,6 +38,10 @@ def projection(root):
             'result_revision':row['revision'],'revision':row['revision'],'due_at':row['due_at'],
             'due_text':row['due_text'],'posted_at':row['posted_at'],'source_note':row['source'],
             'cancelable':row['status'] in ('OPEN','DUE'),'source_kind':'mail' if row['id'] in mail_ids else 'personal'})
+    from modules.mail.standing import reminder_controls
+    held=reminder_controls(root,time.time())
+    for item in items:
+        if item['id'] in held:item['notification_held']=held[item['id']]
     return items
 
 

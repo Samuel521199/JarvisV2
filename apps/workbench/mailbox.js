@@ -1,6 +1,7 @@
 import {mailWorkSection} from './mail-work.js';
 import {reviewMailOperation} from './mail-review.js';
 import {mailApi} from './mail-client.js';
+import {openMailStanding} from './mail-standing.js';
 import {el,button,icon,select,input,field,notice,modal,closeModal,run,card} from './ui.js';
 
 const labels={READY:'排队中',RUNNING:'处理中',SUCCEEDED:'已完成',FAILED:'失败',WAITING_AUTH:'等待 Google 重新授权',WAITING_NETWORK:'等待联网',WAITING_SCOPE:'需要增加授权',WAITING:'等待接续',UNKNOWN:'结果未知，请核对',CANCELLED:'已取消'};
@@ -22,6 +23,7 @@ export async function mailboxView(body,{attach}={}){
  connectionBody.append(el('p','只需选择一次桌面 OAuth JSON，再完成 Google 要求本人确认的页面。已连接账号的令牌由 Jarvis 自动续期。','note'),configure,file,field('Google 授权档位',level),connect,button('取消授权等待',async()=>{await mailApi.command({action:'cancel_authorization'});await refresh();}),button('断开本机连接',async()=>{await mailApi.command({action:'disconnect'});await refresh();}),el('p','断开只移除本机连接，不撤销 Google 服务器上的授权。测试状态的应用可能需要再次人工授权。','note'));
  const cloud=el('a','Google Cloud 凭据与 Gmail API');cloud.href='https://console.cloud.google.com/apis/credentials';cloud.target='_blank';cloud.rel='noopener noreferrer';connectionBody.append(cloud);
  for(const [key,name] of [['inbox','邮件'],['compose','写邮件'],['jobs','任务与回执'],['rules','分类规则']])tabs.append(button(name,()=>{mode=key;render();}));
+ tabs.append(button('持续办事与待办',()=>openMailStanding()));
  async function refresh(){if(disposed||polling)return;polling=true;try{const next=await mailApi.state();if(next.account_generation!==state.account_generation){selected=null;jobId=null;signature='';mode='inbox';}state=next;updateHeader();const sig=JSON.stringify({jobs:state.jobs.map(j=>[j.id,j.status,j.error]),drafts:state.drafts.map(d=>[d.id,d.revision]),rules:state.rules,auth:state.authorization});if(sig!==signature){signature=sig;render();}}finally{polling=false;}}
  function updateHeader(){updateMailIndicator(state);header.replaceChildren();const health=state.health==='connected'?'最近连接正常':state.health==='auth_required'?'需要重新授权':state.health==='offline'?'网络暂不可用':'尚未核对连通性';header.append(el('h3',state.email||'Gmail'),el('p',health+(state.checked_at?' · '+new Date(state.checked_at*1000).toLocaleString():''),'note'));const auth=state.authorization||{};if(['RUNNING','WAITING_BROWSER'].includes(auth.status))header.append(el('p','正在等待 Google 官方授权；聊天与其他任务可以继续。','mail-wait'));if(auth.error)header.append(el('p',textError(auth.error),'mail-warning'));if(!state.connected)connection.open=true;connect.disabled=['RUNNING','WAITING_BROWSER'].includes(auth.status);}
  async function submit(operation,payload){const job=await mailApi.command({action:'job',request_id:crypto.randomUUID(),operation,payload});jobId=job.id;await refresh();render();}

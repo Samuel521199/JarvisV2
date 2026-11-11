@@ -49,5 +49,16 @@ class RuntimeShutdown(unittest.TestCase):
         self.server.shutdown.assert_called_once()
         self.handler.json.assert_called_once_with({'stopping':True})
 
+    def test_missing_host_drains_only_when_its_original_lease_is_free(self):
+        import socket
+        from adapters.application_host import WorkbenchProcess
+        from control.recovery.gate import RunLock
+        with socket.socket() as sock:sock.bind(('127.0.0.1',0));port=sock.getsockname()[1]
+        driver=WorkbenchProcess(self.root,port);driver.request=Mock(side_effect=AssertionError('No request to an absent host'))
+        driver.drain({'build':self.build},1);driver.request.assert_not_called()
+        with RunLock(self.root,'workbench-host'):
+            with self.assertRaises(CoreError):driver.drain({'build':self.build},1)
+        driver.request.assert_not_called()
+
 
 if __name__ == '__main__': unittest.main()

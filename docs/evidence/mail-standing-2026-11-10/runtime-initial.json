@@ -1,0 +1,30 @@
+{
+  "passed": false,
+  "synthetic_gmail_adapter": true,
+  "real_model_calls": 0,
+  "real_mail_writes": 0,
+  "actual_desktop_clicks": false,
+  "steps": [
+    {
+      "case": "shared_durable_draft_does_not_check_mail",
+      "passed": true
+    },
+    {
+      "case": "normal_drain_restart_preserves_mandate_and_original_read_intent",
+      "passed": true
+    },
+    {
+      "case": "actual_dispatcher_and_mail_lane_create_one_source_bound_common_task",
+      "passed": true
+    },
+    {
+      "case": "actual_due_timer_and_shared_attention_do_not_complete_the_task",
+      "passed": true
+    }
+  ],
+  "error": {
+    "type": "HTTPError",
+    "message": "HTTP Error 400: Bad Request"
+  },
+  "owned_hosts_stopped": true
+}

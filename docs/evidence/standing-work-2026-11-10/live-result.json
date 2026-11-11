@@ -1,0 +1,46 @@
+{
+  "passed": true,
+  "proxy_build": "aa21fe21fb38fe1f385352fd097b82a5dbbabf909f163b65e07a03ba719cdad4",
+  "data": "synthetic only",
+  "model_retries": 0,
+  "mail_actions": 0,
+  "steps": [
+    {
+      "case": "real_model_recognizes_non_command_recurring_request_as_inert_schedule_candidate",
+      "passed": true,
+      "usage": {
+        "completion_tokens": 159,
+        "prompt_tokens": 1466,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 430,
+        "total_tokens": 2055
+      }
+    },
+    {
+      "case": "original_real_model_planner_uses_available_tool_after_model_gate_repair",
+      "passed": true
+    },
+    {
+      "case": "foreground_chat_completes_while_standing_dispatch_enabled",
+      "passed": true
+    },
+    {
+      "case": "reviewed_real_model_plan_runs_and_passes_declared_literal_acceptance",
+      "passed": true
+    }
+  ],
+  "repair": "Goal planning used the general external gate instead of the model-only frozen-proxy path. General development external access remains denied.",
+  "planning_model_receipts": 1,
+  "planning_usage": [
+    {
+      "completion_tokens": 80,
+      "prompt_tokens": 462,
+      "reasoning_in_completion": false,
+      "reasoning_tokens": 363,
+      "total_tokens": 905
+    }
+  ],
+  "actual_cloud_calls": 3,
+  "automatic_execution_model_calls": 0,
+  "actual_desktop_clicks": false
+}
