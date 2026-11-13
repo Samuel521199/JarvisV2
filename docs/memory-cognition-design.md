@@ -33,6 +33,8 @@ Jarvis 需要在普通 PC／Mac 上持续理解用户，同时处理聊天、情
 
 本章负责综合说明和场景图解；精确字段、完整安全规则、组件比较和验收阈值仍各有唯一权威位置。阅读本章可以了解完整运作方式，实施时再沿每节链接进入细则。图中角色表示职责，不要求分别部署服务。
 
+面向大型网络陪聊服务的专项补充见[长期记忆优化方案](long-term-memory-scale-optimization.md#platform-memory-scope)，覆盖 Redis 热缓存、重排和异步梦境整理。该补充为 proposed 的平台部署设计，复用本章的来源、纠正与权限原则，不改变普通 PC 的 SQLite/按需 Worker 默认路线；实际未完成项见[平台实施清单](long-term-memory-scale-optimization.md#platform-memory-delivery)。
+
 关于“越用越聪明”而非堆积记忆，新增[知识分层、条件化总结、反例和成本规则](knowledge-learning.md#knowledge-compounding)，配套[直观例子与图解](grok-bot-comparison.md#jarvis-learning-deepening)。知识库作用有多大，需按[分组对照](delivery-validation.md#knowledge-value-ablation)实测，不从容量、检索次数或架构完整性推算成绩。
 
 | 阅读目标 | 本章位置 | 深入实施时的权威章节 |

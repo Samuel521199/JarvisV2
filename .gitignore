@@ -27,7 +27,9 @@ config/local-*.json
 # Large binary assets stay on the local disk. GitHub rejects files over 100 MB,
 # warns above 50 MB, and every pushed binary stays in history forever.
 # Check before committing:  python tools/check_repo_size.py
-3DModels/
+# Keep asset payloads local; publish only the registered workflow instructions.
+3DModels/*
+!3DModels/AGENTS.md
 *.blend
 *.blend1
 *.glb

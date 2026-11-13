@@ -624,7 +624,7 @@ r24 全资产本地高模表面转换诊断：原生 Worker 对 78 个可见源�
 
 | 实际渲染：修复前 | 实际渲染：修复后 |
 |---|---|
-| ![诊断板件修复前](evidence/studio3d-learning-1.0.0/previews/plate-before.png) | ![诊断板件修复后](evidence/studio3d-learning-1.0.0/previews/plate-after.png) |
+| 诊断板件修复前（本机历史证据，未纳入 Git：`evidence/studio3d-learning-1.0.0/previews/plate-before.png`） | 诊断板件修复后（本机历史证据，未纳入 Git：`evidence/studio3d-learning-1.0.0/previews/plate-after.png`） |
 
 以下边界保留：两种工具依赖调用者明确声明对象和已确认目标位置；尚无自动截图到网格定位、参考相机自动拟合、任意零件重建、通用材质自动修复或完整刚性合批工具。接近表面的采样距离不能证明无穿插或结构真实；动画资产在本学习工具版本中只允许检查。视觉模型审查已可按条件加载经验，未证明模型会从自然聊天独立编制完整的高模修复契约。
 

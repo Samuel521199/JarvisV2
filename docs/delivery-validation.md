@@ -849,7 +849,7 @@ V-UI 中涉及长期记忆、真实语音、第二节点、进化与托盘的场
 **日期：2026-10-26；实现 implemented，以下检查按实际证据局部 verified。** 对应[当前运行范围](tasks-agents.md#bounded-concurrency-runtime)，不据此宣布完整 K2／M2 或 V-DLG-01—14 达标。
 
 - **功能回归：**[全量记录](evidence/concurrency-1.0.0/regression-final.txt)共 601 项通过，其中新增 15 项针对并行执行、原任务回执唯一性、冲突串行、局部取消、排队持久化、UNKNOWN 不重放、修订冲突、优先级、老化与聊天资源保留。随后补修活跃任务展示与检查点读取，最终专项增至 17 项；检查点优化后的相关 138 项回归见下文，全量 601 项记录不冒充最后一次修改后的全量重跑。首轮 598 项中有 3 处测试替身使用旧聊天接口而失败；已改用真实的后台接口后重跑，原失败记录保留在[首轮日志](evidence/concurrency-1.0.0/regression.txt)。
-- **浏览器闭环：**[操作结果](evidence/concurrency-1.0.0/browser.json)验证顶栏图标、工作状态分类、优先级保存、资源预算保存、深浅主题无横向溢出，以及回答中发送后续消息、停止第一条后第二条继续完成；本轮记录未出现页面脚本异常。[工作状态截图](evidence/concurrency-1.0.0/work-status.png) · [深色设置](evidence/concurrency-1.0.0/settings-dark.png) · [浅色设置](evidence/concurrency-1.0.0/settings-light.png)。测试使用独立临时数据根，不读取个人会话或调用收费 API。
+- **浏览器闭环：**[操作结果](evidence/concurrency-1.0.0/browser.json)验证顶栏图标、工作状态分类、优先级保存、资源预算保存、深浅主题无横向溢出，以及回答中发送后续消息、停止第一条后第二条继续完成；本轮记录未出现页面脚本异常。工作状态截图（本机历史证据，未纳入 Git：`evidence/concurrency-1.0.0/work-status.png`） · 深色设置（本机历史证据，未纳入 Git：`evidence/concurrency-1.0.0/settings-dark.png`） · 浅色设置（本机历史证据，未纳入 Git：`evidence/concurrency-1.0.0/settings-light.png`）。测试使用独立临时数据根，不读取个人会话或调用收费 API。
 - **明确控制：**[200 次控制采样](evidence/concurrency-1.0.0/control.json)在两个后台步骤继续执行时修改同一原任务优先级，受理 p95 29.057 ms、p99 41.251 ms。一次选定任务取消受理 13.134 ms，到达检查点约 20.460 ms，其余工作继续；单次取消不作为取消延迟分布。该验证不包含自然语言歧义解析或远端动作中止。
 - **实际加载：**[部署记录](evidence/concurrency-1.0.0/deployment.json)确认主服务 18282 已在无活跃任务时重启，保留原数据根，新工作状态接口返回成功、默认通用并发为 2；另一个审阅实例 18283 未重启。[在线页面核查](evidence/concurrency-1.0.0/live-browser.json)仅打开状态与设置，没有发送收费聊天或修改个人预算。
 - **性能方法：**真实 Host HTTP、SQLite 持久化和任务执行链；个人文本会话，记忆检索与助手行动识别关闭；模型替身固定 200 ms、相同完整回答，两个背景内置任务重复执行带检查点的有界哈希／等待负载和真实报告写入，同时保持一个长后台模型请求。预热 10 次，再交替比较 200 组空闲／加载样本，之后执行 30 分钟持续负载。此负载没有模拟开启检索的项目对话、满 CPU、GPU 渲染、真实网络额度或语音；其通过范围仅是这组已声明的本机负载。
@@ -864,7 +864,7 @@ V-UI 中涉及长期记忆、真实语音、第二节点、进化与托盘的场
 | 前台派发等待 | 17.440 / 19.302 | 3.446 / 3.817 | 9.845 / 12.623 |
 | 完整实质回复（含固定 200 ms 模型替身） | 284.832 / 288.120 | 276.277 / 281.462 | 403.580 / 433.670 |
 
-![空闲、双后台与持续负载的延迟分布](evidence/concurrency-1.0.0/latency.png)
+空闲、双后台与持续负载的延迟分布（本机历史证据，未纳入 Git：`evidence/concurrency-1.0.0/latency.png`）
 
 本轮收费模型调用为零。上述数据区分输入受理、真实调度和完整回答，未以排队提示替代实质回复；[最终静态检查](evidence/concurrency-1.0.0/final-checks.json)单独记录文档、架构和语法检查。
 
@@ -1323,7 +1323,7 @@ Jarvis 正式 Google Vertex / Gemini 3.8 Flash 实际评审一次。[原始评�
 - **自动化：72 项相关测试通过。** 覆盖原记忆管理、任务背景/经验、模型生命周期与 HTTP、偏好/对话和工作台兼容，以及 13 项新检索/通道测试和 1 项任务结果记忆开关回归。测试发现并修复了中英数字混排被粘为一个词、单字标题误匹配英文子串的问题；没有删除失败用例。命令与范围记录在[检查回执](evidence/memory-retrieval-1.0.0/checks.json)。
 - **真实 E5：**隔离临时数据、固定已有权重、CPU 2 线程、应用网络策略禁用，23 条合成资料，中文会议、英文查询中文饮食偏好、中文查询英文保养资料均召回目标，各返回 1 条，最后一次单次约 68–85 ms。初始规则带入过多弱相关资料，收紧后重跑；这是开发样例，不能当独立留出集。纠正后只使用新值，遗忘后关闭编码器、重开数据连接仍无旧值。完整数据见[真实编码回执](evidence/memory-retrieval-1.0.0/real-encoder.json)。该探针没有调用回答 LLM，不能据此证明最终自然语言回答质量。
 - **并发/恢复：**无关事实更改时在途回答成功；实际引用更改/到期则拒绝旧答案；历史转述与任务结果保留传递依赖。慢编码器前台按限时退回，第二请求忙时直接降级；异常 Worker 被释放后可重新启动。这里只验证受控故障，不是长时压力、硬资源隔离或绝对零阻塞证明。
-- **界面：**临时服务 18287 的 21 条合成记忆中按问题找到末尾会议资料；切换未获许可的接入方后显示 0 条，旧结果清除，按钮可重复使用；窄面板和展开布局已检查，控制台无错误。[展开截图](evidence/memory-retrieval-1.0.0/recall-ui-expanded.png) · [侧栏截图](evidence/memory-retrieval-1.0.0/recall-ui.png)。测试没有写入真实个人记忆。
+- **界面：**临时服务 18287 的 21 条合成记忆中按问题找到末尾会议资料；切换未获许可的接入方后显示 0 条，旧结果清除，按钮可重复使用；窄面板和展开布局已检查，控制台无错误。展开截图（本机历史证据，未纳入 Git：`evidence/memory-retrieval-1.0.0/recall-ui-expanded.png`） · 侧栏截图（本机历史证据，未纳入 Git：`evidence/memory-retrieval-1.0.0/recall-ui.png`）。测试没有写入真实个人记忆。
 
 主服务 18282 已在确认空闲后重载；关闭记忆的只读 API 探针返回组件版本 1.0.0，未写入个人事实、未调用云端模型。[部署回执](evidence/memory-retrieval-1.0.0/deployment.json)。
 
@@ -1338,9 +1338,9 @@ Jarvis 正式 Google Vertex / Gemini 3.8 Flash 实际评审一次。[原始评�
 - **回归：**第一轮 132 项相关回归通过；WAL/来源 schema/引用粒度收尾后完整回归 **339 项 / 205.064 秒通过**，最后专项复验 **21 项 / 2.504 秒通过**（其中新增资料库 14 项、复用记忆 7 项）。套件覆盖重叠，数量不相加，不是独立场景数。[执行日志](evidence/knowledge-library-1.0.0/regression.txt) · [专项日志](evidence/knowledge-library-1.0.0/targeted.txt) · [检查回执](evidence/knowledge-library-1.0.0/checks.json)。
 - **规模与并行：**100 份合成原件、11,200 片段，60 次相同问题序列，最终暖查询 P95 **11.75 ms**；后台重建并行 P95 **13.66 ms**，增幅约 **16.2%**；60/60 定向目标进入上下文。构建约 **5.36 秒**，结束测量时 SQLite 主文件加 WAL/SHM 约 **32.7 MiB**。见[原始测量](evidence/knowledge-library-1.0.0/scale-probe.json)。它测的是本机原件词项检索与引用装配，没有 LLM、语音或多工具负载；不是独立留出质量或普通 PC 保证。
 - **保留失败：**[首轮记录](evidence/knowledge-library-1.0.0/scale-initial-failure.json)并行 P95 约 264 ms，未满足增幅 ≤20%；启用 WAL、缩小批次和 CPU 让步后修复。中间一次比较的问题序列不相同，保留为[非配对中间记录](evidence/knowledge-library-1.0.0/scale-intermediate-unpaired.json)，不作为通过依据；最终重新固定了相同问题序列和预热。
-- **真实界面：**独立 18287 服务、合成资料，展开资料库、查 ZX900、查看原文行号、编辑到 r2、旧预览清空并召回 42 Nm 新值通过；控制台零错误。[界面截图](evidence/knowledge-library-1.0.0/library-ui.png)。正式用户原件和个人事实未用于这些测试。
+- **真实界面：**独立 18287 服务、合成资料，展开资料库、查 ZX900、查看原文行号、编辑到 r2、旧预览清空并召回 42 Nm 新值通过；控制台零错误。界面截图（本机历史证据，未纳入 Git：`evidence/knowledge-library-1.0.0/library-ui.png`）。正式用户原件和个人事实未用于这些测试。
 
-主服务 18282 在核对聊天、任务和研发空闲后正常重载至 PID 2500；只读 index_status 返回组件 1.0.0，knowledge_schema=1、WAL 已生效，正式资料库仍为 0 份。[部署回执](evidence/knowledge-library-1.0.0/deployment.json)。界面另验证粘贴新增原件、含表情的跨片段第 71–83 行定位，以及重建完成状态，[管理截图](evidence/knowledge-library-1.0.0/library-controls.png)。本机独立测试不冒充正式用户资料测试。
+主服务 18282 在核对聊天、任务和研发空闲后正常重载至 PID 2500；只读 index_status 返回组件 1.0.0，knowledge_schema=1、WAL 已生效，正式资料库仍为 0 份。[部署回执](evidence/knowledge-library-1.0.0/deployment.json)。界面另验证粘贴新增原件、含表情的跨片段第 71–83 行定位，以及重建完成状态，管理截图（本机历史证据，未纳入 Git：`evidence/knowledge-library-1.0.0/library-controls.png`）。本机独立测试不冒充正式用户资料测试。
 
 **尚未完成：**PDF/表格/OCR/语音解析、原文历史版本、全库跨语言语义/持久向量、自动提取/编纂、原始聊天/任务/账本的完整派生清理、通用导出恢复、家庭加密和双节点。影子重建遇源变更会拒绝切换并要求重试，尚无自动重放增量；文档内提示注入的任意模型抵抗、真实答案引证正确性、30 天 churn、10 万片段、低配 PC 与 Mac 仍未验收。完整 V-MEM 与原有阶段没有缩减。
 
@@ -1364,7 +1364,7 @@ Jarvis 正式 Google Vertex / Gemini 3.8 Flash 实际评审一次。[原始评�
 
 最终全量执行快照 **394 项 / 222.509 秒通过**，见[全量日志](evidence/knowledge-library-1.2.0/regression.txt)；收尾专项 **62 项 / 7.333 秒通过**，其中本轮新增 22 项，见[专项日志](evidence/knowledge-library-1.2.0/targeted.txt)。套件有复用，不累加为独立场景；全量之后的候选排序/明确重新审阅修复以最后专项覆盖。构建中共享工程还有其他开发，回归只对执行快照负责；最终源摘要、界面、部署与未验证项登记于[交付回执](evidence/knowledge-library-1.2.0/checks.json)。完整 V-MEM-01—13、独立质量集/答案支持率、Mac/低配 PC、真实断电、第二节点和长期 churn 不因本项局部通过而改为通过。
 
-真实浏览器在隔离 18287 服务验证了候选审阅、暂停来源后计数立即归零、恢复来源不复活旧知识、新修订明确审阅后重新入库，以及真实本地 E5 编码/持久索引/英文检索中文原文。[语义检索画面](evidence/knowledge-library-1.2.0/semantic-ui.png) · [来源撤回](evidence/knowledge-library-1.2.0/withdrawn-ui.png) · [派生清理清单](evidence/knowledge-library-1.2.0/cleanup-ui.png)。清理预览列出 1 回复、1 背景、1 终态任务和 1 模型结果；本轮未用浏览器点击永久清理，实际清理、文件失败和重试由自动测试覆盖。控制台零错误。
+真实浏览器在隔离 18287 服务验证了候选审阅、暂停来源后计数立即归零、恢复来源不复活旧知识、新修订明确审阅后重新入库，以及真实本地 E5 编码/持久索引/英文检索中文原文。语义检索画面（本机历史证据，未纳入 Git：`evidence/knowledge-library-1.2.0/semantic-ui.png`） · 来源撤回（本机历史证据，未纳入 Git：`evidence/knowledge-library-1.2.0/withdrawn-ui.png`） · 派生清理清单（本机历史证据，未纳入 Git：`evidence/knowledge-library-1.2.0/cleanup-ui.png`）。清理预览列出 1 回复、1 背景、1 终态任务和 1 模型结果；本轮未用浏览器点击永久清理，实际清理、文件失败和重试由自动测试覆盖。控制台零错误。
 
 主服务统一重载到 **PID 4360 / 18282**；组件 1.2.0、knowledge_schema=4、核心 user_version=7、WAL，首页和新资产 200。主库来源、Claims 与撤回队列均为 0，没有用真实个人内容造测试。[部署回执](evidence/knowledge-library-1.2.0/deployment.json)。测试模型已待命释放、18287 与测试标签已关闭；两个本轮临时目录的递归删除被自动审批返回 blocked by policy，未绕过，目录保留且路径登记于交付回执。
 
@@ -1385,9 +1385,9 @@ Jarvis 正式 Google Vertex / Gemini 3.8 Flash 实际评审一次。[原始评�
 
 执行结果：[全量快照 363 项 / 205.942 秒通过](evidence/knowledge-library-1.1.0/regression.txt)，最后专项 [40 项 / 4.456 秒通过](evidence/knowledge-library-1.1.0/targeted.txt)，含本轮 19 项恢复/清理测试及已有 21 项原件/记忆回归。全量快照之后增加了恢复逐项列表、清理目标展示以及两项故障/墓碑测试，以专项复验覆盖；数量含复用测试，不是 403 个独立场景。测试中一次不存在的 Core.open 测试辅助调用已改为真实构造器并通过，没有删除原验收。
 
-独立浏览器以合成资料验证：旧包显示“已删除跳过 1”，执行后变更 0；新包显示新增 1，恢复后“已暂停、仅本地保存”；清理预览明确列出 1 条回复和 1 个目标背景及排除项。正式模型凭据、私人内容和 API 调用未用于该流程。[恢复界面](evidence/knowledge-library-1.1.0/restored-ui.png)。最终检查、部署与完整限制登记在[回执](evidence/knowledge-library-1.1.0/checks.json)。
+独立浏览器以合成资料验证：旧包显示“已删除跳过 1”，执行后变更 0；新包显示新增 1，恢复后“已暂停、仅本地保存”；清理预览明确列出 1 条回复和 1 个目标背景及排除项。正式模型凭据、私人内容和 API 调用未用于该流程。恢复界面（本机历史证据，未纳入 Git：`evidence/knowledge-library-1.1.0/restored-ui.png`）。最终检查、部署与完整限制登记在[回执](evidence/knowledge-library-1.1.0/checks.json)。
 
-[清理预览截图](evidence/knowledge-library-1.1.0/cleanup-preview.png)已核对会话与目标清单；清理的实际写入/重试由自动测试验证，本轮没有通过浏览器点击永久清理按钮。浏览器下载的[合成资料包](evidence/knowledge-library-1.1.0/browser-export.json)包含 1 份暂停来源与 1 个墓碑，独立解码/摘要校验通过。控制台零错误，独立测试服务和标签页已关闭，核对路径与摘要后移除本轮临时数据及 Downloads 中合成导出，证据副本保留。
+清理预览截图（本机历史证据，未纳入 Git：`evidence/knowledge-library-1.1.0/cleanup-preview.png`）已核对会话与目标清单；清理的实际写入/重试由自动测试验证，本轮没有通过浏览器点击永久清理按钮。浏览器下载的[合成资料包](evidence/knowledge-library-1.1.0/browser-export.json)包含 1 份暂停来源与 1 个墓碑，独立解码/摘要校验通过。控制台零错误，独立测试服务和标签页已关闭，核对路径与摘要后移除本轮临时数据及 Downloads 中合成导出，证据副本保留。
 
 正式 18282 在确认聊天、任务、研发、规划均无活动、两条 runner 空闲且本地模型未运行后统一重载至 PID 34220。只读核对组件 1.1.0、knowledge_schema=2、主 user_version=7、WAL；首页、新 JS 和健康入口均 200，正式来源和清理回执均为 0。[部署回执](evidence/knowledge-library-1.1.0/deployment.json)。没有改动 18283 实例，也没有在正式资料上执行恢复或清理。
 
@@ -1421,7 +1421,7 @@ Jarvis 正式 Google Vertex / Gemini 3.8 Flash 实际评审一次。[原始评�
 - 分支与迁移集成快照全套 **430 项 / 226.078 秒通过**，见[回归日志](evidence/memory-continuity-1.0.0/regression.txt)。之后加入联合检索、事实合并和模型提取，仍须以收尾回归为准，不能把这个快照写成其全部通过。
 - 独立测试服务 18288：分支选择/绑定、真实检索、历史新旧值、未来生效状态、迁移说明和页面错误检查已操作；控制台 error 为 0。临时页和服务已关闭，自建测试目录已随测试工具正常回收。
 
-新增联合范围 5 项、显式事实合并 5 项、模型候选提取 6 项专项已通过；覆盖第三项目/私人信息排除、当前会话实际装配、撤销后重验、只读范围、合并冲突与事务回滚、提取不阻塞读取、取消/撤权/重启和未知调用不重试。再次在隔离服务验证联合预览与会话绑定、合并后暂停且无外发许可、模型选择和断网提示，控制台 error 为 0；[联合检索](evidence/memory-continuity-1.0.0/joint-ui.png)、[合并审阅](evidence/memory-continuity-1.0.0/merge-ui.png)、[提取入口](evidence/memory-continuity-1.0.0/extraction-ui.png)。
+新增联合范围 5 项、显式事实合并 5 项、模型候选提取 6 项专项已通过；覆盖第三项目/私人信息排除、当前会话实际装配、撤销后重验、只读范围、合并冲突与事务回滚、提取不阻塞读取、取消/撤权/重启和未知调用不重试。再次在隔离服务验证联合预览与会话绑定、合并后暂停且无外发许可、模型选择和断网提示，控制台 error 为 0；联合检索（本机历史证据，未纳入 Git：`evidence/memory-continuity-1.0.0/joint-ui.png`）、合并审阅（本机历史证据，未纳入 Git：`evidence/memory-continuity-1.0.0/merge-ui.png`）、提取入口（本机历史证据，未纳入 Git：`evidence/memory-continuity-1.0.0/extraction-ui.png`）。
 
 公开长对话质量探测使用 [S105](references.md#s105) 的 [LongMemEval-S cleaned 数据](https://huggingface.co/datasets/xiaowu0162/longmemeval-cleaned/tree/98d7416c24c778c2fee6e6f3006e7a073259d48f)，固定数据摘要与 30 个问题顺序，详见[冻结记录](evidence/memory-continuity-1.0.0/quality/frozen.json)。首轮按实际 5,000 字节上下文、Bailian qwen3.8-flash 回答、Vertex gemini-3.8-flash 独立自动评判，每题 3 次：**正确 51/90、证据支持判定 81/90、无答案 11/12**；[逐题汇总与估算费用](evidence/memory-continuity-1.0.0/quality/answer-summary.json)。这只是英文外部开发探测，不是官方得分、人工审定或来源隔离的最终验收。部分调用价格缺失，未知费用没有记为零。结果低于既定门槛，V-MEM 不得因此改为通过。
 
@@ -1445,23 +1445,23 @@ Jarvis 正式 Google Vertex / Gemini 3.8 Flash 实际评审一次。[原始评�
 
 另外实际运行了 1 次后台模型提取（虚构中英条件/否定资料）：约 1.97 秒形成 4 条准确定位的引用候选，全部 pending、晋升事实 0、调用账不存模型原文；并行检索 35 次，最慢约 20.87 ms。真实 NativeModel/传输/提交链执行，仅在隔离进程将凭据读取绑定到已有只读库，没有复制密钥。[真实提取回执](evidence/memory-continuity-1.0.0/real-extraction-1.json)。这是集成冒烟，不代替 120＋60 提取质量集。
 
-新增只读健康检查 3 项通过：范围计数、缺失索引检测/既有修复通路、旧配方提示；整库逻辑快照前后一致。浏览器实际操作健康页、提交后台重建、重新打开后显示覆盖一致，未执行删除，控制台错误 0。[健康检查界面](evidence/memory-continuity-1.0.0/health-ui.png)。修正后端/增量索引的完整回归快照 **457 项 / 213.845 秒通过**，见[日志](evidence/memory-continuity-1.0.0/regression-incremental.txt)；健康入口随后补入，不将该快照冒称包含后续 3 项。
+新增只读健康检查 3 项通过：范围计数、缺失索引检测/既有修复通路、旧配方提示；整库逻辑快照前后一致。浏览器实际操作健康页、提交后台重建、重新打开后显示覆盖一致，未执行删除，控制台错误 0。健康检查界面（本机历史证据，未纳入 Git：`evidence/memory-continuity-1.0.0/health-ui.png`）。修正后端/增量索引的完整回归快照 **457 项 / 213.845 秒通过**，见[日志](evidence/memory-continuity-1.0.0/regression-incremental.txt)；健康入口随后补入，不将该快照冒称包含后续 3 项。
 
 明确记住请求新增 6 项测试：无云端可用时本地保留、记忆开关/引用/否定/凭据规则排除、真实回复状态说明、同消息幂等与拒绝后不复活、审阅状态变化使旧回复失效。首轮扩大中文凭据负例发现词边界漏检，已修复并通过[最后专项](evidence/memory-continuity-1.0.0/capture-targeted.txt)。这些规则没有宣称完整语言理解或凭据识别。
 
-实际浏览器在网络关闭且无测试密钥时发送明确“记住”请求：云端回复失败，候选仍为 1 条且新增正式事实为 0，待核对页可见原始本人消息。[界面](evidence/memory-continuity-1.0.0/capture-offline-ui.png) · [隔离库核对](evidence/memory-continuity-1.0.0/capture-browser.json)。没有点击正式保存或永久删除；浏览器错误 0，自建测试服务、页面和临时数据均已关闭/回收。
+实际浏览器在网络关闭且无测试密钥时发送明确“记住”请求：云端回复失败，候选仍为 1 条且新增正式事实为 0，待核对页可见原始本人消息。界面（本机历史证据，未纳入 Git：`evidence/memory-continuity-1.0.0/capture-offline-ui.png`） · [隔离库核对](evidence/memory-continuity-1.0.0/capture-browser.json)。没有点击正式保存或永久删除；浏览器错误 0，自建测试服务、页面和临时数据均已关闭/回收。
 
 包含健康与明确记住入口的完整执行快照 **465 项 / 215.487 秒通过**，见[回归日志](evidence/memory-continuity-1.0.0/regression-capture.txt)。该快照之后补强否定/中文凭据匹配，以及关闭记忆时向模型说明未保存状态，用上述 6 项专项复验；不把重叠用例相加当独立验收数量。架构、文档与源摘要登记见[集成检查回执](evidence/memory-continuity-1.0.0/checks.json)。
 
 新增原文/章节三方合并 `memory-source-merge-1.0.0`：完整回归快照 **479 项 / 222.001 秒通过**，见[日志](evidence/memory-continuity-1.0.0/regression-source-merge.txt)。随后补入真实进程故障和 schema 3→4、v1 组包宿主兼容验证，[15 项专项通过](evidence/memory-continuity-1.0.0/source-merge-targeted.txt)；不把重叠快照相加。覆盖不同章节组合、重叠冲突、显式删除选择、旧预览拒绝、整批失败回滚、重复回执、父许可对词项/向量/已晋升知识的限制、归档分支撤回、父范围派生聊天清理和旧组包防复活。
 
-实际隔离浏览器展开四栏原文对照、选择组合并提交，父资料成为 r3，包含分支 Beta 接口与主项目发布检查结果，暂停且没有目的地许可；控制台错误 0。[原文比较](evidence/memory-continuity-1.0.0/source-merge-ui.png) · [合并完成界面](evidence/memory-continuity-1.0.0/source-merge-applied.png) · [数据库回执](evidence/memory-continuity-1.0.0/source-merge-browser.json)。合并提交前子进程退出留下旧完整版本；提交后退出再调用只返回原回执。它不证明真实断电安全、语义真实性或权威知识章节自动维护。
+实际隔离浏览器展开四栏原文对照、选择组合并提交，父资料成为 r3，包含分支 Beta 接口与主项目发布检查结果，暂停且没有目的地许可；控制台错误 0。原文比较（本机历史证据，未纳入 Git：`evidence/memory-continuity-1.0.0/source-merge-ui.png`） · 合并完成界面（本机历史证据，未纳入 Git：`evidence/memory-continuity-1.0.0/source-merge-applied.png`） · [数据库回执](evidence/memory-continuity-1.0.0/source-merge-browser.json)。合并提交前子进程退出留下旧完整版本；提交后退出再调用只返回原回执。它不证明真实断电安全、语义真实性或权威知识章节自动维护。
 
 本轮记忆文件范围的空白检查通过；全仓空白检查仍报告其他增量 10 个文件的 CRLF 尾部空白，路径列在集成检查回执，并已向获准的协作会话说明。未修改这些不属于本轮的运行/资产文件，也没有把全仓检查记为通过。
 
 **正式运行待切换：**本轮主服务 18282 的备份并重载命令被自动审批拒绝，仅返回 blocked by policy；整条命令未执行，备份也未生成。未改用其他途径或要求协作会话代为重启。已请主人手动重启，等待操作后只读核对实际加载与数据迁移；磁盘代码、隔离服务和正式进程的状态分别记录。
 
-界面证据：[分支与范围](evidence/memory-continuity-1.0.0/branch-ui.png)、[历史修订](evidence/memory-continuity-1.0.0/history-ui.png)、[迁移窗口](evidence/memory-continuity-1.0.0/transfer-ui.png)。浏览器测试没有执行永久遗忘；删除事务与传播由隔离的后端测试验证。完整 V-MEM、Mac 之外的其他未完成项继续按[缺口清单](knowledge-learning.md#memory-final-gap-register)逐项推进；家庭权限已由主人于 2026-10-24 选择，后续实现见[家庭验收](#family-private-evidence)。
+界面证据：分支与范围（本机历史证据，未纳入 Git：`evidence/memory-continuity-1.0.0/branch-ui.png`）、历史修订（本机历史证据，未纳入 Git：`evidence/memory-continuity-1.0.0/history-ui.png`）、迁移窗口（本机历史证据，未纳入 Git：`evidence/memory-continuity-1.0.0/transfer-ui.png`）。浏览器测试没有执行永久遗忘；删除事务与传播由隔离的后端测试验证。完整 V-MEM、Mac 之外的其他未完成项继续按[缺口清单](knowledge-learning.md#memory-final-gap-register)逐项推进；家庭权限已由主人于 2026-10-24 选择，后续实现见[家庭验收](#family-private-evidence)。
 
 <a id="family-private-evidence"></a>
 ## 家庭身份与加密私密空间验收（family-private-1.0.0）
@@ -1474,7 +1474,7 @@ Jarvis 正式 Google Vertex / Gemini 3.8 Flash 实际评审一次。[原始评�
 | [全量回归快照](evidence/family-private-1.0.0/regression.txt) | 491 项通过，227.776 秒；随后增加的并发与启用测试以及最终源码核对，见[收尾记录](evidence/family-private-1.0.0/checks.json)，不能简单相加为不同用例数 |
 | [实际模型链路](evidence/family-private-1.0.0/family-live-1.json) | 使用已配置百炼 qwen3.8-flash，2 次合成资料调用；Alice 正确回忆“月桂7263”，无资料的 Bob 回答“不知道”。3.010 / 1.576 秒；等待时资料查询最大 4.05 / 2.54 ms。按现存价格配置估算合计 CNY 0.0008553，非账单；没有复制 Key、发送真实家庭资料或重试未知请求 |
 | [浏览器记录](evidence/family-private-1.0.0/browser.json) | 真实页面完成成员登录、资料保存、离线聊天终态、主人登录/普通工作台与设置入口、主人查看全体、多标签页退出清屏；两页控制台 0 error |
-| [成员界面](evidence/family-private-1.0.0/member-ui.png) / [主人界面](evidence/family-private-1.0.0/owner-ui.png) | 使用独立临时数据根和 18288；不是主数据或真实家庭账号。密码初始化/重置的后端由测试验证，没有通过浏览器代替主人设置真实密码 |
+| 成员界面（本机历史证据，未纳入 Git：`evidence/family-private-1.0.0/member-ui.png`） / 主人界面（本机历史证据，未纳入 Git：`evidence/family-private-1.0.0/owner-ui.png`） | 使用独立临时数据根和 18288；不是主数据或真实家庭账号。密码初始化/重置的后端由测试验证，没有通过浏览器代替主人设置真实密码 |
 
 这 2 次实际问答仅证明选定输入的调用与隔离链路，不是 60＋30 独立语料或通用答案质量通过。当前未覆盖：真实家人长期使用、语音/多人在场受众、屏幕锁定事件、独立 OS 账户攻击、私密资料跨机恢复/备份与密钥轮换、成员任务执行、多节点与 Mac、私密库大规模性能和取证级擦除。程序退出不保证交换区或已发给服务商的内容消失。
 
@@ -1591,7 +1591,7 @@ Jarvis 正式 Google Vertex / Gemini 3.8 Flash 实际评审一次。[原始评�
 
 - 设置管理 16 项、工作台 HTTP 2 项既有回归通过；相关 JavaScript 语法检查通过。
 - 日常 18282 服务实际打开总览、分类和原直达链接；检查主题选中、保存、重载保持、图标提示、动效开关、减少动态效果对应的 CSS，以及 Logo 继续使用原文件。
-- 原版 Logo 文件未修改；CPU/内存来自实时计数器，GPU/显存仍为未接入。后台待命来自当前执行器状态，不是示例值。查看[总览画面](evidence/settings-control-2026-10-23/overview-dark.png)与[浅色外观页](evidence/settings-control-2026-10-23/appearance-light.png)。
+- 原版 Logo 文件未修改；CPU/内存来自实时计数器，GPU/显存仍为未接入。后台待命来自当前执行器状态，不是示例值。查看总览画面（本机历史证据，未纳入 Git：`evidence/settings-control-2026-10-23/overview-dark.png`）与浅色外观页（本机历史证据，未纳入 Git：`evidence/settings-control-2026-10-23/appearance-light.png`）。
 - 检查期间发现并行新增的本地模型模块静态引用会阻断旧服务加载设置页，已改为按需加载并提供局部未就绪提示。新模块的下载、推理与后端验收归其所属增量；不强行重启服务加载未验收后端。
 - 全书导航同步完成，本次文件差异检查通过。首轮全仓文档检查曾报 3 处其他增量脚本的依赖规则错误：`tools/anatomy_engine_worker.py`、`tools/local_models.py`、`tools/probe_local_models.py` 使用 `sys.path.insert`，命中现行检查规则。未修改这些并行实现或降低检查标准；本次文档链接、锚点与资产检查没有额外报错，不能将全仓检查记为通过。
 - 窄屏断点与键盘焦点样式已编写；本轮浏览器实测以桌面窗口为准，未做全部真机宽度、屏幕阅读器、长时功耗或 GPU 性能验收。声音保持原先关闭偏好，未用浏览器检查实际音频播放。
@@ -1600,13 +1600,13 @@ Jarvis 正式 Google Vertex / Gemini 3.8 Flash 实际评审一次。[原始评�
 
 设置管理 16 项与工作台 HTTP 2 项回归再次通过，JavaScript 语法检查通过；1280 × 720 浏览器逐页核对渲染、独立图形及无横向溢出。实际检查模型搜索、编辑弹窗打开/关闭、明亮主题、统一暂停（图形及预览伪元素均变为无动画）、恢复深色与动效、固定顶栏和跨子页回到顶部。只检查界面操作，未保存模型或凭据改动、发起付费调用、启动任务或执行本地模型操作；此时并行本地模型页面已能加载，不将其后端验收计入本增量。窄屏与其他未验收边界沿用上段说明。
 
-第二轮源码摘要、检查结论与边界见[子页验收索引](evidence/settings-control-2026-10-23/subpages-checks.json)，实景见[浅色外观子页](evidence/settings-control-2026-10-23/subpages-appearance-light.png)与[模型筛选表格](evidence/settings-control-2026-10-23/subpages-models-dark.png)。第二轮全仓文档检查已通过（26 个文档、23 章、39 张图、2,181 个本地链接），首轮记录的三处问题不再出现；保留首轮失败证据，不改写历史结论。
+第二轮源码摘要、检查结论与边界见[子页验收索引](evidence/settings-control-2026-10-23/subpages-checks.json)，实景见浅色外观子页（本机历史证据，未纳入 Git：`evidence/settings-control-2026-10-23/subpages-appearance-light.png`）与模型筛选表格（本机历史证据，未纳入 Git：`evidence/settings-control-2026-10-23/subpages-models-dark.png`）。第二轮全仓文档检查已通过（26 个文档、23 章、39 张图、2,181 个本地链接），首轮记录的三处问题不再出现；保留首轮失败证据，不改写历史结论。
 
 **侧栏动态导航验收（同日第三轮）。** 总览与六大类的图标框、标签和数量标记已统一，保留原 Logo 与功能符号；新增单个随选择移动的边框、当前图标呼吸、侧光轨和低频流光，悬停与键盘聚焦分别提供反馈。完整行为只维护在[分类侧栏规则](interaction-persona.md#workbench-settings)。
 
 1280 × 720 实际浏览器检查七个分类的选中框对齐、单一 `aria-current`、无横向溢出、分类切换过程、Tab 焦点与回车导航；暂停后动画与过渡关闭，静态选中保留。核对明亮／深空冷蓝主题并恢复深色及动效，控制台无错误或警告。验收途中本机服务已退出，确认端口空闲后使用本工程现有数据重新启动；未停止其他进程、调用模型或执行业务任务。本轮为导航交互与样式增量，没有重复运行第二轮的后端回归；未实测全部窄屏、操作系统减少动态效果设置、屏幕阅读器或长时功耗。
 
-源码摘要与检查记录见[侧栏验收索引](evidence/settings-control-2026-10-23/sidebar-checks.json)，实际界面见[深色侧栏](evidence/settings-control-2026-10-23/sidebar-dark.png)与[浅色侧栏](evidence/settings-control-2026-10-23/sidebar-light.png)。
+源码摘要与检查记录见[侧栏验收索引](evidence/settings-control-2026-10-23/sidebar-checks.json)，实际界面见深色侧栏（本机历史证据，未纳入 Git：`evidence/settings-control-2026-10-23/sidebar-dark.png`）与浅色侧栏（本机历史证据，未纳入 Git：`evidence/settings-control-2026-10-23/sidebar-light.png`）。
 
 <a id="local-model-manager-evidence"></a>
 ## 本地模型管理与 E5 多语编码（2026-10-23）
@@ -1620,7 +1620,7 @@ Jarvis 正式 Google Vertex / Gemini 3.8 Flash 实际评审一次。[原始评�
 | 文件与运行资源 | 已校验下载 135,429,554 bytes，约 **129.2 MiB**；本次进程 RAM 448,929,792 bytes，约 **428.1 MiB**，峰值约 **441.5 MiB**，专用显存 **0**；不含 Python 运行环境磁盘、宿主和知识索引 |
 | 延迟 | 包含摘要检查与首次编码的冷启动约 **2.15 秒**；4 条短查询一批模型计算约 **5.9 ms**。不包含大型索引搜索、网络、LLM 回答，不能当作端到端 RAG 延迟或普通低配机承诺 |
 | 离线/待命 | 在独立测试数据根关闭应用网络策略后可启动、编码、待命并再启动；待命后 Worker 退出、文件保留。未切断整机网络、未证明原生依赖 OS 网络隔离 |
-| 浏览器 | 独立本机测试工作台打开“本地模型”，实际设置默认、启动 E5、生成 3 条中英文 384 维向量，浏览器日志无错误；正式 18282 入口也完成同样实测，并待命释放模型内存，见[正式入口回执](evidence/local-model-manager-web-2026-10-23.json)与[界面](evidence/local-model-manager-ui-2026-10-23.png) |
+| 浏览器 | 独立本机测试工作台打开“本地模型”，实际设置默认、启动 E5、生成 3 条中英文 384 维向量，浏览器日志无错误；正式 18282 入口也完成同样实测，并待命释放模型内存，见[正式入口回执](evidence/local-model-manager-web-2026-10-23.json)与界面（本机历史证据，未纳入 Git：`evidence/local-model-manager-ui-2026-10-23.png`） |
 
 工作台 HTTP 2 项、聊天目标 12 项与设置管理 16 项回归通过；合计 40 项自动测试。导航/文档与架构依赖检查通过，浏览器日志无错误。[检查与源码摘要](evidence/local-model-manager-checks-2026-10-23.json)记录覆盖范围。
 
@@ -1637,10 +1637,10 @@ Jarvis 正式 Google Vertex / Gemini 3.8 Flash 实际评审一次。[原始评�
 |---|---|
 | 自动回归 | 本地模型 20 项、工作台 HTTP 2 项、聊天目标 12 项、设置管理 16 项，合计 50 项通过；末次模型修改后另复跑 20 项。新增覆盖持久校准、重启/待命/卸载、旧状态模式迁移、换设备/修订不误用、非法计数器与坏文件不校准、取消不造完成成绩、评测保留默认/不抢占、评测集变更不复用旧分数 |
 | 真实离线应用路径 | [独立数据根实测](evidence/local-model-assessments-1.1.0.json)：复用已下载 E5，应用网络策略关闭，20 个固定查询对 20 文档 **19/20 Hit@1、MRR 0.95625**；待命恢复及重启后预测/成绩保留。不是整机拔网测试 |
-| 失败保留 | “汽车需要做什么保养？”的跨语正确文档排第 8，首位错误为喝茶偏好；可在[查询详情界面](evidence/local-model-assessments-cases-1.1.0.png)查看。原 1.0.0 的 4/4 是较小候选集合，不可延伸为新集合全通过；本轮没有调整样本来掩盖失败 |
+| 失败保留 | “汽车需要做什么保养？”的跨语正确文档排第 8，首位错误为喝茶偏好；可在查询详情界面（本机历史证据，未纳入 Git：`evidence/local-model-assessments-cases-1.1.0.png`）查看。原 1.0.0 的 4/4 是较小候选集合，不可延伸为新集合全通过；本轮没有调整样本来掩盖失败 |
 | 正式入口 | [18282 真实回执](evidence/local-model-assessments-web-1.1.0.json)：浏览器点击评测成功，默认 E5 保留、结束回待命。磁盘 **129.2 MiB**，最近 RSS **430.0 MiB**、已观测峰值 **441.6 MiB**；采样 batch 最大 4 / token 最大 17，对应规划预测 **426.7–507.8 MiB**，专用显存 0（CPU） |
 | 速度 | 正式入口固定短查询 batch=1 p50 **8.4 ms**、p95 **9.2 ms**，包含 JSONL 与测量写入；开发机已有其他负载，与独立探针有正常差异。不包含向量索引/LLM，不能当作普通 PC 或所有上下文的性能保证 |
-| 页面 | [模型卡截图](evidence/local-model-assessments-ui-1.1.0.png)：区分当前占用与启动预测，查看评分依据、官方指标、每条查询与失败高亮；正式入口浏览器错误/警告日志为空，待命后仍显示保存结果 |
+| 页面 | 模型卡截图（本机历史证据，未纳入 Git：`evidence/local-model-assessments-ui-1.1.0.png`）：区分当前占用与启动预测，查看评分依据、官方指标、每条查询与失败高亮；正式入口浏览器错误/警告日志为空，待命后仍显示保存结果 |
 
 [检查及源码摘要](evidence/local-model-assessments-checks-1.1.0.json)记录本轮覆盖。复现资源校准可运行 `python -B -m tools.probe_local_model_assessments`；该工具只复制已存在的模型到临时数据根，不改正式网络策略。持久测量元数据留在本机，不写入公开模型清单；本证据使用公开合成样本，不包含用户真实对话。
 
@@ -1658,7 +1658,7 @@ Jarvis 正式 Google Vertex / Gemini 3.8 Flash 实际评审一次。[原始评�
 | 程序检查 | `node --check apps/workbench/settings-local-models.js` 通过；设置管理既有 16 项与工作台 HTTP 既有 2 项通过。最初使用不存在的 HTTP 测试文件模式产生 0 项，随后改用实际 `test_workbench.py` 运行 2 项通过；0 项不算通过 |
 | 样式与状态 | 保留原 Logo、深空冷蓝主题、设置工具栏；8 个用途入口，当前目录 8 项、已下载 1 项、可启动 1 项、运行中 0 项。语音等参考项没有被升级为“可运行”。浏览器错误和警告为空 |
 
-[界面验收记录](evidence/local-model-categories-ui-1.2.0.json)保存各项断言与窗口尺寸，[检查及源码摘要](evidence/local-model-categories-checks-1.2.0.json)保存程序与文档检查；[用途导航实景](evidence/local-model-categories-1.2.0.png)和[紧凑模型卡](evidence/local-model-categories-cards-1.2.0.png)可直接查看。
+[界面验收记录](evidence/local-model-categories-ui-1.2.0.json)保存各项断言与窗口尺寸，[检查及源码摘要](evidence/local-model-categories-checks-1.2.0.json)保存程序与文档检查；用途导航实景（本机历史证据，未纳入 Git：`evidence/local-model-categories-1.2.0.png`）和紧凑模型卡（本机历史证据，未纳入 Git：`evidence/local-model-categories-cards-1.2.0.png`）可直接查看。
 
 **边界：**窄容器响应式规则已实现，本轮没有移动宽度真机或屏幕阅读器设备验收；没有重跑模型故障恢复、后台取消及所有生命周期执行，沿用 [1.1.0 后端证据](#local-model-assessments-evidence)。分类本身不增加模型运行能力，不代表全量离线助手已经实现。
 
@@ -1675,7 +1675,7 @@ Jarvis 正式 Google Vertex / Gemini 3.8 Flash 实际评审一次。[原始评�
 | 自动检查 | 工作区／技能 13 项、会话目录 12 项、设置管理 16 项、工作台 HTTP 2 项，共 43 项既有 Python 回归通过；`test_session_folder_queue.mjs` 的在途等待、最新草稿排队、修订顺序、无变化不写入、失败阻止隐藏、失败保留草稿断言通过；4 个改动 JS 语法检查通过 |
 | 布局 | 1280×720 验证固定恢复入口、独立列表滚动、菜单边界；修复附加项目说明后菜单底部越界的问题。侧栏缩至 180 px 后折叠与菜单仍可达；真实 18282 入口刷新加载，保留原 Logo 与主题，浏览器无错误或警告 |
 
-证据：[交互记录](evidence/sidebar-controls-1.1.0/browser-checks.json)、[持久草稿](evidence/sidebar-controls-1.1.0/draft-check.json)、[数据保全](evidence/sidebar-controls-1.1.0/data-checks.json)、[检查与源码摘要](evidence/sidebar-controls-1.1.0/checks.json)。画面：[正式项目菜单](evidence/sidebar-controls-1.1.0/main-project-menu.png)、[合成会话菜单](evidence/sidebar-controls-1.1.0/conversation-menu.png)。测试页与临时服务已关闭；核对绝对路径后清理独立测试数据，未清理正式数据。
+证据：[交互记录](evidence/sidebar-controls-1.1.0/browser-checks.json)、[持久草稿](evidence/sidebar-controls-1.1.0/draft-check.json)、[数据保全](evidence/sidebar-controls-1.1.0/data-checks.json)、[检查与源码摘要](evidence/sidebar-controls-1.1.0/checks.json)。画面：正式项目菜单（本机历史证据，未纳入 Git：`evidence/sidebar-controls-1.1.0/main-project-menu.png`）、合成会话菜单（本机历史证据，未纳入 Git：`evidence/sidebar-controls-1.1.0/conversation-menu.png`）。测试页与临时服务已关闭；核对绝对路径后清理独立测试数据，未清理正式数据。
 
 **未覆盖：**永久擦除不在本版功能内；系统文件管理器打开、剪贴板和浏览器下载沿用接口，本轮未触发操作；触屏／屏幕阅读器设备与跨浏览器同步未验收。运行中任务的原有执行／交付限制继续生效，整理侧栏不能作为后台任务已取消的证据。
 
@@ -1708,7 +1708,7 @@ Jarvis 正式 Google Vertex / Gemini 3.8 Flash 实际评审一次。[原始评�
 
 保留六次原生开发尝试及修复证据：首次退化面门禁拒绝；第二次曾交付但后续检查发现旧UV图集面积和3.93985，不接受其资产质量；第三次新UV的面选择丢失造成默认UV面积和11878.89，被门禁拒绝；改为独立UV且重新选择面后，第四/五次发现未三角化或奇异UV产生缺失/零切线；三角化与明确记录的正交补全后第六次正式格式通过。原始native-1至native-6与browser-1至browser-3留存；早期浏览器功能通过不等于早期资产质量通过。没有删失败结果、放宽格式错误或宣称自主自愈，修复由本轮开发完成。
 
-验证结果：工作室专项22项通过；全量执行快照346项通过（200.269秒），原始输出见[专项](evidence/studio3d-viewer-2026-10-23/unit.txt)和[全量](evidence/studio3d-viewer-2026-10-23/regression.txt)。共享工程同期另有资料库增量，回归仅代表执行时快照，后续并发修改不自动继承其通过状态。主服务[浏览器12项](evidence/studio3d-viewer-2026-10-23/browser-live/browser.json)验证真实WebGL渲染、模式差异、标量着色/线框、UV、键盘、选件、PNG、剖切、三档LOD、贴图尺寸与验收导出；无外部请求、无JS/CSP错误。[主服务取消](evidence/studio3d-viewer-2026-10-23/cancel-live.json)验证原生任务取消后无成功回执。界面见[真实截图](evidence/studio3d-viewer-2026-10-23/browser-live/viewer.png)。
+验证结果：工作室专项22项通过；全量执行快照346项通过（200.269秒），原始输出见[专项](evidence/studio3d-viewer-2026-10-23/unit.txt)和[全量](evidence/studio3d-viewer-2026-10-23/regression.txt)。共享工程同期另有资料库增量，回归仅代表执行时快照，后续并发修改不自动继承其通过状态。主服务[浏览器12项](evidence/studio3d-viewer-2026-10-23/browser-live/browser.json)验证真实WebGL渲染、模式差异、标量着色/线框、UV、键盘、选件、PNG、剖切、三档LOD、贴图尺寸与验收导出；无外部请求、无JS/CSP错误。[主服务取消](evidence/studio3d-viewer-2026-10-23/cancel-live.json)验证原生任务取消后无成功回执。界面见真实截图（本机历史证据，未纳入 Git：`evidence/studio3d-viewer-2026-10-23/browser-live/viewer.png`）。
 
 人工观看本轮画面可见金属微表面和叶片轮廓；这张512图集存在细节粗糙与高光不够均匀的问题，不评级为3A成品。未覆盖1024图集原生执行、高低模笼罩烘焙、艺术家重拓扑、精确UV重叠/纹素密度、层级保留、动画、所有视角LOD轮廓、跨浏览器/低内存设备、完整供应链漏洞审计及目标游戏引擎性能。后续流程归[资产制作与验收](tasks-agents.md#studio3d-production-workflow)，不以模型或数据分数代替这些检查。
 
@@ -1716,24 +1716,24 @@ Jarvis 正式 Google Vertex / Gemini 3.8 Flash 实际评审一次。[原始评�
 <a id="studio3d-panzer2-evidence"></a>
 ### 1.2.0 五视图坦克与图集改进
 
-2026-10-24，工程0.1.0 / 工作室1.2.0，Windows、Blender5.2.0 LTS、Three.js r186。当前协作者先使用内置image_gen生成一张含前/后/左/右/俯视的参考板，再目视解释并独立编写声明式外观场景，通过Jarvis工作台上传参考、制作和烘焙。没有Jarvis自主像素重建、扫描或新Jarvis模型调用；[原始生成提示](evidence/studio3d-panzer2-2026-10-24/reference-generation.json)与[参考板](evidence/studio3d-panzer2-2026-10-24/reference-five-views.png)保留。车型身份参考[S329](references.md#s329)，近似外形不能当作历史测绘精度。
+2026-10-24，工程0.1.0 / 工作室1.2.0，Windows、Blender5.2.0 LTS、Three.js r186。当前协作者先使用内置image_gen生成一张含前/后/左/右/俯视的参考板，再目视解释并独立编写声明式外观场景，通过Jarvis工作台上传参考、制作和烘焙。没有Jarvis自主像素重建、扫描或新Jarvis模型调用；[原始生成提示](evidence/studio3d-panzer2-2026-10-24/reference-generation.json)与参考板（本机历史证据，未纳入 Git：`evidence/studio3d-panzer2-2026-10-24/reference-five-views.png`）保留。车型身份参考[S329](references.md#s329)，近似外形不能当作历史测绘精度。
 
 正式原版8996a49850584ba29162262c03e8a3d2：108个命名对象、43416三角面、9种参数材质、每侧5负重轮/4托带轮/116节履带。正式贴图副本6d20504701ea4d2f99dfdfe5d1053c79包含2048×2048的底色、切线法线、ORM三张内嵌PNG，另有AO。实际GLB三档面数为43320、21660、10821；Blender减面后LOD2计算网格为10829，比导出多8面，保留两侧统计与差异待审，不混称为同一数据。GLB0/1/2均官方格式0错误、0警告、未截断。源原版0错误/0警告及108条未用UV信息，不隐去信息记录。详见[原版](evidence/studio3d-panzer2-2026-10-24/main-source.json)、[最终副本](evidence/studio3d-panzer2-2026-10-24/main-final.json)与[汇总](evidence/studio3d-panzer2-2026-10-24/assessment.json)。
 
-前/后/左/右/俯视为五个独立正交相机的960×640实际渲染，均逐实际网格验证未超出画幅；各视角的比例和最大投影边界写入report。分件原版保留，静态副本合并层级，.blend保留隐藏的源对象；没有装配、悬挂或履带运动验收。[前视](evidence/studio3d-panzer2-2026-10-24/final-view-front.png) · [后视](evidence/studio3d-panzer2-2026-10-24/final-view-rear.png) · [左视](evidence/studio3d-panzer2-2026-10-24/final-view-left.png) · [右视](evidence/studio3d-panzer2-2026-10-24/final-view-right.png) · [俯视](evidence/studio3d-panzer2-2026-10-24/final-view-top.png)。
+前/后/左/右/俯视为五个独立正交相机的960×640实际渲染，均逐实际网格验证未超出画幅；各视角的比例和最大投影边界写入report。分件原版保留，静态副本合并层级，.blend保留隐藏的源对象；没有装配、悬挂或履带运动验收。前视（本机历史证据，未纳入 Git：`evidence/studio3d-panzer2-2026-10-24/final-view-front.png`） · 后视（本机历史证据，未纳入 Git：`evidence/studio3d-panzer2-2026-10-24/final-view-rear.png`） · 左视（本机历史证据，未纳入 Git：`evidence/studio3d-panzer2-2026-10-24/final-view-left.png`） · 右视（本机历史证据，未纳入 Git：`evidence/studio3d-panzer2-2026-10-24/final-view-right.png`） · 俯视（本机历史证据，未纳入 Git：`evidence/studio3d-panzer2-2026-10-24/final-view-top.png`）。
 
 逐轮问题与修复留档：native-1硬表面平滑过软、颜色/构图待改；native-2在将issue上限80增至400后暴露9个多余零切线错误，基础导出移除未使用的切线后复测通过，未忽略错误；native-3虽有2K图片，UV三角面积和只有0.007928，纹素浪费严重；第一次FRACTION按8像素间距改到0.152117，仍保留低利用率警告；最终4像素间距/2像素扩边达到0.391928。利用率是三角面积和，未计算精确并集，不据此证明无局部重叠或密度均匀。原生重建、两版低效图集及最终结果分别保留，开发修改不是系统自主自愈。
 
 最终原生任务99.696秒，Job内存峰值1482465280字节，低于原4GiB/300秒预算；LOD0清理后0退化面、1792开放边、0多面共享非流形边，三档共0奇异切线补全。开放边与LOD轮廓仍需检查。源级别仍有环形零件的未封闭边，导出不构成水密或制造正确证明。图片参考比当前模型有更多细部、锈蚀和面板信息，当前视觉仍是近似研究资产，不评级为3A成品。
 
-工作室专项30项通过；全量执行快照390项通过（223.224秒），见[执行输出](evidence/studio3d-panzer2-2026-10-24/regression.txt)。共享树同期有其他会话的资料库修改与测试，此结果不自动覆盖后续并发改动。正式工作台通过真实界面完成参考上传、两次烘焙和导出；浏览器确认五图入口、2048图片实际解码、材质通道、法线/UV、三档LOD、坐标按钮、PNG及JSON验收导出，控制台无error。PBR与法线保存PNG字节不同，导出记录保留准确GLB摘要及AAA=false；见[浏览器检查](evidence/studio3d-panzer2-2026-10-24/browser-checks.json)、[PBR视口](evidence/studio3d-panzer2-2026-10-24/viewer-pbr.png)和[导出记录](evidence/studio3d-panzer2-2026-10-24/viewer-review.json)。没有进行本轮完整网络抓包，不将依赖本地化扩大为浏览器所有网络行为已审计。
+工作室专项30项通过；全量执行快照390项通过（223.224秒），见[执行输出](evidence/studio3d-panzer2-2026-10-24/regression.txt)。共享树同期有其他会话的资料库修改与测试，此结果不自动覆盖后续并发改动。正式工作台通过真实界面完成参考上传、两次烘焙和导出；浏览器确认五图入口、2048图片实际解码、材质通道、法线/UV、三档LOD、坐标按钮、PNG及JSON验收导出，控制台无error。PBR与法线保存PNG字节不同，导出记录保留准确GLB摘要及AAA=false；见[浏览器检查](evidence/studio3d-panzer2-2026-10-24/browser-checks.json)、PBR视口（本机历史证据，未纳入 Git：`evidence/studio3d-panzer2-2026-10-24/viewer-pbr.png`）和[导出记录](evidence/studio3d-panzer2-2026-10-24/viewer-review.json)。没有进行本轮完整网络抓包，不将依赖本地化扩大为浏览器所有网络行为已审计。
 
 未验收：参考板跨视角的严格测量一致性、Jarvis模型看图、交互重拓扑、高低模笼罩投射、精确UV与全mipmap接缝、分件UV/LOD转移、真实内部装置、运动、目标游戏引擎帧率以及完整3A美术质量。[使用与后续流程](tasks-agents.md#studio3d-reference-workflow)为唯一操作权威。
 
 <a id="panzer-assembly-evidence"></a>
 ### 二号坦克用户分件装配与候选经验（2026-10-28）
 
-**implemented / 分项 verified，工程 v0.1.1 未发布。** 实现、输入及经验边界归[用户高模分件案例](studio3d-learning.md#studio3d-part-assembly-case)。固定工具 1.0.0 实际执行一次分件检查、三轮安装修正及一次最终重渲；最终 6 个网格实例共 11,669,279 三角面，五个原文件摘要不变，15 张 4K 贴图字节不变。独立空场景 GLB 回读通过；装配多视图、爆炸图已目视检查，23 项相关测试通过，4 项候选经验检索及反例拒绝通过。大文件只留本机，摘要、版本、资源和限制见[验证记录](evidence/panzer-ii-assembly-2026-10-28/verification.json)、[测试日志](evidence/panzer-ii-assembly-2026-10-28/tests.log)。
+**implemented / 分项 verified，工程 v0.1.1 未发布。** 实现、输入及经验边界归[用户高模分件案例](studio3d-learning.md#studio3d-part-assembly-case)。固定工具 1.0.0 实际执行一次分件检查、三轮安装修正及一次最终重渲；最终 6 个网格实例共 11,669,279 三角面，五个原文件摘要不变，15 张 4K 贴图字节不变。独立空场景 GLB 回读通过；装配多视图、爆炸图已目视检查，23 项相关测试通过，4 项候选经验检索及反例拒绝通过。大文件只留本机，摘要、版本、资源和限制见[验证记录](evidence/panzer-ii-assembly-2026-10-28/verification.json)、测试日志（本机历史证据，未纳入 Git：`evidence/panzer-ii-assembly-2026-10-28/tests.log`）。
 
 Google Argon 审阅超时（UNKNOWN，费用未确认）；Google Flash 审阅成功，账本估算 USD 0.01048725。模型建议经复核后作为辅助意见保存，不自动应用。当前是作者校准、Jarvis 固定工具执行与模型审阅的本资产案例，未验证独立组装、权重训练、跨资产迁移、工程装配精度、游戏低模/LOD 或 AAA 美术质量；未经用户最终外观签收。没有重启或替换主工作台进程。
 
@@ -1748,7 +1748,7 @@ Google Argon 审阅超时（UNKNOWN，费用未确认）；Google Flash 审阅�
 
 - 原生链：Jarvis 建模 → 只加宽外壳并改颜色/粗糙度 → 新 .blend、GLB、预览与前后左右俯视五图。两个任务均 DELIVERED，GLB 空场景回读通过；原 scene.json 字节及轴/底座数据保持，旧源摘要被拒绝。零付费调用。[原生记录](evidence/blender-workflow-1.0.0/native-eval.json)。
 - 界面链：独立测试工作台的目录、使用条件、出处及编辑表单可见；通过表单选择轴并将 Z 比例改为 1.2，经真实 HTTP/Host/Blender 交付第三个版本。共享材质影响名单可见，原外壳与底座保持。[界面与交付记录](evidence/blender-workflow-1.0.0/ui-eval.json)。
-- 自动检查：65 项相关测试通过，覆盖新增部件编辑、拒绝未授权字段/无效值/重复目标、源摘要、停用、按需加载、对话指导冻结和模拟模型规划接线，并回归原工作室、项目、参考修正、投射与五视图逻辑。模拟规划测试不等于真实模型质量验证。[测试日志](evidence/blender-workflow-1.0.0/tests.log)。
+- 自动检查：65 项相关测试通过，覆盖新增部件编辑、拒绝未授权字段/无效值/重复目标、源摘要、停用、按需加载、对话指导冻结和模拟模型规划接线，并回归原工作室、项目、参考修正、投射与五视图逻辑。模拟规划测试不等于真实模型质量验证。测试日志（本机历史证据，未纳入 Git：`evidence/blender-workflow-1.0.0/tests.log`）。
 
 实际观看前后渲染可确认外壳变宽、蓝色改为橙色及高光变化；只作为诊断效果观察，不给 AAA 或照片相似度评分。没有新增真实模型调用、角色重建、自动骨架/表情/VRM、任意外部 Blend 编辑、跨模型质量、全漏洞扫描或低内存压力验证。主服务 18282 未重载，界面端按运行能力隐藏未加载的新编辑操作；正常重启才载入新增宿主逻辑。源码、测试服务和主服务状态分别记录。
 
@@ -1785,7 +1785,7 @@ Google Argon 审阅超时（UNKNOWN，费用未确认）；Google Flash 审阅�
 
 游戏合批副本保留全部三角面与贴图像素，将201个编辑对象整理为12个刚体运动总成、19个渲染网格。相同Jarvis灰底光照、地面与单阴影通道下，实测绘制调用由403降到39；这不等于目标引擎帧率或显存已经合格。七段实际GLB动画逐项改变渲染，固定／可动标注和未确认高模的界面入口禁用已核对。世界空间顶点位置、法线、UV及材质的双向联合误差小于0.000001；同机位静态渲染另列证据。完整动作穿插、连续碰撞、通用自动绑定及最终游戏性能仍未验证，不能据此跳过高模人工验收。
 
-2026-10-27，按用户要求整理为[leFH18 当前资产包](../3DModels/leFH18/README.txt)。[打包核查](evidence/lefh18-package-2026-10-27/cleanup-report.json)确认当前 GLB 字节未变，两份 BLEND 的几何、UV、层级和内嵌贴图保持一致，外部贴图改为包内相对路径并在迁移旧交付目录后重新打开验证。5 张参考图保持原字节；成本、经验规则和必要审查证据集中到 metadata，经验卡来源仍通过摘要检查。资产目录由约 11 GiB 收拢为约 256 MiB；3042 个旧文件移至 user-data/archives 下的受控归档区。自动审批以 blocked by policy 拒绝批量删除，因此没有释放旧文件占用空间；4 个被服务占用的日志仍暂留 _work，未重启服务。此项只验证文件打包与引用完整性，不增加美术合格或 LOD 批准结论。
+2026-10-27，按用户要求整理为leFH18 当前资产包（本机历史证据，未纳入 Git：`../3DModels/leFH18/README.txt`）。[打包核查](evidence/lefh18-package-2026-10-27/cleanup-report.json)确认当前 GLB 字节未变，两份 BLEND 的几何、UV、层级和内嵌贴图保持一致，外部贴图改为包内相对路径并在迁移旧交付目录后重新打开验证。5 张参考图保持原字节；成本、经验规则和必要审查证据集中到 metadata，经验卡来源仍通过摘要检查。资产目录由约 11 GiB 收拢为约 256 MiB；3042 个旧文件移至 user-data/archives 下的受控归档区。自动审批以 blocked by policy 拒绝批量删除，因此没有释放旧文件占用空间；4 个被服务占用的日志仍暂留 _work，未重启服务。此项只验证文件打包与引用完整性，不增加美术合格或 LOD 批准结论。
 
 <a id="studio3d-apple-evidence"></a>
 ### 苹果参考图、高低模与贴图修复实测（1.4—1.6）
@@ -1800,13 +1800,13 @@ Codex内置image_gen先生成单苹果参考，Jarvis经Vertex gemini-4-argon实
 | 游戏低模LOD0 | 998 | 果实852、果柄146；约45.07秒、峰值2.28GiB；1材质、2 draw calls |
 | LOD1 / LOD2 | 498 / 248 | 实际GLB计数；各档官方检查0错误/0警告 |
 
-高模到LOD0减少99.19%。2K底色、切线法线、ORM及独立AO；低模没有退化面、开放边、非流形边或奇异切线，UV三角面积和52.65%；998条三角中心投射射线0漏射，仍不证明逐像素无误。实际实时查看器加载并检查材质、线框和文件通道；[材质画面](evidence/studio3d-apple-2026-10-24/viewer-pbr.png)与[线框画面](evidence/studio3d-apple-2026-10-24/viewer-wire.png)保留。高模基础GLB不携带程序化果皮，需使用BLEND源或查看其真实渲染；低模GLB包含烘焙图集。
+高模到LOD0减少99.19%。2K底色、切线法线、ORM及独立AO；低模没有退化面、开放边、非流形边或奇异切线，UV三角面积和52.65%；998条三角中心投射射线0漏射，仍不证明逐像素无误。实际实时查看器加载并检查材质、线框和文件通道；材质画面（本机历史证据，未纳入 Git：`evidence/studio3d-apple-2026-10-24/viewer-pbr.png`）与线框画面（本机历史证据，未纳入 Git：`evidence/studio3d-apple-2026-10-24/viewer-wire.png`）保留。高模基础GLB不携带程序化果皮，需使用BLEND源或查看其真实渲染；低模GLB包含烘焙图集。
 
-![高模实际渲染](evidence/studio3d-apple-2026-10-24/high-r5/preview.png)
+高模实际渲染（本机历史证据，未纳入 Git：`evidence/studio3d-apple-2026-10-24/high-r5/preview.png`）
 
-![998三角面低模实际渲染](evidence/studio3d-apple-2026-10-24/low-r2/preview.png)
+998三角面低模实际渲染（本机历史证据，未纳入 Git：`evidence/studio3d-apple-2026-10-24/low-r2/preview.png`）
 
-同视角可见低模保留主要轮廓和色斑，顶部凹窝边缘仍有小块减面/投射痕迹。与[生成参考](evidence/studio3d-apple-2026-10-24/high-r2/reference.png)相比，果柄弯曲、局部轮廓、果皮纹理与高光未达到忠实还原；外观仍偏程序化。额外498面LOD1在实时PBR中出现[黑色三角伪影](evidence/studio3d-apple-2026-10-24/viewer-lod1-artifacts.png)，视觉验收失败，不能把格式通过当成游戏可用；248面LOD2仅保留诊断，未验收。单图背面/底部、精确UV重叠与密度、逐像素烘焙与目标引擎性能仍未验证。保留首轮旧进程拒绝、半径限制失败、相机近裁切黑洞及材质调整的原始记录，不覆盖失败来冒充一次完成。收尾检查见[检查结果](evidence/studio3d-apple-2026-10-24/checks.json)。
+同视角可见低模保留主要轮廓和色斑，顶部凹窝边缘仍有小块减面/投射痕迹。与生成参考（本机历史证据，未纳入 Git：`evidence/studio3d-apple-2026-10-24/high-r2/reference.png`）相比，果柄弯曲、局部轮廓、果皮纹理与高光未达到忠实还原；外观仍偏程序化。额外498面LOD1在实时PBR中出现黑色三角伪影（本机历史证据，未纳入 Git：`evidence/studio3d-apple-2026-10-24/viewer-lod1-artifacts.png`），视觉验收失败，不能把格式通过当成游戏可用；248面LOD2仅保留诊断，未验收。单图背面/底部、精确UV重叠与密度、逐像素烘焙与目标引擎性能仍未验证。保留首轮旧进程拒绝、半径限制失败、相机近裁切黑洞及材质调整的原始记录，不覆盖失败来冒充一次完成。收尾检查见[检查结果](evidence/studio3d-apple-2026-10-24/checks.json)。
 
 **1.5.0 对照修正增量，2026-10-24。** 已实现并在同一主服务实际运行受限双图比较、一次局部修正、渲染后复核；新增渐细弯曲扫掠体/独立断面及不规则端缘、分区果皮参数、受控相机/灯光、查看器检视灯光切换。完整操作规则仍归[识图与修正流程](tasks-agents.md#studio3d-image-workflow)。没有安装新依赖或导入H盘实现；[准入审查](evidence/studio3d-apple-2026-10-24/refinement-implementation/source-review.json)记录检查范围和未覆盖项。
 
@@ -1820,9 +1820,9 @@ Codex内置image_gen先生成单苹果参考，Jarvis经Vertex gemini-4-argon实
 
 主低模减少99.17%，有限998条中心射线0漏射，0退化面/开放边/非流形边/奇异切线；UV三角面积和53.01%，不代表精确无重叠。各档官方GLB格式0错误/0警告仍不能覆盖已观察到的视觉失败。998面在已看静帧和实时视角保留主要轮廓、果柄与材质，顶部仍见减面/接缝痕迹。与原参考相比，纵向条纹仍偏规则，皮孔分布、断面木质和高光仍不忠实；**参考还原与AAA美术验收未通过**。照片去光照/纹理投射、数值相似度、背面/底部和目标引擎验收未实现或未验证。没有把程序化色区参数宣称为照片纹理恢复。
 
-![本轮998面实际渲染](evidence/studio3d-apple-2026-10-24/refine-low/preview.png)
+本轮998面实际渲染（本机历史证据，未纳入 Git：`evidence/studio3d-apple-2026-10-24/refine-low/preview.png`）
 
-[实测汇总](evidence/studio3d-apple-2026-10-24/refinement-implementation/assessment.json)包含各版ID、人工干预、资源与质量判断；[实时低模](evidence/studio3d-apple-2026-10-24/refinement-implementation/viewer-low.png)、[LOD1失败](evidence/studio3d-apple-2026-10-24/refinement-implementation/viewer-lod1-fail.png)、[LOD2失败](evidence/studio3d-apple-2026-10-24/refinement-implementation/viewer-lod2-fail.png)为实际截图。82项专项、JavaScript语法、架构与文档检查结果归[检查记录](evidence/studio3d-apple-2026-10-24/refinement-implementation/checks.json)。浏览器确认新修正入口、复核结论、检视灯光及LOD提示可见，检视页面控制台无error；未通过界面再次触发付费修正，真实付费流程由同一本机API执行。
+[实测汇总](evidence/studio3d-apple-2026-10-24/refinement-implementation/assessment.json)包含各版ID、人工干预、资源与质量判断；实时低模（本机历史证据，未纳入 Git：`evidence/studio3d-apple-2026-10-24/refinement-implementation/viewer-low.png`）、LOD1失败（本机历史证据，未纳入 Git：`evidence/studio3d-apple-2026-10-24/refinement-implementation/viewer-lod1-fail.png`）、LOD2失败（本机历史证据，未纳入 Git：`evidence/studio3d-apple-2026-10-24/refinement-implementation/viewer-lod2-fail.png`）为实际截图。82项专项、JavaScript语法、架构与文档检查结果归[检查记录](evidence/studio3d-apple-2026-10-24/refinement-implementation/checks.json)。浏览器确认新修正入口、复核结论、检视灯光及LOD提示可见，检视页面控制台无error；未通过界面再次触发付费修正，真实付费流程由同一本机API执行。
 
 
 **1.6.0 贴图与低模修复，2026-10-24。** 本轮Codex用内置imagegen生成一张1774×887、参考启发的无大范围光照底色近似图，接入宿主核验的本机材质绑定；[完整提示词与生成记录](evidence/studio3d-apple-2026-10-24/texture-implementation/imagegen-request.json)可复查。沿旋转体母线弧长展开高模贴图，果窝、木纹、粗糙度与微凹凸分别处理；没有新增Jarvis模型调用或依赖。它不是自动去光照、真实扫描或无人干预达到参考。
@@ -1838,7 +1838,7 @@ Codex内置image_gen先生成单苹果参考，Jarvis经Vertex gemini-4-argon实
 
 主低模UV三角面积和50.21%，不代表精确无重叠。全部三档官方GLB检查0错误/0警告；最终本机流水线79.05秒、峰值约2.60GiB，仍在既有预算内。[四向GLB重导入记录](evidence/studio3d-apple-2026-10-24/texture-implementation/lod-review-rings/review-inputs.json)包含实际文件摘要、Blender版本及导入设置；主低模在四向渲染中未再观察到此前黑斑/细暗缝。皮孔大小、蜡斑明度、果柄断面与参考仍有差距，背面为推测，**AAA和精确参考还原仍未通过**。本轮中断后浏览器控制工具不可用，未声称完成新的浏览器视觉或目标游戏引擎验收。
 
-![990面贴图修复后的实际GLB渲染](evidence/studio3d-apple-2026-10-24/texture-implementation/lod-review-rings/lod0-0.png)
+990面贴图修复后的实际GLB渲染（本机历史证据，未纳入 Git：`evidence/studio3d-apple-2026-10-24/texture-implementation/lod-review-rings/lod0-0.png`）
 
 [修复汇总与候选失败](evidence/studio3d-apple-2026-10-24/texture-implementation/assessment.json)、[源码/输入审查](evidence/studio3d-apple-2026-10-24/texture-implementation/source-review.json)、[检查记录](evidence/studio3d-apple-2026-10-24/texture-implementation/checks.json)保留真实范围；构建开始后的布尔/壳厚排除条件单独记录为源码保护性收窄，未回写产物的实际执行源码摘要。当前针对性测试、静态架构、JS语法和文档结果以检查文件为准。
 
@@ -1857,9 +1857,9 @@ Codex内置image_gen先生成单苹果参考，Jarvis经Vertex gemini-4-argon实
 
 已目视检查2.1原图、改色图与Lite图：金属外壳、黄铜接口和白背景符合本次提示；改色前后主要轮廓、视角和接口基本保持。没有做像素级结构一致性、文字、多视图、复杂指令或跨场景质量评分；不能据此声称普遍优于其他模型、真实机械构造正确或达到AAA资产标准。上一代主线本轮验收为有效图片返回，未单独目视评分。
 
-![2.1实际改色产物](evidence/nano-banana-2026-10-25/edited-red.png)
+2.1实际改色产物（本机历史证据，未纳入 Git：`evidence/nano-banana-2026-10-25/edited-red.png`）
 
-[原始蓝色图](evidence/nano-banana-2026-10-25/generated-blue.png)与[评估记录](evidence/nano-banana-2026-10-25/assessment.json)可复查。三款均得到真实图片用量；金额保留未知，等待Google账单，不套用文本费率。Gemini Developer API 的API Key线路完成协议测试，未配置真实Key、未作付费调用；2K选项尚未真实调用，4K未开放。Lite本次返回JPEG，可查看和保存；当前编辑输入与3D参考衔接只接受PNG。
+原始蓝色图（本机历史证据，未纳入 Git：`evidence/nano-banana-2026-10-25/generated-blue.png`）与[评估记录](evidence/nano-banana-2026-10-25/assessment.json)可复查。三款均得到真实图片用量；金额保留未知，等待Google账单，不套用文本费率。Gemini Developer API 的API Key线路完成协议测试，未配置真实Key、未作付费调用；2K选项尚未真实调用，4K未开放。Lite本次返回JPEG，可查看和保存；当前编辑输入与3D参考衔接只接受PNG。
 
 针对性验证共68项：图片18、原生模型传输4、CLI原生模型4、3D识图9、多视图8、家庭隐私12、技能13。图片HTTP用例通过真实本地Handler和临时端口测试受理→状态→图片下载→参考登记，但模拟Google响应；四次真实Google调用使用同一宿主与适配器。覆盖未带令牌、跨站、成员访问拒绝、重复任务不重调、取消保留用量、孤儿任务未知、停用/离线、篡改文件以及图片编辑不依赖3D技能开关。不是全仓回归，未做浏览器点击与布局验收。结果见[检查记录](evidence/nano-banana-2026-10-25/checks.json)和[回归明细](evidence/nano-banana-2026-10-25/regression.json)。
 
@@ -1922,7 +1922,7 @@ Codex内置image_gen先生成单苹果参考，Jarvis经Vertex gemini-4-argon实
 - **本地回归：**47项通过，覆盖新增请求/否定/引述/假设选择、停用持久化、同会话反馈上下文、回复文件交付、既有技能、模型偏好和聊天目标回归。[测试记录](evidence/personal-workflows-1.0.0-2026-10-26/tests.json)。
 - **真实 Google 对话：**明确选择已配置的 Vertex `gemini-3.8-flash`，关闭个人记忆，使用合成例子；首次5次调用，日志修正后2次复测，共7次，无自动回退。英语题未提前泄露答案，纠正 `move → moves` 并解释主谓一致，学习卡没有把未作答重试计为完成。日志能按后续纠正更换耗时与状态。[初测](evidence/personal-workflows-1.0.0-2026-10-26/live.json)、[日志复测](evidence/personal-workflows-1.0.0-2026-10-26/journal-retest.json)。
 - **发现与修复：**初次日志把用户自述写成“依据渲染执行结果”，没有对应工具回执。补充来源规则后，复测明确写成“根据你提供的记录/更正”。保留初测，不以网络调用成功替代内容审阅。[范围、用量与源码摘要](evidence/personal-workflows-1.0.0-2026-10-26/assessment.json)。
-- **界面：**Edge 无头浏览器检查卡片、搜索、彩色图标、键盘提示、适用条件与聊天选框；无页面脚本错误，并目视核查截图。[检查](evidence/personal-workflows-1.0.0-2026-10-26/browser.json)、[英语卡片](evidence/personal-workflows-1.0.0-2026-10-26/english-card.png)、[日志卡片](evidence/personal-workflows-1.0.0-2026-10-26/journal-card.png)。
+- **界面：**Edge 无头浏览器检查卡片、搜索、彩色图标、键盘提示、适用条件与聊天选框；无页面脚本错误，并目视核查截图。[检查](evidence/personal-workflows-1.0.0-2026-10-26/browser.json)、英语卡片（本机历史证据，未纳入 Git：`evidence/personal-workflows-1.0.0-2026-10-26/english-card.png`）、日志卡片（本机历史证据，未纳入 Git：`evidence/personal-workflows-1.0.0-2026-10-26/journal-card.png`）。
 
 这些证据仅说明两个短文本场景可用；没有跨模型或长期学习效果结论，不包含口语、定时提醒、新闻自动抓取或全方位助手整体完成。自动选择仅匹配明确开头；连续练习/复盘使用显式技能选择。真实调用用量保存在 Jarvis 账本，不将未取得的供应商账单当成实际金额。可复跑 `tools/eval_personal_workflows.py`，默认仅显示用例，`--run` 才发起有费用的真实请求；失败后停止，不自动重发。
 
@@ -2300,7 +2300,7 @@ Studio3D 新增的限定诊断、失败和成本证据见[执行登记](studio3d
 | 原入口一致 | 原会话与目标详情返回同一评价；工作状态来自原任务；浏览器检查开关持久性、缺失文件和深浅主题 | 原生精灵、多平台和真实机器人验收 |
 | 三位一体与控制保持 | 原核心、并发、会话目标、目标计划与工作台相关回归；没有增发执行/发布权限 | 全部 V-TRI、长期自进化或主体连续性替换已通过 |
 
-功能结果与源码 SHA-256 见[验证登记](evidence/outcome-observer-1.0.0/verification.json)。新增 [test_outcomes](../tests/test_outcomes.py) 专门覆盖上述故障、版本、界限和来源撤回场景；原回归不因加观察器而放宽。UI 证据为[浏览器检查](evidence/outcome-observer-1.0.0/browser.json)、[深色截图](evidence/outcome-observer-1.0.0/outcomes-dark.png)和[浅色截图](evidence/outcome-observer-1.0.0/outcomes-light.png)。首轮浏览器夹具缺少一个只读研发状态对象，修复夹具后复跑；不是把服务异常当通过。
+功能结果与源码 SHA-256 见[验证登记](evidence/outcome-observer-1.0.0/verification.json)。新增 [test_outcomes](../tests/test_outcomes.py) 专门覆盖上述故障、版本、界限和来源撤回场景；原回归不因加观察器而放宽。UI 证据为[浏览器检查](evidence/outcome-observer-1.0.0/browser.json)、深色截图（本机历史证据，未纳入 Git：`evidence/outcome-observer-1.0.0/outcomes-dark.png`）和浅色截图（本机历史证据，未纳入 Git：`evidence/outcome-observer-1.0.0/outcomes-light.png`）。首轮浏览器夹具缺少一个只读研发状态对象，修复夹具后复跑；不是把服务异常当通过。
 
 | 冻结的局部开销门槛 | 实测 | 判断 |
 |---|---|---|
@@ -2332,7 +2332,7 @@ V-TLC-04/05、V-TRI-04/05 和 V-CLC-01/02/03/09 获得相关**局部证据**；�
 
 相关回归 **158 项通过，0 失败、0 错误、0 跳过**，覆盖核心、结果评价、闭环、并发、会话目标、目标计划、工作台与记忆检索。原始结果、环境、源码摘要与未覆盖范围见[verification.json](evidence/completion-loop-1.0.0/verification.json)；新场景集中在[test_completion_loop.py](../tests/test_completion_loop.py)，目标批准事务由[test_goal_plans.py](../tests/test_goal_plans.py)覆盖。测试通过率不是用户任务质量分。
 
-浏览器实际完成“点击采用方法 → 原调度执行新输入 → 迟到纠正 → 源方法暂停及采用结果失效 → 撤回仍保留历史”。过程中发现工作状态自动刷新会折叠任务组、忙碌请求会丢掉强制刷新，已修复并复跑。见[操作检查](evidence/completion-loop-1.0.0/completion-browser.json)、[深色界面](evidence/completion-loop-1.0.0/completion-dark.png)和[浅色界面](evidence/completion-loop-1.0.0/completion-light.png)；另有[原结果观察器界面回归](evidence/completion-loop-1.0.0/browser.json)。截图显示“执行完成”与“依据失效”可以同时成立；条件通过率只描述已约定条目，不覆盖来源有效性或满意度。
+浏览器实际完成“点击采用方法 → 原调度执行新输入 → 迟到纠正 → 源方法暂停及采用结果失效 → 撤回仍保留历史”。过程中发现工作状态自动刷新会折叠任务组、忙碌请求会丢掉强制刷新，已修复并复跑。见[操作检查](evidence/completion-loop-1.0.0/completion-browser.json)、深色界面（本机历史证据，未纳入 Git：`evidence/completion-loop-1.0.0/completion-dark.png`）和浅色界面（本机历史证据，未纳入 Git：`evidence/completion-loop-1.0.0/completion-light.png`）；另有[原结果观察器界面回归](evidence/completion-loop-1.0.0/browser.json)。截图显示“执行完成”与“依据失效”可以同时成立；条件通过率只描述已约定条目，不覆盖来源有效性或满意度。
 
 | 沿用的冻结开销门槛 | 本次实测 | 结论 |
 |---|---|---|
@@ -2525,7 +2525,7 @@ python -m tools.probe_workflow_audit --output docs/evidence/workflow-audit-2026-
 
 [编码前边界与基线摘要](evidence/workflow-handoff-1.1.0/plan.json)保留改造范围；[主回归](evidence/workflow-handoff-1.1.0/regression-r1.json)189 次与[记忆／研发补充回归](evidence/workflow-handoff-1.1.0/memory-growth-regression.json)25 次均通过。两组共有 7 个重复测试 ID；最终另做[两项候选边界回归](evidence/workflow-handoff-1.1.0/candidate-boundary-regression-r2.json)，其中一项重复、一项新增。三份最终记录合计 **208 个不同测试、216 次执行**，无失败或跳过；不把重复执行计为独立能力。新增覆盖包括真实进程退出、容量等待/过期/取消、撤权、重复请求、弱覆盖、错误映射、冻结条件、旧 schema 和反馈。
 
-界面证据分为[实际目标组件＋HTTP＋调度](evidence/workflow-handoff-1.1.0/ui-r4/browser.json)、[原工作台反馈/方法闭环](evidence/workflow-handoff-1.1.0/completion-ui/completion-browser.json)和[原观察器界面](evidence/workflow-handoff-1.1.0/performance/browser.json)。目标组件测试使用真实前端模块和临时 HTTP 服务，外层测试页只提供布局与对话框；不冒充生产工作台部署。两次批准均只发送一个 approve_and_run，没有另发 goals/run；显示检查通过率 100% 的同时，两条业务要求仍待核对。深浅主题无横向溢出或页面异常，已检查[深色截图](evidence/workflow-handoff-1.1.0/ui-r4/handoff-dark.png)及[浅色截图](evidence/workflow-handoff-1.1.0/ui-r4/handoff-light.png)。模型调用为 0。
+界面证据分为[实际目标组件＋HTTP＋调度](evidence/workflow-handoff-1.1.0/ui-r4/browser.json)、[原工作台反馈/方法闭环](evidence/workflow-handoff-1.1.0/completion-ui/completion-browser.json)和[原观察器界面](evidence/workflow-handoff-1.1.0/performance/browser.json)。目标组件测试使用真实前端模块和临时 HTTP 服务，外层测试页只提供布局与对话框；不冒充生产工作台部署。两次批准均只发送一个 approve_and_run，没有另发 goals/run；显示检查通过率 100% 的同时，两条业务要求仍待核对。深浅主题无横向溢出或页面异常，已检查深色截图（本机历史证据，未纳入 Git：`evidence/workflow-handoff-1.1.0/ui-r4/handoff-dark.png`）及浅色截图（本机历史证据，未纳入 Git：`evidence/workflow-handoff-1.1.0/ui-r4/handoff-light.png`）。模型调用为 0。
 
 [开销实测](evidence/workflow-handoff-1.1.0/performance/performance.json)沿用原 30 对任务、10 对前台样本和阈值。开关观察器的任务 p95 为 29.614 / 32.186 ms，差 2.572 ms，小于原 25 ms 增量门槛；负载下前台输入 p95 为 44.521 ms，小于 200 ms 门槛，回复增量也通过。此实验是当前实现的开销检查，不是旧版对新版的任务质量对照，也不据负增量推断系统提速。
 
@@ -2650,7 +2650,7 @@ JPF/r1 不改写；本轮是 V-TRI/V-CLC 的局部接线证据，完整场景仍
 | 不破坏既有机制 | 最终执行344项不同用例，原316项零遗漏；新增28项；全部通过 | 不能把用例增长当作业务质量增长 |
 | 更快、更省token、更聪明 | 未测；本轮没有模型调用与真实用户对照，报价方法未自动入库 | 不给未知收益填分；JPF/r1 原预测不变 |
 
-首轮专项记录[narrow-r1](evidence/workflow-domain-1.5.0/narrow-r1.log)有两项测试预期错误：取消后尝试重启会按原接口抛 invalid_state；产物改动按原观察器产生 ISSUES→NEEDS_CORRECTION，而非来源撤回的 INVALIDATED。核对旧测试后修正预期，并继续断言无 action、不能结案和证据不可用；没有放宽生产判定。[narrow-r2](evidence/workflow-domain-1.5.0/narrow-r2.log)的当时27项通过；随后新增核验版本变化反例，包含在最终28项中。
+首轮专项记录narrow-r1（本机历史证据，未纳入 Git：`evidence/workflow-domain-1.5.0/narrow-r1.log`）有两项测试预期错误：取消后尝试重启会按原接口抛 invalid_state；产物改动按原观察器产生 ISSUES→NEEDS_CORRECTION，而非来源撤回的 INVALIDATED。核对旧测试后修正预期，并继续断言无 action、不能结案和证据不可用；没有放宽生产判定。narrow-r2（本机历史证据，未纳入 Git：`evidence/workflow-domain-1.5.0/narrow-r2.log`）的当时27项通过；随后新增核验版本变化反例，包含在最终28项中。
 
 首轮[界面失败](evidence/workflow-domain-1.5.0/ui-r1/browser.json)暴露长选项在390px窄屏溢出；修正限定于验收表单，复测通过并保留失败截图。[第二轮运行记录](evidence/workflow-domain-1.5.0/ui-r2/runtime.json)为三件合成任务，各2动作单位，零模型调用，不接触真实用户业务数据。样本选择工具在隔离 worker 中执行，领域核验器独立读取原输入；比较弱字面检查与领域判定的反例说明覆盖差异，不能冒充新版真实成功率提高。
 
@@ -2670,7 +2670,7 @@ JPF/r1 不改写；本轮是 V-TRI/V-CLC 的局部接线证据，完整场景仍
 | 明确表达能提取并对照 | 20个固定合成语法样本覆盖顺序变化、金额精度、万元、零值、否定、工作日、重复、冲突等；[样本](../tests/fixtures/quote_requests_v1.json) | 这些是工程正反例，未测真实用户请求的召回率或通用理解能力 |
 | 未覆盖要求不能假装完成 | 强制complete、反馈认可均不能将未覆盖保修/税费要求变成完整结案 | 部分本地文字任务可执行，但条件通过率不冒充完整质量分 |
 | 冲突与过期依据拦在受理前 | API受理事务回滚、迟到审阅响应丢弃、目标截断绕过及解析版本变更有反例 | 不覆盖聊天转Goal过程的语义遗漏；当前原文范围在界面明示 |
-| 原机制不退化 | [38项专项](evidence/workflow-requirements-1.6.0/narrow-r3.log)通过；最终382项联合回归也全部通过 | 1.5结构化模式仍保留其原范围；不能把范围收紧导致的待核对数量增加叫作变笨 |
+| 原机制不退化 | 38项专项（本机历史证据，未纳入 Git：`evidence/workflow-requirements-1.6.0/narrow-r3.log`）通过；最终382项联合回归也全部通过 | 1.5结构化模式仍保留其原范围；不能把范围收紧导致的待核对数量增加叫作变笨 |
 | 知识不会凭部分成功升级 | 未覆盖任务只能产生带“目标要求覆盖尚未证实”的执行观察，报价方法不可自动采用 | 没有长期成长、经验净收益或token节省实测 |
 
 [首轮真实浏览器](evidence/workflow-requirements-1.6.0/ui-r1/browser.json)验证：迟到响应不覆盖新选项、明确请求结案、附加保修保持WAITING_EVIDENCE、预算冲突时界面及直接HTTP拒绝且不创建任务。其后补强未支持控制表达拦截、原文范围标识与知识限定，在最终联合验收中重新覆盖。专项36/37/38项是迭代记录，不能相加计数；本轮未读取模型凭据、调用云模型、部署服务或发布真实报价能力。
@@ -2694,13 +2694,13 @@ JPF/r1 不改写；本轮是 V-TRI/V-CLC 的局部接线证据，完整场景仍
 | 附件不获授权，未核对上下文不消失 | 非一致附件、图片、前文、修订/返工链保持未核验；一致附件只证明原样传入 | 多轮覆盖关系、来源可信度和附件含义仍待后续实现 |
 | 原机制不退化、长期更聪明 | 最终保留原382项、增加32项，414项及全部原界面流程通过；架构检查200个Python文件零错误 | 不能把回归通过当成长评分；长期收益、真实请求泛化、完整费用和生产运行未测 |
 
-[32项专项](evidence/workflow-sources-1.7.0/narrow-r2.log)通过。[浏览器第二轮](evidence/workflow-sources-1.7.0/ui-r2/browser.json)用合成聊天原话，经真实HTTP/worker/工作台验证三条分支：一致来源可结案、遗漏保修保持待核验、原话预算冲突拒绝且无Task；包含迟到响应与窄屏检查。首轮专项因新增测试中的字典键引号错误未导入，修正后重跑；[首轮界面记录](evidence/workflow-sources-1.7.0/ui-r1/browser.json)因探针预期文案与实际文案不一致超时，修正精确文案后重跑。原失败记录保留，没有放宽运行判定。
+32项专项（本机历史证据，未纳入 Git：`evidence/workflow-sources-1.7.0/narrow-r2.log`）通过。[浏览器第二轮](evidence/workflow-sources-1.7.0/ui-r2/browser.json)用合成聊天原话，经真实HTTP/worker/工作台验证三条分支：一致来源可结案、遗漏保修保持待核验、原话预算冲突拒绝且无Task；包含迟到响应与窄屏检查。首轮专项因新增测试中的字典键引号错误未导入，修正后重跑；[首轮界面记录](evidence/workflow-sources-1.7.0/ui-r1/browser.json)因探针预期文案与实际文案不一致超时，修正精确文案后重跑。原失败记录保留，没有放宽运行判定。
 
 原JPF/r1预测不改写。更多任务停在待核验可能来自发现旧遗漏，也可能来自不必要拒绝；需要独立真实样本区分，不能把待核验比例或用例数量当智能分。下一步优先验证真实请求和多轮增补/撤销规则，再接完整费用与有限常设委托，最后扩大经验复用和多Bot接管范围。
 
 [首轮冻结联合验收](evidence/workflow-sources-1.7.0/frozen-r1/run/report.json)中414项不同用例、架构、文档、原性能预算和其他八条浏览器流程通过；1.6目标审阅探针刷新后尚未等待新DOM，滚动到已被替换的旧元素时失败，整轮保持FAIL。修正探针为等待详情HTTP成功和新评价节点出现，再滚动及截图；没有删除原断言、增加任意重试或放宽产品判定。[目标审阅专项复验](evidence/workflow-sources-1.7.0/request-ui-r2/browser.json)通过后，最终候选重新冻结联合验收。
 
-[第二轮冻结预检](evidence/workflow-sources-1.7.0/frozen-r2/documentation-preflight.log)拒绝缺失的并行桌面机器人证据引用：副本复制时尚无 `face-preview-checks-r3.json`。未改动该领域实现或删除引用；共享文档及证据齐备后文档检查恢复通过，再冻结新一轮。第二轮没有进入业务回归，不能与第一轮用例数相加。
+第二轮冻结预检（本机历史证据，未纳入 Git：`evidence/workflow-sources-1.7.0/frozen-r2/documentation-preflight.log`）拒绝缺失的并行桌面机器人证据引用：副本复制时尚无 `face-preview-checks-r3.json`。未改动该领域实现或删除引用；共享文档及证据齐备后文档检查恢复通过，再冻结新一轮。第二轮没有进入业务回归，不能与第一轮用例数相加。
 
 [第三轮最终结果](evidence/workflow-sources-1.7.0/frozen-r3/result.json)冻结505个源码输入及55个支持输入，运行中副本和共享源码、支持输入均保持一致。原观察器30次/组P95为25.315→27.536ms，增加2.221ms，低于原25ms预算；这不是新增来源核验或完整任务链的规模性能实测。[最终来源界面](evidence/workflow-sources-1.7.0/frozen-r3/run/quote_sources/browser.json)与[原目标界面](evidence/workflow-sources-1.7.0/frozen-r3/run/quote_request/browser.json)均通过，合成任务零模型调用；未调用真实用户模型或业务数据。
 
@@ -2719,11 +2719,11 @@ JPF/r1 不改写；本轮是 V-TRI/V-CLC 的局部接线证据，完整场景仍
 | 兼容原机制 | 原414项零遗漏，新增37项，最终451项全过；旧九条界面流程保留；旧1.7核验不随新策略版本改写 | 保持不新增权限、知识库和执行器；生产未部署 |
 | 越用越聪明 | 更可追溯的要求和失败证据可支持后续改进 | 本轮没有自动归纳报价方法，也没有长期经验收益或token节省分数 |
 
-早期[narrow-r1](evidence/workflow-changes-1.8.0/narrow-r1.log)中测试会话编号含原接口不允许的冒号，21项在会话受理前被拒绝；修正夹具编号，未放宽接口。[narrow-r2](evidence/workflow-changes-1.8.0/narrow-r2.log)剩余一项错误因夹具在计划引用后替换工具版本，触发原plan_version_changed；改为创建Goal前发布故障工具，以测试真正的独立结果核验。[首轮浏览器](evidence/workflow-changes-1.8.0/ui-r1/browser.json)假设刷新必然替换DOM，但工作台已支持相同结果保留节点；探针改为等待HTTP结果对应的详情签名及实际完成文字，不删除结果断言。[界面复验](evidence/workflow-changes-1.8.0/ui-r2/browser.json)通过。
+早期narrow-r1（本机历史证据，未纳入 Git：`evidence/workflow-changes-1.8.0/narrow-r1.log`）中测试会话编号含原接口不允许的冒号，21项在会话受理前被拒绝；修正夹具编号，未放宽接口。narrow-r2（本机历史证据，未纳入 Git：`evidence/workflow-changes-1.8.0/narrow-r2.log`）剩余一项错误因夹具在计划引用后替换工具版本，触发原plan_version_changed；改为创建Goal前发布故障工具，以测试真正的独立结果核验。[首轮浏览器](evidence/workflow-changes-1.8.0/ui-r1/browser.json)假设刷新必然替换DOM，但工作台已支持相同结果保留节点；探针改为等待HTTP结果对应的详情签名及实际完成文字，不删除结果断言。[界面复验](evidence/workflow-changes-1.8.0/ui-r2/browser.json)通过。
 
 真实请求评测保持未运行：当前只有公开标记的自编合成工程正反例和真实HTTP/worker/浏览器流程，没有独立收集且未参与规则编写的用户请求集。不把这些测试叫作留出集，不填业务Q、误拒率、人工介入净减少或完整费用收益。后续真实评测必须分别统计正确结案、错误结案、正确拒绝和不必要拒绝，并保留人工决策与实际采用经验记录。
 
-[36项专项复验](evidence/workflow-changes-1.8.0/narrow-r3.log)通过后，新增[动作之间来源变化反例](evidence/workflow-changes-1.8.0/boundary-r1.log)通过：只保留首个已确认动作及1单位成本，后续交付停止。这37项均纳入最终451项，不把迭代重复运行次数累计为独立用例。最终[新增浏览器流程](evidence/workflow-changes-1.8.0/frozen-r1/run/quote_changes/browser.json)验证替换与撤销的历史展示、未知新增条件、模型错配、异步响应和390px窄屏；[实际执行记录](evidence/workflow-changes-1.8.0/frozen-r1/run/quote_changes/runtime.json)为临时合成任务、零模型调用。
+36项专项复验（本机历史证据，未纳入 Git：`evidence/workflow-changes-1.8.0/narrow-r3.log`）通过后，新增动作之间来源变化反例（本机历史证据，未纳入 Git：`evidence/workflow-changes-1.8.0/boundary-r1.log`）通过：只保留首个已确认动作及1单位成本，后续交付停止。这37项均纳入最终451项，不把迭代重复运行次数累计为独立用例。最终[新增浏览器流程](evidence/workflow-changes-1.8.0/frozen-r1/run/quote_changes/browser.json)验证替换与撤销的历史展示、未知新增条件、模型错配、异步响应和390px窄屏；[实际执行记录](evidence/workflow-changes-1.8.0/frozen-r1/run/quote_changes/runtime.json)为临时合成任务、零模型调用。
 
 [最终冻结结果](evidence/workflow-changes-1.8.0/frozen-r1/result.json)包含507个源码输入、55个支持输入；副本与共享源码、支持输入在验收期间均保持一致。原观察器30次/组P95为26.248→27.160ms，增加0.912ms，低于原25ms门槛；该指标不代表新增要求重放器或完整任务链的规模性能。架构检查201个Python文件零错误。
 
@@ -2759,7 +2759,7 @@ JPF/r1 不改写；本轮是 V-TRI/V-CLC 的局部接线证据，完整场景仍
 
 本轮预测在有限正反例范围得到支持，不能推算真实成功率提升或误拒率下降。冻结511个源码输入及55个支持输入；原观察器P95为29.258→31.758ms，增加2.500ms，低于原25ms门槛；不是新继承核验的规模性能。[原预测与工作状态审计](evidence/workflow-inheritance-1.9.0/candidate-audit.json)保留原摘要；[最终交付检查](evidence/workflow-inheritance-1.9.0/delivery-checks.json)覆盖文档、架构、报告窄屏与最终源码一致性。
 
-失败和修复保留：[首轮专项](evidence/workflow-inheritance-1.9.0/narrow-r1.log)21项通过；[扩展轮](evidence/workflow-inheritance-1.9.0/narrow-r2.log)28项中取消测试误认为已取消任务仍能调用启动，原接口返回invalid_state。修正测试预期，继续检查CANCELLED及零动作，[取消复验](evidence/workflow-inheritance-1.9.0/cancel-r3.log)通过，未修改执行机制。[首轮冻结](evidence/workflow-inheritance-1.9.0/frozen-r1/result.json)已全部通过；随后发现三个文件被写为CRLF，[仅恢复原LF](evidence/workflow-inheritance-1.9.0/format-normalization.json)后再次冻结，第二轮479项通过，但[原预算浏览器门失败](evidence/workflow-inheritance-1.9.0/frozen-r2/run/budget/browser.json)：详情先读PREPARED交付，后读SUCCEEDED任务，形成混合时刻响应。[补充修复范围](evidence/workflow-inheritance-1.9.0/plan-amendment-r1.json)先冻结；[稳定复现](evidence/workflow-inheritance-1.9.0/consistency-reproduction.json)后将详情及观察评价放在同一核心账本事务，新用例通过，原预算断言不变。[最终第三轮](evidence/workflow-inheritance-1.9.0/frozen-r3/result.json)重新通过全部验收。重复轮次不计为新增用例。全仓仍有非本轮文件的既有格式问题；本轮修改范围的格式检查单独签收，不称全仓通过。
+失败和修复保留：首轮专项（本机历史证据，未纳入 Git：`evidence/workflow-inheritance-1.9.0/narrow-r1.log`）21项通过；扩展轮（本机历史证据，未纳入 Git：`evidence/workflow-inheritance-1.9.0/narrow-r2.log`）28项中取消测试误认为已取消任务仍能调用启动，原接口返回invalid_state。修正测试预期，继续检查CANCELLED及零动作，取消复验（本机历史证据，未纳入 Git：`evidence/workflow-inheritance-1.9.0/cancel-r3.log`）通过，未修改执行机制。[首轮冻结](evidence/workflow-inheritance-1.9.0/frozen-r1/result.json)已全部通过；随后发现三个文件被写为CRLF，[仅恢复原LF](evidence/workflow-inheritance-1.9.0/format-normalization.json)后再次冻结，第二轮479项通过，但[原预算浏览器门失败](evidence/workflow-inheritance-1.9.0/frozen-r2/run/budget/browser.json)：详情先读PREPARED交付，后读SUCCEEDED任务，形成混合时刻响应。[补充修复范围](evidence/workflow-inheritance-1.9.0/plan-amendment-r1.json)先冻结；[稳定复现](evidence/workflow-inheritance-1.9.0/consistency-reproduction.json)后将详情及观察评价放在同一核心账本事务，新用例通过，原预算断言不变。[最终第三轮](evidence/workflow-inheritance-1.9.0/frozen-r3/result.json)重新通过全部验收。重复轮次不计为新增用例。全仓仍有非本轮文件的既有格式问题；本轮修改范围的格式检查单独签收，不称全仓通过。
 
 报告[首轮截图](evidence/workflow-inheritance-1.9.0/report-ui-r1.json)遇到浏览器capture接口错误；页面内容未改，原样重试后[桌面1400px与窄屏390px检查](evidence/workflow-inheritance-1.9.0/report-ui.json)通过，无页面横向溢出，并目视检查首屏。该展示失败单独保留，不混入运行用例分数。
 
@@ -2793,9 +2793,9 @@ JPF/r1 不改写；本轮是 V-TRI/V-CLC 的局部接线证据，完整场景仍
 
 流程观察：`反馈更新 → 原后代INVALIDATED或等待 → 只读分析 → 恢复草案 → 新验收 → 正确：VERIFIED／未知：WAITING_EVIDENCE／错误：NEEDS_CORRECTION`。实测已完成旧版再恢复累计6单位；未执行旧版停止后恢复累计4单位；执行过1个计算后等待再恢复累计5单位。这些是工具动作单位，不是token或完整费用，不能推导省钱百分比。
 
-[首轮专项记录](evidence/workflow-recovery-1.10.0/narrow-r1.json)12项中10项报错：实现错误地要求保存文件具有计算回执，合法恢复被拒绝。修复为按原证据类型分别核验，未降低标准；终端长输出被截断，该轮不声称有完整逐项日志。[第二轮](evidence/workflow-recovery-1.10.0/narrow-r2.json)12项通过；[扩展轮](evidence/workflow-recovery-1.10.0/narrow-r3.json)28项通过。[停止/过期许可复验](evidence/workflow-recovery-1.10.0/authority-r4.log)2项通过。最终冻结重新执行全部30项新用例与480项旧用例。[独立浏览器专项](evidence/workflow-recovery-1.10.0/browser-r1/browser.json)覆盖已完成恢复、未开始且有未知要求的恢复、原话变化拒绝恢复；含桌面及390px截图。重复运行不算新增用例。
+[首轮专项记录](evidence/workflow-recovery-1.10.0/narrow-r1.json)12项中10项报错：实现错误地要求保存文件具有计算回执，合法恢复被拒绝。修复为按原证据类型分别核验，未降低标准；终端长输出被截断，该轮不声称有完整逐项日志。[第二轮](evidence/workflow-recovery-1.10.0/narrow-r2.json)12项通过；[扩展轮](evidence/workflow-recovery-1.10.0/narrow-r3.json)28项通过。停止/过期许可复验（本机历史证据，未纳入 Git：`evidence/workflow-recovery-1.10.0/authority-r4.log`）2项通过。最终冻结重新执行全部30项新用例与480项旧用例。[独立浏览器专项](evidence/workflow-recovery-1.10.0/browser-r1/browser.json)覆盖已完成恢复、未开始且有未知要求的恢复、原话变化拒绝恢复；含桌面及390px截图。重复运行不算新增用例。
 
-首轮联合冻结中，510项有509项通过，旧部分前段复用的拒绝顺序回归：预期acceptance_invalid，实际先返回rework_source_changed。[失败日志](evidence/workflow-recovery-1.10.0/frozen-r1/run/regression.log)保留；[修复范围](evidence/workflow-recovery-1.10.0/plan-amendment-r1.json)限制为恢复原检查顺序，旧测试和门槛不变；[两轮输入对照](evidence/workflow-recovery-1.10.0/compatibility-change-audit.json)确认仅一处源码文件变化、测试ID和性能阈值相同。[定点复验](evidence/workflow-recovery-1.10.0/compatibility-r5.log)三项通过；随后重新冻结执行全部验收。
+首轮联合冻结中，510项有509项通过，旧部分前段复用的拒绝顺序回归：预期acceptance_invalid，实际先返回rework_source_changed。失败日志（本机历史证据，未纳入 Git：`evidence/workflow-recovery-1.10.0/frozen-r1/run/regression.log`）保留；[修复范围](evidence/workflow-recovery-1.10.0/plan-amendment-r1.json)限制为恢复原检查顺序，旧测试和门槛不变；[两轮输入对照](evidence/workflow-recovery-1.10.0/compatibility-change-audit.json)确认仅一处源码文件变化、测试ID和性能阈值相同。定点复验（本机历史证据，未纳入 Git：`evidence/workflow-recovery-1.10.0/compatibility-r5.log`）三项通过；随后重新冻结执行全部验收。
 
 原JPF预测不改写；综合Q、真实首次合格率、无谓拒绝率、人工介入、token净收益及长期学习增益均未测。条件检查分只能描述本次有限验收，不与完整业务评分混用。下一步按[真实工作协议](#completion-real-work-acceptance)准备独立脱敏请求、固定参照和候选、冻结硬条件/量表/成本，再比较预测与实测；没有真实任务素材时只能先交付评测采集与诊断机制，不能自行编造真实收益。
 
@@ -2832,9 +2832,9 @@ JPF/r1 不改写；本轮是 V-TRI/V-CLC 的局部接线证据，完整场景仍
 
 **字段通过但正文仍有问题。** [补充正文审阅](evidence/workflow-trials-1.11.0/semantic-review.json)为事后模型辅助审阅，不是独立人工金标准，也不追改冻结分数。r4文档把原始“烘焙失败”扩写成“异常中断”；更正轮把“明天排查”改为“启动并执行烘焙”，没有保留原时间与动作。修正烘焙状态后计划是否需要改变可以提出建议，但应与已确认计划分开，不能静默替换。后续要把事实、推断、建议、旧计划去向及正文/字段一致性纳入新一轮冻结规则，用未见任务验证；不能仅给当前6题补关键词便宣布语义核验完成。
 
-[离线首轮](evidence/workflow-trials-1.11.0/narrow-r1.log)21项中2项失败：替身忽略同末轮文字的不同学习上下文。修正替身选取整段会话后[21项通过](evidence/workflow-trials-1.11.0/narrow-r2.log)，未改领域参考。补缺轮配对、交付失败与UNKNOWN分离、配置边界后[28项通过](evidence/workflow-trials-1.11.0/narrow-r3.log)；提示与采集调整后[同28项通过](evidence/workflow-trials-1.11.0/narrow-r4.log)。
+离线首轮（本机历史证据，未纳入 Git：`evidence/workflow-trials-1.11.0/narrow-r1.log`）21项中2项失败：替身忽略同末轮文字的不同学习上下文。修正替身选取整段会话后21项通过（本机历史证据，未纳入 Git：`evidence/workflow-trials-1.11.0/narrow-r2.log`），未改领域参考。补缺轮配对、交付失败与UNKNOWN分离、配置边界后28项通过（本机历史证据，未纳入 Git：`evidence/workflow-trials-1.11.0/narrow-r3.log`）；提示与采集调整后同28项通过（本机历史证据，未纳入 Git：`evidence/workflow-trials-1.11.0/narrow-r4.log`）。
 
-文档预检曾把生成.md证据当成未登记章节。未放宽检查器：前两轮[原包r1](evidence/workflow-trials-1.11.0/live-r1-original.zip)、[原包r2](evidence/workflow-trials-1.11.0/live-r2-original.zip)逐文件核对字节一致后，仅把阅读副本改为.md.txt，旧相对路径和记录完整保存在ZIP中。[r1映射](evidence/workflow-trials-1.11.0/live-r1/artifact-storage.json)与[r2映射](evidence/workflow-trials-1.11.0/live-r2/artifact-storage.json)可复核；后续直接采集证据文本后缀，原会话.md保持原格式。
+文档预检曾把生成.md证据当成未登记章节。未放宽检查器：前两轮原包r1（本机历史证据，未纳入 Git：`evidence/workflow-trials-1.11.0/live-r1-original.zip`）、原包r2（本机历史证据，未纳入 Git：`evidence/workflow-trials-1.11.0/live-r2-original.zip`）逐文件核对字节一致后，仅把阅读副本改为.md.txt，旧相对路径和记录完整保存在ZIP中。[r1映射](evidence/workflow-trials-1.11.0/live-r1/artifact-storage.json)与[r2映射](evidence/workflow-trials-1.11.0/live-r2/artifact-storage.json)可复核；后续直接采集证据文本后缀，原会话.md保持原格式。
 
 [冻结联合验收](evidence/workflow-trials-1.11.0/frozen-r1/run/report.json)冻结519个源码输入、55个支持输入；原观察器p95关闭24.522ms、开启28.183ms，增加3.661ms，小于原25ms门限。[交付审计](evidence/workflow-trials-1.11.0/delivery-checks.json)核对当前源码与冻结一致、文档/架构/选定差异、报告1400/390像素及原预测摘要；共享树其他改动的格式发现单独保留，不声称全树格式通过。原任务、取消、预算、记忆、权限与工作流用例全部保留；这不等于全部现实场景已验证。
 
@@ -2887,7 +2887,7 @@ JPF/r1 不改写；本轮是 V-TRI/V-CLC 的局部接线证据，完整场景仍
 
 [事前提示修订](evidence/workflow-fidelity-1.12.0/prompt-plan.json)在查看新基线答案前记录；[补回放的事前修订](evidence/workflow-fidelity-1.12.0/plan-amendment-v1-regression.json)增加原v1模式最多24次调用，总上限84次，无自动重试。原基线在修改提示前已[回读核验](evidence/workflow-fidelity-1.12.0/baseline-prechange-recheck.json)；候选与保留题和v1回放均绑定最终源码，不能将基线旧源码误写为当前候选。
 
-专项[首轮失败](evidence/workflow-fidelity-1.12.0/narrow-r1.log)是错误导入测试夹具，导致模块未加载；修正导入后[23项通过](evidence/workflow-fidelity-1.12.0/narrow-r2.log)，与原试验及个人工作流[51项合跑通过](evidence/workflow-fidelity-1.12.0/narrow-combined.log)，实际提示修订后[同51项通过](evidence/workflow-fidelity-1.12.0/narrow-candidate.log)。未删断言或降验收门。
+专项首轮失败（本机历史证据，未纳入 Git：`evidence/workflow-fidelity-1.12.0/narrow-r1.log`）是错误导入测试夹具，导致模块未加载；修正导入后23项通过（本机历史证据，未纳入 Git：`evidence/workflow-fidelity-1.12.0/narrow-r2.log`），与原试验及个人工作流51项合跑通过（本机历史证据，未纳入 Git：`evidence/workflow-fidelity-1.12.0/narrow-combined.log`），实际提示修订后同51项通过（本机历史证据，未纳入 Git：`evidence/workflow-fidelity-1.12.0/narrow-candidate.log`）。未删断言或降验收门。
 
 [完整冻结验收](evidence/workflow-fidelity-1.12.0/frozen-r1/run/report.json)使用523个源码、55个支持输入；原观察器p95关闭25.513ms、开启26.113ms，增加0.600ms，小于原25ms门限。[交付审计](evidence/workflow-fidelity-1.12.0/delivery-checks.json)核对当前源码、原始试验重算、文档/架构/选定差异、报告1400/390像素及原预测摘要。共享树其他改动的3705处格式发现保留，未擅自改动，不宣称全树格式通过。
 
@@ -2918,7 +2918,7 @@ JPF/r1 不改写；本轮是 V-TRI/V-CLC 的局部接线证据，完整场景仍
 
 [15条反例校准](evidence/workflow-shadow-1.13.0/calibration.json)为第一方预设合成样本，不能估计真实分布误判率。合理改写会被逐字缺失误报，原文保留后添加无依据结论可能漏提示。[全部12条自由正文事后复看](evidence/workflow-shadow-1.13.0/prose-review.json)发现日志增加未提供的“当前无进行中导出任务”，学习文字把“只看过”写成“完成学习”有夸大风险。复看由助手完成，不是独立人工评分；原TRIAL-SEM-01/02仍OPEN，不因新小样本保留计划而关闭。
 
-失败与修复均保留：[专项首轮](evidence/workflow-shadow-1.13.0/narrow-r1.log)27项通过，补边界后[相关模块合跑106项](evidence/workflow-shadow-1.13.0/narrow-r2.log)通过，最终专项30项已纳入591项。[UI r1](evidence/workflow-shadow-1.13.0/ui-r1/browser.json)在初始化完成前填写且清理遗漏临时mail服务；[r2](evidence/workflow-shadow-1.13.0/ui-r2/browser.json)错误期待200，原接口实际202。修复探针后r3通过基础断言，但目视发现窄屏发送按钮底边868px超出844px视口约24px；[事前修复补记](evidence/workflow-shadow-1.13.0/plan-amendment-mobile.json)后限制编辑区高度并补按钮可见断言，[r4](evidence/workflow-shadow-1.13.0/ui-r4/browser.json)底边760px，最终联合界面也通过。未放宽产品准入。
+失败与修复均保留：专项首轮（本机历史证据，未纳入 Git：`evidence/workflow-shadow-1.13.0/narrow-r1.log`）27项通过，补边界后相关模块合跑106项（本机历史证据，未纳入 Git：`evidence/workflow-shadow-1.13.0/narrow-r2.log`）通过，最终专项30项已纳入591项。[UI r1](evidence/workflow-shadow-1.13.0/ui-r1/browser.json)在初始化完成前填写且清理遗漏临时mail服务；[r2](evidence/workflow-shadow-1.13.0/ui-r2/browser.json)错误期待200，原接口实际202。修复探针后r3通过基础断言，但目视发现窄屏发送按钮底边868px超出844px视口约24px；[事前修复补记](evidence/workflow-shadow-1.13.0/plan-amendment-mobile.json)后限制编辑区高度并补按钮可见断言，[r4](evidence/workflow-shadow-1.13.0/ui-r4/browser.json)底边760px，最终联合界面也通过。未放宽产品准入。
 
 [frozen-r1](evidence/workflow-shadow-1.13.0/frozen-r1-interruption.json)无完整结果，恢复时无进程，原因未知，不能计通过；frozen-r2重新运行完整门。实测试跑之后只改移动端CSS和界面探针：原实测summary和回执保持；当前整包重算如实返回CHANGED。[分范围源码核验](evidence/workflow-shadow-1.13.0/trial-source-review.json)确认其余源码包括生成/核对全部相同，原观察重算不变。因此模型证据限定用于未变动组件，完整最终候选由frozen-r2另行验收，不把两个版本冒充同一整包。
 

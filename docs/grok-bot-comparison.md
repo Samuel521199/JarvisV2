@@ -640,7 +640,7 @@ Jarvis 当前可运行界面是网页工作台：项目/会话导航、聊天、
 
 已采纳的下一形态是“透明 Logo 精灵 + 场景卡片 + 按需打开工作台”，原生实现仍 proposed。它在日常陪伴和低打扰方面更贴近 Jarvis 的定位；代价是空间小，必须精确处理焦点、窗口命中、通知排队和状态聚合。Grok Bot 的可展开执行界面可以成为补充工作台的参考，不必改变已确定的 Logo 与主体形态。
 
-当前显示依据可查看[真实记忆检索面板](evidence/memory-retrieval-1.0.0/recall-ui-expanded.png)；后续形态查看[场景设计参考图](evidence/desktop-companion-2026-10-25/presence-events.jpg)。前者只代表相应模块验收时的真实页面，后者是设计图，两者都不能冒充本轮全系统实测截图。设计权威归[工程首页](../README.md#desktop-companion-overview)。
+当前显示依据可查看真实记忆检索面板（本机历史证据，未纳入 Git：`evidence/memory-retrieval-1.0.0/recall-ui-expanded.png`）；后续形态查看[场景设计参考图](evidence/desktop-companion-2026-10-25/presence-events.jpg)。前者只代表相应模块验收时的真实页面，后者是设计图，两者都不能冒充本轮全系统实测截图。设计权威归[工程首页](../README.md#desktop-companion-overview)。
 
 <a id="grok-operation"></a>
 ## 运作机制：公开事实与合理推断

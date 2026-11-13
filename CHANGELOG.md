@@ -1,5 +1,11 @@
 # 版本记录
 
+## v0.1.9 · 2026-11-13（文档方案更新，未日用采用）
+
+新增[大型陪聊平台长期记忆优化方案](docs/long-term-memory-scale-optimization.md#platform-memory-scope)：分层记忆、关键事实压缩、Embedding/Reranker 与指令评测、Redis 热状态、后台梦境整理、聊天/状态异步更新、纠正删除和成本验收。方案标记 proposed，未实现为云端多租户服务，也未证明质量、成本或延迟改善。独立 JarvisV2 与原 JachinV2 的工程/验收归属分别说明。
+
+收尾统一 VERSION、发布锁、文档清单的源码版本与 README 源码标识；登记专项文档并从原记忆章节链接，保留既有未提交功能改动。初始 v0.1.9 标签指向 5a46c91，后续收尾以分支提交及补充检查点为准，不覆盖已发布标签。检查范围和实际结果见[收尾记录](docs/evidence/memory-docs-closeout-20261113.md#memory-docs-closeout-checks)。
+
 2026-11-12 日用独立恢复：备份恢复至D:/Jarvis-runtime，保留D:/Jarvis-dev开发数据，模型库继续使用D盘备份仓库。受控程序包207项（206通过/1跳过）后采用v0.1.7、epoch 1；644个内部会话路径重绑、4个原内容摘要工具恢复并通过24个既有用例。模型库三整模、高模/LOD联动、线框和标注实际浏览器检查通过；原生双窗口已显示、Gmail一次只读连通检查成功。未恢复的旧项目、产物及可选环境和历史UNKNOWN明确保留。[范围与证据](docs/delivery-validation.md#daily-restore-20261112)。
 
 2026-11-11 资产与Git恢复：完整校验并迁移模型库至D盘备份目录，保留13资产/24版本/74登记文件及必要证据；原C盘副本已移走。用户删除旧日用根后，按原JarvisV2远端恢复工作树历史，保留开发分支上尚未合入main的8个提交及本地v0.1.6/v0.1.7、邮件持续安排和模型检视增量。模型、私人配置和机器恢复材料继续留在本机，不混入源码提交。[范围](docs/tasks-agents.md#studio3d-model-library)。

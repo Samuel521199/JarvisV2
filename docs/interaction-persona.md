@@ -290,11 +290,11 @@ Jarvis 首先是可以自然交流的个人伙伴，无需打开项目才能聊�
 
 **r5 已由主人确认为本阶段实施基准（accepted）；正式分层资产、原生动画与真实状态接入仍 proposed。** 2026-10-27，主人确认“先这样吧以后再说”“先按照这个进行”：当前外观与面罩状态方案按本版推进，暂不继续扩展造型变体；后续若调整，在此权威节修订。 外框采用单圈圆润轮廓：顶部、两侧更饱满，下缘为宽而柔和的弧线，不再使用尖下巴、盾形斜角或层叠装甲。银蓝边框降低深浅反差，围住完整黑色电子面罩；无颈部、躯干和四肢。额头、边框与面罩均不叠加 J、星核或品牌徽章。此项是精灵造型修订，工作台的品牌资产仍由品牌规范管理。
 
-![无 J 标记、圆润外框与柔和双眼的当前预览](evidence/desktop-robot-2026-10-27/face-soft-shell-r5.png)
+无 J 标记、圆润外框与柔和双眼的当前预览（本机历史证据，未纳入 Git：`evidence/desktop-robot-2026-10-27/face-soft-shell-r5.png`）
 
 日常眼形保留放大的柔和圆角轮廓；进入工作状态后，眼睛可直接替换成大面积状态图形。不能只改同一双眼的速度和颜色，让聆听、思考、排队看起来相同。不同状态的形状、空间组织和节奏按[电子面罩规范](#desktop-face-display)统一定义；精灵和工作台仍复用[同一功能与设置基础](architecture.md#unified-system-principle)。
 
-r5 由预览 HTML 内的 SVG 图形绘制，单层头壳、面罩与状态内容分别绘制，不加载头部品牌图片；这不证明原生透明窗口已经实现。此前[全身稿](evidence/desktop-robot-2026-10-27/jarvis-robot-concept-v1.png)与[复杂头壳稿](evidence/desktop-robot-2026-10-27/jarvis-head-concept-v2.png)保留为过程参考。早期 v2 使用内置图像生成工具产生 RGBA 透明图；其[提示词](evidence/desktop-robot-2026-10-27/head-v2-generation.json)和[素材检查](evidence/desktop-robot-2026-10-27/head-v2-asset-check.json)仍只描述那个版本。
+r5 由预览 HTML 内的 SVG 图形绘制，单层头壳、面罩与状态内容分别绘制，不加载头部品牌图片；这不证明原生透明窗口已经实现。此前全身稿（本机历史证据，未纳入 Git：`evidence/desktop-robot-2026-10-27/jarvis-robot-concept-v1.png`）与复杂头壳稿（本机历史证据，未纳入 Git：`evidence/desktop-robot-2026-10-27/jarvis-head-concept-v2.png`）保留为过程参考。早期 v2 使用内置图像生成工具产生 RGBA 透明图；其[提示词](evidence/desktop-robot-2026-10-27/head-v2-generation.json)和[素材检查](evidence/desktop-robot-2026-10-27/head-v2-asset-check.json)仍只描述那个版本。
 
 <a id="desktop-face-display"></a>
 #### 电子面罩：双眼、动画表情与短文字
@@ -341,7 +341,7 @@ r5 由预览 HTML 内的 SVG 图形绘制，单层头壳、面罩与状态内容
 
 [动态设计预览](evidence/desktop-robot-2026-10-27/face-expression-preview.html)提供九种状态形态、待命的四种眼神、三种显示模式、尺寸、明暗背景和减弱动效；增加可点选的九宫格与手动“播放一轮状态”。主视图、九宫格和尺寸示例复用同一个图形渲染函数。暂停、减少动态效果、页面隐藏时停止动态；暂停中切换状态仍显示完整静态图形，完成勾不重复绘制。它不调用模型、不接麦克风、不连接真实任务，不能当作原生桌面功能已交付。[r5 预览检查](evidence/desktop-robot-2026-10-27/face-preview-checks-r5.json)记录实际覆盖范围。
 
-![九种状态的静态形态对照，完整定义以上表为准](evidence/desktop-robot-2026-10-27/face-state-grid-r5.png)
+九种状态的静态形态对照，完整定义以上表为准（本机历史证据，未纳入 Git：`evidence/desktop-robot-2026-10-27/face-state-grid-r5.png`）
 
 <a id="personal-plan-ui"></a>
 ## 计划、生活与私密事务

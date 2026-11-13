@@ -1,12 +1,14 @@
 # JARVIS
 
+**源码 v0.1.9 · 文档方案更新，未日用采用。** 新增[大型陪聊平台长期记忆优化方案](docs/long-term-memory-scale-optimization.md#platform-memory-scope)，当前状态为 proposed。此仓库为独立 JarvisV2 工程；旧 JachinV2 的实现与验收不自动继承。下文日用功能描述按原有验收记录理解，源码版本不代表已安装或上线。见[本轮收尾记录](docs/evidence/memory-docs-closeout-20261113.md#memory-docs-closeout-scope)。
+
 <p align="center">
   <img src="apps/workbench/brand/core.png" width="156" alt="Jarvis blue core emblem">
 </p>
 <p align="center"><strong>与你交流 · 为你办事 · 与你一同成长</strong></p>
 <p align="center">A personal AI companion, built around your computer and your context.</p>
 <p align="center">
-  <img src="https://img.shields.io/badge/release-v0.1.7-38bdf8?style=for-the-badge" alt="Release v0.1.7">
+  <img src="https://img.shields.io/badge/source-v0.1.9-38bdf8?style=for-the-badge" alt="Source v0.1.9">
   <img src="https://img.shields.io/badge/Local_First-0f172a?style=for-the-badge" alt="Local first">
   <img src="https://img.shields.io/badge/Python-3.13-3776AB?style=for-the-badge" alt="Python 3.13">
   <img src="https://img.shields.io/badge/Stage-Early_Preview-8b5cf6?style=for-the-badge" alt="Early preview">
@@ -17,7 +19,7 @@
 
 一个以普通 PC 为主要载体、以个人为主、以其家庭或以其为中心的小团体为辅，能够长期相处、自主工作并持续成长的 AI 助手与伙伴。最终目标是在明确目标与有效授权内独立完成任务、验证结果并交付。
 
-**这里是工程与文档的主入口。** 当前版本 **v0.1.7 · 早期预览，已日用采用**（[当前状态](docs/current-state.md)）（首个 GitHub 发布为 v0.1.0），历史开发证据保持原编号，版本号规则见 [CHANGELOG](CHANGELOG.md#changelog-rules)。低打扰持续安排现已接入Gmail只读检查、规则筛选、共用待办/提醒与有限跟进，和固定文字计划一起复用原队列、授权、结果反馈与恢复。模型库与原有个人/专业功能保留。[受控 MCP 接入](docs/tasks-agents.md#mcp-runtime)使用原任务体系。当前自主研发仍受限于纯文本能力，完整助手与 K0—K6 按分项证据判断。
+**这里是工程与文档的主入口。** 最近日用验收记录 **v0.1.7 · 早期预览，已日用采用**（[当前状态](docs/current-state.md)）（首个 GitHub 发布为 v0.1.0），历史开发证据保持原编号，版本号规则见 [CHANGELOG](CHANGELOG.md#changelog-rules)。低打扰持续安排现已接入Gmail只读检查、规则筛选、共用待办/提醒与有限跟进，和固定文字计划一起复用原队列、授权、结果反馈与恢复。模型库与原有个人/专业功能保留。[受控 MCP 接入](docs/tasks-agents.md#mcp-runtime)使用原任务体系。当前自主研发仍受限于纯文本能力，完整助手与 K0—K6 按分项证据判断。
 
 **先读这一页：[当前真实状态](docs/current-state.md)**：能运行什么、哪些只是设计、证据边界与已知风险都在一页内。按版本的变更流水见 [CHANGELOG](CHANGELOG.md)。
 

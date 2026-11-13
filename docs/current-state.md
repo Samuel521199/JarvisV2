@@ -1,5 +1,7 @@
 # 当前真实状态
 
+2026-11-13 源码 v0.1.9 为[大型平台记忆优化方案](long-term-memory-scale-optimization.md#platform-memory-scope)及文档收尾更新，状态 proposed，未构建或安装本轮日用候选。VERSION、发布锁与 manifest 的版本是源码版本，不改写下方既有日用验收。Redis 热记忆、平台重排和梦境整理的实施/性能验收仍待完成；[收尾证据](evidence/memory-docs-closeout-20261113.md#memory-docs-closeout-checks)仅证明文档与提交检查。
+
 2026-11-12 日用恢复：已从11月11日备份恢复到独立 `D:/Jarvis-runtime/user-data`，当前采用v0.1.7、epoch 1，开发数据未覆盖。工作台、模型库高模/LOD同步对比、线框和持久标注通过实际浏览器检查；原生机器人及标签窗口已显示，Gmail只读连通检查成功。两个已删除项目目录、部分原产物和未备份的可选环境仍缺失，历史UNKNOWN保留且不重放。[恢复证据与限制](delivery-validation.md#daily-restore-20261112)。
 
 2026-11-11 恢复核对：原D盘日用目录已由用户删除，当前代码保留在D:/Jarvis-dev，日用数据尚未重新安置或启动。模型库13资产、24版本、74登记文件完整；整库8166文件已按摘要迁至D:/Jarvis-backups/JarvisModelLibrary。已从正确的JarvisV2远端找回开发分支历史，并与本地新代码比较；源码与资产备份分开，不上传模型或私人数据。[迁移和恢复范围](tasks-agents.md#studio3d-model-library)。
