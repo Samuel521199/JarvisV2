@@ -1,5 +1,7 @@
 # 版本记录
 
+2026-11-14候选收尾：cc1f354在独立业务根经既有冻结控制器检查，207项中206通过/1项平台跳过；未创建日用ready记录或采用，不以技术检查替代尚未达到的90%语言门。首次夹具初始化遗漏与修正均保留。[记录](docs/delivery-validation.md#request-document-evidence-20261113)。
+
 2026-11-13受理与交付开发（未日用采用）：补本地请求表达，192条新表述的逐轮首次成绩保留，最后75%未达90%门；显式摘录文档先核对来源再确定性渲染，原聊天/影子默认不改写。三域工程模型产物修复转义失败并精简重复依据，总token仍高于原始9.3%、费用估算低6.1%，不记作全面智能提升；补代理忙的已知派发前拒绝分类。212项相关回归通过，原失败和未验证项见[验收](docs/delivery-validation.md#request-document-evidence-20261113)。
 
 2026-11-13 E盘迁移（环境变更，未采用新源码包）：日用、开发、模型及恢复材料统一至E:/Jarvis；自包含Git仍连接Samuel521199/JarvisV2。双服务在线、真实NTFS LPAC验证通过；补回初版快照误漏的14份依赖锁并修复恢复校验产生空sidecar。新增显式离线Codex记忆迁移工具，真实切换待退出后执行；C临时副本删除被自动审批拒绝，D原件保留。[操作](docs/stack-project-layout.md#external-storage-local-layout)／[验收](docs/delivery-validation.md#external-storage-evidence-20261113)。

@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "E:\Jarvis\runtime\user-data\deployment\controllers\c019b64ea9de2dfdbec375811a7c81cc2f1bb93fff31a5aa5002f752805ed3ae\apps\development\releases.py", line 9, in <module>
+    main()
+    ~~~~^^
+  File "E:\Jarvis\runtime\user-data\deployment\controllers\c019b64ea9de2dfdbec375811a7c81cc2f1bb93fff31a5aa5002f752805ed3ae\host\application_release.py", line 122, in main
+    value = app.stage(args.archive)
+  File "E:\Jarvis\runtime\user-data\deployment\controllers\c019b64ea9de2dfdbec375811a7c81cc2f1bb93fff31a5aa5002f752805ed3ae\modules\release_recovery\application.py", line 168, in stage
+    with RunLock(self.root, 'application-release'), self.staging() as incoming:
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Jarvis\runtime\user-data\deployment\controllers\c019b64ea9de2dfdbec375811a7c81cc2f1bb93fff31a5aa5002f752805ed3ae\control\recovery\gate.py", line 61, in __enter__
+    self.stream = self.path.open("a+b")
+                  ~~~~~~~~~~~~~~^^^^^^^
+  File "D:\soft\Python313\Lib\pathlib\_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'E:\\Jarvis\\validation\\isolated-package-cc1f354\\data\\state\\application-release.lock'

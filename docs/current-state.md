@@ -1,5 +1,7 @@
 # 当前真实状态
 
+2026-11-14收尾：本地源码检查点cc1f354；独立候选207项中206通过、1项平台跳过，已核对冻结控制器与包内运行摘要。未创建日用准备采用记录，当前日用仍v0.1.8/epoch7；语言75%未达门及Codex离线迁移等原缺口继续保留。[收尾证据](delivery-validation.md#request-document-evidence-20261113)。
+
 2026-11-13后续验收：开发源码已补本地请求表达、显式来源文档渲染和代理忙的派发前拒绝辨识。四轮留出最后21/28（75%），未达90%门；三域工程任务12个结果通过限定条件，成本退步及修复均保留，不能称独立用户或学习质量达标。日用仍v0.1.8、epoch7，尚未采用新源码。[本轮完整证据与缺口](delivery-validation.md#request-document-evidence-20261113)。
 
 2026-11-13外接盘迁移：当前权威源码`E:/Jarvis/dev`，日用`E:/Jarvis/runtime`，模型库`E:/Jarvis/models`，恢复材料`E:/Jarvis/backups`；日用v0.1.8 epoch6与开发同时在线，真实LPAC Worker通过。Codex记忆实际仍在C盘，离线迁移工具已准备，须退出/迁移/重启验收；C临时删除被自动审批拒绝，D原件暂留，不能称已全量腾空C/D。[布局与操作](stack-project-layout.md#external-storage-local-layout)／[验收、失败及边界](delivery-validation.md#external-storage-evidence-20261113)。

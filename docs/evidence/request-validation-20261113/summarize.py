@@ -47,6 +47,15 @@ def main():
         'remaining':['Language final holdout below 90 percent','Independent end-user requests and supplier quotation quality',
             'Long-term knowledge benefit and negative transfer','Whole-PC shared resource leases','Multi-Bot ownership and bounded self-healing',
             'Codex offline storage cutover and restart verification','Production controller/source adoption and complete legacy retirement']}
+    package_path=HERE/'isolated-package-20261114-r2/result.json'
+    if package_path.is_file():
+        package=json.loads(package_path.read_text(encoding='utf-8'))
+        validation=package['steps'][-1]['result']['approval']['receipt']['report']
+        total,failed,errors,skipped=map(int,validation['tests_summary'].split())
+        report['independent_package_validation']={'source_commit':package['source_commit'],'build':package['build'],
+            'passed':package['passed'],'tests_total':total,'tests_passed':total-failed-errors-skipped,'skipped':skipped,
+            'runtime_intact':validation['runtime_intact'],'controller_build':package['controller_build'],
+            'production_adopted':False,'daily_ready_record_created':False}
     (HERE/'summary.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     print(json.dumps({'language_gate_passed':report['language_gate_passed'],'provider_tokens':report['usage']['known_provider_tokens'],'cost_comparison':report['cost_comparison']}))
 
