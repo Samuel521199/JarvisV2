@@ -7,6 +7,7 @@
 
 **本章导航**
 
+- [自然请求留出、真实模型产物与显式文档渲染（2026-11-13）](#request-document-evidence-20261113)
 - [开源 Agent 机制与编码适配验收（proposed）](#open-source-adoption-validation)
 - [知识与记忆选型实验（proposed）](#memory-selection-evaluation)
   - [对照方法](#section-73af5598cfee)
@@ -160,6 +161,39 @@
 - [个人助理开发收尾与兼容升级（2026-11-09）](#assistant-release-20261109)
 - [网页精灵共享能力与排空修复（2026-11-04）](#companion-shared-evidence)
 <!-- book-nav:end -->
+
+<a id="request-document-evidence-20261113"></a>
+## 自然请求留出、真实模型产物与显式文档渲染（2026-11-13）
+
+**结论：格式交付已形成限定技术闭环，语言泛化尚未达门。** 开发源码增加明确本地请求表达、显式结构文档渲染及派发前忙拒绝的辨识；日用仍v0.1.8，epoch7，新源码未采用。四轮新表述均比日用版多处理明确请求，但最后一轮21/28（75%）低于事前90%门槛；不以已见修复100%签收广泛自然语言。完整[机器汇总](evidence/request-validation-20261113/summary.json)与[源码副本摘要](evidence/request-validation-20261113/source-checkpoint.json)保留。
+
+| 轮次：首次评分，不回写 | 日用版正确自动处理/28 | 当轮开发版/28 | 否定或歧义误受理/20 | 后续性质 |
+|---|---|---|---|---|
+| 新表述r1 | 2 | 10（35.7%） | 0 | 修复后28/28仅开发回归，不是新留出成绩 |
+| 新表述r2 | 3 | 24（85.7%） | 0 | 未达到90%，随后修复4条；第一次查看前的一次源码补正单独留档 |
+| 新表述r3 | 2 | 22（78.6%） | 0 | 未达到90%，随后补礼貌问句、schedule、加入等；不覆盖原成绩 |
+| 新表述r4 | 2 | 21（75%） | 0 | 仍缺截止时间、列表变体及同句代词等7条，保持待改进 |
+
+共192条**表述**，由独立措辞模型看不到实现、旧例和得分的情况下生成；标题/时点/场景与金标由操作者预先声明并逐轮审阅。共享场景族、语言改写和同一作者链不能算192个独立用户任务，不能估算总体零误受理率。上述仅强制候选的宿主影子受理，逐项核对内容、时间、对象、操作及原始夹具无写入，不能代替模型选择动作后的真实业务验收。原金标和失败不改；r2的查看前补正见[时间线](evidence/request-validation-20261113/unseen-r2/source-amendment-before-access.json)。
+
+| 三域受控真实模型试验 | 条件匹配结果 | total_tokens | 冻结价表API估算USD | 解释 |
+|---|---|---|---|---|
+| 原始比较/整理/学习任务 | 8/12，学习4条正文转义失败 | 33,151 | 0.03761325 | 事实/业务字段正确不代替文档契约通过 |
+| 显式渲染首次接入 | 12/12 | 40,766 | 0.03926550 | 总token增加约23%，保留退步，不称省token |
+| 首次压缩试验 | 3次本地UNKNOWN，未完成 | 未测 | 未测 | 与生成任务并发，单槽冲突；账本核对该区间仅生成调用派发，不重放原UNKNOWN |
+| 精简依据后串行复验 | 12/12 | 36,219 | 0.03531525 | 比首次渲染少11.2%token，仍比原始多9.3%；费用估算比原始少6.1% |
+| 同一批原始回复的确定性复验 | 8/12→12/12 | 新增模型token为0 | 新增API调用为0 | 仅改document，业务字段保持；原始4条仍记失败，不冒充原答案已通过 |
+
+三域输入来自本次真实工程的磁盘选址、迁移简报和开发边界学习卡；模型走原批准Google代理、固定额度及原Host/会话交付，关闭回退，没有真实邮箱、外部执行或日用数据副本。它们是操作者制定的工程任务，**不是独立用户委托、供应商报价质量或人类学习收益**；原三域目标没有缩减。指南开/关两臂不是旧/新实现对照，不据此宣称技能因果增益。完整成本仍缺发票、人时和本地计算；Q、长期记忆、保持/迁移、情绪质量继续留空。另以[8条原有动作基线](evidence/request-validation-20261113/live-action-regression.json)完成当前源下真实模型创建/改期/取消/完成/否定/补时回归8/8；这是已见回归，不替代新留出。开发正常重启后，认证HTTP又完成[1条显式文档请求](evidence/request-validation-20261113/live-development-document.json)，来源检查/渲染/原会话保存通过；日用boot_id与epoch7保持，未升级日用。
+
+[首轮模型记录](evidence/request-validation-20261113/project-domains-r1/summary.json)／[首次渲染](evidence/request-validation-20261113/project-domains-rendered-r1/summary.json)／[压缩复验](evidence/request-validation-20261113/project-domains-rendered-r3/summary.json)／[同回复复验](evidence/request-validation-20261113/same-reply-render-replay/summary.json)。渲染必须由用户选择，先核对来源/范围；错误来源不通过修复或删条件放行，默认聊天和影子核对不改写。三位一体沿原授权、Host及观察回执，未增加执行权限、Bot、第二套记忆或评分器。[实现](core-bootstrap.md#source-document-render-runtime)／[契约](contracts.md#source-document-render-contract)。
+
+**保留的失败与修复：**初版新代码的依据upsert缩进错误由原影子回归检出，已恢复原事务位置；初次Host测试在构造Host后又手动重复运行恢复队列，改为正常测试入口；首次批量回归文件名错导致0项，改正确文件后212项通过，原失败登记保留。原安全/兼容机制、停止/取消、来源修订和旧请求没有为过门而删改。另保留代理并发故障的[派发账本核对](evidence/request-validation-20261113/dispatch-incident.json)：新客户端只把已知409 development_busy辨为REJECTED/未派发，不自动重试；其它传输/HTTP失败仍保留不确定性。
+
+**环境恢复事件：**暂停后外接盘一度不可见，确认USB重连后从E盘继续，未改旧D盘业务源码。旧版影子探针未禁字节码，给固定包写入86个缓存，完整性门拒绝启动；核对659个清单源码原摘要后，将仅新增缓存归档移出，未放宽门槛，日用正常恢复至epoch7。后续探针采用-B及dont_write_bytecode。950份与最后三域模型运行冻结一致的源码已存E盘独立ZIP并逐项核验；文件摘要及证据在本节机器记录，原始私有包只留本机。
+
+**预测与下一步：**90%语言门未达到；格式、token及费用收益没有事前量化预测，不事后填预测命中。后续先补语言覆盖的结构性缺口和独立真实请求，再按原路线做知识方法消融、根预算/租约与多Bot/自愈；新数据、旧源修复和生产采用分别登记。Codex离线切换、C临时清理及D旧副本退役仍未完成，不能据本节签收整个目标。[回归明细](evidence/request-validation-20261113/final-regressions-r2.json)。
+
 
 <a id="open-source-adoption-validation"></a>
 ## 开源 Agent 机制与编码适配验收（proposed）

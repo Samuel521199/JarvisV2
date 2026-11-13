@@ -1,0 +1,89 @@
+{
+  "case_id": "actual-storage-choice",
+  "domain": "comparison",
+  "arm": "workflow_off",
+  "turn": 0,
+  "freeze_digest": "0d447c4e01f75185e690d6b0aa5e3d7adddbc70d3bf49a8505b33ae039880cf4",
+  "status": "UNKNOWN",
+  "error": "development_bridge_rejected",
+  "reply": null,
+  "skill_id": null,
+  "skill_version": null,
+  "action_kind": null,
+  "task_count": 0,
+  "flow_valid": false,
+  "elapsed_seconds": 0.1467,
+  "attempts": [
+    {
+      "status": "UNKNOWN",
+      "usage": {},
+      "error": "development_bridge_rejected",
+      "estimate": {
+        "amount": null,
+        "currency": "USD",
+        "reason": "missing_usage_or_price",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [],
+  "assessment": {
+    "state": "UNMEASURED",
+    "checks": [
+      {
+        "id": "response_delivery",
+        "status": "unknown"
+      }
+    ],
+    "condition_score": null,
+    "quality_score": null
+  },
+  "failure_stage": "transport_or_availability",
+  "business_quality": null,
+  "delivery_basis": {
+    "digest": "d98c16d5e1b851ec8c03980865d8a7529b899968b5a069a395899dd29b28afb3",
+    "entries": [
+      {
+        "end": 138,
+        "id": "F1",
+        "kind": "facts",
+        "quote": "本机C、D分区属于同一块内置物理磁盘。",
+        "source_turn": "trial-actual-storage-choice-workflow_off-0",
+        "start": 119
+      },
+      {
+        "end": 169,
+        "id": "F2",
+        "kind": "facts",
+        "quote": "E是外接硬盘NTFS分区，真实LPAC文本执行已通过。",
+        "source_turn": "trial-actual-storage-choice-workflow_off-0",
+        "start": 142
+      },
+      {
+        "end": 207,
+        "id": "F3",
+        "kind": "facts",
+        "quote": "G是同一外接硬盘的exFAT分区，现有LPAC持久ACL检查未通过。",
+        "source_turn": "trial-actual-storage-choice-workflow_off-0",
+        "start": 173
+      }
+    ],
+    "relative_time_resolution": "UNVERIFIED",
+    "revision": 1,
+    "source_time_utc": "2026-11-13T15:33:52.784394+00:00",
+    "source_turn": "trial-actual-storage-choice-workflow_off-0"
+  },
+  "delivery_review": null,
+  "record_digest": "8b1ce9a1e315f7534e5d783afc362eaaea90e8234e4eea9ca1e598f9e4530b66"
+}

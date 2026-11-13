@@ -1,0 +1,789 @@
+{
+  "schema": 1,
+  "scope": "Development implementation and bounded project-derived technical acceptance; not independent end-user excellence",
+  "language": [
+    {
+      "round": "unseen-r1-proxy",
+      "baseline": {
+        "cases": 48,
+        "clear_requests": 28,
+        "correct_auto": 2,
+        "coverage": 0.07142857142857142,
+        "unsafe_auto": 0,
+        "wrong_auto_content": 0,
+        "missed_clear": 26
+      },
+      "candidate_first_score": {
+        "cases": 48,
+        "clear_requests": 28,
+        "correct_auto": 10,
+        "coverage": 0.35714285714285715,
+        "unsafe_auto": 0,
+        "wrong_auto_content": 0,
+        "missed_clear": 18
+      },
+      "read_before_score_audit": {
+        "audited_before_scoring": true,
+        "cases_sha256": "dddf6218e9b60d00e94729f78ce5ddc7b6e936ba72b388c9c6ec5b55eecde7a6",
+        "cases": 48,
+        "clear_requests": 28,
+        "negative_or_ambiguous": 20,
+        "excluded_cases": [],
+        "label_changes": [],
+        "audit": "All exact positive titles and ISO clocks are present; negatives remain non-affirmative or lack unambiguous time. Paired paraphrases share scenarios, so 48 utterances are not 48 independent user tasks.",
+        "created": 1794566728.184725
+      },
+      "criterion": {
+        "unsafe_auto": 0,
+        "wrong_auto_content": 0,
+        "clear_coverage_minimum": 0.9
+      },
+      "seed_state_unchanged": true,
+      "source_amendment_before_access": false
+    },
+    {
+      "round": "unseen-r2",
+      "baseline": {
+        "cases": 48,
+        "clear_requests": 28,
+        "correct_auto": 3,
+        "coverage": 0.10714285714285714,
+        "unsafe_auto": 0,
+        "wrong_auto_content": 0,
+        "missed_clear": 25
+      },
+      "candidate_first_score": {
+        "cases": 48,
+        "clear_requests": 28,
+        "correct_auto": 24,
+        "coverage": 0.8571428571428571,
+        "unsafe_auto": 0,
+        "wrong_auto_content": 0,
+        "missed_clear": 4
+      },
+      "read_before_score_audit": {
+        "audited_before_scoring": true,
+        "cases_sha256": "2436533b2400dcf1514102bf87972df907ca79358396180297ce480bf755d487",
+        "cases": 48,
+        "clear_requests": 28,
+        "negative_or_ambiguous": 20,
+        "excluded_cases": [],
+        "label_changes": [],
+        "created": 1794567084.033434,
+        "audit": "Every positive retains the exact literal and explicit clock; negatives remain non-affirmative/ambiguous. New wording and titles, shared scenario families; no independent-user claim."
+      },
+      "criterion": {
+        "unsafe_auto": 0,
+        "wrong_auto_content": 0,
+        "clear_coverage_minimum": 0.9
+      },
+      "seed_state_unchanged": true,
+      "source_amendment_before_access": true
+    },
+    {
+      "round": "unseen-r3",
+      "baseline": {
+        "cases": 48,
+        "clear_requests": 28,
+        "correct_auto": 2,
+        "coverage": 0.07142857142857142,
+        "unsafe_auto": 0,
+        "wrong_auto_content": 0,
+        "missed_clear": 26
+      },
+      "candidate_first_score": {
+        "cases": 48,
+        "clear_requests": 28,
+        "correct_auto": 22,
+        "coverage": 0.7857142857142857,
+        "unsafe_auto": 0,
+        "wrong_auto_content": 0,
+        "missed_clear": 6
+      },
+      "read_before_score_audit": {
+        "audited_before_scoring": true,
+        "cases_sha256": "8b508825671d076b7db573c43d56155458a2e4fdfb83910515fc4402c6194bb5",
+        "cases": 48,
+        "clear_requests": 28,
+        "negative_or_ambiguous": 20,
+        "excluded_cases": [],
+        "label_changes": [],
+        "created": 1794582340.968543,
+        "audit": "Operator read wording before pause; no source changes after freeze. Exact positive titles and ISO clocks retained; negatives non-affirmative/ambiguous. New wording and titles, shared scenario families, not independent users."
+      },
+      "criterion": {
+        "unsafe_auto": 0,
+        "wrong_auto_content": 0,
+        "clear_coverage_minimum": 0.9
+      },
+      "seed_state_unchanged": true,
+      "source_amendment_before_access": false
+    },
+    {
+      "round": "unseen-r4",
+      "baseline": {
+        "cases": 48,
+        "clear_requests": 28,
+        "correct_auto": 2,
+        "coverage": 0.07142857142857142,
+        "unsafe_auto": 0,
+        "wrong_auto_content": 0,
+        "missed_clear": 26
+      },
+      "candidate_first_score": {
+        "cases": 48,
+        "clear_requests": 28,
+        "correct_auto": 21,
+        "coverage": 0.75,
+        "unsafe_auto": 0,
+        "wrong_auto_content": 0,
+        "missed_clear": 7
+      },
+      "read_before_score_audit": {
+        "audited_before_scoring": true,
+        "cases_sha256": "87a3fd3891728b54f1a83ff673a9a1e53aae53718a199a9fce33328fd7980b7b",
+        "cases": 48,
+        "clear_requests": 28,
+        "negative_or_ambiguous": 20,
+        "excluded_cases": [],
+        "label_changes": [],
+        "created": 1794584375.1985042,
+        "audit": "Positive titles/clocks retained. Deadline wording n03 kept as a local reminder due-time request; n24 refers to the same exact existing item then uses a pronoun. No labels altered to suit grammar. Independent wording only, repeated scenario families, not independent users."
+      },
+      "criterion": {
+        "unsafe_auto": 0,
+        "wrong_auto_content": 0,
+        "clear_coverage_minimum": 0.9
+      },
+      "seed_state_unchanged": true,
+      "source_amendment_before_access": false
+    }
+  ],
+  "language_gate_passed": false,
+  "domains": [
+    {
+      "run": "project-domains-r1",
+      "comparison_complete": true,
+      "all_conditions_passed": false,
+      "cases": [
+        {
+          "id": "actual-storage-choice",
+          "domain": "comparison",
+          "arms": {
+            "workflow_off": {
+              "state": "PASS",
+              "turn_states": [
+                "PASS",
+                "PASS"
+              ]
+            },
+            "workflow_on": {
+              "state": "PASS",
+              "turn_states": [
+                "PASS",
+                "PASS"
+              ]
+            }
+          }
+        },
+        {
+          "id": "actual-acceptance-notes",
+          "domain": "documents",
+          "arms": {
+            "workflow_off": {
+              "state": "PASS",
+              "turn_states": [
+                "PASS",
+                "PASS"
+              ]
+            },
+            "workflow_on": {
+              "state": "PASS",
+              "turn_states": [
+                "PASS",
+                "PASS"
+              ]
+            }
+          }
+        },
+        {
+          "id": "actual-boundary-lesson",
+          "domain": "learning",
+          "arms": {
+            "workflow_off": {
+              "state": "FAIL",
+              "turn_states": [
+                "FAIL",
+                "FAIL"
+              ]
+            },
+            "workflow_on": {
+              "state": "FAIL",
+              "turn_states": [
+                "FAIL",
+                "FAIL"
+              ]
+            }
+          }
+        }
+      ],
+      "costs": {
+        "attempts": 12,
+        "known_tokens": 33151,
+        "tokens_complete": true,
+        "total_tokens": 33151,
+        "known_api_estimates": {
+          "USD": 0.03761325
+        },
+        "unpriced_attempts": 0,
+        "full_cost": null,
+        "missing": [
+          "human effort",
+          "local compute",
+          "supplier invoice reconciliation"
+        ],
+        "quality_cost_efficiency": null
+      },
+      "failure_details": [
+        {
+          "case_id": "actual-boundary-lesson",
+          "arm": "workflow_off",
+          "turn": 0,
+          "stage": "content",
+          "failed_checks": [
+            "body_document_parity"
+          ]
+        },
+        {
+          "case_id": "actual-boundary-lesson",
+          "arm": "workflow_off",
+          "turn": 1,
+          "stage": "content",
+          "failed_checks": [
+            "body_document_parity"
+          ]
+        },
+        {
+          "case_id": "actual-boundary-lesson",
+          "arm": "workflow_on",
+          "turn": 0,
+          "stage": "content",
+          "failed_checks": [
+            "body_document_parity"
+          ]
+        },
+        {
+          "case_id": "actual-boundary-lesson",
+          "arm": "workflow_on",
+          "turn": 1,
+          "stage": "content",
+          "failed_checks": [
+            "body_document_parity"
+          ]
+        }
+      ],
+      "source_matches_freeze_at_run_completion": true
+    },
+    {
+      "run": "project-domains-rendered-r1",
+      "comparison_complete": true,
+      "all_conditions_passed": true,
+      "cases": [
+        {
+          "id": "actual-storage-choice",
+          "domain": "comparison",
+          "arms": {
+            "workflow_off": {
+              "state": "PASS",
+              "turn_states": [
+                "PASS",
+                "PASS"
+              ]
+            },
+            "workflow_on": {
+              "state": "PASS",
+              "turn_states": [
+                "PASS",
+                "PASS"
+              ]
+            }
+          }
+        },
+        {
+          "id": "actual-acceptance-notes",
+          "domain": "documents",
+          "arms": {
+            "workflow_off": {
+              "state": "PASS",
+              "turn_states": [
+                "PASS",
+                "PASS"
+              ]
+            },
+            "workflow_on": {
+              "state": "PASS",
+              "turn_states": [
+                "PASS",
+                "PASS"
+              ]
+            }
+          }
+        },
+        {
+          "id": "actual-boundary-lesson",
+          "domain": "learning",
+          "arms": {
+            "workflow_off": {
+              "state": "PASS",
+              "turn_states": [
+                "PASS",
+                "PASS"
+              ]
+            },
+            "workflow_on": {
+              "state": "PASS",
+              "turn_states": [
+                "PASS",
+                "PASS"
+              ]
+            }
+          }
+        }
+      ],
+      "costs": {
+        "attempts": 12,
+        "known_tokens": 40766,
+        "tokens_complete": true,
+        "total_tokens": 40766,
+        "known_api_estimates": {
+          "USD": 0.039265499999999995
+        },
+        "unpriced_attempts": 0,
+        "full_cost": null,
+        "missing": [
+          "human effort",
+          "local compute",
+          "supplier invoice reconciliation"
+        ],
+        "quality_cost_efficiency": null
+      },
+      "failure_details": [],
+      "source_matches_freeze_at_run_completion": true
+    },
+    {
+      "run": "project-domains-rendered-r2",
+      "comparison_complete": false,
+      "all_conditions_passed": false,
+      "cases": [
+        {
+          "id": "actual-storage-choice",
+          "domain": "comparison",
+          "arms": {
+            "workflow_off": {
+              "state": "UNMEASURED",
+              "turn_states": [
+                "UNMEASURED",
+                "UNMEASURED"
+              ]
+            },
+            "workflow_on": {
+              "state": "UNMEASURED",
+              "turn_states": [
+                "UNMEASURED",
+                "UNMEASURED"
+              ]
+            }
+          }
+        },
+        {
+          "id": "actual-acceptance-notes",
+          "domain": "documents",
+          "arms": {
+            "workflow_off": {
+              "state": "UNMEASURED",
+              "turn_states": [
+                "UNMEASURED",
+                "UNMEASURED"
+              ]
+            },
+            "workflow_on": {
+              "state": "UNMEASURED",
+              "turn_states": [
+                "UNMEASURED",
+                "UNMEASURED"
+              ]
+            }
+          }
+        },
+        {
+          "id": "actual-boundary-lesson",
+          "domain": "learning",
+          "arms": {
+            "workflow_off": {
+              "state": "UNMEASURED",
+              "turn_states": [
+                "UNMEASURED",
+                "UNMEASURED"
+              ]
+            },
+            "workflow_on": {
+              "state": "UNMEASURED",
+              "turn_states": [
+                "UNMEASURED",
+                "UNMEASURED"
+              ]
+            }
+          }
+        }
+      ],
+      "costs": {
+        "attempts": 3,
+        "known_tokens": 0,
+        "tokens_complete": false,
+        "total_tokens": null,
+        "known_api_estimates": {},
+        "unpriced_attempts": 3,
+        "full_cost": null,
+        "missing": [
+          "human effort",
+          "local compute",
+          "supplier invoice reconciliation"
+        ],
+        "quality_cost_efficiency": null
+      },
+      "failure_details": [
+        {
+          "case_id": "actual-acceptance-notes",
+          "arm": "workflow_on",
+          "turn": 0,
+          "stage": "transport_or_availability",
+          "failed_checks": [
+            "response_delivery"
+          ]
+        },
+        {
+          "case_id": "actual-storage-choice",
+          "arm": "workflow_off",
+          "turn": 0,
+          "stage": "transport_or_availability",
+          "failed_checks": [
+            "response_delivery"
+          ]
+        },
+        {
+          "case_id": "actual-storage-choice",
+          "arm": "workflow_on",
+          "turn": 0,
+          "stage": "transport_or_availability",
+          "failed_checks": [
+            "response_delivery"
+          ]
+        }
+      ],
+      "source_matches_freeze_at_run_completion": true
+    },
+    {
+      "run": "project-domains-rendered-r3",
+      "comparison_complete": true,
+      "all_conditions_passed": true,
+      "cases": [
+        {
+          "id": "actual-storage-choice",
+          "domain": "comparison",
+          "arms": {
+            "workflow_off": {
+              "state": "PASS",
+              "turn_states": [
+                "PASS",
+                "PASS"
+              ]
+            },
+            "workflow_on": {
+              "state": "PASS",
+              "turn_states": [
+                "PASS",
+                "PASS"
+              ]
+            }
+          }
+        },
+        {
+          "id": "actual-acceptance-notes",
+          "domain": "documents",
+          "arms": {
+            "workflow_off": {
+              "state": "PASS",
+              "turn_states": [
+                "PASS",
+                "PASS"
+              ]
+            },
+            "workflow_on": {
+              "state": "PASS",
+              "turn_states": [
+                "PASS",
+                "PASS"
+              ]
+            }
+          }
+        },
+        {
+          "id": "actual-boundary-lesson",
+          "domain": "learning",
+          "arms": {
+            "workflow_off": {
+              "state": "PASS",
+              "turn_states": [
+                "PASS",
+                "PASS"
+              ]
+            },
+            "workflow_on": {
+              "state": "PASS",
+              "turn_states": [
+                "PASS",
+                "PASS"
+              ]
+            }
+          }
+        }
+      ],
+      "costs": {
+        "attempts": 12,
+        "known_tokens": 36219,
+        "tokens_complete": true,
+        "total_tokens": 36219,
+        "known_api_estimates": {
+          "USD": 0.03531525
+        },
+        "unpriced_attempts": 0,
+        "full_cost": null,
+        "missing": [
+          "human effort",
+          "local compute",
+          "supplier invoice reconciliation"
+        ],
+        "quality_cost_efficiency": null
+      },
+      "failure_details": [],
+      "source_matches_freeze_at_run_completion": true
+    }
+  ],
+  "same_reply_replay": {
+    "model_calls": 0,
+    "before_pass": 8,
+    "after_pass": 12,
+    "business_fields_unchanged": true
+  },
+  "cost_comparison": {
+    "optimized_vs_initial_tokens_fraction": 0.0925462278664293,
+    "optimized_vs_first_renderer_tokens_fraction": -0.11153902762105672,
+    "optimized_vs_initial_api_estimate_fraction": -0.061095491615321795
+  },
+  "usage": {
+    "successful_provider_calls": 49,
+    "wording_generation_calls": 4,
+    "domain_calls": 36,
+    "ordinary_action_regression_calls": 8,
+    "live_development_document_calls": 1,
+    "known_provider_tokens": 152605,
+    "api_estimate_usd_for_36_domain_calls": 0.11219399999999999,
+    "generation_price_not_frozen": true,
+    "complete_cost": null,
+    "local_unknown_attempts_not_resent": 3,
+    "dispatch_resolution": {
+      "interval_from": 1794584027.4939806,
+      "interval_until": 1794584035.244172,
+      "rejected_local_turns": 3,
+      "journal_calls_in_interval": [
+        {
+          "id": "d74b8814967740a98d05e4e592847bf1",
+          "status": "SUCCEEDED",
+          "created": 1794584032.504953
+        }
+      ],
+      "wording_generation_request_id": "d74b8814967740a98d05e4e592847bf1",
+      "only_generation_was_dispatched": true,
+      "original_unknown_records_preserved": true,
+      "original_http_error_body_unavailable": true,
+      "inferred_cause": "Concurrent use of the pinned proxy single slot; original client discarded the specific rejection code. No three domain supplier calls in this interval."
+    }
+  },
+  "prior_quantitative_forecasts": {
+    "language_minimum_coverage": 0.9,
+    "format_gain": null,
+    "token_reduction": null
+  },
+  "quality_score": null,
+  "learning_gain": null,
+  "emotion_quality": null,
+  "production_adopted": false,
+  "source_checkpoint": {
+    "source_matches_completed_freeze": true,
+    "source_files": 950,
+    "archive": "E:/Jarvis/backups/source-snapshots/project-domains-rendered-r3.zip",
+    "archive_sha256": "f2595dabf17030d53f093c42c3617631e7f38a0cadba11322290098927b2e9fa",
+    "private_source_backup_only": true
+  },
+  "related_regressions": {
+    "rows": [
+      {
+        "pattern": "test_assistant_commitments.py",
+        "tests": 42,
+        "exit_code": 0,
+        "seconds": 11.537
+      },
+      {
+        "pattern": "test_commitments.py",
+        "tests": 10,
+        "exit_code": 0,
+        "seconds": 1.7
+      },
+      {
+        "pattern": "test_body_document.py",
+        "tests": 10,
+        "exit_code": 0,
+        "seconds": 3.02
+      },
+      {
+        "pattern": "test_delivery_shadow.py",
+        "tests": 30,
+        "exit_code": 0,
+        "seconds": 4.789
+      },
+      {
+        "pattern": "test_work_trials.py",
+        "tests": 24,
+        "exit_code": 0,
+        "seconds": 14.1
+      },
+      {
+        "pattern": "test_preferences_dialogue.py",
+        "tests": 18,
+        "exit_code": 0,
+        "seconds": 2.867
+      },
+      {
+        "pattern": "test_development_busy.py",
+        "tests": 3,
+        "exit_code": 0,
+        "seconds": 0.167
+      },
+      {
+        "pattern": "test_development_bridge.py",
+        "tests": 19,
+        "exit_code": 0,
+        "seconds": 2.586
+      },
+      {
+        "pattern": "test_application_compatibility.py",
+        "tests": 10,
+        "exit_code": 0,
+        "seconds": 2.734
+      },
+      {
+        "pattern": "test_application_release.py",
+        "tests": 27,
+        "exit_code": 0,
+        "seconds": 18.206
+      },
+      {
+        "pattern": "test_companion_workflows.py",
+        "tests": 6,
+        "exit_code": 0,
+        "seconds": 1.929
+      },
+      {
+        "pattern": "test_development_workstation.py",
+        "tests": 13,
+        "exit_code": 0,
+        "seconds": 3.136
+      }
+    ],
+    "passed": true,
+    "tests": 212,
+    "prior_harness_failure_preserved": "final-regressions.json",
+    "correction": "Use actual required workstation file name; did not repeat, remove or weaken any of the 199 passing cases."
+  },
+  "ordinary_action_regression": {
+    "cases": 8,
+    "passed": true,
+    "known_preexisting_cases": true,
+    "temporary_bridge_credential_removed": true
+  },
+  "live_development_document": {
+    "passed": true,
+    "review_state": "EXCERPT_MATCH",
+    "rendering": {
+      "basis_digest": "c326f7a44d970bf483bf2d8ec269ff2f98834a4d2a84cff3373d9714fcd2bff7",
+      "basis_revision": 1,
+      "document_digest": "705b7872d8e61c66577e0399e65f89f5aa7d5d0302fcbd87d7a1275b0a456dc1",
+      "mode": "explicit_render",
+      "model_calls": 0,
+      "original_checks": [
+        {
+          "id": "body_shape",
+          "status": "passed"
+        },
+        {
+          "id": "body_facts_coverage",
+          "status": "passed"
+        },
+        {
+          "id": "body_facts_grounding",
+          "status": "passed"
+        },
+        {
+          "id": "body_plans_coverage",
+          "status": "passed"
+        },
+        {
+          "id": "body_plans_grounding",
+          "status": "passed"
+        },
+        {
+          "id": "body_document_parity",
+          "status": "failed"
+        }
+      ],
+      "original_reply_digest": "db41b7cd721d6413af10e55aafd80018b51f198df6712df848e55bfb756a9bbb",
+      "quality_score": null,
+      "reason": "current_source_structure_only",
+      "reply_digest": "874bd8f176e43636d4a64a17c690c5a00fb2ea9d82f37b04ad60a0f17c220a49",
+      "state": "RENDERED",
+      "version": "body-document-1"
+    },
+    "synthetic_development_only": true
+  },
+  "environment_recovery": {
+    "manifested_source_files": 659,
+    "manifested_sources_unchanged": true,
+    "unmanifested_files_after_all_shadow_runs": 0,
+    "generated_bytecode_archived": 86,
+    "package_integrity_guard_relaxed": false,
+    "daily_epoch_after_normal_restart": 7,
+    "private_incident_archive": "E:/Jarvis/backups/evaluation-bytecode-incident-20261113",
+    "no_old_D_business_source_modified": true,
+    "actual_Codex_cutover_executed": false
+  },
+  "development_restart": {
+    "daily_online_before": true,
+    "daily_online_after": true,
+    "development_online_after": true,
+    "daily_instance_unchanged": true,
+    "daily_state_unchanged": true,
+    "daily_epoch": 7,
+    "daily_version": "0.1.8",
+    "optional_format_source_active_in_development": true,
+    "production_adopted": false
+  },
+  "remaining": [
+    "Language final holdout below 90 percent",
+    "Independent end-user requests and supplier quotation quality",
+    "Long-term knowledge benefit and negative transfer",
+    "Whole-PC shared resource leases",
+    "Multi-Bot ownership and bounded self-healing",
+    "Codex offline storage cutover and restart verification",
+    "Production controller/source adoption and complete legacy retirement"
+  ]
+}

@@ -359,5 +359,74 @@ class AssistantCommitments(unittest.TestCase):
             self.assertEqual(assistant.commitment_from_turn(self.root,self.turn(text,title=title))['mode'],'REVIEW')
         self.assertFalse(commitments.exists(self.root))
 
+    def test_direct_list_frames_keep_title_words_as_content(self):
+        for text,title in [('新建待办：整理不要重复采购清单。','整理不要重复采购清单'),
+            ('请把“核对假设说明”添加到我的本地待办里。','核对假设说明'),
+            ('在我的待办清单里加上一项：阅读「别让统计学骗了你」。','阅读「别让统计学骗了你」'),
+            ('Put organize example scripts on my to-do list, please.','organize example scripts'),
+            ('Add a local task titled check the quote index.','check the quote index')]:
+            with self.subTest(text=text):
+                receipt=assistant.commitment_from_turn(self.root,self.turn(text,title=title))
+                self.assertEqual(receipt['mode'],'APPLIED');self.assertEqual(receipt['receipt']['current']['title'],title)
+
+    def test_clock_connectives_and_reminder_target_nouns_share_normal_receipts(self):
+        plain=assistant.commitment_from_turn(self.root,self.turn('请记一下待办：核对假设前提。',title='核对假设前提'))
+        self.assertEqual(plain['mode'],'APPLIED')
+        row=assistant.commitment_from_turn(self.root,self.turn('到 2039-04-17T14:20:00+08:00 的时候提醒我检查备用电源。',title='检查备用电源'))['receipt']['current']
+        moved=assistant.commitment_from_turn(self.root,self.turn('请将提醒事项“检查备用电源”的时间调整为 2039-08-20T17:45:00+05:45。',title='检查备用电源',operation='reschedule',target=row['id']))
+        self.assertEqual(moved['mode'],'APPLIED')
+        cancelled=assistant.commitment_from_turn(self.root,self.turn('Cancel my reminder for 检查备用电源.',title='检查备用电源',operation='cancel',target=row['id']))
+        self.assertEqual(cancelled['receipt']['current']['status'],'CANCELLED')
+
+    def test_timed_literal_title_and_alternate_clock_frames_are_persisted(self):
+        for text,title in [('Set a reminder for 2038-05-12T09:20:00-03:30 to read Salt and Time.','read Salt and Time'),
+            ('Create a local reminder for review the if-else reference scheduled for 2038-05-14T11:20:00-03:30.','review the if-else reference'),
+            ('Set an alert on 2038-05-17T14:20:00-03:30: collect the weather notebook.','collect the weather notebook'),
+            ('设一个 2038-04-16T13:20:00+08:00 的日程提醒，叫登记观测站借用表。','登记观测站借用表')]:
+            with self.subTest(text=text):
+                receipt=assistant.commitment_from_turn(self.root,self.turn(text,title=title))
+                self.assertEqual(receipt['mode'],'APPLIED');self.assertIsNotNone(receipt['receipt']['current']['due_at'])
+
+    def test_existing_literal_target_wrappers_keep_revision_and_cancel_semantics(self):
+        for title,edit,cancel in [('read Salt and Time',
+            'Please change the time for read Salt and Time to 2038-08-20T17:45:00+05:45.',
+            'Cancel my scheduled task read Salt and Time.'),('解释潮汐图例',
+            '帮我重新安排“解释潮汐图例”，调整为 2038-08-20T17:45:00+05:45 提醒。',
+            '取消我之前关于“解释潮汐图例”的提醒吧。')]:
+            initial=assistant.commitment_from_turn(self.root,self.turn('Add a to-do item: '+title,title=title))['receipt']['current']
+            moved=assistant.commitment_from_turn(self.root,self.turn(edit,title=title,operation='reschedule',target=initial['id']))
+            self.assertEqual(moved['mode'],'APPLIED');self.assertEqual(moved['receipt']['current']['due_text'],'2038-08-20T17:45:00+05:45')
+            cancelled=assistant.commitment_from_turn(self.root,self.turn(cancel,title=title,operation='cancel',target=initial['id']))
+            self.assertEqual(cancelled['receipt']['current']['status'],'CANCELLED')
+
+    def test_extended_frames_preserve_outer_conditions_quotes_and_multi_action_review(self):
+        title='read Salt and Time'
+        for text in ['If it rains, set an alert on 2038-05-17T14:20:00-03:30: '+title,
+            'Do not add a local task titled '+title,
+            '"Add a local task titled '+title+'"',
+            'Put '+title+' on my to-do list, then delete the folder.',
+            'Set an alert on 2038-05-17T14:20:00-03:30 and 2038-05-18T14:20:00-03:30: '+title]:
+            self.assertNotEqual(assistant.commitment_from_turn(self.root,self.turn(text,title=title))['mode'],'APPLIED')
+        self.assertFalse(commitments.exists(self.root))
+
+    def test_permission_to_mark_done_is_not_completion_without_a_direct_request(self):
+        initial=assistant.commitment_from_turn(self.root,self.turn('添加待办：核对图表',title='核对图表'))['receipt']['current']
+        candidate=self.turn('我可以把核对图表标记为完成',title='核对图表',operation='complete',target=initial['id'])
+        self.assertEqual(assistant.commitment_from_turn(self.root,candidate)['mode'],'REVIEW')
+        self.assertEqual(commitments.detail(self.root,initial['id'])['current']['status'],'OPEN')
+
+    def test_polite_questions_schedule_and_declarative_completion_use_local_receipts(self):
+        for text,title in [('Can you set a local reminder to inspect the spare fan on 2040-05-16T13:20:00-03:30?','inspect the spare fan'),
+            ('Would you please add review the tide notes to my tasks?','review the tide notes'),
+            ('Please schedule a reminder at 2040-05-17T14:20:00-03:30 to collect the observatory pass.','collect the observatory pass'),
+            ('把“阅读「假设月亮消失了」”加入我的本地待办列表。','阅读「假设月亮消失了」'),
+            ('Can you add check the explanation notes to my tasks?','check the explanation notes')]:
+            self.assertEqual(assistant.commitment_from_turn(self.root,self.turn(text,title=title))['mode'],'APPLIED')
+        target=assistant.commitment_from_turn(self.root,self.turn('添加待办：解释轨道刻度',title='解释轨道刻度'))['receipt']['current']['id']
+        moved=assistant.commitment_from_turn(self.root,self.turn('请将之前定好的“解释轨道刻度”推迟到 2040-08-20T17:45:00+05:45 提醒。',title='解释轨道刻度',operation='reschedule',target=target))
+        self.assertEqual(moved['mode'],'APPLIED')
+        done=assistant.commitment_from_turn(self.root,self.turn('我做完了，“解释轨道刻度”帮我标记为完成。',title='解释轨道刻度',operation='complete',target=target))
+        self.assertEqual(done['receipt']['current']['status'],'DONE')
+
 
 if __name__=='__main__':unittest.main()

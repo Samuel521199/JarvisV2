@@ -176,8 +176,11 @@ class DialogueHost:
             if result is None: result = {'status': 'FAILED', 'code': 'model_unavailable'}
             if result['status'] in {'REJECTED', 'INVALID'}: result['status'] = 'FAILED'
             with memory.LOCK:
-                from host.delivery_review import observe as observe_delivery
-                result['delivery_review']=observe_delivery(store.turn(ident),result)
+                from host.delivery_review import observe as observe_delivery,materialize as materialize_delivery
+                delivery_turn=store.turn(ident)
+                result,rendering=materialize_delivery(delivery_turn,result)
+                result['delivery_review']=observe_delivery(delivery_turn,result)
+                if rendering and result['delivery_review'] is not None:result['delivery_review']['rendering']=rendering
                 checkpoint(); store.finish(ident, result)
                 try:
                     turn=store.turn(ident)

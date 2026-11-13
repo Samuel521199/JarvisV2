@@ -1,0 +1,217 @@
+{
+  "case_id": "actual-storage-choice",
+  "domain": "comparison",
+  "arm": "workflow_off",
+  "turn": 0,
+  "freeze_digest": "249d46084f08a5dd59db0ce1bde37df1dd8d7ba74508cade5354be40725f736e",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\n  \"selected_volume\": \"E\",\n  \"candidate_isolated\": true,\n  \"evidence\": {\n    \"facts\": [\n      {\n        \"source\": \"F1\",\n        \"quote\": \"本机C、D分区属于同一块内置物理磁盘。\"\n      },\n      {\n        \"source\": \"F2\",\n        \"quote\": \"E是外接硬盘NTFS分区，真实LPAC文本执行已通过。\"\n      },\n      {\n        \"source\": \"F3\",\n        \"quote\": \"G是同一外接硬盘的exFAT分区，现有LPAC持久ACL检查未通过。\"\n      }\n    ],\n    \"plans\": [],\n    \"suggestions\": []\n  },\n  \"document\": \"## 事实\\n- [F1] 本机C、D分区属于同一块内置物理磁盘。\\n- [F2] E是外接硬盘NTFS分区，真实LPAC文本执行已通过。\\n- [F3] G是同一外接硬盘的exFAT分区，现有LPAC持久ACL检查未通过。\\n\\n## 已确认计划\\n- 无\\n\\n## 建议（未采纳）\\n- 无\"\n}",
+  "skill_id": null,
+  "skill_version": null,
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 17.1305,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 314,
+        "prompt_tokens": 2326,
+        "total_tokens": 2640
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.002922,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/actual-storage-choice-workflow_off-0.native.json",
+      "sha256": "aedf78cfd034ce992c270e83b48e0c76375210a8aebcebc26c44392b63098cfd",
+      "kind": "native_protocol_response"
+    },
+    {
+      "file": "artifacts/actual-storage-choice-workflow_off-0.reply.md.txt",
+      "sha256": "a89d7f3ec446c751027b529eeca10ae945a5c4fc0134b821ea0d4c56511f3d05",
+      "kind": "original_session_reply"
+    },
+    {
+      "file": "artifacts/actual-storage-choice-workflow_off-0.document.md.txt",
+      "sha256": "c3352c7db6569ee04328c2359dd6b5c3244c8aff355585a8bc2d059e2f752cb9",
+      "kind": "verbatim_document_field_from_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "selected_volume",
+        "status": "passed"
+      },
+      {
+        "id": "candidate_isolated",
+        "status": "passed"
+      },
+      {
+        "id": "document_present",
+        "status": "passed"
+      },
+      {
+        "id": "body_shape",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_document_parity",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "delivery_basis": {
+    "digest": "eb7d082385edd001d0bfb1c140aba642f7825c43e769e0c18110262d6e48cb20",
+    "entries": [
+      {
+        "end": 138,
+        "id": "F1",
+        "kind": "facts",
+        "quote": "本机C、D分区属于同一块内置物理磁盘。",
+        "source_turn": "trial-actual-storage-choice-workflow_off-0",
+        "start": 119
+      },
+      {
+        "end": 169,
+        "id": "F2",
+        "kind": "facts",
+        "quote": "E是外接硬盘NTFS分区，真实LPAC文本执行已通过。",
+        "source_turn": "trial-actual-storage-choice-workflow_off-0",
+        "start": 142
+      },
+      {
+        "end": 207,
+        "id": "F3",
+        "kind": "facts",
+        "quote": "G是同一外接硬盘的exFAT分区，现有LPAC持久ACL检查未通过。",
+        "source_turn": "trial-actual-storage-choice-workflow_off-0",
+        "start": 173
+      }
+    ],
+    "relative_time_resolution": "UNVERIFIED",
+    "revision": 1,
+    "source_time_utc": "2026-11-13T15:39:36.637442+00:00",
+    "source_turn": "trial-actual-storage-choice-workflow_off-0"
+  },
+  "delivery_review": {
+    "basis_digest": "eb7d082385edd001d0bfb1c140aba642f7825c43e769e0c18110262d6e48cb20",
+    "basis_revision": 1,
+    "checks": [
+      {
+        "id": "body_shape",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_document_parity",
+        "status": "passed"
+      }
+    ],
+    "method": "source_excerpt",
+    "mode": "shadow",
+    "quality_score": null,
+    "reason": "bounded_document_check_only",
+    "rendering": {
+      "basis_digest": "eb7d082385edd001d0bfb1c140aba642f7825c43e769e0c18110262d6e48cb20",
+      "basis_revision": 1,
+      "document_digest": "faac26cb947a5510ed4598c51f061c5f9889dd2842a33a7f913ce4e453392dd4",
+      "mode": "explicit_render",
+      "model_calls": 0,
+      "original_checks": [
+        {
+          "id": "body_shape",
+          "status": "passed"
+        },
+        {
+          "id": "body_facts_coverage",
+          "status": "passed"
+        },
+        {
+          "id": "body_facts_grounding",
+          "status": "passed"
+        },
+        {
+          "id": "body_plans_coverage",
+          "status": "passed"
+        },
+        {
+          "id": "body_plans_grounding",
+          "status": "passed"
+        },
+        {
+          "id": "body_document_parity",
+          "status": "passed"
+        }
+      ],
+      "original_reply_digest": "0db6d3baa2fb8b495726656506963e282b71dca904b1a07abfee559bbe72429f",
+      "quality_score": null,
+      "reason": "current_source_structure_only",
+      "reply_digest": "0db6d3baa2fb8b495726656506963e282b71dca904b1a07abfee559bbe72429f",
+      "state": "UNCHANGED",
+      "version": "body-document-1"
+    },
+    "reply_digest": "0db6d3baa2fb8b495726656506963e282b71dca904b1a07abfee559bbe72429f",
+    "state": "EXCERPT_MATCH",
+    "version": "delivery-shadow-1",
+    "would_block": false
+  },
+  "record_digest": "f176fb7194b46507e596f25760e76e9cd86aa5f9f4cedff43e88c0c8d2b29a7b"
+}

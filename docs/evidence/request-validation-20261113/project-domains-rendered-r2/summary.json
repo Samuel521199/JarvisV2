@@ -1,0 +1,181 @@
+{
+  "version": "work-trials-3/body-evidence-1",
+  "origin": "user_supplied",
+  "independent_cases": 3,
+  "planned_turns": 12,
+  "recorded_turns": 3,
+  "complete_pairs": 0,
+  "cases": [
+    {
+      "id": "actual-storage-choice",
+      "domain": "comparison",
+      "arms": {
+        "workflow_off": {
+          "state": "UNMEASURED",
+          "turn_states": [
+            "UNMEASURED",
+            "UNMEASURED"
+          ]
+        },
+        "workflow_on": {
+          "state": "UNMEASURED",
+          "turn_states": [
+            "UNMEASURED",
+            "UNMEASURED"
+          ]
+        }
+      }
+    },
+    {
+      "id": "actual-acceptance-notes",
+      "domain": "documents",
+      "arms": {
+        "workflow_off": {
+          "state": "UNMEASURED",
+          "turn_states": [
+            "UNMEASURED",
+            "UNMEASURED"
+          ]
+        },
+        "workflow_on": {
+          "state": "UNMEASURED",
+          "turn_states": [
+            "UNMEASURED",
+            "UNMEASURED"
+          ]
+        }
+      }
+    },
+    {
+      "id": "actual-boundary-lesson",
+      "domain": "learning",
+      "arms": {
+        "workflow_off": {
+          "state": "UNMEASURED",
+          "turn_states": [
+            "UNMEASURED",
+            "UNMEASURED"
+          ]
+        },
+        "workflow_on": {
+          "state": "UNMEASURED",
+          "turn_states": [
+            "UNMEASURED",
+            "UNMEASURED"
+          ]
+        }
+      }
+    }
+  ],
+  "domains": {
+    "comparison": {
+      "workflow_off": {
+        "PASS": 0,
+        "FAIL": 0,
+        "UNMEASURED": 1
+      },
+      "workflow_on": {
+        "PASS": 0,
+        "FAIL": 0,
+        "UNMEASURED": 1
+      }
+    },
+    "documents": {
+      "workflow_off": {
+        "PASS": 0,
+        "FAIL": 0,
+        "UNMEASURED": 1
+      },
+      "workflow_on": {
+        "PASS": 0,
+        "FAIL": 0,
+        "UNMEASURED": 1
+      }
+    },
+    "learning": {
+      "workflow_off": {
+        "PASS": 0,
+        "FAIL": 0,
+        "UNMEASURED": 1
+      },
+      "workflow_on": {
+        "PASS": 0,
+        "FAIL": 0,
+        "UNMEASURED": 1
+      }
+    }
+  },
+  "descriptive_improved_pairs": 0,
+  "descriptive_regressed_pairs": 0,
+  "all_candidate_conditions_passed": false,
+  "comparison_complete": false,
+  "quality_gain": null,
+  "learning_gain": null,
+  "emotion_quality": null,
+  "real_work_gain": null,
+  "all_functional_excellence_verified": false,
+  "scope": "Current-runtime workflow guidance ablation on source-excerpt documents; exact current-source and confirmed-plan coverage plus body parity, not free prose semantic certification; no causal or population inference",
+  "execution": "live",
+  "costs": {
+    "attempts": 3,
+    "known_tokens": 0,
+    "tokens_complete": false,
+    "total_tokens": null,
+    "known_api_estimates": {},
+    "unpriced_attempts": 3,
+    "full_cost": null,
+    "missing": [
+      "human effort",
+      "local compute",
+      "supplier invoice reconciliation"
+    ],
+    "quality_cost_efficiency": null
+  },
+  "source_matches_freeze": true,
+  "production_deployed": false,
+  "forecast_delta": null,
+  "avoidable_interventions": null,
+  "required_decisions": null,
+  "unmeasured": [
+    "independent real requests",
+    "free-form semantic coverage",
+    "subjective document quality",
+    "human retention and transfer",
+    "emotional experience",
+    "full costs"
+  ],
+  "failure_details": [
+    {
+      "case_id": "actual-acceptance-notes",
+      "arm": "workflow_on",
+      "turn": 0,
+      "stage": "transport_or_availability",
+      "failed_checks": [
+        "response_delivery"
+      ]
+    },
+    {
+      "case_id": "actual-storage-choice",
+      "arm": "workflow_off",
+      "turn": 0,
+      "stage": "transport_or_availability",
+      "failed_checks": [
+        "response_delivery"
+      ]
+    },
+    {
+      "case_id": "actual-storage-choice",
+      "arm": "workflow_on",
+      "turn": 0,
+      "stage": "transport_or_availability",
+      "failed_checks": [
+        "response_delivery"
+      ]
+    }
+  ],
+  "shadow_states": {
+    "NOT_RECORDED": 3
+  },
+  "shadow_is_completion_gate": false,
+  "project_derived_not_independent_user_tasks": true
+}

@@ -1,0 +1,217 @@
+{
+  "case_id": "actual-acceptance-notes",
+  "domain": "documents",
+  "arm": "workflow_on",
+  "turn": 0,
+  "freeze_digest": "249d46084f08a5dd59db0ce1bde37df1dd8d7ba74508cade5354be40725f736e",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\"all_storage_retired\":false,\"codex_cutover_completed\":false,\"document\":\"## 事实\\n- [F1] Jarvis日用和开发主目录已迁至E盘，代码与日用数据仍分离。\\n- [F2] Codex迁移工具已测试，但真实记忆当前仍在C盘，离线切换和重启验收尚未执行。\\n\\n## 已确认计划\\n- [P1] 完全退出Codex后运行离线迁移，再重启核对原会话和记忆。\\n\\n## 建议（未采纳）\\n- 无\",\"evidence\":{\"facts\":[{\"quote\":\"Jarvis日用和开发主目录已迁至E盘，代码与日用数据仍分离。\",\"source\":\"F1\"},{\"quote\":\"Codex迁移工具已测试，但真实记忆当前仍在C盘，离线切换和重启验收尚未执行。\",\"source\":\"F2\"}],\"plans\":[{\"quote\":\"完全退出Codex后运行离线迁移，再重启核对原会话和记忆。\",\"source\":\"P1\"}],\"suggestions\":[]}}",
+  "skill_id": "journal-review",
+  "skill_version": "1.0.0",
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 4.5028,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 235,
+        "prompt_tokens": 2761,
+        "total_tokens": 2996
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.002952,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/actual-acceptance-notes-workflow_on-0.native.json",
+      "sha256": "3747c6e2533e49b449907bb3dee1642865d4a83527e81137724adf0378b849b2",
+      "kind": "native_protocol_response"
+    },
+    {
+      "file": "artifacts/actual-acceptance-notes-workflow_on-0.reply.md.txt",
+      "sha256": "de8c9a8900e33efe6c608e1542ab11fff9e9886be0a1a1aaedfc7a4a5a67c095",
+      "kind": "original_session_reply"
+    },
+    {
+      "file": "artifacts/actual-acceptance-notes-workflow_on-0.document.md.txt",
+      "sha256": "d65507fa388ec8f4ac7b7bfbe9d697960b96cbae72c5908478cdd7f3c9de9e1a",
+      "kind": "verbatim_document_field_from_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "codex_cutover_completed",
+        "status": "passed"
+      },
+      {
+        "id": "all_storage_retired",
+        "status": "passed"
+      },
+      {
+        "id": "document_present",
+        "status": "passed"
+      },
+      {
+        "id": "body_shape",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_document_parity",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "delivery_basis": {
+    "digest": "b130c470861b18f26cf1893cefd2db0a42af10c92b66566bc32930befbd19348",
+    "entries": [
+      {
+        "end": 148,
+        "id": "F1",
+        "kind": "facts",
+        "quote": "Jarvis日用和开发主目录已迁至E盘，代码与日用数据仍分离。",
+        "source_turn": "trial-actual-acceptance-notes-workflow_on-0",
+        "start": 117
+      },
+      {
+        "end": 191,
+        "id": "F2",
+        "kind": "facts",
+        "quote": "Codex迁移工具已测试，但真实记忆当前仍在C盘，离线切换和重启验收尚未执行。",
+        "source_turn": "trial-actual-acceptance-notes-workflow_on-0",
+        "start": 152
+      },
+      {
+        "end": 224,
+        "id": "P1",
+        "kind": "plans",
+        "quote": "完全退出Codex后运行离线迁移，再重启核对原会话和记忆。",
+        "source_turn": "trial-actual-acceptance-notes-workflow_on-0",
+        "start": 195
+      }
+    ],
+    "relative_time_resolution": "UNVERIFIED",
+    "revision": 1,
+    "source_time_utc": "2026-11-13T15:40:07.454103+00:00",
+    "source_turn": "trial-actual-acceptance-notes-workflow_on-0"
+  },
+  "delivery_review": {
+    "basis_digest": "b130c470861b18f26cf1893cefd2db0a42af10c92b66566bc32930befbd19348",
+    "basis_revision": 1,
+    "checks": [
+      {
+        "id": "body_shape",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_document_parity",
+        "status": "passed"
+      }
+    ],
+    "method": "source_excerpt",
+    "mode": "shadow",
+    "quality_score": null,
+    "reason": "bounded_document_check_only",
+    "rendering": {
+      "basis_digest": "b130c470861b18f26cf1893cefd2db0a42af10c92b66566bc32930befbd19348",
+      "basis_revision": 1,
+      "document_digest": "4309dd5cb26194925e5f5545dbb02addc3fbe09d9d948659e45d5e3bb6b1c7c0",
+      "mode": "explicit_render",
+      "model_calls": 0,
+      "original_checks": [
+        {
+          "id": "body_shape",
+          "status": "passed"
+        },
+        {
+          "id": "body_facts_coverage",
+          "status": "passed"
+        },
+        {
+          "id": "body_facts_grounding",
+          "status": "passed"
+        },
+        {
+          "id": "body_plans_coverage",
+          "status": "passed"
+        },
+        {
+          "id": "body_plans_grounding",
+          "status": "passed"
+        },
+        {
+          "id": "body_document_parity",
+          "status": "failed"
+        }
+      ],
+      "original_reply_digest": "6ed8a6600eb42515ed6fe2cca8c563d6ee84dbed02086c66a7b3a775f8dad547",
+      "quality_score": null,
+      "reason": "current_source_structure_only",
+      "reply_digest": "5415d29b8d4e7254aaabb7bcdb4993ffebdb92cba8e22baae409fe469f2b6b19",
+      "state": "RENDERED",
+      "version": "body-document-1"
+    },
+    "reply_digest": "5415d29b8d4e7254aaabb7bcdb4993ffebdb92cba8e22baae409fe469f2b6b19",
+    "state": "EXCERPT_MATCH",
+    "version": "delivery-shadow-1",
+    "would_block": false
+  },
+  "record_digest": "6ff138d9e7e3fb41f242f0d8bd38c7982bfb2d807efd1d94695aa2514c57c7d4"
+}

@@ -65,6 +65,7 @@
 - [三领域对照 1.11.0 的实际契约](#workflow-trials-contract)
 - [正文忠实性 1.12.0 的实际契约](#workflow-fidelity-contract)
 - [交付影子核对 1.13.0 的实际契约](#workflow-shadow-contract)
+  - [显式来源文档渲染契约（2026-11-13开发）](#source-document-render-contract)
 - [原生精灵双窗口协议 2](#native-two-window-contract)
 - [持久委托与持续办事契约（v0.1.6）](#standing-work-contract)
 - [Gmail 持续委托契约（v0.1.7）](#mail-standing-contract)
@@ -1157,6 +1158,23 @@ v1的输入及结果含义保持；新增`jarvis.work-trials.v2`在每轮增加�
 | 隔离与权限 | 仅同聊天依据；不自动读附件、其他聊天或知识库来建真值；不执行计划、不发信、不安排提醒、不写正式知识/业务评分，不额外请求模型 |
 
 工作台的依据编辑草稿复用原会话草稿目录；提交后取消更新勾选，未提交失败时保留。清空当前依据不是删除历史原消息，也不代替正式知识的纠正/遗忘流程。`tools.work_trials --basis-inputs`可加载独立于隐藏答案的用户声明包并冻结，采集真实交付观察；输入声明属于试验条件，不冒充自然语言自动提取成果。[实施](core-bootstrap.md#workflow-shadow-runtime) · [验证](delivery-validation.md#workflow-shadow-evidence)。
+
+<a id="source-document-render-contract"></a>
+### 显式来源文档渲染契约（2026-11-13开发）
+
+`/api/chat/send`新增可选字符串`delivery_format=source_excerpt_markdown_v1`，由用户请求提供，默认不启用。事务必须已有非空的本轮依据快照，或在同一事务显式建立；不新增数据库列或外部受理端口。未知格式拒绝；失败不保存空轮次或半份依据。原影子契约继续成立，渲染是另一项显式呈现选择，不赋予观察器否决权。
+
+| 对象 | 契约 |
+|---|---|
+| 格式来源 | `modules/dialogue/document_format.py`管理聊天格式与上下文说明；Host协调原task_resource正文检查/渲染，领域模块不跨域导入实现 |
+| 模型结构 | JSON对象含evidence及字符串document；evidence恰含facts/plans/suggestions，逐项来源及逐字引用必须与本轮冻结依据一致；沿用原body-evidence边界 |
+| 转换 | 仅SUCCEEDED且为普通chat或非助手普通回答；只改document，不改业务字段、原结构、动作与使用量；无新增模型调用。原回复或渲染后回复超30000字拒绝转换，不截断冒充完整交付 |
+| 拒绝转换 | 来源错误/缺失/过期/重复、非法结构/重复JSON键/非有限值均保留原回复并记录DECLINED；异常标UNAVAILABLE，普通影子仍可指出差异 |
+| 记录 | delivery_review.rendering保存版本、依据修订/摘要、原回复摘要、转换前检查及结果摘要；quality_score仍null。默认未选择时无渲染记录、不改原回答 |
+| 去重 | 仅显式模式精简模型侧的服务端定位元数据；原始完整快照持久保存。所有当前F/P编号在原消息中唯一且逐字对应时以可见原文引用代替重复quote，否则完整quote回退；时间语境和当前版本不可省略 |
+| 接续与清理 | 沿受理时冻结的快照，不拿之后的依据改写已排队轮次；新依据或回复变化仍标stale，专用导出仅对有效结果开放；原依赖清理同时撤回观察 |
+
+文档是一份对用户声明的忠实表示，不是独立事实核查、通用语义判官或执行授权。先后两组模型调用不能单独证明因果质量收益；同原始回复的确定性重放另存证据，不反改原失败。机制正文归[运行说明](core-bootstrap.md#source-document-render-runtime)，实测归[本轮验收](delivery-validation.md#request-document-evidence-20261113)。
 
 <a id="native-two-window-contract"></a>
 ## 原生精灵双窗口协议 2

@@ -1,0 +1,89 @@
+{
+  "case_id": "actual-acceptance-notes",
+  "domain": "documents",
+  "arm": "workflow_on",
+  "turn": 0,
+  "freeze_digest": "0d447c4e01f75185e690d6b0aa5e3d7adddbc70d3bf49a8505b33ae039880cf4",
+  "status": "UNKNOWN",
+  "error": "development_bridge_rejected",
+  "reply": null,
+  "skill_id": "journal-review",
+  "skill_version": "1.0.0",
+  "action_kind": null,
+  "task_count": 0,
+  "flow_valid": false,
+  "elapsed_seconds": 0.0692,
+  "attempts": [
+    {
+      "status": "UNKNOWN",
+      "usage": {},
+      "error": "development_bridge_rejected",
+      "estimate": {
+        "amount": null,
+        "currency": "USD",
+        "reason": "missing_usage_or_price",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [],
+  "assessment": {
+    "state": "UNMEASURED",
+    "checks": [
+      {
+        "id": "response_delivery",
+        "status": "unknown"
+      }
+    ],
+    "condition_score": null,
+    "quality_score": null
+  },
+  "failure_stage": "transport_or_availability",
+  "business_quality": null,
+  "delivery_basis": {
+    "digest": "510ed7faa28d9c206f8fd04eadebafaf2e212054a10a637d9052cd6fa8e6f863",
+    "entries": [
+      {
+        "end": 148,
+        "id": "F1",
+        "kind": "facts",
+        "quote": "Jarvis日用和开发主目录已迁至E盘，代码与日用数据仍分离。",
+        "source_turn": "trial-actual-acceptance-notes-workflow_on-0",
+        "start": 117
+      },
+      {
+        "end": 191,
+        "id": "F2",
+        "kind": "facts",
+        "quote": "Codex迁移工具已测试，但真实记忆当前仍在C盘，离线切换和重启验收尚未执行。",
+        "source_turn": "trial-actual-acceptance-notes-workflow_on-0",
+        "start": 152
+      },
+      {
+        "end": 224,
+        "id": "P1",
+        "kind": "plans",
+        "quote": "完全退出Codex后运行离线迁移，再重启核对原会话和记忆。",
+        "source_turn": "trial-actual-acceptance-notes-workflow_on-0",
+        "start": 195
+      }
+    ],
+    "relative_time_resolution": "UNVERIFIED",
+    "revision": 1,
+    "source_time_utc": "2026-11-13T15:33:53.171572+00:00",
+    "source_turn": "trial-actual-acceptance-notes-workflow_on-0"
+  },
+  "delivery_review": null,
+  "record_digest": "0a0ff688fc41dd4d437adce9ffe302a625a5271506b5a56fe6a268eeaa91609f"
+}

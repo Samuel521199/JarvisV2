@@ -14,7 +14,7 @@ CLOCK = r'(?:\d{1,2}:\d\d|\d{1,2}点(?:\d{1,2}分?)?)'
 LOCAL = DAY + r'\s*(?:上午|下午|晚上|中午)?' + CLOCK + r'\s*UTC[+-]\d\d:\d\d'
 TIME = '(?:' + ISO + '|' + LOCAL + ')'
 PREFIX = r'(?:(?:请(?:你)?(?:帮我)?|帮我|麻烦(?:你)?(?:帮我)?|劳驾(?:你)?|给我)\s*)?'
-EN_PREFIX = r'(?:(?:please|could you|can you)\s+)?'
+EN_PREFIX = r'(?:(?:please|(?:could|can|would) you(?: please)?)\s+)?'
 REMIND = r'(?:提醒我一下|提醒一下我|提醒我)'
 UNSAFE = r'不要|不必|无需|别|如果|假设|例如|比如|引用|转发|示例|解释|代码|演示|[“”"「」`\n]'
 EN_UNSAFE = r"\b(?:do\s+not|don['’]t|never|if|unless|example|quote|explain)\b"
@@ -97,30 +97,33 @@ def anchored_parts(text,operation,title):
         frame=frame.replace(left+'@item@'+right,'@item@')
     frame=re.sub(TIME,'@clock@',frame)
     zh=re.sub('^'+PREFIX,'',frame).strip();en=re.sub('^'+EN_PREFIX,'',frame,flags=re.IGNORECASE).strip().lower()
-    common_zh=['@item@','@clock@','请','帮我','我','的','把','将','待办事项','待办任务','待办','这个待办','提醒','这个提醒','本地','一个','一条','一项','个','现有的','现有','已有的','已有']
-    common_en=['the','a','one','my','local','locally','existing','to-do','todo','task','tasks','item','reminder']
+    common_zh=['@item@','@clock@','请','帮我','我','的','的时候','把','将','待办事项','待办任务','待办','这个待办','提醒事项','提醒','这个提醒','本地','一个','一条','一项','个','现有的','现有','已有的','已有','之前那个','之前关于','之前定好的','吧']
+    common_en=['the','a','an','one','my','local','locally','existing','scheduled','to-do','todo','task','tasks','item','reminder','alert']
     if operation=='create':
-        zh_root=bool(re.match(r'(?:提醒我|提醒一下我|提醒我一下|设置|设|定|记下|记|添加|新增|加|在|于|到|@clock@)',zh))
-        en_root=bool(re.match(r'(?:remind me\b|set\b|create\b|add\b)',en))
+        zh_root=bool(re.match(r'(?:提醒我|提醒一下我|提醒我一下|设置|设|定|记下|记|添加|新增|新建|加|把|将|在|于|到|@clock@)',zh))
+        en_root=bool(re.match(r'(?:remind me\b|set\b|create\b|add\b|put\b)',en))
+        if timed and re.match(r'schedule\b',en):en_root=True
         zh_ok=bool(re.search('提醒',zh)) if timed else bool(re.search('待办',zh))
-        en_ok=bool(re.search(r'\b(?:remind|reminder)\b',en)) if timed else bool(re.search(r'\b(?:to-do|todo|task)\b',en))
-        zh_words=['提醒我一下','提醒一下我','提醒我','设置','设','定','记下','记','添加','新增','加','在','于','到','时','我的','清单','列表','里','中',
-                  '时间设定为','时间设为','时间定在','时间是','时间在','时间为','时间','设定为','设为','定在','内容是','内容为','内容','是','为']
-        en_words=['remind','me','set','create','add','new','at','for','to','list']
+        en_ok=bool(re.search(r'\b(?:remind|reminder|alert)\b',en)) if timed else bool(re.search(r'\b(?:to-do|todo|tasks?)\b',en))
+        zh_words=['提醒我一下','提醒一下我','提醒我','设置','设','定','记一下','记下','记','添加到','添加','新增','新建','加入','加上','加','在','于','到','时','我的','清单','列表','里','中',
+                  '时间设定为','时间设为','时间定在','时间是','时间在','时间为','时间','设定为','设为','定在','内容是','内容为','内容','是','为','日程','叫']
+        en_words=['remind','me','set','create','add','put','schedule','new','at','for','to','on','list','titled','scheduled','please']
     elif operation=='reschedule':
-        zh_root=bool(re.match(r'(?:把|将|@item@)',zh));en_root=bool(re.match(r'(?:move|reschedule)\b',en))
-        zh_words=['改期到','改到','改为','挪到','推迟到','移到','调整为','调整到','重新安排在','重新安排到','重新安排为','的时间','时间']
-        en_words=['move','reschedule','to','for']
+        zh_root=bool(re.match(r'(?:把|将|重新安排|@item@)',zh));en_root=bool(re.match(r'(?:move|reschedule|change)\b',en))
+        zh_words=['改期到','改到','改为','挪到','推迟到','移到','调整为','调整到','重新安排在','重新安排到','重新安排为','重新安排','的时间','时间']
+        en_words=['move','reschedule','change','time','to','for']
         zh_ok=any(word in zh for word in zh_words[:-2]);en_ok=True
     elif operation=='cancel':
         zh_root=zh.startswith('取消');en_root=bool(re.match(r'cancel\b',en))
-        zh_words=['取消','这个','这项'];en_words=['cancel','from'];zh_ok=en_ok=True
+        zh_words=['取消','这个','这项'];en_words=['cancel','from','for'];zh_ok=en_ok=True
     elif operation=='complete':
         zh_root=bool(re.match(r'(?:我|把|将|@item@)',zh));en_root=bool(re.match(r'mark\b',en))
-        zh_words=['已','已经','完成','了','标记为','标记','一下','设为'];en_words=['mark','as','done','complete','completed']
+        zh_words=['已','已经','完成','了','刚弄完了','做完了','标记为','标记','一下','设为'];en_words=['mark','as','done','complete','completed']
+        # "I could mark it done" alone is not a completed-work declaration.
+        if re.match(r'^我(?:刚弄完了|(?:已经|已)?完成了?)',zh):zh_words.append('可以')
         zh_ok=bool(re.search(r'标记|设为',zh));en_ok=True
     else:return None
-    punctuation=r'[\s，,：:。.!！]'
+    punctuation=r'[\s，,：:。.!！?？]'
     zh_tokens='|'.join(re.escape(word) for word in sorted(set(common_zh+zh_words),key=len,reverse=True))
     en_tokens='|'.join(re.escape(word) for word in sorted(set(common_en+en_words),key=len,reverse=True))
     valid_zh=zh_root and zh_ok and re.fullmatch('(?:'+zh_tokens+'|'+punctuation+')+',zh)
@@ -179,12 +182,13 @@ def interpret(text, operation, title, reference, *, target_title=None, active_co
     if re.search(UNSAFE,guarded) or re.search(EN_UNSAFE,guarded,re.IGNORECASE):
         return {**result,'mode':'NOT_REQUEST','message':'原文含否定、引用或条件，不作为直接待办指令。'}
     compound_text=text
-    if operation=='create' and parts and parts[1] is None and literal(parts[0],title):
-        # An untimed, explicitly added single item can have a conjunction in
-        # its literal name (e.g. a book title). Sequential/multiple action
-        # markers are still reviewed; saving a to-do never executes its text.
+    if parts and literal(parts[0],title,target=operation!='create'):
+        # A fully matched local item can contain a conjunction in its name,
+        # including timed reminders and edits of an existing literal target.
+        # Storing/removing an item never executes its content. New sequential
+        # or multiple-action requests still require review.
         compound_text=guarded
-        if re.search(r'[;；]|然后|并且|同时|顺便|还要|另外|\b(?:then|also)\b',parts[0],re.IGNORECASE):
+        if operation=='create' and re.search(r'[;；]|然后|并且|同时|顺便|还要|另外|\b(?:then|also)\b',parts[0],re.IGNORECASE):
             compound_text=text
     if re.search(COMPOUND,compound_text,re.IGNORECASE) or len(list(re.finditer(TIME,text)))>1:
         return {**result,'message':'请求含多个动作，需保留完整要求并核对，不能自动合并为一项提醒。'}

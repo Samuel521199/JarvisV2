@@ -38,8 +38,9 @@ def exclusive(path,value):
     with path.open('x',encoding='utf-8',newline='\n') as f:f.write(json.dumps(value,ensure_ascii=False,indent=2)+'\n')
 
 
-def basis_text(text,value):
+def basis_text(text,value,*,compact=False):
     if value is None:return text
+    if compact and all(quote in text for quote in value['facts']+value['plans']):return text
     return text+'\n\n本次明确更新交付核对依据（资料声明，不是新的外部动作要求）：\n事实：\n'+('\n'.join(value['facts']) or '无')+'\n已确认计划：\n'+('\n'.join(value['plans']) or '无')
 
 
@@ -102,7 +103,17 @@ def summarize(folder):
         if r['assessment']!=assessment or r['flow_valid']!=(flow and delivery):raise CoreError('trial_changed','Assessment does not match raw observations and frozen reference')
         if r.get('delivery_review') and r['delivery_review'].get('reason')!='observer_error':
             checked=delivery_review.review(r['delivery_basis'],r['reply'],r['status'],r['action_kind'])
-            if checked!=r['delivery_review']:raise CoreError('trial_changed','Shadow observation differs from frozen basis and reply')
+            observed={k:v for k,v in r['delivery_review'].items() if k!='rendering'}
+            if checked!=observed:raise CoreError('trial_changed','Shadow observation differs from frozen basis and reply')
+            if frozen.get('document_format') and r['status']=='SUCCEEDED':
+                from host import assistant
+                from host.delivery_review import materialize
+                raw=json.loads((folder/'artifacts'/(r['case_id']+'-'+r['arm']+'-'+str(r['turn'])+'.native.json')).read_text('utf-8'))
+                original,action=assistant.parse(raw['text'],[])
+                output,receipt=materialize({'request':canonical({'delivery_format':frozen['document_format']}),
+                    'delivery_basis':canonical(r['delivery_basis'])},{'status':r['status'],'text':original,'assistant_action':action})
+                if output['text']!=r['reply'] or receipt!=r['delivery_review'].get('rendering'):
+                    raise CoreError('trial_changed','Rendered delivery differs from native reply and explicit source basis')
         for a in r.get('artifacts',[]):
             path=folder/a['file']
             if path.resolve().parent!=(folder/'artifacts').resolve() or not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest()!=a['sha256']:
@@ -121,14 +132,17 @@ def summarize(folder):
     return result
 
 
-def run_suite(suite,out,catalog,route,factory,*,execution='live',owner_checkpoint=lambda:None,basis_inputs=None):
+def run_suite(suite,out,catalog,route,factory,*,execution='live',owner_checkpoint=lambda:None,basis_inputs=None,document_format=None):
     suite=trial_checks.validate(copy.deepcopy(suite));basis_inputs=copy.deepcopy(basis_inputs);validate_basis_inputs(suite,basis_inputs)
+    if document_format is not None:
+        from modules.dialogue.document_format import FORMAT
+        if document_format!=FORMAT or basis_inputs is None:raise CoreError('trial_invalid','Explicit format requires declared source inputs')
     out=Path(out);out.mkdir(parents=True,exist_ok=False)
     (out/'turns').mkdir();(out/'artifacts').mkdir()
     ordering=[{'case_id':c['id'],'arm':a} for i,c in enumerate(suite['cases']) for a in (trial_checks.ARMS if i%2==0 else tuple(reversed(trial_checks.ARMS)))]
     frozen={'schema':'jarvis.work-trial-freeze.v1','created':time.time(),'suite':suite,'suite_digest':digest(suite),
         'source_digests':source_snapshot(),'verifier':trial_checks.verifier(suite),'execution':execution,
-        'route':{k:route.get(k) for k in ('id','adapter','model','parameters','max_output_tokens','max_prompt_bytes','timeout_seconds','billing_profile')},
+        'route':{k:route.get(k) for k in ('id','adapter','model','parameters','max_output_tokens','max_prompt_bytes','timeout_seconds','billing_profile')},'document_format':document_format,
         'catalog_digest':digest(catalog),'order':ordering,'repetitions':1,'max_calls':2*sum(len(c['turns']) for c in suite['cases']),
         'stop_after_consecutive_response_failures':3,'memory_enabled':False,'fallback':False,
         'comparison':'current runtime, identical model and limits, selected workflow guidance off/on; quotation is same-path control',
@@ -160,9 +174,10 @@ def run_suite(suite,out,catalog,route,factory,*,execution='live',owner_checkpoin
                         key=c['id']+'-'+arm+'-'+str(i);ident='trial-'+key;skill=c['skill'] if arm=='workflow_on' else 'none'
                         command={'chat_id':chat,'request_id':ident,'text':reference['prompt'],'provider':route['id'],'model':route['model'],
                             'reasoning':'default','skill':skill,'assistant_mode':True,'memory_enabled':False}
+                        if document_format is not None:command['delivery_format']=document_format
                         if basis_inputs is not None:
                             value=basis_inputs['cases'][c['id']][i]
-                            if value is not None:command.update(text=basis_text(command['text'],value),delivery_basis=value)
+                            if value is not None:command.update(text=basis_text(command['text'],value,compact=document_format is not None),delivery_basis=value)
                         guidance=skills.select(skill,reference['prompt']);store.begin(command,[route],guidance)
                         exclusive(out/'turns'/(key+'.started.json'),{'freeze_digest':digest(frozen),'case_id':c['id'],'arm':arm,'turn':i,'request_digest':digest(command),'started':time.time()})
                         start=time.monotonic();host.run(ident);elapsed=time.monotonic()-start;t=store.turn(ident)

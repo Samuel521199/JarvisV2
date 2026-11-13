@@ -1,5 +1,7 @@
 # 当前真实状态
 
+2026-11-13后续验收：开发源码已补本地请求表达、显式来源文档渲染和代理忙的派发前拒绝辨识。四轮留出最后21/28（75%），未达90%门；三域工程任务12个结果通过限定条件，成本退步及修复均保留，不能称独立用户或学习质量达标。日用仍v0.1.8、epoch7，尚未采用新源码。[本轮完整证据与缺口](delivery-validation.md#request-document-evidence-20261113)。
+
 2026-11-13外接盘迁移：当前权威源码`E:/Jarvis/dev`，日用`E:/Jarvis/runtime`，模型库`E:/Jarvis/models`，恢复材料`E:/Jarvis/backups`；日用v0.1.8 epoch6与开发同时在线，真实LPAC Worker通过。Codex记忆实际仍在C盘，离线迁移工具已准备，须退出/迁移/重启验收；C临时删除被自动审批拒绝，D原件暂留，不能称已全量腾空C/D。[布局与操作](stack-project-layout.md#external-storage-local-layout)／[验收、失败及边界](delivery-validation.md#external-storage-evidence-20261113)。
 
 2026-11-13后续开发：已按[六项实施跟踪](decisions-review.md#review-followthrough-20261113)启动改造。首先修复候选检查期间源码变化导致的准备记录错绑，以及旧升级操作可能停止新基线的竞争条件；[验证与边界](delivery-validation.md#upgrade-guards-20261113)。日用仍为原v0.1.8，完整备份恢复、受理/知识收益、统一资源、多Bot/自愈目标未因局部修复而签收。

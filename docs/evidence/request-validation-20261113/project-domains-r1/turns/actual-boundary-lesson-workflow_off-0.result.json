@@ -1,0 +1,107 @@
+{
+  "case_id": "actual-boundary-lesson",
+  "domain": "learning",
+  "arm": "workflow_off",
+  "turn": 0,
+  "freeze_digest": "ba438ce06677880884bb46ff97a27379756d13c36213831a83c4e1060dd0f5c0",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\n  \"failure_category\": \"permission_boundary\",\n  \"model_calls_started\": 0,\n  \"evidence\": {\n    \"facts\": [\n      {\n        \"source\": \"F1\",\n        \"quote\": \"首次探针对开发profile调用require_online，被development_external_denied拒绝。\"\n      },\n      {\n        \"source\": \"F2\",\n        \"quote\": \"拒绝发生在模型请求发出之前，该次探针模型调用数为0。\"\n      },\n      {\n        \"source\": \"F3\",\n        \"quote\": \"开发profile禁止直接外联，模型请求必须走既有认证的本地代理。\"\n      }\n    ],\n    \"plans\": [],\n    \"suggestions\": []\n  },\n  \"document\": \"## 事实\\n- [F1] 首次探针对开发profile调用require_online，被development_external_denied拒绝。\\n- [F2] 拒绝发生在模型请求发出之前，该次探针模型调用数为0。\\n- [F3] 开发profile禁止直接外联，模型请求必须走既有认证的本地代理。\\n\\n## 已确认计划\\n- 无\\n\\n## 建议（未采纳）\\n- 无\"\n}",
+  "skill_id": null,
+  "skill_version": null,
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 5.609,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 328,
+        "prompt_tokens": 1937,
+        "total_tokens": 2265
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.00268275,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/actual-boundary-lesson-workflow_off-0.native.json",
+      "sha256": "9d3ef37d6f97287e89e7a30941e7074c02260ed58a745b9da0bd5d6e95c9584a",
+      "kind": "native_protocol_response"
+    },
+    {
+      "file": "artifacts/actual-boundary-lesson-workflow_off-0.reply.md.txt",
+      "sha256": "c2b8c517cfb46aca4806e0612a66784ba4085f5d2771f339fa00306783ff8a40",
+      "kind": "original_session_reply"
+    },
+    {
+      "file": "artifacts/actual-boundary-lesson-workflow_off-0.document.md.txt",
+      "sha256": "0c4ded8fb22fda2ee69bb4a0d58031973996e579aee9252f604fee3a9e8ccc16",
+      "kind": "verbatim_document_field_from_reply"
+    }
+  ],
+  "assessment": {
+    "state": "FAIL",
+    "checks": [
+      {
+        "id": "failure_category",
+        "status": "passed"
+      },
+      {
+        "id": "model_calls_started",
+        "status": "passed"
+      },
+      {
+        "id": "document_present",
+        "status": "passed"
+      },
+      {
+        "id": "body_shape",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_document_parity",
+        "status": "failed"
+      }
+    ],
+    "condition_score": 88.88888888888889,
+    "quality_score": null
+  },
+  "failure_stage": "content",
+  "business_quality": null,
+  "record_digest": "b6ed15b46cd0f232219b16b2eef51bfc4c63b09578ef339e5d281b20f2c7890c"
+}

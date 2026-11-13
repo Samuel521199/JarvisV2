@@ -1,0 +1,107 @@
+{
+  "case_id": "actual-storage-choice",
+  "domain": "comparison",
+  "arm": "workflow_off",
+  "turn": 1,
+  "freeze_digest": "ba438ce06677880884bb46ff97a27379756d13c36213831a83c4e1060dd0f5c0",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\n  \"same_external_physical_disk\": true,\n  \"partition_copy_protects_whole_disk_failure\": false,\n  \"evidence\": {\n    \"facts\": [\n      {\n        \"source\": \"F1\",\n        \"quote\": \"本机C、D分区属于同一块内置物理磁盘。\"\n      },\n      {\n        \"source\": \"F2\",\n        \"quote\": \"E是外接硬盘NTFS分区，真实LPAC文本执行已通过。\"\n      },\n      {\n        \"source\": \"F3\",\n        \"quote\": \"G是同一外接硬盘的exFAT分区，现有LPAC持久ACL检查未通过。\"\n      },\n      {\n        \"source\": \"F4\",\n        \"quote\": \"E和G属于同一块外接物理硬盘，分区间副本不能防这块硬盘整体失效。\"\n      }\n    ],\n    \"plans\": [],\n    \"suggestions\": []\n  },\n  \"document\": \"## 事实\\n- [F1] 本机C、D分区属于同一块内置物理磁盘。\\n- [F2] E是外接硬盘NTFS分区，真实LPAC文本执行已通过。\\n- [F3] G是同一外接硬盘的exFAT分区，现有LPAC持久ACL检查未通过。\\n- [F4] E和G属于同一块外接物理硬盘，分区间副本不能防这块硬盘整体失效。\\n\\n## 已确认计划\\n- 无\\n\\n## 建议（未采纳）\\n- 无\"\n}",
+  "skill_id": null,
+  "skill_version": null,
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 5.4198,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 399,
+        "prompt_tokens": 2588,
+        "total_tokens": 2987
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.00343725,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/actual-storage-choice-workflow_off-1.native.json",
+      "sha256": "c4472909b90aaf2aa7ec37dd11af54a29ede836ae862808c6a72d64643cfa23d",
+      "kind": "native_protocol_response"
+    },
+    {
+      "file": "artifacts/actual-storage-choice-workflow_off-1.reply.md.txt",
+      "sha256": "e02571e66f353604a700054708543b0eff9cf6e4194c77eda838dd310eccaf15",
+      "kind": "original_session_reply"
+    },
+    {
+      "file": "artifacts/actual-storage-choice-workflow_off-1.document.md.txt",
+      "sha256": "fa8d15afb95c05be405800fd95cf044a02981c3f3d056c3a5831699be4f14b13",
+      "kind": "verbatim_document_field_from_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "same_external_physical_disk",
+        "status": "passed"
+      },
+      {
+        "id": "partition_copy_protects_whole_disk_failure",
+        "status": "passed"
+      },
+      {
+        "id": "document_present",
+        "status": "passed"
+      },
+      {
+        "id": "body_shape",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_document_parity",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "record_digest": "9462e6713daea5f3b4b39fc848b5198223d3ce637424b1a05c1472c610b8c9d3"
+}

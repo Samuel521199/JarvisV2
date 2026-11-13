@@ -6,7 +6,7 @@ import uuid
 
 from control.development_profile import client_secret, read
 from control.network import NetworkGate
-from sdk.protocol import CoreError
+from sdk.protocol import CoreError,decode
 
 
 class NoRedirect(urllib.request.HTTPRedirectHandler):
@@ -36,6 +36,16 @@ def exchange(root, path, body=None):
             raise CoreError('development_output_limit', 'Development response exceeds its limit')
         return json.loads(raw)
     except urllib.error.HTTPError as error:
+        # The pinned bridge emits this code only before acquiring a dispatch
+        # slot. Preserve that fact; all other HTTP failures stay uncertain.
+        code=None
+        try:
+            with error:raw=error.read(4097)
+            detail=decode(raw) if len(raw)<=4096 else None
+            if isinstance(detail,dict):code=detail.get('error')
+        except (CoreError,OSError,ValueError):pass
+        if error.code==409 and code=='development_busy':
+            raise CoreError('development_busy','The shared model slot is busy; this request was not dispatched') from None
         raise CoreError('development_bridge_rejected', 'Shared development service rejected this request') from None
     except (OSError, ValueError):
         raise CoreError('development_bridge_unavailable', 'Shared development service is unavailable; no direct fallback') from None
@@ -49,9 +59,15 @@ def complete(root, route, messages, checkpoint, *, json_mode=False, reference_pn
     if NetworkGate(root).read()['blocked']:
         return {'status': 'REJECTED', 'code': 'network_disabled'}
     checkpoint()
-    result = exchange(root, '/model', {'request_id': uuid.uuid4().hex, 'provider': route['id'],
-                                     'model': route['model'], 'messages': messages, 'json_mode': json_mode,
-                                     'reasoning': route['parameters']})
+    try:
+        result = exchange(root, '/model', {'request_id': uuid.uuid4().hex, 'provider': route['id'],
+                                         'model': route['model'], 'messages': messages, 'json_mode': json_mode,
+                                         'reasoning': route['parameters']})
+    except CoreError as error:
+        if error.code!='development_busy':raise
+        checkpoint()
+        return {'status':'REJECTED','code':'development_busy','dispatched':False,
+                'usage':{'prompt_tokens':0,'completion_tokens':0,'total_tokens':0}}
     checkpoint()
     if not isinstance(result, dict) or result.get('status') not in {'SUCCEEDED', 'INVALID', 'REJECTED', 'UNKNOWN'}:
         raise CoreError('development_bridge_reply', 'Invalid shared model result')

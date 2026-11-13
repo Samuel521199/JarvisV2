@@ -1,0 +1,27 @@
+{
+  "same_external_physical_disk": true,
+  "partition_copy_protects_whole_disk_failure": false,
+  "evidence": {
+    "facts": [
+      {
+        "source": "F1",
+        "quote": "本机C、D分区属于同一块内置物理磁盘。"
+      },
+      {
+        "source": "F2",
+        "quote": "E是外接硬盘NTFS分区，真实LPAC文本执行已通过。"
+      },
+      {
+        "source": "F3",
+        "quote": "G是同一外接硬盘的exFAT分区，现有LPAC持久ACL检查未通过。"
+      },
+      {
+        "source": "F4",
+        "quote": "E和G属于同一块外接物理硬盘，分区间副本不能防这块硬盘整体失效。"
+      }
+    ],
+    "plans": [],
+    "suggestions": []
+  },
+  "document": "## 事实\n- [F1] 本机C、D分区属于同一块内置物理磁盘。\n- [F2] E是外接硬盘NTFS分区，真实LPAC文本执行已通过。\n- [F3] G是同一外接硬盘的exFAT分区，现有LPAC持久ACL检查未通过。\n- [F4] E和G属于同一块外接物理硬盘，分区间副本不能防这块硬盘整体失效。\n\n## 已确认计划\n- 无\n\n## 建议（未采纳）\n- 无"
+}

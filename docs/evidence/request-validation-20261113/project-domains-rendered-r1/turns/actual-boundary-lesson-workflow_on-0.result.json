@@ -1,0 +1,217 @@
+{
+  "case_id": "actual-boundary-lesson",
+  "domain": "learning",
+  "arm": "workflow_on",
+  "turn": 0,
+  "freeze_digest": "3ea5148798be84226491aa41db95b09605496b796c5f27c74413fbb90e4a6ab5",
+  "status": "SUCCEEDED",
+  "error": null,
+  "reply": "{\"document\":\"## 事实\\n- [F1] 首次探针对开发profile调用require\\\\_online，被development\\\\_external\\\\_denied拒绝。\\n- [F2] 拒绝发生在模型请求发出之前，该次探针模型调用数为0。\\n- [F3] 开发profile禁止直接外联，模型请求必须走既有认证的本地代理。\\n\\n## 已确认计划\\n- 无\\n\\n## 建议（未采纳）\\n- 无\",\"evidence\":{\"facts\":[{\"quote\":\"首次探针对开发profile调用require_online，被development_external_denied拒绝。\",\"source\":\"F1\"},{\"quote\":\"拒绝发生在模型请求发出之前，该次探针模型调用数为0。\",\"source\":\"F2\"},{\"quote\":\"开发profile禁止直接外联，模型请求必须走既有认证的本地代理。\",\"source\":\"F3\"}],\"plans\":[],\"suggestions\":[]},\"failure_category\":\"permission_boundary\",\"model_calls_started\":0}",
+  "skill_id": "english-coach",
+  "skill_version": "1.0.0",
+  "action_kind": "chat",
+  "task_count": 0,
+  "flow_valid": true,
+  "elapsed_seconds": 5.1314,
+  "attempts": [
+    {
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 182,
+        "prompt_tokens": 2948,
+        "total_tokens": 3130
+      },
+      "error": null,
+      "estimate": {
+        "amount": 0.0028935,
+        "currency": "USD",
+        "reason": "token_rates",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "file": "artifacts/actual-boundary-lesson-workflow_on-0.native.json",
+      "sha256": "14ad50b8a775f26b788bdd2950593371e4490dfc7aad28bbd950764ffac9312c",
+      "kind": "native_protocol_response"
+    },
+    {
+      "file": "artifacts/actual-boundary-lesson-workflow_on-0.reply.md.txt",
+      "sha256": "416ab75431193530392d167b39cdfee913d370a3277b72103b390aa12fc39fd1",
+      "kind": "original_session_reply"
+    },
+    {
+      "file": "artifacts/actual-boundary-lesson-workflow_on-0.document.md.txt",
+      "sha256": "04eaf06123ed093b7a992ec1037b2242cc147e63dfede4b001f652a54e9205f2",
+      "kind": "verbatim_document_field_from_reply"
+    }
+  ],
+  "assessment": {
+    "state": "PASS",
+    "checks": [
+      {
+        "id": "failure_category",
+        "status": "passed"
+      },
+      {
+        "id": "model_calls_started",
+        "status": "passed"
+      },
+      {
+        "id": "document_present",
+        "status": "passed"
+      },
+      {
+        "id": "body_shape",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_document_parity",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "quality_score": null
+  },
+  "failure_stage": null,
+  "business_quality": null,
+  "delivery_basis": {
+    "digest": "33d6f68bcc971e2e803fdb354daba49c9012ec97f0788f6ad49c522203b53943",
+    "entries": [
+      {
+        "end": 202,
+        "id": "F1",
+        "kind": "facts",
+        "quote": "首次探针对开发profile调用require_online，被development_external_denied拒绝。",
+        "source_turn": "trial-actual-boundary-lesson-workflow_on-0",
+        "start": 140
+      },
+      {
+        "end": 232,
+        "id": "F2",
+        "kind": "facts",
+        "quote": "拒绝发生在模型请求发出之前，该次探针模型调用数为0。",
+        "source_turn": "trial-actual-boundary-lesson-workflow_on-0",
+        "start": 206
+      },
+      {
+        "end": 269,
+        "id": "F3",
+        "kind": "facts",
+        "quote": "开发profile禁止直接外联，模型请求必须走既有认证的本地代理。",
+        "source_turn": "trial-actual-boundary-lesson-workflow_on-0",
+        "start": 236
+      }
+    ],
+    "relative_time_resolution": "UNVERIFIED",
+    "revision": 1,
+    "source_time_utc": "2026-11-13T15:30:01.260759+00:00",
+    "source_turn": "trial-actual-boundary-lesson-workflow_on-0"
+  },
+  "delivery_review": {
+    "basis_digest": "33d6f68bcc971e2e803fdb354daba49c9012ec97f0788f6ad49c522203b53943",
+    "basis_revision": 1,
+    "checks": [
+      {
+        "id": "body_shape",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_document_parity",
+        "status": "passed"
+      }
+    ],
+    "method": "source_excerpt",
+    "mode": "shadow",
+    "quality_score": null,
+    "reason": "bounded_document_check_only",
+    "rendering": {
+      "basis_digest": "33d6f68bcc971e2e803fdb354daba49c9012ec97f0788f6ad49c522203b53943",
+      "basis_revision": 1,
+      "document_digest": "8e4c63feb4fe2898b21773050262d6842cc6e167fcde5212f7c834f616353e82",
+      "mode": "explicit_render",
+      "model_calls": 0,
+      "original_checks": [
+        {
+          "id": "body_shape",
+          "status": "passed"
+        },
+        {
+          "id": "body_facts_coverage",
+          "status": "passed"
+        },
+        {
+          "id": "body_facts_grounding",
+          "status": "passed"
+        },
+        {
+          "id": "body_plans_coverage",
+          "status": "passed"
+        },
+        {
+          "id": "body_plans_grounding",
+          "status": "passed"
+        },
+        {
+          "id": "body_document_parity",
+          "status": "failed"
+        }
+      ],
+      "original_reply_digest": "942806c20bda15c3b07cb35032589df4b6a4a269f6741fbef0089d9df1ae3d6f",
+      "quality_score": null,
+      "reason": "current_source_structure_only",
+      "reply_digest": "5d9f1d4575fac316378ebed2b81f90d770de20911d338bb8fe413db1c5c01a28",
+      "state": "RENDERED",
+      "version": "body-document-1"
+    },
+    "reply_digest": "5d9f1d4575fac316378ebed2b81f90d770de20911d338bb8fe413db1c5c01a28",
+    "state": "EXCERPT_MATCH",
+    "version": "delivery-shadow-1",
+    "would_block": false
+  },
+  "record_digest": "b58e394a9963b02c435bd898b7f50b869aa8101e56d95cad2dbcb69ee6b1c4fa"
+}
