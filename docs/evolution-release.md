@@ -254,7 +254,7 @@ MCP 标准提供初始化、协议／能力协商、运行和关闭的连接生�
 
 2026-11-09补强声明类型核对：只接受对象和整数schema，null/数组/布尔schema不能冒充有效声明。实际控制器已在新合成数据上完成受审包采用、相容回退、失败恢复、接管中断后由新Driver恢复、未知退出阻断第二写入者、浏览器钥匙轮换及STOP优先的[9步组合验收](delivery-validation.md#commitment-coverage-evidence)。它验证当前控制器管理候选包的流程，不等于冻结控制器自身已被更新，也不扩张为全部历史业务库迁移验收。
 
-若候选失败时已经留下旧版无法读取的新状态，先确认候选停止，再将控制状态记为blocked / `baseline_data_incompatible`，不启动不兼容的基线；保留数据等待兼容代码或受控修复。此规则只存在于新控制器，**日用冻结的旧控制器不会自动获得**。两份旧代码的真实进程、恢复新代码和停止锁演练见[本轮核验](delivery-validation.md#commitment-shadow-evidence)；尚未部署到日用。
+若候选失败时已经留下旧版无法读取的新状态，先确认候选停止，再将控制状态记为blocked / `baseline_data_incompatible`，不启动不兼容的基线；保留数据等待兼容代码或受控修复。日用冻结的旧控制器不会自动获得新规则；2026-11-08起始核验当时尚未部署，两份旧代码的真实进程、恢复新代码和停止锁演练见[该轮核验](delivery-validation.md#commitment-shadow-evidence)。2026-11-12当前已安装控制器包含此门，并完成[本机实际升级/回退往返](delivery-validation.md#single-pc-20261112)；不能将当前规则倒写进旧证据。
 
 状态为 `stopped → draining → starting → active`，异常可进入 `blocked`；SQLite 是控制事务和事件的权威，协调 JSON 可由控制事务修复。A/B 为逻辑槽，指向按摘要保存的代码目录，不覆盖活动目录。[目录权威](stack-project-layout.md#single-pc-development-paths)。
 

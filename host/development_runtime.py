@@ -17,7 +17,7 @@ import urllib.request
 from adapters.development_bridge import exchange
 from control.atomic import write_json
 from control.credentials import load_envelope
-from control.development_profile import read
+from control.development_profile import read, client_secret
 from control.local_access import read_key
 from control.paths import data_root, reject_links
 from sdk.protocol import CoreError
@@ -114,8 +114,12 @@ def start(root, production, port, *, adopt_proxy=False):
     profile = read(root)
     if not profile:
         raise ValueError('Prepare the isolated development profile first')
+    if not profile.get('production_data') or Path(profile['production_data']).resolve()!=Path(production).resolve():
+        raise ValueError('Development profile points to a different daily installation; explicitly repair the link first')
+    if port==int(profile['bridge_origin'].rsplit(':',1)[1]):
+        raise ValueError('Development workbench and model proxy must use different ports')
     secret = load_envelope(production / 'private/development-bridge.dpapi')
-    if secret['client_id'] != profile['client_id']:
+    if secret != client_secret(root) or secret['client_id'] != profile['client_id']:
         raise ValueError('Production and development grants do not match')
     if adopt_proxy:
         _, candidate = freeze(production / 'development/proxy-releases')

@@ -56,6 +56,7 @@
 - [原生能力边界与可部署文件（v0.1.2）](#native-capability-boundary)
   - [外部 Worker 生命周期（开发实现，2026-11-08）](#worker-process-lifetime)
   - [日用安装、开发与恢复控制器](#daily-managed-installation)
+    - [一台电脑的使用、开发、升级与回退](#single-pc-local-workflow)
 - [可选原生薄壳与双窗口](#native-presence-prototype)
 <!-- book-nav:end -->
 
@@ -761,7 +762,7 @@ SQLite 仅明文索引对象 ID、种类、修订；内容、地址、令牌、c
 
 | 路径示例 | 用途 |
 |---|---|
-| `D:/Jarvis/user-data/` | 当前正式记忆、配置、账号、任务和交付；唯一正式写入者 |
+| `D:/Jarvis-runtime/user-data/` | 2026-11-12恢复后的正式记忆、配置、账号、任务和交付；唯一正式写入者 |
 | `<数据根>/deployment/packages/<sha>/` | 应用代码包；逻辑 A/B 引用摘要，不覆盖活动包 |
 | `<数据根>/deployment/control.sqlite3` | 包、准入回执、活动／上一／候选版本、代际和控制事件 |
 | `<数据根>/state/application-host.json` | 从控制事务发布的接单／代际协调快照 |
@@ -769,8 +770,8 @@ SQLite 仅明文索引对象 ID、种类、修订；内容、地址、令牌、c
 | `<数据根>/deployment/retired/<sha>/` | 可恢复的旧代码退役区，不保存旧业务数据库快照 |
 | `D:/Jarvis-dev/` | 已建立的开发工作树，跟踪 `codex/pc-environments` |
 | `D:/Jarvis-dev/user-data/` | 开发配置、合成记忆、测试任务与日志 |
-| `D:/Jarvis/user-data/development/proxy-releases/<hash>/` | 已冻结的第一方 Google 代理代码，不放个人业务数据库 |
-| `D:/Jarvis/user-data/development/proxy-active.json` | 当前已核对代理包的摘要选择；普通开发启动不自动采用源码变化 |
+| `D:/Jarvis-runtime/user-data/development/proxy-releases/<hash>/` | 已冻结的第一方 Google 代理代码，不放个人业务数据库 |
+| `D:/Jarvis-runtime/user-data/development/proxy-active.json` | 当前已核对代理包的摘要选择；普通开发启动不自动采用源码变化 |
 | `D:/jarvisTest/<run-id>/` | 用后可按归属管理的集成测试工程，沿现有非系统盘规则 |
 
 Git worktree 可以共享仓库对象而分别检出源码；它不会自动复制当前工作区的未提交／未跟踪内容，也不隔离运行权限。[S412](references.md#s412) 先盘点当前变更、形成可恢复且包含必要本机功能的源码基线，再建立开发工作区；不擅自 reset、clean、整体提交或复制私人资料。测试和日用页面分别使用 18283／18282，真实测试按需另占空闲端口；端口不同不意味着数据、文件和桌面资源已隔离。
@@ -778,7 +779,7 @@ Git worktree 可以共享仓库对象而分别检出源码；它不会自动复�
 本机已完成配置后的启动入口如下。开发启动器读取自己的 profile，使用独立数据根、18283 端口和 18482 代理；不停止日用服务。双击开发批处理会打开带本机访问钥匙的页面，该链接不得公开。
 
 ```bat
-D:\Jarvis\StartJarvis.bat --port 18282 --data-root D:\Jarvis\user-data
+D:\Jarvis-runtime\StartJarvis.bat
 D:\Jarvis-dev\StartJarvisDev.bat
 ```
 
@@ -811,7 +812,7 @@ D:\Jarvis-dev\StartJarvisDev.bat
 
 开发重任务先限制为一项，按需启动浏览器／Blender／模型 Worker；稳定交互优先。共用 API key 仍共用供应商配额与余额，不同本地数据根的费用上限不能自动合并为账户总上限。Google 受限代理已经运行；全机设备调度、账户总预算和正式数据只读视图仍待实现。开发服务与代理的单点工作集实测见[验收记录](delivery-validation.md#pc-environments-evidence)，不代表峰值、长期或 8 GiB PC 表现，不声称完全没有影响。
 
-落地顺序：确认可恢复基线 → 分离源码／数据／依赖 → 补测试 profile 与受限共享接口 → Mock 和只读联调 → 在文件传输助手等限定对象验证 → 建立 A/B 交接与故障恢复 → 有效维护授权覆盖后开放自动更新。前三项已落地，应用级控制器增加了隔离验收；日用采用仍受架构检查阻塞。当前共用既有 Python，未原地升级依赖；独立 supervisor、跨实例设备／费用仲裁、微信接线与无人值守更新仍未完成。不据此移走业务数据或注册持续更新任务。
+落地顺序：确认可恢复基线 → 分离源码／数据／依赖 → 补测试 profile 与受限共享接口 → Mock 和只读联调 → 在限定对象验证 → 建立 A/B 交接与故障恢复 → 有效维护授权覆盖后开放自动更新。早期架构门阻塞与后续修复保留原证据；2026-11-12已补[本机使用、开发与实际升级往返](#single-pc-local-workflow)。当前共用既有Python，未原地升级依赖；独立supervisor、跨实例设备／费用仲裁、微信接线与无人值守更新仍未完成。不据此移走业务数据或注册持续更新任务。
 
 <a id="native-capability-boundary"></a>
 ## 原生能力边界与可部署文件（v0.1.2）
@@ -864,9 +865,34 @@ D:\Jarvis-dev\StartJarvisDev.bat
 
 当前日用入口为 `D:/Jarvis-runtime/StartJarvis.bat`；加 `--companion` 打开已登记的原生精灵。日用端口18282，开发仍使用独立数据根；开发代码不会因修改源码而自动替换日用程序。原日用部署账本未包含在小型业务备份里，因此旧host/PID标记只作恢复证据存档，新安装重新通过包校验建立epoch 1，不能伪造旧代际或以旧状态启动。两个已删除的外部项目路径保持缺失提示，未把内容仓库冒充原项目目录。
 
+后续同日已采用v0.1.8并往返验证到epoch 5，上一版v0.1.7已登记。epoch 1是本次新安装起点，不是当前运行代际；旧安装epoch 18仍不复活。具体操作归下一小节，[实际验收](delivery-validation.md#single-pc-20261112)。
+
 日用 `user-data` 保持原位；被采用的代码位于 `deployment/packages/<sha>`。`host/application_installation.py` 仅在候选已被采用后安装根启动器，先保存原 `StartJarvis.bat`，再安装 `JarvisLaunch.py`。它先逐项核对恢复控制器摘要，随后通过同一应用账本启动当前已采用版本，避免重启后误用旧工作树。
 
 恢复控制器放在 `deployment/controllers/<build>`，带自己的检查器及回归测试；应用包退役不删除它。控制器本身的自动更新尚未实现，源码修改不会让它自动采用新规则。原工作树和未提交内容保留；开发仍在独立 worktree，Google 代理继续使用原已批准冻结版本。完整命令与恢复语义见[应用级交接](evolution-release.md#single-pc-application-runtime)。
+
+<a id="single-pc-local-workflow"></a>
+#### 一台电脑的使用、开发、升级与回退
+
+**implemented / 2026-11-12实测。** `tools/workstation.py`是显式操作入口，复用原Applications、WorkbenchProcess与冻结代理，不建第二套业务服务。日用使用固定代码包，开发使用当前源码和独立user-data；两者可以同时运行。Google调用仍发往已配置的云端，不等于已安装离线本地大语言模型。
+
+| 入口（位于开发工程根） | 做什么 | 对日用的影响 |
+|---|---|---|
+| `StartJarvisDaily.bat` | 读取开发profile中的日用路径，经固定启动器启动或复用日用，再打开工作台 | 不改日用源码/数据归属；已运行时复用 |
+| `StartJarvisDev.bat` | 启动开发18283和受限模型代理18482 | 不停止日用18282，不复制正式业务库或厂商凭据 |
+| `JarvisPC.bat status` | 分别核对数据根、在线状态、已采用与上一版本 | 只读，不把账本active误当服务在线 |
+| `JarvisPC.bat restart-development` | 正常停止再启动开发与代理 | 有在途工作会拒绝停止；日用继续运行 |
+| `JarvisPC.bat prepare-update --reviewed-source` | 源码审阅后，从开发源码构建、解包并由**已安装的独立控制器**检查候选 | 检查期间日用继续运行，不采用、不重启 |
+| `UpdateJarvis.bat` | 应用上一步的候选，备份、切换、健康检查后更新固定启动器 | 切换时短暂停止接单；不承诺零中断 |
+| `RollbackJarvis.bat` | 回到登记的上一版相容代码 | 复用当前业务数据；不恢复旧数据库或撤回已发生的外部动作 |
+
+平时分别打开日用和开发入口，在开发页测试；改完并审阅后先执行prepare-update，成功后再运行UpdateJarvis。**prepare-update的reviewed-source是操作者确认已审阅的声明，不是脚本自动完成了代码审阅。** 未登记的新运行文件会拒绝打包，避免Git清单只包含半个功能；新增代码需先核对并登记，再准备候选。源码摘要或日用代际变化后旧准备记录失效，必须重新准备；原固定独立检查失败时不停止日用，也不能调整评估器来放行。
+
+应用升级会先核验候选准入回执与已有数据相容性，再排空/停止日用，取得应用与Host独占锁，使用SQLite backup保存config/private/sessions/state和部署账本的本机快照。快照放在日用安装旁的backups唯一新目录，逐库完整性检查；**不含模型权重、资产正文、外部项目和全部可选环境**，不是整机备份。随后按准备时epoch接管候选；失败沿原控制器兼容恢复，停止锁优先。备份阶段失败且原基线尚未改变时，仅尝试正常重启该基线。不会自动用快照覆盖业务库，也不强杀未知Host。
+
+`apply-update`默认顺序为：核对原候选/源码/代际 → 核对原准入和相容性 → 日用正常停止 → 独立小型备份 → adopt → install-launcher → 复用固定启动器确认服务。开发进程不会因该顺序重启。没有新增定时任务、自动拉取、依赖安装或持续监控；只读状态和本次短时采样不属于后台常驻监管。
+
+恢复或更换安装路径后，使用`JarvisPC.bat repair-link --daily-data <新日用user-data>`，它只接受双方已存在且完全一致的DPAPI开发授权，拒绝不同令牌、不同共享策略或尚在运行的代理；保存原profile后仅修改日用路径。未知新授权不自动生成。启动还复核完整授权、路径和代理/工作台端口，拒绝误连另一份日用数据。冻结代理包丢失时需先审阅和测试，再显式采用代理；常规启动不采用开发源码变化。完整故障历史、两次真实模型连通与当前版本见[验收](delivery-validation.md#single-pc-20261112)。
 
 <a id="native-presence-prototype"></a>
 ## 可选原生薄壳与双窗口

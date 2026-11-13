@@ -1,10 +1,16 @@
 # 版本记录
 
+2026-11-13 开发边界修复（尚未日用采用）：升级准备记录改为绑定真实候选包清单，构建/验证期间源码改变会拒绝新准备记录；停止日用在原发布锁内核对expected_epoch/expected_build，旧操作不再停住新基线。保留原恢复/STOP规则，新增并发与编辑中变更反例；后续源码检查点、完整恢复、受理与知识收益、统一资源及多Bot/自愈仍按原路线推进。[实施跟踪](docs/decisions-review.md#review-followthrough-20261113)／[验证](docs/delivery-validation.md#upgrade-guards-20261113)。
+
 ## v0.1.9 · 2026-11-13（文档方案更新，未日用采用）
 
 新增[大型陪聊平台长期记忆优化方案](docs/long-term-memory-scale-optimization.md#platform-memory-scope)：分层记忆、关键事实压缩、Embedding/Reranker 与指令评测、Redis 热状态、后台梦境整理、聊天/状态异步更新、纠正删除和成本验收。方案标记 proposed，未实现为云端多租户服务，也未证明质量、成本或延迟改善。独立 JarvisV2 与原 JachinV2 的工程/验收归属分别说明。
 
 收尾统一 VERSION、发布锁、文档清单的源码版本与 README 源码标识；登记专项文档并从原记忆章节链接，保留既有未提交功能改动。初始 v0.1.9 标签指向 5a46c91，后续收尾以分支提交及补充检查点为准，不覆盖已发布标签。检查范围和实际结果见[收尾记录](docs/evidence/memory-docs-closeout-20261113.md#memory-docs-closeout-checks)。
+
+## v0.1.8 · 2026-11-12
+
+本机使用、开发与受控升级入口补齐：开发profile重绑D:/Jarvis-runtime，保留原DPAPI授权、Google范围与额度；冻结代理重新审阅/登记，开发与日用双开。新增JarvisPC、日用启动、应用已准备升级和代码回退入口；已安装控制器检查候选，源码/代际变更拒绝旧准备记录，停止日用后做小型一致备份再切换。开发启动复核完整授权、路径及端口，拒绝只匹配client_id而令牌不同的组合。实际完成v0.1.7→v0.1.8→v0.1.7→v0.1.8，当前epoch 5；92张业务表、原设置/凭据与有效浏览器会话保持。8项入口专项、19项代理回归通过，独立包206通过/1项平台跳过；升级前后各一次真实开发模型调用成功。没有安装离线LLM、启用定时自动更新或承诺零中断。[操作](docs/stack-project-layout.md#single-pc-local-workflow)／[实测、失败与备份边界](docs/delivery-validation.md#single-pc-20261112)。
 
 2026-11-12 日用独立恢复：备份恢复至D:/Jarvis-runtime，保留D:/Jarvis-dev开发数据，模型库继续使用D盘备份仓库。受控程序包207项（206通过/1跳过）后采用v0.1.7、epoch 1；644个内部会话路径重绑、4个原内容摘要工具恢复并通过24个既有用例。模型库三整模、高模/LOD联动、线框和标注实际浏览器检查通过；原生双窗口已显示、Gmail一次只读连通检查成功。未恢复的旧项目、产物及可选环境和历史UNKNOWN明确保留。[范围与证据](docs/delivery-validation.md#daily-restore-20261112)。
 

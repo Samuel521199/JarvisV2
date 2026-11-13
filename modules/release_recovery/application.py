@@ -381,9 +381,12 @@ class Applications:
             raise CoreError('application_rollback', 'No previous adopted version is available')
         return self.adopt(previous['build'], driver, rollback=True)
 
-    def stop(self, driver):
+    def stop(self, driver, *, expected_epoch=None, expected_build=None):
         with RunLock(self.root, 'application-release'):
             state = self.state()
+            if (expected_epoch is not None and state['epoch'] != expected_epoch
+                    or expected_build is not None and (not state['active'] or state['active']['build'] != expected_build)):
+                raise CoreError('application_epoch', 'Active baseline changed; the current host was not stopped')
             if state['phase'] != 'active' or not state['active']:
                 raise CoreError('application_phase', 'Resolve the current transition before stopping')
             state.update(phase='draining')

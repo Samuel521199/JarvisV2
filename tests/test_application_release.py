@@ -86,6 +86,24 @@ class ApplicationReleaseTests(unittest.TestCase):
         with self.assertRaises(CoreError): self.app.adopt(ident, self.driver)
         self.assertIsNone(self.driver.live)
 
+    def test_conditional_stop_preserves_newer_running_baseline(self):
+        first,second=self.candidate('stop-old'),self.candidate('stop-new')
+        self.app.adopt(first,self.driver);old=self.app.state()
+        self.app.adopt(second,self.driver);new=self.app.state();events=list(self.driver.events)
+        with self.assertRaises(CoreError) as error:
+            self.app.stop(self.driver,expected_epoch=old['epoch'],expected_build=first)
+        self.assertEqual(error.exception.code,'application_epoch')
+        self.assertEqual(self.app.state(),new);self.assertEqual(self.driver.events,events)
+        self.assertEqual(self.driver.live,(second,new['epoch']))
+        self.app.stop(self.driver,expected_epoch=new['epoch'],expected_build=second)
+        self.assertEqual(self.app.state()['phase'],'stopped');self.assertIsNone(self.driver.live)
+
+    def test_conditional_stop_rejects_wrong_build_even_with_current_epoch(self):
+        current=self.candidate('stop-identity');self.app.adopt(current,self.driver)
+        before=self.app.state();events=list(self.driver.events)
+        with self.assertRaises(CoreError):self.app.stop(self.driver,expected_epoch=before['epoch'],expected_build='f'*64)
+        self.assertEqual(self.app.state(),before);self.assertEqual(self.driver.events,events)
+
     def test_failed_validation_cannot_launch(self):
         ident = self.candidate('bad-check', False)
         self.app.validate(ident, lambda _: {'passed': False})

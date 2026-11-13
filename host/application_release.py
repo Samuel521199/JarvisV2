@@ -138,6 +138,8 @@ def main(arguments=None):
         if args.action == 'adopt':
             if not args.build: parser.error('adopt requires --build')
             value = app.adopt(args.build, driver, expected_epoch=args.expected_epoch)
+        elif args.action == 'stop':
+            value = app.stop(driver,expected_epoch=args.expected_epoch,expected_build=args.build)
         else:
             value = getattr(app, args.action)(driver)
     # Account credentials, access keys, source or private model replies are not printed.

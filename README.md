@@ -2,6 +2,8 @@
 
 **源码 v0.1.9 · 文档方案更新，未日用采用。** 新增[大型陪聊平台长期记忆优化方案](docs/long-term-memory-scale-optimization.md#platform-memory-scope)，当前状态为 proposed。此仓库为独立 JarvisV2 工程；旧 JachinV2 的实现与验收不自动继承。下文日用功能描述按原有验收记录理解，源码版本不代表已安装或上线。见[本轮收尾记录](docs/evidence/memory-docs-closeout-20261113.md#memory-docs-closeout-scope)。
 
+同日后续开发已修复升级准备的源码错绑与旧操作停止新基线问题，尚未日用采用；完整后续工作按[实施跟踪](docs/decisions-review.md#review-followthrough-20261113)推进，不以局部通过标记全部目标完成。
+
 <p align="center">
   <img src="apps/workbench/brand/core.png" width="156" alt="Jarvis blue core emblem">
 </p>
@@ -19,15 +21,15 @@
 
 一个以普通 PC 为主要载体、以个人为主、以其家庭或以其为中心的小团体为辅，能够长期相处、自主工作并持续成长的 AI 助手与伙伴。最终目标是在明确目标与有效授权内独立完成任务、验证结果并交付。
 
-**这里是工程与文档的主入口。** 最近日用验收记录 **v0.1.7 · 早期预览，已日用采用**（[当前状态](docs/current-state.md)）（首个 GitHub 发布为 v0.1.0），历史开发证据保持原编号，版本号规则见 [CHANGELOG](CHANGELOG.md#changelog-rules)。低打扰持续安排现已接入Gmail只读检查、规则筛选、共用待办/提醒与有限跟进，和固定文字计划一起复用原队列、授权、结果反馈与恢复。模型库与原有个人/专业功能保留。[受控 MCP 接入](docs/tasks-agents.md#mcp-runtime)使用原任务体系。当前自主研发仍受限于纯文本能力，完整助手与 K0—K6 按分项证据判断。
+**这里是工程与文档的主入口。** 最近日用验收记录 **v0.1.8 · 早期预览，已日用采用**（[当前状态](docs/current-state.md)）（首个 GitHub 发布为 v0.1.0），历史开发证据保持原编号，版本号规则见 [CHANGELOG](CHANGELOG.md#changelog-rules)。本机日用/开发、候选检查、备份升级和相容回退已有共用入口；低打扰持续安排接入Gmail只读检查、规则筛选、共用待办/提醒与有限跟进，和固定文字计划一起复用原队列、授权、结果反馈与恢复。模型库与原有个人/专业功能保留。[受控 MCP 接入](docs/tasks-agents.md#mcp-runtime)使用原任务体系。当前自主研发仍受限于纯文本能力，完整助手与 K0—K6 按分项证据判断。
 
 **先读这一页：[当前真实状态](docs/current-state.md)**：能运行什么、哪些只是设计、证据边界与已知风险都在一页内。按版本的变更流水见 [CHANGELOG](CHANGELOG.md)。
 
-**2026-11-11 本机恢复状态：**代码、Git历史及模型库的核对与迁移见[当前状态](docs/current-state.md)。原日用安装目录已删除，源码存在不表示日用数据已自动恢复；模型和私有备份不进入Git。
+**2026-11-12 本机恢复状态：**日用已恢复至独立`D:/Jarvis-runtime`并采用v0.1.8，开发仍在`D:/Jarvis-dev`；缺失旧项目、原产物与可选环境的边界见[当前状态](docs/current-state.md)。模型和私有备份不进入Git。
 
-**边用边开发：**日用数据保留原位；托管代码与恢复入口见[安装与恢复](docs/stack-project-layout.md#daily-managed-installation)。已配置的独立开发工作树用 `StartJarvisDev.bat` 启动，不共用正式业务数据。新克隆还需准备独立 profile，不能直接把两个 Host 指向同一个数据根。[双环境入口与操作](docs/stack-project-layout.md#single-pc-development-paths) · [本轮核验及未完成项](docs/delivery-validation.md#pc-environments-evidence)。
+**边用边开发：**开发根双击`StartJarvisDaily.bat`开日用、`StartJarvisDev.bat`开开发，两者数据分离。改完并审阅后运行`JarvisPC.bat prepare-update --reviewed-source`，独立检查通过后用`UpdateJarvis.bat`切换；`RollbackJarvis.bat`回到登记的相容上一版。检查候选期间日用继续运行，切换有短暂停顿。[操作与备份边界](docs/stack-project-layout.md#single-pc-local-workflow) · [本轮实测](docs/delivery-validation.md#single-pc-20261112)。新克隆仍需准备独立profile，不能把两个Host指向同一数据根。
 
-**持续办事：**从聊天目标卡、行动计划或工作状态打开[共用持续安排](docs/tasks-agents.md#standing-work-runtime)；真实邮件由[邮件与待办持续助手](docs/tasks-agents.md#mail-standing-runtime)管理，核对一次范围后定时推进，支持暂停、接续和反馈。日用请使用工程根`StartJarvis.bat`的固定托管入口，避免直接运行旧源码服务。
+**持续办事：**从聊天目标卡、行动计划或工作状态打开[共用持续安排](docs/tasks-agents.md#standing-work-runtime)；真实邮件由[邮件与待办持续助手](docs/tasks-agents.md#mail-standing-runtime)管理，核对一次范围后定时推进，支持暂停、接续和反馈。日用使用开发根`StartJarvisDaily.bat`或日用安装目录`D:/Jarvis-runtime/StartJarvis.bat`的固定托管入口，避免直接运行旧源码服务。
 
 **原生入口：**已准备本地可选壳的安装目录可双击 `StartJarvisCompanion.bat`；机器人独立拖动，标签与卡片停靠显示。[双窗口与限制](docs/contracts.md#native-two-window-contract)。[邮件待办闭环](docs/tasks-agents.md#mail-work-local-closure)复用原邮箱、提醒与准确审阅，不自动执行邮件正文。
 

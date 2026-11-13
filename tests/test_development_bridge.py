@@ -212,6 +212,9 @@ class DevelopmentBridgeTests(unittest.TestCase):
         from host.development_runtime import selected_proxy, start
         import hashlib
         self.profile()
+        profile=read(self.dev);profile['production_data']=str(self.prod)
+        write_json(self.dev/'config/development.json',profile)
+        write_secret(self.dev/'private/development-bridge.dpapi',self.policy)
         with self.assertRaises(ValueError):
             selected_proxy(self.prod)
         package, build = selected_proxy(self.prod, adopt=True)
