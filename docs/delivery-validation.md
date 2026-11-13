@@ -2285,11 +2285,11 @@ Studio3D 新增的限定诊断、失败和成本证据见[执行登记](studio3d
 
 实际ABL-4仅给同条件案例提供1条候选，另三例均未提供旧方法正文；每次提供前都重新验证当前来源。各组均保留撤权/删除等硬门，ABL-3不拿撤销内容做“消融”。原生会话/输入摘要/来源回执与评分逐项回读通过，实际任务与待办创建均0，临时代理凭据已删除。[事前冻结](evidence/knowledge-advice-20261114/ablation-r1/frozen.json)／[原始结果](evidence/knowledge-advice-20261114/ablation-r1/summary.json)／[来源选择](evidence/knowledge-advice-20261114/ablation-r1/selection.json)／[原生回读审计](evidence/knowledge-advice-20261114/ablation-r1/audit.json)。
 
-本轮预设的局部目标是ABL-3背景字节不超过ABL-2的75%；实际为33.6%，优于该表示大小目标。但没有事前承诺token或业务正确率增益，不把该字节预测当JPF/r1命中；单次推理token有随机性。5次模型调用共25,875 reported tokens，完整费用、总结人时、本地计算及供应商账单未计全，full_cost保持未知，不能称已经回本。
+本轮预设的局部目标是ABL-3背景字节不超过ABL-2的75%；实际为33.6%，优于该表示大小目标。该字节大小可在调用前直接计算，属于表示设计目标，不是未知任务效果预测；没有事前承诺token或业务正确率增益，不计JPF/r1预测命中；单次推理token有随机性。5次模型调用共25,875 reported tokens，完整费用、总结人时、本地计算及供应商账单未计全，full_cost保持未知，不能称已经回本。
 
 兼容检查覆盖当前/历史卡片、未知版本、旧包声明、排空期间新增卡片与失败后无法安全恢复旧包；不恢复旧业务库掩盖不相容。真实E盘日用/开发根只读检查尚无条件卡数据，预检约16.0/6.7毫秒仅本次单样本，不是性能门。当前已安装冻结控制器仍旧版，本轮没有给它新增声明或升级；正式采用仍需控制器和兼容恢复链单独验收。[环境检查](evidence/knowledge-advice-20261114/environment.json)。本机两根local-models目录均无模型子目录，本次是词法检索与云端回答；历史E5/79/90成绩没有当作当前环境复验，缺少权重仍需补齐。
 
-初次后续回归错写不存在的test_knowledge_collection.py，得到0项/失败状态；保留[原记录](evidence/knowledge-advice-20261114/final-regressions.json)，查明真实文件后重新收集，不能把0项当通过。最终13组相关文件使用现有unique_suite移除7个重复测试ID，239个唯一测试ID全部通过，无失败/错误/跳过；另保留初次125项与后续文件名错误的原始记录，不删除验收或降低标准。[最终回归](evidence/knowledge-advice-20261114/final-regressions-r2.json)。剩余门仍包含真实任务经验提炼/反证回接、自动任务消费、普通聊天组合、替代方法探测、ABL-5、独立来源新题和跨时间完整成本。
+初次后续回归错写不存在的test_knowledge_collection.py，得到0项/失败状态；保留[原记录](evidence/knowledge-advice-20261114/final-regressions.json)，查明真实文件后重新收集，不能把0项当通过。源码检查点e81142b另经冻结控制器683份文件核对，独立候选207项中206通过、1项平台跳过，包内运行摘要保持；确认新兼容声明和方法模块确实入包。未创建日用ready或采用。[独立结果](evidence/knowledge-advice-20261114/independent-package/result.json)／[原日志](evidence/knowledge-advice-20261114/independent-package/independent-tests.txt)。模型调用早于最后普通事实值旁路保护，该保护另有最终回归和包检查，没有追加模型复验。最终13组相关文件使用现有unique_suite移除7个重复测试ID，239个唯一测试ID全部通过，无失败/错误/跳过；另保留初次125项与后续文件名错误的原始记录，不删除验收或降低标准。[最终回归](evidence/knowledge-advice-20261114/final-regressions-r2.json)。剩余门仍包含真实任务经验提炼/反证回接、自动任务消费、普通聊天组合、替代方法探测、ABL-5、独立来源新题和跨时间完整成本。
 
 本轮不改写 [JPF/r1](grok-bot-comparison.md#grok-forecast-dashboard) 的数值预测。上述机制是 JPF-05/06/09 等效果成立的重要前提，待取得匹配基线后，可另行登记新版预测和新增观察项；不能事后把当前补充当作 r1 已经实测成立。
 
