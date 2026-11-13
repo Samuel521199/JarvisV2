@@ -1,8 +1,9 @@
 """Explicit stopped cross-disk snapshot and inert restore rehearsal; no task replay."""
 from pathlib import Path
-import json,subprocess,sys,time
+import json,shutil,subprocess,sys,time
 ROOT=Path(__file__).resolve().parents[3];sys.path.insert(0,str(ROOT));sys.dont_write_bytecode=True
 from host.development_runtime import start as start_dev,stop as stop_dev
+from control.paths import reject_links
 from tools import workstation
 from tools.migrate_codex_home import independent_disks
 from tools.recovery_snapshot import snapshot,restore
@@ -11,13 +12,16 @@ from tools.recovery_snapshot import snapshot,restore
 def main():
     if ROOT!=Path('E:/Jarvis/dev').resolve():raise RuntimeError('Use the canonical E source')
     private=Path(sys.argv[1]).resolve();private.mkdir(parents=True,exist_ok=False)
+    entrypoints=private/'operator-root';entrypoints.mkdir()
+    for path in Path('E:/Jarvis').iterdir():
+        if path.is_file():reject_links(path);shutil.copy2(path,entrypoints/path.name)
     destination=Path('D:/Jarvis-Recovery/jarvis/2026-11-14-r1/snapshot')
     rehearsal=Path('E:/Jarvis/validation/restore-from-D-20261114-r1')
     if destination.exists() or rehearsal.exists():raise FileExistsError('Keep previous recovery evidence; do not overwrite')
     daily=Path('E:/Jarvis/runtime/user-data');dev=ROOT/'user-data';before=workstation.state(daily)
     report={'started':time.time(),'disks':independent_disks(),'source_commit':subprocess.check_output(['git','-C',str(ROOT),'rev-parse','HEAD'],text=True).strip(),
         'daily_before':before,'excluded_active_Codex_home':'C:/Users/samuel/.codex; offline copy required',
-        'roots':{'installation':'E:/Jarvis/runtime','development':'E:/Jarvis/dev','models':'E:/Jarvis/models','projects':'E:/Jarvis/projects'},
+        'roots':{'installation':'E:/Jarvis/runtime','development':'E:/Jarvis/dev','models':'E:/Jarvis/models','projects':'E:/Jarvis/projects','operator':str(entrypoints)},
         'daily_adopted':False,'restored_tasks_started':False}
     def save():
         destination.parent.mkdir(parents=True,exist_ok=True)

@@ -1,7 +1,7 @@
 import json,os,sqlite3,tempfile,unittest,zipfile
 from pathlib import Path
 from unittest.mock import patch
-from tools.migrate_codex_home import copy_home,redirect_home,independent_disks
+from tools.migrate_codex_home import copy_home,redirect_home,independent_disks,verify_home,rebind_sqlite_config
 from sdk.protocol import CoreError
 
 
@@ -63,6 +63,30 @@ class CodexHomeMigrationTests(unittest.TestCase):
         with patch('tools.migrate_codex_home.active_clients',side_effect=[[],[{'Id':456}]]):
             with self.assertRaisesRegex(RuntimeError,'Close all Codex'):copy_home(self.source,self.base/'new',self.base/'backup.zip')
         self.assertTrue((self.source/'sessions/rollout-test.jsonl').exists())
+
+    @unittest.skipUnless(os.name=='nt','Actual NTFS cutover requires Windows')
+    def test_changed_original_is_caught_after_retirement_and_rolled_back(self):
+        source=self.base/'.codex';self.source.rename(source);target=self.base/'new'
+        with patch('tools.migrate_codex_home.active_clients',return_value=[]),patch.object(Path,'home',return_value=self.base):
+            report=copy_home(source,target,self.base/'backup.zip')
+            (source/'auth.json').write_text('new original state after a brief writer')
+            with self.assertRaisesRegex(ValueError,'Source content changed'):
+                redirect_home(source,target,set_home=lambda _:self.fail('Registry must not change'),verify_source=lambda p:verify_home(p,report['files']))
+        self.assertFalse(source.is_junction());self.assertEqual((source/'auth.json').read_text(),'new original state after a brief writer')
+        self.assertEqual(list(self.base.glob('.codex-before-E-*')),[])
+
+    def test_new_session_after_inventory_is_not_silently_discarded(self):
+        with patch('tools.migrate_codex_home.active_clients',return_value=[]):report=copy_home(self.source,self.base/'new',self.base/'backup.zip')
+        (self.source/'sessions/new-session.jsonl').write_text('new durable memory')
+        with self.assertRaisesRegex(ValueError,'Source inventory changed'):verify_home(self.source,report['files'])
+
+    def test_windows_sqlite_path_rebinding_preserves_other_toml_tables(self):
+        import tomllib
+        text='model = "fixture"\n  sqlite_home = '+json.dumps(str(self.source/'db storage'))+'\n[plugin]\nsqlite_home = "leave this alone"\n'
+        target=self.base/'new';changed=rebind_sqlite_config(text,self.source,target)
+        value=tomllib.loads(changed)
+        self.assertEqual(value['sqlite_home'],str(target/'db storage'))
+        self.assertEqual(value['plugin'],{'sqlite_home':'leave this alone'});self.assertEqual(value['model'],'fixture')
 
     def test_archive_content_change_refuses_even_with_valid_zip_crc(self):
         original_write=zipfile.ZipFile.write
