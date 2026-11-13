@@ -58,6 +58,31 @@ class RecoverySnapshotTests(unittest.TestCase):
     def test_dependency_lockfiles_are_payload_not_ephemeral_leases(self):
         (self.assets/'Cargo.lock').write_text('reviewed dependency graph')
         (self.assets/'uv.lock').write_text('reviewed Python graph')
+        (self.assets/'memory.lock').write_text('ordinary asset with a reserved-looking basename')
         self.capture();restore(self.base/'backup',self.base/'restored')
         self.assertEqual((self.base/'restored/assets/Cargo.lock').read_text(),'reviewed dependency graph')
         self.assertEqual((self.base/'restored/assets/uv.lock').read_text(),'reviewed Python graph')
+        self.assertEqual((self.base/'restored/assets/memory.lock').read_text(),'ordinary asset with a reserved-looking basename')
+
+    def test_second_managed_root_writer_blocks_the_whole_snapshot(self):
+        second=self.base/'development';(second/'state').mkdir(parents=True)
+        with RunLock(second,'workbench-host'):
+            with self.assertRaises(CoreError):snapshot({'daily':self.root,'development':second},self.base/'backup',managed_root=self.root,additional_managed_roots=[second])
+        self.assertFalse((self.base/'backup').exists())
+
+    def test_suffixless_sqlite_includes_live_wal_and_preserves_unrelated_sidecar_names(self):
+        path=self.root/'state/History';db=sqlite3.connect(path)
+        try:
+            db.execute('PRAGMA journal_mode=WAL');db.execute('PRAGMA wal_autocheckpoint=0')
+            db.execute('CREATE TABLE facts(value)');db.commit();db.execute("INSERT INTO facts VALUES('committed in WAL')");db.commit()
+            self.assertTrue(path.with_name('History-wal').exists())
+            (self.assets/'research-wal').write_text('ordinary user payload')
+            (self.assets/'research-shm').write_text('another ordinary payload')
+            result=self.capture();self.assertEqual(result['sqlite_integrity_ok'],2)
+        finally:db.close()
+        restore(self.base/'backup',self.base/'restored')
+        restored=sqlite3.connect((self.base/'restored/daily/state/History').as_uri()+'?mode=ro&immutable=1',uri=True)
+        try:self.assertEqual(restored.execute('SELECT value FROM facts').fetchone()[0],'committed in WAL')
+        finally:restored.close()
+        self.assertEqual((self.base/'restored/assets/research-wal').read_text(),'ordinary user payload')
+        self.assertEqual((self.base/'restored/assets/research-shm').read_text(),'another ordinary payload')

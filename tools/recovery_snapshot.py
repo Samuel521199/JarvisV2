@@ -13,11 +13,14 @@ from control.recovery.gate import RunLock
 
 LANES=['application-release','workbench-host','task-runner','executor','dialogue','planning',
        'development','local-models','image-generation','mail']
-EPHEMERAL_LOCKS={lane+'.lock' for lane in LANES}|{'bridge.instance.lock','memory.lock'}
 
 
 def digest(path):
     with path.open('rb') as stream:return hashlib.file_digest(stream,'sha256').hexdigest()
+
+
+def sqlite_file(path):
+    with path.open('rb') as stream:return stream.read(16)==b'SQLite format 3\x00'
 
 
 def destination_for(base,label,name):
@@ -30,7 +33,7 @@ def destination_for(base,label,name):
     return path
 
 
-def snapshot(roots,destination,*,managed_root,missing_projects=()):
+def snapshot(roots,destination,*,managed_root,missing_projects=(),additional_managed_roots=()):
     roots={label:Path(root).resolve() for label,root in roots.items()};destination=Path(destination).resolve()
     reject_links(destination)
     for label,root in roots.items():
@@ -38,18 +41,29 @@ def snapshot(roots,destination,*,managed_root,missing_projects=()):
         reject_links(root)
         if not root.is_dir() or destination==root or destination.is_relative_to(root) or root.is_relative_to(destination):
             raise ValueError('Snapshot roots and destination must be separate existing trees')
+    managed=sorted({Path(managed_root).resolve(),*(Path(p).resolve() for p in additional_managed_roots)},key=lambda p:str(p).casefold())
+    ephemeral={p/'state'/(lane+'.lock') for p in managed for lane in LANES}
+    ephemeral|={p/name for p in managed for name in ['state/memory.lock','development/bridge.instance.lock']}
     with ExitStack() as locks:
         # A free lease is proven by acquiring it, not by reading an old PID file.
-        for lane in LANES:locks.enter_context(RunLock(Path(managed_root),lane))
+        for root in managed:
+            for lane in LANES:locks.enter_context(RunLock(root,lane))
         destination.mkdir(parents=True,exist_ok=False);files=[];databases=0
         for label,root in roots.items():
-            for source in sorted(root.rglob('*')):
+            sources=sorted(root.rglob('*'));sqlite_paths=set()
+            for source in sources:
                 reject_links(source)
-                if not source.is_file() or source.name in EPHEMERAL_LOCKS or source.name.endswith(('-wal','-shm')):continue
+                if source in ephemeral:continue
+                if source.name.endswith(('-wal','-shm')) and source.with_name(source.name[:-4]) in sqlite_paths:continue
+                if source.is_file() and sqlite_file(source):sqlite_paths.add(source)
+            for source in sources:
+                reject_links(source)
+                if not source.is_file() or source in ephemeral:continue
+                if source.name.endswith(('-wal','-shm')) and source.with_name(source.name[:-4]) in sqlite_paths:continue
                 name=source.relative_to(root).as_posix();target=destination_for(destination,label,name)
                 target.parent.mkdir(parents=True,exist_ok=True)
                 before=source.stat()
-                if source.suffix=='.sqlite3':
+                if source in sqlite_paths:
                     original=sqlite3.connect(source.as_uri()+'?mode=ro',uri=True);copy=sqlite3.connect(target)
                     try:
                         original.backup(copy)
@@ -63,8 +77,8 @@ def snapshot(roots,destination,*,managed_root,missing_projects=()):
                 if (before.st_size,before.st_mtime_ns)!=(after.st_size,after.st_mtime_ns):raise ValueError('Source changed during snapshot')
                 files.append({'root':label,'path':name,'bytes':target.stat().st_size,'sha256':digest(target)})
         manifest={'schema':1,'created_utc':datetime.now(timezone.utc).isoformat(),'roots':{k:str(v) for k,v in roots.items()},
-            'files':files,'sqlite_integrity_ok':databases,'missing_projects':list(missing_projects),
-            'scope':'Existing explicit trees, except ephemeral lock/WAL/SHM; SQLite backup incorporates WAL. Operational markers remain inert; no automatic execution or credential export.'}
+            'files':files,'sqlite_integrity_ok':databases,'missing_projects':list(missing_projects),'managed_roots':[str(p) for p in managed],
+            'scope':'Existing explicit trees, except known ephemeral leases and sidecars of header-identified SQLite databases; SQLite backup incorporates WAL. Other similarly named payloads remain. Operational markers stay inert; no automatic execution or credential export.'}
         (destination/'snapshot.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
         return {'files':len(files),'bytes':sum(row['bytes'] for row in files),'sqlite_integrity_ok':databases,'snapshot':str(destination)}
 
@@ -88,7 +102,7 @@ def restore(snapshot_root,destination):
         source=destination_for(snapshot_root,row['root'],row['path']);target=destination_for(destination,row['root'],row['path'])
         target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(source,target)
         if digest(target)!=row['sha256']:raise ValueError('Restored file changed')
-        if target.suffix=='.sqlite3':
+        if sqlite_file(target):
             db=sqlite3.connect(target.as_uri()+'?mode=ro&immutable=1',uri=True)
             try:
                 if db.execute('PRAGMA integrity_check').fetchone()[0]!='ok':raise ValueError('Restored database failed integrity check')

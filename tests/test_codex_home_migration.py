@@ -1,7 +1,8 @@
 import json,os,sqlite3,tempfile,unittest,zipfile
 from pathlib import Path
 from unittest.mock import patch
-from tools.migrate_codex_home import copy_home,redirect_home
+from tools.migrate_codex_home import copy_home,redirect_home,independent_disks
+from sdk.protocol import CoreError
 
 
 class CodexHomeMigrationTests(unittest.TestCase):
@@ -19,6 +20,36 @@ class CodexHomeMigrationTests(unittest.TestCase):
         with patch('tools.migrate_codex_home.active_clients',return_value=[{'Id':123}]):
             with self.assertRaisesRegex(RuntimeError,'Close all Codex'):copy_home(self.source,self.base/'new',self.base/'backup.zip')
         self.assertFalse((self.base/'new').exists());self.assertTrue(self.source.exists())
+
+    def test_recovery_volume_space_is_checked_before_any_original_retirement(self):
+        archive=self.base/'archives/backup.zip'
+        def space(path):
+            from collections import namedtuple
+            return namedtuple('Space','total used free')(3*1024**3,0,0 if Path(path)==archive.parent else 3*1024**3)
+        with patch('tools.migrate_codex_home.active_clients',return_value=[]),patch('tools.migrate_codex_home.shutil.disk_usage',side_effect=space):
+            with self.assertRaisesRegex(ValueError,'recovery volume'):copy_home(self.source,self.base/'new',archive)
+        self.assertTrue((self.source/'auth.json').exists());self.assertFalse(archive.exists())
+
+    def test_same_physical_disk_is_refused_even_for_different_drive_letters(self):
+        from subprocess import CompletedProcess
+        with patch('tools.migrate_codex_home.subprocess.run',return_value=CompletedProcess([],0,'{"primary_disk":1,"backup_disk":1}')):
+            with self.assertRaisesRegex(ValueError,'different physical'):independent_disks()
+        with patch('tools.migrate_codex_home.subprocess.run',return_value=CompletedProcess([],0,'{"primary_disk":1,"backup_disk":0}')):
+            self.assertEqual(independent_disks(),{'primary_disk':1,'backup_disk':0})
+
+    @unittest.skipUnless(os.name=='nt','Actual NTFS junction requires Windows')
+    def test_archive_parent_junction_cannot_silently_redirect_the_backup(self):
+        import subprocess
+        elsewhere=self.base/'elsewhere';elsewhere.mkdir();link=self.base/'redirected-archive'
+        command="New-Item -ItemType Junction -Path '"+str(link)+"' -Target '"+str(elsewhere)+"' | Out-Null"
+        subprocess.run(['powershell.exe','-NoProfile','-Command',command],capture_output=True,check=True)
+        try:
+            with patch('tools.migrate_codex_home.active_clients',return_value=[]):
+                with self.assertRaises(CoreError) as error:copy_home(self.source,self.base/'new',link/'backup.zip')
+            self.assertEqual(error.exception.code,'unsafe_path')
+            self.assertFalse((self.base/'new').exists());self.assertTrue((self.source/'auth.json').exists())
+            self.assertFalse((elsewhere/'backup.zip').exists())
+        finally:link.rmdir()
 
     def test_offline_copy_preserves_memory_auth_bytes_and_recovery_archive(self):
         with patch('tools.migrate_codex_home.active_clients',return_value=[]):

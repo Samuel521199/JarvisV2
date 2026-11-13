@@ -908,7 +908,7 @@ D:\Jarvis-dev\StartJarvisDev.bat
 | 恢复点和历史备份 | `E:/Jarvis/backups` | 恢复点15,219文件摘要通过；历史D盘备份另行归档并核对 |
 | Codex记忆、会话、SQLite与设置 | 计划`E:/Jarvis/codex-home` | 当前仍在C盘；须退出Codex后执行根目录`MigrateCodexMemory.cmd`，重启验收后才可称迁完 |
 
-根目录`StartJarvis.bat`开日用，`StartJarvisDev.bat`开开发，更新/回退仍委托原开发工具和固定控制器。当前日用包不因迁盘自动采用最新源码修复；共用已安装Python仍在本机，未迁移系统应用或安装新依赖。断开外接盘前正常停止日用/开发并退出Codex，避免数据库写入中断；盘符应保持E。E/G是同一物理盘，分区间副本不能防整块外接盘故障。
+根目录`StartJarvis.bat`开日用，`StartJarvisDev.bat`开开发，更新/回退仍委托原开发工具和固定控制器。当前日用包不因迁盘自动采用最新源码修复；共用已安装Python仍在本机，未迁移系统应用或安装新依赖。断开外接盘前正常停止日用/开发并退出Codex，避免数据库写入中断；盘符应保持E。E/G是同一物理盘，分区间副本不能防整块外接盘故障。 2026-11-14主人另行选择`D:/Jarvis-Recovery`仅作灾备，主项目和日用仍全部在E；实测D为物理盘0、E为物理盘1。Codex离线工具已将恢复ZIP目标改为该D盘目录，并在切换前后检查物理盘身份；当前真实迁移仍待退出Codex后执行。
 
 Codex操作顺序：先完成本轮交付并**完全退出所有Codex应用、CLI和app-server**，再双击`E:/Jarvis/MigrateCodexMemory.cmd`，期间不要重新打开Codex。工具先核对无写入者，以独立暂存目录复制，逐文件SHA和ZIP内容再次校验，检查SQLite完整性；确认后设置用户`CODEX_HOME`及C盘旧路径的NTFS兼容junction，再清理精确退休目录。失败保留原件和失败暂存，不覆盖重试。新路径下的账号文件只作本机不透明保留，不扩账号权限或调用模型。重启后打开`E:/Jarvis/dev`，核对原会话、记忆、目标、设置和新增会话持久化；**工具测试通过不等于这次真实迁移和重启验收通过**。
 

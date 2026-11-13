@@ -6,6 +6,7 @@ NTFS compatibility junction keeps existing shortcuts using the same new home.
 import argparse,hashlib,json,os,shutil,sqlite3,subprocess,time,zipfile
 from datetime import datetime,timezone
 from pathlib import Path
+from control.paths import reject_links
 
 
 def digest(path):
@@ -23,12 +24,23 @@ def require_offline():
     if active_clients():raise RuntimeError('Close all Codex app/CLI windows first, then run this migration again. No original files were removed.')
 
 
+def independent_disks():
+    script="$ErrorActionPreference='Stop'; @{primary_disk=(Get-Partition -DriveLetter E | Get-Disk).Number;backup_disk=(Get-Partition -DriveLetter D | Get-Disk).Number} | ConvertTo-Json -Compress"
+    result=subprocess.run(['powershell.exe','-NoProfile','-NonInteractive','-Command',script],capture_output=True,text=True,encoding='utf-8',timeout=20,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
+    if result.returncode:raise RuntimeError('Cannot verify independent E/D disks; original home retained')
+    value=json.loads(result.stdout)
+    if any(type(value.get(k)) is not int for k in ('primary_disk','backup_disk')) or value['primary_disk']==value['backup_disk']:
+        raise ValueError('Primary E and recovery D must be on different physical disks')
+    return value
+
+
 def copy_home(source,destination,archive):
     """Offline byte-checked copy with an independently verified ZIP backup."""
-    source=Path(source).resolve();destination=Path(destination).absolute();archive=Path(archive).absolute()
+    original_path=Path(source).absolute();source=original_path.resolve();destination=Path(destination).absolute();archive=Path(archive).absolute()
     if destination.exists() or archive.exists():raise FileExistsError('Keep previous migration files; choose a fresh destination/archive')
     if destination==source or destination.is_relative_to(source) or source.is_relative_to(destination):raise ValueError('Homes must be separate')
-    require_offline();destination.mkdir(parents=True);archive.parent.mkdir(parents=True,exist_ok=True)
+    require_offline();reject_links(original_path);reject_links(destination);reject_links(archive)
+    destination.mkdir(parents=True);archive.parent.mkdir(parents=True,exist_ok=True)
     files=[];omitted=[]
     # Locks/caches do not carry memories and must not preserve live ownership.
     ephemeral={'.sandbox','.sandbox-bin','.sandbox-secrets','.tmp','tmp','thread-writer-locks','mcp-oauth-locks','project-metadata-locks'}
@@ -45,8 +57,10 @@ def copy_home(source,destination,archive):
                 omitted.append(item.relative_to(source).as_posix());continue
             files.append(item)
     total=sum(path.stat().st_size for path in files)
-    if shutil.disk_usage(destination).free<2*total+1024**3:
-        raise ValueError('Insufficient E space for copied home and compressed recovery backup')
+    same_volume=destination.stat().st_dev==archive.parent.stat().st_dev
+    home_required=(2 if same_volume else 1)*total+1024**3
+    if shutil.disk_usage(destination).free<home_required or shutil.disk_usage(archive.parent).free<total+1024**3:
+        raise ValueError('Insufficient home/recovery volume space; original home retained')
     records=[]
     with zipfile.ZipFile(archive,'x',compression=zipfile.ZIP_DEFLATED,compresslevel=1,allowZip64=True) as backup:
         for index,item in enumerate(files):
@@ -114,7 +128,7 @@ def main():
     clients=active_clients()
     if args.check:
         print(json.dumps({'ready':not clients,'active_client_count':len(clients) if isinstance(clients,list) else 1,
-            'source':str(source),'destination':str(target),'originals_unchanged':True}));return
+            'source':str(source),'destination':str(target),'backup_root':'D:/Jarvis-Recovery/codex','originals_unchanged':True}));return
     require_offline()
     if source.is_junction() or source.is_symlink():raise ValueError('Existing home is already redirected; inspect it before proceeding')
     if target.parent!=Path('E:/Jarvis'):raise ValueError('This cutover is restricted to the owner-authorized E project root')
@@ -130,11 +144,14 @@ def main():
     configured=config.get('sqlite_home')
     if configured and not Path(configured).resolve().is_relative_to(source.resolve()):
         raise ValueError('A separate configured SQLite home needs explicit reconciliation; original home retained')
-    archive=target.parent/'backups'/('codex-original-'+datetime.now().strftime('%Y%m%d-%H%M%S')+'.zip')
+    disks=independent_disks()
+    archive=Path('D:/Jarvis-Recovery/codex')/('codex-original-'+datetime.now().strftime('%Y%m%d-%H%M%S')+'.zip')
     # Failed/interrupted attempts retain a unique staging tree and originals;
     # the final home is never a half-copied destination on the next retry.
     stage=target.with_name(target.name+'.pending-'+str(time.time_ns()))
     report=copy_home(source,stage,archive);require_offline()
+    if independent_disks()!=disks:raise RuntimeError('Disk layout changed; keep original home')
+    report['independent_disk_backup']=disks
     # Do not split an explicit, separately configured SQLite home silently.
     config=tomllib.loads((stage/'config.toml').read_text(encoding='utf-8'))
     configured=config.get('sqlite_home')
@@ -153,7 +170,8 @@ def main():
         restart_verification_required=True)
     # The raw recovery ZIP is verified before deleting only the exact retired
     # home. The new junction must resolve to the authorized E location.
-    assert retired.parent==Path.home() and retired.name.startswith('.codex-before-E-') and source.resolve()==target.resolve()
+    if not (retired.parent==Path.home() and retired.name.startswith('.codex-before-E-') and source.resolve()==target.resolve()
+            and target.is_dir() and archive.is_file()):raise RuntimeError('Final home/archive guard failed; retired original retained')
     try:shutil.rmtree(retired);report['original_removed']=True
     except OSError as error:report['cleanup_pending']=str(error)
     (target.parent/'codex-migration-result.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
