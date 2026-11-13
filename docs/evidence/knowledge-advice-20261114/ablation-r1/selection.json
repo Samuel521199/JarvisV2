@@ -1,0 +1,301 @@
+{
+  "compact": {
+    "version": "conditional-advice-1",
+    "methods": [
+      {
+        "id": "filter-then-compare",
+        "revision": 1,
+        "recipe": "quote-source-v1",
+        "requires": {
+          "currency": "CNY",
+          "objective": "lowest_eligible_total",
+          "pool": "regular",
+          "price_includes_fees": true
+        },
+        "summary": "For all-in CNY quotes, filter current total budget and delivery first, then choose the lowest current total. Recompute each new input.",
+        "counterexamples": [
+          "Net prices with separate shipping require a different total calculation.",
+          "Earliest delivery is a different objective; do not reuse the lowest-price choice.",
+          "Withdrawn evidence is unusable."
+        ],
+        "expires": 1794680732.4968748,
+        "source_id": "source-bd4bc7bbd41241a797fed6419ad76789",
+        "source_revision": 1,
+        "source_digest": "c1ebbd7b4bb71e2fcd4d3f6399ef133cbd6c165167f8ff20d152d676e92f74e4",
+        "evidence": [
+          {
+            "revision": 1,
+            "sha256": "62897e97e236657d252a81475fbd482298300efeed16aad2593c293ece2e1736",
+            "source_id": "source-9656110cdb5a4a1da7b0862fb4cb76a1"
+          }
+        ],
+        "lineage_group": "912e7052aa0cd7c95fa8032310c02cbd2dd6fae49864a08d31cbe369f8f69279",
+        "advisory_only": true,
+        "verified": false,
+        "execution_authorized": false
+      }
+    ],
+    "rejected": [
+      {
+        "source_id": "source-4962ccee57774fd2b50ec9b92f2d2ab1",
+        "id": "withdrawn-method",
+        "reason": "precondition_mismatch"
+      }
+    ],
+    "bytes": 1032,
+    "receipt": {
+      "version": "conditional-advice-1",
+      "context_digest": "304342f9420725da95cf957b1d375a0e37c7bfdcf41c54cf69b90d34d97736aa",
+      "methods": [
+        {
+          "source_id": "source-bd4bc7bbd41241a797fed6419ad76789",
+          "source_revision": 1,
+          "source_digest": "c1ebbd7b4bb71e2fcd4d3f6399ef133cbd6c165167f8ff20d152d676e92f74e4",
+          "method_digest": "a2f7c261b01d2e4c28eae94e729e9499a67d0d4bc6dc6d03538fb43bc655021c"
+        }
+      ]
+    },
+    "context_digest": "304342f9420725da95cf957b1d375a0e37c7bfdcf41c54cf69b90d34d97736aa",
+    "lineage_groups": 1,
+    "independent_successes": null,
+    "execution_authorized": false,
+    "automatic_promotion": false,
+    "context_authority": "caller_declared_advice_only",
+    "scope": "personal",
+    "provider": "vertex",
+    "enabled": true,
+    "epoch": 5,
+    "retrieval": {
+      "mode": "conditional_advice_lexical",
+      "candidates": 4,
+      "sources_examined": 2
+    }
+  },
+  "by_case": {
+    "same-conditions": {
+      "version": "conditional-advice-1",
+      "methods": [
+        {
+          "id": "filter-then-compare",
+          "revision": 1,
+          "recipe": "quote-source-v1",
+          "requires": {
+            "currency": "CNY",
+            "objective": "lowest_eligible_total",
+            "pool": "regular",
+            "price_includes_fees": true
+          },
+          "summary": "For all-in CNY quotes, filter current total budget and delivery first, then choose the lowest current total. Recompute each new input.",
+          "counterexamples": [
+            "Net prices with separate shipping require a different total calculation.",
+            "Earliest delivery is a different objective; do not reuse the lowest-price choice.",
+            "Withdrawn evidence is unusable."
+          ],
+          "expires": 1794680732.4968748,
+          "source_id": "source-bd4bc7bbd41241a797fed6419ad76789",
+          "source_revision": 1,
+          "source_digest": "c1ebbd7b4bb71e2fcd4d3f6399ef133cbd6c165167f8ff20d152d676e92f74e4",
+          "evidence": [
+            {
+              "revision": 1,
+              "sha256": "62897e97e236657d252a81475fbd482298300efeed16aad2593c293ece2e1736",
+              "source_id": "source-9656110cdb5a4a1da7b0862fb4cb76a1"
+            }
+          ],
+          "lineage_group": "912e7052aa0cd7c95fa8032310c02cbd2dd6fae49864a08d31cbe369f8f69279",
+          "advisory_only": true,
+          "verified": false,
+          "execution_authorized": false
+        }
+      ],
+      "rejected": [
+        {
+          "source_id": "source-4962ccee57774fd2b50ec9b92f2d2ab1",
+          "id": "withdrawn-method",
+          "reason": "precondition_mismatch"
+        }
+      ],
+      "bytes": 1032,
+      "receipt": {
+        "version": "conditional-advice-1",
+        "context_digest": "304342f9420725da95cf957b1d375a0e37c7bfdcf41c54cf69b90d34d97736aa",
+        "methods": [
+          {
+            "source_id": "source-bd4bc7bbd41241a797fed6419ad76789",
+            "source_revision": 1,
+            "source_digest": "c1ebbd7b4bb71e2fcd4d3f6399ef133cbd6c165167f8ff20d152d676e92f74e4",
+            "method_digest": "a2f7c261b01d2e4c28eae94e729e9499a67d0d4bc6dc6d03538fb43bc655021c"
+          }
+        ]
+      },
+      "context_digest": "304342f9420725da95cf957b1d375a0e37c7bfdcf41c54cf69b90d34d97736aa",
+      "lineage_groups": 1,
+      "independent_successes": null,
+      "execution_authorized": false,
+      "automatic_promotion": false,
+      "context_authority": "caller_declared_advice_only",
+      "scope": "personal",
+      "provider": "vertex",
+      "enabled": true,
+      "epoch": 5,
+      "retrieval": {
+        "mode": "conditional_advice_lexical",
+        "candidates": 4,
+        "sources_examined": 2
+      }
+    },
+    "price-basis-reversed": {
+      "version": "conditional-advice-1",
+      "methods": [],
+      "rejected": [
+        {
+          "source_id": "source-bd4bc7bbd41241a797fed6419ad76789",
+          "id": "filter-then-compare",
+          "reason": "precondition_mismatch"
+        },
+        {
+          "source_id": "source-4962ccee57774fd2b50ec9b92f2d2ab1",
+          "id": "withdrawn-method",
+          "reason": "precondition_mismatch"
+        }
+      ],
+      "bytes": 0,
+      "receipt": {
+        "version": "conditional-advice-1",
+        "context_digest": "e338111a13d683f73febcc18e10d664bc80df4b032e6090ac4c4a75ae236d884",
+        "methods": []
+      },
+      "context_digest": "e338111a13d683f73febcc18e10d664bc80df4b032e6090ac4c4a75ae236d884",
+      "lineage_groups": 0,
+      "independent_successes": null,
+      "execution_authorized": false,
+      "automatic_promotion": false,
+      "context_authority": "caller_declared_advice_only",
+      "scope": "personal",
+      "provider": "vertex",
+      "enabled": true,
+      "epoch": 5,
+      "retrieval": {
+        "mode": "conditional_advice_lexical",
+        "candidates": 4,
+        "sources_examined": 2
+      }
+    },
+    "objective-changed": {
+      "version": "conditional-advice-1",
+      "methods": [],
+      "rejected": [
+        {
+          "source_id": "source-bd4bc7bbd41241a797fed6419ad76789",
+          "id": "filter-then-compare",
+          "reason": "precondition_mismatch"
+        },
+        {
+          "source_id": "source-4962ccee57774fd2b50ec9b92f2d2ab1",
+          "id": "withdrawn-method",
+          "reason": "precondition_mismatch"
+        }
+      ],
+      "bytes": 0,
+      "receipt": {
+        "version": "conditional-advice-1",
+        "context_digest": "2aa59d7c2f00eed2a527eb6a7480dd7402919e4dc58c869fca5e1c689d64eaab",
+        "methods": []
+      },
+      "context_digest": "2aa59d7c2f00eed2a527eb6a7480dd7402919e4dc58c869fca5e1c689d64eaab",
+      "lineage_groups": 0,
+      "independent_successes": null,
+      "execution_authorized": false,
+      "automatic_promotion": false,
+      "context_authority": "caller_declared_advice_only",
+      "scope": "personal",
+      "provider": "vertex",
+      "enabled": true,
+      "epoch": 5,
+      "retrieval": {
+        "mode": "conditional_advice_lexical",
+        "candidates": 4,
+        "sources_examined": 2
+      }
+    },
+    "withdrawn-history": {
+      "version": "conditional-advice-1",
+      "methods": [],
+      "rejected": [
+        {
+          "source_id": "source-bd4bc7bbd41241a797fed6419ad76789",
+          "id": "filter-then-compare",
+          "reason": "precondition_mismatch"
+        },
+        {
+          "source_id": "source-4962ccee57774fd2b50ec9b92f2d2ab1",
+          "id": "withdrawn-method",
+          "reason": "evidence_changed_missing_or_disallowed"
+        }
+      ],
+      "bytes": 0,
+      "receipt": {
+        "version": "conditional-advice-1",
+        "context_digest": "12f6a326466ec5636d564c136ce1de8f650d142d00255fffea69983014d95371",
+        "methods": []
+      },
+      "context_digest": "12f6a326466ec5636d564c136ce1de8f650d142d00255fffea69983014d95371",
+      "lineage_groups": 0,
+      "independent_successes": null,
+      "execution_authorized": false,
+      "automatic_promotion": false,
+      "context_authority": "caller_declared_advice_only",
+      "scope": "personal",
+      "provider": "vertex",
+      "enabled": true,
+      "epoch": 5,
+      "retrieval": {
+        "mode": "conditional_advice_lexical",
+        "candidates": 4,
+        "sources_examined": 2
+      }
+    }
+  },
+  "facts": {
+    "version": "memory-retrieval-1.1.0",
+    "mode": "lexical",
+    "eligible": 1,
+    "matched": 1,
+    "semantic": "unavailable",
+    "semantic_candidates": 0,
+    "model": null,
+    "vector_space": null,
+    "sources": {
+      "scope": "personal",
+      "mode": "fts5",
+      "candidates": 1,
+      "version": "knowledge-library-1.3.0",
+      "semantic": {
+        "status": "model_not_loaded"
+      }
+    },
+    "selected": 1,
+    "bytes": 486
+  },
+  "history": {
+    "version": "memory-retrieval-1.1.0",
+    "mode": "lexical",
+    "eligible": 5,
+    "matched": 5,
+    "semantic": "unavailable",
+    "semantic_candidates": 0,
+    "model": null,
+    "vector_space": null,
+    "sources": {
+      "scope": "personal",
+      "mode": "fts5",
+      "candidates": 5,
+      "version": "knowledge-library-1.3.0",
+      "semantic": {
+        "status": "model_not_loaded"
+      }
+    },
+    "selected": 5,
+    "bytes": 4099
+  }
+}

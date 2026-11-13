@@ -5,6 +5,7 @@ are provenance-bound by normal package inspection and reviewed-source tests;
 they are not proof of arbitrary third-party code compatibility.
 """
 import json
+from itertools import chain
 from pathlib import Path
 import sqlite3
 from control.paths import child,reject_links
@@ -42,6 +43,23 @@ def required(root):
             if row:
                 if row[0]!='1':raise CoreError('application_data_compatibility','Unknown standing-work schema')
                 needs['standing_schema']=1
+            current_texts=();historical_texts=();fact_texts=()
+            if db.execute("SELECT 1 FROM sqlite_master WHERE name='knowledge_sources'").fetchone():
+                current_texts=(r[0] for r in db.execute("SELECT text FROM knowledge_sources WHERE status!='deleted'"))
+            if db.execute("SELECT 1 FROM sqlite_master WHERE name='memory_history'").fetchone():
+                # Historical snapshots can survive a current source edit. Older
+                # readers must not expose a past method as ordinary background.
+                historical_texts=(json.loads(r[1])['text' if r[0]=='source' else 'value'] for r in db.execute("SELECT kind,body FROM memory_history WHERE kind IN ('source','fact')"))
+            if db.execute("SELECT 1 FROM sqlite_master WHERE name='facts'").fetchone():
+                fact_texts=(r[0] for r in db.execute('SELECT value FROM facts WHERE deleted=0'))
+            for text in chain(current_texts,fact_texts,historical_texts):
+                try:value=json.loads(text)
+                except ValueError:continue
+                schema=value.get('schema') if isinstance(value,dict) else None
+                if isinstance(schema,str) and schema.startswith('jarvis.method-card.'):
+                    if schema!='jarvis.method-card.v1':
+                        raise CoreError('application_data_compatibility','Unknown conditional advice schema')
+                    needs['conditional_advice_schema']=1
         finally:db.close()
     path=child(root,'private/mail.sqlite3')
     if path.exists():
@@ -82,6 +100,14 @@ def require_compatible(root,package):
             mail=Path(package)/'config/mail-standing-compatibility.json';reject_links(mail)
             if not mail.exists() or mail.stat().st_size>1024 or json.loads(mail.read_text(encoding='utf-8'))!={'schema':1,'mail_watch_schema':1}:
                 raise CoreError('application_data_compatibility','Target cannot serve existing encrypted mailbox mandates')
+        if needs.get('conditional_advice_schema'):
+            advice=Path(package)/'config/conditional-advice-compatibility.json';reject_links(advice)
+            if not advice.exists() or advice.stat().st_size>1024:
+                raise CoreError('application_data_compatibility','Target cannot preserve conditional advice boundaries')
+            policy=json.loads(advice.read_text(encoding='utf-8'))
+            if (not isinstance(policy,dict) or set(policy)!={'schema','conditional_advice_schema'}
+                    or any(type(policy[k]) is not int or policy[k]!=1 for k in policy)):
+                raise CoreError('application_data_compatibility','Unsupported conditional advice reader')
         return {'compatible':True,'required':needs,'declared':declared}
-    except (OSError,ValueError,sqlite3.Error) as error:
+    except (OSError,ValueError,TypeError,KeyError,sqlite3.Error) as error:
         raise CoreError('application_data_compatibility','Cannot verify local data compatibility') from error

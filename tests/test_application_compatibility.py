@@ -26,14 +26,17 @@ class ApplicationCompatibility(unittest.TestCase):
         self.base=Path(self.temp.name);self.root=self.base/'data';Core.initialize(self.root).close()
         self.app=Applications(self.root);self.driver=Driver()
 
-    def candidate(self,name,commitments=False,chat=False):
+    def candidate(self,name,commitments=False,chat=False,advice=False):
         source=self.base/name;(source/'apps/workbench').mkdir(parents=True)
         (source/'VERSION').write_text(name);(source/'apps/workbench/server.py').write_text('# synthetic protocol fixture')
         files=['VERSION','apps/workbench/server.py']
-        if commitments or chat:
+        if commitments or chat or advice:
             (source/'config').mkdir();(source/'config/runtime-compatibility.json').write_text(json.dumps(
                 {'schema':1,'commitments_schema':int(commitments),'assistant_commitments':chat}))
             files.append('config/runtime-compatibility.json')
+        if advice:
+            (source/'config/conditional-advice-compatibility.json').write_text(json.dumps({'schema':1,'conditional_advice_schema':1}))
+            files.append('config/conditional-advice-compatibility.json')
         archive=self.base/(name+'.zip');ident=build(source,files,archive,name)
         self.app.stage(archive);self.app.validate(ident,lambda _: {'passed':True,'scope':'synthetic protocol fixture'})
         return ident
@@ -130,3 +133,64 @@ class ApplicationCompatibility(unittest.TestCase):
         for value in [None,[],[{}],True,{'schema':True,'commitments_schema':1,'assistant_commitments':True}]:
             path.write_text(json.dumps(value))
             with self.subTest(value=value),self.assertRaises(CoreError):require_compatible(self.root,package)
+
+    def method_source(self,schema='jarvis.method-card.v1'):
+        from modules.context_knowledge.knowledge import Knowledge
+        core=Core(self.root)
+        try:return Knowledge(core.db).save({'id':'','scope':'personal','title':'Synthetic method',
+            'text':json.dumps({'schema':schema}),'providers':['fixture'],'paused':False},0)
+        finally:core.close()
+
+    def test_method_card_blocks_old_reader_before_drain_and_accepts_declared_reader(self):
+        old=self.candidate('old-advice');new=self.candidate('new-advice',advice=True)
+        self.app.adopt(old,self.driver);self.app.adopt(new,self.driver);self.method_source()
+        before=self.app.state();events=list(self.driver.events)
+        with self.assertRaises(CoreError):self.app.rollback(self.driver)
+        self.assertEqual(self.app.state(),before);self.assertEqual(self.driver.events,events)
+        self.assertTrue(require_compatible(self.root,self.app.record(new)['path'])['compatible'])
+
+    def test_historical_card_cannot_be_hidden_by_editing_current_source_to_plain_text(self):
+        new=self.candidate('advice-history',advice=True);old=self.candidate('no-advice-history');saved=self.method_source()
+        from modules.context_knowledge.knowledge import Knowledge
+        core=Core(self.root)
+        try:Knowledge(core.db).save({'id':saved['id'],'scope':'personal','title':'Changed to ordinary source','text':'Current plain text',
+            'providers':['fixture'],'paused':False},1)
+        finally:core.close()
+        with self.assertRaises(CoreError):require_compatible(self.root,self.app.record(old)['path'])
+        self.assertTrue(require_compatible(self.root,self.app.record(new)['path'])['compatible'])
+
+    def test_unknown_advice_version_and_boolean_declaration_are_not_compatible(self):
+        new=self.candidate('future-advice',advice=True);self.method_source('jarvis.method-card.v2')
+        with self.assertRaises(CoreError):require_compatible(self.root,self.app.record(new)['path'])
+        # A current v1 source also cannot be served by a boolean "version".
+        other=self.base/'other';Core.initialize(other).close()
+        from modules.context_knowledge.knowledge import Knowledge
+        core=Core(other)
+        try:Knowledge(core.db).save({'id':'','scope':'personal','title':'v1','text':'{"schema":"jarvis.method-card.v1"}',
+            'providers':['fixture'],'paused':False},0)
+        finally:core.close()
+        path=Path(self.app.record(new)['path'])/'config/conditional-advice-compatibility.json'
+        path.write_text('{"schema":true,"conditional_advice_schema":1}')
+        with self.assertRaises(CoreError):require_compatible(other,self.app.record(new)['path'])
+
+    def test_method_created_during_drain_restores_the_compatible_current_reader(self):
+        old=self.candidate('old-advice-drain');new=self.candidate('new-advice-drain',advice=True)
+        self.app.adopt(old,self.driver);self.app.adopt(new,self.driver)
+        original=self.driver.drain
+        def drain(selected,epoch):original(selected,epoch);self.method_source()
+        self.driver.drain=drain
+        result=self.app.rollback(self.driver)
+        self.assertEqual(result['active']['build'],new);self.assertEqual(self.driver.live,new)
+        self.assertEqual([e for e in self.driver.events if e==('start',old)],[('start',old)])
+
+    def test_failed_candidate_cannot_restore_old_reader_after_new_method_data(self):
+        old=self.candidate('old-advice-fail');new=self.candidate('new-advice-fail',advice=True)
+        self.app.adopt(old,self.driver)
+        def fail(selected):
+            if selected['build']==new:self.method_source();raise RuntimeError('Synthetic failure after method creation')
+        self.driver.on_health=fail
+        with self.assertRaises(CoreError):self.app.adopt(new,self.driver)
+        self.assertEqual(self.app.state()['phase'],'blocked');self.assertIsNone(self.driver.live)
+        core=Core(self.root)
+        try:self.assertEqual(core.db.one('SELECT count(*) AS n FROM knowledge_sources')["n"],1)
+        finally:core.close()

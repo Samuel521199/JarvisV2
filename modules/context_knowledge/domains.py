@@ -68,6 +68,8 @@ class Domains:
             old=self.db.one('SELECT body FROM memory_history WHERE kind=? AND id=? AND revision=?',(snap['kind'],snap['id'],snap['revision']))
             if not old:continue
             body=decode(old['body'])
+            from modules.context_knowledge.source_policy import method_source
+            if method_source(body['text' if snap['kind']=='source' else 'value']):continue
             if not fragments:rows.append({'id':snap['id'],'revision':snap['revision']});continue
             if snap['kind']=='fact':
                 rows.append(current|body|{'revision':snap['revision'],'snapshot_domain':scope,'scope':scope})

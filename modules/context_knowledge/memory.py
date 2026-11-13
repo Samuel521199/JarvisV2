@@ -42,6 +42,8 @@ class Memory:
                     row['evidence']={'source_id':claim['source_id'],'revision':claim['source_revision'],'start':claim['start'],'end':claim['end'],
                                      'line_start':claim['text'].count('\n',0,claim['start'])+1,'line_end':claim['text'].count('\n',0,claim['end']-1)+1,
                                      'trust':'owner_reviewed_claim','claim_id':claim['id']}
+            if source_policy.method_source(row['value']):
+                row['state']='advisory_only';row['providers']=[]
         return rows
 
     def save(self, item, revision, source='owner:explicit', candidate=None, source_candidate=None):
@@ -63,6 +65,8 @@ class Memory:
             conditions.validate(item['applicability'])
             if expiry is not None and item['applicability']['valid_from'] is not None and expiry<=item['applicability']['valid_from']:
                 raise CoreError('memory_invalid','Effective end must follow start')
+        if source_policy.method_source(item['value']):
+            raise CoreError('memory_invalid','Store conditional advice as a knowledge source, not an ordinary fact')
         fact = dict(schema='jarvis.fact.v1', principal_id='owner.local', scope_id=item['scope'], key=item['key'], value=item['value'], source=source)
         contract('fact', fact)
         with self.db.transaction() as tx:

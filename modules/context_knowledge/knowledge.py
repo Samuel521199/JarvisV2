@@ -14,7 +14,7 @@ from modules.context_knowledge.retrieval import lexical, tokens, query_words
 from modules.context_knowledge.history import record, changed
 from sdk.protocol import CoreError, contract
 
-VERSION = 'knowledge-library-1.2.0'
+VERSION = 'knowledge-library-1.3.0'
 MAX_BYTES = 80000
 MAX_SOURCES = 200
 SLOTS = ('knowledge_fts_a', 'knowledge_fts_b')
@@ -50,13 +50,14 @@ class Knowledge:
         rows = self.db.all("SELECT s.id,s.scope,s.title,s.revision,s.status,s.bytes,s.updated,count(c.id) AS chunks "
                            "FROM knowledge_sources s LEFT JOIN knowledge_chunks c ON c.source_id=s.id "
                            "WHERE s.scope=? AND s.status!='deleted' GROUP BY s.id ORDER BY s.updated DESC", (scope,))
-        for r in rows: r['providers'] = source_policy.destinations(self.db,r['id'])
+        for r in rows: r['providers'] = source_policy.destinations(self.db,r['id'],include_methods=True)
         return rows
 
     def detail(self, scope, ident):
         row = self.db.one("SELECT * FROM knowledge_sources WHERE id=? AND scope=? AND status!='deleted'", (ident, scope))
         if not row: raise CoreError('knowledge_missing', 'Source unavailable')
-        row['providers'] = source_policy.destinations(self.db,ident)
+        row['providers'] = source_policy.destinations(self.db,ident,include_methods=True)
+        if source_policy.method_source(row['text']):row['use']='conditional_advice_only'
         return row
 
     @staticmethod
@@ -162,13 +163,13 @@ class Knowledge:
         return {'deleted':True,'cleared_chunks':count,'historical_outputs_cleared':False,'version':VERSION}
 
     @staticmethod
-    def permitted():
-        return "s.scope=? AND "+source_policy.permitted()
+    def permitted(*,methods=False):
+        return "s.scope=? AND "+source_policy.permitted(methods=methods)
 
-    def references(self,scope,provider):
-        return self.db.all('SELECT s.id,s.revision FROM knowledge_sources s WHERE '+self.permitted(),(scope,provider))
+    def references(self,scope,provider,*,methods=False):
+        return self.db.all('SELECT s.id,s.revision FROM knowledge_sources s WHERE '+self.permitted(methods=methods),(scope,provider))
 
-    def search(self,scope,provider,query):
+    def search(self,scope,provider,query,*,methods=False):
         if not query.strip():return [],{'mode':'not_requested'}
         base='SELECT c.*,s.title FROM knowledge_chunks c JOIN knowledge_sources s ON s.id=c.source_id '
         slot=self.slot();words=query_words(query)
@@ -176,10 +177,10 @@ class Knowledge:
         try:
             if mode=='fts5':
                 match=' OR '.join('"'+w.replace('"','""')+'"' for w in words)
-                rows=self.db.all(base+f'JOIN {slot} ON {slot}.rowid=c.seq WHERE '+self.permitted()+f' AND {slot} MATCH ? ORDER BY bm25({slot}),c.seq LIMIT 64',(scope,provider,match))
-            else: rows=self.db.all(base+'WHERE '+self.permitted(),(scope,provider))
+                rows=self.db.all(base+f'JOIN {slot} ON {slot}.rowid=c.seq WHERE '+self.permitted(methods=methods)+f' AND {slot} MATCH ? ORDER BY bm25({slot}),c.seq LIMIT 64',(scope,provider,match))
+            else: rows=self.db.all(base+'WHERE '+self.permitted(methods=methods),(scope,provider))
         except sqlite3.DatabaseError:
-            mode='scan_fallback';rows=self.db.all(base+'WHERE '+self.permitted(),(scope,provider))
+            mode='scan_fallback';rows=self.db.all(base+'WHERE '+self.permitted(methods=methods),(scope,provider))
         items=[{'id':r['id'],'revision':r['revision'],'key':r['title'],'value':r['text'],'kind':'source','expires':None,
                 'evidence':{'source_id':r['source_id'],'chunk_id':r['id'],'revision':r['revision'],'start':r['start'],'end':r['end'],
                             'line_start':r['line_start'],'line_end':r['line_end'],'trust':'reference_unverified'}} for r in rows]

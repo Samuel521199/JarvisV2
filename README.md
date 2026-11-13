@@ -2,7 +2,7 @@
 
 **源码 v0.1.9 后续开发，未日用采用。** 新增[大型陪聊平台长期记忆优化方案](docs/long-term-memory-scale-optimization.md#platform-memory-scope)，当前状态为 proposed。此仓库为独立 JarvisV2 工程；旧 JachinV2 的实现与验收不自动继承。下文日用功能描述按原有验收记录理解，源码版本不代表已安装或上线。见[本轮收尾记录](docs/evidence/memory-docs-closeout-20261113.md#memory-docs-closeout-scope)。
 
-同日后续开发已修复升级竞争问题，并补显式来源文档渲染；自然请求11月14日新增较宽留出首测66.7%，未达事前90%门；修复回放不能替代新留出。见[实际结果与剩余缺口](docs/delivery-validation.md#request-document-evidence-20261113)。这些改动尚未日用采用；完整后续工作按[实施跟踪](docs/decisions-review.md#review-followthrough-20261113)推进，不以局部通过标记全部目标完成。
+同日后续开发已修复升级竞争问题，并补显式来源文档渲染；自然请求11月14日新增较宽留出首测66.7%，未达事前90%门；修复回放不能替代新留出。见[实际结果与剩余缺口](docs/delivery-validation.md#request-document-evidence-20261113)。另补[条件经验只读筛选和首次知识贡献对照](docs/delivery-validation.md#conditional-advice-evidence-20261114)，未证明长期质量收益。这些改动尚未日用采用；完整后续工作按[实施跟踪](docs/decisions-review.md#review-followthrough-20261113)推进，不以局部通过标记全部目标完成。
 
 <p align="center">
   <img src="apps/workbench/brand/core.png" width="156" alt="Jarvis blue core emblem">

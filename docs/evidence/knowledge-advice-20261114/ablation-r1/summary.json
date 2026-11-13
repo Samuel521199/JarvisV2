@@ -1,0 +1,95 @@
+{
+  "rows": [
+    {
+      "arm": "ABL-0",
+      "status": "SUCCEEDED",
+      "correct_cases": 4,
+      "cases": 4,
+      "background_bytes": 2,
+      "usage": {
+        "completion_tokens": 225,
+        "prompt_tokens": 2392,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 1423,
+        "total_tokens": 4040
+      },
+      "seconds": 13.737366299999849
+    },
+    {
+      "arm": "ABL-1",
+      "status": "SUCCEEDED",
+      "correct_cases": 4,
+      "cases": 4,
+      "background_bytes": 498,
+      "usage": {
+        "completion_tokens": 224,
+        "prompt_tokens": 2576,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 3246,
+        "total_tokens": 6046
+      },
+      "seconds": 23.04094190000069
+    },
+    {
+      "arm": "ABL-2",
+      "status": "SUCCEEDED",
+      "correct_cases": 4,
+      "cases": 4,
+      "background_bytes": 4619,
+      "usage": {
+        "completion_tokens": 225,
+        "prompt_tokens": 3963,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 1863,
+        "total_tokens": 6051
+      },
+      "seconds": 13.274364599999899
+    },
+    {
+      "arm": "ABL-3",
+      "status": "SUCCEEDED",
+      "correct_cases": 4,
+      "cases": 4,
+      "background_bytes": 1554,
+      "usage": {
+        "completion_tokens": 225,
+        "prompt_tokens": 3004,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 1418,
+        "total_tokens": 4647
+      },
+      "seconds": 12.967389299999923
+    },
+    {
+      "arm": "ABL-4",
+      "status": "SUCCEEDED",
+      "correct_cases": 4,
+      "cases": 4,
+      "background_bytes": 2181,
+      "usage": {
+        "completion_tokens": 225,
+        "prompt_tokens": 3166,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 1700,
+        "total_tokens": 5091
+      },
+      "seconds": 14.477364900001703
+    }
+  ],
+  "model_requests": 5,
+  "provider_calls": 5,
+  "planned_arms": 5,
+  "completed_arms": 5,
+  "full_cost": null,
+  "formal_acceptance": false,
+  "quality_score": null,
+  "ABL-5": "UNMEASURED",
+  "production_adopted": false,
+  "limits": [
+    "Operator-authored synthetic cases and method, not independent users or learned from real successes",
+    "One bundle per arm; four outputs are correlated, not four independent calls",
+    "No alternative-method exploration in ABL-4 yet",
+    "Background is an explicit controlled attachment after real retrieval; ordinary automatic chat memory assembly is not being accepted"
+  ],
+  "background_size_forecast_passed": true
+}

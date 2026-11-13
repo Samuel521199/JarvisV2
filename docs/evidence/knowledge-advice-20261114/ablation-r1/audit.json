@@ -1,0 +1,80 @@
+{
+  "native_results_verified": true,
+  "grader_reproduced": true,
+  "tasks_created": 0,
+  "commitments_created": 0,
+  "all_flows_chat_only": true,
+  "accepted_advice_by_case": {
+    "same-conditions": 1,
+    "price-basis-reversed": 0,
+    "objective-changed": 0,
+    "withdrawn-history": 0
+  },
+  "rows": [
+    {
+      "arm": "ABL-0",
+      "correct_cases": 4,
+      "flow_chat_only": true,
+      "background_bytes": 2,
+      "prompt_tokens": 2392,
+      "total_tokens": 4040,
+      "seconds": 13.737366299999849
+    },
+    {
+      "arm": "ABL-1",
+      "correct_cases": 4,
+      "flow_chat_only": true,
+      "background_bytes": 498,
+      "prompt_tokens": 2576,
+      "total_tokens": 6046,
+      "seconds": 23.04094190000069
+    },
+    {
+      "arm": "ABL-2",
+      "correct_cases": 4,
+      "flow_chat_only": true,
+      "background_bytes": 4619,
+      "prompt_tokens": 3963,
+      "total_tokens": 6051,
+      "seconds": 13.274364599999899
+    },
+    {
+      "arm": "ABL-3",
+      "correct_cases": 4,
+      "flow_chat_only": true,
+      "background_bytes": 1554,
+      "prompt_tokens": 3004,
+      "total_tokens": 4647,
+      "seconds": 12.967389299999923
+    },
+    {
+      "arm": "ABL-4",
+      "correct_cases": 4,
+      "flow_chat_only": true,
+      "background_bytes": 2181,
+      "prompt_tokens": 3166,
+      "total_tokens": 5091,
+      "seconds": 14.477364900001703
+    }
+  ],
+  "provider_calls": 5,
+  "reported_total_tokens": 25875,
+  "ABL-3_vs_ABL-2": {
+    "background_bytes_change": -0.6635635418921845,
+    "prompt_tokens_change": -0.24198839263184457,
+    "total_tokens_change": -0.23202776400594938
+  },
+  "ABL-4_vs_ABL-3_total_tokens_change": 0.09554551323434479,
+  "ABL-3_vs_ABL-0_total_tokens_change": 0.15024752475247527,
+  "full_cost": null,
+  "quality_gain_demonstrated": false,
+  "formal_learning_acceptance": false,
+  "temporary_bridge_credential_removed": true,
+  "limits": [
+    "Operator-authored synthetic cases and method, not independent users or learned from real successes",
+    "One bundle per arm; four outputs are correlated, not four independent calls",
+    "No alternative-method exploration in ABL-4 yet",
+    "Background is an explicit controlled attachment after real retrieval; ordinary automatic chat memory assembly is not being accepted"
+  ],
+  "passed": true
+}

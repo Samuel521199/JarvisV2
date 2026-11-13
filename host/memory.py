@@ -39,6 +39,8 @@ def scope_for(root, scope):
 def command(root, value):
     fields = {'list': {'scope'}, 'save': {'item', 'revision', 'candidate'}, 'forget': {'scope', 'key', 'revision'},
               'history':{'scope','kind','id'}, 'health':{'scope'}, 'context_recall':{'scope','provider','enabled','query','selectors'},
+              'method_recall':{'scope','provider','enabled','query','context'},
+              'method_revalidate':{'scope','provider','enabled','context','receipt'},
               'propose': {'turn_id'}, 'propose_goal':{'goal_id'}, 'dismiss': {'id', 'revision'}, 'preview': {'scope', 'provider', 'enabled'},
               'recall': {'scope','provider','enabled','query'}}
     if not isinstance(value, dict) or value.get('action') not in fields or set(value) != {'action'} | fields[value['action']]:
@@ -48,6 +50,10 @@ def command(root, value):
     if value['action']=='context_recall':
         from modules.context_knowledge.conditions import context
         return retrieve(root,value['scope'],value['provider'],value['enabled'],value['query'],context(value['selectors']))
+    if value['action']=='method_recall':
+        return method_recall(root,value['scope'],value['provider'],value['enabled'],value['query'],value['context'])
+    if value['action']=='method_revalidate':
+        return method_revalidate(root,value['scope'],value['provider'],value['enabled'],value['context'],value['receipt'])
     db, memory = open_memory(root)
     try:
         with LOCK:
@@ -138,6 +144,77 @@ def retrieve(root, scope, provider, enabled, query='', selectors=None):
             view['valid_refs']=memory.references(scope,provider,enabled,selectors)
             view['epoch']=memory.epoch()
         return view
+    finally:db.close()
+
+
+def method_sources(db,store,scope,provider,enabled):
+    from modules.context_knowledge.joint import members
+    from modules.context_knowledge.knowledge import Knowledge
+    ordinary=store.references(scope,provider,enabled,{'channel':'chat'})
+    advice=[r for s in (members(scope) or [scope]) for r in Knowledge(db).references(s,provider,methods=True)] if enabled else []
+    return {r['id']:r['revision'] for r in ordinary+advice}
+
+
+def method_recall(root,scope,provider,enabled,query,context):
+    """Read-only conditional advice over the same authorized knowledge library."""
+    from modules.context_knowledge.methods import context as validate_context,select
+    from modules.context_knowledge.knowledge import Knowledge
+    from modules.context_knowledge.joint import members
+    validate_context(context);scope_for(root,scope)
+    if type(enabled) is not bool or not isinstance(query,str) or len(query)>20000:
+        raise CoreError('memory_invalid','Invalid method retrieval request')
+    db,store=open_memory(root)
+    try:
+        with LOCK,db.read_snapshot():
+            # Source IDs are eligible references, not arbitrary IDs supplied in a
+            # card. An evidence reference never broadens domain/provider policy.
+            allowed=method_sources(db,store,scope,provider,enabled)
+            cache={}
+            def resolve(ident):
+                if ident not in cache:
+                    row=db.one("SELECT id,scope,revision,text FROM knowledge_sources WHERE id=? AND status='active'",(ident,))
+                    cache[ident]=row if row and allowed.get(ident)==row['revision'] else None
+                return cache[ident]
+            sources=[];seen=set();candidates=[]
+            for s in (members(scope) or [scope]):
+                if enabled:candidates.extend(Knowledge(db).search(s,provider,query,methods=True)[0])
+            for fact in candidates:
+                ident=fact['evidence']['source_id']
+                if ident in seen:continue
+                seen.add(ident);row=resolve(ident)
+                if row and row['revision']==fact['revision']:sources.append(row)
+                if len(sources)>=12:break
+            result=select(sources,context,resolve)
+            result.update(scope=scope,provider=provider,enabled=enabled,epoch=store.epoch(),
+                retrieval={'mode':'conditional_advice_lexical','candidates':len(candidates),'sources_examined':len(sources)})
+            return result
+    finally:db.close()
+
+
+def method_revalidate(root,scope,provider,enabled,context,receipt):
+    """Recompute exact advice from current source policy; no top-N membership test."""
+    from modules.context_knowledge.methods import context as validate_context,select,VERSION
+    validate_context(context);scope_for(root,scope)
+    if (not isinstance(receipt,dict) or set(receipt)!={'version','context_digest','methods'}
+        or receipt['version']!=VERSION or receipt['context_digest']!=digest(context)
+        or not isinstance(receipt['methods'],list) or not 1<=len(receipt['methods'])<=4):
+        raise CoreError('method_changed','Method context, policy or receipt changed')
+    refs=receipt['methods']
+    if any(not isinstance(r,dict) or set(r)!={'source_id','source_revision','source_digest','method_digest'}
+           or not isinstance(r['source_id'],str) for r in refs) or len({r['source_id'] for r in refs})!=len(refs):
+        raise CoreError('method_changed','Invalid method references')
+    db,store=open_memory(root)
+    try:
+        with LOCK,db.read_snapshot():
+            allowed=method_sources(db,store,scope,provider,enabled)
+            def resolve(ident):
+                row=db.one("SELECT id,revision,text FROM knowledge_sources WHERE id=? AND status='active'",(ident,))
+                return row if row and allowed.get(ident)==row['revision'] else None
+            sources=[resolve(r['source_id']) for r in refs]
+            if any(r is None for r in sources):raise CoreError('method_changed','Method source is no longer authorized')
+            current=select(sources,context,resolve)
+            if current['receipt']!=receipt:raise CoreError('method_changed','Method evidence or applicability changed')
+            return current|{'current':True,'scope':scope,'provider':provider,'enabled':enabled,'epoch':store.epoch()}
     finally:db.close()
 
 

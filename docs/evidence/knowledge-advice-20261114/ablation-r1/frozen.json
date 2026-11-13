@@ -1,0 +1,508 @@
+{
+  "scope": "One bounded ABL-0..4 diagnostic through ordinary DialogueHost; no retries.\n\nFour operator-authored synthetic comparisons share one call per arm, so they are\nnot independent model observations. Required current inputs stay in every arm.\nABL-5 and source-disjoint/longitudinal learning remain explicitly unmeasured.\n",
+  "cases": [
+    {
+      "id": "same-conditions",
+      "context": {
+        "currency": "CNY",
+        "price_includes_fees": true,
+        "objective": "lowest_eligible_total",
+        "pool": "regular"
+      },
+      "max_price_minor": 10000,
+      "max_delivery_days": 7,
+      "offers": [
+        {
+          "id": "a",
+          "price_minor": 6000,
+          "shipping_minor": 0,
+          "delivery_days": 4,
+          "source": "current-input:a"
+        },
+        {
+          "id": "b",
+          "price_minor": 5500,
+          "shipping_minor": 0,
+          "delivery_days": 8,
+          "source": "current-input:b"
+        },
+        {
+          "id": "c",
+          "price_minor": 7000,
+          "shipping_minor": 0,
+          "delivery_days": 3,
+          "source": "current-input:c"
+        }
+      ]
+    },
+    {
+      "id": "price-basis-reversed",
+      "context": {
+        "currency": "CNY",
+        "price_includes_fees": false,
+        "objective": "lowest_eligible_total",
+        "pool": "regular"
+      },
+      "max_price_minor": 10000,
+      "max_delivery_days": 7,
+      "offers": [
+        {
+          "id": "d",
+          "price_minor": 5000,
+          "shipping_minor": 2500,
+          "delivery_days": 4,
+          "source": "current-input:d"
+        },
+        {
+          "id": "e",
+          "price_minor": 6500,
+          "shipping_minor": 200,
+          "delivery_days": 5,
+          "source": "current-input:e"
+        },
+        {
+          "id": "f",
+          "price_minor": 6000,
+          "shipping_minor": 0,
+          "delivery_days": 9,
+          "source": "current-input:f"
+        }
+      ]
+    },
+    {
+      "id": "objective-changed",
+      "context": {
+        "currency": "CNY",
+        "price_includes_fees": true,
+        "objective": "earliest_eligible",
+        "pool": "regular"
+      },
+      "max_price_minor": 10000,
+      "max_delivery_days": 7,
+      "offers": [
+        {
+          "id": "g",
+          "price_minor": 6000,
+          "shipping_minor": 0,
+          "delivery_days": 6,
+          "source": "current-input:g"
+        },
+        {
+          "id": "h",
+          "price_minor": 9000,
+          "shipping_minor": 0,
+          "delivery_days": 2,
+          "source": "current-input:h"
+        },
+        {
+          "id": "i",
+          "price_minor": 11000,
+          "shipping_minor": 0,
+          "delivery_days": 1,
+          "source": "current-input:i"
+        }
+      ]
+    },
+    {
+      "id": "withdrawn-history",
+      "context": {
+        "currency": "CNY",
+        "price_includes_fees": true,
+        "objective": "lowest_eligible_total",
+        "pool": "withdrawn"
+      },
+      "max_price_minor": 10000,
+      "max_delivery_days": 7,
+      "offers": [
+        {
+          "id": "j",
+          "price_minor": 4000,
+          "shipping_minor": 0,
+          "delivery_days": 4,
+          "source": "current-input:j"
+        },
+        {
+          "id": "k",
+          "price_minor": 5500,
+          "shipping_minor": 0,
+          "delivery_days": 5,
+          "source": "current-input:k"
+        }
+      ],
+      "notice": "The prior observation for this pool was withdrawn. Do not rely on it; current offers below remain valid user input."
+    }
+  ],
+  "gold": [
+    {
+      "id": "same-conditions",
+      "eligible_ids": [
+        "a",
+        "c"
+      ],
+      "selected_id": "a",
+      "total_minor": 6000,
+      "source": "current-input:a"
+    },
+    {
+      "id": "price-basis-reversed",
+      "eligible_ids": [
+        "d",
+        "e"
+      ],
+      "selected_id": "e",
+      "total_minor": 6700,
+      "source": "current-input:e"
+    },
+    {
+      "id": "objective-changed",
+      "eligible_ids": [
+        "g",
+        "h"
+      ],
+      "selected_id": "h",
+      "total_minor": 9000,
+      "source": "current-input:h"
+    },
+    {
+      "id": "withdrawn-history",
+      "eligible_ids": [
+        "j",
+        "k"
+      ],
+      "selected_id": "j",
+      "total_minor": 4000,
+      "source": "current-input:j"
+    }
+  ],
+  "arms": [
+    "ABL-0",
+    "ABL-1",
+    "ABL-2",
+    "ABL-3",
+    "ABL-4"
+  ],
+  "backgrounds": {
+    "ABL-0": {},
+    "ABL-1": {
+      "facts": [
+        {
+          "id": "source-e06c6cdcd8534162aec77bc61332968c",
+          "revision": 1,
+          "key": "Money and constraint notes",
+          "value": "Amounts are integer minor currency units. Only compare eligible offers. Current task conditions override history; a past winner is not a current answer.",
+          "kind": "source",
+          "evidence": {
+            "source_id": "source-e06c6cdcd8534162aec77bc61332968c",
+            "chunk_id": "chunk-c82a40a4cd4a4c3db66584d39fee2139",
+            "revision": 1,
+            "start": 0,
+            "end": 152,
+            "line_start": 1,
+            "line_end": 1,
+            "trust": "reference_unverified"
+          }
+        }
+      ]
+    },
+    "ABL-2": {
+      "facts": [
+        {
+          "id": "source-e06c6cdcd8534162aec77bc61332968c",
+          "revision": 1,
+          "key": "Money and constraint notes",
+          "value": "Amounts are integer minor currency units. Only compare eligible offers. Current task conditions override history; a past winner is not a current answer.",
+          "kind": "source",
+          "evidence": {
+            "source_id": "source-e06c6cdcd8534162aec77bc61332968c",
+            "chunk_id": "chunk-c82a40a4cd4a4c3db66584d39fee2139",
+            "revision": 1,
+            "start": 0,
+            "end": 152,
+            "line_start": 1,
+            "line_end": 1,
+            "trust": "reference_unverified"
+          }
+        }
+      ],
+      "observations": [
+        {
+          "id": "source-9656110cdb5a4a1da7b0862fb4cb76a1",
+          "revision": 1,
+          "key": "Prior comparison observations",
+          "value": "Run 12: all-in CNY prices; budget and delivery filtered; compared the remaining full prices. Prior offer old-12 was chosen. New inputs must be recomputed, not copied.\nRun 13: all-in CNY prices; budget and delivery filtered; compared the remaining full prices. Prior offer old-13 was chosen. New inputs must be recomputed, not copied.",
+          "kind": "source",
+          "evidence": {
+            "source_id": "source-9656110cdb5a4a1da7b0862fb4cb76a1",
+            "chunk_id": "chunk-5c5943b5928e496c9af4d744d1e30ad6",
+            "revision": 1,
+            "start": 2047,
+            "end": 2380,
+            "line_start": 14,
+            "line_end": 15,
+            "trust": "reference_unverified"
+          }
+        },
+        {
+          "id": "source-9656110cdb5a4a1da7b0862fb4cb76a1",
+          "revision": 1,
+          "key": "Prior comparison observations",
+          "value": "Synthetic observations for testing, not real successful tasks:\nRun 0: all-in CNY prices; budget and delivery filtered; compared the remaining full prices. Prior offer old-0 was chosen. New inputs must be recomputed, not copied.\nRun 1: all-in CNY prices; budget and delivery filtered; compared the remaining full prices. Prior offer old-1 was chosen. New inputs must be recomputed, not copied.\nRun 2: all-in CNY prices; budget and delivery filtered; compared the remaining full prices. Prior offer old-2 was chosen. New inputs must be recomputed, not copied.\n",
+          "kind": "source",
+          "evidence": {
+            "source_id": "source-9656110cdb5a4a1da7b0862fb4cb76a1",
+            "chunk_id": "chunk-cc2d6ed9d3f141aaa913c1505604df93",
+            "revision": 1,
+            "start": 0,
+            "end": 558,
+            "line_start": 1,
+            "line_end": 4,
+            "trust": "reference_unverified"
+          }
+        },
+        {
+          "id": "source-9656110cdb5a4a1da7b0862fb4cb76a1",
+          "revision": 1,
+          "key": "Prior comparison observations",
+          "value": "Run 3: all-in CNY prices; budget and delivery filtered; compared the remaining full prices. Prior offer old-3 was chosen. New inputs must be recomputed, not copied.\nRun 4: all-in CNY prices; budget and delivery filtered; compared the remaining full prices. Prior offer old-4 was chosen. New inputs must be recomputed, not copied.\nRun 5: all-in CNY prices; budget and delivery filtered; compared the remaining full prices. Prior offer old-5 was chosen. New inputs must be recomputed, not copied.\n",
+          "kind": "source",
+          "evidence": {
+            "source_id": "source-9656110cdb5a4a1da7b0862fb4cb76a1",
+            "chunk_id": "chunk-15cedd49498a481299b429f69d036a85",
+            "revision": 1,
+            "start": 558,
+            "end": 1053,
+            "line_start": 5,
+            "line_end": 7,
+            "trust": "reference_unverified"
+          }
+        },
+        {
+          "id": "source-9656110cdb5a4a1da7b0862fb4cb76a1",
+          "revision": 1,
+          "key": "Prior comparison observations",
+          "value": "Run 9: all-in CNY prices; budget and delivery filtered; compared the remaining full prices. Prior offer old-9 was chosen. New inputs must be recomputed, not copied.\nRun 10: all-in CNY prices; budget and delivery filtered; compared the remaining full prices. Prior offer old-10 was chosen. New inputs must be recomputed, not copied.\nRun 11: all-in CNY prices; budget and delivery filtered; compared the remaining full prices. Prior offer old-11 was chosen. New inputs must be recomputed, not copied.\n",
+          "kind": "source",
+          "evidence": {
+            "source_id": "source-9656110cdb5a4a1da7b0862fb4cb76a1",
+            "chunk_id": "chunk-7f30f32c9f624280bdecf6f92f6b27a5",
+            "revision": 1,
+            "start": 1548,
+            "end": 2047,
+            "line_start": 11,
+            "line_end": 13,
+            "trust": "reference_unverified"
+          }
+        },
+        {
+          "id": "source-9656110cdb5a4a1da7b0862fb4cb76a1",
+          "revision": 1,
+          "key": "Prior comparison observations",
+          "value": "Run 6: all-in CNY prices; budget and delivery filtered; compared the remaining full prices. Prior offer old-6 was chosen. New inputs must be recomputed, not copied.\nRun 7: all-in CNY prices; budget and delivery filtered; compared the remaining full prices. Prior offer old-7 was chosen. New inputs must be recomputed, not copied.\nRun 8: all-in CNY prices; budget and delivery filtered; compared the remaining full prices. Prior offer old-8 was chosen. New inputs must be recomputed, not copied.\n",
+          "kind": "source",
+          "evidence": {
+            "source_id": "source-9656110cdb5a4a1da7b0862fb4cb76a1",
+            "chunk_id": "chunk-bfb577f69e1142e8ab638afaf9c8887e",
+            "revision": 1,
+            "start": 1053,
+            "end": 1548,
+            "line_start": 8,
+            "line_end": 10,
+            "trust": "reference_unverified"
+          }
+        }
+      ]
+    },
+    "ABL-3": {
+      "facts": [
+        {
+          "id": "source-e06c6cdcd8534162aec77bc61332968c",
+          "revision": 1,
+          "key": "Money and constraint notes",
+          "value": "Amounts are integer minor currency units. Only compare eligible offers. Current task conditions override history; a past winner is not a current answer.",
+          "kind": "source",
+          "evidence": {
+            "source_id": "source-e06c6cdcd8534162aec77bc61332968c",
+            "chunk_id": "chunk-c82a40a4cd4a4c3db66584d39fee2139",
+            "revision": 1,
+            "start": 0,
+            "end": 152,
+            "line_start": 1,
+            "line_end": 1,
+            "trust": "reference_unverified"
+          }
+        }
+      ],
+      "conditional_advice": [
+        {
+          "id": "filter-then-compare",
+          "revision": 1,
+          "recipe": "quote-source-v1",
+          "requires": {
+            "currency": "CNY",
+            "objective": "lowest_eligible_total",
+            "pool": "regular",
+            "price_includes_fees": true
+          },
+          "summary": "For all-in CNY quotes, filter current total budget and delivery first, then choose the lowest current total. Recompute each new input.",
+          "counterexamples": [
+            "Net prices with separate shipping require a different total calculation.",
+            "Earliest delivery is a different objective; do not reuse the lowest-price choice.",
+            "Withdrawn evidence is unusable."
+          ],
+          "expires": 1794680732.4968748,
+          "source_id": "source-bd4bc7bbd41241a797fed6419ad76789",
+          "source_revision": 1,
+          "source_digest": "c1ebbd7b4bb71e2fcd4d3f6399ef133cbd6c165167f8ff20d152d676e92f74e4",
+          "evidence": [
+            {
+              "revision": 1,
+              "sha256": "62897e97e236657d252a81475fbd482298300efeed16aad2593c293ece2e1736",
+              "source_id": "source-9656110cdb5a4a1da7b0862fb4cb76a1"
+            }
+          ],
+          "lineage_group": "912e7052aa0cd7c95fa8032310c02cbd2dd6fae49864a08d31cbe369f8f69279",
+          "advisory_only": true,
+          "verified": false,
+          "execution_authorized": false
+        }
+      ]
+    },
+    "ABL-4": {
+      "facts": [
+        {
+          "id": "source-e06c6cdcd8534162aec77bc61332968c",
+          "revision": 1,
+          "key": "Money and constraint notes",
+          "value": "Amounts are integer minor currency units. Only compare eligible offers. Current task conditions override history; a past winner is not a current answer.",
+          "kind": "source",
+          "evidence": {
+            "source_id": "source-e06c6cdcd8534162aec77bc61332968c",
+            "chunk_id": "chunk-c82a40a4cd4a4c3db66584d39fee2139",
+            "revision": 1,
+            "start": 0,
+            "end": 152,
+            "line_start": 1,
+            "line_end": 1,
+            "trust": "reference_unverified"
+          }
+        }
+      ],
+      "advice_by_case": {
+        "same-conditions": {
+          "methods": [
+            {
+              "id": "filter-then-compare",
+              "revision": 1,
+              "recipe": "quote-source-v1",
+              "requires": {
+                "currency": "CNY",
+                "objective": "lowest_eligible_total",
+                "pool": "regular",
+                "price_includes_fees": true
+              },
+              "summary": "For all-in CNY quotes, filter current total budget and delivery first, then choose the lowest current total. Recompute each new input.",
+              "counterexamples": [
+                "Net prices with separate shipping require a different total calculation.",
+                "Earliest delivery is a different objective; do not reuse the lowest-price choice.",
+                "Withdrawn evidence is unusable."
+              ],
+              "expires": 1794680732.4968748,
+              "source_id": "source-bd4bc7bbd41241a797fed6419ad76789",
+              "source_revision": 1,
+              "source_digest": "c1ebbd7b4bb71e2fcd4d3f6399ef133cbd6c165167f8ff20d152d676e92f74e4",
+              "evidence": [
+                {
+                  "revision": 1,
+                  "sha256": "62897e97e236657d252a81475fbd482298300efeed16aad2593c293ece2e1736",
+                  "source_id": "source-9656110cdb5a4a1da7b0862fb4cb76a1"
+                }
+              ],
+              "lineage_group": "912e7052aa0cd7c95fa8032310c02cbd2dd6fae49864a08d31cbe369f8f69279",
+              "advisory_only": true,
+              "verified": false,
+              "execution_authorized": false
+            }
+          ],
+          "rejected": [
+            {
+              "id": "withdrawn-method",
+              "reason": "precondition_mismatch"
+            }
+          ]
+        },
+        "price-basis-reversed": {
+          "methods": [],
+          "rejected": [
+            {
+              "id": "filter-then-compare",
+              "reason": "precondition_mismatch"
+            },
+            {
+              "id": "withdrawn-method",
+              "reason": "precondition_mismatch"
+            }
+          ]
+        },
+        "objective-changed": {
+          "methods": [],
+          "rejected": [
+            {
+              "id": "filter-then-compare",
+              "reason": "precondition_mismatch"
+            },
+            {
+              "id": "withdrawn-method",
+              "reason": "precondition_mismatch"
+            }
+          ]
+        },
+        "withdrawn-history": {
+          "methods": [],
+          "rejected": [
+            {
+              "id": "filter-then-compare",
+              "reason": "precondition_mismatch"
+            },
+            {
+              "id": "withdrawn-method",
+              "reason": "evidence_changed_missing_or_disallowed"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "source_sha256": {
+    "host/memory.py": "e51730f12b652c6230c7c31285f03074e27ac970da9587eff3a76538032eeb9d",
+    "host/dialogue.py": "7d26aedb42a11946c8105b02c05d272641e209136ce46d1600adaf2ba8d3e32c",
+    "modules/context_knowledge/methods.py": "a1e3e1f4753e9175daafa806b5f0abc39331871676b0ee2c6540ef382d483b2b",
+    "modules/context_knowledge/source_policy.py": "a6db6ab420283b7638a1d4598a99fd6df9aefe86faba44f77b442c04e391977d",
+    "modules/context_knowledge/knowledge.py": "22430af13da14586e360ce39ae988d5a8ee87adced6d6f2c190acd469aa22272",
+    "docs/evidence/knowledge-advice-20261114/run_ablation.py": "cf044352ea6c91e55768cbbd7efbf2267ff5221bdac984c415d06c9ea9e6157f"
+  },
+  "proxy_build": "30b79127b81e04a57cdc8aae76f607ea38b499b3fa4d92abf0020700e17848bc",
+  "provider": "vertex",
+  "model": "gemini-3.8-flash",
+  "calls_limit": 5,
+  "model_retries": 0,
+  "repetitions": 1,
+  "raw_context_budget_bytes": 5000,
+  "formal_acceptance": false,
+  "quality_score": null,
+  "criteria": {
+    "case_fields_all_correct": true,
+    "source_withdrawal_and_policy_failures": 0,
+    "no_quality_regression": true
+  },
+  "forecast": {
+    "ABL-3_context_bytes_vs_ABL-2_max_ratio": 0.75,
+    "scope": "Pre-call representation size target only; not a token or quality guarantee"
+  },
+  "ABL-5": "UNMEASURED: existing compiled text-report method does not implement these changed quotation rules",
+  "limits": [
+    "Operator-authored synthetic cases and method, not independent users or learned from real successes",
+    "One bundle per arm; four outputs are correlated, not four independent calls",
+    "No alternative-method exploration in ABL-4 yet",
+    "Background is an explicit controlled attachment after real retrieval; ordinary automatic chat memory assembly is not being accepted"
+  ]
+}

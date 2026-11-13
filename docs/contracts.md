@@ -13,6 +13,7 @@
 - [记忆组件的替换契约（proposed）](#memory-provider-contracts)
   - [开源提取器、编纂器与路由的适配要求（proposed）](#memory-extractor-adapter)
   - [MemoryView 与知识候选的必要语义（proposed）](#memory-view-contract)
+  - [条件经验候选与使用前回执（conditional-advice-1）](#conditional-advice-contract)
 - [接口与数据契约](#interfaces)
   - [任务与动作分离](#interfaces-2)
   - [事件信封](#interfaces-3)
@@ -167,6 +168,23 @@ MemoryView 只授权本次读取与装配，不授予工具执行权限。实际
 切片/事实中的每个来源定位都属于宿主允许的输入集合；多来源混合片段不能因为其中一句可见而返回全文。查询、出站提示、向量化、检索结果与最终产物分别执行当前用途检查。视图缓存键至少关联范围、用途、消费者/实际 provider、输出受众、策略版本及所用依赖修订；旧缓存不能沿用到另一个 Agent、项目、角色或读者。撤销/纠正先使派生视图不再合格，再执行可延后的物理清理；期间返回缺口，不从旧摘要补回内容。
 
 上述 MemoryRecord / SharedProjection 为拟定语义，需要独立验证来源依赖、撤回和受众隔离，组合验收见[个人与工作防串用](delivery-validation.md#memory-domain-validation)。
+
+<a id="conditional-advice-contract"></a>
+### 条件经验候选与使用前回执（conditional-advice-1）
+
+这是[运行子集](knowledge-learning.md#conditional-advice-runtime)的已实现契约，不覆盖上节完整MemoryView目标。Knowledge library实现版本1.3.0，原源字段、Core schema7及业务表结构不变；新声明归`config/conditional-advice-compatibility.json`。
+
+| 对象/接口 | 必需内容与规则 |
+|---|---|
+| 条件资料卡 | schema、id、revision、status（仅CANDIDATE/QUARANTINED）、recipe、requires、summary、counterexamples、evidence、expires；严格JSON，重复键/非有限数拒绝。requires为非空标量条件；未知值不能满足条件 |
+| evidence | 1—8个不同source_id、正修订、原始UTF-8文本sha256；从当前用途和目的地仍可读取的原始资料解析，拒绝方法卡互证/自证；不是成功次数或独立因果证明 |
+| method_recall | 复用POST /api/memory；action、scope、provider、enabled、query、context恰好这些字段。只读召回，原Origin/nonce鉴权不变；context不代替用户授权、任务证据或能力检查 |
+| method_revalidate | action、scope、provider、enabled、context、receipt；receipt为version、context_digest、methods。methods只含source_id、source_revision、source_digest、method_digest；重新选择绑定来源再逐项比较，改变则method_changed，不依赖当前top-N |
+| 返回 | methods、rejected原因、bytes、lineage_groups、receipt、当前范围及修订；advisory_only=true，verified=false，execution_authorized=false、automatic_promotion=false，independent_successes=null |
+| 用途隔离 | 保留格式不进入普通source检索/向量返回/派生事实/历史快照；来源编辑页仍可查看用户自有资料。历史JSON条件卡也不能借新事实或新代码被当作已核验事实使用 |
+| 发布与兼容 | 有当前/历史条件卡时，新控制器拒绝没有明确读取声明的目标；新版本未知则拒绝。已安装旧冻结控制器不自动获得该判断，正式写入和采用须先完成控制器/兼容恢复链验收 |
+
+调用者收到候选，仍须依据当前原任务核对适用性，实际使用前重验；该接口不自动将候选接入普通聊天或执行器，不注册新Bot、模型调用、反馈晋升或数据库迁移。未接自动任务消费和普通界面卡片，属于后续工作，不能据此签收自主学习。
 
 <a id="interfaces"></a>
 ## 接口与数据契约
