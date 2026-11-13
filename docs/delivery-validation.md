@@ -3151,7 +3151,7 @@ JPF/r1 不改写；本轮是 V-TRI/V-CLC 的局部接线证据，完整场景仍
 <a id="external-storage-evidence-20261113"></a>
 ## E盘外接迁移、恢复与离线记忆切换（2026-11-13）
 
-**结论：日用/开发及模型迁移可用；Codex记忆迁移和旧副本退役尚未闭环。** 源码检查点4929857后续本机修改，Windows同机，E为USB外接NTFS；原C/D为内置盘。操作入口统一见[本机布局](stack-project-layout.md#external-storage-local-layout)，机器摘要见[本轮记录](evidence/external-storage-20261113/result.json)。私人数据、原始逐文件清单、DPAPI材料仅留E盘，不加入Git。
+**结论：E盘日用/开发可用，独立D盘灾备及惰性还原已验证；Codex记忆迁移和旧副本退役尚未闭环。** 源码检查点4929857后续本机修改，Windows同机，E为USB外接NTFS；原C/D为内置盘。操作入口统一见[本机布局](stack-project-layout.md#external-storage-local-layout)，机器摘要见[本轮记录](evidence/external-storage-20261113/result.json)。私人数据、原始逐文件清单、DPAPI材料仅留本机E盘及授权D盘灾备，不加入Git。
 
 | 验收项 | 实测结果 | 能证明/不能证明 |
 |---|---|---|
@@ -3161,10 +3161,20 @@ JPF/r1 不改写；本轮是 V-TRI/V-CLC 的局部接线证据，完整场景仍
 | 会话、路径和模型 | 644个日用内部owner核对，3个开发会话重绑；原项目路径转E | 聊天API返回500为分页上限，不作持久聊天总数；模型真实推理未重测 |
 | 完整恢复点 | 15,219文件/2,871,152,861字节逐文件SHA；99 SQLite；已从G副本恢复到独立C目录且不启动任务，再核验E副本 | 惰性恢复不是自动启用许可或整机灾备；E/G同盘不能防整盘损坏 |
 | 失败修复 | 初版过滤所有.lock误漏Cargo.lock；迁移启动前拒绝，补回14份依赖锁后启动；恢复RO校验改immutable，避免空WAL/SHM污染 | 旧恢复点仍是旧格式，不把它冒称完整可启动包；原文件和修复报告保留 |
-| Codex工具 | 活跃客户端拒绝；合成记忆/账号字节及SQLite保留、重现客户端拒绝、ZIP内容变化拒绝，另实测临时NTFS junction与环境设置失败回滚；6项工具测试通过，真实账号仅运行--check | 当前Codex仍写C盘，真实45GB量级数据尚未搬迁；junction/用户环境切换和重启必须另验 |
+| Codex工具 | 最新12项专项测试通过：拒绝活跃客户端、同物理盘和链接重定向；核验复制/ZIP字节、最终切换前原目录变更；NTFS junction失败回滚及Windows SQLite路径重绑保留其他设置 | 真实账号仅运行--check，当前仍写C盘，约46GB数据未搬迁；真实切换及重启必须另验 |
 | C盘清理 | 替代副本和独有记录核验完毕；精确临时目录Remove-Item被自动审批以blocked by policy拒绝 | 未执行删除，不报告已释放空间，不绕过策略 |
 
 `tools/recovery_snapshot.py`沿原RunLock取得工作通道独占，数据库用SQLite backup；新回归保留Cargo.lock/uv.lock，拒绝改字节、穿越路径、重叠目标、存活写入者，恢复不启动任务、不清STOP。`tools/migrate_codex_home.py`是独立显式工具，运行前后拒绝Codex写入者、独立暂存、SHA/ZIP/SQLite核对；原件只在校验及重定向成功后退休。不把目录重定向当沙箱或权限恢复证明。48项专项回归通过；历史备份20,394文件/3,119,779,951字节逐文件摘要通过（不含无关旧Jachin工程），9个旧D盘启动入口已转E，原入口另存E备份。回归结果保存在本轮机器记录及测试日志。
+
+2026-11-14按主人明确选择，将`D:/Jarvis-Recovery`设为仅存灾备的目录，核对E为物理盘1、D为物理盘0；主项目没有迁回D盘。此次[机器摘要](evidence/external-storage-20261113/cross-disk-20261114.json)与[最终专项回归](evidence/external-storage-20261113/cross-disk-regressions-final.json)记录如下。原迁移时的epoch6及旧恢复点是历史记录，不覆盖其原结果。
+
+| 新增验收 | 实测 | 边界与后续 |
+|---|---|---|
+| 历史E备份跨盘归档 | 35,723文件、6,114,756,189字节逐文件SHA一致，原件保留 | 归档到D的historical-E，不能补回此前已缺失的项目 |
+| 最新完整恢复点 | 源码7e6e044；21,114文件、3,294,510,584字节，132份SQLite完整性通过 | `D:/Jarvis-Recovery/jarvis/2026-11-14-r1/snapshot`；覆盖runtime、dev、models、projects与根入口，不含仍在C盘的活跃Codex home |
+| 从D实际还原 | 独立`E:/Jarvis/validation/restore-from-D-20261114-r1`，全部21,114文件与快照字节一致，132份SQLite通过 | 未启动还原副本、未重放UNKNOWN；不是自动接管或重装Windows/跨机DPAPI恢复通过 |
+| 正常停止与恢复 | 日用、开发分别停机后同时取得两根工作通道锁，完成复制即恢复原服务；日用v0.1.8、epoch8，开发和代理在线 | 没有升级日用代码；激活恢复副本前仍需路径、可选工具、控制器身份与权限重新核对 |
+| 恢复/迁移工具最终回归 | 9项恢复测试＋12项Codex迁移测试，共21项通过 | SQLite按文件头识别并合并WAL；保留无关-wal/-shm及依赖锁；第二数据根活跃写入会阻止快照 |
 
 下一道实际验收门：退出Codex→执行离线迁移→重启并从E打开工程→核对原会话/记忆/目标/设置和新写入落E→核对旧目录退役。C临时清理和D原件仍待处理。没有这一步，本节保持部分verified，不签收“全部数据均已离开C/D盘”。后续自然请求、知识收益、统一预算、多Bot和自愈依然按原实施跟踪推进。
 

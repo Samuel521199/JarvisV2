@@ -25,7 +25,7 @@
 
 **先读这一页：[当前真实状态](docs/current-state.md)**：能运行什么、哪些只是设计、证据边界与已知风险都在一页内。按版本的变更流水见 [CHANGELOG](CHANGELOG.md)。
 
-**2026-11-13 本机布局：**源码/开发`E:/Jarvis/dev`，日用`E:/Jarvis/runtime`，模型`E:/Jarvis/models`，备份`E:/Jarvis/backups`。E盘双服务与受限Worker已验；Codex记忆须退出后离线迁移，C/D旧副本尚未全部退役。[迁移步骤与限制](docs/stack-project-layout.md#external-storage-local-layout)／[实测](docs/delivery-validation.md#external-storage-evidence-20261113)。模型和私有备份不进入Git。
+**2026-11-13 本机布局：**源码/开发`E:/Jarvis/dev`，日用`E:/Jarvis/runtime`，模型`E:/Jarvis/models`，本机恢复材料`E:/Jarvis/backups`，独立灾备`D:/Jarvis-Recovery`（仅存副本）。2026-11-14从D惰性还原21,114文件与132份SQLite通过；E盘双服务与受限Worker已验；Codex记忆须退出后离线迁移，C/D旧副本尚未全部退役。[迁移步骤与限制](docs/stack-project-layout.md#external-storage-local-layout)／[实测](docs/delivery-validation.md#external-storage-evidence-20261113)。模型和私有备份不进入Git。
 
 **边用边开发：**开发根双击`StartJarvisDaily.bat`开日用、`StartJarvisDev.bat`开开发，两者数据分离。改完并审阅后运行`JarvisPC.bat prepare-update --reviewed-source`，独立检查通过后用`UpdateJarvis.bat`切换；`RollbackJarvis.bat`回到登记的相容上一版。检查候选期间日用继续运行，切换有短暂停顿。[操作与备份边界](docs/stack-project-layout.md#single-pc-local-workflow) · [本轮实测](docs/delivery-validation.md#single-pc-20261112)。新克隆仍需准备独立profile，不能把两个Host指向同一数据根。
 
