@@ -409,6 +409,87 @@ class AssistantCommitments(unittest.TestCase):
             self.assertNotEqual(assistant.commitment_from_turn(self.root,self.turn(text,title=title))['mode'],'APPLIED')
         self.assertFalse(commitments.exists(self.root))
 
+    def test_list_destinations_and_due_clauses_keep_exact_persisted_values(self):
+        for text,title,clock in [
+            ('给我的待办清单添加一项：“清点野外器材”。','清点野外器材',None),
+            ('帮我记一笔待办：阅读「如果河流倒流」。','阅读「如果河流倒流」',None),
+            ('把“核对假设记录”加到我的任务列表里。','核对假设记录',None),
+            ('设定提醒：核对代码规范，截止时间为2042-08-09T11:20:00+08:00。','核对代码规范','2042-08-09T11:20:00+08:00'),
+            ('Please create a reminder titled "review the if-clause guide" due at 2042-08-10T12:35:00-03:30.','review the if-clause guide','2042-08-10T12:35:00-03:30')]:
+            with self.subTest(text=text):
+                ident=self.turn(text,title=title);result=assistant.commitment_from_turn(self.root,ident)
+                self.assertEqual(result['mode'],'APPLIED')
+                self.assertEqual(result['receipt']['current']['title'],title)
+                self.assertEqual(result['receipt']['current']['due_text'],clock)
+                self.assertEqual(assistant.accept(self.root,{'turn_id':ident})['receipt']['id'],result['receipt']['id'])
+
+    def test_same_sentence_completion_reference_and_about_cancel_use_named_target(self):
+        other=assistant.commitment_from_turn(self.root,self.turn('添加待办：保留另一个事项',title='保留另一个事项'))['receipt']['current']
+        for operation,text in [('cancel','帮我取消关于“解释标尺图例”的提醒。'),
+                               ('complete','我已经完成了“解释标尺图例”，帮我把它标记为完成吧。')]:
+            row=assistant.commitment_from_turn(self.root,self.turn('添加待办：解释标尺图例',title='解释标尺图例'))['receipt']['current']
+            result=assistant.commitment_from_turn(self.root,self.turn(text,title=row['title'],operation=operation,target=row['id']))
+            self.assertEqual(result['receipt']['current']['status'],'DONE' if operation=='complete' else 'CANCELLED')
+            self.assertEqual(result['receipt']['current']['revision'],2)
+            self.assertEqual(commitments.detail(self.root,other['id'])['current']['status'],'OPEN')
+
+    def test_new_clause_frames_do_not_authorize_negation_reports_or_unbound_pronouns(self):
+        title='检查标尺'
+        row=assistant.commitment_from_turn(self.root,self.turn('添加待办：'+title,title=title))['receipt']['current']
+        for operation,text in [('complete','我可能完成了检查标尺，帮我把它标记为完成吧。'),
+            ('complete','我已经完成了检查标尺，可以把它标记为完成吗？'),
+            ('complete','我已经完成了检查标尺，帮我把另一个任务标记为完成。'),
+            ('cancel','关于检查标尺的提醒已经取消了。'),
+            ('cancel','如果确认了，帮我取消关于检查标尺的提醒。'),
+            ('create','给我的待办清单添加一项：检查标尺，并删除记录。'),
+            ('create','设定提醒：检查标尺，截止时间为2042-08-09T11:20:00+08:00，仅作为示例。'),
+            ('create','Please create a reminder titled "检查标尺" due at 2042-08-09T11:20:00+08:00 if the manager approves.')]:
+            with self.subTest(text=text):
+                result=assistant.commitment_from_turn(self.root,self.turn(text,title=title,operation=operation,target='' if operation=='create' else row['id']))
+                self.assertNotEqual(result['mode'],'APPLIED')
+        self.assertEqual(commitments.detail(self.root,row['id'])['current']['status'],'OPEN')
+
+    def test_explicit_untimed_tasks_never_acquire_a_model_supplied_deadline(self):
+        for text in ['添加一个无截止日期的任务：检查样本编号。',
+            '把“检查样本编号”记为一项未定时间的任务。',
+            'Create a new task to 检查样本编号 without a due date.',
+            'Could you add an untimed item to 检查样本编号?',
+            'Add 检查样本编号 to my untimed tasks.']:
+            with self.subTest(text=text):
+                result=assistant.commitment_from_turn(self.root,self.turn(text,title='检查样本编号'))
+                self.assertEqual(result['mode'],'APPLIED')
+                self.assertIsNone(result['receipt']['current']['due_at'])
+                self.assertIsNone(result['receipt']['current']['due_text'])
+        for text in ['添加一个无截止日期的任务：检查样本编号，时间明天定。',
+                     'Could you add an untimed item to 检查样本编号 if approved?']:
+            self.assertNotEqual(assistant.commitment_from_turn(self.root,self.turn(text,title='检查样本编号'))['mode'],'APPLIED')
+
+    def test_local_list_locators_edit_only_the_named_item_and_keep_cancel_history(self):
+        named=assistant.commitment_from_turn(self.root,self.turn('添加待办：检查代码索引',title='检查代码索引'))['receipt']['current']
+        other=assistant.commitment_from_turn(self.root,self.turn('添加待办：检查设备',title='检查设备'))['receipt']['current']
+        moved=assistant.commitment_from_turn(self.root,self.turn('将待办中的“检查代码索引”重新安排在2045-07-15T10:30:00+09:00。',title=named['title'],operation='reschedule',target=named['id']))
+        self.assertEqual(moved['receipt']['current']['due_text'],'2045-07-15T10:30:00+09:00')
+        done=assistant.commitment_from_turn(self.root,self.turn('把任务列表里的“检查代码索引”标为已完成。',title=named['title'],operation='complete',target=named['id']))
+        self.assertEqual(done['receipt']['current']['status'],'DONE')
+        cancelled=assistant.commitment_from_turn(self.root,self.turn('Remove the existing reminder 检查设备 from my list.',title=other['title'],operation='cancel',target=other['id']))
+        self.assertEqual(cancelled['receipt']['current']['status'],'CANCELLED')
+        with Commitments(self.root) as db:self.assertEqual(len(db.history(other['id'])),2)
+        self.assertEqual(commitments.detail(self.root,named['id'])['current']['status'],'DONE')
+
+    def test_duplicate_active_titles_cannot_be_disambiguated_by_model_target_id(self):
+        rows=[assistant.commitment_from_turn(self.root,self.turn('添加待办：核对样本',title='核对样本'))['receipt']['current'] for _ in range(2)]
+        for operation,text in [('cancel','取消关于“核对样本”的提醒。'),
+            ('complete','把任务列表里的“核对样本”标为已完成。'),
+            ('reschedule','将“核对样本”改期到2045-07-15T10:30:00+09:00。')]:
+            candidate=self.turn(text,title='核对样本',operation=operation,target=rows[0]['id'])
+            result=assistant.commitment_from_turn(self.root,candidate)
+            self.assertEqual(result['mode'],'REVIEW')
+        negative=self.turn('不要取消关于“核对样本”的提醒。',title='核对样本',operation='cancel',target=rows[0]['id'])
+        self.assertEqual(assistant.confirm_commitment(self.root,{'turn_id':negative,'due_at':None})['mode'],'NOT_REQUEST')
+        for row in rows:
+            current=commitments.detail(self.root,row['id'])['current']
+            self.assertEqual(current['status'],'OPEN');self.assertEqual(current['revision'],1)
+
     def test_permission_to_mark_done_is_not_completion_without_a_direct_request(self):
         initial=assistant.commitment_from_turn(self.root,self.turn('添加待办：核对图表',title='核对图表'))['receipt']['current']
         candidate=self.turn('我可以把核对图表标记为完成',title='核对图表',operation='complete',target=initial['id'])

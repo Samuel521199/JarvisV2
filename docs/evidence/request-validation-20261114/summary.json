@@ -1,0 +1,119 @@
+{
+  "scope": "Development implementation; latest fresh holdout failed the unchanged 90% gate. Repaired replays are seen, not fresh acceptance.",
+  "baseline_commit": "88f4c1e",
+  "source_sha256": {
+    "host/assistant.py": "698b5266af4c317314b42beb07e4471f436cc5e5b228464f101f695907057817",
+    "host/assistant_commitments.py": "d272a8569e77ae928bc4a2a4603c5ee9bfbb4731ab811197b4ac1c727c968ed1",
+    "modules/task_resource/commitment_intent.py": "c7b7220964c2060c9eeec002d19f52bbedce9860d962d76115994ae8f4872b46"
+  },
+  "first_scores": {
+    "before_repair": {
+      "cases": 60,
+      "clear_requests": 36,
+      "correct_auto": 23,
+      "coverage": 0.6388888888888888,
+      "unsafe_auto": 0,
+      "wrong_auto_content": 0,
+      "missed_clear": 13
+    },
+    "candidate": {
+      "cases": 60,
+      "clear_requests": 36,
+      "correct_auto": 24,
+      "coverage": 0.6666666666666666,
+      "unsafe_auto": 0,
+      "wrong_auto_content": 0,
+      "missed_clear": 12
+    }
+  },
+  "live_first": {
+    "cases": 6,
+    "passed": 3,
+    "positive_passed": 2,
+    "positive_cases": 5,
+    "negative_passed": true,
+    "scope": "Six preregistered synthetic unseen utterances; real model selection and ordinary Host application"
+  },
+  "native_seen_replay": {
+    "cases": 6,
+    "passed": 6,
+    "model_calls": 0,
+    "original_fixture_unchanged": true
+  },
+  "model_cost": {
+    "provider_calls": 7,
+    "reported_tokens": 20248,
+    "new_model_calls_for_repair": 0,
+    "full_cost": null,
+    "daily_limit_unchanged": 64
+  },
+  "validation": {
+    "earlier_regressions": {
+      "rows": [
+        {
+          "pattern": "test_assistant_commitments.py",
+          "tests": 47,
+          "exit_code": 0
+        },
+        {
+          "pattern": "test_commitments.py",
+          "tests": 10,
+          "exit_code": 0
+        },
+        {
+          "pattern": "test_delivery_shadow.py",
+          "tests": 30,
+          "exit_code": 0
+        },
+        {
+          "pattern": "test_body_document.py",
+          "tests": 10,
+          "exit_code": 0
+        },
+        {
+          "pattern": "test_development_workstation.py",
+          "tests": 13,
+          "exit_code": 0
+        },
+        {
+          "pattern": "test_application_release.py",
+          "tests": 27,
+          "exit_code": 0
+        }
+      ],
+      "tests": 137,
+      "passed": true
+    },
+    "final_after_duplicate_title_guard": {
+      "rows": [
+        {
+          "pattern": "test_assistant_commitments.py",
+          "tests": 48,
+          "exit_code": 0
+        },
+        {
+          "pattern": "test_commitments.py",
+          "tests": 10,
+          "exit_code": 0
+        },
+        {
+          "pattern": "test_application_compatibility.py",
+          "tests": 10,
+          "exit_code": 0
+        }
+      ],
+      "tests": 68,
+      "passed": true
+    }
+  },
+  "production_adopted": false,
+  "broader_goal_complete": false,
+  "remaining": [
+    "Fresh language acceptance still below 90%; no regeneration to get a pass",
+    "Independent real user tasks and all three domain quality",
+    "Knowledge benefit and negative transfer ablation",
+    "Whole-PC leases, multi-Bot ownership and bounded self-healing",
+    "Production controller/source adoption",
+    "Codex offline move/restart verification and old copy retirement"
+  ]
+}

@@ -78,17 +78,23 @@ def decision(root, turn, chat, *, source_store=None):
             if when:return {**base,'mode':'AUTO','message':'原待办与补充时间已核对','due_at':when,'needs_time':False,
                             'parent_turn':parent['id'],'parent_digest':source_digest(parent)}
         return {**base,'mode':'NEEDS_TIME','message':'请给出具体几点和UTC偏移；尚未保存提醒。'}
-    target=None;active_count=0
+    target=None;active_count=0;ambiguous_title=False
     if candidate['operation']!='create':
         if not service.exists(root):raise CoreError('commitment_source','No conversation commitment is available')
         with Commitments(root) as db:
             origin=db.origin(action['target']);target=db.read(action['target'])
-            active_count=sum(r['status'] in ('OPEN','DUE') for r in db.conversation_items(chat['id']))
+            active=[r for r in db.conversation_items(chat['id']) if r['status'] in ('OPEN','DUE')]
+            active_count=len(active)
         if not origin or origin['chat_id']!=chat['id']:raise CoreError('commitment_source','Target does not belong to this conversation')
         if target['revision']!=action['target_revision'] or target['status'] not in ('OPEN','DUE'):
             raise CoreError('conflict','The commitment changed since this suggestion')
-    try:return interpret(text,candidate['operation'],candidate['title'],turn['created'],
-        target_title=target['title'] if target else None,active_count=active_count)
+        ambiguous_title=sum(r['title']==target['title'] for r in active)>1
+    try:
+        chosen=interpret(text,candidate['operation'],candidate['title'],turn['created'],
+            target_title=target['title'] if target else None,active_count=active_count)
+        if ambiguous_title and chosen['mode']=='AUTO':
+            return {**chosen,'mode':'REVIEW','message':'当前会话有多个同名待办，请核对具体目标；没有自动修改。'}
+        return chosen
     except (CoreError,ValueError,OverflowError):return base
 
 

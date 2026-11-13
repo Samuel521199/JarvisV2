@@ -83,6 +83,44 @@ def edit_parts(text,operation):
     return None
 
 
+def structured_frame(frame,operation,timed):
+    """Match ordered clauses; new reference words aren't a free token bag."""
+    item=r'@item@';clock=r'@clock@';sep=r'[，,：:]*'
+    listing=r'(?:本地)?(?:待办(?:事项)?|任务)(?:清单|列表)?'
+    count=r'(?:一项|一个|一条|个)?'
+    untimed=r'(?:(?:未定时间|不定时间|无截止日期|无到期时间|不设时间)的?)?'
+    locator=r'(?:(?:我的)?(?:任务|待办)?(?:清单|列表)?(?:里|中)的)?'+item
+    en_target=r'(?:(?:the|my)\s+)?(?:existing\s+)?(?:(?:task|reminder|to-do(?:\s+item)?|todo)\s+)?'+item
+    zh=[];en=[]
+    if operation=='create' and not timed:
+        zh=[r'(?:在|向|往|给)(?:我的)?'+listing+r'(?:里|中)?(?:添加|增加|新增|新建|加入|加上|加)'+count+sep+item,
+            r'(?:把|将)'+item+r'(?:添加到|加入|加到|放到|记到)(?:我的)?'+listing+r'(?:里|中)?',
+            r'(?:记一笔|记下|记个|添加|新增|新建)'+count+untimed+listing+sep+item,
+            r'(?:把|将)'+item+r'(?:添加|新增|记)为'+count+untimed+listing]
+        en=[r'(?:add|create)\s+(?:(?:a|an|one)\s+)?(?:new\s+)?(?:local\s+)?(?:untimed\s+)?(?:item|task|to-do(?:\s+item)?)\s+(?:to|for|titled)\s+'+item+r'(?:\s+without\s+(?:a\s+)?(?:due\s+date|deadline))?',
+            r'add\s+'+item+r'\s+to\s+(?:my|the)\s+untimed\s+(?:tasks|to-do\s+list)']
+    elif operation=='create' and timed:
+        zh=[r'(?:设置|设定|设|添加|新增)(?:一个|一条|个)?(?:本地|日程)?提醒'+sep+item+sep+r'(?:截止时间|到期时间|时间)(?:设定为|定在|设为|为|是|在)'+clock,
+            r'(?:在|于)?'+clock+r'(?:时)?(?:准时)?'+REMIND+sep+item]
+        en=[r'(?:set|create|add)\s+(?:(?:a|an|one)\s+)?(?:local\s+)?reminder\s+(?:titled|called|to|for)\s+'+item+r'[,\s]+(?:due\s+(?:at|on)|scheduled\s+for|at|on)\s+'+clock]
+    elif operation=='reschedule':
+        zh=[r'(?:把|将)?'+locator+r'(?:重新安排在|重新安排到|改期到|改到|调整到)'+clock]
+    elif operation=='cancel':
+        zh=[r'取消(?:我)?(?:之前)?关于'+item+r'的(?:提醒|待办(?:事项)?|任务)',
+            r'取消'+locator+r'(?:这个|这项)?(?:任务|待办|提醒)?',
+            r'(?:把|将)(?:我)?'+locator+r'取消掉?']
+        en=[r'(?:cancel|delete|remove)\s+'+en_target+r'(?:\s+from\s+(?:my|the)\s+(?:task\s+)?list)?']
+    elif operation=='complete':
+        # Pronouns bind only to the single exact title in this same sentence;
+        # tentative permission or an unrelated earlier conversation isn't enough.
+        zh=[r'我(?:已经|已)?(?:完成了|完成|做完了|刚弄完了)'+item+r'[，,]'+PREFIX+r'(?:把|将)?(?:它|这项待办|这项任务|该待办)(?:标记为完成|标记完成|设为完成|标为完成)',
+            r'(?:把|将)?'+locator+r'(?:标记为|标为|设为)(?:已)?完成']
+        en=[r'(?:I\s+(?:have\s+)?(?:finished|completed)\s+it,\s*so\s+)?'+EN_PREFIX+r'(?:set|mark)\s+'+en_target+r'\s+(?:to|as)\s+(?:done|complete|completed)']
+    compact=re.sub(r'\s+','',frame)
+    return (any(re.fullmatch(PREFIX+pattern+r'(?:吧)?[。！!？?]?',compact) for pattern in zh)
+        or any(re.fullmatch(EN_PREFIX+pattern+r'[.!?]?',frame,re.IGNORECASE) for pattern in en))
+
+
 def anchored_parts(text,operation,title):
     if not title or text.count(title)!=1:return None
     clocks=list(re.finditer(TIME,text));timed=operation=='reschedule' or operation=='create' and bool(clocks)
@@ -96,6 +134,7 @@ def anchored_parts(text,operation,title):
     for left,right in [('“','”'),('「','」'),('"','"'),("'","'")]:
         frame=frame.replace(left+'@item@'+right,'@item@')
     frame=re.sub(TIME,'@clock@',frame)
+    if structured_frame(frame,operation,timed):return label,clocks[0].group() if clocks else None
     zh=re.sub('^'+PREFIX,'',frame).strip();en=re.sub('^'+EN_PREFIX,'',frame,flags=re.IGNORECASE).strip().lower()
     common_zh=['@item@','@clock@','请','帮我','我','的','的时候','把','将','待办事项','待办任务','待办','这个待办','提醒事项','提醒','这个提醒','本地','一个','一条','一项','个','现有的','现有','已有的','已有','之前那个','之前关于','之前定好的','吧']
     common_en=['the','a','an','one','my','local','locally','existing','scheduled','to-do','todo','task','tasks','item','reminder','alert']
