@@ -13,6 +13,7 @@ from control.recovery.gate import RunLock
 
 LANES=['application-release','workbench-host','task-runner','executor','dialogue','planning',
        'development','local-models','image-generation','mail']
+EPHEMERAL_LOCKS={lane+'.lock' for lane in LANES}|{'bridge.instance.lock','memory.lock'}
 
 
 def digest(path):
@@ -44,7 +45,7 @@ def snapshot(roots,destination,*,managed_root,missing_projects=()):
         for label,root in roots.items():
             for source in sorted(root.rglob('*')):
                 reject_links(source)
-                if not source.is_file() or source.suffix=='.lock' or source.name.endswith(('-wal','-shm')):continue
+                if not source.is_file() or source.name in EPHEMERAL_LOCKS or source.name.endswith(('-wal','-shm')):continue
                 name=source.relative_to(root).as_posix();target=destination_for(destination,label,name)
                 target.parent.mkdir(parents=True,exist_ok=True)
                 before=source.stat()

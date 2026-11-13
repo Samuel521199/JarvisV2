@@ -1,0 +1,148 @@
+{
+  "schema": 1,
+  "date": "2026-11-13",
+  "environment": "Windows, same PC, E NTFS on USB disk1; C/D on disk0",
+  "source_checkpoint": "492985716ab1fe9c6f4536006f7948438e488571",
+  "repository": "https://github.com/Samuel521199/JarvisV2.git",
+  "canonical_root": "E:/Jarvis",
+  "runtime": {
+    "http": {
+      "/api/instance": 200,
+      "/api/chats": 200,
+      "/api/projects": 200,
+      "/api/commitments": 200,
+      "/api/model-library": 200,
+      "/settings": 200,
+      "/companion": 200
+    },
+    "counts": {
+      "chats": 500,
+      "project_root_rebound": true,
+      "library_response_keys": [
+        "assets",
+        "categories",
+        "schema",
+        "storage",
+        "total"
+      ]
+    },
+    "state": {
+      "active": {
+        "build": "c019b64ea9de2dfdbec375811a7c81cc2f1bb93fff31a5aa5002f752805ed3ae",
+        "epoch": 6,
+        "slot": "B",
+        "version": "0.1.8"
+      },
+      "epoch": 6,
+      "error": null,
+      "pending": null,
+      "pending_epoch": null,
+      "phase": "active",
+      "previous": {
+        "build": "91025515d9853676253d15376c9cbcc136dc3b3174ffd9cf375f06af2e903587",
+        "epoch": 4,
+        "slot": "A",
+        "version": "0.1.7"
+      },
+      "schema": 1
+    },
+    "public_model_catalog_available": true,
+    "proxy_build": "30b79127b81e04a57cdc8aae76f607ea38b499b3fa4d92abf0020700e17848bc",
+    "proxy_calls_in_24h": 0,
+    "controller_intact": true,
+    "model_calls_in_this_probe": 0
+  },
+  "worker": {
+    "passed": true,
+    "outputs": [
+      "EXTERNAL NTFS WORKER PROBE"
+    ],
+    "evidence": {
+      "backend": "windows-lpac-job",
+      "appcontainer_verified": true,
+      "network_capabilities": [],
+      "capabilities": [
+        "registryRead"
+      ],
+      "active_process_limit": 1,
+      "memory_limit_bytes": 268435456,
+      "peak_memory_bytes": 12681216,
+      "cpu_limit_seconds": 3,
+      "wall_limit_seconds": 8,
+      "elapsed_seconds": 0.4545
+    }
+  },
+  "migration_copy": {
+    "files": 15671,
+    "sqlite_integrity_ok": 110,
+    "destination": "E:\\Jarvis\\migration-stage",
+    "byte_exact": true,
+    "work_started": false,
+    "missing_projects": [
+      "SilverHairCharacter",
+      "PaK38"
+    ],
+    "operational_restore_complete": false,
+    "remaining": "Paths, machine-bound optional tools, restored controller identity and execution permissions require separate reconciliation before starting this copy."
+  },
+  "dependency_lockfiles_repaired": 14,
+  "recovery_payload_files_verified": 15219,
+  "recovery_payload_bytes_verified": 2871152861,
+  "private_reports": "E:/Jarvis/*.json and E:/Jarvis/backups/c-drive-archive/20261113-r1/e-verification.json",
+  "c_staging_cleanup": {
+    "removed": false,
+    "reason": "Automatic approval rejected the exact Remove-Item action with blocked by policy; no bypass attempted."
+  },
+  "codex_home": {
+    "implemented": true,
+    "executed": false,
+    "source": "C:/Users/samuel/.codex",
+    "planned": "E:/Jarvis/codex-home",
+    "requires": "All Codex app/CLI writers exited, offline copy, restart verification",
+    "active_clients_at_precheck": 26,
+    "originals_unchanged": true
+  },
+  "remaining": [
+    "Codex offline cutover and restart memory/chat verification",
+    "C task-owned staging cleanup blocked",
+    "D original paths retained until current Codex workspace is reopened from E",
+    "Optional native UI and multi-display not revalidated",
+    "USB E/G partitions share a single physical failure domain",
+    "Previously deleted SilverHairCharacter/PaK38 remain unavailable"
+  ],
+  "regressions": [
+    {
+      "pattern": "test_codex_home_migration.py",
+      "exit_code": 0
+    },
+    {
+      "pattern": "test_recovery_snapshot.py",
+      "exit_code": 0
+    },
+    {
+      "pattern": "test_assistant_commitments.py",
+      "exit_code": 0
+    }
+  ],
+  "regression_counts": {
+    "codex_migration": 6,
+    "recovery_snapshot": 7,
+    "assistant_commitments": 35,
+    "total": 48,
+    "failures": 0
+  },
+  "checks": {
+    "navigation": "passed",
+    "documents": "34 documents, 25 chapters, 46 diagrams, 4571 local links, 0 errors",
+    "architecture": "447 Python files, 0 errors",
+    "file_size_limit_mib": 50,
+    "file_size_check": "passed"
+  },
+  "legacy_entrypoints_redirected": 9,
+  "historical_backups": {
+    "passed": true,
+    "total_files": 20394,
+    "total_bytes": 3119779951,
+    "source_removed": false
+  }
+}

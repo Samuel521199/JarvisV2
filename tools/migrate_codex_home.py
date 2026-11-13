@@ -1,0 +1,165 @@
+"""One-shot offline Codex home relocation. Run only AFTER closing Codex.
+
+No model/account calls, no rewriting chat contents, no background watcher. The
+NTFS compatibility junction keeps existing shortcuts using the same new home.
+"""
+import argparse,hashlib,json,os,shutil,sqlite3,subprocess,time,zipfile
+from datetime import datetime,timezone
+from pathlib import Path
+
+
+def digest(path):
+    with path.open('rb') as stream:return hashlib.file_digest(stream,'sha256').hexdigest()
+
+
+def active_clients():
+    script="Get-Process | Where-Object { $_.ProcessName -eq 'codex' -or $_.ProcessName -eq 'codex-code-mode-host' -or ($_.ProcessName -eq 'ChatGPT' -and $_.Path -like '*OpenAI.Codex*') } | Select-Object ProcessName,Id | ConvertTo-Json -Compress"
+    result=subprocess.run(['powershell.exe','-NoProfile','-NonInteractive','-Command',script],capture_output=True,text=True,encoding='utf-8',timeout=15,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
+    if result.returncode:raise RuntimeError('Cannot verify Codex processes; keep original home')
+    return json.loads(result.stdout) if result.stdout.strip() else []
+
+
+def require_offline():
+    if active_clients():raise RuntimeError('Close all Codex app/CLI windows first, then run this migration again. No original files were removed.')
+
+
+def copy_home(source,destination,archive):
+    """Offline byte-checked copy with an independently verified ZIP backup."""
+    source=Path(source).resolve();destination=Path(destination).absolute();archive=Path(archive).absolute()
+    if destination.exists() or archive.exists():raise FileExistsError('Keep previous migration files; choose a fresh destination/archive')
+    if destination==source or destination.is_relative_to(source) or source.is_relative_to(destination):raise ValueError('Homes must be separate')
+    require_offline();destination.mkdir(parents=True);archive.parent.mkdir(parents=True,exist_ok=True)
+    files=[];omitted=[]
+    # Locks/caches do not carry memories and must not preserve live ownership.
+    ephemeral={'.sandbox','.sandbox-bin','.sandbox-secrets','.tmp','tmp','thread-writer-locks','mcp-oauth-locks','project-metadata-locks'}
+    for folder,dirs,names in os.walk(source,followlinks=False):
+        parent=Path(folder)
+        if parent==source:dirs[:]=[name for name in dirs if name not in ephemeral]
+        for name in dirs:
+            item=parent/name
+            if item.is_symlink() or item.is_junction():raise ValueError('Unexpected reparse directory; preserve original for manual review')
+        for name in names:
+            item=parent/name
+            if item.is_symlink():raise ValueError('Unexpected linked file; preserve original')
+            if name in {'auth.json.lock','auth.lock','session_index.jsonl.lock','.sqlite-maintenance.lock'} or name.endswith('-shm'):
+                omitted.append(item.relative_to(source).as_posix());continue
+            files.append(item)
+    total=sum(path.stat().st_size for path in files)
+    if shutil.disk_usage(destination).free<2*total+1024**3:
+        raise ValueError('Insufficient E space for copied home and compressed recovery backup')
+    records=[]
+    with zipfile.ZipFile(archive,'x',compression=zipfile.ZIP_DEFLATED,compresslevel=1,allowZip64=True) as backup:
+        for index,item in enumerate(files):
+            if index%100==0:require_offline();print(f'Copied {index}/{len(files)} files',flush=True)
+            before=item.stat();name=item.relative_to(source).as_posix();target=destination/name
+            target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(item,target)
+            value=digest(item)
+            if digest(target)!=value or (before.st_size,before.st_mtime_ns)!=(item.stat().st_size,item.stat().st_mtime_ns):
+                raise ValueError('Source changed; keep originals and retry only after Codex exits')
+            backup.write(item,name);records.append({'path':name,'bytes':before.st_size,'sha256':value})
+    require_offline()
+    with zipfile.ZipFile(archive) as backup:
+        if backup.testzip() is not None:raise ValueError('Recovery ZIP integrity failed')
+        for row in records:
+            with backup.open(row['path']) as stream:
+                if hashlib.file_digest(stream,'sha256').hexdigest()!=row['sha256']:
+                    raise ValueError('Recovery ZIP does not match the verified home')
+    databases=[]
+    for item in destination.rglob('*'):
+        if not item.is_file() or item.suffix not in {'.sqlite','.sqlite3','.db'}:continue
+        db=sqlite3.connect(item.as_uri()+'?mode=ro',uri=True)
+        try:
+            if db.execute('PRAGMA integrity_check').fetchone()[0]!='ok':raise ValueError('Copied Codex database integrity failed')
+        finally:db.close()
+        databases.append(item.relative_to(destination).as_posix())
+    report={'schema':1,'source':str(source),'destination':str(destination),'archive':str(archive),
+        'files':records,'sqlite_integrity_ok':databases,'omitted_ephemeral_files':omitted,
+        'omitted_rebuildable_directories':sorted(ephemeral),'copied_bytes':total,'copied_files':len(records),
+        'checked_utc':datetime.now(timezone.utc).isoformat(),'original_removed':False,'account_actions':0}
+    (destination.parent/'codex-migration-copy.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    return report
+
+
+def redirect_home(source,target,*,set_home=None):
+    """Swap only the default home; restore it if junction/environment setup fails."""
+    if source!=Path.home()/'.codex' or source.is_junction() or source.is_symlink():
+        raise ValueError('Invalid original home for cutover')
+    if not target.is_dir() or target.is_junction() or target.is_symlink():
+        raise ValueError('Expected verified regular destination directory')
+    require_offline()
+    retired=source.with_name('.codex-before-E-'+str(time.time_ns()))
+    if retired.parent!=Path.home() or retired.exists():raise ValueError('Invalid original-home retirement path')
+    source.rename(retired)
+    try:
+        require_offline()
+        script="New-Item -ItemType Junction -Path '"+str(source).replace("'","''")+"' -Target '"+str(target).replace("'","''")+"' | Out-Null"
+        result=subprocess.run(['powershell.exe','-NoProfile','-NonInteractive','-Command',script],capture_output=True,text=True,timeout=20)
+        if result.returncode or source.resolve()!=target.resolve():raise RuntimeError('Codex home junction could not be verified')
+        if set_home is not None:set_home(str(target))
+        else:
+            import winreg
+            with winreg.CreateKey(winreg.HKEY_CURRENT_USER,'Environment') as key:
+                winreg.SetValueEx(key,'CODEX_HOME',0,winreg.REG_SZ,str(target))
+    except BaseException:
+        if source.is_junction():source.rmdir()
+        if not source.exists():retired.rename(source)
+        raise
+    return retired
+
+
+def main():
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--check',action='store_true');parser.add_argument('--destination',type=Path,default=Path('E:/Jarvis/codex-home'))
+    args=parser.parse_args();source=Path.home()/'.codex';target=args.destination.absolute()
+    clients=active_clients()
+    if args.check:
+        print(json.dumps({'ready':not clients,'active_client_count':len(clients) if isinstance(clients,list) else 1,
+            'source':str(source),'destination':str(target),'originals_unchanged':True}));return
+    require_offline()
+    if source.is_junction() or source.is_symlink():raise ValueError('Existing home is already redirected; inspect it before proceeding')
+    if target.parent!=Path('E:/Jarvis'):raise ValueError('This cutover is restricted to the owner-authorized E project root')
+    if target.exists():raise FileExistsError('Final home already exists; originals retained')
+    configured_home=os.environ.get('CODEX_HOME')
+    if configured_home and Path(configured_home).resolve()!=source.resolve():
+        raise ValueError('A different CODEX_HOME needs reconciliation first; originals retained')
+    sqlite_env=os.environ.get('CODEX_SQLITE_HOME')
+    if sqlite_env and not Path(sqlite_env).resolve().is_relative_to(source.resolve()):
+        raise ValueError('A separate SQLite environment path needs reconciliation first; originals retained')
+    import tomllib
+    config=tomllib.loads((source/'config.toml').read_text(encoding='utf-8'))
+    configured=config.get('sqlite_home')
+    if configured and not Path(configured).resolve().is_relative_to(source.resolve()):
+        raise ValueError('A separate configured SQLite home needs explicit reconciliation; original home retained')
+    archive=target.parent/'backups'/('codex-original-'+datetime.now().strftime('%Y%m%d-%H%M%S')+'.zip')
+    # Failed/interrupted attempts retain a unique staging tree and originals;
+    # the final home is never a half-copied destination on the next retry.
+    stage=target.with_name(target.name+'.pending-'+str(time.time_ns()))
+    report=copy_home(source,stage,archive);require_offline()
+    # Do not split an explicit, separately configured SQLite home silently.
+    config=tomllib.loads((stage/'config.toml').read_text(encoding='utf-8'))
+    configured=config.get('sqlite_home')
+    if configured and not Path(configured).resolve().is_relative_to(source.resolve()):
+        raise ValueError('A separate configured SQLite home needs explicit reconciliation; original home retained')
+    if configured:
+        import re
+        path=target/Path(configured).resolve().relative_to(source.resolve())
+        text=(stage/'config.toml').read_text(encoding='utf-8')
+        text=re.sub(r'^sqlite_home\s*=.*$', 'sqlite_home = '+json.dumps(str(path)),text,flags=re.MULTILINE)
+        (stage/'config.toml').write_text(text,encoding='utf-8')
+    if target.exists():raise FileExistsError('Final home already exists; originals retained')
+    stage.rename(target);report['destination']=str(target)
+    retired=redirect_home(source,target)
+    report.update(original_retired=str(retired),junction_verified=True,code_home_set=str(target),
+        restart_verification_required=True)
+    # The raw recovery ZIP is verified before deleting only the exact retired
+    # home. The new junction must resolve to the authorized E location.
+    assert retired.parent==Path.home() and retired.name.startswith('.codex-before-E-') and source.resolve()==target.resolve()
+    try:shutil.rmtree(retired);report['original_removed']=True
+    except OSError as error:report['cleanup_pending']=str(error)
+    (target.parent/'codex-migration-result.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    print(json.dumps({'copied_files':report['copied_files'],'bytes':report['copied_bytes'],
+        'sqlite_databases':len(report['sqlite_integrity_ok']),'memory_home':str(target),'restart_codex_now':True,
+        'original_removed':report['original_removed']}))
+
+
+if __name__=='__main__':main()

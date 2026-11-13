@@ -146,6 +146,7 @@
 - [单机日用／开发分离与 Google 代理核验（2026-10-30）](#pc-environments-evidence)
 - [应用级准入、A/B 交接与恢复核验（2026-11-04）](#application-release-evidence)
 - [253 项架构修复、兼容与日用采用（2026-11-04，v0.1.2）](#architecture-repair-evidence)
+- [E盘外接迁移、恢复与离线记忆切换（2026-11-13）](#external-storage-evidence-20261113)
 - [明确请求覆盖、独立新样本与控制器组合验收（2026-11-09）](#commitment-coverage-evidence)
 - [新增语言样本、真实模型影子与旧版回退核验（2026-11-08起始）](#commitment-shadow-evidence)
 - [聊天待办受理与时间澄清核验（2026-11-08，开发工作树）](#chat-commitments-evidence)
@@ -3108,6 +3109,26 @@ JPF/r1 不改写；本轮是 V-TRI/V-CLC 的局部接线证据，完整场景仍
 
 <!-- architecture-repair-results:end -->
 
+
+<a id="external-storage-evidence-20261113"></a>
+## E盘外接迁移、恢复与离线记忆切换（2026-11-13）
+
+**结论：日用/开发及模型迁移可用；Codex记忆迁移和旧副本退役尚未闭环。** 源码检查点4929857后续本机修改，Windows同机，E为USB外接NTFS；原C/D为内置盘。操作入口统一见[本机布局](stack-project-layout.md#external-storage-local-layout)，机器摘要见[本轮记录](evidence/external-storage-20261113/result.json)。私人数据、原始逐文件清单、DPAPI材料仅留E盘，不加入Git。
+
+| 验收项 | 实测结果 | 能证明/不能证明 |
+|---|---|---|
+| 迁移数据核对 | 15,671文件，110 SQLite检查；凭据、开发授权、固定控制器/程序包核对 | 证明本次实际已有内容；不重建已删除的SilverHairCharacter/PaK38 |
+| E盘真实执行器 | LPAC已验证，无网络capability，1进程/256MiB，合成文本任务成功 | 沿原隔离执行器，不以迁盘放宽权限；G盘exFAT失败保留 |
+| 双服务与代理 | 日用v0.1.8 epoch6、开发在线；7个已认证读取入口200，代理模型目录可见 | 本次0次付费模型调用；未重做UI点击、3D渲染或多屏验收 |
+| 会话、路径和模型 | 644个日用内部owner核对，3个开发会话重绑；原项目路径转E | 聊天API返回500为分页上限，不作持久聊天总数；模型真实推理未重测 |
+| 完整恢复点 | 15,219文件/2,871,152,861字节逐文件SHA；99 SQLite；已从G副本恢复到独立C目录且不启动任务，再核验E副本 | 惰性恢复不是自动启用许可或整机灾备；E/G同盘不能防整盘损坏 |
+| 失败修复 | 初版过滤所有.lock误漏Cargo.lock；迁移启动前拒绝，补回14份依赖锁后启动；恢复RO校验改immutable，避免空WAL/SHM污染 | 旧恢复点仍是旧格式，不把它冒称完整可启动包；原文件和修复报告保留 |
+| Codex工具 | 活跃客户端拒绝；合成记忆/账号字节及SQLite保留、重现客户端拒绝、ZIP内容变化拒绝，另实测临时NTFS junction与环境设置失败回滚；6项工具测试通过，真实账号仅运行--check | 当前Codex仍写C盘，真实45GB量级数据尚未搬迁；junction/用户环境切换和重启必须另验 |
+| C盘清理 | 替代副本和独有记录核验完毕；精确临时目录Remove-Item被自动审批以blocked by policy拒绝 | 未执行删除，不报告已释放空间，不绕过策略 |
+
+`tools/recovery_snapshot.py`沿原RunLock取得工作通道独占，数据库用SQLite backup；新回归保留Cargo.lock/uv.lock，拒绝改字节、穿越路径、重叠目标、存活写入者，恢复不启动任务、不清STOP。`tools/migrate_codex_home.py`是独立显式工具，运行前后拒绝Codex写入者、独立暂存、SHA/ZIP/SQLite核对；原件只在校验及重定向成功后退休。不把目录重定向当沙箱或权限恢复证明。48项专项回归通过；历史备份20,394文件/3,119,779,951字节逐文件摘要通过（不含无关旧Jachin工程），9个旧D盘启动入口已转E，原入口另存E备份。回归结果保存在本轮机器记录及测试日志。
+
+下一道实际验收门：退出Codex→执行离线迁移→重启并从E打开工程→核对原会话/记忆/目标/设置和新写入落E→核对旧目录退役。C临时清理和D原件仍待处理。没有这一步，本节保持部分verified，不签收“全部数据均已离开C/D盘”。后续自然请求、知识收益、统一预算、多Bot和自愈依然按原实施跟踪推进。
 
 <!-- book-footer:start -->
 [返回工程主入口](../README.md) · [全书目录](../README.md#book-tree) · [上一章：系统自身模型与能力认知](self-model.md) · [下一章：架构决策、批判性评审与评分](decisions-review.md)

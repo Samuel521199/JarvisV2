@@ -1,5 +1,7 @@
 # 版本记录
 
+2026-11-13 E盘迁移（环境变更，未采用新源码包）：日用、开发、模型及恢复材料统一至E:/Jarvis；自包含Git仍连接Samuel521199/JarvisV2。双服务在线、真实NTFS LPAC验证通过；补回初版快照误漏的14份依赖锁并修复恢复校验产生空sidecar。新增显式离线Codex记忆迁移工具，真实切换待退出后执行；C临时副本删除被自动审批拒绝，D原件保留。[操作](docs/stack-project-layout.md#external-storage-local-layout)／[验收](docs/delivery-validation.md#external-storage-evidence-20261113)。
+
 2026-11-13 开发边界修复（尚未日用采用）：升级准备记录改为绑定真实候选包清单，构建/验证期间源码改变会拒绝新准备记录；停止日用在原发布锁内核对expected_epoch/expected_build，旧操作不再停住新基线。保留原恢复/STOP规则，新增并发与编辑中变更反例；后续源码检查点、完整恢复、受理与知识收益、统一资源及多Bot/自愈仍按原路线推进。[实施跟踪](docs/decisions-review.md#review-followthrough-20261113)／[验证](docs/delivery-validation.md#upgrade-guards-20261113)。
 
 ## v0.1.9 · 2026-11-13（文档方案更新，未日用采用）

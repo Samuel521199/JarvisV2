@@ -57,6 +57,7 @@
   - [外部 Worker 生命周期（开发实现，2026-11-08）](#worker-process-lifetime)
   - [日用安装、开发与恢复控制器](#daily-managed-installation)
     - [一台电脑的使用、开发、升级与回退](#single-pc-local-workflow)
+    - [E盘外接日用、开发与Codex记忆（2026-11-13）](#external-storage-local-layout)
 - [可选原生薄壳与双窗口](#native-presence-prototype)
 <!-- book-nav:end -->
 
@@ -893,6 +894,27 @@ D:\Jarvis-dev\StartJarvisDev.bat
 `apply-update`默认顺序为：核对原候选/源码/代际 → 核对原准入和相容性 → 日用正常停止 → 独立小型备份 → adopt → install-launcher → 复用固定启动器确认服务。开发进程不会因该顺序重启。没有新增定时任务、自动拉取、依赖安装或持续监控；只读状态和本次短时采样不属于后台常驻监管。
 
 恢复或更换安装路径后，使用`JarvisPC.bat repair-link --daily-data <新日用user-data>`，它只接受双方已存在且完全一致的DPAPI开发授权，拒绝不同令牌、不同共享策略或尚在运行的代理；保存原profile后仅修改日用路径。未知新授权不自动生成。启动还复核完整授权、路径和代理/工作台端口，拒绝误连另一份日用数据。冻结代理包丢失时需先审阅和测试，再显式采用代理；常规启动不采用开发源码变化。完整故障历史、两次真实模型连通与当前版本见[验收](delivery-validation.md#single-pc-20261112)。
+
+<a id="external-storage-local-layout"></a>
+#### E盘外接日用、开发与Codex记忆（2026-11-13）
+
+**Jarvis迁移 verified；Codex迁移工具 implemented、实际切换待离线执行。** 主人最终选择全部放E盘；E为外接硬盘NTFS分区，G为同一硬盘exFAT分区。G实测无法满足原LPAC执行器的持久ACL要求，因此不以关闭隔离适配G盘，不格式化任何分区。当前主入口和路径如下；前文D盘路径保留作历史，不能继续作为新的启动入口。
+
+| 内容 | 当前权威路径 | 状态 |
+|---|---|---|
+| 源码、独立Git历史、开发数据 | `E:/Jarvis/dev`、其下`user-data` | 自包含Git克隆；远端为Samuel521199/JarvisV2，不再依赖D盘common Git目录 |
+| 日用安装和业务数据 | `E:/Jarvis/runtime`、其下`user-data` | v0.1.8、epoch 6；18282在线，开发18283及代理18482在线 |
+| 模型库、已存在的外部项目 | `E:/Jarvis/models`、`E:/Jarvis/projects` | 路径及会话owner核对，原凭据、授权和冻结代码包保持 |
+| 恢复点和历史备份 | `E:/Jarvis/backups` | 恢复点15,219文件摘要通过；历史D盘备份另行归档并核对 |
+| Codex记忆、会话、SQLite与设置 | 计划`E:/Jarvis/codex-home` | 当前仍在C盘；须退出Codex后执行根目录`MigrateCodexMemory.cmd`，重启验收后才可称迁完 |
+
+根目录`StartJarvis.bat`开日用，`StartJarvisDev.bat`开开发，更新/回退仍委托原开发工具和固定控制器。当前日用包不因迁盘自动采用最新源码修复；共用已安装Python仍在本机，未迁移系统应用或安装新依赖。断开外接盘前正常停止日用/开发并退出Codex，避免数据库写入中断；盘符应保持E。E/G是同一物理盘，分区间副本不能防整块外接盘故障。
+
+Codex操作顺序：先完成本轮交付并**完全退出所有Codex应用、CLI和app-server**，再双击`E:/Jarvis/MigrateCodexMemory.cmd`，期间不要重新打开Codex。工具先核对无写入者，以独立暂存目录复制，逐文件SHA和ZIP内容再次校验，检查SQLite完整性；确认后设置用户`CODEX_HOME`及C盘旧路径的NTFS兼容junction，再清理精确退休目录。失败保留原件和失败暂存，不覆盖重试。新路径下的账号文件只作本机不透明保留，不扩账号权限或调用模型。重启后打开`E:/Jarvis/dev`，核对原会话、记忆、目标、设置和新增会话持久化；**工具测试通过不等于这次真实迁移和重启验收通过**。
+
+本流程依照[官方状态位置](https://learn.chatgpt.com/docs/config-file/config-advanced#config-and-state-locations)与[环境变量](https://learn.chatgpt.com/docs/config-file/environment-variables#core-locations)说明处理CODEX_HOME和SQLite，不只复制rollout文本。另设的sqlite_home/外部数据库位置会拒绝静默拆分。工具为一次显式离线迁移，无自动停进程或常驻等待；当前聊天无法一边保持数据库写入，一边声称完成可靠搬迁。
+
+D盘原件暂留供退役核对，当前Codex聊天仍绑定旧工作目录，后续请从E盘工程继续。C盘本轮8.6GB左右临时恢复/演练副本已有E盘替代和独有元数据归档，但删除操作被自动审批拒绝，当前尚未释放该空间；`.codex`也未删除。原缺失项目、未备份环境、历史UNKNOWN均保留原边界，不重放任务。技术与失败证据见[迁移验收](delivery-validation.md#external-storage-evidence-20261113)。
 
 <a id="native-presence-prototype"></a>
 ## 可选原生薄壳与双窗口

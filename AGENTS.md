@@ -1,6 +1,6 @@
 # AI 协作与文档维护约定
 
-本文件适用于 D:/Jarvis 独立新工程。系统、开发者和用户当前要求优先；本文件不扩大权限。
+本文件适用于本仓库 JarvisV2 独立新工程；本机当前权威源码为 E:/Jarvis/dev（2026-11-13迁移）。系统、开发者和用户当前要求优先；本文件不扩大权限。
 
 先读根 [README.md](README.md)、[维护规范](docs/MAINTENANCE.md) 与 `docs/manifest.json`，再定位权威章节。当前已有确定性核心与受限自主研发种子，实际范围以[当前验收](docs/delivery-validation.md#session-folder-evidence)为准；不得因图、目录或 H 盘旧报告存在而声称完整目标已实现。
 

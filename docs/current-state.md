@@ -1,5 +1,7 @@
 # 当前真实状态
 
+2026-11-13外接盘迁移：当前权威源码`E:/Jarvis/dev`，日用`E:/Jarvis/runtime`，模型库`E:/Jarvis/models`，恢复材料`E:/Jarvis/backups`；日用v0.1.8 epoch6与开发同时在线，真实LPAC Worker通过。Codex记忆实际仍在C盘，离线迁移工具已准备，须退出/迁移/重启验收；C临时删除被自动审批拒绝，D原件暂留，不能称已全量腾空C/D。[布局与操作](stack-project-layout.md#external-storage-local-layout)／[验收、失败及边界](delivery-validation.md#external-storage-evidence-20261113)。
+
 2026-11-13后续开发：已按[六项实施跟踪](decisions-review.md#review-followthrough-20261113)启动改造。首先修复候选检查期间源码变化导致的准备记录错绑，以及旧升级操作可能停止新基线的竞争条件；[验证与边界](delivery-validation.md#upgrade-guards-20261113)。日用仍为原v0.1.8，完整备份恢复、受理/知识收益、统一资源、多Bot/自愈目标未因局部修复而签收。
 
 2026-11-13 源码 v0.1.9 为[大型平台记忆优化方案](long-term-memory-scale-optimization.md#platform-memory-scope)及文档收尾更新，状态 proposed，未构建或安装本轮日用候选。VERSION、发布锁与 manifest 的版本是源码版本，不改写下方既有日用验收。Redis 热记忆、平台重排和梦境整理的实施/性能验收仍待完成；[收尾证据](evidence/memory-docs-closeout-20261113.md#memory-docs-closeout-checks)仅证明文档与提交检查。

@@ -54,3 +54,10 @@ class RecoverySnapshotTests(unittest.TestCase):
         self.capture();restore(self.base/'backup',self.base/'restored')
         self.assertEqual(list((self.base/'restored').rglob('*-wal')),[])
         self.assertEqual(list((self.base/'restored').rglob('*-shm')),[])
+
+    def test_dependency_lockfiles_are_payload_not_ephemeral_leases(self):
+        (self.assets/'Cargo.lock').write_text('reviewed dependency graph')
+        (self.assets/'uv.lock').write_text('reviewed Python graph')
+        self.capture();restore(self.base/'backup',self.base/'restored')
+        self.assertEqual((self.base/'restored/assets/Cargo.lock').read_text(),'reviewed dependency graph')
+        self.assertEqual((self.base/'restored/assets/uv.lock').read_text(),'reviewed Python graph')
