@@ -169,15 +169,24 @@ def interpret(text, operation, title, reference, *, target_title=None, active_co
         and parts[0].lower() in ('这个提醒','这项待办','这个待办','this reminder','this task'))
     if not parts or not (literal(parts[0],title,target=operation!='create') or unique_reference):
         parts=anchored_parts(text,operation,title)
-    # A directly requested title may contain literal book/quotation marks.
-    # The full request must still match; quoted commands and forwarded prose do not.
+    # Only an exact literal item inside a fully matched request is content.
+    # Words such as "解释" in a task title aren't a negation of the request.
+    # Whole quoted/forwarded instructions still do not match a direct frame.
     guarded=text
     if parts and literal(parts[0],title,target=operation!='create'):
         start=text.find(parts[0])
-        if start>=0:guarded=text[:start]+re.sub(r'[“”"「」]','',parts[0])+text[start+len(parts[0]):]
+        if start>=0:guarded=text[:start]+'@item@'+text[start+len(parts[0]):]
     if re.search(UNSAFE,guarded) or re.search(EN_UNSAFE,guarded,re.IGNORECASE):
         return {**result,'mode':'NOT_REQUEST','message':'原文含否定、引用或条件，不作为直接待办指令。'}
-    if re.search(COMPOUND,text,re.IGNORECASE) or len(list(re.finditer(TIME,text)))>1:
+    compound_text=text
+    if operation=='create' and parts and parts[1] is None and literal(parts[0],title):
+        # An untimed, explicitly added single item can have a conjunction in
+        # its literal name (e.g. a book title). Sequential/multiple action
+        # markers are still reviewed; saving a to-do never executes its text.
+        compound_text=guarded
+        if re.search(r'[;；]|然后|并且|同时|顺便|还要|另外|\b(?:then|also)\b',parts[0],re.IGNORECASE):
+            compound_text=text
+    if re.search(COMPOUND,compound_text,re.IGNORECASE) or len(list(re.finditer(TIME,text)))>1:
         return {**result,'message':'请求含多个动作，需保留完整要求并核对，不能自动合并为一项提醒。'}
     if operation=='create':
         if parts and literal(parts[0],title):

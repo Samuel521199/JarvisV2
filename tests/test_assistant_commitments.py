@@ -340,5 +340,24 @@ class AssistantCommitments(unittest.TestCase):
         cancel=self.turn('取消这个提醒',operation='cancel',target=row['id'])
         self.assertEqual(assistant.commitment_from_turn(self.root,cancel)['receipt']['current']['status'],'CANCELLED')
 
+    def test_request_keywords_inside_literal_item_do_not_negate_direct_todo(self):
+        for text,title in [('帮我记个待办：解释实验报告','解释实验报告'),
+                           ('Please add a to-do item: read War and Peace.','read War and Peace'),
+                           ('帮我记个待办：阅读“如果这是一本书”','阅读“如果这是一本书”')]:
+            with self.subTest(text=text):
+                row=assistant.commitment_from_turn(self.root,self.turn(text,title=title))['receipt']['current']
+                self.assertEqual(row['title'],title);self.assertIsNone(row['due_at'])
+
+    def test_literal_item_does_not_hide_outer_negation_or_extra_actions(self):
+        title='解释实验报告'
+        for text in ['不要帮我记个待办：解释实验报告','如果有空帮我记个待办：解释实验报告',
+                     '“帮我记个待办：解释实验报告”','帮我记个待办：解释实验报告，然后删除附件']:
+            with self.subTest(text=text):
+                self.assertNotEqual(assistant.commitment_from_turn(self.root,self.turn(text,title=title))['mode'],'APPLIED')
+        for text,title in [('帮我记个待办：整理文件，然后删除附件','整理文件，然后删除附件'),
+                           ('Add a to-do item: read notes and then delete the archive.','read notes and then delete the archive')]:
+            self.assertEqual(assistant.commitment_from_turn(self.root,self.turn(text,title=title))['mode'],'REVIEW')
+        self.assertFalse(commitments.exists(self.root))
+
 
 if __name__=='__main__':unittest.main()
