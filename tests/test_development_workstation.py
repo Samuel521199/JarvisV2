@@ -132,6 +132,27 @@ class WorkstationTests(unittest.TestCase):
 
     def test_preparation_binds_built_manifest_and_later_edit_invalidates(self):self.exercise_prepare()
 
+    def test_controller_preparation_preserves_application_ready_record_and_binds_both_baselines(self):
+        source,names=self.prepare_source();before={'epoch':7,'phase':'active','active':{'build':'a'*64}}
+        pointer={'schema':1,'build':'old'};built={}
+        oldready=self.dev/'state/workstation-update.json';oldready.write_text('{"prior":"preserve"}')
+        def release(root,action,*options):
+            if action=='build':
+                archive=Path(options[options.index('--archive')+1]);built['id']=build(source,names,archive,'v1');return {'build':built['id']}
+            if action=='validate':return {'approval':{'receipt':{'report':{'passed':True}}}}
+            return {}
+        with patch.object(workstation,'tracked_runtime',return_value=names),patch.object(workstation.subprocess,'check_output',return_value=b''),patch.object(workstation,'state',return_value=before),patch.object(workstation,'release',side_effect=release),patch('control.controller_pin.read',return_value=pointer),patch('host.application_controller.promote',return_value={'committed':True}) as promote:
+            workstation.prepare(self.daily,self.dev,source,controller_only=True)
+            ready=json.loads((self.dev/'state/workstation-controller-update.json').read_text())
+            from sdk.protocol import digest
+            self.assertEqual(ready['expected_controller'],digest(pointer));self.assertEqual(ready['expected_build'],'a'*64)
+            self.assertEqual(json.loads(oldready.read_text()),{'prior':'preserve'})
+            workstation.apply_controller(self.daily,self.dev,reviewed_source=True)
+            promote.assert_called_once_with(self.daily,built['id'],expected_epoch=7,expected_build='a'*64,expected_controller=digest(pointer),reviewed_source=True)
+            (source/'VERSION').write_text('v2')
+            with self.assertRaisesRegex(ValueError,'Source changed'):workstation.apply_controller(self.daily,self.dev,reviewed_source=True)
+            self.assertEqual(promote.call_count,1)
+
     def test_newer_status_is_not_stopped_by_stale_apply(self):
         before={'phase':'active','epoch':2,'active':{'build':'a'*64}}
         newer={'phase':'active','epoch':3,'active':{'build':'b'*64}}

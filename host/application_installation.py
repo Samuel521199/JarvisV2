@@ -29,6 +29,13 @@ def install(root, installation, package, *, port=18282):
     selected=Applications(root).state()['active']
     if not selected or selected['build']!=build:
         raise CoreError('application_installation','Only the adopted active build can install the daily launcher')
+    from sdk.controller_bootstrap import embedded
+    path=installation/'JarvisLaunch.py'
+    if path.is_file() and embedded(path.read_bytes()) is not None:
+        from control.controller_pin import read
+        return read(root)
+    if (root/'deployment/controller-protocol.json').exists():
+        raise CoreError('controller_protocol','Repair the independent controller; legacy installation cannot replace it')
     base=root/'deployment/controllers';base.mkdir(exist_ok=True)
     controller=base/build
     reject_links(controller)
@@ -53,22 +60,8 @@ def install(root, installation, package, *, port=18282):
     # Embed the inventory digest in the tiny root bootstrap: changed controller
     # code is rejected before any of it is imported. Same-user OS compromise is
     # outside this integrity check's threat model.
-    bootstrap='''"""Pinned Jarvis recovery-controller bootstrap (no user data migration)."""
-from pathlib import Path
-import hashlib,json,runpy,sys
-base=Path(__file__).resolve().parent
-root=base/'user-data'
-controller=root/'deployment/controllers'/BUILD
-inventory=(controller/'controller-files.json').read_bytes()
-if hashlib.sha256(inventory).hexdigest()!=EXPECTED:raise RuntimeError('Recovery controller inventory changed')
-for name,sha in json.loads(inventory).items():
-    path=(controller/name).resolve()
-    if not path.is_relative_to(controller.resolve()) or hashlib.sha256(path.read_bytes()).hexdigest()!=sha:
-        raise RuntimeError('Recovery controller code changed: '+name)
-sys.path.insert(0,str(controller))
-sys.argv=[str(controller/'apps/workbench/launch.py'),'--data-root',str(root),'--port',str(PORT),*sys.argv[1:]]
-runpy.run_path(str(controller/'apps/workbench/launch.py'),run_name='__main__')
-'''.replace('BUILD',repr(build)).replace('EXPECTED',repr(expected)).replace('PORT',str(port))
+    from sdk.controller_bootstrap import legacy
+    bootstrap=legacy(build,port,expected)
     launcher=LAUNCHER_TEMPLATE
     if b'JarvisLaunch.py' not in launcher:raise CoreError('application_installation','Unsupported launcher template')
     backup=root/'deployment/launcher-backups'/uuid.uuid4().hex;backup.mkdir(parents=True)
@@ -77,7 +70,7 @@ runpy.run_path(str(controller/'apps/workbench/launch.py'),run_name='__main__')
         if path.exists():shutil.copyfile(path,backup/name)
     # Save the original before atomic replacement; no source checkout is reset.
     try:
-        for name,raw in (('JarvisLaunch.py',bootstrap.encode()),('StartJarvis.bat',launcher)):
+        for name,raw in (('JarvisLaunch.py',bootstrap),('StartJarvis.bat',launcher)):
             target=installation/name;pending=target.with_suffix(target.suffix+'.pending')
             reject_links(pending);pending.write_bytes(raw);pending.replace(target)
     except Exception:

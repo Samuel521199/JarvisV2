@@ -50,6 +50,12 @@ def roots(development):
 
 def controller(root):
     """Verify every installed controller byte before executing its entry point."""
+    from sdk.controller_bootstrap import embedded
+    bootstrap=root.parent/'JarvisLaunch.py'
+    if bootstrap.is_file() and embedded(bootstrap.read_bytes()) is not None:
+        from control.controller_pin import read
+        meta=read(root)
+        return Path(meta['controller']),meta['port']
     meta=json.loads((root/'deployment/launcher.json').read_text(encoding='utf-8'))
     folder=Path(meta['controller']).resolve();reject_links(folder)
     if folder.parent!=root/'deployment/controllers':raise ValueError('Controller is outside the installation')
@@ -138,7 +144,7 @@ def backup(root,destination):
         return {'folder':str(destination),'files':len(files),'sqlite_integrity_ok':databases}
 
 
-def prepare(root,development,source):
+def prepare(root,development,source,*,controller_only=False):
     source=source.resolve();names=tracked_runtime(source)
     # Never silently ship only the tracked half of a newly added runtime feature.
     untracked=subprocess.check_output(['git','-C',str(source),'ls-files','--others','--exclude-standard','-z']).decode().split('\0')
@@ -146,7 +152,12 @@ def prepare(root,development,source):
     if any(name and name.split('/')[0] in TOPS for name in untracked):
         raise ValueError('Review/register new runtime files before packaging; untracked runtime files were not silently omitted')
     frozen={name:sha(source/name) for name in names}
-    expected=state(root)['epoch'];archive=development/'state/workstation-releases'/(uuid.uuid4().hex+'.zip')
+    before=state(root);expected=before['epoch'];controller_token=None
+    if controller_only:
+        from control.controller_pin import read
+        from sdk.protocol import digest
+        controller_token=digest(read(root))
+    archive=development/'state/workstation-releases'/(uuid.uuid4().hex+'.zip')
     archive.parent.mkdir(exist_ok=True)
     built=release(root,'build','--source',source,'--archive',archive,'--version',(source/'VERSION').read_text().strip())
     ident=built['build']
@@ -163,8 +174,22 @@ def prepare(root,development,source):
     record={'schema':1,'daily_data':str(root),'source':str(source),'build':ident,'expected_epoch':expected,
         'created_utc':datetime.now(timezone.utc).isoformat(),'files':candidate_files,
         'validation':checked['approval']['receipt']['report']}
-    write_json(development/'state/workstation-update.json',record)
+    if controller_only:
+        from control.controller_pin import read
+        from sdk.protocol import digest
+        if digest(read(root))!=controller_token or state(root)!=before:raise ValueError('Controller or application baseline changed during preparation')
+        record.update(kind='controller',expected_controller=controller_token,expected_build=before['active']['build'])
+    write_json(development/('state/workstation-controller-update.json' if controller_only else 'state/workstation-update.json'),record)
     return {'prepared_build':ident,'expected_epoch':expected,'validation':record['validation'],'daily_restarted':False}
+
+
+def apply_controller(root,development,*,reviewed_source=False):
+    record=json.loads((development/'state/workstation-controller-update.json').read_text(encoding='utf-8'))
+    if record.get('kind')!='controller':raise ValueError('Expected a controller-only preparation')
+    require_prepared(root,record)
+    from host.application_controller import promote
+    return promote(root,record['build'],expected_epoch=record['expected_epoch'],expected_build=record['expected_build'],
+        expected_controller=record['expected_controller'],reviewed_source=reviewed_source)
 
 
 def require_prepared(root,record):
@@ -228,7 +253,7 @@ def apply(root,development):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('action',choices=['status','repair-link','start-daily','start-development','restart-development','stop-development','prepare-update','apply-update','rollback'])
+    parser.add_argument('action',choices=['status','repair-link','start-daily','start-development','restart-development','stop-development','prepare-update','apply-update','prepare-controller','apply-controller','repair-controller','rollback'])
     parser.add_argument('--development-data',type=Path,default=SOURCE/'user-data')
     parser.add_argument('--daily-data',type=Path);parser.add_argument('--source',type=Path,default=SOURCE)
     parser.add_argument('--open-browser',action='store_true')
@@ -248,10 +273,15 @@ def main():
             from host.development_runtime import start,stop
             if args.action in {'restart-development','stop-development'}:stop(dev,18283)
             result=start(dev,daily,18283) if args.action!='stop-development' else {'development_stopped':True}
-        elif args.action=='prepare-update':
-            if not args.reviewed_source:parser.error('prepare-update requires --reviewed-source after review')
-            result=prepare(daily,dev,args.source)
+        elif args.action in {'prepare-update','prepare-controller'}:
+            if not args.reviewed_source:parser.error('Preparation requires --reviewed-source after review')
+            result=prepare(daily,dev,args.source,controller_only=args.action=='prepare-controller')
         elif args.action=='apply-update':result=apply(daily,dev)
+        elif args.action=='apply-controller':result=apply_controller(daily,dev,reviewed_source=args.reviewed_source)
+        elif args.action=='repair-controller':
+            from host.application_controller import repair
+            from control.controller_pin import read
+            result=repair(daily,expected_controller=read(daily)['build'])
         else:
             # rollback uses current data and compatibility checks; no business restore.
             before=state(daily)

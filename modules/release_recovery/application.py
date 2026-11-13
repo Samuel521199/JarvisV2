@@ -355,6 +355,15 @@ class Applications:
             state = self.state()
             if any(value and value['build'] == ident for value in (state['active'], state['previous'], state['pending'])):
                 raise CoreError('application_in_use', 'Active, previous and in-flight versions cannot be retired')
+            from sdk.controller_bootstrap import embedded
+            launcher=self.root.parent/'JarvisLaunch.py';reject_links(launcher)
+            pointer=embedded(launcher.read_bytes()) if launcher.exists() else None
+            if pointer is not None:
+                self.approvals.verify({k:v for k,v in pointer.items() if k!='signature'},pointer.get('signature'))
+                if pointer.get('runtime_source_build')==ident and not restore:
+                    raise CoreError('application_in_use','The installed independent controller still depends on this source package')
+            elif (self.root/'deployment/controller-protocol.json').exists():
+                raise CoreError('application_in_use','Repair the controller registration before retiring code')
             record = self.record(ident)
             original, retired = self.base / 'packages' / ident, self.base / 'retired' / ident
             source, destination = (retired, original) if restore else (original, retired)
