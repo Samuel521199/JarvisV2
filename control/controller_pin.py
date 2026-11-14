@@ -8,8 +8,8 @@ from control.paths import reject_links
 from sdk.controller_bootstrap import embedded,legacy
 from sdk.protocol import CoreError,decode,read_json
 
-PROTOCOL=3
-SUPPORTED_PROTOCOLS=(1,2,3)
+PROTOCOL=4
+SUPPORTED_PROTOCOLS=(1,2,3,4)
 FIELDS={'schema','controller_protocol','build','runtime_source_build','controller','controller_inventory_sha256',
     'data_root','port','generation','policy_anchor_build','policy_sha256','capsule_id','recovery_archive','recovery_sha256','launcher_backup','signature'}
 

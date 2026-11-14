@@ -14,7 +14,7 @@ from sdk.protocol import CoreError,canonical,decode,digest
 
 KEY='conditional_advice'
 VERSION=2
-SUPPORTED=(1,2)
+SUPPORTED=(1,2,3)
 BAD={'NEEDS_CORRECTION','INVALIDATED'}
 
 
@@ -40,7 +40,7 @@ class PlanningAdvice:
         if any(p.exists() for p in (root.parent/'JarvisLaunch.py',root/'deployment/launcher.json',root/'deployment/controller-protocol.json')):
             from control.controller_pin import read
             record=read(root)
-            return 2 if record.get('controller_protocol',0)>=3 else 1
+            return 3 if record.get('controller_protocol',0)>=4 else (2 if record.get('controller_protocol',0)>=3 else 1)
         return VERSION
 
     def allowed(self,scope,provider,enabled):
@@ -63,7 +63,7 @@ class PlanningAdvice:
         if not self.db.one("SELECT value FROM meta WHERE key='completion_schema'"):return False
         return bool(self.db.one("""SELECT g.goal_id FROM goal_context g
             JOIN goal_plans p ON p.id=g.goal_id JOIN task_completion c ON c.task_id=p.task_id
-            WHERE g.scope=? AND g.goal_id!=? AND json_extract(g.view,'$.conditional_advice.version') IN (1,2)
+            WHERE g.scope=? AND g.goal_id!=? AND json_extract(g.view,'$.conditional_advice.version') IN (1,2,3)
             AND json_extract(c.body,'$.state')='NEEDS_CORRECTION'
             AND (json_extract(c.body,'$.feedback.kind')='reject' OR EXISTS(
                 SELECT 1 FROM json_each(c.body,'$.checks') criterion WHERE json_extract(criterion.value,'$.status')='failed'))
@@ -73,19 +73,25 @@ class PlanningAdvice:
                 SELECT 1 FROM json_each(g.view,'$.conditional_advice.families') f WHERE f.value=?)) LIMIT 1""",
             (scope,goal_id,ref['source_id'],ref['source_revision'],ref['source_digest'],transfer or '')))
 
-    def offer(self,plan,scope,enabled,selectors):
+    def offer(self,plan,scope,enabled,selectors,*,version=2):
+        if type(version) is not int or version not in SUPPORTED:raise CoreError('goal_context_changed','Unknown advice selection version')
         if not enabled or not plan['routes']:return None
         providers=list(dict.fromkeys(r['id'] for r in plan['routes']));resolve=self.resolver(scope,providers,enabled)
         sources=[];seen=set()
         for part in (members(scope) or [scope]):
             candidates=Knowledge(self.db).search(part,providers[0],plan['request']['goal']+' '+plan['request']['input_text'],methods=True)[0]
             for candidate in candidates:
+                if len(seen)>=12:break
                 ident=candidate['evidence']['source_id']
                 if ident in seen:continue
                 seen.add(ident);row=resolve(ident)
                 if row:
                     ref={'source_id':ident,'source_revision':row['revision'],'source_digest':text_digest(row['text'])}
-                    try:transfer=family(parse(row['text']))
+                    try:
+                        method=parse(row['text']);transfer=family(method)
+                        if version==3:
+                            from modules.task_resource.advice_scope import eligible
+                            if not eligible(method['requires'],selectors):continue
                     except CoreError:transfer=None
                     if not self.held(scope,ref,plan['id'],transfer):sources.append(row)
                 if len(seen)>=12:break
@@ -96,7 +102,7 @@ class PlanningAdvice:
         for method in result['methods']:
             refs[method['source_id']]=method['source_revision']
             for ref in method['evidence']:refs[ref['source_id']]=ref['revision']
-        return {'version':VERSION,'binding':binding(plan),'selectors':selectors,'receipt':result['receipt'],
+        return {'version':version,'binding':binding(plan),'selectors':selectors,'receipt':result['receipt'],
             'dependencies':[{'id':i,'revision':r} for i,r in sorted(refs.items())],
             'families':{m['source_id']:family(m) for m in result['methods']}}
 
@@ -132,6 +138,9 @@ class PlanningAdvice:
                     or bundle['receipt']!=prior['receipt'] or bundle['families']!=prior['families']):
                     raise ValueError('Inherited dependency receipt changed')
                 return []
+            if bundle['version']==3:
+                from modules.task_resource.advice_scope import selectors as advice_selectors
+                if selectors!=advice_selectors(plan,3):raise ValueError('Purpose conditions changed')
             receipt=bundle['receipt'];refs=receipt['methods']
             if (set(receipt)!={'version','context_digest','methods'} or not isinstance(refs,list)
                 or not 1<=len(refs)<=2 or len({r['source_id'] for r in refs})!=len(refs)):
@@ -141,6 +150,9 @@ class PlanningAdvice:
             sources=[resolve(r['source_id']) for r in refs]
             if any(r is None for r in sources):raise ValueError('Source no longer authorized')
             result=select(sources,selectors,resolve,limit=2,max_bytes=3000)
+            if bundle['version']==3:
+                from modules.task_resource.advice_scope import eligible
+                if any(not eligible(m['requires'],selectors) for m in result['methods']):raise ValueError('Unscoped advice')
             if result['receipt']!=receipt or any(self.held(context['scope'],r,plan['id'],family(m)) for r,m in zip(refs,result['methods'])):
                 raise ValueError('Advice or counterevidence changed')
             if bundle['families']!={m['source_id']:family(m) for m in result['methods']}:
@@ -239,6 +251,9 @@ class PlanningAdvice:
     def projection(self,plan,context,selectors):
         if not context or KEY not in context['view']:return None
         bundle=context['view'][KEY];current=False
+        if bundle.get('version')==3:
+            from modules.task_resource.advice_scope import selectors as current_selectors
+            selectors=current_selectors(plan,3)
         try:self.checked(plan,context,selectors);current=True
         except CoreError:pass
         stamp=bundle.get('dispatch',{});calls=[]

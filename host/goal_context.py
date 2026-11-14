@@ -10,23 +10,16 @@ from modules.task_resource.plans import Plans, planning_key
 from sdk.protocol import CoreError, canonical, decode
 
 
-def advice_selectors(plan):
-    selectors={'channel':'task','planner':'goal-plan-v1','input_kind':'text' if plan['request']['input_text'] else 'empty'}
-    from modules.task_resource import quote_checks,quote_request
-    try:source=quote_checks.parse_source(plan['request']['input_text'])
-    except CoreError:return selectors
-    selectors.update(input_schema=source['schema'],currency=source['currency'],
-        max_price_minor=source['max_price_minor'],max_delivery_days=source['max_delivery_days'])
-    try:selectors['quote_requirements_ready']=quote_request.analyze(plan['request']['goal'],plan['request']['input_text'])['ready']
-    except CoreError:selectors['quote_requirements_ready']=False
-    return selectors
-
+def advice_selectors(plan,version=2):
+    from modules.task_resource.advice_scope import selectors
+    return selectors(plan,version)
 
 def attach_advice(core,plan,view,scope,enabled):
     from host.planning_advice import PlanningAdvice,KEY
-    offered=PlanningAdvice(core.db).offer(plan,scope,enabled,advice_selectors(plan))
+    version=PlanningAdvice.writer_version(core.root)
+    offered=PlanningAdvice(core.db).offer(plan,scope,enabled,advice_selectors(plan,version),version=version)
     if offered:
-        offered['version']=PlanningAdvice.writer_version(core.root)
+        offered['version']=version
         view[KEY]=offered
     return view
 
@@ -53,7 +46,7 @@ def advice(core,ident,destinations=None):
     scope_for(core.root,row['scope'])
     from host.planning_advice import PlanningAdvice
     plan=Plans(core.db).get(ident)
-    return PlanningAdvice(core.db).checked(plan,row,advice_selectors(plan),destinations)
+    return PlanningAdvice(core.db).checked(plan,row,advice_selectors(plan,row['view'].get('conditional_advice',{}).get('version',2)),destinations)
 
 
 def snapshot(core, scope, enabled, routes, query=''):

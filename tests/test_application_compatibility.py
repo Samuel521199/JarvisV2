@@ -226,7 +226,7 @@ class ApplicationCompatibility(unittest.TestCase):
         self.assertEqual(require_compatible(self.root,self.app.record(new)['path'])['required']['goal_advice_schema'],1)
 
     def test_unknown_goal_advice_version_is_rejected(self):
-        new=self.candidate('new-goal-unknown',goal_advice=True);self.goal_advice_context(version=3)
+        new=self.candidate('new-goal-unknown',goal_advice=True);self.goal_advice_context(version=4)
         with self.assertRaises(CoreError):require_compatible(self.root,self.app.record(new)['path'])
 
     def test_boolean_goal_advice_declaration_is_rejected(self):
@@ -255,6 +255,6 @@ class ApplicationCompatibility(unittest.TestCase):
         package=Path(self.app.record(old)['path']);marker=package/'config/goal-advice-compatibility.json'
         marker.write_text('{"schema":1,"goal_advice_schema":2}')
         self.assertEqual(require_compatible(self.root,package)['required']['goal_advice_schema'],2)
-        for value in [True,3,0,'2']:
+        for value in [True,4,0,'2']:
             marker.write_text(json.dumps({'schema':1,'goal_advice_schema':value}))
             with self.subTest(value=value),self.assertRaises(CoreError):require_compatible(self.root,package)
