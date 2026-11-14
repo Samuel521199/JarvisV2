@@ -144,6 +144,15 @@ class GoalAdviceBudget(unittest.TestCase):
         self.assertEqual(result['status'],'REVIEW');self.assertEqual(primary.prompts,[base]);self.assertEqual(backup.prompts,[base])
         self.assertEqual(len(self.calls(ident)),2);self.assertEqual(self.omitted(ident)[0]['max_prompt_bytes'],envelope(base))
 
+    def test_smaller_backup_cannot_block_original_prompt_that_primary_accepts(self):
+        base=self.baseline();self.seed()
+        def smaller(catalog,primary,**options):return [{**r,'max_prompt_bytes':envelope(base)-1} for r in fallback_routes(catalog,primary,**options)]
+        with patch('host.goals.fallback_routes',side_effect=smaller):ident=self.create()
+        before=Plans(self.core.db).get(ident)['routes'];result,p=self.plan(ident)
+        self.assertEqual(result['status'],'REVIEW');self.assertEqual(p.prompts,[base])
+        self.assertEqual(Plans(self.core.db).get(ident)['routes'],before)
+        self.assertEqual(len(self.calls(ident)),1);self.assertEqual(self.omitted(ident)[0]['base_message_bytes'],envelope(base))
+
     def test_assembly_without_call_can_be_omitted_and_is_not_counted_as_exposure(self):
         base=self.baseline();self.limit(envelope(base));self.seed();ident=self.create();plan=Plans(self.core.db).get(ident)
         PlanningAdvice(self.core.db).assembly(plan,goal_context.get(self.core,ident),ident,'assembled but never sent')

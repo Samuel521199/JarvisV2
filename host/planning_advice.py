@@ -146,7 +146,7 @@ class PlanningAdvice:
         bundle=context['view'][KEY]
         if bundle.get('mode')=='inherited':return prompt
         self.checked(plan,context,bundle['selectors'])
-        limit=min(r.get('max_prompt_bytes',50000) for r in plan['routes'])
+        limits=[r.get('max_prompt_bytes',50000) for r in plan['routes']];limit=min(limits)
         full_bytes=message_bytes([{'role':'user','content':prompt}])
         if full_bytes<=limit:return prompt
         base_bytes=message_bytes([{'role':'user','content':base_prompt}]);key=planning_key(plan)
@@ -157,8 +157,8 @@ class PlanningAdvice:
             # Any recorded attempt binds this planning key, even rejection or an
             # acknowledged unknown. RoutedModels must retain its original digest.
             if tx.execute('SELECT 1 FROM model_calls WHERE run_id=? LIMIT 1',(key,)).fetchone():return prompt
-            if base_bytes>limit:
-                raise CoreError('model_input_limit','Original planning context exceeds the frozen route budget')
+            if base_bytes>max(limits):
+                raise CoreError('model_input_limit','Original planning context exceeds every frozen route budget')
             original=canonical(context['view']);view=dict(context['view']);view.pop(KEY)
             if tx.execute('UPDATE goal_context SET view=? WHERE goal_id=? AND view=?',
                     (canonical(view),plan['id'],original)).rowcount!=1:
@@ -166,6 +166,7 @@ class PlanningAdvice:
             self.db.event(tx,None,'goal.advice_omitted',{'goal_id':plan['id'],'run_id':key,'reason':'prompt_budget',
                 'source_ids':[r['source_id'] for r in bundle['receipt']['methods']],
                 'full_message_bytes':full_bytes,'base_message_bytes':base_bytes,'max_prompt_bytes':limit,
+                'largest_route_prompt_bytes':max(limits),
                 'input_digest':digest({'prompt':base_prompt,'schema':'goal-plan'})})
         return base_prompt
 
