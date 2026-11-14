@@ -1,0 +1,71 @@
+{
+  "rows": [
+    {
+      "pattern": "disabled-control",
+      "tests": 1,
+      "failures": 1,
+      "errors": 0,
+      "expected_failure": true
+    },
+    {
+      "pattern": "test_goal_advice_budget.py",
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "seconds": 23.949,
+      "passed": true
+    },
+    {
+      "pattern": "test_goal_advice.py",
+      "tests": 20,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "seconds": 45.158,
+      "passed": true
+    }
+  ],
+  "source_unchanged": true,
+  "all_positive_passed": true,
+  "unique_positive_test_count": 32,
+  "positive_test_ids": [
+    "test_goal_advice_budget.GoalAdviceBudget.test_assembly_without_call_can_be_omitted_and_is_not_counted_as_exposure",
+    "test_goal_advice_budget.GoalAdviceBudget.test_every_existing_receipt_status_preserves_dependencies_and_input_binding",
+    "test_goal_advice_budget.GoalAdviceBudget.test_exact_base_budget_omits_unused_advice_and_current_task_still_executes",
+    "test_goal_advice_budget.GoalAdviceBudget.test_full_prompt_exact_boundary_retains_advice_and_one_byte_less_omits",
+    "test_goal_advice_budget.GoalAdviceBudget.test_inherited_dependencies_cannot_be_dropped_by_a_new_child_budget",
+    "test_goal_advice_budget.GoalAdviceBudget.test_omission_is_durable_unknown_does_not_retry_and_ack_keeps_original_context",
+    "test_goal_advice_budget.GoalAdviceBudget.test_ordinary_fact_dependencies_are_preserved_when_optional_advice_is_omitted",
+    "test_goal_advice_budget.GoalAdviceBudget.test_original_oversize_stops_before_reserving_call_or_erasing_advice",
+    "test_goal_advice_budget.GoalAdviceBudget.test_smaller_backup_cannot_block_original_prompt_that_primary_accepts",
+    "test_goal_advice_budget.GoalAdviceBudget.test_smallest_frozen_fallback_budget_is_used_without_removing_fallback",
+    "test_goal_advice_budget.GoalAdviceBudget.test_stale_view_cannot_undo_concurrent_redaction_during_omission",
+    "test_goal_advice_budget.GoalAdviceBudget.test_unicode_quotes_newlines_use_native_message_envelope_not_raw_prompt_length",
+    "test_goal_advice.GoalAdvice.test_acknowledging_unknown_cost_does_not_erase_dispatch_evidence",
+    "test_goal_advice.GoalAdvice.test_advice_is_automatically_assembled_but_not_promoted_or_authorized",
+    "test_goal_advice.GoalAdvice.test_atomic_prompt_assembly_does_not_resurrect_redacted_context",
+    "test_goal_advice.GoalAdvice.test_chat_and_goal_detail_share_the_same_advice_receipt_projection",
+    "test_goal_advice.GoalAdvice.test_cleanup_discovers_forgotten_evidence_used_only_as_advice",
+    "test_goal_advice.GoalAdvice.test_copy_renaming_renewal_and_new_observation_ids_do_not_escape_hold",
+    "test_goal_advice.GoalAdvice.test_dependency_invalidation_is_not_a_new_negative_vote_and_review_recovers",
+    "test_goal_advice.GoalAdvice.test_disabled_and_missing_context_do_not_forward_advice",
+    "test_goal_advice.GoalAdvice.test_effect_boundary_rechecks_source_after_task_approval",
+    "test_goal_advice.GoalAdvice.test_explicit_amend_rebinds_and_keeps_historical_receipt",
+    "test_goal_advice.GoalAdvice.test_failure_after_other_goal_was_planned_blocks_its_pending_effects",
+    "test_goal_advice.GoalAdvice.test_fallback_requires_every_destination_to_allow_evidence",
+    "test_goal_advice.GoalAdvice.test_inherited_plan_keeps_original_advice_dependency_without_injecting_it",
+    "test_goal_advice.GoalAdvice.test_missing_evidence_dependency_inventory_cannot_be_admitted",
+    "test_goal_advice.GoalAdvice.test_no_advice_preserves_existing_model_prompt_prefix_exactly",
+    "test_goal_advice.GoalAdvice.test_result_score_is_recorded_and_late_rejection_holds_future_same_revision",
+    "test_goal_advice.GoalAdvice.test_unknown_and_changed_conditions_do_not_match",
+    "test_goal_advice.GoalAdvice.test_unknown_mode_cannot_be_treated_as_supported_advice",
+    "test_goal_advice.GoalAdvice.test_withdrawal_after_planning_blocks_admission_before_grant",
+    "test_goal_advice.GoalAdvice.test_withdrawal_before_planning_sends_no_model_request"
+  ],
+  "earlier_genuine_regression": {
+    "log": "before-fix.txt",
+    "cause": "small backup limit incorrectly blocked a usable primary route",
+    "fixed": true
+  }
+}

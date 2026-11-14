@@ -1,0 +1,19 @@
+{
+  "scope": "technical envelope/call-ledger verification only",
+  "source_sha256": {
+    "adapters/models/native.py": "a4849620ce0985646653eb8f3ae1ecd554668d17ff2bb4d910758b6f86da2674",
+    "host/goals.py": "a2aea8a39212acc063a6e28e37112f23e7326bc82005f407dddab441d90082e8",
+    "host/planning_advice.py": "ecddd4be3e1b4209ddf228b9ef8a4ea6acfecc39c3da466299ac22d24bff6c8f",
+    "tests/test_goal_advice_budget.py": "4ec01b45b3fa1629b450ab3c3355daa4d832f237fd81c149621aa076af5ee00d"
+  },
+  "route_budget_rule": "If full prompt exceeds the smallest route limit, omit unused advice whenever the original prompt fits at least one original route; reject only when no original route can fit. Never erase existing calls.",
+  "baseline_commit": "6e57dc9a01d596e74177b14f793025a24bcf81e2",
+  "predictions": [
+    "Exact native envelope budget admits the original prompt after unused advice is omitted",
+    "A full fitting prompt keeps its advice",
+    "No existing or inherited receipt dependencies are discarded",
+    "No cloud requests, quota expansion or production application adoption"
+  ],
+  "quality_gain": null,
+  "token_savings": null
+}

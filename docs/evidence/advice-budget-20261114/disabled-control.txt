@@ -1,0 +1,18 @@
+test_exact_base_budget_omits_unused_advice_and_current_task_still_executes (test_goal_advice_budget.GoalAdviceBudget.test_exact_base_budget_omits_unused_advice_and_current_task_still_executes) ... FAIL
+
+======================================================================
+FAIL: test_exact_base_budget_omits_unused_advice_and_current_task_still_executes (test_goal_advice_budget.GoalAdviceBudget.test_exact_base_budget_omits_unused_advice_and_current_task_still_executes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\Jarvis\dev\tests\test_goal_advice_budget.py", line 69, in test_exact_base_budget_omits_unused_advice_and_current_task_still_executes
+    result,provider=self.plan(ident);self.assertEqual(result['status'],'REVIEW');self.assertEqual(provider.prompts,[base])
+                                     ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'WAITING' != 'REVIEW'
+- WAITING
++ REVIEW
+
+
+----------------------------------------------------------------------
+Ran 1 test in 1.691s
+
+FAILED (failures=1)

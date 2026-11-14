@@ -216,6 +216,7 @@ MemoryView 只授权本次读取与装配，不授予工具执行权限。实际
 | version=1、binding、selectors | 严格版本及已知字段；绑定完整请求、规划路由、能力目录、generation和planning_round，selectors由宿主取得 |
 | receipt、dependencies、families | 原条件卡回执、卡与原始证据的完整修订列表；families按条件/摘要/反例形成，不因改名、续期、修订号或复制观察改变 |
 | dispatch | run_id及与既有RoutedModels一致的prompt/schema摘要；仅装配记录，实际派发需匹配model_calls中的持久回执 |
+| goal.advice_omitted事件 | 无当前规划调用时省略未派发建议；保存原因prompt_budget、来源ID、全量/原提示消息字节、冻结路由最小/最大上限和最终input_digest，不存正文或形成新使用依赖；已有调用/继承依赖不可删 |
 | observation | task_id、完成指纹、state、condition_score、score_scope、coverage_complete、review_required；causal_contribution为null |
 | mode=inherited | 已审阅返工/持续安排的依赖继承，附parent_goal/parent_binding；递归最多8层，同域同权限重验，不把旧建议注入新模型输入 |
 | detail.planning_advice | 当前有效性、提供引用、真实模型回执及usage、结果观察；automatic_promotion=false，independent_successes=null，execution_authorized=false |

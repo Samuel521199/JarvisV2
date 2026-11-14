@@ -1,0 +1,125 @@
+{
+  "scope": "final technical checks before new paired model trial; no model request in this audit",
+  "source_commit": "f0bff039b153e3530bb017f358d8607ed12ebd89",
+  "frozen_source_hashes": {
+    "adapters/models/native.py": true,
+    "host/goals.py": true,
+    "host/planning_advice.py": true,
+    "tests/test_goal_advice_budget.py": true
+  },
+  "package_runtime_sources_match": {
+    "host/goals.py": true,
+    "host/planning_advice.py": true,
+    "adapters/models/native.py": true
+  },
+  "disaster_copy_readback": {
+    "installation/JarvisLaunch.py": true,
+    "installation/StartJarvis.bat": true,
+    "user-data/deployment/launcher.json": true,
+    "user-data/deployment/controller-protocol.json": true,
+    "user-data/private/application-release.dpapi": true,
+    "controller.zip": true,
+    "activation.json": true,
+    "user-data/deployment/control.sqlite3": true,
+    "runtime-source.zip": true
+  },
+  "checks": {
+    "daily_unchanged": true,
+    "grant_and_proxy_unchanged": true,
+    "old_window_matches_report": true,
+    "rolling_change_matches_ledger": true,
+    "no_calls_since_refresh": true
+  },
+  "daily_instance": {
+    "application_build": "c019b64ea9de2dfdbec375811a7c81cc2f1bb93fff31a5aa5002f752805ed3ae",
+    "application_epoch": 9,
+    "boot_id": "4552fe438ad5f1e406d9270c",
+    "environment": "stable",
+    "family_version": "1.0.0",
+    "presence_protocol": 2,
+    "root_digest": "8cc158ee4a5679f150274a3c358bab6cb1fd3ed989534aa73464bcb45a9b2170",
+    "service": "jarvis-workbench"
+  },
+  "proxy_status": {
+    "allowed_providers": [
+      "vertex"
+    ],
+    "build_id": "30b79127b81e04a57cdc8aae76f607ea38b499b3fa4d92abf0020700e17848bc",
+    "calls_in_24h": 62,
+    "daily_call_limit": 64,
+    "external_tools_exposed": false,
+    "production_memory_exposed": false,
+    "profile": "development-bridge"
+  },
+  "rolling_window": {
+    "seconds": 86400,
+    "count_at_refresh": 63,
+    "count_now": 62,
+    "expired_old_calls": 1,
+    "new_calls": 0
+  },
+  "earlier_audit_failure": "An equality check wrongly treated calls_in_24h as permanent. Actual status dropped naturally as old ledger entries expired; source, grants and policy did not change. This check now correlates both windows with the unchanged timestamped call ledger.",
+  "commands": [
+    {
+      "command": [
+        "python",
+        "-B",
+        "tools/sync_doc_navigation.py",
+        "--root",
+        "."
+      ],
+      "exit_code": 0,
+      "stdout": "OK navigation: 0 updated\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "-B",
+        "tools/check_docs.py",
+        "--root",
+        "."
+      ],
+      "exit_code": 0,
+      "stdout": "OK documents=34 chapters=25 diagrams=46 local_links=4730 errors=0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "-B",
+        "tools/check_architecture.py",
+        "--root",
+        "."
+      ],
+      "exit_code": 0,
+      "stdout": "{\"python_files\": 454, \"host_cycle_modules\": 20, \"errors\": []}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "-B",
+        "tools/check_repo_size.py",
+        "--limit",
+        "50"
+      ],
+      "exit_code": 0,
+      "stdout": "candidate files total: 144.9 MB\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "-I",
+        "-B",
+        "E:/Jarvis/runtime/JarvisLaunch.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout": "[Jarvis] Already running with this data folder: http://127.0.0.1:18282/\n",
+      "stderr": ""
+    }
+  ],
+  "passed": true
+}
