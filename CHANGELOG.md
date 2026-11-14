@@ -16,7 +16,9 @@
 
 2026-11-13 开发边界修复（尚未日用采用）：升级准备记录改为绑定真实候选包清单，构建/验证期间源码改变会拒绝新准备记录；停止日用在原发布锁内核对expected_epoch/expected_build，旧操作不再停住新基线。保留原恢复/STOP规则，新增并发与编辑中变更反例；后续源码检查点、完整恢复、受理与知识收益、统一资源及多Bot/自愈仍按原路线推进。[实施跟踪](docs/decisions-review.md#review-followthrough-20261113)／[验证](docs/delivery-validation.md#upgrade-guards-20261113)。
 
-## v0.1.9 · 2026-11-13（文档方案更新，未日用采用）
+## v0.1.9 · 2026-11-13起（后续开发，应用未日用采用）
+
+2026-11-14补目标规划条件经验、实际模型派发/用量回执、原Completion评价和迟到反证回接；不自动晋升事实或放宽执行授权。共用目标/聊天展示并保留无建议任务原提示；当前/历史新元数据阻断不理解格式的旧版。日用独立控制器已晋升协议2/generation2，冻结评价不变，应用仍v0.1.8/epoch9且无重启；D盘r2控制增量读回通过。三域真实模型各一次通过有限条件，不证明长期获益；提示剩余预算回退及相容应用基线待补。[实际测试、失败与边界](docs/delivery-validation.md#goal-planning-advice-evidence-20261114)。
 
 新增[大型陪聊平台长期记忆优化方案](docs/long-term-memory-scale-optimization.md#platform-memory-scope)：分层记忆、关键事实压缩、Embedding/Reranker 与指令评测、Redis 热状态、后台梦境整理、聊天/状态异步更新、纠正删除和成本验收。方案标记 proposed，未实现为云端多租户服务，也未证明质量、成本或延迟改善。独立 JarvisV2 与原 JachinV2 的工程/验收归属分别说明。
 

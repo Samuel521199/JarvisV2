@@ -1,0 +1,138 @@
+{
+  "id": "fresh-current-worksheet",
+  "domain": "learning",
+  "goal_id": "goal-d492f8e3544b42aca4597b11ee783591",
+  "planning_status": "REVIEW",
+  "proposal": {
+    "input_text": "{\"pairs\":[[7,13],[16,9],[24,11]],\"schema\":\"jarvis.practice-input.v1\"}",
+    "questions": [],
+    "schema": "jarvis.goal-plan.v1",
+    "steps": [
+      {
+        "capability": "plugin.advice-practice.v1",
+        "expected": "输出包含 exercises 数组的 jarvis.practice-result.v1 JSON 练习题与准确乘积答案",
+        "source": "input",
+        "title": "生成乘法练习题及答案"
+      }
+    ],
+    "summary": "调用练习生成工具读取当前乘法数对输入，计算乘积并输出练习与准确答案 JSON，随后由宿主自动保存结果。"
+  },
+  "plan_passed": true,
+  "planning_advice": {
+    "version": 1,
+    "current": true,
+    "offered": [
+      {
+        "method_digest": "0446962e413608005783b7fafefae686a2e5a924f6793059aadec267c33958ac",
+        "source_digest": "588de936bcb5e1d18141f0e673753139a3d0d4b43a17d13989dcae59f6fd66f4",
+        "source_id": "source-8605771c63ef4d5dace039c5add3d344",
+        "source_revision": 1
+      },
+      {
+        "method_digest": "e90a12a0c4f878693c7f9f19643c38bff12c3f4d925d74cb9c7080dc1ee51d0a",
+        "source_digest": "64a22152c8c0a1a057c3edb9db276dc17b10e5de287b3a462e14df6a30db99b7",
+        "source_id": "source-4e43b3361a104ed08ea7ac38f81b7c71",
+        "source_revision": 1
+      }
+    ],
+    "model_calls": [
+      {
+        "id": "call-c4bb5336f4514c5693df59a87b303476",
+        "status": "SUCCEEDED",
+        "usage": {
+          "completion_tokens": 144,
+          "prompt_tokens": 2480,
+          "reasoning_in_completion": false,
+          "reasoning_tokens": 345,
+          "total_tokens": 2969
+        }
+      }
+    ],
+    "model_dispatched": true,
+    "observation": {
+      "causal_contribution": null,
+      "condition_score": 100.0,
+      "coverage_complete": true,
+      "fingerprint": "c56c0819a244a0c2e93d049621f5a2450c9cc80c5b14a71cd564fea4ef40574b",
+      "review_required": false,
+      "score_scope": "declared_conditions_only",
+      "state": "VERIFIED",
+      "task_id": "task-5921cd01512545a792e928efa1024d36"
+    },
+    "inherited_from": null,
+    "advisory_only": true,
+    "execution_authorized": false,
+    "automatic_promotion": false,
+    "independent_successes": null,
+    "causal_contribution": null
+  },
+  "elapsed_seconds": 6.835,
+  "task_id": "task-5921cd01512545a792e928efa1024d36",
+  "task_status": "SUCCEEDED",
+  "completion": {
+    "version": "completion-1.1.0",
+    "task_id": "task-5921cd01512545a792e928efa1024d36",
+    "state": "VERIFIED",
+    "fingerprint": "c56c0819a244a0c2e93d049621f5a2450c9cc80c5b14a71cd564fea4ef40574b",
+    "acceptance": {
+      "revision": 1,
+      "rules": {
+        "coverage": "complete",
+        "criteria": [
+          {
+            "check": "text_equals",
+            "expected": "{\"exercises\":[{\"a\":7,\"answer\":91,\"b\":13},{\"a\":16,\"answer\":144,\"b\":9},{\"a\":24,\"answer\":264,\"b\":11}],\"schema\":\"jarvis.practice-result.v1\"}",
+            "id": "exact-artifact",
+            "step_id": "step-1"
+          }
+        ],
+        "requirements": [
+          {
+            "criterion_ids": [
+              "exact-artifact"
+            ],
+            "id": "frozen-current-artifact",
+            "kind": "literal",
+            "text": "Frozen synthetic current artifact and source values"
+          }
+        ]
+      }
+    },
+    "checks": [
+      {
+        "id": "exact-artifact",
+        "step_id": "step-1",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "score_scope": "declared_conditions_only",
+    "outcome_id": "outcome-16b5504c6100fe23c424c12bebd6f008",
+    "requirement_coverage": {
+      "version": "declared-requirements-1",
+      "state": "SATISFIED",
+      "requirements": [
+        {
+          "criterion_ids": [
+            "exact-artifact"
+          ],
+          "id": "frozen-current-artifact",
+          "kind": "literal",
+          "text": "Frozen synthetic current artifact and source values",
+          "status": "passed",
+          "reason": "linked_checks"
+        }
+      ],
+      "complete": true,
+      "scope": "explicitly_declared_requirements",
+      "semantic_goal_verified": false
+    },
+    "evidence_ready": true,
+    "feedback": null,
+    "method": null,
+    "method_available": false,
+    "feedback_history": [],
+    "assessment_history": []
+  },
+  "passed": true
+}

@@ -15,6 +15,7 @@
   - [开源提取器、编纂器与路由的适配要求（proposed）](#memory-extractor-adapter)
   - [MemoryView 与知识候选的必要语义（proposed）](#memory-view-contract)
   - [条件经验候选与使用前回执（conditional-advice-1）](#conditional-advice-contract)
+  - [目标规划建议与反证记录（goal-advice-schema1）](#goal-planning-advice-contract)
 - [接口与数据契约](#interfaces)
   - [任务与动作分离](#interfaces-2)
   - [事件信封](#interfaces-3)
@@ -90,20 +91,20 @@
 <a id="controller-pointer-contract"></a>
 ## 独立控制器指针与恢复契约
 
-**implemented，控制器协议1；限已审阅第一方源码和同Windows用户。** 根`JarvisLaunch.py`中的固定模板携带签名记录，是原子提交权威；`deployment/launcher.json`是可修复缓存。旧schema1入口保持兼容，登记协议下限后不能重新安装旧入口。操作流程归[独立晋升](evolution-release.md#independent-controller-runtime)，实测归[验收](delivery-validation.md#controller-promotion-evidence-20261114)。
+**implemented，当前控制器协议2；限已审阅第一方源码和同Windows用户。** 根`JarvisLaunch.py`中的固定模板携带签名记录，是原子提交权威；`deployment/launcher.json`是可修复缓存。未登记协议下限时兼容旧schema1入口；登记后受支持入口拒绝重新安装旧入口。协议2读取目标建议依赖，必须先晋升控制器再写入新格式。操作流程归[独立晋升](evolution-release.md#independent-controller-runtime)，实测归[验收](delivery-validation.md#controller-promotion-evidence-20261114)。
 
 | 字段／文件 | 语义与校验 |
 |---|---|
-| schema=2、controller_protocol=1、generation | 严格字段、整数类型与已知协议；generation随控制器指针提交递增，与应用epoch分开 |
+| schema=2、controller_protocol=1或2、generation | 当前产生协议2；仅在下限允许时读取协议1，拒绝未知协议；generation随控制器指针提交递增，与应用epoch分开 |
 | build、controller_inventory_sha256 | 控制器全部文件摘要清单的SHA256，两者必须相同；包括冻结的旧评价策略，所以不等于运行来源包摘要 |
 | runtime_source_build、policy_anchor_build、policy_sha256 | 分别为独立准入的运行来源、评价策略原锚点与实际冻结策略摘要；启动时复核来源未退役、准入签名和策略仍有效 |
 | controller、data_root、port | 安装内直属控制器目录、固定数据根与端口；拒绝链接、越界路径、额外文件和内容变化 |
 | capsule_id、recovery_archive、recovery_sha256、launcher_backup | 签名绑定的恢复副本和事件位置；恢复只能重建expected_controller原身份，改用新目录而不覆盖坏目录 |
 | signature | 既有DPAPI密钥保护的本机HMAC；不在日志导出密钥，不新增模型发放权限 |
-| controller-protocol.json | 协议下限登记；未知版本拒绝，不自动降低或覆盖 |
+| controller-protocol.json | 严格schema1/minimum1或2；晋升可单调提高1→2，repair只补登记、不降低；旧协议1版本化控制器拒绝下限2，未知版本拒绝 |
 | registration_pending | 原子根入口已经提交但派生登记未完；读取根入口实际记录，显式修复缓存，不谎称晋升失败并反向切旧 |
 
-晋升同时固定当前应用epoch/build与原控制器指针摘要；提交前复查包和实际数据需求。应用生命周期仍走原Applications事务；控制器恢复不回放旧业务数据库、不清除STOP、不恢复已撤回的来源准入。损坏元数据只能由匹配签名事件及已知身份恢复；没有证据时保持拒绝。此契约不代表完整跨业务库迁移或任意代码热更新已实现。
+晋升同时固定当前应用epoch/build与原控制器指针摘要；提交前复查包和实际数据需求。应用生命周期仍走原Applications事务；控制器恢复不回放旧业务数据库、不清除STOP、不恢复已撤回的来源准入。损坏元数据只能由匹配签名事件及已知身份恢复；没有证据时保持拒绝。下限只约束受支持、版本化入口及可信当前CLI；古老未版本化schema1代码并不读取新下限，同用户手工执行旧程序或整体回滚控制/数据目录不在此保证内。灾备必须先覆盖最新相配增量，不能从D旧副本直接启动。此契约不代表完整跨业务库迁移或任意代码热更新已实现。
 
 <a id="personal-assistant-contracts"></a>
 ## 个人助手核心接口（设计）
@@ -203,7 +204,24 @@ MemoryView 只授权本次读取与装配，不授予工具执行权限。实际
 | 用途隔离 | 保留格式不进入普通source检索/向量返回/派生事实/历史快照；来源编辑页仍可查看用户自有资料。历史JSON条件卡也不能借新事实或新代码被当作已核验事实使用 |
 | 发布与兼容 | 有当前/历史条件卡时，新控制器拒绝没有明确读取声明的目标；新版本未知则拒绝。已安装旧冻结控制器不自动获得该判断，正式写入和采用须先完成控制器/兼容恢复链验收 |
 
-调用者收到候选，仍须依据当前原任务核对适用性，实际使用前重验；该接口不自动将候选接入普通聊天或执行器，不注册新Bot、模型调用、反馈晋升或数据库迁移。未接自动任务消费和普通界面卡片，属于后续工作，不能据此签收自主学习。
+调用者收到候选，仍须依据当前原任务核对适用性，实际使用前重验；该接口不自动将候选接入普通聊天或执行器，不注册新Bot、模型调用、反馈晋升或数据库迁移。初次只读阶段未接自动任务消费和普通界面；后续已补下节目标规划建议及共用目标/聊天展示，仍不能据此签收自主学习。
+
+<a id="goal-planning-advice-contract"></a>
+### 目标规划建议与反证记录（goal-advice-schema1）
+
+**implemented，未日用采用。** 元数据存于原goal_context.view的conditional_advice；原Core schema7及原事实/资料表不变。普通聊天和独立可执行经验通路保持原边界。[运行语义](knowledge-learning.md#goal-planning-advice-runtime)／[验证](delivery-validation.md#goal-planning-advice-evidence-20261114)。
+
+| 字段/端口 | 语义 |
+|---|---|
+| version=1、binding、selectors | 严格版本及已知字段；绑定完整请求、规划路由、能力目录、generation和planning_round，selectors由宿主取得 |
+| receipt、dependencies、families | 原条件卡回执、卡与原始证据的完整修订列表；families按条件/摘要/反例形成，不因改名、续期、修订号或复制观察改变 |
+| dispatch | run_id及与既有RoutedModels一致的prompt/schema摘要；仅装配记录，实际派发需匹配model_calls中的持久回执 |
+| observation | task_id、完成指纹、state、condition_score、score_scope、coverage_complete、review_required；causal_contribution为null |
+| mode=inherited | 已审阅返工/持续安排的依赖继承，附parent_goal/parent_binding；递归最多8层，同域同权限重验，不把旧建议注入新模型输入 |
+| detail.planning_advice | 当前有效性、提供引用、真实模型回执及usage、结果观察；automatic_promotion=false，independent_successes=null，execution_authorized=false |
+| config/goal-advice-compatibility.json | 严格{"schema":1,"goal_advice_schema":1}；当前或历史元数据存在即要求支持，未知版本拒绝；来源卡被忘记不能抹去该要求 |
+
+明确条件失败或仍有效的reject在同域暂停相同内容家族的自动提供和相关待执行工作。只有依赖失效、上游撤回或普通工具故障不能被累计成新的独立方法反例；现有Completion反馈撤回/重评沿原流程进行。新建议不提供执行权限，准入与每步执行继续核验原目标、来源、能力、预算及取消状态。
 
 <a id="interfaces"></a>
 ## 接口与数据契约

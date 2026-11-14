@@ -1,0 +1,138 @@
+{
+  "id": "fresh-price-delay",
+  "domain": "comparison",
+  "goal_id": "goal-9bc2294ffeac4c8cb1af1d1fbbbb25d2",
+  "planning_status": "REVIEW",
+  "proposal": {
+    "input_text": "{\"currency\":\"CNY\",\"max_delivery_days\":6,\"max_price_minor\":13500,\"offers\":[{\"delivery_days\":9,\"id\":\"M47\",\"price_minor\":6500,\"source\":\"new:M47\"},{\"delivery_days\":4,\"id\":\"N38\",\"price_minor\":11200,\"source\":\"new:N38\"},{\"delivery_days\":3,\"id\":\"P26\",\"price_minor\":12800,\"source\":\"new:P26\"}],\"schema\":\"jarvis.quote-input.v1\"}",
+    "questions": [],
+    "schema": "jarvis.goal-plan.v1",
+    "steps": [
+      {
+        "capability": "plugin.advice-quote.v1",
+        "expected": "输出包含 eligible_ids、selected_id 与 selected_source 的 JSON 文本，由宿主自动保存最终结果",
+        "source": "input",
+        "title": "筛选符合条件的最低报价并保留来源"
+      }
+    ],
+    "summary": "读取报价输入数据，依据预算（不超过135元）与交期（不超过6天）筛选有效报价，选出符合条件的最低价报价并保留来源引用，最终结果由系统自动保存。"
+  },
+  "plan_passed": true,
+  "planning_advice": {
+    "version": 1,
+    "current": true,
+    "offered": [
+      {
+        "method_digest": "e90a12a0c4f878693c7f9f19643c38bff12c3f4d925d74cb9c7080dc1ee51d0a",
+        "source_digest": "64a22152c8c0a1a057c3edb9db276dc17b10e5de287b3a462e14df6a30db99b7",
+        "source_id": "source-4e43b3361a104ed08ea7ac38f81b7c71",
+        "source_revision": 1
+      },
+      {
+        "method_digest": "9b2cda6fa42ab143919e142a60586b4357f60d27be9bc419ccb8b77163cf7ead",
+        "source_digest": "2738d2d49842ad26a0b52d0d08a9d27cc878763de2d4ab633c6a2d1e375b2ed2",
+        "source_id": "source-93c70e7cdbd04c579b3a1a808cbeae94",
+        "source_revision": 1
+      }
+    ],
+    "model_calls": [
+      {
+        "id": "call-b7d65a84bd2849c9a7da398daa68a8df",
+        "status": "SUCCEEDED",
+        "usage": {
+          "completion_tokens": 264,
+          "prompt_tokens": 2346,
+          "reasoning_in_completion": false,
+          "reasoning_tokens": 682,
+          "total_tokens": 3292
+        }
+      }
+    ],
+    "model_dispatched": true,
+    "observation": {
+      "causal_contribution": null,
+      "condition_score": 100.0,
+      "coverage_complete": true,
+      "fingerprint": "d6f459d58d5fa253c34be6134022309e8f2c74047eae45fa3e4f305ac5cfe717",
+      "review_required": false,
+      "score_scope": "declared_conditions_only",
+      "state": "VERIFIED",
+      "task_id": "task-3a4b409a371349889cd2f18b99a69a4f"
+    },
+    "inherited_from": null,
+    "advisory_only": true,
+    "execution_authorized": false,
+    "automatic_promotion": false,
+    "independent_successes": null,
+    "causal_contribution": null
+  },
+  "elapsed_seconds": 9.299,
+  "task_id": "task-3a4b409a371349889cd2f18b99a69a4f",
+  "task_status": "SUCCEEDED",
+  "completion": {
+    "version": "completion-1.1.0",
+    "task_id": "task-3a4b409a371349889cd2f18b99a69a4f",
+    "state": "VERIFIED",
+    "fingerprint": "d6f459d58d5fa253c34be6134022309e8f2c74047eae45fa3e4f305ac5cfe717",
+    "acceptance": {
+      "revision": 1,
+      "rules": {
+        "coverage": "complete",
+        "criteria": [
+          {
+            "check": "text_equals",
+            "expected": "{\"eligible_ids\":[\"N38\",\"P26\"],\"selected_id\":\"N38\",\"selected_source\":\"new:N38\"}",
+            "id": "exact-artifact",
+            "step_id": "step-1"
+          }
+        ],
+        "requirements": [
+          {
+            "criterion_ids": [
+              "exact-artifact"
+            ],
+            "id": "frozen-current-artifact",
+            "kind": "literal",
+            "text": "Frozen synthetic current artifact and source values"
+          }
+        ]
+      }
+    },
+    "checks": [
+      {
+        "id": "exact-artifact",
+        "step_id": "step-1",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "score_scope": "declared_conditions_only",
+    "outcome_id": "outcome-64d03047329d30ee31645dc3fae87bbe",
+    "requirement_coverage": {
+      "version": "declared-requirements-1",
+      "state": "SATISFIED",
+      "requirements": [
+        {
+          "criterion_ids": [
+            "exact-artifact"
+          ],
+          "id": "frozen-current-artifact",
+          "kind": "literal",
+          "text": "Frozen synthetic current artifact and source values",
+          "status": "passed",
+          "reason": "linked_checks"
+        }
+      ],
+      "complete": true,
+      "scope": "explicitly_declared_requirements",
+      "semantic_goal_verified": false
+    },
+    "evidence_ready": true,
+    "feedback": null,
+    "method": null,
+    "method_available": false,
+    "feedback_history": [],
+    "assessment_history": []
+  },
+  "passed": true
+}

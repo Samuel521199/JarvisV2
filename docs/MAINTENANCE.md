@@ -89,6 +89,8 @@ python tools/check_docs.py --root .
 
 涉及等待唤醒、目标结案、交付反馈、故障回接或多轮自动更新的实现，同时核对[闭环缺口表](decisions-review.md#closure-gap-register)和[V-CLC 登记](delivery-validation.md#closure-validation-register)。已有原则缺少实现与新发现的设计缺口分开描述；保留失败、迟到反证和累计变化，不因某个模块通过就把整件工作标为闭环。
 
+新增持久字段或依赖契约时，除活动应用外还须检查旧版恢复控制器是否理解其含义；必要时提高控制器协议及下限，先部署相容控制器，再允许应用写新格式。固定独立评价策略不随候选放宽；格式可恢复、代码检查通过和知识质量获益分别举证。旧未版本化入口不能被协议下限当作已隔离，灾备说明必须写明适用增量和启动前置条件。
+
 <a id="retirement-and-history"></a>
 ## 历史与清理
 

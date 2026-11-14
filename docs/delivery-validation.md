@@ -7,6 +7,9 @@
 
 **本章导航**
 
+- [目标规划经验接线与反证回接（2026-11-14）](#goal-planning-advice-evidence-20261114)
+  - [实现、回归与真实模型范围](#goal-planning-advice-results)
+  - [独立包、日用边界与后续门](#goal-planning-advice-closeout)
 - [控制器独立晋升与相容恢复（2026-11-14）](#controller-promotion-evidence-20261114)
   - [最终源码与原生组合](#controller-promotion-final)
   - [日用采用与灾备](#controller-promotion-daily)
@@ -165,6 +168,54 @@
 - [个人助理开发收尾与兼容升级（2026-11-09）](#assistant-release-20261109)
 - [网页精灵共享能力与排空修复（2026-11-04）](#companion-shared-evidence)
 <!-- book-nav:end -->
+
+<a id="goal-planning-advice-evidence-20261114"></a>
+## 目标规划经验接线与反证回接（2026-11-14）
+
+**结论：已在开发源码接通“提供条件经验→真实模型规划→原任务执行/评价→迟到反证→暂停再用/复核”的子链。三域真实模型各一次首轮通过有限产物条件；没有配对无经验基线，不能宣称经验贡献、节省token或越用越聪明已达标。未升级日用应用。** 运行正文归[目标规划经验](knowledge-learning.md#goal-planning-advice-runtime)，字段归[目标建议契约](contracts.md#goal-planning-advice-contract)。
+
+| 改进／事前预测 | 实测 | 与预测的差距、下一步 |
+|---|---|---|
+| 自动向规划器提供有权读取且条件匹配的候选，仍走原工具/任务/评分链 | 新18项任务建议测试通过，含撤回、执行前复核、依赖清理和反证暂停；普通无建议提示前缀与原版摘要相同 | 当前是条件候选，不是自动归纳出新方法；摘要被提供不等于模型实际采用 |
+| 成功应有真实派发和产物证据 | 报价、资料整理、学习练习3例都取得SUCCEEDED模型回执、正确单工具规划、受限执行和VERIFIED产物条件，condition_score均100 | 只对冻结的明确条件评分；不是所有需求/学习效果或独立用户工作通过 |
+| 反证能阻止下一次机械复用 | 独立单元及真实模型任务后的合成迟到reject，均暂停同方法的后续自动提供；原结果首轮记录保留 | 迟到reject由试验注入，未证明它是建议造成的错误 |
+| 不把更多失败标签反向放大 | 依赖失效不累计成新反例，撤回原反证后重新评价可恢复；复制卡、改名、续期和复制观察不能解禁同内容家族 | 暂停是待归因；无因果贡献分和独立成功次数，不能据此自动删方法或晋升 |
+| 旧设计和兼容门继续有效 | 补当前/历史goal_context格式门；无源卡时仍拒绝无goal_advice_schema声明的旧读者；版本/布尔声明反例通过 | 已先将日用控制器从655cfcbdec2e…/协议1晋升545dfd07b8f1…/协议2，下限2；应用尚未采用新格式 |
+| 成本有记录而非先声称节省 | 3次共9,209 token，其中prompt 7,324、可见completion 580、独立reasoning 1,305；未增加原64次额度 | 此轮开发余量仅3次，全部用于三域，配对基线未测；费用、全维护成本、长期净收益保持未知 |
+
+<a id="goal-planning-advice-results"></a>
+### 实现、回归与真实模型范围
+
+新增`host/planning_advice.py`，复用goal_context、model_calls、Completion和事件；不建另一个知识真相库、不增加执行权限、不放宽架构门。第一轮广泛回归[320个不同测试ID](evidence/goal-advice-20261114/regressions-r1.json)通过，覆盖规划、聊天目标、研发回接、返工/恢复、持续安排、知识清理和升级等。随后补强反证防循环、同内容家族、原提示兼容、未知方法互证及首次安装固定评价策略，并逐项重验；这些轮次有重叠，不相加成总分。
+
+[当时18项任务建议测试](evidence/goal-advice-20261114/test_goal_advice-r5.txt)通过；[首次安装4项](evidence/goal-advice-20261114/test_application_installation-r4.txt)、[条件建议20项](evidence/goal-advice-20261114/test_conditional_advice-r3.txt)、[控制器15项](evidence/goal-advice-20261114/test_application_controller-r3.txt)、[兼容19项](evidence/goal-advice-20261114/test_application_compatibility-r3.txt)通过。320项是较早快照，最终补强以这些专项及后续独立包为准。首次夹具少给bailian备用模型权限，导致建议正确被过滤，见[原失败](evidence/goal-advice-20261114/first-run.json)；补丁定位/测试缩进的技术失败日志也保留，不当模型成绩。
+
+真实模型使用[冻结协议](evidence/goal-advice-20261114/native-r1/freeze.json)，先保存源码摘要、合成资料/工具和新输入的独立期望，再发送任何模型请求；单一路由、不fallback、不retry。数据根`E:/Jarvis/validation/goal-advice-20261114-r1/data`，只复制已授权开发桥profile/临时凭据和Worker运行物，不复制日用业务库或厂商密钥。[清场](evidence/goal-advice-20261114/native-r1/cleanup.json)确认临时桥凭据已删除。未开启常驻监控。
+
+| 领域／新输入 | 实际核对 | 首轮结果／token |
+|---|---|---|
+| 报价：135元/6天，M47低价但超期 | 模型选现有比较工具；全量合格集合N38/P26，当前最低价N38及来源正确；输入逐字保留 | [通过](evidence/goal-advice-20261114/native-r1/fresh-price-delay.json)，3,292 |
+| 整理：两条新资料，一条仍为未确认估价 | 原顺序、来源ID和原文字段保留；不增写确认结论；实际JSON产物匹配 | [通过](evidence/goal-advice-20261114/native-r1/fresh-source-excerpts.json)，2,948 |
+| 学习：7×13、16×9、24×11练习 | 题目来自当前输入，答案91/144/264正确，生成练习产物；不评价学习者掌握程度 | [通过](evidence/goal-advice-20261114/native-r1/fresh-current-worksheet.json)，2,969 |
+
+[汇总](evidence/goal-advice-20261114/native-r1/summary.json)保留first_run_passed=3/3、quality_gain/token_savings=null。三例是实施者编写的合成新输入，工具和经验语料同样由实施者提供，不能写成外部来源独立留出、供应商真实报价或教育效果试验。建议可能有用、被忽略或带来额外费用，当前没有配对数据区分。[迟到反证](evidence/goal-advice-20261114/native-r1/late-counterevidence.json)单列，不覆盖首轮产物检查。
+
+<a id="goal-planning-advice-closeout"></a>
+### 独立包、日用边界与后续门
+
+[最终专项59项](evidence/goal-advice-20261114/protocol2-tests.json)通过，包含20项任务建议（含UNKNOWN人工确认后仍记曾派发）、16项控制器、4项首次安装、19项数据兼容；随后补协议下限repair反例，[最终17项控制器测试](evidence/goal-advice-20261114/controller-final.txt)通过。源码检查点e9d597f；[独立包](evidence/goal-advice-20261114/independent-package/result.json)由已安装旧控制器固定评价，207项中206通过/1平台跳过，架构错误0；来源包fe3dd7ef6bfd…。真实模型三例来源摘要对应更早提交2f33267，后续回执展示/控制器协议补强没有重新调用模型，不混记成最终代码的独立模型重测。[最终只读对账](evidence/goal-advice-20261114/native-ledger-audit.json)确认七份冻结源码摘要对应2f33267、三次持久模型回执与装配摘要匹配、目标/任务关联及原输入不变、临时凭据已清除；不计为新试验。
+
+| 部署/恢复环节 | 实际结果 | 边界 |
+|---|---|---|
+| 日用独立控制器晋升 | [production-r1](evidence/goal-advice-20261114/production-r1/result.json)由现控制器再次固定207项检查后，原子切换至545dfd07b8f1…，generation2/协议2，下限2；登记完成 | 活动应用仍c019b64e…、v0.1.8、epoch9；没有采用v0.1.9应用 |
+| 日用连续性 | 同一boot_id，68次观察同一实例；核对的配置/权限和core/dialogue/commitments摘要不变，普通应用ready不变 | 不扩大为全部业务库、长时间负载或物理断电证明；私密指纹仅本机保存 |
+| 独立物理盘灾备 | D:/Jarvis-Recovery/controllers/2026-11-14-r2，9文件、694项受摘要清单保护的控制器文件（另含1份清单，ZIP共695成员）、SQLite完整性及逐项SHA读回通过；[公开验证清单](evidence/goal-advice-20261114/production-r1/disaster-copy.json) | 控制/准入增量，不是新全量业务快照；同用户DPAPI，跨系统未验；r1保留历史 |
+| 开发独立刷新 | [审计](evidence/goal-advice-20261114/refresh-audit.json)确认新共用组件实际由18283提供；日用boot/build不变，原代理build及64次额度保持 | 开发额度64/64，未加额度、重置或追加模型请求 |
+| 共用目标/聊天展示 | [38项接线测试](evidence/goal-advice-20261114/delivery-tests.json)及[Edge真实390/1280视口](evidence/goal-advice-20261114/ui-r3/render-result.json)通过；标签、无溢出、父任务按钮验证 | 静态夹具使用真实合成回执和明确标注的状态；不是完整日用工作台端到端 |
+
+最初移动渲染虽报告语义标签通过，实际Edge视口为470而非390，不能作移动布局验收；[原测量](evidence/goal-advice-20261114/ui-r2/initial-metrics.json)保留。后改用已有Edge的DevTools Emulation重验精确390视口，实际截图已查看，未安装依赖。截图仅本机保留。协议下限保护版本化入口；古老未版本化代码及同用户手工启动旧副本没有OS级阻断保证，灾备须先应用最新相配控制增量。
+
+后续优先补：建议按剩余提示预算派发前回退（当前3,000字节上限不能防原任务接近路由上限），再准备相容应用基线；真实条件变化下的新任务与配对无经验/长经历对照；自动从已验证工作形成候选方法并接受独立反例试验；低成本计划复用、归因和自动晋升。自然请求r5首测66.7%及原90%门不因本轮3例通过而变更；跨根预算、资源租约、多Bot负责人和限定自愈继续保留原工作包，不将本子链当完整自主成长闭环。
 
 <a id="controller-promotion-evidence-20261114"></a>
 ## 控制器独立晋升与相容恢复（2026-11-14）

@@ -254,6 +254,8 @@ MCP 标准提供初始化、协议／能力协商、运行和关闭的连接生�
 | 控制器损坏 | 启动前拒绝；签名绑定的压缩副本按同一控制器摘要还原到新目录，再原子换指针 | 保留坏目录、STOP、权限与当前数据；不选择较旧控制器冒充恢复 |
 | 来源准入撤回、未知协议或不相容数据 | 拒绝启动／晋升／恢复，保留现场 | 恢复材料不能复活撤权或绕过兼容门 |
 
+2026-11-14后续将当前协议提高到2，使目标建议新格式的采用/回退检查在可信恢复入口中继续有效；协议下限单调提高，repair可补1→2，不能降低。现代旧协议1控制器会拒绝下限2；古老未版本化入口和同用户手工回滚整个目录没有操作系统级阻断保证。[本轮日用晋升与D盘增量](delivery-validation.md#goal-planning-advice-closeout)与先前协议1证据分列。
+
 字段权威见[控制器指针契约](contracts.md#controller-pointer-contract)。首次安装仍沿install-launcher；独立控制器登记后该命令只核验现控制器，不再随活动应用重绑。当前控制器来源包不能当成无用应用退役；损坏入口且已有协议下限时应修复，不允许重装旧入口降低协议。保留同OS用户信任边界：本机HMAC不是公开发布者签名，不抵御同用户进程篡改整个环境。
 
 操作入口为`JarvisPC.bat prepare-controller --reviewed-source`和`JarvisPC.bat apply-controller --reviewed-source`；`repair-controller`修复派生登记。损坏恢复使用可信、已审阅且可运行的`python -B -m host.application_controller recover --data-root <根> --expected-controller <原摘要> --expected-epoch <当前代际> --expected-build <当前应用>`；原副本丢失时用`--archive <已核验副本>`，根入口和缓存都损坏时再给`--activation <原签名事件>`，不能猜身份。恢复密钥及包准入账本也须来自相配备份，跨系统DPAPI恢复尚未证明。全自动下载、自动源码审阅和常驻自愈监管仍未开启。

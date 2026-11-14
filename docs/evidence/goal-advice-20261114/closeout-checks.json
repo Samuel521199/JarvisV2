@@ -1,0 +1,84 @@
+{
+  "scope": "documentation, architecture, fixed root check and independent disk readback; no model request or application adoption",
+  "source_commit": "e9d597f3ce43f30e9d5e25b0b1786fd533849fd0",
+  "commands": [
+    {
+      "command": [
+        "python",
+        "-B",
+        "tools/sync_doc_navigation.py",
+        "--root",
+        "."
+      ],
+      "exit_code": 0,
+      "stdout": "OK navigation: 0 updated\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "-B",
+        "tools/check_docs.py",
+        "--root",
+        "."
+      ],
+      "exit_code": 0,
+      "stdout": "OK documents=34 chapters=25 diagrams=46 local_links=4708 errors=0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "-B",
+        "tools/check_architecture.py",
+        "--root",
+        "."
+      ],
+      "exit_code": 0,
+      "stdout": "{\"python_files\": 454, \"host_cycle_modules\": 20, \"errors\": []}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "-B",
+        "tools/check_repo_size.py",
+        "--limit",
+        "50"
+      ],
+      "exit_code": 0,
+      "stdout": "candidate files total: 144.7 MB\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "-I",
+        "-B",
+        "E:/Jarvis/runtime/JarvisLaunch.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout": "[Jarvis] Already running with this data folder: http://127.0.0.1:18282/\n",
+      "stderr": ""
+    }
+  ],
+  "disaster_hashes": {
+    "installation/JarvisLaunch.py": true,
+    "installation/StartJarvis.bat": true,
+    "user-data/deployment/launcher.json": true,
+    "user-data/deployment/controller-protocol.json": true,
+    "user-data/private/application-release.dpapi": true,
+    "controller.zip": true,
+    "activation.json": true,
+    "user-data/deployment/control.sqlite3": true,
+    "runtime-source.zip": true
+  },
+  "controller_archive": {
+    "indexed_files": 694,
+    "zip_members_including_index": 695
+  },
+  "sqlite_integrity": "ok",
+  "earlier_audit_correction": "An ad-hoc audit incorrectly expected total ZIP entries to equal 694 indexed files. Actual ZIP contains an additional controller-files.json index. Original backup hashes were all correct; membership is now checked against the signed index rather than a hardcoded total.",
+  "passed": true
+}

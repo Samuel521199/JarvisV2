@@ -1,0 +1,311 @@
+{
+  "origin": "operator_authored_synthetic",
+  "cases": [
+    {
+      "id": "fresh-price-delay",
+      "domain": "comparison",
+      "goal": "比较报价，预算不超过135元，交期不超过6天，选择符合条件的最低价报价，保留来源引用，保存报告",
+      "input": {
+        "schema": "jarvis.quote-input.v1",
+        "currency": "CNY",
+        "max_price_minor": 13500,
+        "max_delivery_days": 6,
+        "offers": [
+          {
+            "id": "M47",
+            "price_minor": 6500,
+            "delivery_days": 9,
+            "source": "new:M47"
+          },
+          {
+            "id": "N38",
+            "price_minor": 11200,
+            "delivery_days": 4,
+            "source": "new:N38"
+          },
+          {
+            "id": "P26",
+            "price_minor": 12800,
+            "delivery_days": 3,
+            "source": "new:P26"
+          }
+        ]
+      },
+      "expected": {
+        "eligible_ids": [
+          "N38",
+          "P26"
+        ],
+        "selected_id": "N38",
+        "selected_source": "new:N38"
+      }
+    },
+    {
+      "id": "fresh-source-excerpts",
+      "domain": "documents",
+      "goal": "将两条资料的id和text按原顺序逐字整理为excerpts JSON并保存结果；不能改写或补充事实。",
+      "input": {
+        "schema": "jarvis.notes-input.v1",
+        "sources": [
+          {
+            "id": "new-h7",
+            "text": "试制件将在周四完成检验。"
+          },
+          {
+            "id": "new-j4",
+            "text": "预算仍为暂估值，尚未得到确认。"
+          }
+        ]
+      },
+      "expected": {
+        "schema": "jarvis.notes-result.v1",
+        "excerpts": [
+          {
+            "id": "new-h7",
+            "text": "试制件将在周四完成检验。"
+          },
+          {
+            "id": "new-j4",
+            "text": "预算仍为暂估值，尚未得到确认。"
+          }
+        ]
+      }
+    },
+    {
+      "id": "fresh-current-worksheet",
+      "domain": "learning",
+      "goal": "用当前pairs生成乘法练习与准确答案JSON并保存练习；不要声称我已经掌握，也不要使用过去题目。",
+      "input": {
+        "schema": "jarvis.practice-input.v1",
+        "pairs": [
+          [
+            7,
+            13
+          ],
+          [
+            16,
+            9
+          ],
+          [
+            24,
+            11
+          ]
+        ]
+      },
+      "expected": {
+        "schema": "jarvis.practice-result.v1",
+        "exercises": [
+          {
+            "a": 7,
+            "b": 13,
+            "answer": 91
+          },
+          {
+            "a": 16,
+            "b": 9,
+            "answer": 144
+          },
+          {
+            "a": 24,
+            "b": 11,
+            "answer": 264
+          }
+        ]
+      }
+    }
+  ],
+  "tools": {
+    "comparison": {
+      "capability": "plugin.advice-quote.v1",
+      "description": "Read jarvis.quote-input.v1 JSON. Filter by current max_price_minor AND max_delivery_days, then select lowest eligible price. Return JSON eligible_ids, selected_id and selected_source; null if none. No network.",
+      "code": "import json\ndef run(text):\n    x=json.loads(text)\n    eligible=[o for o in x['offers'] if o['price_minor']<=x['max_price_minor'] and o['delivery_days']<=x['max_delivery_days']]\n    chosen=min(eligible,key=lambda o:o['price_minor']) if eligible else None\n    return json.dumps({'eligible_ids':sorted(o['id'] for o in eligible),'selected_id':chosen['id'] if chosen else None,'selected_source':chosen['source'] if chosen else None},ensure_ascii=False,sort_keys=True,separators=(',',':'))\n",
+      "sample": {
+        "schema": "jarvis.quote-input.v1",
+        "currency": "CNY",
+        "max_price_minor": 100,
+        "max_delivery_days": 2,
+        "offers": [
+          {
+            "id": "sample",
+            "price_minor": 80,
+            "delivery_days": 1,
+            "source": "sample-only"
+          }
+        ]
+      },
+      "expected": {
+        "eligible_ids": [
+          "sample"
+        ],
+        "selected_id": "sample",
+        "selected_source": "sample-only"
+      }
+    },
+    "documents": {
+      "capability": "plugin.advice-notes.v1",
+      "description": "Read jarvis.notes-input.v1 JSON sources array of {id,text}; emit jarvis.notes-result.v1 JSON with excerpts preserving every source id/text byte-for-byte and in order. Do not paraphrase or invent facts.",
+      "code": "import json\ndef run(text):\n    x=json.loads(text)\n    return json.dumps({'schema':'jarvis.notes-result.v1','excerpts':x['sources']},ensure_ascii=False,sort_keys=True,separators=(',',':'))\n",
+      "sample": {
+        "schema": "jarvis.notes-input.v1",
+        "sources": [
+          {
+            "id": "s",
+            "text": "Sample excerpt."
+          }
+        ]
+      },
+      "expected": {
+        "schema": "jarvis.notes-result.v1",
+        "excerpts": [
+          {
+            "id": "s",
+            "text": "Sample excerpt."
+          }
+        ]
+      }
+    },
+    "learning": {
+      "capability": "plugin.advice-practice.v1",
+      "description": "Read jarvis.practice-input.v1 JSON pairs array of two positive integers; emit jarvis.practice-result.v1 with exercises {a,b,answer} using current multiplication products. Produce a practice worksheet only; no claim the learner mastered it.",
+      "code": "import json\ndef run(text):\n    x=json.loads(text)\n    return json.dumps({'schema':'jarvis.practice-result.v1','exercises':[{'a':p[0],'b':p[1],'answer':p[0]*p[1]} for p in x['pairs']]},ensure_ascii=False,sort_keys=True,separators=(',',':'))\n",
+      "sample": {
+        "schema": "jarvis.practice-input.v1",
+        "pairs": [
+          [
+            2,
+            3
+          ]
+        ]
+      },
+      "expected": {
+        "schema": "jarvis.practice-result.v1",
+        "exercises": [
+          {
+            "a": 2,
+            "b": 3,
+            "answer": 6
+          }
+        ]
+      }
+    }
+  },
+  "advice_corpus": [
+    {
+      "source_id": "source-4e43b3361a104ed08ea7ac38f81b7c71",
+      "card": {
+        "schema": "jarvis.method-card.v1",
+        "id": "advice-comparison",
+        "revision": 1,
+        "status": "CANDIDATE",
+        "recipe": "current-input-comparison",
+        "requires": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text"
+        },
+        "summary": "Use only current input, inspect the capability description and choose the smallest exact tool chain. Read jarvis.quote-input.v1 JSON. Filter by current max_price_minor AND max_delivery_days, then select lowest eligible price. Return JSON eligible_ids, selected_id and selected_source; null if none. No network.",
+        "counterexamples": [
+          "A different input schema or current goal overrides this advice. Past answers, budgets, sources and learning results are not current facts."
+        ],
+        "evidence": [
+          {
+            "source_id": "source-b5f3e91908c44e58a5bae1a6ea554914",
+            "revision": 1,
+            "sha256": "4ca33ff3423f888e9951188e77835b19263521200b2e5bcce72d007cbcdba0ea"
+          }
+        ],
+        "expires": 1794649866.3685997
+      },
+      "title_tags": "报价 比较 预算 交期 选择 来源 保存 报告"
+    },
+    {
+      "source_id": "source-93c70e7cdbd04c579b3a1a808cbeae94",
+      "card": {
+        "schema": "jarvis.method-card.v1",
+        "id": "advice-documents",
+        "revision": 1,
+        "status": "CANDIDATE",
+        "recipe": "current-input-documents",
+        "requires": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text"
+        },
+        "summary": "Use only current input, inspect the capability description and choose the smallest exact tool chain. Read jarvis.notes-input.v1 JSON sources array of {id,text}; emit jarvis.notes-result.v1 JSON with excerpts preserving every source id/text byte-for-byte and in order. Do not paraphrase or invent facts.",
+        "counterexamples": [
+          "A different input schema or current goal overrides this advice. Past answers, budgets, sources and learning results are not current facts."
+        ],
+        "evidence": [
+          {
+            "source_id": "source-ec86eccbaee7445db9f1c47797905938",
+            "revision": 1,
+            "sha256": "b881e833f8232a71acf8b60db7ff85999c6e9ec03d41ea49323d7538048ccc94"
+          }
+        ],
+        "expires": 1794649866.375869
+      },
+      "title_tags": "资料 整理 原文 摘录 原样 顺序 保存 来源"
+    },
+    {
+      "source_id": "source-8605771c63ef4d5dace039c5add3d344",
+      "card": {
+        "schema": "jarvis.method-card.v1",
+        "id": "advice-learning",
+        "revision": 1,
+        "status": "CANDIDATE",
+        "recipe": "current-input-learning",
+        "requires": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text"
+        },
+        "summary": "Use only current input, inspect the capability description and choose the smallest exact tool chain. Read jarvis.practice-input.v1 JSON pairs array of two positive integers; emit jarvis.practice-result.v1 with exercises {a,b,answer} using current multiplication products. Produce a practice worksheet only; no claim the learner mastered it.",
+        "counterexamples": [
+          "A different input schema or current goal overrides this advice. Past answers, budgets, sources and learning results are not current facts."
+        ],
+        "evidence": [
+          {
+            "source_id": "source-c25255b8297245f6a250bdc04d427bdc",
+            "revision": 1,
+            "sha256": "c7ef73830a61a9bbd06492944163687f13de09ad8d442fc8a6c60a7517f1922a"
+          }
+        ],
+        "expires": 1794649866.3817153
+      },
+      "title_tags": "练习 学习 乘法 答案 当前 题目 工作表"
+    }
+  ],
+  "source_sha256": {
+    "host/planning_advice.py": "889003c719e5d7f6489893f3d8c445e8d7ea4ded1965b1ef885f2bc669573f33",
+    "host/goal_context.py": "1b897690a99d47c61792676600f25d0c1aa271c7122db9144d61497fa7b84752",
+    "host/goals.py": "3fdc1393703853b39d9cc0bfa76e4b2797eeec550893e4244ef7b5c78f2e38d1",
+    "host/completion.py": "14a0abc3f79df1564a2ffa87db9190de77fbfa62d8a42f8a0c81cd5462c80ed6",
+    "host/knowledge_cleanup.py": "d92a8763f46cbbdf4bed9325ae3bf595de53bddbd2b0bd776cf793e764346c4b",
+    "control/application_compatibility.py": "c8f1ed9623e71b03b40794cd9bb2e5791f0d988938305790467ec6c580d1179d",
+    "config/goal-advice-compatibility.json": "0907bc7eed32c5a790916b61b3e23a296bd1b35ed50f90bbc6072e0fee62cf1c"
+  },
+  "proxy_build": "30b79127b81e04a57cdc8aae76f607ea38b499b3fa4d92abf0020700e17848bc",
+  "provider": "vertex",
+  "model": "gemini-3.8-flash",
+  "budget": {
+    "available_before": 3,
+    "planned_calls": 3,
+    "fallback": false,
+    "retry": false
+  },
+  "predeclared_checks": [
+    "one correct input-source tool",
+    "explicit input unchanged",
+    "current artifact matches frozen independent expected result",
+    "advice dispatch has actual model receipt",
+    "result observation recorded"
+  ],
+  "prediction": "All three finite artifact tasks should pass their declared checks; no quality, token or speed gain is predicted without paired control.",
+  "not_measured": [
+    "paired no-advice baseline",
+    "independent real user work",
+    "educational learning gain",
+    "longitudinal transfer",
+    "full maintenance cost"
+  ]
+}
