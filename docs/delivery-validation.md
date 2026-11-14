@@ -178,7 +178,7 @@
 <a id="advice-purpose-evidence-20261115"></a>
 ## 用途识别与选择性提供（2026-11-15）
 
-**开发实现，尚未启用日用v3选择语义。** 针对精简卡仍比无卡多19.4% token、通用条件无法排除无关卡的实测，在原GoalContext/PlanningAdvice链新增可检查用途，不新增知识库、任务系统或执行权限。原事实、来源和反例保留，未知用途沿原流程独立规划。当前日用仍v0.1.8/epoch10、控制器协议3；v3须协议4先完成独立资格与恢复验收后才能写入托管根，未托管开发根暂留v2。
+**开发实现，尚未启用日用v3选择语义。** 针对精简卡仍比无卡多19.4% token、通用条件无法排除无关卡的实测，在原GoalContext/PlanningAdvice链新增可检查用途，不新增知识库、任务系统或执行权限。原事实、来源和反例保留，未知用途沿原流程独立规划。当前日用仍v0.1.8/epoch10；协议4已完成独立资格、原生恢复组合及控制器日用采用，应用未采用本候选，未托管开发根暂留v2。
 
 | 改进 | 实际行为 | 边界和预期效果 |
 |---|---|---|
@@ -192,7 +192,20 @@
 
 卡的requires可写input_schema=jarvis.notes-input.v1、task_purpose=notes-excerpt-v1，或practice-product-v1、quote-lowest-v1对应格式。普通方法重用流程并重新读取当前参数，不固定历史预算、期限或答案；过去通用卡保持原字节/历史记录，在v3新目标中不自动提供。原方法卡仍是jarvis.method-card.v1，目标建议记录升version3，读者声明升3，控制器代码升协议4；模型外层仍compact-v2，因为投影字段没有再次变化。
 
-初次架构检查发现host.planning_advice回引goal_context扩大原循环，已将共享selector计算移至modules/task_resource/advice_scope.py，恢复原20模块循环边界；没有修改架构基线放行。首轮7项专项中的5个夹具子例因request_id过短被原契约拒绝，修正夹具ID后通过，生产准入规则未改。最终[141项开发回归](evidence/advice-purpose-20261115/regressions.json)通过、测试期间源码未变，包含9项用途专项及原条件卡、预算、格式恢复、控制器、聊天和工作台回归。源码6959b0e的[正式独立包51a3726](evidence/advice-purpose-20261115/qualified-r2/independent-package/result.json)经原冻结策略ed2a6f6验证，207项中206通过/1平台跳过，架构零错误、运行文件完整；[包内9项用途重放](evidence/advice-purpose-20261115/qualified-r2/package-purpose-replay.json)所有运行时导入均来自正式包。另补[报价v3目标反转检查](evidence/advice-purpose-20261115/quote-selection.json)和[实际旧/新读者边界](evidence/advice-purpose-20261115/actual-reader-boundary.json)：已安装读者2拒绝隔离v3上下文，合格读者3接受。提交前末尾空行检查曾阻断提交，但初次独立包仍启动，故其source_commit不代表当时工作树；[纠正记录](evidence/advice-purpose-20261115/qualification-correction.json)保留原轮次，修正一个末尾空行并提交后才产生正式51a3726，未把初轮当作提交源码资格。141项测试对应修正空行前等价逻辑，正式包9项为修正后的实际字节。协议4的原生组合、日用晋升和未见/真实模型收益尚未完成，不以本次开发包通过代替部署或泛化证据。当前不能用“少给卡”直接记作任务质量提升或长期成本收益；仍需未见表述漏受理评估、困难任务、无卡/方法/配方对照及自动归纳晋升。
+初次架构检查发现host.planning_advice回引goal_context扩大原循环，已将共享selector计算移至modules/task_resource/advice_scope.py，恢复原20模块循环边界；没有修改架构基线放行。首轮7项专项中的5个夹具子例因request_id过短被原契约拒绝，修正夹具ID后通过，生产准入规则未改。最终[141项开发回归](evidence/advice-purpose-20261115/regressions.json)通过、测试期间源码未变，包含9项用途专项及原条件卡、预算、格式恢复、控制器、聊天和工作台回归。源码6959b0e的[正式独立包51a3726](evidence/advice-purpose-20261115/qualified-r2/independent-package/result.json)经原冻结策略ed2a6f6验证，207项中206通过/1平台跳过，架构零错误、运行文件完整；[包内9项用途重放](evidence/advice-purpose-20261115/qualified-r2/package-purpose-replay.json)所有运行时导入均来自正式包。另补[报价v3目标反转检查](evidence/advice-purpose-20261115/quote-selection.json)和[实际旧/新读者边界](evidence/advice-purpose-20261115/actual-reader-boundary.json)：已安装读者2拒绝隔离v3上下文，合格读者3接受。提交前末尾空行检查曾阻断提交，但初次独立包仍启动，故其source_commit不代表当时工作树；[纠正记录](evidence/advice-purpose-20261115/qualification-correction.json)保留原轮次，修正一个末尾空行并提交后才产生正式51a3726，未把初轮当作提交源码资格。141项测试对应修正空行前等价逻辑，正式包9项为修正后的实际字节。后续[原生进程组合](evidence/advice-purpose-20261115/native-r1/result.json)通过：原v0.1.8实例晋升协议4时45次采样无失败、boot_id及聊天读写不变；隔离采用相容应用后写入v3格式哨兵，不相容旧版回退在排空前拒绝；损坏控制器后按原签名同身份恢复，STOP、应用代际与boot_id保留，夹具已正常停止。实际协议3代码[读取隔离协议4下限](evidence/advice-purpose-20261115/actual-old-controller-fence.json)拒绝。哨兵只验格式和恢复，不证明业务或知识收益。日用晋升与语言结果另见本节接续记录。当前不能用“少给卡”直接记作任务质量提升或长期成本收益；仍需未见表述漏受理评估、困难任务、无卡/方法/配方对照及自动归纳晋升。
+
+**日用控制器已晋升：**[真实3→4晋升](evidence/advice-purpose-20261115/production-r1/result.json)完成，generation4、身份eb0f15a；44次采样无请求失败，活动应用v0.1.8/epoch10、boot_id、config/private和core/dialogue/commitments摘要不变。原固定策略通过后才提交原子入口，应用ready记录未改。D最新[控制增量](evidence/advice-purpose-20261115/production-r1/disaster-copy.json)为controllers/2026-11-15-r2，包括入口、协议下限、签名事件、控制账一致快照、加密release密钥和控制器/来源ZIP，逐文件及索引摘要和SQLite读回通过；私有业务摘要仅在E本地。它不是最新全量业务或跨系统DPAPI恢复证明。语言覆盖和知识净收益尚未达标，因此未采用新应用。
+
+**新表述首测未达通用覆盖：**[冻结24条新构造表述](evidence/advice-purpose-20261115/language-r1/freeze.json)后才调用当前解析器；[首测](evidence/advice-purpose-20261115/language-r1/result.json)保留4/12正向命中、0/12负向误命中，总计16/24正确。它是实施者构造的首次挑战，不是独立用户留出，不替代原90%自然请求门。本次没有改解析器后回填成绩，也没有把同义改写漏识别重标为正确拒绝。
+
+| 方向 | 本次结果 | 对下一步的要求 |
+|---|---|---|
+| 合理的同义中文/英文用途请求 | 4/12可识别（33.3%），8条漏识别 | 有限规则只能作保护层，不能宣称通用用途识别；优先补语义槽位与明确限定的覆盖 |
+| 摘要/删除来源/改序/发出结果等附加或相反要求 | 0/12误选为当前用途 | 扩大正向覆盖时必须保留这些反例，另出新反例复验 |
+| 对任务的实际影响 | 本测仅检查经验用途选择；未调用模型或执行任务 | 未选经验仍走原独立规划，不能把33.3%称为整个Jarvis任务成功率，也不能忽略漏选损失 |
+| 经验净收益 | 本轮无新模型配对，前轮精简卡比无卡多19.4%仍有效 | 不因拒绝更多卡就声称更聪明；须在确实需要经验的任务上证明少错误/少返工的净收益 |
+
+继续扩展时，处理对象、产物、保真要求、顺序和附加约束应分开识别，所有未覆盖文本保留；优先复用现有目标/需求服务。增加覆盖也要冻结已绑定任务的规则语义，验证旧读者与恢复不会重解释既有调用。规则别名修复后的旧样本仅算回归，新增独立表述才能继续衡量泛化；自动经验归纳、统一资源预算、多Bot和限定自愈仍在原六项路线内，未因本局部通过而完成。
 
 <a id="advice-net-value-evidence-20261115"></a>
 ## 精简经验净成本与适用边界（2026-11-15）

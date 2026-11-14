@@ -1,0 +1,178 @@
+{
+  "scope": "24 new operator-authored phrases; broader intended meaning vs finite implementation; not independent user holdout",
+  "frozen_at": 1794678123.7067766,
+  "source_commit": "347f062f78fa11b9f9c30915ac568b84adf01362",
+  "runtime_sha256": "ea881fb6a867aa18ceb56acf905510c400a33357890c73779f4bd901cd65e9de",
+  "harness_sha256": "e248a4ba4e87e1e5400849da3a96a5f87f6b5b517d4583c3bd4c9dc0905383a8",
+  "cases": [
+    [
+      "n01",
+      "notes",
+      true,
+      "请整理资料；原样摘录每条原文；保留来源ID和顺序；不要概括；保存报告。"
+    ],
+    [
+      "n02",
+      "notes",
+      true,
+      "整理当前资料\n原样摘录每条原文\n保留来源ID和顺序\n不把草稿估价写成确认结论"
+    ],
+    [
+      "n03",
+      "notes",
+      true,
+      "把这些资料按原顺序逐条原样引用，附上各自来源ID，不要总结。"
+    ],
+    [
+      "n04",
+      "notes",
+      true,
+      "整理资料，逐字摘录各条原文，保持来源ID与顺序，保存报告。"
+    ],
+    [
+      "n05",
+      "notes",
+      true,
+      "请保留来源ID和顺序，将当前资料逐条照抄成报告，不改写。"
+    ],
+    [
+      "n06",
+      "notes",
+      true,
+      "Organize these notes by copying each source verbatim in order with its ID."
+    ],
+    [
+      "p01",
+      "practice",
+      true,
+      "请生成当前乘法练习和正确答案；保留题目顺序；保存练习表；不得声称已经掌握。"
+    ],
+    [
+      "p02",
+      "practice",
+      true,
+      "用当前给出的数生成乘法练习和正确答案\n保留题目顺序\n不要评价学习者是否掌握"
+    ],
+    [
+      "p03",
+      "practice",
+      true,
+      "按顺序把当前整数对做成乘法练习，并附正确答案。"
+    ],
+    [
+      "p04",
+      "practice",
+      true,
+      "生成当前乘法练习及正确答案，保留题目顺序，保存练习表。"
+    ],
+    [
+      "p05",
+      "practice",
+      true,
+      "根据pairs出乘法题和答案，顺序不变，勿判断我是否掌握。"
+    ],
+    [
+      "p06",
+      "practice",
+      true,
+      "Make multiplication exercises and correct answers from these pairs, preserving their order."
+    ],
+    [
+      "x01",
+      "notes",
+      false,
+      "整理资料，原样摘录每条原文，保留来源ID和顺序，只留下已确认结论"
+    ],
+    [
+      "x02",
+      "notes",
+      false,
+      "整理资料，原样摘录每条原文，保留来源ID和顺序，但重写成摘要"
+    ],
+    [
+      "x03",
+      "notes",
+      false,
+      "整理资料，原样摘录每条原文，删除来源ID，保存报告"
+    ],
+    [
+      "x04",
+      "notes",
+      false,
+      "整理资料，原样摘录每条原文，保留来源ID和顺序，先按价格排序"
+    ],
+    [
+      "x05",
+      "notes",
+      false,
+      "不要整理资料，原样摘录每条原文，保留来源ID和顺序"
+    ],
+    [
+      "x06",
+      "notes",
+      false,
+      "整理资料，原样摘录每条原文，保留来源ID和顺序，发给供应商"
+    ],
+    [
+      "x07",
+      "practice",
+      false,
+      "生成当前乘法练习和正确答案，保留题目顺序，并判断我已经掌握"
+    ],
+    [
+      "x08",
+      "practice",
+      false,
+      "生成当前乘法练习和正确答案，保留题目顺序，但不要提供答案"
+    ],
+    [
+      "x09",
+      "practice",
+      false,
+      "生成当前除法练习和正确答案，保留题目顺序"
+    ],
+    [
+      "x10",
+      "practice",
+      false,
+      "生成当前乘法练习和正确答案，保留题目顺序，只计算第一题"
+    ],
+    [
+      "x11",
+      "practice",
+      false,
+      "生成当前乘法练习和正确答案，保留题目顺序，随机打乱题目"
+    ],
+    [
+      "x12",
+      "practice",
+      false,
+      "生成当前乘法练习和正确答案，保留题目顺序，上传到云端"
+    ]
+  ],
+  "inputs": {
+    "notes": {
+      "schema": "jarvis.notes-input.v1",
+      "sources": [
+        {
+          "id": "memo-R72",
+          "text": "报价为估计值，需再次核对。"
+        }
+      ]
+    },
+    "practice": {
+      "schema": "jarvis.practice-input.v1",
+      "pairs": [
+        [
+          19,
+          7
+        ],
+        [
+          28,
+          12
+        ]
+      ]
+    }
+  },
+  "gate": "No negative may match; positive recall is measured without relabelling rejected paraphrases as successes. This is not the existing independent 90% language gate."
+}
