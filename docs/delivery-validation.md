@@ -192,7 +192,7 @@
 
 卡的requires可写input_schema=jarvis.notes-input.v1、task_purpose=notes-excerpt-v1，或practice-product-v1、quote-lowest-v1对应格式。普通方法重用流程并重新读取当前参数，不固定历史预算、期限或答案；过去通用卡保持原字节/历史记录，在v3新目标中不自动提供。原方法卡仍是jarvis.method-card.v1，目标建议记录升version3，读者声明升3，控制器代码升协议4；模型外层仍compact-v2，因为投影字段没有再次变化。
 
-初次架构检查发现host.planning_advice回引goal_context扩大原循环，已将共享selector计算移至modules/task_resource/advice_scope.py，恢复原20模块循环边界；没有修改架构基线放行。首轮7项专项中的5个夹具子例因request_id过短被原契约拒绝，修正夹具ID后通过，生产准入规则未改。最终[141项开发回归](evidence/advice-purpose-20261115/regressions.json)通过、测试期间源码未变，包含9项用途专项及原条件卡、预算、格式恢复、控制器、聊天和工作台回归。独立包与实际控制器部署结果继续接续登记。当前不能用“少给卡”直接记作任务质量提升或长期成本收益；仍需未见表述漏受理评估、困难任务、无卡/方法/配方对照及自动归纳晋升。
+初次架构检查发现host.planning_advice回引goal_context扩大原循环，已将共享selector计算移至modules/task_resource/advice_scope.py，恢复原20模块循环边界；没有修改架构基线放行。首轮7项专项中的5个夹具子例因request_id过短被原契约拒绝，修正夹具ID后通过，生产准入规则未改。最终[141项开发回归](evidence/advice-purpose-20261115/regressions.json)通过、测试期间源码未变，包含9项用途专项及原条件卡、预算、格式恢复、控制器、聊天和工作台回归。源码6959b0e的[正式独立包51a3726](evidence/advice-purpose-20261115/qualified-r2/independent-package/result.json)经原冻结策略ed2a6f6验证，207项中206通过/1平台跳过，架构零错误、运行文件完整；[包内9项用途重放](evidence/advice-purpose-20261115/qualified-r2/package-purpose-replay.json)所有运行时导入均来自正式包。另补[报价v3目标反转检查](evidence/advice-purpose-20261115/quote-selection.json)和[实际旧/新读者边界](evidence/advice-purpose-20261115/actual-reader-boundary.json)：已安装读者2拒绝隔离v3上下文，合格读者3接受。提交前末尾空行检查曾阻断提交，但初次独立包仍启动，故其source_commit不代表当时工作树；[纠正记录](evidence/advice-purpose-20261115/qualification-correction.json)保留原轮次，修正一个末尾空行并提交后才产生正式51a3726，未把初轮当作提交源码资格。141项测试对应修正空行前等价逻辑，正式包9项为修正后的实际字节。协议4的原生组合、日用晋升和未见/真实模型收益尚未完成，不以本次开发包通过代替部署或泛化证据。当前不能用“少给卡”直接记作任务质量提升或长期成本收益；仍需未见表述漏受理评估、困难任务、无卡/方法/配方对照及自动归纳晋升。
 
 <a id="advice-net-value-evidence-20261115"></a>
 ## 精简经验净成本与适用边界（2026-11-15）
