@@ -1,0 +1,518 @@
+{
+  "schema": 1,
+  "frozen_at": 1794672781.0759056,
+  "execution": "deterministic-dry-run",
+  "origin": "operator_authored_synthetic",
+  "case": {
+    "id": "new-practice-pair-01",
+    "domain": "learning",
+    "goal": "用当前给出的三组数生成乘法练习和正确答案，保留题目顺序，保存练习表；不要评价学习者是否掌握",
+    "input": {
+      "schema": "jarvis.practice-input.v1",
+      "pairs": [
+        [
+          9,
+          14
+        ],
+        [
+          17,
+          6
+        ],
+        [
+          23,
+          12
+        ]
+      ]
+    },
+    "expected": {
+      "schema": "jarvis.practice-result.v1",
+      "exercises": [
+        {
+          "a": 9,
+          "b": 14,
+          "answer": 126
+        },
+        {
+          "a": 17,
+          "b": 6,
+          "answer": 102
+        },
+        {
+          "a": 23,
+          "b": 12,
+          "answer": 276
+        }
+      ]
+    }
+  },
+  "tools": {
+    "comparison": {
+      "capability": "plugin.advice-quote.v1",
+      "description": "Read jarvis.quote-input.v1 JSON. Filter by current max_price_minor AND max_delivery_days, then select lowest eligible price. Return JSON eligible_ids, selected_id and selected_source; null if none. No network.",
+      "code": "import json\ndef run(text):\n    x=json.loads(text)\n    eligible=[o for o in x['offers'] if o['price_minor']<=x['max_price_minor'] and o['delivery_days']<=x['max_delivery_days']]\n    chosen=min(eligible,key=lambda o:o['price_minor']) if eligible else None\n    return json.dumps({'eligible_ids':sorted(o['id'] for o in eligible),'selected_id':chosen['id'] if chosen else None,'selected_source':chosen['source'] if chosen else None},ensure_ascii=False,sort_keys=True,separators=(',',':'))\n",
+      "sample": {
+        "schema": "jarvis.quote-input.v1",
+        "currency": "CNY",
+        "max_price_minor": 100,
+        "max_delivery_days": 2,
+        "offers": [
+          {
+            "id": "sample",
+            "price_minor": 80,
+            "delivery_days": 1,
+            "source": "sample-only"
+          }
+        ]
+      },
+      "expected": {
+        "eligible_ids": [
+          "sample"
+        ],
+        "selected_id": "sample",
+        "selected_source": "sample-only"
+      }
+    },
+    "documents": {
+      "capability": "plugin.advice-notes.v1",
+      "description": "Read jarvis.notes-input.v1 JSON sources array of {id,text}; emit jarvis.notes-result.v1 JSON with excerpts preserving every source id/text byte-for-byte and in order. Do not paraphrase or invent facts.",
+      "code": "import json\ndef run(text):\n    x=json.loads(text)\n    return json.dumps({'schema':'jarvis.notes-result.v1','excerpts':x['sources']},ensure_ascii=False,sort_keys=True,separators=(',',':'))\n",
+      "sample": {
+        "schema": "jarvis.notes-input.v1",
+        "sources": [
+          {
+            "id": "s",
+            "text": "Sample excerpt."
+          }
+        ]
+      },
+      "expected": {
+        "schema": "jarvis.notes-result.v1",
+        "excerpts": [
+          {
+            "id": "s",
+            "text": "Sample excerpt."
+          }
+        ]
+      }
+    },
+    "learning": {
+      "capability": "plugin.advice-practice.v1",
+      "description": "Read jarvis.practice-input.v1 JSON pairs array of two positive integers; emit jarvis.practice-result.v1 with exercises {a,b,answer} using current multiplication products. Produce a practice worksheet only; no claim the learner mastered it.",
+      "code": "import json\ndef run(text):\n    x=json.loads(text)\n    return json.dumps({'schema':'jarvis.practice-result.v1','exercises':[{'a':p[0],'b':p[1],'answer':p[0]*p[1]} for p in x['pairs']]},ensure_ascii=False,sort_keys=True,separators=(',',':'))\n",
+      "sample": {
+        "schema": "jarvis.practice-input.v1",
+        "pairs": [
+          [
+            2,
+            3
+          ]
+        ]
+      },
+      "expected": {
+        "schema": "jarvis.practice-result.v1",
+        "exercises": [
+          {
+            "a": 2,
+            "b": 3,
+            "answer": 6
+          }
+        ]
+      }
+    }
+  },
+  "cards": [
+    {
+      "source_id": "source-769b71fc7f93432aa4fff8e8d0a5deba",
+      "card": {
+        "schema": "jarvis.method-card.v1",
+        "id": "pair-advice-comparison",
+        "revision": 1,
+        "status": "CANDIDATE",
+        "recipe": "current-input-comparison",
+        "requires": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text"
+        },
+        "summary": "Use only current input and the smallest exact tool chain. Read jarvis.quote-input.v1 JSON. Filter by current max_price_minor AND max_delivery_days, then select lowest eligible price. Return JSON eligible_ids, selected_id and selected_source; null if none. No network.",
+        "counterexamples": [
+          "Current goal and input schema override historical advice. Never reuse old prices, sources, deadlines or answers."
+        ],
+        "evidence": [
+          {
+            "source_id": "source-0c0a7bac81f64230b1d9ee5d9cc4f7b1",
+            "revision": 1,
+            "sha256": "59fac963d18f8d300195f7060d6e45e17673a8a7d2a4b533a9b04795caefefb3"
+          }
+        ],
+        "expires": 1794676380.9918973
+      }
+    },
+    {
+      "source_id": "source-c5f3ebe905cb4e258ff8875bdcad89bb",
+      "card": {
+        "schema": "jarvis.method-card.v1",
+        "id": "pair-advice-documents",
+        "revision": 1,
+        "status": "CANDIDATE",
+        "recipe": "current-input-documents",
+        "requires": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text"
+        },
+        "summary": "Use only current input and the smallest exact tool chain. Read jarvis.notes-input.v1 JSON sources array of {id,text}; emit jarvis.notes-result.v1 JSON with excerpts preserving every source id/text byte-for-byte and in order. Do not paraphrase or invent facts.",
+        "counterexamples": [
+          "Current goal and input schema override historical advice. Never reuse old prices, sources, deadlines or answers."
+        ],
+        "evidence": [
+          {
+            "source_id": "source-3990b645a88d477b8f74a441f43a0533",
+            "revision": 1,
+            "sha256": "203ad72f06be93b58dc59678860cc5cb2ab7012c5ae1a586ab29a80f3bf21b5a"
+          }
+        ],
+        "expires": 1794676380.9986916
+      }
+    },
+    {
+      "source_id": "source-9a07120742754a75a1b285c4372661a4",
+      "card": {
+        "schema": "jarvis.method-card.v1",
+        "id": "pair-advice-learning",
+        "revision": 1,
+        "status": "CANDIDATE",
+        "recipe": "current-input-learning",
+        "requires": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text"
+        },
+        "summary": "Use only current input and the smallest exact tool chain. Read jarvis.practice-input.v1 JSON pairs array of two positive integers; emit jarvis.practice-result.v1 with exercises {a,b,answer} using current multiplication products. Produce a practice worksheet only; no claim the learner mastered it.",
+        "counterexamples": [
+          "Current goal and input schema override historical advice. Never reuse old prices, sources, deadlines or answers."
+        ],
+        "evidence": [
+          {
+            "source_id": "source-7cb42485b9c4479481ffb0143dee88b3",
+            "revision": 1,
+            "sha256": "b0a9f53e2ca2c56bea883dd9f8bdc309511aecdf04963cf737adc465b03955e7"
+          }
+        ],
+        "expires": 1794676381.0051098
+      }
+    }
+  ],
+  "order": [
+    "without-advice",
+    "with-advice"
+  ],
+  "contexts": {
+    "without-advice": {
+      "goal_id": "goal-345fe488701f473fa2c90a34f5c6a18e",
+      "scope": "personal",
+      "enabled": 1,
+      "view": {
+        "dependencies": [
+          {
+            "id": "source-0c0a7bac81f64230b1d9ee5d9cc4f7b1",
+            "revision": 1
+          },
+          {
+            "id": "source-3990b645a88d477b8f74a441f43a0533",
+            "revision": 1
+          },
+          {
+            "id": "source-7cb42485b9c4479481ffb0143dee88b3",
+            "revision": 1
+          }
+        ],
+        "facts": [
+          {
+            "evidence": {
+              "chunk_id": "chunk-c294f81228954e748deab084d4a1966f",
+              "end": 321,
+              "line_end": 1,
+              "line_start": 1,
+              "revision": 1,
+              "source_id": "source-7cb42485b9c4479481ffb0143dee88b3",
+              "start": 0,
+              "trust": "reference_unverified"
+            },
+            "id": "source-7cb42485b9c4479481ffb0143dee88b3",
+            "key": "Synthetic pair observation learning",
+            "kind": "source",
+            "revision": 1,
+            "value": "Operator-authored synthetic procedural observation, not independent user success: Read jarvis.practice-input.v1 JSON pairs array of two positive integers; emit jarvis.practice-result.v1 with exercises {a,b,answer} using current multiplication products. Produce a practice worksheet only; no claim the learner mastered it."
+          },
+          {
+            "evidence": {
+              "chunk_id": "chunk-eedd6d31be694a2ab6989dba229016cd",
+              "end": 291,
+              "line_end": 1,
+              "line_start": 1,
+              "revision": 1,
+              "source_id": "source-0c0a7bac81f64230b1d9ee5d9cc4f7b1",
+              "start": 0,
+              "trust": "reference_unverified"
+            },
+            "id": "source-0c0a7bac81f64230b1d9ee5d9cc4f7b1",
+            "key": "Synthetic pair observation comparison",
+            "kind": "source",
+            "revision": 1,
+            "value": "Operator-authored synthetic procedural observation, not independent user success: Read jarvis.quote-input.v1 JSON. Filter by current max_price_minor AND max_delivery_days, then select lowest eligible price. Return JSON eligible_ids, selected_id and selected_source; null if none. No network."
+          },
+          {
+            "evidence": {
+              "chunk_id": "chunk-3a9af25ac2304a19b05788c2c09bfde3",
+              "end": 283,
+              "line_end": 1,
+              "line_start": 1,
+              "revision": 1,
+              "source_id": "source-3990b645a88d477b8f74a441f43a0533",
+              "start": 0,
+              "trust": "reference_unverified"
+            },
+            "id": "source-3990b645a88d477b8f74a441f43a0533",
+            "key": "Synthetic pair observation documents",
+            "kind": "source",
+            "revision": 1,
+            "value": "Operator-authored synthetic procedural observation, not independent user success: Read jarvis.notes-input.v1 JSON sources array of {id,text}; emit jarvis.notes-result.v1 JSON with excerpts preserving every source id/text byte-for-byte and in order. Do not paraphrase or invent facts."
+          }
+        ],
+        "providers": [
+          "vertex"
+        ],
+        "retrieval": {
+          "mode": "lexical",
+          "semantic": "transaction_lexical",
+          "version": "memory-retrieval-1.1.0"
+        },
+        "selectors": {
+          "channel": "task"
+        }
+      },
+      "history": []
+    },
+    "with-advice": {
+      "goal_id": "goal-4812894bc1524546a01e973b08bad6e3",
+      "scope": "personal",
+      "enabled": 1,
+      "view": {
+        "conditional_advice": {
+          "binding": "019a992287d27caa91ce4d854e3e6e1893c3b5734dfb92448962bf9a4b3e6a00",
+          "dependencies": [
+            {
+              "id": "source-3990b645a88d477b8f74a441f43a0533",
+              "revision": 1
+            },
+            {
+              "id": "source-7cb42485b9c4479481ffb0143dee88b3",
+              "revision": 1
+            },
+            {
+              "id": "source-9a07120742754a75a1b285c4372661a4",
+              "revision": 1
+            },
+            {
+              "id": "source-c5f3ebe905cb4e258ff8875bdcad89bb",
+              "revision": 1
+            }
+          ],
+          "families": {
+            "source-9a07120742754a75a1b285c4372661a4": "782be2bb7bdb0eaf1cb71a8b956d0af9d346be7a474bef8e4c9d098adcec7866",
+            "source-c5f3ebe905cb4e258ff8875bdcad89bb": "b842167e7516d273d1d7adb92914bc884e67d3937f834834720a3c3ad9bde403"
+          },
+          "receipt": {
+            "context_digest": "732b4591e64f7a91e7947e01dd8346bacd8ffae4e9d73ea48a88f13f80558de2",
+            "methods": [
+              {
+                "method_digest": "22fc309f765010b802b5aeaa21755662e7386d4578841bd8164bb4d524115fe4",
+                "source_digest": "f826c349fbc29ab1e927e8fe7ea59191b44f4ab23056f8e5edf7de5f0c9dadfa",
+                "source_id": "source-9a07120742754a75a1b285c4372661a4",
+                "source_revision": 1
+              },
+              {
+                "method_digest": "a7f695f38686384b9ae44537ab5c3fdf3f1802320b2f8188fd6d07ca7b225722",
+                "source_digest": "d6182b41f2b6c932c3ecfde414e30bef51e70436ea3ecc8c947a3ae2e62cfd92",
+                "source_id": "source-c5f3ebe905cb4e258ff8875bdcad89bb",
+                "source_revision": 1
+              }
+            ],
+            "version": "conditional-advice-1"
+          },
+          "selectors": {
+            "channel": "task",
+            "input_kind": "text",
+            "planner": "goal-plan-v1"
+          },
+          "version": 1
+        },
+        "dependencies": [
+          {
+            "id": "source-0c0a7bac81f64230b1d9ee5d9cc4f7b1",
+            "revision": 1
+          },
+          {
+            "id": "source-3990b645a88d477b8f74a441f43a0533",
+            "revision": 1
+          },
+          {
+            "id": "source-7cb42485b9c4479481ffb0143dee88b3",
+            "revision": 1
+          }
+        ],
+        "facts": [
+          {
+            "evidence": {
+              "chunk_id": "chunk-c294f81228954e748deab084d4a1966f",
+              "end": 321,
+              "line_end": 1,
+              "line_start": 1,
+              "revision": 1,
+              "source_id": "source-7cb42485b9c4479481ffb0143dee88b3",
+              "start": 0,
+              "trust": "reference_unverified"
+            },
+            "id": "source-7cb42485b9c4479481ffb0143dee88b3",
+            "key": "Synthetic pair observation learning",
+            "kind": "source",
+            "revision": 1,
+            "value": "Operator-authored synthetic procedural observation, not independent user success: Read jarvis.practice-input.v1 JSON pairs array of two positive integers; emit jarvis.practice-result.v1 with exercises {a,b,answer} using current multiplication products. Produce a practice worksheet only; no claim the learner mastered it."
+          },
+          {
+            "evidence": {
+              "chunk_id": "chunk-eedd6d31be694a2ab6989dba229016cd",
+              "end": 291,
+              "line_end": 1,
+              "line_start": 1,
+              "revision": 1,
+              "source_id": "source-0c0a7bac81f64230b1d9ee5d9cc4f7b1",
+              "start": 0,
+              "trust": "reference_unverified"
+            },
+            "id": "source-0c0a7bac81f64230b1d9ee5d9cc4f7b1",
+            "key": "Synthetic pair observation comparison",
+            "kind": "source",
+            "revision": 1,
+            "value": "Operator-authored synthetic procedural observation, not independent user success: Read jarvis.quote-input.v1 JSON. Filter by current max_price_minor AND max_delivery_days, then select lowest eligible price. Return JSON eligible_ids, selected_id and selected_source; null if none. No network."
+          },
+          {
+            "evidence": {
+              "chunk_id": "chunk-3a9af25ac2304a19b05788c2c09bfde3",
+              "end": 283,
+              "line_end": 1,
+              "line_start": 1,
+              "revision": 1,
+              "source_id": "source-3990b645a88d477b8f74a441f43a0533",
+              "start": 0,
+              "trust": "reference_unverified"
+            },
+            "id": "source-3990b645a88d477b8f74a441f43a0533",
+            "key": "Synthetic pair observation documents",
+            "kind": "source",
+            "revision": 1,
+            "value": "Operator-authored synthetic procedural observation, not independent user success: Read jarvis.notes-input.v1 JSON sources array of {id,text}; emit jarvis.notes-result.v1 JSON with excerpts preserving every source id/text byte-for-byte and in order. Do not paraphrase or invent facts."
+          }
+        ],
+        "providers": [
+          "vertex"
+        ],
+        "retrieval": {
+          "mode": "lexical",
+          "semantic": "transaction_lexical",
+          "version": "memory-retrieval-1.1.0"
+        },
+        "selectors": {
+          "channel": "task"
+        }
+      },
+      "history": []
+    }
+  },
+  "routes": [
+    {
+      "adapter": "vertex",
+      "base_url": null,
+      "billing_profile": {
+        "adapter": "vertex",
+        "connection_label": "Google Vertex",
+        "key_label": "",
+        "price": {
+          "cache_read": 0.075,
+          "cache_write": null,
+          "checked_at": "2026-10-16",
+          "currency": "USD",
+          "fee_percent": 0,
+          "input": 0.75,
+          "max_input_tokens": 1000000,
+          "output": 3.75,
+          "source": "https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing",
+          "valid_until": "2026-12-31"
+        }
+      },
+      "credential_id": null,
+      "endpoint": null,
+      "id": "vertex",
+      "location": "global",
+      "max_output_tokens": 8192,
+      "max_prompt_bytes": 65536,
+      "model": "gemini-3.8-flash",
+      "parameters": {
+        "max_output_tokens": 8192,
+        "thinking_level": "MEDIUM"
+      },
+      "region": null,
+      "timeout_seconds": 120
+    }
+  ],
+  "harness_sha256": "a536832b4fbbaac4ddb2a0ae00cb26a7102edf8ffbfa5f69d0a1025162520f90",
+  "ablation": "PlanningAdvice.offer disabled only while binding the baseline goal; ordinary memory remains enabled in both groups",
+  "source_sha256": {
+    "host/goals.py": "d6445b92059e269a67445b7c5d87335ba8483bbf2e7d13840b612fce347d6aa6",
+    "host/planning_advice.py": "446e0932b4f4b1fdd3ef3ecd7c81d29ce1fbae4d6d7981182d8075981abf381a",
+    "host/goal_context.py": "1b897690a99d47c61792676600f25d0c1aa271c7122db9144d61497fa7b84752",
+    "adapters/models/native.py": "a4849620ce0985646653eb8f3ae1ecd554668d17ff2bb4d910758b6f86da2674",
+    "modules/context_knowledge/methods.py": "89ddba2a73a7f95e32fe213feda71876f0340e0aa56ed0712fe13e14224f78bc"
+  },
+  "source_commit": "c71ffe64ae827697055653646f3302f498d4c199",
+  "proxy_before": {
+    "allowed_providers": [
+      "vertex"
+    ],
+    "build_id": "30b79127b81e04a57cdc8aae76f607ea38b499b3fa4d92abf0020700e17848bc",
+    "calls_in_24h": 17,
+    "daily_call_limit": 64,
+    "external_tools_exposed": false,
+    "production_memory_exposed": false,
+    "profile": "development-bridge"
+  },
+  "budget": {
+    "planned_calls": 0,
+    "fallback": false,
+    "retry": false,
+    "quota_expansion": false
+  },
+  "prediction": {
+    "strict_task_success_each": true,
+    "quality_gain": "No positive gain predicted from a single simple paired case",
+    "tokens": "Advice will add prompt bytes/tokens; total/reasoning and latency may vary"
+  },
+  "predeclared_checks": [
+    "same original goal/input/catalog/routes",
+    "identical authorized ordinary background and memory settings; only conditional offer ablated",
+    "one correct input-source domain tool",
+    "input text unchanged",
+    "actual restricted task and saved artifact match independent frozen expected value",
+    "model ledger digest matches captured prompt",
+    "no automatic retry or fallback"
+  ],
+  "not_measured": [
+    "independent user work",
+    "multiple independent cases per domain",
+    "learning gains",
+    "longitudinal benefit",
+    "statistical significance",
+    "complete monetary and maintenance cost"
+  ]
+}

@@ -1,0 +1,155 @@
+{
+  "group": "with-advice",
+  "goal_id": "goal-2cb2393beecf4a3cb7e83b1ffd8df5de",
+  "planning_status": "REVIEW",
+  "proposal": {
+    "input_text": "{\"currency\":\"CNY\",\"max_delivery_days\":5,\"max_price_minor\":19300,\"offers\":[{\"delivery_days\":8,\"id\":\"X55\",\"price_minor\":16500,\"source\":\"synthetic:X55\"},{\"delivery_days\":4,\"id\":\"Y72\",\"price_minor\":18000,\"source\":\"synthetic:Y72\"},{\"delivery_days\":5,\"id\":\"Z04\",\"price_minor\":17500,\"source\":\"synthetic:Z04\"}],\"schema\":\"jarvis.quote-input.v1\"}",
+    "questions": [],
+    "schema": "jarvis.goal-plan.v1",
+    "steps": [
+      {
+        "capability": "plugin.advice-quote.v1",
+        "expected": "Current quote artifact",
+        "source": "input",
+        "title": "比较当前报价"
+      }
+    ],
+    "summary": "Dry comparison"
+  },
+  "plan_passed": true,
+  "planning_seconds": 0.026634399999238667,
+  "task_id": "task-2b7b525b61544e6d9ea21e2fc9457b3d",
+  "task_status": "SUCCEEDED",
+  "completion": {
+    "version": "completion-1.1.0",
+    "task_id": "task-2b7b525b61544e6d9ea21e2fc9457b3d",
+    "state": "VERIFIED",
+    "fingerprint": "c1f34f8b7d59a928d61ec894c4cb0d73cb4613210969caae11489dc8d5ca9cc6",
+    "acceptance": {
+      "revision": 1,
+      "rules": {
+        "coverage": "complete",
+        "criteria": [
+          {
+            "check": "text_equals",
+            "expected": "{\"eligible_ids\":[\"Y72\",\"Z04\"],\"selected_id\":\"Z04\",\"selected_source\":\"synthetic:Z04\"}",
+            "id": "exact-current-comparison",
+            "step_id": "step-1"
+          }
+        ],
+        "requirements": [
+          {
+            "criterion_ids": [
+              "exact-current-comparison"
+            ],
+            "id": "current-frozen-artifact",
+            "kind": "literal",
+            "text": "Current eligible set, lowest eligible offer and exact source"
+          }
+        ]
+      }
+    },
+    "checks": [
+      {
+        "id": "exact-current-comparison",
+        "step_id": "step-1",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "score_scope": "declared_conditions_only",
+    "outcome_id": "outcome-731ef648d1d96f47ec2258302175cfd0",
+    "requirement_coverage": {
+      "version": "declared-requirements-1",
+      "state": "SATISFIED",
+      "requirements": [
+        {
+          "criterion_ids": [
+            "exact-current-comparison"
+          ],
+          "id": "current-frozen-artifact",
+          "kind": "literal",
+          "text": "Current eligible set, lowest eligible offer and exact source",
+          "status": "passed",
+          "reason": "linked_checks"
+        }
+      ],
+      "complete": true,
+      "scope": "explicitly_declared_requirements",
+      "semantic_goal_verified": false
+    },
+    "evidence_ready": true,
+    "feedback": null,
+    "method": null,
+    "method_available": false,
+    "feedback_history": [],
+    "assessment_history": []
+  },
+  "saved_artifact_receipts": [
+    {
+      "bytes": 475,
+      "relative_path": "artifacts/task-2b7b525b61544e6d9ea21e2fc9457b3d/action-b6706f0bfe98c36e514223a91ad1fe73/result.json",
+      "sha256": "33a0986a2beae9259006bd15c9b21c07fbac589672e12d20d02e6bfd5f3f4b5d",
+      "verified": true
+    }
+  ],
+  "passed": true,
+  "calls": [
+    {
+      "id": "call-518c96f85cda48598fbaa16f94672fbd",
+      "run_id": "goal-2cb2393beecf4a3cb7e83b1ffd8df5de",
+      "phase": "goal-plan",
+      "status": "SUCCEEDED",
+      "input_digest": "03a17a77ec0b40c67ecb0674a5ff7aa540f99fee34e370ae3bc290dc8a2a2d6b",
+      "usage": {
+        "total_tokens": 0
+      }
+    }
+  ],
+  "actual_model_calls": 1,
+  "planning_advice": {
+    "version": 1,
+    "current": true,
+    "offered": [
+      {
+        "method_digest": "d28259e6b221b8587a7a9ea25a4915b070d6b28c172b08ffe0f438ce20306ff0",
+        "source_digest": "21bb23ea5e0675624de9d5a658d85b828569006639a22076f3e7ccf1564bc038",
+        "source_id": "source-73abc4091bd245dabaf029f29052a747",
+        "source_revision": 1
+      },
+      {
+        "method_digest": "db0fe7cbad17b87eda3c4f2fc36b7bd74ece14094ad0f9d439b783f85c704141",
+        "source_digest": "af058f36d4294a69867a92ff5a678db07b2fee0f104736c2423c07d0c4dabb5c",
+        "source_id": "source-9f28c7c620ed4f92b1a1542847acc0f4",
+        "source_revision": 1
+      }
+    ],
+    "model_calls": [
+      {
+        "id": "call-518c96f85cda48598fbaa16f94672fbd",
+        "status": "SUCCEEDED",
+        "usage": {
+          "total_tokens": 0
+        }
+      }
+    ],
+    "model_dispatched": true,
+    "observation": {
+      "causal_contribution": null,
+      "condition_score": 100.0,
+      "coverage_complete": true,
+      "fingerprint": "c1f34f8b7d59a928d61ec894c4cb0d73cb4613210969caae11489dc8d5ca9cc6",
+      "review_required": false,
+      "score_scope": "declared_conditions_only",
+      "state": "VERIFIED",
+      "task_id": "task-2b7b525b61544e6d9ea21e2fc9457b3d"
+    },
+    "inherited_from": null,
+    "advisory_only": true,
+    "execution_authorized": false,
+    "automatic_promotion": false,
+    "independent_successes": null,
+    "causal_contribution": null
+  },
+  "receipt_bound": true
+}

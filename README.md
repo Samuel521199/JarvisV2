@@ -2,7 +2,9 @@
 
 **源码 v0.1.9 后续开发，未日用采用。** 新增[大型陪聊平台长期记忆优化方案](docs/long-term-memory-scale-optimization.md#platform-memory-scope)，当前状态为 proposed。此仓库为独立 JarvisV2 工程；旧 JachinV2 的实现与验收不自动继承。下文日用功能描述按原有验收记录理解，源码版本不代表已安装或上线。见[本轮收尾记录](docs/evidence/memory-docs-closeout-20261113.md#memory-docs-closeout-scope)。
 
-同日后续开发已修复升级竞争问题，并补显式来源文档渲染；自然请求11月14日新增较宽留出首测66.7%，未达事前90%门；修复回放不能替代新留出。见[实际结果与剩余缺口](docs/delivery-validation.md#request-document-evidence-20261113)。另补[条件经验只读筛选和首次知识贡献对照](docs/delivery-validation.md#conditional-advice-evidence-20261114)，未证明长期质量收益。后续已补[目标规划经验与反证回接](docs/delivery-validation.md#goal-planning-advice-evidence-20261114)：三域模型各一次通过有限产物条件，无配对收益证明；日用控制器先晋升协议2并留存D灾备，应用仍未采用。[提示预算回退](docs/delivery-validation.md#goal-advice-budget-evidence-20261114)已补开发验证，长期贡献、相容应用基线和自动归纳仍待补。这些应用改动尚未日用采用；[控制器独立晋升与恢复](docs/delivery-validation.md#controller-promotion-evidence-20261114)已在日用完成，活动应用仍v0.1.8/epoch9。完整后续工作按[实施跟踪](docs/decisions-review.md#review-followthrough-20261113)推进，不以局部通过标记全部目标完成。
+**最新实测：**[条件经验三域配对](docs/delivery-validation.md#goal-advice-pair-evidence-20261114)各一组、条件同分，加卡组合计token增加52.8%；未证明长期收益。新增开发体积诊断帮助定位输入膨胀；日用从离线状态按原入口恢复至v0.1.8/epoch10，未采用本轮应用。
+
+同日后续开发已修复升级竞争问题，并补显式来源文档渲染；自然请求11月14日新增较宽留出首测66.7%，未达事前90%门；修复回放不能替代新留出。见[实际结果与剩余缺口](docs/delivery-validation.md#request-document-evidence-20261113)。另补[条件经验只读筛选和首次知识贡献对照](docs/delivery-validation.md#conditional-advice-evidence-20261114)，未证明长期质量收益。后续已补[目标规划经验与反证回接](docs/delivery-validation.md#goal-planning-advice-evidence-20261114)：三域模型各一次通过有限产物条件，无配对收益证明；日用控制器先晋升协议2并留存D灾备，应用仍未采用。[提示预算回退](docs/delivery-validation.md#goal-advice-budget-evidence-20261114)已补开发验证，长期贡献、相容应用基线和自动归纳仍待补。这些应用改动尚未日用采用；[控制器独立晋升与恢复](docs/delivery-validation.md#controller-promotion-evidence-20261114)已在日用完成，当前活动应用为v0.1.8/epoch10。完整后续工作按[实施跟踪](docs/decisions-review.md#review-followthrough-20261113)推进，不以局部通过标记全部目标完成。
 
 <p align="center">
   <img src="apps/workbench/brand/core.png" width="156" alt="Jarvis blue core emblem">

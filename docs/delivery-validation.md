@@ -7,6 +7,8 @@
 
 **本章导航**
 
+- [条件经验真实配对与成本诊断（2026-11-14—15）](#goal-advice-pair-evidence-20261114)
+  - [新增体积诊断、旧版读回与部署边界](#goal-advice-size-diagnostics)
 - [经验提示预算回退（2026-11-14）](#goal-advice-budget-evidence-20261114)
 - [目标规划经验接线与反证回接（2026-11-14）](#goal-planning-advice-evidence-20261114)
   - [实现、回归与真实模型范围](#goal-planning-advice-results)
@@ -169,6 +171,61 @@
 - [个人助理开发收尾与兼容升级（2026-11-09）](#assistant-release-20261109)
 - [网页精灵共享能力与排空修复（2026-11-04）](#companion-shared-evidence)
 <!-- book-nav:end -->
+
+<a id="goal-advice-pair-evidence-20261114"></a>
+## 条件经验真实配对与成本诊断（2026-11-14—15）
+
+**结论：报价、资料整理、学习练习各一组配对，6次真实模型调用均通过声明产物条件；加卡组total_tokens合计9,276，对照组6,069（+52.8%），本批未观察到质量增益。不能据此扩大全量默认采用，也不能推导所有知识都无用。** 后续补的是输入体积诊断与相容读回，尚未压缩模型提示、自动淘汰经验或日用采用新应用。[运行正文](knowledge-learning.md#goal-planning-advice-runtime)／[字段](contracts.md#goal-planning-advice-contract)。
+
+[三域汇总及只读审计](evidence/advice-pair-20261114/all-domain-pairs.json)按每域一题两种条件记账；是3个构造问题，不是6个独立问题，未达到正式重复/留出门。报价采样源码c9e4617，其余两域为仅新增体积观察且提示兼容的c71ffe6，不能写成同一代码快照的三域长测。
+
+| 域／一组真实配对 | 不加卡 total_tokens | 加卡 total_tokens | 条件得分／成本变化 |
+|---|---|---|---|
+| [报价](evidence/advice-pair-20261114/native-r1/analysis.json) | 2,279 | 3,411 | 两组100；+49.7% |
+| [资料整理](evidence/advice-pair-20261114/documents-native-r1/analysis.json) | 1,706 | 2,903 | 两组100；+70.2% |
+| [练习工作表](evidence/advice-pair-20261114/learning-native-r1/analysis.json) | 2,084 | 2,962 | 两组100；+42.1% |
+| 本批记账合计 | 6,069 | 9,276 | +3,207（+52.8%），不是总体效应估计 |
+
+下表保留首个报价配对的细项；其余域原始用量、时延、消息字节和文件检查见各自analysis。新增两域先[试跑资料](evidence/advice-pair-20261114/documents-dry-r1/summary.json)和[试跑学习](evidence/advice-pair-20261114/learning-dry-r1/summary.json)，再冻结真实请求；资料按加卡→不加卡、学习按不加卡→加卡执行。滚动额度释放到17/64后仅计划4次、实际21/64；上限始终64。两域新体积诊断与两组实际消息字节逐项一致，临时凭据均已清除；资料保留草稿/未确认限定，练习答案126/102/276，不评价学习者掌握。
+
+| 一组配对的实测 | 不提供条件经验卡 | 提供条件经验卡 | 解释与预测差距 |
+|---|---|---|---|
+| 声明产物条件得分 | 100 / 100 | 100 / 100 | 冻结时预计两组可完成这一有限任务；没有质量提升证据 |
+| prompt_tokens | 1,602 | 2,560 | +958（+59.8%）；事前只预测额外输入，不事后冒充预测过此比例 |
+| visible completion / separate reasoning | 236 / 441 | 278 / 573 | reasoning_in_completion=false，未重复计数 |
+| reported total_tokens | 2,279 | 3,411 | +1,132（+49.7%）；是此配对的成本退步，不是已证明长期趋势 |
+| 规划耗时 | 8.077秒 | 7.549秒 | 单次少0.527秒，不能证明稳定加速，受顺序、服务状态和随机生成影响 |
+| 消息JSON的UTF-8字节 | 5,865 | 8,435 | +2,570字节；不等于token差或实际账单 |
+| 模型调用 / 工具动作单位 | 1 / 2 | 1 / 2 | 不fallback、不retry；金额及完整维护成本未知 |
+
+[冻结协议](evidence/advice-pair-20261114/native-r1/freeze.json)先于两次派发，源码c9e4617，原授权代理自然释放额度后61→63/64，没有重置/扩大上限。目标、193元预算、5天交期、X55/Y72/Z04输入、工具、路由、模型、普通背景和记忆开关均相同；冻结顺序为不加卡→加卡。两组都保留3条已授权的合成原始观察，**对照是“同一普通背景下有无条件经验卡”，不是关闭全部记忆**。处理组提供报价卡及资料整理卡；后者只声明通用channel/planner/input_kind前提，没有按本次报价schema收窄，因此也占用了输入。
+
+[原回执与分析](evidence/advice-pair-20261114/native-r1/analysis.json)对应独立Root中的真实NativeModel/原批准桥、真实RestrictedWorker和实际保存的文件；[6个桥请求体哈希关联](evidence/advice-pair-20261114/bridge-correlation.json)与三域捕获消息、模型及已冻结推理参数逐一匹配；合格集合Y72/Z04、最低合格Z04及synthetic:Z04来源符合预先手写的期望。逐项SHA/长度/文件text、持久模型摘要和冻结时点已只读核对；[临时桥凭据清除](evidence/advice-pair-20261114/native-r1/cleanup.json)通过。包装器只记录输入并调用原NativeModel，不修改模型消息。所有报价、经验和资料均由实施者构造，不能当作供应商报价或独立用户留出；两组各一次，未达原多次重复、留出和长期验收门。后续分析按冻结的Git提交核对源码，保留[改码前的首次审计](evidence/advice-pair-20261114/native-r1/analysis-initial-source-audit.json)，不把新观测代码当作已经重跑模型。
+
+第一次无云调用试跑发现：关闭记忆会同时改变普通资料，形成混淆；[原失败](evidence/advice-pair-20261114/dry-r1/failure.txt)保留，未消费真实模型请求。随后仅在独立夹具绑定基线时旁路PlanningAdvice.offer，记忆保持开启；[最终试跑](evidence/advice-pair-20261114/dry-r3/summary.json)通过后才做真实配对。不能把试跑或两次同题结果算成更多独立任务。
+
+| 原要求的三域 | 本轮新增配对 | 剩余验收 |
+|---|---|---|
+| 报价比较 | 1组，真实模型2次；条件均通过但成本增加 | 未见条件变化、多次重复、独立真实来源、长期净收益 |
+| 资料整理 | 1组，真实模型2次；条件同分、成本增加 | 长资料、独立用户来源、纠正传播与长期返工收益未验 |
+| 学习辅助 | 1组，真实模型2次；条件同分、成本增加 | 原练习产物不证明学习者掌握；仍需独立题目、多次配对和延迟复测 |
+
+**按证据继续的改进顺序：**先补适用条件精度、避免无关领域卡和重复工具说明，再缩小模型可见的建议负担，宿主仍保留完整来源、反例和撤回依赖。若改变持久格式或既有规划消息的恢复方式，先定义版本及旧版拒绝/相容基线，不用改提示文本绕过已有回执摘要。之后按原协议补三域配对、未见条件反转和长期样本，测完整成本后再决定默认采用；不能凭这一次高成本就永久封禁方法族。自动归纳、独立成功统计和经验晋升仍待补。
+
+<a id="goal-advice-size-diagnostics"></a>
+### 新增体积诊断、旧版读回与部署边界
+
+`dispatch.message_exposure`只存4个有界观察字段：unit、full_bytes、without_advice_bytes、added_bytes；不存新正文，不影响授权、任务条件分或经验可信度。装配时比较实际消息JSON，沿原goal.advice_assembled事件留审计；目标详情和聊天共用同一投影/组件显示体积。历史缺失或坏值表示未知，不填0；继承任务不把父输入体积计作自己的输入。新观测没有改变模型提示，新增[7项专项](evidence/advice-pair-20261114/exposure-first.txt)及[66项关联回归](evidence/advice-pair-20261114/exposure-regressions.json)通过，含原有/无建议提示兼容、UNKNOWN、撤回和预算省略，不将重叠轮次相加。
+
+实际[前一已核验包5aa25450…](evidence/advice-pair-20261114/legacy-reader-replay.json)和[当前控制器运行来源fe3dd7ef…](evidence/advice-pair-20261114/controller-reader-r1/legacy-reader-replay.json)都读取新可选字段并复用原成功模型回执恢复至REVIEW；调用、用量、许可支出和来源有效性不变，模型新增调用0。旧程序可丢弃这个可选体积字段，新程序随后显示未知；完整模型摘要、任务依赖和原审计保留。因同一模型消息保持兼容，GoalAdviceSchema1/Core7/控制器协议2不变；这不代表所有未来提示压缩也可不升级契约。
+
+[真实Edge桌面1280和移动390视口](evidence/advice-pair-20261114/ui-r1/render-result.json)检查及截图查看通过：无横向溢出，体积说明、反证状态和上游按钮可读/可用。数据是明确标注的模型替身规划回执及展示态，属于共用组件验证，不是完整日用端到端；未安装依赖，浏览器和静态服务均已退出，截图仅本机。
+
+源码c71ffe6的[独立包](evidence/advice-pair-20261114/independent-package/result.json)经已安装控制器固定207项检查，206通过/1平台跳过、架构错误0、runtime_intact=true，包2d05125d015e…；冻结评价策略未更换。[包内7项已见重放](evidence/advice-pair-20261114/package-exposure-replay.json)通过，所有运行时导入来自该包、包文件摘要不变。固定207项与新增诊断断言分别记录，不把包内重放计成新留出或新模型采样。
+
+[离线压缩草案](evidence/advice-pair-20261114/compact-proposal/analysis.json)对同一已见报价消息保留方法ID、配方、适用条件、摘要、反例和来源引用，仅去掉模型无需重复携带的宿主元数据：8,435→7,545消息字节（-10.6%），仍大于不加卡的5,865。未请求模型、未写运行时数据；token、质量和费用收益未知。[具体实施面和相容门](knowledge-learning.md#goal-advice-compact-proposal)先行，不把此草案标作运行时压缩已完成。
+
+**可用性记录另计：**本轮发现日用、开发和代理已离线，原因未确定；测试执行句柄仍存活，继续等待完成，没有重启测试。[按原E盘入口恢复日用](evidence/advice-pair-20261114/service-recovery-r1/result.json)至v0.1.8/epoch10，控制器545dfd07…/协议2未变；本轮核对的config/private文件摘要及core/dialogue/commitments所有表摘要相同、桥调用账未变。开发/原代理随后重新启动，未复制日用数据或采用新应用。此记录不算热升级零中断，长期存活与退出原因仍需补证，私密指纹仅留E:/Jarvis/backups。相同控制器和epoch10准入账本已一致备份到D:/Jarvis-Recovery/controllers/2026-11-14-r3，[9文件、694项受摘要保护控制器文件及SQLite读回](evidence/advice-pair-20261114/controller-disaster-copy.json)通过；这是控制增量，不是新全量业务快照。另将[当前调用账及6个实验回执](evidence/advice-pair-20261114/budget-disaster-copy.json)一致备份到D:/Jarvis-Recovery/budgets/2026-11-15-r1并读回。预算快照不构成防回滚机制：恢复存在间隙时，未核清缺失用量和当前有效授权前，不自动恢复代理/外部动作，不把缺失调用算0。跨根预算/权限防回滚仍属后续工作。
 
 <a id="goal-advice-budget-evidence-20261114"></a>
 ## 经验提示预算回退（2026-11-14）
@@ -2392,6 +2449,7 @@ Studio3D 新增的限定诊断、失败和成本证据见[执行登记](studio3d
 | 近似问题的节省与误用 | 条件相反/目标变化/历史撤回已有技术小样；泛化未测 | 单次表示压缩有节省，完整质量/成本收益未证明 |
 | 新结构低分后的受控修复 | 未运行 | 结构证据、失败清单、修复轮次及生产采用决定 |
 | 长期经验增长与防退化 | 未运行 | 跨时间保留任务、错误复发、知识/检索版本和恢复记录 |
+| 条件经验自动提供的单组配对 | [三域各一组](#goal-advice-pair-evidence-20261114)条件同分、合计total_tokens增加52.8%，不作长期收益结论 | 原始背景相同、消息差异、真实模型/Worker/文件、失败与成本保留；其余域和正式门仍待验 |
 
 <a id="conditional-advice-evidence-20261114"></a>
 #### 条件经验候选与首次知识贡献对照（2026-11-14）

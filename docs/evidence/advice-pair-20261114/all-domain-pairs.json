@@ -1,0 +1,171 @@
+{
+  "scope": "three operator-authored cases, one pair per domain; six calls are not six independent questions; no longitudinal or population effect claim",
+  "rows": [
+    {
+      "domain": "comparison",
+      "source_commit": "c9e4617c7063636e9565772eeafb31354768dbcc",
+      "order": [
+        "without-advice",
+        "with-advice"
+      ],
+      "pairs": 1,
+      "strict_task_passed": [
+        true,
+        true
+      ],
+      "without_advice": {
+        "declared_condition_score": 100.0,
+        "strict_task_passed": true,
+        "prompt_tokens": 1602,
+        "completion_tokens": 236,
+        "reasoning_tokens": 441,
+        "total_tokens": 2279,
+        "planning_seconds": 8.076522099998328,
+        "message_bytes": 5865,
+        "task_cost_units": 2,
+        "model_calls": 1,
+        "monetary_cost": null
+      },
+      "with_advice": {
+        "declared_condition_score": 100.0,
+        "strict_task_passed": true,
+        "prompt_tokens": 2560,
+        "completion_tokens": 278,
+        "reasoning_tokens": 573,
+        "total_tokens": 3411,
+        "planning_seconds": 7.5492157000007865,
+        "message_bytes": 8435,
+        "task_cost_units": 2,
+        "model_calls": 1,
+        "monetary_cost": null
+      },
+      "observed_deltas": {
+        "declared_condition_score": 0.0,
+        "prompt_tokens": 958,
+        "prompt_tokens_percent": 59.80024968789013,
+        "total_tokens": 1132,
+        "total_tokens_percent": 49.670908293111005,
+        "planning_seconds": -0.527306399997542,
+        "planning_seconds_percent": -6.528879553213274
+      },
+      "audit_passed": true,
+      "temporary_credential_removed": true
+    },
+    {
+      "domain": "documents",
+      "source_commit": "c71ffe64ae827697055653646f3302f498d4c199",
+      "order": [
+        "with-advice",
+        "without-advice"
+      ],
+      "pairs": 1,
+      "strict_task_passed": [
+        true,
+        true
+      ],
+      "without_advice": {
+        "declared_condition_score": 100.0,
+        "strict_task_passed": true,
+        "prompt_tokens": 1094,
+        "completion_tokens": 196,
+        "reasoning_tokens": 416,
+        "total_tokens": 1706,
+        "planning_seconds": 8.171875200000613,
+        "message_bytes": 4312,
+        "task_cost_units": 2,
+        "model_calls": 1,
+        "monetary_cost": null
+      },
+      "with_advice": {
+        "declared_condition_score": 100.0,
+        "strict_task_passed": true,
+        "prompt_tokens": 2047,
+        "completion_tokens": 186,
+        "reasoning_tokens": 670,
+        "total_tokens": 2903,
+        "planning_seconds": 10.795943699999953,
+        "message_bytes": 6883,
+        "task_cost_units": 2,
+        "model_calls": 1,
+        "monetary_cost": null
+      },
+      "observed_deltas": {
+        "declared_condition_score": 0.0,
+        "prompt_tokens": 953,
+        "prompt_tokens_percent": 87.11151736745886,
+        "total_tokens": 1197,
+        "total_tokens_percent": 70.16412661195778,
+        "planning_seconds": 2.624068499999339,
+        "planning_seconds_percent": 32.11097129822959
+      },
+      "audit_passed": true,
+      "temporary_credential_removed": true
+    },
+    {
+      "domain": "learning",
+      "source_commit": "c71ffe64ae827697055653646f3302f498d4c199",
+      "order": [
+        "without-advice",
+        "with-advice"
+      ],
+      "pairs": 1,
+      "strict_task_passed": [
+        true,
+        true
+      ],
+      "without_advice": {
+        "declared_condition_score": 100.0,
+        "strict_task_passed": true,
+        "prompt_tokens": 1497,
+        "completion_tokens": 139,
+        "reasoning_tokens": 448,
+        "total_tokens": 2084,
+        "planning_seconds": 7.625645300000542,
+        "message_bytes": 5468,
+        "task_cost_units": 2,
+        "model_calls": 1,
+        "monetary_cost": null
+      },
+      "with_advice": {
+        "declared_condition_score": 100.0,
+        "strict_task_passed": true,
+        "prompt_tokens": 2450,
+        "completion_tokens": 151,
+        "reasoning_tokens": 361,
+        "total_tokens": 2962,
+        "planning_seconds": 7.756242200000088,
+        "message_bytes": 8064,
+        "task_cost_units": 2,
+        "model_calls": 1,
+        "monetary_cost": null
+      },
+      "observed_deltas": {
+        "declared_condition_score": 0.0,
+        "prompt_tokens": 953,
+        "prompt_tokens_percent": 63.66065464261857,
+        "total_tokens": 878,
+        "total_tokens_percent": 42.13051823416507,
+        "planning_seconds": 0.1305968999995457,
+        "planning_seconds_percent": 1.7126012928969647
+      },
+      "audit_passed": true,
+      "temporary_credential_removed": true
+    }
+  ],
+  "real_model_calls": 6,
+  "unique_question_cases": 3,
+  "per_domain_pairs": 1,
+  "bookkeeping_totals": {
+    "without_advice_tokens": 6069,
+    "with_advice_tokens": 9276,
+    "delta_tokens": 3207,
+    "delta_percent": 52.842313395946604
+  },
+  "all_six_declared_artifacts_passed": true,
+  "all_audits_passed": true,
+  "all_temporary_credentials_removed": true,
+  "quality_gain_claimed": false,
+  "statistical_non_inferiority_claimed": false,
+  "long_term_learning_claimed": false,
+  "production_application_adopted": false
+}

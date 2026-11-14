@@ -216,11 +216,14 @@ MemoryView 只授权本次读取与装配，不授予工具执行权限。实际
 | version=1、binding、selectors | 严格版本及已知字段；绑定完整请求、规划路由、能力目录、generation和planning_round，selectors由宿主取得 |
 | receipt、dependencies、families | 原条件卡回执、卡与原始证据的完整修订列表；families按条件/摘要/反例形成，不因改名、续期、修订号或复制观察改变 |
 | dispatch | run_id及与既有RoutedModels一致的prompt/schema摘要；仅装配记录，实际派发需匹配model_calls中的持久回执 |
+| dispatch.message_exposure（可选） | 严格unit=message_json_utf8_bytes及full_bytes/without_advice_bytes/added_bytes三个非负整数，added=full-without；未知字段/单位、布尔数值或不一致值仅作观察未知。无新正文、授权或可信度；旧v1读者可忽略，消息正文不变；[实际旧包读回](delivery-validation.md#goal-advice-size-diagnostics)已验 |
 | goal.advice_omitted事件 | 无当前规划调用时省略未派发建议；保存原因prompt_budget、来源ID、全量/原提示消息字节、冻结路由最小/最大上限和最终input_digest，不存正文或形成新使用依赖；已有调用/继承依赖不可删 |
 | observation | task_id、完成指纹、state、condition_score、score_scope、coverage_complete、review_required；causal_contribution为null |
 | mode=inherited | 已审阅返工/持续安排的依赖继承，附parent_goal/parent_binding；递归最多8层，同域同权限重验，不把旧建议注入新模型输入 |
 | detail.planning_advice | 当前有效性、提供引用、真实模型回执及usage、结果观察；automatic_promotion=false，independent_successes=null，execution_authorized=false |
 | config/goal-advice-compatibility.json | 严格{"schema":1,"goal_advice_schema":1}；当前或历史元数据存在即要求支持，未知版本拒绝；来源卡被忘记不能抹去该要求 |
+
+体积从同次装配取得，覆盖附加规则和完整消息封装；新投影message_exposure可为null，不能把缺失当0或父任务用量当子任务用量。旧程序丢弃这个可选字段后仍保留执行依赖和回执，新程序不伪造历史数值；已知观察字段不构成新的执行语义版本。
 
 明确条件失败或仍有效的reject在同域暂停相同内容家族的自动提供和相关待执行工作。只有依赖失效、上游撤回或普通工具故障不能被累计成新的独立方法反例；现有Completion反馈撤回/重评沿原流程进行。新建议不提供执行权限，准入与每步执行继续核验原目标、来源、能力、预算及取消状态。
 

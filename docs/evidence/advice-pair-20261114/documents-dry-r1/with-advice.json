@@ -1,0 +1,168 @@
+{
+  "group": "with-advice",
+  "goal_id": "goal-c19234866be84f6db7202d38518320bb",
+  "planning_status": "REVIEW",
+  "proposal": {
+    "input_text": "{\"schema\":\"jarvis.notes-input.v1\",\"sources\":[{\"id\":\"note-Q15\",\"text\":\"草稿：250元只是估价，尚未最终确认。\\n请保留这条限定。\"},{\"id\":\"note-R06\",\"text\":\"已确认：交付清单为2个零件；日期待另行确认。\"}]}",
+    "questions": [],
+    "schema": "jarvis.goal-plan.v1",
+    "steps": [
+      {
+        "capability": "plugin.advice-notes.v1",
+        "expected": "Current quote artifact",
+        "source": "input",
+        "title": "比较当前报价"
+      }
+    ],
+    "summary": "Dry comparison"
+  },
+  "plan_passed": true,
+  "planning_seconds": 0.04055419999986043,
+  "task_id": "task-be704d930c8241c3917851c323a3336c",
+  "task_status": "SUCCEEDED",
+  "completion": {
+    "version": "completion-1.1.0",
+    "task_id": "task-be704d930c8241c3917851c323a3336c",
+    "state": "VERIFIED",
+    "fingerprint": "aa4cf0764d28f62ef104aad698d4361fc0e83700364bc83b2ad52c152d526294",
+    "acceptance": {
+      "revision": 1,
+      "rules": {
+        "coverage": "complete",
+        "criteria": [
+          {
+            "check": "text_equals",
+            "expected": "{\"excerpts\":[{\"id\":\"note-Q15\",\"text\":\"草稿：250元只是估价，尚未最终确认。\\n请保留这条限定。\"},{\"id\":\"note-R06\",\"text\":\"已确认：交付清单为2个零件；日期待另行确认。\"}],\"schema\":\"jarvis.notes-result.v1\"}",
+            "id": "exact-current-comparison",
+            "step_id": "step-1"
+          }
+        ],
+        "requirements": [
+          {
+            "criterion_ids": [
+              "exact-current-comparison"
+            ],
+            "id": "current-frozen-artifact",
+            "kind": "literal",
+            "text": "Frozen current domain artifact, values, source/order and explicit limitations"
+          }
+        ]
+      }
+    },
+    "checks": [
+      {
+        "id": "exact-current-comparison",
+        "step_id": "step-1",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "score_scope": "declared_conditions_only",
+    "outcome_id": "outcome-0e8f4d12c7c322a417847d2e3bcf6c56",
+    "requirement_coverage": {
+      "version": "declared-requirements-1",
+      "state": "SATISFIED",
+      "requirements": [
+        {
+          "criterion_ids": [
+            "exact-current-comparison"
+          ],
+          "id": "current-frozen-artifact",
+          "kind": "literal",
+          "text": "Frozen current domain artifact, values, source/order and explicit limitations",
+          "status": "passed",
+          "reason": "linked_checks"
+        }
+      ],
+      "complete": true,
+      "scope": "explicitly_declared_requirements",
+      "semantic_goal_verified": false
+    },
+    "evidence_ready": true,
+    "feedback": null,
+    "method": null,
+    "method_available": false,
+    "feedback_history": [],
+    "assessment_history": []
+  },
+  "saved_artifact_receipts": [
+    {
+      "bytes": 645,
+      "relative_path": "artifacts/task-be704d930c8241c3917851c323a3336c/action-a0f0685a0e89c19f150017cc08f557db/result.json",
+      "sha256": "aa9853e720004f72587652f632b2b1b4b1e2e20af5a2e697a2aa97bad02560c5",
+      "verified": true
+    }
+  ],
+  "artifact_checks": [
+    {
+      "sha256_matches": true,
+      "bytes_match": true,
+      "actual_text_matches_frozen_expected": true
+    }
+  ],
+  "passed": true,
+  "calls": [
+    {
+      "id": "call-b9568215d85a405d9c38f5d513eaecdb",
+      "run_id": "goal-c19234866be84f6db7202d38518320bb",
+      "phase": "goal-plan",
+      "status": "SUCCEEDED",
+      "input_digest": "1f6ec9e815c867c8ca5a5051cd85461ef2856d465fad95560a61ac39fe381b7a",
+      "usage": {
+        "total_tokens": 0
+      }
+    }
+  ],
+  "actual_model_calls": 1,
+  "planning_advice": {
+    "version": 1,
+    "current": true,
+    "offered": [
+      {
+        "method_digest": "5fec7d25f867e8c76d08e851732e98a9e4132d3db3001a270b1c631fd9e747bd",
+        "source_digest": "0c72ce7a828dd5b469770405c7cc523a8fb4b867cd1b8c0e818816605cde22d7",
+        "source_id": "source-730278e57520464c859fa773049444e0",
+        "source_revision": 1
+      },
+      {
+        "method_digest": "6236a23325ae8c4410cfdbe59e2db705087337b509df816ba6c3929023d0d03a",
+        "source_digest": "ac07505bfd1841085c6d7005eaa721831f3dce6e70db302e18f925295dd84987",
+        "source_id": "source-2ec6d87814294ee0a5987882b495d435",
+        "source_revision": 1
+      }
+    ],
+    "model_calls": [
+      {
+        "id": "call-b9568215d85a405d9c38f5d513eaecdb",
+        "status": "SUCCEEDED",
+        "usage": {
+          "total_tokens": 0
+        }
+      }
+    ],
+    "model_dispatched": true,
+    "observation": {
+      "causal_contribution": null,
+      "condition_score": 100.0,
+      "coverage_complete": true,
+      "fingerprint": "aa4cf0764d28f62ef104aad698d4361fc0e83700364bc83b2ad52c152d526294",
+      "review_required": false,
+      "score_scope": "declared_conditions_only",
+      "state": "VERIFIED",
+      "task_id": "task-be704d930c8241c3917851c323a3336c"
+    },
+    "inherited_from": null,
+    "advisory_only": true,
+    "execution_authorized": false,
+    "automatic_promotion": false,
+    "independent_successes": null,
+    "causal_contribution": null,
+    "message_exposure": {
+      "added_bytes": 2569,
+      "full_bytes": 6881,
+      "unit": "message_json_utf8_bytes",
+      "without_advice_bytes": 4312
+    }
+  },
+  "receipt_bound": true
+}

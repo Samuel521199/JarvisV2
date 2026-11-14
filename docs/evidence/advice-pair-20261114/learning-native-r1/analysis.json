@@ -1,0 +1,98 @@
+{
+  "audit_created_at": 1794673412.2974238,
+  "audit_mode": "recorded source commit and persisted native ledgers; not a new model run",
+  "scope": "one operator-authored synthetic learning pair, same ordinary source background in both groups; not memory-off vs memory-on",
+  "sample_pairs": 1,
+  "source_commit": "c71ffe64ae827697055653646f3302f498d4c199",
+  "metrics": {
+    "without-advice": {
+      "declared_condition_score": 100.0,
+      "strict_task_passed": true,
+      "prompt_tokens": 1497,
+      "completion_tokens": 139,
+      "reasoning_tokens": 448,
+      "total_tokens": 2084,
+      "planning_seconds": 7.625645300000542,
+      "message_bytes": 5468,
+      "task_cost_units": 2,
+      "model_calls": 1,
+      "monetary_cost": null
+    },
+    "with-advice": {
+      "declared_condition_score": 100.0,
+      "strict_task_passed": true,
+      "prompt_tokens": 2450,
+      "completion_tokens": 151,
+      "reasoning_tokens": 361,
+      "total_tokens": 2962,
+      "planning_seconds": 7.756242200000088,
+      "message_bytes": 8064,
+      "task_cost_units": 2,
+      "model_calls": 1,
+      "monetary_cost": null
+    }
+  },
+  "observed_deltas": {
+    "declared_condition_score": 0.0,
+    "prompt_tokens": 953,
+    "prompt_tokens_percent": 63.66065464261857,
+    "total_tokens": 878,
+    "total_tokens_percent": 42.13051823416507,
+    "planning_seconds": 0.1305968999995457,
+    "planning_seconds_percent": 1.7126012928969647
+  },
+  "checks": {
+    "without-advice": {
+      "single_successful_call": true,
+      "prompt_digest_matches_actual_ledger": true,
+      "called_after_freeze": true,
+      "current_plan_matches_recorded_proposal": true,
+      "task_link_matches": true,
+      "actual_task_succeeded": true,
+      "physical_saved_artifacts_match_gold": true,
+      "same_current_ordinary_background": true
+    },
+    "with-advice": {
+      "single_successful_call": true,
+      "prompt_digest_matches_actual_ledger": true,
+      "called_after_freeze": true,
+      "current_plan_matches_recorded_proposal": true,
+      "task_link_matches": true,
+      "actual_task_succeeded": true,
+      "physical_saved_artifacts_match_gold": true,
+      "same_current_ordinary_background": true,
+      "new_diagnostic_matches_both_actual_messages": true
+    }
+  },
+  "shared_checks": {
+    "same_goal_input_and_model_request": true,
+    "same_catalog": true,
+    "same_routes": true,
+    "same_ordinary_background": true,
+    "same_memory_setting": true,
+    "recorded_prompt_diff_is_only_conditional_advice": true,
+    "temporary_credential_absent": true,
+    "frozen_files_match_recorded_commit": true,
+    "harness_matches_freeze": true
+  },
+  "ordinary_background_items_each": 3,
+  "offered_method_count": 2,
+  "interpretation": {
+    "quality_gain": "not observed on this one declared-condition task",
+    "token_gain": "negative; treatment used more tokens on this pair",
+    "latency_gain": "one observed faster treatment; no stable benefit claimed",
+    "causal_generalization": null,
+    "longitudinal_benefit": null,
+    "automatic_promotion_allowed": false,
+    "production_default_expansion_allowed": false
+  },
+  "not_measured": [
+    "independent user work",
+    "multiple independent cases per domain",
+    "learning gains",
+    "longitudinal benefit",
+    "statistical significance",
+    "complete monetary and maintenance cost"
+  ],
+  "passed_audit": true
+}
