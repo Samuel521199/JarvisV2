@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "E:\Jarvis\validation\goal-advice-compact-native-20261115-r1\installation\user-data\deployment\controllers\a04d1294fece836f8035d9593d345719caee4966cef7bbf9d15069640070eb46\apps\development\releases.py", line 9, in <module>
+    main()
+    ~~~~^^
+  File "E:\Jarvis\validation\goal-advice-compact-native-20261115-r1\installation\user-data\deployment\controllers\a04d1294fece836f8035d9593d345719caee4966cef7bbf9d15069640070eb46\host\application_release.py", line 144, in main
+    value = getattr(app, args.action)(driver)
+  File "E:\Jarvis\validation\goal-advice-compact-native-20261115-r1\installation\user-data\deployment\controllers\a04d1294fece836f8035d9593d345719caee4966cef7bbf9d15069640070eb46\modules\release_recovery\application.py", line 391, in rollback
+    return self.adopt(previous['build'], driver, rollback=True)
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Jarvis\validation\goal-advice-compact-native-20261115-r1\installation\user-data\deployment\controllers\a04d1294fece836f8035d9593d345719caee4966cef7bbf9d15069640070eb46\modules\release_recovery\application.py", line 263, in adopt
+    require_compatible(self.root,candidate['path'])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Jarvis\validation\goal-advice-compact-native-20261115-r1\installation\user-data\deployment\controllers\a04d1294fece836f8035d9593d345719caee4966cef7bbf9d15069640070eb46\control\application_compatibility.py", line 115, in require_compatible
+    raise CoreError('application_data_compatibility','Target cannot preserve goal planning advice dependencies')
+sdk.protocol.CoreError: Target cannot preserve goal planning advice dependencies

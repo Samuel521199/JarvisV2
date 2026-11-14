@@ -1,0 +1,66 @@
+{
+  "scope": "actual qualified v1/v2 packages; synthetic cached receipts, no new cloud calls; not live controller promotion",
+  "packages": {
+    "v1": "E:\\Jarvis\\validation\\advice-exposure-package-20261114-r1\\data\\deployment\\packages\\2d05125d015e45ed7c733000e26947847958f09c03ba3e89c300c9f2e07b413a",
+    "v2": "E:\\Jarvis\\validation\\goal-advice-compact-package-20261115-r1\\data\\deployment\\packages\\1e9b840f9d473b2bf1505b0edb4056a995deedb0a39d0ea6be5531388cf2fc3c"
+  },
+  "rows": [
+    {
+      "data_version": 1,
+      "reader": "v1",
+      "result": {
+        "blocked": false,
+        "status": "REVIEW",
+        "required": {
+          "commitments_schema": 0,
+          "assistant_commitments": false,
+          "goal_advice_schema": 1,
+          "conditional_advice_schema": 1
+        }
+      },
+      "model_ledger_and_grants_unchanged": true
+    },
+    {
+      "data_version": 1,
+      "reader": "v2",
+      "result": {
+        "blocked": false,
+        "status": "REVIEW",
+        "required": {
+          "commitments_schema": 0,
+          "assistant_commitments": false,
+          "goal_advice_schema": 1,
+          "conditional_advice_schema": 1
+        }
+      },
+      "model_ledger_and_grants_unchanged": true
+    },
+    {
+      "data_version": 2,
+      "reader": "v1",
+      "result": {
+        "blocked": true,
+        "code": "application_data_compatibility"
+      },
+      "model_ledger_and_grants_unchanged": true
+    },
+    {
+      "data_version": 2,
+      "reader": "v2",
+      "result": {
+        "blocked": false,
+        "status": "REVIEW",
+        "required": {
+          "commitments_schema": 0,
+          "assistant_commitments": false,
+          "goal_advice_schema": 2,
+          "conditional_advice_schema": 1
+        }
+      },
+      "model_ledger_and_grants_unchanged": true
+    }
+  ],
+  "packages_intact": true,
+  "production_data_used": false,
+  "passed": true
+}

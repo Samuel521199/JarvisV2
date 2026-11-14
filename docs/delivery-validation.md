@@ -195,7 +195,7 @@
 
 这是对同一已见正文的离线比较，保留卡数、摘要、适用条件、反例和全部其他输入，不能当作三域新任务完成结果或预测命中。后续需在已冻结条件下做full-v1/compact-v2真实模型配对、未见条件反转与原长期门，再决定采用；即使总token降低也不能跳过质量门。
 
-最终开发树[104项回归](evidence/goal-advice-compact-20261115/regressions-final.json)全部通过，测试期间源码摘要未变；覆盖11项精简专项及原预算、来源、应用兼容、控制器、聊天与工作台检查。初轮102项是在后续加固期间执行，保留为中间证据，不把它当最终树验收或与104累加。独立固定包与控制器实际部署仍待接续验收；未经实测的部署不标verified。Codex仍需退出后离线迁E、D灾备不替代当前授权/用量间隙审查，其他语言/预算/多Bot/自愈缺口不随本改动消失。
+最终开发树[104项回归](evidence/goal-advice-compact-20261115/regressions-final.json)全部通过，测试期间源码摘要未变；覆盖11项精简专项及原预算、来源、应用兼容、控制器、聊天与工作台检查。初轮102项是在后续加固期间执行，保留为中间证据，不把它当最终树验收或与104累加。源码0a1f0e9的[独立包](evidence/goal-advice-compact-20261115/independent-package/result.json)1e9b840通过原固定策略ed2a6f6：207项中206通过、1平台跳过，包字节完整、架构零错误；[包内11项专项重放](evidence/goal-advice-compact-20261115/package-compact-replay.json)全部运行时导入来自该包。专项是已见开发用例，不改称独立设计。两份实际合格包[四种格式读回组合](evidence/goal-advice-compact-20261115/actual-readers.json)证明：v1读者读v1、v2读者读v1/v2均缓存恢复到REVIEW，v1读者遇v2在前置检查拒绝；模型调用账及grants不变。[隔离真实进程组合](evidence/goal-advice-compact-20261115/native-r1/result.json)已通过：从原v0.1.8安装晋升协议3控制器时40次采样无请求失败、boot_id和聊天读写正常；采用相容候选后写入v2格式哨兵，旧应用回退在排空前拒绝；损坏控制器后按原签名同身份恢复，STOP、活动应用与boot_id保留，结束后夹具正常停止。哨兵只验证格式兼容，不冒充业务任务。实际已安装协议2代码[读取隔离协议3下限](evidence/goal-advice-compact-20261115/actual-old-controller-fence.json)确实拒绝。日用仍是v0.1.8/epoch10、协议2，真实日用2→3晋升与后续模型配对尚未执行。Codex仍需退出后离线迁E、D灾备不替代当前授权/用量间隙审查，其他语言/预算/多Bot/自愈缺口不随本改动消失。
 
 <a id="goal-advice-pair-evidence-20261114"></a>
 ## 条件经验真实配对与成本诊断（2026-11-14—15）
