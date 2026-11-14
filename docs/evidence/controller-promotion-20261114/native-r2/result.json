@@ -1,0 +1,144 @@
+{
+  "scope": "isolated real native processes; no user business data or models",
+  "source_commit": "e4af7a412b0b39c7fd76ab828238d822fca8b458",
+  "production_adopted": false,
+  "frozen_controller": "c019b64ea9de2dfdbec375811a7c81cc2f1bb93fff31a5aa5002f752805ed3ae",
+  "port": 59970,
+  "steps": [
+    {
+      "name": "reuse-stopped-verified-baseline",
+      "passed": true,
+      "prior_evidence": "native-r1; no repeat of unchanged baseline qualification"
+    },
+    {
+      "name": "baseline-native-adopt",
+      "exit_code": 0,
+      "seconds": 0.89,
+      "result": {
+        "active": {
+          "build": "c019b64ea9de2dfdbec375811a7c81cc2f1bb93fff31a5aa5002f752805ed3ae",
+          "version": "0.1.8",
+          "slot": "B",
+          "epoch": 2
+        },
+        "epoch": 2,
+        "error": null,
+        "pending": null,
+        "pending_epoch": null,
+        "phase": "active",
+        "previous": {
+          "build": "c019b64ea9de2dfdbec375811a7c81cc2f1bb93fff31a5aa5002f752805ed3ae",
+          "epoch": 1,
+          "slot": "A",
+          "version": "0.1.8"
+        },
+        "schema": 1
+      }
+    },
+    {
+      "name": "baseline-install",
+      "exit_code": 0,
+      "seconds": 0.296,
+      "result": {
+        "schema": 1,
+        "build": "c019b64ea9de2dfdbec375811a7c81cc2f1bb93fff31a5aa5002f752805ed3ae",
+        "controller": "E:\\Jarvis\\validation\\controller-promotion-20261114-r1\\installation\\user-data\\deployment\\controllers\\c019b64ea9de2dfdbec375811a7c81cc2f1bb93fff31a5aa5002f752805ed3ae",
+        "controller_inventory_sha256": "955daa0dba4bc8e64ff3b3623087351547e66410df32cee043a6ccf5255c04f7",
+        "launcher_backup": "E:\\Jarvis\\validation\\controller-promotion-20261114-r1\\installation\\user-data\\deployment\\launcher-backups\\543258a1e4f34c6284fa67da139398b4",
+        "data_root": "E:\\Jarvis\\validation\\controller-promotion-20261114-r1\\installation\\user-data",
+        "port": 59970
+      }
+    },
+    {
+      "name": "candidate-build",
+      "exit_code": 0,
+      "seconds": 0.679,
+      "result": {
+        "build": "db0955c3d4f993a56c3ded985dd7a3e059ae384228121f05b519e37298020ef7"
+      }
+    },
+    {
+      "name": "candidate-stage",
+      "exit_code": 0,
+      "seconds": 1.336,
+      "result": {
+        "approval": null,
+        "build": "db0955c3d4f993a56c3ded985dd7a3e059ae384228121f05b519e37298020ef7",
+        "path": "E:\\Jarvis\\validation\\controller-promotion-20261114-r1\\installation\\user-data\\deployment\\packages\\db0955c3d4f993a56c3ded985dd7a3e059ae384228121f05b519e37298020ef7",
+        "version": "0.1.9"
+      }
+    },
+    {
+      "name": "candidate-independent-validation",
+      "exit_code": 0,
+      "seconds": 56.968,
+      "result": {
+        "approval": {
+          "receipt": {
+            "build": "db0955c3d4f993a56c3ded985dd7a3e059ae384228121f05b519e37298020ef7",
+            "data_schema": 7,
+            "report": {
+              "schema": 1,
+              "passed": true,
+              "reviewed_source": true,
+              "architecture_passed": true,
+              "architecture_error_count": 0,
+              "architecture_sample": [],
+              "policy_sha256": "ed2a6f6b201c60ff0c1bc07e5c2ff4df462fc9c92d17bd8e848aa879e446a827",
+              "tests_passed": true,
+              "tests_summary": "207 0 0 1",
+              "runtime_intact": true,
+              "test_log": "0.1.9-69c3416ae03c4e6fa89a0f4e62eaaa41.log",
+              "test_log_sha256": "8c09813c107b5ee26061bb676aabfcda6edb9074fe37d1e783e9f9781ace331f"
+            },
+            "validated_at": 1794642607.1071997
+          },
+          "mac": "d5c066fe40eacb9fe43a9f218e7bc8774a83a0ec1e5d4aaca2ad149067980e48"
+        },
+        "build": "db0955c3d4f993a56c3ded985dd7a3e059ae384228121f05b519e37298020ef7",
+        "path": "E:\\Jarvis\\validation\\controller-promotion-20261114-r1\\installation\\user-data\\deployment\\packages\\db0955c3d4f993a56c3ded985dd7a3e059ae384228121f05b519e37298020ef7",
+        "version": "0.1.9",
+        "report": {
+          "schema": 1,
+          "passed": true,
+          "reviewed_source": true,
+          "architecture_passed": true,
+          "architecture_error_count": 0,
+          "architecture_sample": [],
+          "policy_sha256": "ed2a6f6b201c60ff0c1bc07e5c2ff4df462fc9c92d17bd8e848aa879e446a827",
+          "tests_passed": true,
+          "tests_summary": "207 0 0 1",
+          "runtime_intact": true,
+          "test_log": "0.1.9-69c3416ae03c4e6fa89a0f4e62eaaa41.log",
+          "test_log_sha256": "8c09813c107b5ee26061bb676aabfcda6edb9074fe37d1e783e9f9781ace331f"
+        }
+      }
+    },
+    {
+      "name": "fixture-shutdown",
+      "exit_code": 0,
+      "seconds": 1.097,
+      "result": {
+        "active": {
+          "build": "c019b64ea9de2dfdbec375811a7c81cc2f1bb93fff31a5aa5002f752805ed3ae",
+          "epoch": 2,
+          "slot": "B",
+          "version": "0.1.8"
+        },
+        "epoch": 2,
+        "error": null,
+        "pending": null,
+        "pending_epoch": null,
+        "phase": "stopped",
+        "previous": {
+          "build": "c019b64ea9de2dfdbec375811a7c81cc2f1bb93fff31a5aa5002f752805ed3ae",
+          "epoch": 1,
+          "slot": "A",
+          "version": "0.1.8"
+        },
+        "schema": 1
+      }
+    }
+  ],
+  "fixture_stopped": true
+}

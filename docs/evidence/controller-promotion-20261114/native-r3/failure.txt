@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "E:\Jarvis\dev\docs\evidence\controller-promotion-20261114\native_probe.py", line 131, in <module>
+    try:main()
+        ~~~~^^
+  File "E:\Jarvis\dev\docs\evidence\controller-promotion-20261114\native_probe.py", line 123, in main
+    current=pin.read(root);run('fixture-shutdown',Path(current['controller']),'stop')
+                           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Jarvis\dev\docs\evidence\controller-promotion-20261114\native_probe.py", line 39, in run
+    if success and p.returncode:raise RuntimeError(name+' failed')
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: fixture-shutdown failed

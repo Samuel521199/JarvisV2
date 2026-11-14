@@ -1,0 +1,31 @@
+Traceback (most recent call last):
+  File "E:\Jarvis\validation\controller-promotion-20261114-r1\installation\user-data\deployment\controllers\ac00e76844f8efa6056372aa5b3cb74947e456d8b00b8f42e3125f044f4b4139-recovered-60ab49bb30cb\apps\development\releases.py", line 9, in <module>
+    main()
+    ~~~~^^
+  File "E:\Jarvis\validation\controller-promotion-20261114-r1\installation\user-data\deployment\controllers\ac00e76844f8efa6056372aa5b3cb74947e456d8b00b8f42e3125f044f4b4139-recovered-60ab49bb30cb\host\application_release.py", line 142, in main
+    value = app.stop(driver,expected_epoch=args.expected_epoch,expected_build=args.build)
+  File "E:\Jarvis\validation\controller-promotion-20261114-r1\installation\user-data\deployment\controllers\ac00e76844f8efa6056372aa5b3cb74947e456d8b00b8f42e3125f044f4b4139-recovered-60ab49bb30cb\modules\release_recovery\application.py", line 403, in stop
+    driver.drain(state['active'], state['epoch'])
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Jarvis\validation\controller-promotion-20261114-r1\installation\user-data\deployment\controllers\ac00e76844f8efa6056372aa5b3cb74947e456d8b00b8f42e3125f044f4b4139-recovered-60ab49bb30cb\adapters\application_host.py", line 106, in drain
+    if not self.running(selected,epoch):return
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "E:\Jarvis\validation\controller-promotion-20261114-r1\installation\user-data\deployment\controllers\ac00e76844f8efa6056372aa5b3cb74947e456d8b00b8f42e3125f044f4b4139-recovered-60ab49bb30cb\adapters\application_host.py", line 149, in running
+    self.request(selected, epoch, 'health')
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Jarvis\validation\controller-promotion-20261114-r1\installation\user-data\deployment\controllers\ac00e76844f8efa6056372aa5b3cb74947e456d8b00b8f42e3125f044f4b4139-recovered-60ab49bb30cb\adapters\application_host.py", line 56, in request
+    with self.opener.open(request, timeout=5) as response:
+         ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "D:\soft\Python313\Lib\urllib\request.py", line 495, in open
+    response = meth(req, response)
+  File "D:\soft\Python313\Lib\urllib\request.py", line 604, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "D:\soft\Python313\Lib\urllib\request.py", line 533, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "D:\soft\Python313\Lib\urllib\request.py", line 466, in _call_chain
+    result = func(*args)
+  File "D:\soft\Python313\Lib\urllib\request.py", line 613, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 400: Bad Request

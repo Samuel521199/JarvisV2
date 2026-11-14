@@ -864,13 +864,13 @@ D:\Jarvis-dev\StartJarvisDev.bat
 <a id="daily-managed-installation"></a>
 ### 日用安装、开发与恢复控制器
 
-当前日用入口为 `D:/Jarvis-runtime/StartJarvis.bat`；加 `--companion` 打开已登记的原生精灵。日用端口18282，开发仍使用独立数据根；开发代码不会因修改源码而自动替换日用程序。原日用部署账本未包含在小型业务备份里，因此旧host/PID标记只作恢复证据存档，新安装重新通过包校验建立epoch 1，不能伪造旧代际或以旧状态启动。两个已删除的外部项目路径保持缺失提示，未把内容仓库冒充原项目目录。
+当前日用入口为 `E:/Jarvis/runtime/StartJarvis.bat`（D盘旧副本待退役）；加 `--companion` 打开已登记的原生精灵。日用端口18282，开发仍使用独立数据根；开发代码不会因修改源码而自动替换日用程序。原日用部署账本未包含在小型业务备份里，因此旧host/PID标记只作恢复证据存档，新安装重新通过包校验建立epoch 1，不能伪造旧代际或以旧状态启动。两个已删除的外部项目路径保持缺失提示，未把内容仓库冒充原项目目录。
 
 后续同日已采用v0.1.8并往返验证到epoch 5，上一版v0.1.7已登记。epoch 1是本次新安装起点，不是当前运行代际；旧安装epoch 18仍不复活。具体操作归下一小节，[实际验收](delivery-validation.md#single-pc-20261112)。
 
 日用 `user-data` 保持原位；被采用的代码位于 `deployment/packages/<sha>`。`host/application_installation.py` 仅在候选已被采用后安装根启动器，先保存原 `StartJarvis.bat`，再安装 `JarvisLaunch.py`。它先逐项核对恢复控制器摘要，随后通过同一应用账本启动当前已采用版本，避免重启后误用旧工作树。
 
-恢复控制器放在 `deployment/controllers/<build>`，带自己的检查器及回归测试；应用包退役不删除它。控制器本身的自动更新尚未实现，源码修改不会让它自动采用新规则。原工作树和未提交内容保留；开发仍在独立 worktree，Google 代理继续使用原已批准冻结版本。完整命令与恢复语义见[应用级交接](evolution-release.md#single-pc-application-runtime)。
+恢复控制器放在 `deployment/controllers/<build>`，带自己的检查器及回归测试；应用包退役不删除它。已补显式、独立的[控制器晋升与同身份恢复](evolution-release.md#independent-controller-runtime)；无需先升级活动应用，仍保留原固定评价策略。源码修改不会让它自动采用新规则，无人值守更新未开启。原工作树和未提交内容保留；开发仍在独立 worktree，Google 代理继续使用原已批准冻结版本。完整命令与恢复语义见[应用级交接](evolution-release.md#single-pc-application-runtime)。
 
 <a id="single-pc-local-workflow"></a>
 #### 一台电脑的使用、开发、升级与回退
@@ -884,6 +884,7 @@ D:\Jarvis-dev\StartJarvisDev.bat
 | `JarvisPC.bat status` | 分别核对数据根、在线状态、已采用与上一版本 | 只读，不把账本active误当服务在线 |
 | `JarvisPC.bat restart-development` | 正常停止再启动开发与代理 | 有在途工作会拒绝停止；日用继续运行 |
 | `JarvisPC.bat prepare-update --reviewed-source` | 源码审阅后，从开发源码构建、解包并由**已安装的独立控制器**检查候选 | 检查期间日用继续运行，不采用、不重启 |
+| `JarvisPC.bat prepare-controller --reviewed-source` / `apply-controller --reviewed-source` | 独立检查并晋升控制器，不改活动应用；用repair-controller补派生登记 | 不排空或重启日用；不自动提升模型权限 |
 | `UpdateJarvis.bat` | 应用上一步的候选，备份、切换、健康检查后更新固定启动器 | 切换时短暂停止接单；不承诺零中断 |
 | `RollbackJarvis.bat` | 回到登记的上一版相容代码 | 复用当前业务数据；不恢复旧数据库或撤回已发生的外部动作 |
 

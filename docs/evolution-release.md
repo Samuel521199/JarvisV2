@@ -22,6 +22,7 @@
   - [新旧版本并行](#service-continuity-2)
   - [单机 A/B 与 MCP：测试后采用、保留任务接续](#single-pc-ab-upgrade)
   - [应用级安装与恢复控制器 v1（v0.1.2，2026-11-04）](#single-pc-application-runtime)
+    - [控制器独立晋升与原身份恢复（2026-11-14）](#independent-controller-runtime)
     - [待办与聊天动作的数据兼容门](#application-commitment-compatibility)
   - [长任务与会话](#service-continuity-3)
   - [状态迁移](#service-continuity-4)
@@ -237,6 +238,25 @@ MCP 标准提供初始化、协议／能力协商、运行和关闭的连接生�
 流程为：构建 → 解包与摘要复核 → 来源审阅和独立检查 → 本机准入回执 → 固定当前代际 → 排空并确认旧 Host 退出 → 以同一数据根启动候选 → 健康检查 → 提交活动代际并恢复接单。候选不健康时先确认它退出，再以更大代际恢复原版本；退出不确定时进入 blocked，禁止启动第二个写入者。失败候选的准入回执失效，不能无检查反复采用。停止锁／锁存优先，代码恢复不清除它们。
 
 2026-11-08开发补强：`/api/runtime/shutdown` 在检查构建、代际与允许阶段之后，独立复核共享参与者快照；仍忙或未知时返回 `application_not_drained`，不启动关停线程，不能只依赖调用者先执行过 `drain`。持久的维护阶段先阻止新受理，已有任务可完成，既有取消接口仍可使用。`sdk/application_policy.py` 的控制器回归清单增加 Worker 生命周期和关停反例；冻结的旧恢复控制器不会自动取得新规则。真实原生渲染和独立候选包的补验见[本轮证据](delivery-validation.md#native-handoff-evidence)。
+
+<a id="independent-controller-runtime"></a>
+#### 控制器独立晋升与原身份恢复（2026-11-14）
+
+**implemented；验收状态见[本轮证据](delivery-validation.md#controller-promotion-evidence-20261114)。** `host/application_controller.py`复用原Applications准入、DPAPI本机签名、相容检查和application-release独占锁；控制器升级不要求候选先成为活动应用。定向仍由原授权和明确审阅给出，协作沿原发布锁执行，观察使用已安装控制器的固定检查器和测试；不增加模型可自授权的发布器。
+
+| 步骤／异常 | 行为 | 原机制怎样保留 |
+|---|---|---|
+| 准备 | 从已登记源码构建，由现用控制器独立检查；绑定源码摘要、应用epoch/build与控制器指针摘要 | 不覆盖普通应用ready记录，不停止Host |
+| 冻结评价 | 将现控制器的SDK测试清单、检查器、基线和测试原字节覆盖进候选控制器 | 新运行代码可以升级，候选不能顺便替换自己的通过标准 |
+| 晋升 | 完整摘要、签名、数据与活动应用相容性复查后，原子替换根JarvisLaunch.py | 应用build、epoch及业务数据不改；根启动器是唯一提交点 |
+| 提交前失败 | 保留原根入口；新目录与准备事件供诊断 | 不需要逆向恢复业务库 |
+| 提交后缓存登记失败 | 已提交根入口继续生效，报告registration_pending；显式repair补登记 | 不因缓存写失败偷偷回退旧控制器 |
+| 控制器损坏 | 启动前拒绝；签名绑定的压缩副本按同一控制器摘要还原到新目录，再原子换指针 | 保留坏目录、STOP、权限与当前数据；不选择较旧控制器冒充恢复 |
+| 来源准入撤回、未知协议或不相容数据 | 拒绝启动／晋升／恢复，保留现场 | 恢复材料不能复活撤权或绕过兼容门 |
+
+字段权威见[控制器指针契约](contracts.md#controller-pointer-contract)。首次安装仍沿install-launcher；独立控制器登记后该命令只核验现控制器，不再随活动应用重绑。当前控制器来源包不能当成无用应用退役；损坏入口且已有协议下限时应修复，不允许重装旧入口降低协议。保留同OS用户信任边界：本机HMAC不是公开发布者签名，不抵御同用户进程篡改整个环境。
+
+操作入口为`JarvisPC.bat prepare-controller --reviewed-source`和`JarvisPC.bat apply-controller --reviewed-source`；`repair-controller`修复派生登记。损坏恢复使用可信、已审阅且可运行的`python -B -m host.application_controller recover --data-root <根> --expected-controller <原摘要> --expected-epoch <当前代际> --expected-build <当前应用>`；原副本丢失时用`--archive <已核验副本>`，根入口和缓存都损坏时再给`--activation <原签名事件>`，不能猜身份。恢复密钥及包准入账本也须来自相配备份，跨系统DPAPI恢复尚未证明。全自动下载、自动源码审阅和常驻自愈监管仍未开启。
 
 <a id="application-commitment-compatibility"></a>
 #### 待办与聊天动作的数据兼容门

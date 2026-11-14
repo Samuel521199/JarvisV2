@@ -7,6 +7,9 @@
 
 **本章导航**
 
+- [控制器独立晋升与相容恢复（2026-11-14）](#controller-promotion-evidence-20261114)
+  - [最终源码与原生组合](#controller-promotion-final)
+  - [日用采用与灾备](#controller-promotion-daily)
 - [自然请求留出、真实模型产物与显式文档渲染（2026-11-13）](#request-document-evidence-20261113)
 - [开源 Agent 机制与编码适配验收（proposed）](#open-source-adoption-validation)
 - [知识与记忆选型实验（proposed）](#memory-selection-evaluation)
@@ -162,6 +165,51 @@
 - [个人助理开发收尾与兼容升级（2026-11-09）](#assistant-release-20261109)
 - [网页精灵共享能力与排空修复（2026-11-04）](#companion-shared-evidence)
 <!-- book-nav:end -->
+
+<a id="controller-promotion-evidence-20261114"></a>
+## 控制器独立晋升与相容恢复（2026-11-14）
+
+**结论：独立晋升、相容回退拦截和原身份恢复组合已通过；日用已采用新控制器，应用仍v0.1.8/epoch9。** 此项解决“应用升级前需要新兼容门，但新控制器又要求应用先升级”的依赖环。源码实现为`4b7887b`，原生清单补登记为`e4af7a4`，STOP关停补强为`41664ec`。它不直接提高语言理解或长期学习成绩。
+
+| 改进 | 事前预期／采用门 | 已观察结果与边界 |
+|---|---|---|
+| 应用与控制器分开晋升 | 不改活动build/epoch，不停止Host | native-r3中保持原应用epoch3、同boot_id；认证聊天创建/读取前后成功，74次存活探测无失败。是本机短演练，不是长期零故障证明 |
+| 评价策略冻结 | 候选不能替换固定检查器和测试 | 控制器保留原策略摘要ed2a6f6b…；新运行包经原控制器207项检查，其中206通过、1项平台跳过。新增控制器专项另跑，不伪称旧策略已有新测试 |
+| 先检查实际数据再回退 | 新经验格式存在时，旧代码应在排空前被拒绝 | native-r3采用新包后创建合成格式哨兵，旧版回退拒绝；活动代际、boot_id和新数据保留 |
+| 同身份恢复与STOP优先 | 损坏代码先拒绝，再从签名副本还原到新目录；不清STOP | native-r3代码损坏拒绝、恢复同ac00e768…摘要的新目录，应用与boot_id、STOP均保留；未测试日用控制器故意损坏 |
+| STOP下正常关停 | 停止状态仍能排空/关机，不放行重新工作 | native-r3暴露旧driver把健康当存活检查，清场失败；已补presence判断，原生清场正常完成且STOP未动。native-r4从新目录重跑全部组合及清场通过 |
+| 异常可归因 | 不用重复运行抹去失败 | native-r1原生清单漏项导致207项中1失败，候选被拒绝；native-r2验收脚本命名遮蔽导致演练提前结束。原记录均保留 |
+
+流程、字段与用户操作各自归[发布正文](evolution-release.md#independent-controller-runtime)、[指针契约](contracts.md#controller-pointer-contract)、[本机入口](stack-project-layout.md#single-pc-local-workflow)。不新增独立业务系统，也未授权自动审阅/下载/发布；三职能仍按既有定向授权、协作发布、独立观察分责。源码v0.1.9与日用v0.1.8必须分开判断。
+
+证据目录为[evidence/controller-promotion-20261114](evidence/controller-promotion-20261114/native_probe.py)。首次失败见[native-r1](evidence/controller-promotion-20261114/native-r1/result.json)及[固定测试日志](evidence/controller-promotion-20261114/native-r1/independent-failure.txt)；清单修复后的独立包检查见[native-r2](evidence/controller-promotion-20261114/native-r2/result.json)，脚本错误见[记录](evidence/controller-promotion-20261114/native-r2/failure.txt)。组合过程见[native-r3](evidence/controller-promotion-20261114/native-r3/result.json)，其passed在旧脚本清场前过早设置，**不能算整套通过**；[清场失败](evidence/controller-promotion-20261114/native-r3/failure.txt)及[正常清场补验](evidence/controller-promotion-20261114/native-r3/cleanup.json)保留。新脚本只在清场与日用未改变均确认后写最终passed。
+
+<a id="controller-promotion-final"></a>
+### 最终源码与原生组合
+
+[最终专项](evidence/controller-promotion-20261114/regressions-qualified.json)87项通过：控制器15、安装3、应用发布27、数据兼容15、工作站14、关停6、原生运行7。首次74项是关停修复之前的快照；不把两轮重复项相加。原生清单另3项通过。
+
+[native-r4](evidence/controller-promotion-20261114/native-r4/result.json)使用全新数据根`E:/Jarvis/validation/controller-promotion-20261114-r4`，以原冻结控制器初始化，不复制业务库/凭据；原基线与新包各经固定207项门（206通过、1项平台跳过）。候选来源为41664ec，包`e25afedb7b7154cadb7d8387682462a67070b442f8ed95c6082ea0b02ce6e111`，派生控制器`655cfcbdec2e70550ce784b16e26839eb82c9b71ebfa15895a340a18e5dd0161`。
+
+| 完整组合验收 | 结果 |
+|---|---|
+| 旧应用epoch1时独立晋升控制器 | 原boot_id/应用/代际不变，认证聊天前后可写读，72次探测0失败，旧策略原字节保留 |
+| 新控制器采用相容应用 | 新应用epoch2健康并接单；此采用只在测试根 |
+| 新格式存在时回到旧应用 | 在排空之前拒绝，boot_id/代际与数据不变 |
+| 代码损坏及恢复 | 损坏先被根入口拒绝，再从签名副本恢复同摘要的新目录；坏目录保留，STOP未清，Host未重启 |
+| STOP下清场 | 仍能正常排空、关停测试Host；未解除STOP或强杀进程；确认phase=stopped后才写整套passed |
+| 日用影响／模型费用 | 测试流程结束核对日用指针与应用账本未改；无模型请求，无测试工具安装或后台监控 |
+
+<a id="controller-promotion-daily"></a>
+### 日用采用与灾备
+
+日用首次应用前检查发现18282/18283/18482均无监听，日用Host锁已释放，STOP为ready；[production-r1](evidence/controller-promotion-20261114/production-r1/failure.txt)在任何准备/晋升之前拒绝继续。退出原因未知；账本active不代表进程在线。通过原固定入口正常恢复原v0.1.8，epoch8→9，再恢复开发与原受限代理；不能把此前离线过程记为本次控制器全程不中断。
+
+随后[production-r2](evidence/controller-promotion-20261114/production-r2/result.json)由日用现控制器重新检查同一e25afedb…候选（固定207项中206通过、1平台跳过），实际独立晋升到655cfcbdec2e…控制器，generation1/协议1；活动应用仍为c019b64e…、v0.1.8、epoch9。控制器切换前后boot_id相同，69次探测均为同一实例；普通应用ready未被覆盖，配置/权限文件与本轮核对的core/dialogue/commitments表摘要一致。详细哈希快照仅本机保存，不上传私密业务指纹。固定根入口check通过，登记缓存无待修项目，日用/开发/代理随后均在线。此证据不代表所有业务库、长期负载或物理断电已验。
+
+[D灾备核验](evidence/controller-promotion-20261114/production-r2/disaster-copy.json)对应`D:/Jarvis-Recovery/controllers/2026-11-14-r1`：根入口、协议/指针、原签名事件、控制器ZIP、独立准入账本SQLite一致备份、加密DPAPI材料及来源包ZIP。逐文件摘要、ZIP全部成员和SQLite integrity_check通过。它是控制器与准入的增量，**不是新的完整业务快照**；恢复须与原业务快照和更新后的Git恢复链配合，不从D直接启动。新控制器损坏重建在独立E测试根完成；D这份副本完成读回和内容核验，未替换日用根做破坏性恢复，也未验证重装系统/跨机DPAPI。
+
+**余项：**应用仍未采用新的语言/知识功能；条件经验正式写入还需相容应用基线，自动归纳/消费/晋升、知识长期收益和本机E5恢复仍待补。固定测试策略仍为旧207项，新增控制器专项没有偷偷写入旧策略；未来策略升级须独立治理并保留旧不变量。全机租约、多Bot责任和限定自愈继续按原六工作包推进，不因这条发布恢复链通过就宣告完整自主成长闭环。
 
 <a id="request-document-evidence-20261113"></a>
 ## 自然请求留出、真实模型产物与显式文档渲染（2026-11-13）
