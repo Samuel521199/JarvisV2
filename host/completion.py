@@ -26,6 +26,8 @@ def refresh(core, task_id, *, transaction=None):
                   and not core.db.one('SELECT 1 FROM goal_plans WHERE task_id=?',(task_id,))
                   and not core.db.one('SELECT 1 FROM experience_uses WHERE task_id=?',(task_id,)))
         episodes.record(task,result,eligible,tx)
+        from host.planning_advice import PlanningAdvice
+        PlanningAdvice(core.db).observe(task_id,result,tx)
         method=episodes.source(task_id)
         result['method']={k:method[k] for k in ('id','status','revision','expires')} if method else None
         if method:result['method']['review_required']=method['status']=='QUARANTINED' or method['expires']<=time.time()

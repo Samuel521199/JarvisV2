@@ -271,5 +271,7 @@ def projection(root, chat):
                 turn['linked_goal']['outcome']=observe(core, task['id'])
                 from host.completion import projection as completion_projection
                 turn['linked_goal']['completion']=completion_projection(core,task['id'])
+            from host.planning_advice import PlanningAdvice
+            turn['linked_goal']['planning_advice']=PlanningAdvice(core.db).projection(p,goal_context.get(core,ident),goal_context.advice_selectors(p))
         return chat
     finally:core.close()

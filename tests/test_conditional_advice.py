@@ -210,4 +210,17 @@ class ConditionalAdvice(unittest.TestCase):
         self.assertNotIn(card['summary'],canonical(memory.retrieve(self.root,'personal','openai',True,'Unsafe fact route')))
 
 
+
+
+
+    def test_unknown_future_method_cannot_be_used_as_original_observation(self):
+        _,card,_=self.prepare()
+        future=self.source('{"schema":"jarvis.method-card.v2","summary":"not original evidence"}','Future method')
+        card['id']='future-evidence';card['evidence']=[{'source_id':future['id'],'revision':1,'sha256':text_digest('{"schema":"jarvis.method-card.v2","summary":"not original evidence"}')}]
+        saved=self.source(canonical(card),'Quote reuse method future evidence')
+        result=self.recall()
+        self.assertFalse(any(m['source_id']==saved['id'] for m in result['methods']))
+        self.assertIn('method_as_evidence',[r['reason'] for r in result['rejected']])
+
+
 if __name__=='__main__':unittest.main()

@@ -164,6 +164,7 @@ def rejoin(root,ident):
                              'capabilities':['model.generate.v1'],'max_cost_units':2,'expires_at':deadline},transaction=tx)
             core.grants.revoke(dev['spec']['grant_id'],transaction=tx)
             tx.execute("UPDATE goal_plans SET catalog=?,proposal=NULL,status='NEW',planning_round=1,deadline=?,revision=revision+1,error=NULL WHERE id=?",(canonical(catalog),deadline,ident))
+            goal_context.renew_advice(core,ident,tx)
             tx.execute("UPDATE goal_growth SET status='REJOINED',revision=revision+1,error=NULL WHERE goal_id=?",(ident,))
             core.db.event(tx,None,'goal.growth_rejoined',{'goal_id':ident,'run_id':dev['id'],'package_id':dev['release_id']})
         return Plans(core.db).get(ident)

@@ -145,7 +145,7 @@ def create(core, value):
         tx.execute("UPDATE goal_plans SET proposal=?,status='REVIEW' WHERE id=?",(canonical(proposal),ident))
         if ctx:
             tx.execute('INSERT INTO goal_context(goal_id,scope,enabled,view) VALUES(?,?,?,?)',
-                       (ident,ctx['scope'],ctx['enabled'],canonical(ctx['view'])))
+                       (ident,ctx['scope'],ctx['enabled'],canonical(goal_context.inherit_advice(core,plans.get(ident),p,ctx))))
         if value['kind'] == 'correction':
             from host.completion import refresh
             from modules.task_resource.completion import Completion

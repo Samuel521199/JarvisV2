@@ -197,7 +197,7 @@ def create(core,value):
         ident,fresh=plans.create(req,catalog,p['routes'],tx)
         if not fresh:raise CoreError('conflict','Recovery Goal request already used')
         tx.execute("UPDATE goal_plans SET proposal=?,status='REVIEW' WHERE id=?",(canonical(proposal),ident))
-        if ctx:tx.execute('INSERT INTO goal_context(goal_id,scope,enabled,view) VALUES(?,?,?,?)',(ident,ctx['scope'],ctx['enabled'],canonical(ctx['view'])))
+        if ctx:tx.execute('INSERT INTO goal_context(goal_id,scope,enabled,view) VALUES(?,?,?,?)',(ident,ctx['scope'],ctx['enabled'],canonical(goal_context.inherit_advice(core,plans.get(ident),p,ctx))))
         core.grants.revoke(t['body']['grant_id'],transaction=tx)
         core.grants.revoke(planning_key(p)+'-plan',transaction=tx)
         if checked['retire_pending_task']:

@@ -26,17 +26,20 @@ class ApplicationCompatibility(unittest.TestCase):
         self.base=Path(self.temp.name);self.root=self.base/'data';Core.initialize(self.root).close()
         self.app=Applications(self.root);self.driver=Driver()
 
-    def candidate(self,name,commitments=False,chat=False,advice=False):
+    def candidate(self,name,commitments=False,chat=False,advice=False,goal_advice=False):
         source=self.base/name;(source/'apps/workbench').mkdir(parents=True)
         (source/'VERSION').write_text(name);(source/'apps/workbench/server.py').write_text('# synthetic protocol fixture')
         files=['VERSION','apps/workbench/server.py']
-        if commitments or chat or advice:
+        if commitments or chat or advice or goal_advice:
             (source/'config').mkdir();(source/'config/runtime-compatibility.json').write_text(json.dumps(
                 {'schema':1,'commitments_schema':int(commitments),'assistant_commitments':chat}))
             files.append('config/runtime-compatibility.json')
         if advice:
             (source/'config/conditional-advice-compatibility.json').write_text(json.dumps({'schema':1,'conditional_advice_schema':1}))
             files.append('config/conditional-advice-compatibility.json')
+        if goal_advice:
+            (source/'config/goal-advice-compatibility.json').write_text(json.dumps({'schema':1,'goal_advice_schema':1}))
+            files.append('config/goal-advice-compatibility.json')
         archive=self.base/(name+'.zip');ident=build(source,files,archive,name)
         self.app.stage(archive);self.app.validate(ident,lambda _: {'passed':True,'scope':'synthetic protocol fixture'})
         return ident
@@ -194,3 +197,40 @@ class ApplicationCompatibility(unittest.TestCase):
         core=Core(self.root)
         try:self.assertEqual(core.db.one('SELECT count(*) AS n FROM knowledge_sources')["n"],1)
         finally:core.close()
+
+
+    def goal_advice_context(self,version=1,historical=False):
+        from modules.task_resource.plans import Plans
+        from sdk.protocol import canonical
+        core=Core(self.root)
+        try:
+            with core.db.transaction() as tx:
+                ident,_=Plans(core.db).create({'request_id':'goal-advice-protocol-'+str(version),'goal':'Synthetic advice goal'},[],[],tx)
+                view={'conditional_advice':{'version':version}};history=[]
+                if historical:history=[view];view={'redacted':True}
+                tx.execute('INSERT INTO goal_context VALUES(?,?,?,?,?)',(ident,'personal',1,canonical(view),canonical(history)))
+        finally:core.close()
+
+    def test_goal_advice_blocks_old_reader_before_drain_without_live_source_cards(self):
+        old=self.candidate('old-goal-advice');new=self.candidate('new-goal-advice',goal_advice=True)
+        self.app.adopt(old,self.driver);self.app.adopt(new,self.driver);self.goal_advice_context()
+        before=self.app.state();events=list(self.driver.events)
+        with self.assertRaises(CoreError):self.app.rollback(self.driver)
+        self.assertEqual(self.app.state(),before);self.assertEqual(self.driver.events,events)
+        self.assertTrue(require_compatible(self.root,self.app.record(new)['path'])['compatible'])
+
+    def test_historical_goal_advice_retains_compatibility_requirement(self):
+        old=self.candidate('old-goal-history');new=self.candidate('new-goal-history',goal_advice=True)
+        self.goal_advice_context(historical=True)
+        with self.assertRaises(CoreError):require_compatible(self.root,self.app.record(old)['path'])
+        self.assertEqual(require_compatible(self.root,self.app.record(new)['path'])['required']['goal_advice_schema'],1)
+
+    def test_unknown_goal_advice_version_is_rejected(self):
+        new=self.candidate('new-goal-unknown',goal_advice=True);self.goal_advice_context(version=2)
+        with self.assertRaises(CoreError):require_compatible(self.root,self.app.record(new)['path'])
+
+    def test_boolean_goal_advice_declaration_is_rejected(self):
+        new=self.candidate('new-goal-boolean',goal_advice=True);self.goal_advice_context()
+        path=Path(self.app.record(new)['path'])/'config/goal-advice-compatibility.json'
+        path.write_text('{"schema":1,"goal_advice_schema":true}')
+        with self.assertRaises(CoreError):require_compatible(self.root,self.app.record(new)['path'])

@@ -207,7 +207,7 @@ def _tick(root,core,store,row,now):
             tx.execute('INSERT OR IGNORE INTO standing_children VALUES(?,?,?,?)',(goal,row['id'],run['id'],plan['id']))
             context=goal_context.get(core,plan['id'])
             if context:
-                tx.execute('INSERT OR IGNORE INTO goal_context VALUES(?,?,?,?,?)',(goal,context['scope'],int(context['enabled']),canonical(context['view']),canonical(context['history'])))
+                tx.execute('INSERT OR IGNORE INTO goal_context VALUES(?,?,?,?,?)',(goal,context['scope'],int(context['enabled']),canonical(goal_context.inherit_advice(core,Plans(core.db).get(goal),Plans(core.db).get(plan['id']),context)),canonical(context['history'])))
         if goal not in run['goals']:run['goals'].append(goal)
         store.save(row,run)
     ident=attempt['goal_id'];p=Plans(core.db).get(ident)

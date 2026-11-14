@@ -42,7 +42,7 @@ def install(root, installation, package, *, port=18282):
     files={name:(package/name).read_bytes() for name in manifest['files']}
     # The independent controller keeps its original checker and regression bodies.
     from sdk.application_policy import TESTS, TEST_SUPPORT
-    for name in ['tools/check_architecture.py',*('tests/'+name for name in TESTS + TEST_SUPPORT)]:
+    for name in ['sdk/application_policy.py','tools/check_architecture.py','tools/architecture-baseline.json',*('tests/'+name for name in TESTS + TEST_SUPPORT)]:
         files[name]=(ROOT/name).read_bytes()
     hashes={name:hashlib.sha256(raw).hexdigest() for name,raw in sorted(files.items())}
     if controller.exists():

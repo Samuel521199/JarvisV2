@@ -1,3 +1,4 @@
+import {planningAdvice} from './planning-advice.js';
 import {el,button,post,notice,card,states,errorText} from './ui.js';
 import {outcomeView,completionView} from './ui.js';
 import {workClosure} from './rework-impact.js';
@@ -18,7 +19,7 @@ export function actionCard(parent,turn,{openGoal,refresh,openMemory}){
  const closureStates={COMPLETE:'当前版已结案',NEEDS_REVIEW:'当前版待核对',IN_PROGRESS:'当前版进行中',NEEDS_EVIDENCE:'当前版待核验',STOPPED:'已停止接续'};
  const c=card(goal?.work_closure?'此消息关联的工作 · '+closureStates[goal.work_closure.state]:goal?'此消息的目标 · '+(goalStates[goal.status]||states[goal.status]||goal.status):'识别到行动请求','');
  if(goal){
-  workClosure(c,goal.work_closure);
+  workClosure(c,goal.work_closure);planningAdvice(c,goal.planning_advice,openGoal);
   if(goal.work){c.append(el('p','负责人：Jarvis 默认 Bot · 共 '+goal.work.versions.length+' 个关联版本','note'));if(goal.work.current_goal!==goal.id)c.append(el('p','下面保留原版本结果，最新进展见当前版本。','note'),button('打开当前工作版本',()=>openGoal(goal.work.current_goal),'primary'));}
   if(goal.summary)c.append(el('p',goal.summary));if(action.standing)c.append(el('p','持续安排候选：'+action.standing.quote+' · 尚未启用','note'));
   for(const work of goal.standing_work||[])c.append(el('p',work.title+' · '+work.status+' · 已开始 '+work.runs_started+' 次'+(work.notice?' · 最近 '+work.notice.status:''),'note'));

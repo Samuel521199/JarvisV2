@@ -10,6 +10,50 @@ from modules.task_resource.plans import Plans, planning_key
 from sdk.protocol import CoreError, canonical, decode
 
 
+def advice_selectors(plan):
+    selectors={'channel':'task','planner':'goal-plan-v1','input_kind':'text' if plan['request']['input_text'] else 'empty'}
+    from modules.task_resource import quote_checks,quote_request
+    try:source=quote_checks.parse_source(plan['request']['input_text'])
+    except CoreError:return selectors
+    selectors.update(input_schema=source['schema'],currency=source['currency'],
+        max_price_minor=source['max_price_minor'],max_delivery_days=source['max_delivery_days'])
+    try:selectors['quote_requirements_ready']=quote_request.analyze(plan['request']['goal'],plan['request']['input_text'])['ready']
+    except CoreError:selectors['quote_requirements_ready']=False
+    return selectors
+
+
+def attach_advice(core,plan,view,scope,enabled):
+    from host.planning_advice import PlanningAdvice,KEY
+    offered=PlanningAdvice(core.db).offer(plan,scope,enabled,advice_selectors(plan))
+    if offered:view[KEY]=offered
+    return view
+
+
+def inherit_advice(core,plan,parent,context):
+    from host.planning_advice import PlanningAdvice,KEY
+    view=dict(context['view'])
+    bundle=PlanningAdvice(core.db).inherit(plan,parent,context)
+    if bundle:view[KEY]=bundle
+    return view
+
+
+def renew_advice(core,ident,tx):
+    context=get(core,ident)
+    if not context or 'conditional_advice' not in context['view']:return
+    view=dict(context['view']);view.pop('conditional_advice')
+    attach_advice(core,Plans(core.db).get(ident),view,context['scope'],bool(context['enabled']))
+    tx.execute('UPDATE goal_context SET view=? WHERE goal_id=?',(canonical(view),ident))
+
+
+def advice(core,ident,destinations=None):
+    row=get(core,ident)
+    if not row:return []
+    scope_for(core.root,row['scope'])
+    from host.planning_advice import PlanningAdvice
+    plan=Plans(core.db).get(ident)
+    return PlanningAdvice(core.db).checked(plan,row,advice_selectors(plan),destinations)
+
+
 def snapshot(core, scope, enabled, routes, query=''):
     scope_for(core.root,scope)
     if type(enabled) is not bool:raise CoreError('memory_invalid','Invalid memory switch')
@@ -47,6 +91,7 @@ def bind(core, ident, context, tx):
     view=snapshot(core,scope,enabled,row['routes'],row['request']['goal']+' '+row['request']['input_text'])
     deps={(f['id'],f['revision']) for f in view['dependencies']+upstream_refs}
     view['dependencies']=[{'id':i,'revision':r} for i,r in sorted(deps)]
+    attach_advice(core,row,view,scope,enabled)
     tx.execute('INSERT INTO goal_context(goal_id,scope,enabled,view) VALUES(?,?,?,?)',(ident,scope,int(enabled),canonical(view)))
 
 
@@ -72,6 +117,7 @@ def check(core, ident, destinations=None):
             chat=chats.read(link['chat_id'])
             if chat['removed'] or chat['archived']:raise CoreError('plan_source_changed','Restore the source chat first')
         finally:chats.close()
+    advice(core,ident,destinations)
     return row['view']['facts']
 
 
@@ -90,7 +136,7 @@ def amend(core, ident, revision, goal, text, operation=None):
             raise CoreError('conflict','Cannot rewrite running or admitted work; review a separate follow-up goal')
         if p['generation']>=3:raise CoreError('plan_revision_limit','This goal has reached its explicit replan limit')
         view=snapshot(core,ctx['scope'] if ctx else 'personal',bool(ctx['enabled']) if ctx else False,p['routes'],goal+' '+text)
-        history=(ctx['history'] if ctx else [])+[{'request':p['request'],'proposal':p['proposal'],'generation':p['generation']}]
+        history=(ctx['history'] if ctx else [])+[{'request':p['request'],'proposal':p['proposal'],'generation':p['generation'],**({'conditional_advice':ctx['view']['conditional_advice']} if ctx and 'conditional_advice' in ctx['view'] else {})}]
         request={**p['request'],'goal':goal,'input_text':text};deadline=time.time()+600
         from host.capabilities import catalog as available_catalog
         catalog=available_catalog(core,ctx['scope'] if ctx else 'personal')
@@ -98,6 +144,7 @@ def amend(core, ident, revision, goal, text, operation=None):
         tx.execute("UPDATE goal_plans SET request=?,catalog=?,proposal=NULL,generation=generation+1,revision=revision+1,status='NEW',error=NULL,deadline=? WHERE id=?",
                    (canonical(request),canonical(catalog),deadline,ident))
         key=planning_key(Plans(core.db).get(ident))
+        attach_advice(core,Plans(core.db).get(ident),view,ctx['scope'] if ctx else 'personal',bool(ctx['enabled']) if ctx else False)
         core.grants.add({'schema':'jarvis.grant.v1','grant_id':key+'-plan','principal_id':'owner.local','scope_id':'personal',
                          'capabilities':['model.generate.v1'],'max_cost_units':2,'expires_at':deadline},transaction=tx)
         tx.execute('INSERT INTO goal_context VALUES(?,?,?,?,?) ON CONFLICT(goal_id) DO UPDATE SET view=excluded.view,history=excluded.history',

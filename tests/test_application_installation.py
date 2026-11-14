@@ -65,3 +65,20 @@ class ApplicationInstallation(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             base=Path(temp);(base/'data').mkdir()
             with self.assertRaises(CoreError):install(base/'data',base,base)
+
+
+    def test_first_install_freezes_controller_policy_instead_of_candidate_policy(self):
+        from host.application_installation import ROOT
+        with tempfile.TemporaryDirectory() as temp:
+            base=Path(temp);source=base/'source';(source/'apps/workbench').mkdir(parents=True);(source/'sdk').mkdir();(source/'tools').mkdir()
+            files={'VERSION':b'fixture','apps/workbench/server.py':b'# synthetic server','apps/workbench/launch.py':b'print("fixture")',
+                'sdk/application_policy.py':b'TESTS=[];TEST_SUPPORT=[]','tools/architecture-baseline.json':b'{"host_import_cycles":[]}'}
+            for name,raw in files.items():(source/name).write_bytes(raw)
+            archive=base/'candidate.zip';ident=build(source,list(files),archive,'fixture');package=base/'package'
+            with zipfile.ZipFile(archive) as stream:stream.extractall(package)
+            home=base/'installation';root=home/'user-data';(root/'deployment').mkdir(parents=True)
+            app=Mock();app.state.return_value={'active':{'build':ident}}
+            with patch('modules.release_recovery.application.Applications',return_value=app):result=install(root,home,package)
+            controller=Path(result['controller'])
+            for name in ['sdk/application_policy.py','tools/architecture-baseline.json']:
+                self.assertEqual((controller/name).read_bytes(),(ROOT/name).read_bytes())

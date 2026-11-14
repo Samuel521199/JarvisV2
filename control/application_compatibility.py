@@ -43,6 +43,15 @@ def required(root):
             if row:
                 if row[0]!='1':raise CoreError('application_data_compatibility','Unknown standing-work schema')
                 needs['standing_schema']=1
+            if db.execute("SELECT 1 FROM sqlite_master WHERE name='goal_context'").fetchone():
+                for row in db.execute('SELECT view,history FROM goal_context'):
+                    view=json.loads(row[0]);history=json.loads(row[1])
+                    for candidate in [view,*history]:
+                        if 'conditional_advice' not in candidate:continue
+                        advice=candidate['conditional_advice']
+                        if not isinstance(advice,dict) or type(advice.get('version')) is not int or advice['version']!=1:
+                            raise CoreError('application_data_compatibility','Unknown goal planning advice version')
+                        needs['goal_advice_schema']=1
             current_texts=();historical_texts=();fact_texts=()
             if db.execute("SELECT 1 FROM sqlite_master WHERE name='knowledge_sources'").fetchone():
                 current_texts=(r[0] for r in db.execute("SELECT text FROM knowledge_sources WHERE status!='deleted'"))
@@ -100,6 +109,14 @@ def require_compatible(root,package):
             mail=Path(package)/'config/mail-standing-compatibility.json';reject_links(mail)
             if not mail.exists() or mail.stat().st_size>1024 or json.loads(mail.read_text(encoding='utf-8'))!={'schema':1,'mail_watch_schema':1}:
                 raise CoreError('application_data_compatibility','Target cannot serve existing encrypted mailbox mandates')
+        if needs.get('goal_advice_schema'):
+            advice=Path(package)/'config/goal-advice-compatibility.json';reject_links(advice)
+            if not advice.exists() or advice.stat().st_size>1024:
+                raise CoreError('application_data_compatibility','Target cannot preserve goal planning advice dependencies')
+            policy=json.loads(advice.read_text(encoding='utf-8'))
+            if (not isinstance(policy,dict) or set(policy)!={'schema','goal_advice_schema'}
+                or any(type(policy[k]) is not int or policy[k]!=1 for k in policy)):
+                raise CoreError('application_data_compatibility','Unsupported goal planning advice reader')
         if needs.get('conditional_advice_schema'):
             advice=Path(package)/'config/conditional-advice-compatibility.json';reject_links(advice)
             if not advice.exists() or advice.stat().st_size>1024:

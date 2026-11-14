@@ -36,13 +36,19 @@ def inspect(db, chats, scope, cursor):
             return not Memory(db).references_valid(view['scope'],view['provider'],view.get('enabled',True),refs,view.get('selectors'))
         return any(r.get('id') in sources and (sources[r['id']]['status']!='active' or sources[r['id']]['revision']!=r.get('revision'))
                    for r in refs)
-    goals=db.all('SELECT goal_id,scope,view FROM goal_context WHERE goal_id>? ORDER BY goal_id LIMIT ?', (cursor['goals'],PAGE+1))
+    goals=db.all('SELECT goal_id,scope,enabled,view FROM goal_context WHERE goal_id>? ORDER BY goal_id LIMIT ?', (cursor['goals'],PAGE+1))
     turns=chats.cleanup_page(scope,cursor['turns'],PAGE+1,all_scopes=True)
     selected_goals=[];selected_turns=[];busy=0;busy_goals=0;unknown=0
     for row in goals[:PAGE]:
         view=decode(row['view'])
         refs=relevant(view)
         stale=bool(refs) and (any(not Memory(db).references_valid(row['scope'],p,True,refs,view.get('selectors')) for p in view.get('providers',[])) if view.get('providers') else affected(view))
+        bundle=view.get('conditional_advice')
+        if bundle and any(r.get('id') in sources for r in bundle.get('dependencies',[])):
+            from host.planning_advice import PlanningAdvice
+            from modules.task_resource.plans import Plans
+            try:PlanningAdvice(db).checked(Plans(db).get(row['goal_id']),{'scope':row['scope'],'enabled':row['enabled'],'view':view},bundle['selectors'])
+            except CoreError:stale=True
         if not view.get('redacted') and stale:
             outputs=knowledge_outputs.inspect(db,row['goal_id'])
             if outputs['busy']:busy_goals+=1

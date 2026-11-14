@@ -91,7 +91,7 @@ def select(sources,selectors,resolve,*,limit=4,max_bytes=5000,now=None):
                 if not row or row['revision']!=ref['revision'] or text_digest(row['text'])!=ref['sha256']:
                     reason='evidence_changed_missing_or_disallowed';break
                 # Method cards cannot corroborate one another or form a cycle.
-                try:is_method=isinstance((body:=decode(row['text'])),dict) and body.get('schema')==SCHEMA
+                try:is_method=isinstance((body:=decode(row['text'])),dict) and isinstance(body.get('schema'),str) and body['schema'].startswith('jarvis.method-card.')
                 except CoreError:is_method=False
                 if is_method:reason='method_as_evidence';break
                 evidence.append(ref)
