@@ -58,7 +58,16 @@ def learning_candidate(core,task,completion,tx):
     from modules.task_resource.advice_scope import selectors
     purpose=selectors(plan,4).get('task_purpose')
     value=lessons.record(task['id'],describe(task,plan,context,completion,source_error,purpose=purpose),tx)
-    return lessons.projection(value)
+    result=lessons.projection(value)
+    if result:
+        from modules.context_knowledge.lesson_trials import LessonTrials
+        result['validation']=LessonTrials(core.db).view(result)
+        trial=result['validation']['trial']
+        verdict=(trial.get('result') or {}).get('status') if trial else None
+        if result['next_step']=='independent_validation':
+            result['next_step']={'FAILED':'resolve_validation_failure','INTERRUPTED':'review_validation_run',
+                                 'PASSED':'compare_real_tasks'}.get(verdict,result['next_step'])
+    return result
 
 
 def projection(core, task_id):

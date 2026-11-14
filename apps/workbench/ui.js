@@ -102,9 +102,17 @@ export function completionView(parent,data,{refresh=()=>{}}={}){
   const learning=data.learning_candidate,states={CANDIDATE:'已整理为待验证经验',COUNTEREVIDENCE:'已记录需要纠正的反证',WITHDRAWN:'经验来源已失效',INCOMPLETE:'经验仍缺少完整验收依据'};
   box.append(el('p',states[learning.state]||'经验等待核对','note'));
   box.append(el('p',`同类过程历史记录 ${learning.history.observations} 项，涉及 ${learning.history.distinct_inputs} 组输入；这些记录尚未独立验证，不会自动成为事实或执行许可。`,'note'));
-  const next={independent_validation:'需要独立新输入、反例和无经验对照；自动验证尚待接入。',resolve_counterevidence:'先解决已记录的纠正或失败，再验证适用边界。',restore_current_sources:'来源或记忆许可已失效，候选不能继续使用。',complete_acceptance:'先补齐本次任务的可验证要求。',review_history_window:'当前仅展示有限历史，需要核对更早的记录。'};
+  const next={resolve_validation_failure:'新输入检查未通过，先修复并形成新版本再验证。',review_validation_run:'验证已中断，需要先核对原因和回执。',compare_real_tasks:'合成检查已通过；下一步比较真实任务效果与成本。',independent_validation:'支持的过程可先做本地新输入检查；仍需真实任务和无经验对照。',resolve_counterevidence:'先解决已记录的纠正或失败，再验证适用边界。',restore_current_sources:'来源或记忆许可已失效，候选不能继续使用。',complete_acceptance:'先补齐本次任务的可验证要求。',review_history_window:'当前仅展示有限历史，需要核对更早的记录。'};
   box.append(el('p',next[learning.next_step]||'等待进一步验证。','note'));
   if(learning.history.window_truncated)box.append(el('p','历史展示已达到窗口上限，计数并不完整。','note'));
+  const validation=learning.validation;
+  if(validation){
+   const policy=validation.policy,trial=validation.trial,result=trial?.result;
+   box.append(el('p',`本地自动验证：${policy.enabled?'已开启':'未开启'} · 近24小时已预留 ${validation.trials_in_24h}/${policy.max_trials_24h} 组；只测试合成输入，不调用模型或写入业务文件。`,'note'));
+   if(trial)box.append(el('p',result?.status==='PASSED'?'历史合成输出检查通过；不代表当前来源仍有效、完整交付或长期收益。':result?.status==='FAILED'?'候选未通过新输入检查，不能按历史成功次数直接采用。':result?'验证已中断，原因和已用额度保留。':'尚无完成回执，请结合后台运行状态核对；不会自动重放。','note'));
+   if(validation.policy_error)box.append(el('p','验证设置无法读取，自动验证已停止；请先修复设置。','form-error'));
+   if(!validation.policy_error)actions.append(button(policy.enabled?'暂停本地自动验证':'开启本地自动验证',async()=>{await post('/api/operations',{action:'lesson_validation_configure',enabled:!policy.enabled,max_trials_24h:policy.max_trials_24h,revision:policy.revision});await refresh();}));
+  }
   actions.append(button('查看经验依据与待验证项',()=>details('经验候选与验证缺口',learning)));
  }
  if(data.method_available)actions.append(button('用这个方法处理新文本',()=>{

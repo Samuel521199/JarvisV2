@@ -545,8 +545,17 @@ def _serve(args):
         except (ImportError, CoreError, OSError, sqlite3.Error):
             pass  # optional skill; its own readiness endpoint reports the problem
         server.local_models = create_manager(server.data_root)
-        server.task_runner = TaskRunner(server.data_root, foreground_pending=lambda: any(r["lane"] == "foreground" for r in server.dialogues.state()["queued"]),maintenance=lambda:mail_http.advance(server))
         server.background_lane = BackgroundLane(server.data_root)
+        def learning_interrupted():
+            runner=getattr(server,'task_runner',None)
+            if runner is None or runner.closed:return True
+            tasks=runner.state();dialogues=server.dialogues.state()
+            return bool(tasks['active'] or tasks['queued'] or any(r['lane']=='foreground' for r in dialogues['queued']+dialogues['running']))
+        def idle_maintenance():
+            mail_http.advance(server)
+            from host.lesson_validation import advance as advance_lessons
+            advance_lessons(server.data_root,server.background_lane,interrupted=learning_interrupted)
+        server.task_runner = TaskRunner(server.data_root, foreground_pending=lambda: any(r["lane"] == "foreground" for r in server.dialogues.state()["queued"]),maintenance=idle_maintenance)
         server.development_runner = DevelopmentRunner(server.data_root,server.background_lane)
         server.goal_runner = GoalRunner(server.data_root,server.background_lane)
         server.growth_runner = GrowthRunner(server.data_root,server.background_lane)

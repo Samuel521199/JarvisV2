@@ -13,12 +13,16 @@ def command(root, value):
             'outcome_configure':{'enabled'},'outcome_retry':{'id'},'outcome_history':{'id'},
             'completion_detail':{'id'},'acceptance_set':{'id','revision','rules'},
             'completion_feedback':{'id','request_id','fingerprint','kind','note'},
-            'experience_reuse':{'id','request_id','text'},'experience_review':{'id','revision'}}
+            'experience_reuse':{'id','request_id','text'},'experience_review':{'id','revision'},
+            'lesson_validation_configure':{'enabled','max_trials_24h','revision'}}
     if not isinstance(value,dict) or value.get('action') not in fields or set(value)!={'action'}|fields[value['action']]:
         raise CoreError('invalid_request','Unexpected settings operation')
     core=Core(root)
     try:
         action=value['action'];ident=value.get('id')
+        if action=='lesson_validation_configure':
+            from modules.context_knowledge.lesson_trials import LessonTrials
+            return LessonTrials(core.db).configure({k:v for k,v in value.items() if k!='action'})
         if action=='outcome_configure':
             from host.outcomes import service
             return service(core).configure(value['enabled'])

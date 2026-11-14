@@ -1308,6 +1308,10 @@ policy精确字段为query、interval_seconds、lookback_hours、due_delay_secon
 
 当前投影须重新核对目标来源；历史取本作用域最近200条事件，每任务只用最新观测，截断可见，live_revalidated=false。independent_successes和causal_contribution为null，automatic_promotion、execution_authorized、retrievable_as_memory为false。旧版应用可忽略此事件，不能据此授权或还原事实；新代码不能仅信任历史事件启动任务。原数据schema未改变，新增目标建议v4仍受其独立读者门约束。[实现权威](knowledge-learning.md#task-lessons-runtime)／[验收](delivery-validation.md#task-lessons-evidence-20261115)。
 
+本地验证配置复用meta的`lesson_validation_policy`，字段仅enabled、max_trials_24h、revision；默认false/4/1。`/api/operations`的`lesson_validation_configure`由原本机身份/访问控制保护，严格字段、布尔与1—4额度校验，revision比较后递增。未知配置禁止试验，完成投影单独显示policy_error，不使原任务评估失败。
+
+原events新增`learning.validation_policy`、`learning.validation_started`、`learning.validation_finished`。START含key（验证器版本+族摘要）、family、source_task、fingerprint、seed、challenge摘要、批次数/时限及policy_revision；FINISH含key、状态、每例通过与输出摘要、Worker证据、耗时和无晋升声明。未完成预留仍计24小时额度；没有FINISH只能判UNKNOWN_OR_RUNNING。投影附validation，FAILED/INTERRUPTED/PASSED分别给出修复、核对、真实任务对照下一步，不能覆盖当前来源/反证状态。新增记录不是事实、业务动作或许可，旧应用忽略它们不会运行验证；原grant检查不扩充其业务预算。[执行与边界](knowledge-learning.md#lesson-validation-runtime)。
+
 <!-- book-footer:start -->
 [返回工程主入口](../README.md) · [全书目录](../README.md#book-tree) · [上一章：主人利益原则、身份授权与停止控制](security-sovereignty.md) · [下一章：技术栈、源码目录与运行数据](stack-project-layout.md)
 <!-- book-footer:end -->

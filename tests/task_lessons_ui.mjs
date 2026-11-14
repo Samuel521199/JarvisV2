@@ -23,4 +23,14 @@ for(const [state,label,next] of [
 }
 const legacy=new Element('main');completionView(legacy,{state:'SATISFIED',checks:[]});
 assert.ok(!text(legacy).includes('经验'));assert.equal(buttons(legacy).length,0);
-console.log('5 completion candidate render checks passed; no promote/execute action added');
+for(const [status,next,label] of [['PASSED','compare_real_tasks','合成输出检查通过'],['FAILED','resolve_validation_failure','未通过新输入检查'],['INTERRUPTED','review_validation_run','验证已中断'],[null,'independent_validation','尚无完成回执']]){
+ const parent=new Element('main');
+ completionView(parent,{state:'VERIFIED',checks:[],learning_candidate:{state:'CANDIDATE',next_step:next,
+  history:{observations:1,distinct_inputs:1},validation:{policy:{enabled:true,max_trials_24h:4,revision:2},
+  trials_in_24h:1,trial:{result:status?{status}:null}}}});
+ assert.ok(text(parent).includes(label));assert.ok(text(parent).includes('不调用模型或写入业务文件'));
+ assert.deepEqual(buttons(parent),['暂停本地自动验证','查看经验依据与待验证项']);
+}
+const broken=new Element('main');completionView(broken,{state:'VERIFIED',checks:[],learning_candidate:{state:'CANDIDATE',next_step:'independent_validation',history:{observations:1,distinct_inputs:1},validation:{policy:{enabled:false,max_trials_24h:4,revision:1},policy_error:'invalid_policy',trials_in_24h:0,trial:null}}});
+assert.ok(text(broken).includes('自动验证已停止'));assert.deepEqual(buttons(broken),['查看经验依据与待验证项']);
+console.log('10 completion candidate/validation render checks passed; no promotion action added');
