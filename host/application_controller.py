@@ -58,11 +58,15 @@ def save_root(root,record):
 
 def finish(root,record,event):
     errors=[]
-    for path,value in [(root/'deployment/controller-protocol.json',{'schema':1,'minimum':1}),
+    for path,value in [(root/'deployment/controller-protocol.json',{'schema':1,'minimum':record['controller_protocol']}),
                        (root/'deployment/launcher.json',record),(event,{'phase':'committed','record':record})]:
         try:
-            if path.name=='controller-protocol.json' and path.exists() and read_json(path)!=value:
-                raise CoreError('controller_protocol','Never lower an existing controller protocol fence')
+            if path.name=='controller-protocol.json' and path.exists():
+                current=read_json(path)
+                if (not isinstance(current,dict) or set(current)!={'schema','minimum'} or current.get('schema')!=1
+                    or any(type(v) is not int for v in current.values()) or current['minimum'] not in (1,pin.PROTOCOL)
+                    or current['minimum']>value['minimum']):
+                    raise CoreError('controller_protocol','Never lower an existing or unknown controller protocol fence')
             write_json(path,value)
         except (OSError,CoreError):errors.append(path.name)
     return {'committed':True,'registration_pending':errors,'record':record,'application_adopted':False}
@@ -105,7 +109,7 @@ def promote(root,build,*,expected_epoch,expected_build,expected_controller,revie
         package=Path(approved['path']);actual,manifest=inspect_package(package)
         if actual!=build:raise CoreError('controller_approval','Approved package changed')
         marker=read_json(package/'config/controller-compatibility.json')
-        if marker!={'schema':1,'controller_protocol':1} or any(type(v) is not int for v in marker.values()):
+        if marker!={'schema':1,'controller_protocol':pin.PROTOCOL} or any(type(v) is not int for v in marker.values()):
             raise CoreError('controller_protocol','Candidate does not declare the independent-controller protocol')
         # Both the controller and current application must handle current data.
         require_compatible(root,package);require_compatible(root,app.approved(expected_build,fresh=False)['path'])
@@ -116,7 +120,7 @@ def promote(root,build,*,expected_epoch,expected_build,expected_controller,revie
         with zipfile.ZipFile(archive,'x',compression=zipfile.ZIP_DEFLATED) as stream:
             stream.writestr('controller-files.json',index)
             for name,raw in sorted(files.items()):stream.writestr(name,raw)
-        record={'schema':2,'controller_protocol':1,'build':ident,'runtime_source_build':build,'controller':str(folder),
+        record={'schema':2,'controller_protocol':pin.PROTOCOL,'build':ident,'runtime_source_build':build,'controller':str(folder),
             'controller_inventory_sha256':ident,'data_root':str(root),'port':old['port'],'generation':old.get('generation',0)+1,
             'policy_anchor_build':old.get('policy_anchor_build',old['build']),'policy_sha256':fingerprint,
             'capsule_id':change.name,'recovery_archive':str(archive),'recovery_sha256':pin.sha(archive),'launcher_backup':str(change)}

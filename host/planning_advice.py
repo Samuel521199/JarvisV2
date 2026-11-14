@@ -181,6 +181,6 @@ class PlanningAdvice:
             calls=[{'id':r['id'],'status':r['status'],'usage':decode(r['usage']) if r['usage'] else None}
                 for r in calls if r['input_digest']==stamp['input_digest']]
         return {'version':VERSION,'current':current,'offered':bundle.get('receipt',{}).get('methods',[]),
-            'model_calls':calls,'model_dispatched':any(r['status'] in {'DISPATCHING','UNKNOWN','SUCCEEDED','REJECTED','INVALID'} for r in calls),
+            'model_calls':calls,'model_dispatched':any(r['status'] in {'DISPATCHING','UNKNOWN','ACKNOWLEDGED','SUCCEEDED','REJECTED','INVALID'} for r in calls),
             'observation':bundle.get('observation'),'inherited_from':bundle.get('parent_goal'),'advisory_only':True,'execution_authorized':False,
             'automatic_promotion':False,'independent_successes':None,'causal_contribution':None}

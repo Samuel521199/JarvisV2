@@ -139,10 +139,10 @@ class ControllerTransitions(unittest.TestCase):
 
     def test_live_release_lock_and_unknown_protocol_refuse_transitions(self):
         with RunLock(self.root,'application-release'),self.assertRaises(CoreError):self.promote()
-        record=self.promote()['record'];path=self.root/'deployment/controller-protocol.json';path.write_text('{"schema":1,"minimum":2}')
+        record=self.promote()['record'];path=self.root/'deployment/controller-protocol.json';path.write_text('{"schema":1,"minimum":3}')
         with self.assertRaises(CoreError):pin.read(self.root)
         with self.assertRaises(CoreError):controllers.recover(self.root,expected_controller=record['build'],expected_epoch=self.before['epoch'],expected_build=self.old)
-        self.assertEqual(read_json(path)['minimum'],2)
+        self.assertEqual(read_json(path)['minimum'],3)
 
     def test_late_data_change_is_checked_before_controller_commit(self):
         original=controllers.publish_files
@@ -184,6 +184,31 @@ class ControllerTransitions(unittest.TestCase):
         self.assertNotEqual(self.launch().returncode,0)
         with self.assertRaises(CoreError):controllers.recover(self.root,expected_controller=record['build'],expected_epoch=self.before['epoch'],expected_build=self.old)
         self.assertEqual(self.app.state(),self.before)
+
+
+    def test_protocol_floor_advances_and_current_verifier_rejects_legacy_record(self):
+        old=(self.home/'JarvisLaunch.py').read_bytes()
+        write=self.root/'deployment/controller-protocol.json'
+        result=self.promote();committed=(self.home/'JarvisLaunch.py').read_bytes()
+        self.assertEqual(result['record']['controller_protocol'],2)
+        self.assertEqual(read_json(write),{'schema':1,'minimum':2})
+        (self.home/'JarvisLaunch.py').write_bytes(old)
+        with self.assertRaises(CoreError):pin.read(self.root)
+        (self.home/'JarvisLaunch.py').write_bytes(committed)
+        self.assertEqual(pin.read(self.root)['build'],result['record']['build'])
+
+
+    def test_registration_repair_raises_an_older_floor_without_replacing_root(self):
+        record=self.promote()['record'];path=self.root/'deployment/controller-protocol.json'
+        root=(self.home/'JarvisLaunch.py').read_bytes()
+        path.write_text('{"schema":1,"minimum":1}')
+        repaired=controllers.repair(self.root,expected_controller=record['build'])
+        self.assertEqual(repaired['registration_pending'],[])
+        self.assertEqual(read_json(path)['minimum'],2)
+        self.assertEqual((self.home/'JarvisLaunch.py').read_bytes(),root)
+        path.write_text('{"schema":1,"minimum":3}')
+        with self.assertRaises(CoreError):controllers.repair(self.root,expected_controller=record['build'])
+        self.assertEqual(read_json(path)['minimum'],3)
 
 
 if __name__=='__main__':unittest.main()

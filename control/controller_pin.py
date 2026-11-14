@@ -8,7 +8,7 @@ from control.paths import reject_links
 from sdk.controller_bootstrap import embedded,legacy
 from sdk.protocol import CoreError,decode,read_json
 
-PROTOCOL=1
+PROTOCOL=2
 FIELDS={'schema','controller_protocol','build','runtime_source_build','controller','controller_inventory_sha256',
     'data_root','port','generation','policy_anchor_build','policy_sha256','capsule_id','recovery_archive','recovery_sha256','launcher_backup','signature'}
 
@@ -57,10 +57,13 @@ def verify(root,record,*,files=True):
     if folder.parent.resolve()!=root/'deployment/controllers':raise CoreError('controller_record','Controller outside installation')
     reject_links(folder if files else folder.parent)
     floor=root/'deployment/controller-protocol.json';reject_links(floor)
+    minimum=0
     if floor.exists():
         value=read_json(floor)
-        if value!={'schema':1,'minimum':1} or any(type(v) is not int for v in value.values()):
+        if (not isinstance(value,dict) or set(value)!={'schema','minimum'} or value.get('schema')!=1
+            or any(type(v) is not int for v in value.values()) or value['minimum'] not in (1,PROTOCOL)):
             raise CoreError('controller_protocol','Unknown minimum controller protocol; preserve current state')
+        minimum=value['minimum']
     if record['schema']==2:
         if set(record)!=FIELDS:raise CoreError('controller_record','Unknown controller record fields')
         if any(not isinstance(record[k],str) or not re.fullmatch('[a-f0-9]{64}',record[k]) for k in
@@ -73,7 +76,8 @@ def verify(root,record,*,files=True):
                 raise CoreError('controller_record','Controller recovery path escaped its installation')
         if record['build']!=record['controller_inventory_sha256']:
             raise CoreError('controller_record','Controller identity differs from inventory')
-        if type(record.get('controller_protocol')) is not int or record['controller_protocol']!=PROTOCOL:
+        if (type(record.get('controller_protocol')) is not int or record['controller_protocol'] not in (1,PROTOCOL)
+            or record['controller_protocol']<minimum):
             raise CoreError('controller_protocol','Unsupported controller protocol')
         if type(record.get('generation')) is not int or record['generation']<1:
             raise CoreError('controller_record','Invalid controller generation')
@@ -98,7 +102,7 @@ def verify(root,record,*,files=True):
         if record['schema']==2:
             marker=Path(record['controller'])/'config/controller-compatibility.json';reject_links(marker)
             value=read_json(marker)
-            if value!={'schema':1,'controller_protocol':1} or any(type(v) is not int for v in value.values()):
+            if value!={'schema':1,'controller_protocol':record['controller_protocol']} or any(type(v) is not int for v in value.values()):
                 raise CoreError('controller_protocol','Controller contract declaration changed')
     return record
 

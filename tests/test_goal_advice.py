@@ -207,3 +207,13 @@ class GoalAdvice(unittest.TestCase):
         finally:store.close()
         detail=self.detail(ident)['planning_advice']
         self.assertEqual(linked,detail);self.assertTrue(linked['model_dispatched']);self.assertEqual(linked['observation']['task_id'],tid)
+
+
+    def test_acknowledging_unknown_cost_does_not_erase_dispatch_evidence(self):
+        from modules.model_gateway.routed import RoutedModels
+        self.seed();ident=self.create();self.plan(ident)
+        with self.core.db.transaction() as tx:tx.execute("UPDATE model_calls SET status='UNKNOWN' WHERE run_id=?",(ident,))
+        RoutedModels(self.core.db,{},[]).acknowledge_unknown(ident)
+        advice=self.detail(ident)['planning_advice']
+        self.assertEqual(advice['model_calls'][0]['status'],'ACKNOWLEDGED')
+        self.assertTrue(advice['model_dispatched'])
