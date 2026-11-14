@@ -72,6 +72,7 @@
 - [原生精灵双窗口协议 2](#native-two-window-contract)
 - [持久委托与持续办事契约（v0.1.6）](#standing-work-contract)
 - [Gmail 持续委托契约（v0.1.7）](#mail-standing-contract)
+- [过程候选审计投影](#task-lesson-event-contract)
 <!-- book-nav:end -->
 
 <a id="contracts-implementation-index"></a>
@@ -1299,6 +1300,13 @@ policy精确字段为query、interval_seconds、lookback_hours、due_delay_secon
 通知与待办复用原统一工作API、Attention和Commitments；安静时间影响已阅入口的投递资格，不能靠关闭卡片取消安排或把提醒已阅当业务完成。后续处理使用原`/api/mail-work`、草稿、准确审阅和回执，不由常设委托隐式发信。工作台和原生精灵共同挂载同一组件和传输层。
 
 控制器在排空前读取当前加密安排schema，目标包须声明`config/mail-standing-compatibility.json`为`{"schema":1,"mail_watch_schema":1}`；未知加密格式或缺声明均拒绝。先安装具备该兼容门的控制器及兼容基线，再创建正式安排。回退代码不回退用户数据或撤销记录；同源兼容基线只能证明技术接续，不是独立领域实现的正确性证明。
+
+<a id="task-lesson-event-contract"></a>
+## 过程候选审计投影
+
+`learning.candidate_observed`版本task-lesson-1复用events，不引入新的任务/授权状态或事实存储。字段包含task_id、goal_id、scope、family、procedure、applicability、input_digest、fingerprint、completion_state、state、source_error、condition_score及requirements_complete；procedure只保留能力、前序序号、参数角色/字面摘要及绑定摘要。候选状态不能代替Completion，条件得分不能证明经验贡献。
+
+当前投影须重新核对目标来源；历史取本作用域最近200条事件，每任务只用最新观测，截断可见，live_revalidated=false。independent_successes和causal_contribution为null，automatic_promotion、execution_authorized、retrievable_as_memory为false。旧版应用可忽略此事件，不能据此授权或还原事实；新代码不能仅信任历史事件启动任务。原数据schema未改变，新增目标建议v4仍受其独立读者门约束。[实现权威](knowledge-learning.md#task-lessons-runtime)／[验收](delivery-validation.md#task-lessons-evidence-20261115)。
 
 <!-- book-footer:start -->
 [返回工程主入口](../README.md) · [全书目录](../README.md#book-tree) · [上一章：主人利益原则、身份授权与停止控制](security-sovereignty.md) · [下一章：技术栈、源码目录与运行数据](stack-project-layout.md)

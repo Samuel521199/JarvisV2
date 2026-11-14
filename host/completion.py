@@ -28,6 +28,7 @@ def refresh(core, task_id, *, transaction=None):
         episodes.record(task,result,eligible,tx)
         from host.planning_advice import PlanningAdvice
         PlanningAdvice(core.db).observe(task_id,result,tx)
+        result['learning_candidate']=learning_candidate(core,task,result,tx)
         method=episodes.source(task_id)
         result['method']={k:method[k] for k in ('id','status','revision','expires')} if method else None
         if method:result['method']['review_required']=method['status']=='QUARANTINED' or method['expires']<=time.time()
@@ -36,6 +37,28 @@ def refresh(core, task_id, *, transaction=None):
         result['assessment_history']=[{'created':r['created'],'assessment':decode(r['body'])} for r in
             core.db.all('SELECT body,created FROM completion_history WHERE task_id=? ORDER BY created DESC,rowid DESC LIMIT 8',(task_id,))]
         return result
+
+
+def learning_candidate(core,task,completion,tx):
+    """Completion's existing pump reconciles candidates; no new execution lane."""
+    if task['status'] not in {'SUCCEEDED','FAILED','CANCELLED'}:return None
+    from host import goal_context
+    from modules.task_resource.plans import Plans
+    from modules.context_knowledge.task_lessons import TaskLessons,describe
+    link=core.db.one('SELECT id FROM goal_plans WHERE task_id=?',(task['id'],))
+    if not link:return None
+    plan=Plans(core.db).get(link['id']);context=goal_context.get(core,link['id'])
+    if not context:return None
+    source_error=None
+    if not context['enabled']:source_error='memory_disabled'
+    else:
+        try:goal_context.check(core,plan['id'])
+        except CoreError as error:source_error=error.code
+    lessons=TaskLessons(core.db)
+    from modules.task_resource.advice_scope import selectors
+    purpose=selectors(plan,4).get('task_purpose')
+    value=lessons.record(task['id'],describe(task,plan,context,completion,source_error,purpose=purpose),tx)
+    return lessons.projection(value)
 
 
 def projection(core, task_id):

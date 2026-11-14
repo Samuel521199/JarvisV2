@@ -98,6 +98,15 @@ export function completionView(parent,data,{refresh=()=>{}}={}){
   if(!['WAITING','CANCELLED'].includes(data.state))actions.append(button('指出需要修改',()=>feedback('reject')));
   if(data.feedback?.kind==='reject')actions.append(button('撤回这次纠正',()=>feedback('withdraw')));
  }
+ if(data.learning_candidate){
+  const learning=data.learning_candidate,states={CANDIDATE:'已整理为待验证经验',COUNTEREVIDENCE:'已记录需要纠正的反证',WITHDRAWN:'经验来源已失效',INCOMPLETE:'经验仍缺少完整验收依据'};
+  box.append(el('p',states[learning.state]||'经验等待核对','note'));
+  box.append(el('p',`同类过程历史记录 ${learning.history.observations} 项，涉及 ${learning.history.distinct_inputs} 组输入；这些记录尚未独立验证，不会自动成为事实或执行许可。`,'note'));
+  const next={independent_validation:'需要独立新输入、反例和无经验对照；自动验证尚待接入。',resolve_counterevidence:'先解决已记录的纠正或失败，再验证适用边界。',restore_current_sources:'来源或记忆许可已失效，候选不能继续使用。',complete_acceptance:'先补齐本次任务的可验证要求。',review_history_window:'当前仅展示有限历史，需要核对更早的记录。'};
+  box.append(el('p',next[learning.next_step]||'等待进一步验证。','note'));
+  if(learning.history.window_truncated)box.append(el('p','历史展示已达到窗口上限，计数并不完整。','note'));
+  actions.append(button('查看经验依据与待验证项',()=>details('经验候选与验证缺口',learning)));
+ }
  if(data.method_available)actions.append(button('用这个方法处理新文本',()=>{
   const body=modal('采用已验证的文本统计方法'),form=el('form'),text=el('textarea'),error=el('p',undefined,'form-error'),save=el('button','处理新文本并保存报告','primary'),requestId=crypto.randomUUID();text.maxLength=50000;text.rows=6;text.required=true;text.setAttribute('aria-label','本次待处理文本');save.type='submit';
   form.append(field('本次文本',text),el('p','沿用统计方法，对新文本重新计算。版本、来源或授权不再有效时会停止接续。','note'),error,save);
