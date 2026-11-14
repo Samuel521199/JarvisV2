@@ -293,12 +293,13 @@ def execute(root, ident, retry_unknown=False):
                     prompt=make_prompt(advice)
                     if advice:
                         from host.planning_advice import PlanningAdvice
-                        selected=PlanningAdvice(core.db).fit(row,goal_context.get(core,ident),prompt,make_prompt([]))
+                        base_prompt=make_prompt([])
+                        selected=PlanningAdvice(core.db).fit(row,goal_context.get(core,ident),prompt,base_prompt)
                         if selected!=prompt:advice=[]
                         prompt=selected
                     if advice:
                         from host.planning_advice import PlanningAdvice
-                        PlanningAdvice(core.db).assembly(row,goal_context.get(core,ident),key,prompt)
+                        PlanningAdvice(core.db).assembly(row,goal_context.get(core,ident),key,prompt,base_prompt)
                     proposal=gateway.request(key,'goal-plan',prompt,'goal-plan',{'grant_id':key+'-plan','principal_id':'owner.local','scope_id':'personal'},2,checkpoint,True)
                     if row['request']['input_text'] and proposal['input_text']!=row['request']['input_text'] and not (proposal['steps'] and proposal['steps'][0]['capability'].startswith('mcp.')):raise CoreError('plan_input_changed','Planner changed explicit input')
                 checkpoint();validate_proposal(proposal,row['catalog'])

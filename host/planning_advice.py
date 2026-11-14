@@ -170,10 +170,14 @@ class PlanningAdvice:
                 'input_digest':digest({'prompt':base_prompt,'schema':'goal-plan'})})
         return base_prompt
 
-    def assembly(self,plan,context,run_id,prompt):
+    def assembly(self,plan,context,run_id,prompt,base_prompt=None):
         if KEY not in context['view']:return
         view=context['view'];original=canonical(view);bundle=view[KEY]
         stamp={'run_id':run_id,'input_digest':digest({'prompt':prompt,'schema':'goal-plan'})}
+        if base_prompt is not None:
+            full=message_bytes([{'role':'user','content':prompt}]);base=message_bytes([{'role':'user','content':base_prompt}])
+            stamp['message_exposure']={'unit':'message_json_utf8_bytes','full_bytes':full,
+                'without_advice_bytes':base,'added_bytes':full-base}
         if bundle.get('dispatch')==stamp:return
         # Assembly is not dispatch. Projection consults the real model ledger.
         bundle['dispatch']=stamp
@@ -181,7 +185,8 @@ class PlanningAdvice:
             if tx.execute('UPDATE goal_context SET view=? WHERE goal_id=? AND view=?',(canonical(view),plan['id'],original)).rowcount!=1:
                 raise CoreError('goal_context_changed','Advice context changed during prompt assembly')
             self.db.event(tx,None,'goal.advice_assembled',{'goal_id':plan['id'],'run_id':run_id,'input_digest':stamp['input_digest'],
-                'source_ids':[r['source_id'] for r in bundle['receipt']['methods']]})
+                'source_ids':[r['source_id'] for r in bundle['receipt']['methods']],
+                **({'message_exposure':stamp['message_exposure']} if 'message_exposure' in stamp else {})})
 
     def observe(self,task_id,completion,tx):
         row=self.db.one('SELECT g.* FROM goal_context g JOIN goal_plans p ON p.id=g.goal_id WHERE p.task_id=?',(task_id,))
@@ -200,6 +205,15 @@ class PlanningAdvice:
         self.db.event(tx,task_id,'goal.advice_observed',{'goal_id':row['goal_id'],**observation,
             'source_ids':[r['source_id'] for r in bundle['receipt']['methods']]})
 
+    @staticmethod
+    def message_exposure(stamp):
+        value=stamp.get('message_exposure')
+        if not isinstance(value,dict) or set(value)!={'unit','full_bytes','without_advice_bytes','added_bytes'}:return None
+        if value['unit']!='message_json_utf8_bytes':return None
+        if any(type(value[key]) is not int or value[key]<0 for key in ('full_bytes','without_advice_bytes','added_bytes')):return None
+        if value['full_bytes']-value['without_advice_bytes']!=value['added_bytes']:return None
+        return dict(value)
+
     def projection(self,plan,context,selectors):
         if not context or KEY not in context['view']:return None
         bundle=context['view'][KEY];current=False
@@ -214,4 +228,5 @@ class PlanningAdvice:
         return {'version':VERSION,'current':current,'offered':bundle.get('receipt',{}).get('methods',[]),
             'model_calls':calls,'model_dispatched':any(r['status'] in {'DISPATCHING','UNKNOWN','ACKNOWLEDGED','SUCCEEDED','REJECTED','INVALID'} for r in calls),
             'observation':bundle.get('observation'),'inherited_from':bundle.get('parent_goal'),'advisory_only':True,'execution_authorized':False,
-            'automatic_promotion':False,'independent_successes':None,'causal_contribution':None}
+            'automatic_promotion':False,'independent_successes':None,'causal_contribution':None,
+            'message_exposure':self.message_exposure(stamp)}

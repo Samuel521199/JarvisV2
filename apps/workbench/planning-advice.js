@@ -9,6 +9,11 @@ export function planningAdvice(parent,advice,openGoal){
   if(openGoal)panel.append(button('查看上游工作',()=>openGoal(advice.inherited_from)));
  }else panel.append(el('p',advice.model_dispatched?'已有真实模型派发回执。提供参考不等于模型实际采用或已经证明有帮助。':'尚无匹配的模型派发回执，不能计作已经使用。','note'));
  if(!advice.current)panel.append(el('p','来源、适用条件或反证发生变化，需重新核对相关工作。','form-error'));
+ const exposure=advice.message_exposure;
+ if(exposure){
+  panel.append(el('p',`装配输入体积：不含经验卡 ${exposure.without_advice_bytes.toLocaleString()} 字节 → 本次 ${exposure.full_bytes.toLocaleString()} 字节，增加 ${exposure.added_bytes.toLocaleString()} 字节。`,'note'));
+  panel.append(el('p','这是消息体积，不是 token、实际费用或经验贡献；装配不等于已派发。','note'));
+ }
  const observation=advice.observation;
  if(observation){
   panel.append(el('p',observation.condition_score==null?'本任务条件评分尚未确定。':`本任务已声明条件得分 ${observation.condition_score} / 100。`));
