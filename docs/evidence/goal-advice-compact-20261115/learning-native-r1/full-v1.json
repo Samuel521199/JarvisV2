@@ -1,0 +1,176 @@
+{
+  "group": "full-v1",
+  "goal_id": "goal-e809789722fc47aab5b8c6cb83a0cec9",
+  "planning_status": "REVIEW",
+  "proposal": {
+    "input_text": "{\"pairs\":[[13,16],[24,7],[31,12]],\"schema\":\"jarvis.practice-input.v1\"}",
+    "questions": [],
+    "schema": "jarvis.goal-plan.v1",
+    "steps": [
+      {
+        "capability": "plugin.advice-practice.v1",
+        "expected": "输出包含三组乘法题目与对应乘积答案的 jarvis.practice-result.v1 格式练习表，保持原题目顺序且不含掌握度评价",
+        "source": "input",
+        "title": "生成乘法练习题及答案"
+      }
+    ],
+    "summary": "根据输入的三组正整数对生成对应的乘法练习题和正确答案，并输出练习工作表"
+  },
+  "plan_passed": true,
+  "planning_seconds": 8.949984800001403,
+  "task_id": "task-95d81ccf3c3e4fa6ae8e24106b6c1e43",
+  "task_status": "SUCCEEDED",
+  "completion": {
+    "version": "completion-1.1.0",
+    "task_id": "task-95d81ccf3c3e4fa6ae8e24106b6c1e43",
+    "state": "VERIFIED",
+    "fingerprint": "c9745dca2264d4ca2a699e0fe415d7a5769e1b3dba6c440fb0bf4783dc856453",
+    "acceptance": {
+      "revision": 1,
+      "rules": {
+        "coverage": "complete",
+        "criteria": [
+          {
+            "check": "text_equals",
+            "expected": "{\"exercises\":[{\"a\":13,\"answer\":208,\"b\":16},{\"a\":24,\"answer\":168,\"b\":7},{\"a\":31,\"answer\":372,\"b\":12}],\"schema\":\"jarvis.practice-result.v1\"}",
+            "id": "exact-current-comparison",
+            "step_id": "step-1"
+          }
+        ],
+        "requirements": [
+          {
+            "criterion_ids": [
+              "exact-current-comparison"
+            ],
+            "id": "current-frozen-artifact",
+            "kind": "literal",
+            "text": "Frozen current domain artifact, values, source/order and explicit limitations"
+          }
+        ]
+      }
+    },
+    "checks": [
+      {
+        "id": "exact-current-comparison",
+        "step_id": "step-1",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "score_scope": "declared_conditions_only",
+    "outcome_id": "outcome-8380376b951b83fb8303e02dcaf77968",
+    "requirement_coverage": {
+      "version": "declared-requirements-1",
+      "state": "SATISFIED",
+      "requirements": [
+        {
+          "criterion_ids": [
+            "exact-current-comparison"
+          ],
+          "id": "current-frozen-artifact",
+          "kind": "literal",
+          "text": "Frozen current domain artifact, values, source/order and explicit limitations",
+          "status": "passed",
+          "reason": "linked_checks"
+        }
+      ],
+      "complete": true,
+      "scope": "explicitly_declared_requirements",
+      "semantic_goal_verified": false
+    },
+    "evidence_ready": true,
+    "feedback": null,
+    "method": null,
+    "method_available": false,
+    "feedback_history": [],
+    "assessment_history": []
+  },
+  "saved_artifact_receipts": [
+    {
+      "bytes": 539,
+      "relative_path": "artifacts/task-95d81ccf3c3e4fa6ae8e24106b6c1e43/action-8693d7dcac7557ea7adf4e211fcd433e/result.json",
+      "sha256": "24b8ed7a825695b4e761783e251a4933edd755fe0fbb4eec0d016e74ebbb291f",
+      "verified": true
+    }
+  ],
+  "artifact_checks": [
+    {
+      "sha256_matches": true,
+      "bytes_match": true,
+      "actual_text_matches_frozen_expected": true
+    }
+  ],
+  "passed": true,
+  "calls": [
+    {
+      "id": "call-98b70ca1f8f54b35b68c295c884256a4",
+      "run_id": "goal-e809789722fc47aab5b8c6cb83a0cec9",
+      "phase": "goal-plan",
+      "status": "SUCCEEDED",
+      "input_digest": "56f5b27745bb179b0c1b1ecf077381cdb589de7d0f045d156a9cff034cc27066",
+      "usage": {
+        "completion_tokens": 149,
+        "prompt_tokens": 2439,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 584,
+        "total_tokens": 3172
+      }
+    }
+  ],
+  "actual_model_calls": 1,
+  "planning_advice": {
+    "version": 1,
+    "current": true,
+    "offered": [
+      {
+        "method_digest": "e037d3da597a042912639c9c7872d2b9586315c32483029b42ed949a4cc23565",
+        "source_digest": "e0557be2bee928997bcf3e006bea1a43326903ad1b52b18be14befcc7fdae5e7",
+        "source_id": "source-755b8db72b354acfbc50f4e9f4798786",
+        "source_revision": 1
+      },
+      {
+        "method_digest": "bd0ee0ed8e493f1b4f31e4af31b2ef05e3954a48d0af3c5ae23557890a7616b0",
+        "source_digest": "43a8dd59e1686210930cb071e1591dd47887253bb18ffc36eb3e6a6d18014d04",
+        "source_id": "source-45794152a11e4ecdbf6ef17d3c8b3ab5",
+        "source_revision": 1
+      }
+    ],
+    "model_calls": [
+      {
+        "id": "call-98b70ca1f8f54b35b68c295c884256a4",
+        "status": "SUCCEEDED",
+        "usage": {
+          "completion_tokens": 149,
+          "prompt_tokens": 2439,
+          "reasoning_in_completion": false,
+          "reasoning_tokens": 584,
+          "total_tokens": 3172
+        }
+      }
+    ],
+    "model_dispatched": true,
+    "observation": {
+      "causal_contribution": null,
+      "condition_score": 100.0,
+      "coverage_complete": true,
+      "fingerprint": "c9745dca2264d4ca2a699e0fe415d7a5769e1b3dba6c440fb0bf4783dc856453",
+      "review_required": false,
+      "score_scope": "declared_conditions_only",
+      "state": "VERIFIED",
+      "task_id": "task-95d81ccf3c3e4fa6ae8e24106b6c1e43"
+    },
+    "inherited_from": null,
+    "advisory_only": true,
+    "execution_authorized": false,
+    "automatic_promotion": false,
+    "independent_successes": null,
+    "causal_contribution": null,
+    "message_exposure": {
+      "added_bytes": 2597,
+      "full_bytes": 8066,
+      "unit": "message_json_utf8_bytes",
+      "without_advice_bytes": 5469
+    }
+  },
+  "receipt_bound": true
+}

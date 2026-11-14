@@ -1,0 +1,168 @@
+{
+  "group": "full-v1",
+  "goal_id": "goal-df90e8aa77024a39ad54df915997e6be",
+  "planning_status": "REVIEW",
+  "proposal": {
+    "input_text": "{\"currency\":\"CNY\",\"max_delivery_days\":6,\"max_price_minor\":21800,\"offers\":[{\"delivery_days\":9,\"id\":\"A81\",\"price_minor\":18200,\"source\":\"synthetic:A81\"},{\"delivery_days\":5,\"id\":\"B36\",\"price_minor\":20300,\"source\":\"synthetic:B36\"},{\"delivery_days\":6,\"id\":\"C29\",\"price_minor\":19900,\"source\":\"synthetic:C29\"}],\"schema\":\"jarvis.quote-input.v1\"}",
+    "questions": [],
+    "schema": "jarvis.goal-plan.v1",
+    "steps": [
+      {
+        "capability": "plugin.advice-quote.v1",
+        "expected": "Current quote artifact",
+        "source": "input",
+        "title": "比较当前报价"
+      }
+    ],
+    "summary": "Dry comparison"
+  },
+  "plan_passed": true,
+  "planning_seconds": 0.03457889999845065,
+  "task_id": "task-e6034e3e34204853bcde81d019716ebe",
+  "task_status": "SUCCEEDED",
+  "completion": {
+    "version": "completion-1.1.0",
+    "task_id": "task-e6034e3e34204853bcde81d019716ebe",
+    "state": "VERIFIED",
+    "fingerprint": "5c8da2fa686c1c6dc1019b0ffaa135cea546eb1b0e047182a718460a93eac3c3",
+    "acceptance": {
+      "revision": 1,
+      "rules": {
+        "coverage": "complete",
+        "criteria": [
+          {
+            "check": "text_equals",
+            "expected": "{\"eligible_ids\":[\"B36\",\"C29\"],\"selected_id\":\"C29\",\"selected_source\":\"synthetic:C29\"}",
+            "id": "exact-current-comparison",
+            "step_id": "step-1"
+          }
+        ],
+        "requirements": [
+          {
+            "criterion_ids": [
+              "exact-current-comparison"
+            ],
+            "id": "current-frozen-artifact",
+            "kind": "literal",
+            "text": "Frozen current domain artifact, values, source/order and explicit limitations"
+          }
+        ]
+      }
+    },
+    "checks": [
+      {
+        "id": "exact-current-comparison",
+        "step_id": "step-1",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "score_scope": "declared_conditions_only",
+    "outcome_id": "outcome-8081e5844136071dc928a7eb23aeaca3",
+    "requirement_coverage": {
+      "version": "declared-requirements-1",
+      "state": "SATISFIED",
+      "requirements": [
+        {
+          "criterion_ids": [
+            "exact-current-comparison"
+          ],
+          "id": "current-frozen-artifact",
+          "kind": "literal",
+          "text": "Frozen current domain artifact, values, source/order and explicit limitations",
+          "status": "passed",
+          "reason": "linked_checks"
+        }
+      ],
+      "complete": true,
+      "scope": "explicitly_declared_requirements",
+      "semantic_goal_verified": false
+    },
+    "evidence_ready": true,
+    "feedback": null,
+    "method": null,
+    "method_available": false,
+    "feedback_history": [],
+    "assessment_history": []
+  },
+  "saved_artifact_receipts": [
+    {
+      "bytes": 475,
+      "relative_path": "artifacts/task-e6034e3e34204853bcde81d019716ebe/action-504aa30b23ed93c5e0d9cce30c39ded6/result.json",
+      "sha256": "dee7f6d7da2a65815f1b52ebdcaa3949cc50ef82db2a3140a57ae26df2f23b5c",
+      "verified": true
+    }
+  ],
+  "artifact_checks": [
+    {
+      "sha256_matches": true,
+      "bytes_match": true,
+      "actual_text_matches_frozen_expected": true
+    }
+  ],
+  "passed": true,
+  "calls": [
+    {
+      "id": "call-8e62cb5c6ba24d0f94b0652048d78c5c",
+      "run_id": "goal-df90e8aa77024a39ad54df915997e6be",
+      "phase": "goal-plan",
+      "status": "SUCCEEDED",
+      "input_digest": "4eb966bf3ec37d02706725303cfa20e621938c39da5ec72e8ec3eae267e5f7d5",
+      "usage": {
+        "total_tokens": 0
+      }
+    }
+  ],
+  "actual_model_calls": 1,
+  "planning_advice": {
+    "version": 1,
+    "current": true,
+    "offered": [
+      {
+        "method_digest": "b3d18cecad5745aa5681b1cddb4fc70398b6956a2dfd7b581d7b489874960a13",
+        "source_digest": "c09fd8b8a1755c29fca3cdbc41912962026e739e22189999767f53968f21f431",
+        "source_id": "source-058fb686a61041638962d2855231caef",
+        "source_revision": 1
+      },
+      {
+        "method_digest": "a60cdd17f122fa588574c87420754a78bd532dfface3dbe358a02523c10fd5cb",
+        "source_digest": "2333171855b06ed3557a6d18ad53cd8557fa6068b9a2743294c8eaa5c4beb785",
+        "source_id": "source-fd7091d6240f48949a6331a3fa588345",
+        "source_revision": 1
+      }
+    ],
+    "model_calls": [
+      {
+        "id": "call-8e62cb5c6ba24d0f94b0652048d78c5c",
+        "status": "SUCCEEDED",
+        "usage": {
+          "total_tokens": 0
+        }
+      }
+    ],
+    "model_dispatched": true,
+    "observation": {
+      "causal_contribution": null,
+      "condition_score": 100.0,
+      "coverage_complete": true,
+      "fingerprint": "5c8da2fa686c1c6dc1019b0ffaa135cea546eb1b0e047182a718460a93eac3c3",
+      "review_required": false,
+      "score_scope": "declared_conditions_only",
+      "state": "VERIFIED",
+      "task_id": "task-e6034e3e34204853bcde81d019716ebe"
+    },
+    "inherited_from": null,
+    "advisory_only": true,
+    "execution_authorized": false,
+    "automatic_promotion": false,
+    "independent_successes": null,
+    "causal_contribution": null,
+    "message_exposure": {
+      "added_bytes": 2606,
+      "full_bytes": 8471,
+      "unit": "message_json_utf8_bytes",
+      "without_advice_bytes": 5865
+    }
+  },
+  "receipt_bound": true
+}

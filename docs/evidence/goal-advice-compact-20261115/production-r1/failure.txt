@@ -1,0 +1,26 @@
+Traceback (most recent call last):
+  File "E:\Jarvis\dev\docs\evidence\goal-advice-compact-20261115\promote_controller.py", line 87, in <module>
+    try:main()
+        ~~~~^^
+  File "E:\Jarvis\dev\docs\evidence\goal-advice-compact-20261115\promote_controller.py", line 32, in main
+    save();prepared=prepare(daily,dev,ROOT,controller_only=True);assert prepared['prepared_build']==qualified['build'];report['prepared']=prepared;save()
+                    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Jarvis\dev\tools\workstation.py", line 170, in prepare
+    checked=release(root,'validate','--build',ident,'--reviewed-source')
+  File "E:\Jarvis\dev\tools\workstation.py", line 75, in release
+    if result.returncode:raise RuntimeError('Daily controller refused '+action+'; '+result.stderr[-1200:])
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Daily controller refused validate; icodeDecodeError: 'utf-8' codec can't decode byte 0xbe in position 1376: invalid start byte
+Traceback (most recent call last):
+  File "E:\Jarvis\runtime\user-data\deployment\controllers\545dfd07b8f185faaa067db7e3684e80b06529ff0efd9bc4a43c2db2937a8255\apps\development\releases.py", line 9, in <module>
+    main()
+    ~~~~^^
+  File "E:\Jarvis\runtime\user-data\deployment\controllers\545dfd07b8f185faaa067db7e3684e80b06529ff0efd9bc4a43c2db2937a8255\host\application_release.py", line 125, in main
+    value = app.validate(args.build, validator(root, reviewed_source=args.reviewed_source))
+  File "E:\Jarvis\runtime\user-data\deployment\controllers\545dfd07b8f185faaa067db7e3684e80b06529ff0efd9bc4a43c2db2937a8255\modules\release_recovery\application.py", line 220, in validate
+    report = validator(Path(record['path']))
+  File "E:\Jarvis\runtime\user-data\deployment\controllers\545dfd07b8f185faaa067db7e3684e80b06529ff0efd9bc4a43c2db2937a8255\host\application_release.py", line 78, in evaluate
+    log.write_text((result.stdout + '\n' + result.stderr)[-200000:], encoding='utf-8')
+                    ~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~
+TypeError: can only concatenate str (not "NoneType") to str
+

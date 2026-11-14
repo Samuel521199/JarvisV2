@@ -193,9 +193,24 @@
 | 资料整理 | 6,883 | 5,983 | -13.1% |
 | 练习工作表 | 8,064 | 7,165 | -11.1% |
 
-这是对同一已见正文的离线比较，保留卡数、摘要、适用条件、反例和全部其他输入，不能当作三域新任务完成结果或预测命中。后续需在已冻结条件下做full-v1/compact-v2真实模型配对、未见条件反转与原长期门，再决定采用；即使总token降低也不能跳过质量门。
+**接续真实配对：**[三域汇总](evidence/goal-advice-compact-20261115/all-domain-pairs.json)使用新增构造输入、每域一组，完整v1和精简v2使用同一方法回执、普通背景、输入、工具和路由，仅改变模型投影。事前预测减少prompt字节和prompt token；总token、质量及时延不预设数值。各组真实NativeModel、RestrictedWorker与落盘文件均核验；6次请求逐一[关联实际代理账哈希](evidence/goal-advice-compact-20261115/bridge-correlation.json)，模型额度21→27/64，无fallback/retry/额度扩张，临时桥凭据均清除。
 
-最终开发树[104项回归](evidence/goal-advice-compact-20261115/regressions-final.json)全部通过，测试期间源码摘要未变；覆盖11项精简专项及原预算、来源、应用兼容、控制器、聊天与工作台检查。初轮102项是在后续加固期间执行，保留为中间证据，不把它当最终树验收或与104累加。源码0a1f0e9的[独立包](evidence/goal-advice-compact-20261115/independent-package/result.json)1e9b840通过原固定策略ed2a6f6：207项中206通过、1平台跳过，包字节完整、架构零错误；[包内11项专项重放](evidence/goal-advice-compact-20261115/package-compact-replay.json)全部运行时导入来自该包。专项是已见开发用例，不改称独立设计。两份实际合格包[四种格式读回组合](evidence/goal-advice-compact-20261115/actual-readers.json)证明：v1读者读v1、v2读者读v1/v2均缓存恢复到REVIEW，v1读者遇v2在前置检查拒绝；模型调用账及grants不变。[隔离真实进程组合](evidence/goal-advice-compact-20261115/native-r1/result.json)已通过：从原v0.1.8安装晋升协议3控制器时40次采样无请求失败、boot_id和聊天读写正常；采用相容候选后写入v2格式哨兵，旧应用回退在排空前拒绝；损坏控制器后按原签名同身份恢复，STOP、活动应用与boot_id保留，结束后夹具正常停止。哨兵只验证格式兼容，不冒充业务任务。实际已安装协议2代码[读取隔离协议3下限](evidence/goal-advice-compact-20261115/actual-old-controller-fence.json)确实拒绝。日用仍是v0.1.8/epoch10、协议2，真实日用2→3晋升与后续模型配对尚未执行。Codex仍需退出后离线迁E、D灾备不替代当前授权/用量间隙审查，其他语言/预算/多Bot/自愈缺口不随本改动消失。
+| 构造域／各一组 | full-v1总token | compact-v2总token | 总token变化／声明条件分 |
+|---|---|---|---|
+| 报价：218元、6天，新A81/B36/C29 | 3,170 | 2,724 | -14.1%，两组100 |
+| 资料：新来源ID、287元草稿和3个零件限定 | 2,592 | 2,123 | -18.1%，两组100 |
+| 练习：13×16、24×7、31×12 | 3,172 | 2,336 | -26.4%，两组100 |
+| 本批记账合计 | 8,934 | 7,183 | -19.6%，不是总体效应估计 |
+
+本批prompt token分别减少20.9%、26.3%、21.7%，符合事前方向；总token减少幅度是实测，不补写为事前预测。仍有推理波动、顺序效应及每域仅一题的限制。保留原加卡比无卡增加52.8%的失败结论：本轮是完整卡与精简卡对照，不能跨批直接证明胜过无卡，更不能据此自动晋升经验、声明学习者掌握或达到原90%语言门。条件反转、独立用户来源、多次配对、适用条件精度、自动归纳和长期净收益仍待补。
+
+**日用控制器接续：**[production-r2](evidence/goal-advice-compact-20261115/production-r2/result.json)已将真实协议2/generation2晋升为协议3/generation3，身份a04d129；活动应用v0.1.8/epoch10、boot_id、config/private文件和core/dialogue/commitments表摘要均未变，40次采样无请求失败。业务摘要只保存在E盘私有备份，不进Git。首轮[原失败](evidence/goal-advice-compact-20261115/production-r1/failure.txt)在固定测试输出UTF-8解码处阻断，发生在入口提交前；改用独立验收相同的E盘TEMP/TMP后固定测试206通过/1平台跳过，才晋升，未改评价器或降低标准。故障根因尚未完全归因，不能说已经修复全部Windows编码问题。
+
+D盘[控制增量核验](evidence/goal-advice-compact-20261115/production-r2/disaster-copy.json)对应controllers/2026-11-15-r1，包括签名入口、协议下限、控制账一致快照、加密release密钥及控制器/来源ZIP；旧r3保留历史。新增[调用账灾备](evidence/goal-advice-compact-20261115/budget-disaster-copy.json)为budgets/2026-11-15-r2，含6个本批回执，恢复仍须审查当前授权、撤回及用量间隙。并非新全量业务备份；Codex离线迁移、重装DPAPI、缺失旧项目等余项仍在。
+
+这是对同一已见正文的离线比较，保留卡数、摘要、适用条件、反例和全部其他输入，不能当作三域新任务完成结果或预测命中。本节下述接续已完成单组真实配对；后续仍需更多独立输入、未见条件反转与原长期门，再决定应用采用，即使总token降低也不能跳过质量门。
+
+最终开发树[104项回归](evidence/goal-advice-compact-20261115/regressions-final.json)全部通过，测试期间源码摘要未变；覆盖11项精简专项及原预算、来源、应用兼容、控制器、聊天与工作台检查。初轮102项是在后续加固期间执行，保留为中间证据，不把它当最终树验收或与104累加。源码0a1f0e9的[独立包](evidence/goal-advice-compact-20261115/independent-package/result.json)1e9b840通过原固定策略ed2a6f6：207项中206通过、1平台跳过，包字节完整、架构零错误；[包内11项专项重放](evidence/goal-advice-compact-20261115/package-compact-replay.json)全部运行时导入来自该包。专项是已见开发用例，不改称独立设计。两份实际合格包[四种格式读回组合](evidence/goal-advice-compact-20261115/actual-readers.json)证明：v1读者读v1、v2读者读v1/v2均缓存恢复到REVIEW，v1读者遇v2在前置检查拒绝；模型调用账及grants不变。[隔离真实进程组合](evidence/goal-advice-compact-20261115/native-r1/result.json)已通过：从原v0.1.8安装晋升协议3控制器时40次采样无请求失败、boot_id和聊天读写正常；采用相容候选后写入v2格式哨兵，旧应用回退在排空前拒绝；损坏控制器后按原签名同身份恢复，STOP、活动应用与boot_id保留，结束后夹具正常停止。哨兵只验证格式兼容，不冒充业务任务。实际已安装协议2代码[读取隔离协议3下限](evidence/goal-advice-compact-20261115/actual-old-controller-fence.json)确实拒绝。后续真实日用2→3晋升和三域单组模型配对已完成，见下述接续记录；应用尚未日用采用精简候选。Codex仍需退出后离线迁E、D灾备不替代当前授权/用量间隙审查，其他语言/预算/多Bot/自愈缺口不随本改动消失。
 
 <a id="goal-advice-pair-evidence-20261114"></a>
 ## 条件经验真实配对与成本诊断（2026-11-14—15）

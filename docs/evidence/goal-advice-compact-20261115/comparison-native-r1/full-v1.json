@@ -1,0 +1,176 @@
+{
+  "group": "full-v1",
+  "goal_id": "goal-c30566aa3a5945699cf1cbd814f381ad",
+  "planning_status": "REVIEW",
+  "proposal": {
+    "input_text": "{\"currency\":\"CNY\",\"max_delivery_days\":6,\"max_price_minor\":21800,\"offers\":[{\"delivery_days\":9,\"id\":\"A81\",\"price_minor\":18200,\"source\":\"synthetic:A81\"},{\"delivery_days\":5,\"id\":\"B36\",\"price_minor\":20300,\"source\":\"synthetic:B36\"},{\"delivery_days\":6,\"id\":\"C29\",\"price_minor\":19900,\"source\":\"synthetic:C29\"}],\"schema\":\"jarvis.quote-input.v1\"}",
+    "questions": [],
+    "schema": "jarvis.goal-plan.v1",
+    "steps": [
+      {
+        "capability": "plugin.advice-quote.v1",
+        "expected": "输出包含符合交期与价格条件的 eligible_ids、最终选取的最低价 selected_id 及其 selected_source 的 JSON 结果",
+        "source": "input",
+        "title": "筛选合格报价并比选最低价"
+      }
+    ],
+    "summary": "使用报价比较工具根据预算及交期限制筛选合格报价并选出最低价，结果将由系统自动保存为任务产物报告。"
+  },
+  "plan_passed": true,
+  "planning_seconds": 10.148692400000073,
+  "task_id": "task-7214900a631745daa6037f7b484723c3",
+  "task_status": "SUCCEEDED",
+  "completion": {
+    "version": "completion-1.1.0",
+    "task_id": "task-7214900a631745daa6037f7b484723c3",
+    "state": "VERIFIED",
+    "fingerprint": "c589a7497413a27a42a9d5a714dade688083643266c6582c093dab8c177ac0c1",
+    "acceptance": {
+      "revision": 1,
+      "rules": {
+        "coverage": "complete",
+        "criteria": [
+          {
+            "check": "text_equals",
+            "expected": "{\"eligible_ids\":[\"B36\",\"C29\"],\"selected_id\":\"C29\",\"selected_source\":\"synthetic:C29\"}",
+            "id": "exact-current-comparison",
+            "step_id": "step-1"
+          }
+        ],
+        "requirements": [
+          {
+            "criterion_ids": [
+              "exact-current-comparison"
+            ],
+            "id": "current-frozen-artifact",
+            "kind": "literal",
+            "text": "Frozen current domain artifact, values, source/order and explicit limitations"
+          }
+        ]
+      }
+    },
+    "checks": [
+      {
+        "id": "exact-current-comparison",
+        "step_id": "step-1",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "score_scope": "declared_conditions_only",
+    "outcome_id": "outcome-fcc9b32df4bb9ad3acc8442358258518",
+    "requirement_coverage": {
+      "version": "declared-requirements-1",
+      "state": "SATISFIED",
+      "requirements": [
+        {
+          "criterion_ids": [
+            "exact-current-comparison"
+          ],
+          "id": "current-frozen-artifact",
+          "kind": "literal",
+          "text": "Frozen current domain artifact, values, source/order and explicit limitations",
+          "status": "passed",
+          "reason": "linked_checks"
+        }
+      ],
+      "complete": true,
+      "scope": "explicitly_declared_requirements",
+      "semantic_goal_verified": false
+    },
+    "evidence_ready": true,
+    "feedback": null,
+    "method": null,
+    "method_available": false,
+    "feedback_history": [],
+    "assessment_history": []
+  },
+  "saved_artifact_receipts": [
+    {
+      "bytes": 475,
+      "relative_path": "artifacts/task-7214900a631745daa6037f7b484723c3/action-0233b98e52ffc43f8ca0f9c8af460e48/result.json",
+      "sha256": "a7313731f82ac6b6e2054f2fb1891a2c62b27d753fcfe09cd14e5c29d97ba77e",
+      "verified": true
+    }
+  ],
+  "artifact_checks": [
+    {
+      "sha256_matches": true,
+      "bytes_match": true,
+      "actual_text_matches_frozen_expected": true
+    }
+  ],
+  "passed": true,
+  "calls": [
+    {
+      "id": "call-1018045ec1de4512b5588d3b1b095dfb",
+      "run_id": "goal-c30566aa3a5945699cf1cbd814f381ad",
+      "phase": "goal-plan",
+      "status": "SUCCEEDED",
+      "input_digest": "fdeb2f22a27b7f1dc297b5787a449ea7edd0b27756e366b693c416b209a87f48",
+      "usage": {
+        "completion_tokens": 255,
+        "prompt_tokens": 2579,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 336,
+        "total_tokens": 3170
+      }
+    }
+  ],
+  "actual_model_calls": 1,
+  "planning_advice": {
+    "version": 1,
+    "current": true,
+    "offered": [
+      {
+        "method_digest": "575f795da5dcf68dac584ec5539c363caf8ae03ca2638ca5090e31af6c9d389d",
+        "source_digest": "d9cff1e2c5dea6e1d05d881399fd0fac8204305981293b7b366baddc347da2d1",
+        "source_id": "source-7c2d6142de5f4ffdab1577e7facef2e1",
+        "source_revision": 1
+      },
+      {
+        "method_digest": "a8831f381e077af1728aa7cd7edb17e1faab507e1bf79d364e7be4c1144111a3",
+        "source_digest": "f9f238c4a8a162f0eab92d057d46a43d2c82078382b74e31ae2de2a9312c0689",
+        "source_id": "source-024bef059a2b4d19b4863ff9c852cc4b",
+        "source_revision": 1
+      }
+    ],
+    "model_calls": [
+      {
+        "id": "call-1018045ec1de4512b5588d3b1b095dfb",
+        "status": "SUCCEEDED",
+        "usage": {
+          "completion_tokens": 255,
+          "prompt_tokens": 2579,
+          "reasoning_in_completion": false,
+          "reasoning_tokens": 336,
+          "total_tokens": 3170
+        }
+      }
+    ],
+    "model_dispatched": true,
+    "observation": {
+      "causal_contribution": null,
+      "condition_score": 100.0,
+      "coverage_complete": true,
+      "fingerprint": "c589a7497413a27a42a9d5a714dade688083643266c6582c093dab8c177ac0c1",
+      "review_required": false,
+      "score_scope": "declared_conditions_only",
+      "state": "VERIFIED",
+      "task_id": "task-7214900a631745daa6037f7b484723c3"
+    },
+    "inherited_from": null,
+    "advisory_only": true,
+    "execution_authorized": false,
+    "automatic_promotion": false,
+    "independent_successes": null,
+    "causal_contribution": null,
+    "message_exposure": {
+      "added_bytes": 2606,
+      "full_bytes": 8471,
+      "unit": "message_json_utf8_bytes",
+      "without_advice_bytes": 5865
+    }
+  },
+  "receipt_bound": true
+}
