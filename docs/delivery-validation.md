@@ -193,7 +193,7 @@
 
 [实际旧包读取及开销记录](evidence/task-lessons-20261115/ledger-recovery.json)使用本工程已发布纯文本工具执行孤立任务，规划为可控替身，未调用云模型，未复制日用业务数据。[共用完成卡检查](evidence/task-lessons-20261115/ui-check.json)保留测试夹具BroadcastChannel未退出的修正说明。开发初次跨领域导入被架构检查拒绝，已改为Host传入用途值，知识模块不直接调用任务领域实现。
 
-**回归验证。** [155项开发回归](evidence/task-lessons-20261115/regressions.json)全部通过，测试期间源码未改变；覆盖自动捕获、幂等、事务回滚补记、同输入去重、作用域/字面参数分组、后续纠正、来源撤回、关闭记忆、历史截断，以及原Completion、目标、条件经验、清理和工作台链。架构检查457个Python文件、20个既有Host循环模块、0错误。新包固定检查及包内重放另行登记。
+**回归验证。** [155项开发回归](evidence/task-lessons-20261115/regressions.json)全部通过，测试期间源码未改变；覆盖自动捕获、幂等、事务回滚补记、同输入去重、作用域/字面参数分组、后续纠正、来源撤回、关闭记忆、历史截断，以及原Completion、目标、条件经验、清理和工作台链。架构检查457个Python文件、20个既有Host循环模块、0错误。正式提交3d44044的[独立候选e8acd57](evidence/task-lessons-20261115/qualified-r1/independent-package/result.json)沿原固定策略ed2a6f6完成207项检查：206通过、1平台跳过，源码完整；[包内9项专项重放](evidence/task-lessons-20261115/qualified-r1/package-lessons-replay.json)全部通过，运行导入均来自候选包且事后字节不变。已见专项重放不充当独立业务样本；日用仍v0.1.8/epoch10、协议4，未采用该应用。
 
 **闭环边界。** 目标定义和当前授权仍由定向层负责；执行沿原任务/模型账；候选与反证由观察成长记录。不是改造后的自评分更高就自动采用，也没有让旧版恢复重建已遗忘事实。审计仅保存引用、过程结构和摘要，不复制输入、产物或反馈原文；取候选前复核当前goal context及来源，重复刷新幂等，事务失败回滚后由原pump补记。详见[候选实现规则](knowledge-learning.md#task-lessons-runtime)。完整自动归纳、独立对照验证、晋升、收益追踪仍未闭环，不能用本次技术通过替代它们。
 
