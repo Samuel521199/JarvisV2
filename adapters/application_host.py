@@ -103,7 +103,7 @@ class WorkbenchProcess:
         # A previous host may already have exited after an interrupted handoff.
         # running() still checks identity for a live listener and requires the
         # original host lease to be free before accepting an absent process.
-        if not self.running(selected,epoch):return
+        if not self.present(selected,epoch):return
         deadline = time.monotonic() + self.timeout
         while time.monotonic() < deadline:
             if self.request(selected, epoch, 'drain')['drained']:
@@ -143,10 +143,10 @@ class WorkbenchProcess:
     def activate(self, selected, epoch):
         self.request(selected, epoch, 'activate')
 
-    def running(self, selected, epoch):
+    def present(self, selected, epoch):
+        """Identity/liveness only: STOP must not prevent draining a live host."""
         try:
             self.identity(selected, epoch)
-            self.request(selected, epoch, 'health')
             return True
         except urllib.error.HTTPError:
             raise
@@ -154,3 +154,9 @@ class WorkbenchProcess:
             from control.recovery.gate import RunLock
             with RunLock(self.root, 'workbench-host'): pass
             return False
+
+    def running(self, selected, epoch):
+        if not self.present(selected, epoch):
+            return False
+        self.request(selected, epoch, 'health')
+        return True

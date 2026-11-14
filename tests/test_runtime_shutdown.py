@@ -49,6 +49,26 @@ class RuntimeShutdown(unittest.TestCase):
         self.server.shutdown.assert_called_once()
         self.handler.json.assert_called_once_with({'stopping':True})
 
+    def test_stop_preserves_health_gate_but_allows_idle_shutdown(self):
+        from control.recovery.gate import StopGate
+        gate=StopGate(self.root);gate.stop();token=gate.token()
+        with self.assertRaises(CoreError) as error:
+            runtime_http.post(self.handler,'/api/runtime/health',{'build':self.build,'epoch':1})
+        self.assertEqual(error.exception.code,'stopped')
+        self.assertTrue(self.shutdown());self.assertTrue(self.stopped.wait(1))
+        self.assertEqual(gate.token(),token)
+
+    def test_driver_drain_checks_presence_without_requesting_ready_health(self):
+        from adapters.application_host import WorkbenchProcess
+        from control.recovery.gate import StopGate
+        gate=StopGate(self.root);gate.stop();token=gate.token()
+        driver=WorkbenchProcess(self.root);driver.identity=Mock(return_value={'boot_id':'fixture'})
+        driver.running=Mock(side_effect=AssertionError('Drain must not require ready health'))
+        driver.request=Mock(return_value={'drained':True})
+        driver.drain({'build':self.build},1)
+        driver.request.assert_called_once_with({'build':self.build},1,'drain')
+        self.assertEqual(gate.token(),token)
+
     def test_missing_host_drains_only_when_its_original_lease_is_free(self):
         import socket
         from adapters.application_host import WorkbenchProcess
