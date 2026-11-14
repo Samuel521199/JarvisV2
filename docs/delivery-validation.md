@@ -192,7 +192,7 @@
 | 可回退阅读，不让旧代码重新授权 | [真实旧v0.1.8读取](evidence/lesson-validation-20261115/ledger-recovery.json)保留事件与策略，新代码再读相同候选，额度仍1且不重放 | 这是隔离账本读回，不是日用应用切换、整机重装或跨机DPAPI恢复 |
 | 配置问题不破坏已有评分 | 畸形可选配置关闭验证并提示错误，原任务条件分仍100；共用卡保留旧载荷兼容 | UI做DOM断言，不是完整截图/辅助功能验收；结果不晋升为事实、工具稳定态或执行许可 |
 
-**证据。** [193项开发回归](evidence/lesson-validation-20261115/regressions.json)全部通过，源码期间不变；含13项新增本地验证检查。包内核验待下一步完成。三域规划使用可控替身，实际工具运行使用Windows NTFS上的LPAC/Job受限Worker；没有云模型调用、生产业务数据或新常驻服务。[旧版读回夹具](evidence/lesson-validation-20261115/check_ledger_recovery.py)同时核对授权、调用、事实与业务动作表未变；该次4输入单批实测约0.39秒，单次数字不能外推总体速度。[共用完成卡10项DOM断言](evidence/lesson-validation-20261115/ui-check.json)通过。
+**证据。** [193项开发回归](evidence/lesson-validation-20261115/regressions.json)全部通过，源码期间不变；含13项新增本地验证检查。正式提交2159aa7的[独立包c43984c](evidence/lesson-validation-20261115/qualified-r1/independent-package/result.json)按未修改的固定策略ed2a6f6完成207项检查，206通过、1平台跳过；[包内13项专项重放](evidence/lesson-validation-20261115/qualified-r1/package-validation-replay.json)全部通过，运行导入均来自包内且事后字节未变。已见专项不充当独立用户留出，未创建日用ready或采用。三域规划使用可控替身，实际工具运行使用Windows NTFS上的LPAC/Job受限Worker；没有云模型调用、生产业务数据或新常驻服务。[旧版读回夹具](evidence/lesson-validation-20261115/check_ledger_recovery.py)同时核对授权、调用、事实与业务动作表未变；该次4输入单批实测约0.39秒，单次数字不能外推总体速度。[共用完成卡10项DOM断言](evidence/lesson-validation-20261115/ui-check.json)通过。架构检查460个Python文件、20个既有Host循环模块，0错误。
 
 **不破坏三职能的实施边界。** 定向仍掌握目标/来源/许可，行动仍受原RunLock和Worker控制，观察成长只写有限候选与试验记录；额外本地验证必须显式开启，不能从记忆许可推导执行许可。原业务grant仍核对有效性，但合成测试消耗单独的明确额度；没有复活过期授权或把测试调用当业务执行。通过回执只指导下一步真实任务对照，不提供自动发布入口。[实现权威](knowledge-learning.md#lesson-validation-runtime)／[契约](contracts.md#task-lesson-event-contract)。
 

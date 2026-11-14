@@ -2,7 +2,7 @@
 
 **源码 v0.1.9 后续开发，未日用采用。** 新增[大型陪聊平台长期记忆优化方案](docs/long-term-memory-scale-optimization.md#platform-memory-scope)，当前状态为 proposed。此仓库为独立 JarvisV2 工程；旧 JachinV2 的实现与验收不自动继承。下文日用功能描述按原有验收记录理解，源码版本不代表已安装或上线。见[本轮收尾记录](docs/evidence/memory-docs-closeout-20261113.md#memory-docs-closeout-scope)。
 
-**本轮开发：**已接通结束目标的自动过程候选、同类归组、纠正/撤回回流及共用完成卡展示；重复输入不当独立成功，候选不能自动成为事实或许可。新增本地合成挑战验证，默认关闭；真实任务对照与晋升待补，日用仍为原版本。[闭环范围与实测](docs/delivery-validation.md#task-lessons-evidence-20261115)。
+**本轮开发：**已接通结束目标的自动过程候选、同类归组、纠正/撤回回流及共用完成卡展示；重复输入不当独立成功，候选不能自动成为事实或许可。新增本地合成挑战验证，默认关闭；真实任务对照与晋升待补，日用仍为原版本。[闭环范围与实测](docs/delivery-validation.md#lesson-validation-evidence-20261115)。
 
 **最新净成本对照：**三域各一组，精简卡与无卡条件同分但合计token多19.4%；尚未证明经验净收益。已验证明确前提/撤回/过期保护，同时记录自然语言反例不能自动过滤的缺口。[结果与下一步](docs/delivery-validation.md#advice-net-value-evidence-20261115)。
 
