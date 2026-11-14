@@ -3,11 +3,12 @@
 Uses existing goal context, source permissions, model calls and completion facts.
 It does not infer that exposure caused an outcome or promote advice into facts.
 """
+from adapters.models.native import message_bytes
 from modules.context_knowledge.memory import Memory
 from modules.context_knowledge.knowledge import Knowledge
 from modules.context_knowledge.joint import members
 from modules.context_knowledge.methods import select,text_digest,parse
-from modules.task_resource.plans import Plans
+from modules.task_resource.plans import Plans,planning_key
 from sdk.protocol import CoreError,canonical,decode,digest
 
 KEY='conditional_advice'
@@ -138,6 +139,35 @@ class PlanningAdvice:
             return result['methods']
         except (CoreError,KeyError,ValueError,TypeError) as error:
             raise CoreError('goal_context_changed','Planning advice changed, was withdrawn or needs counterevidence review') from error
+
+    def fit(self,plan,context,prompt,base_prompt):
+        """Omit unconsumed optional advice; never rewrite a dispatched context."""
+        if not context or KEY not in context['view']:return prompt
+        bundle=context['view'][KEY]
+        if bundle.get('mode')=='inherited':return prompt
+        self.checked(plan,context,bundle['selectors'])
+        limit=min(r.get('max_prompt_bytes',50000) for r in plan['routes'])
+        full_bytes=message_bytes([{'role':'user','content':prompt}])
+        if full_bytes<=limit:return prompt
+        base_bytes=message_bytes([{'role':'user','content':base_prompt}]);key=planning_key(plan)
+        with self.db.transaction() as tx:
+            current=Plans(self.db).get(plan['id'])
+            if binding(current)!=binding(plan) or current['cancel'] or current['status']!='PLANNING':
+                raise CoreError('goal_context_changed','Goal changed during advice budget selection')
+            # Any recorded attempt binds this planning key, even rejection or an
+            # acknowledged unknown. RoutedModels must retain its original digest.
+            if tx.execute('SELECT 1 FROM model_calls WHERE run_id=? LIMIT 1',(key,)).fetchone():return prompt
+            if base_bytes>limit:
+                raise CoreError('model_input_limit','Original planning context exceeds the frozen route budget')
+            original=canonical(context['view']);view=dict(context['view']);view.pop(KEY)
+            if tx.execute('UPDATE goal_context SET view=? WHERE goal_id=? AND view=?',
+                    (canonical(view),plan['id'],original)).rowcount!=1:
+                raise CoreError('goal_context_changed','Advice context changed during budget selection')
+            self.db.event(tx,None,'goal.advice_omitted',{'goal_id':plan['id'],'run_id':key,'reason':'prompt_budget',
+                'source_ids':[r['source_id'] for r in bundle['receipt']['methods']],
+                'full_message_bytes':full_bytes,'base_message_bytes':base_bytes,'max_prompt_bytes':limit,
+                'input_digest':digest({'prompt':base_prompt,'schema':'goal-plan'})})
+        return base_prompt
 
     def assembly(self,plan,context,run_id,prompt):
         if KEY not in context['view']:return

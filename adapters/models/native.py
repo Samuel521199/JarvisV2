@@ -8,6 +8,10 @@ from sdk.protocol import CoreError, PROJECT, canonical, decode
 from control.network import NetworkGate
 
 
+def message_bytes(messages):
+    return len(canonical(messages).encode('utf-8'))
+
+
 class NativeModel:
     def __init__(self, config, credential_loader, temp_dir=None):
         self.config = config
@@ -39,7 +43,7 @@ class NativeModel:
         if (not isinstance(messages, list) or not 1 <= len(messages) <= 41
             or any(not isinstance(m, dict) or set(m) != {'role', 'content'} or m['role'] not in {'user', 'assistant'} or not isinstance(m['content'], str) for m in messages)):
             raise CoreError('model_context', 'Invalid conversation context')
-        if len(canonical(messages).encode()) > self.config.get('max_prompt_bytes', 50000):
+        if message_bytes(messages) > self.config.get('max_prompt_bytes', 50000):
             raise CoreError('model_input_limit', 'Conversation exceeds the selected model context budget')
         if self.temp_dir:
             from control.development_profile import read
