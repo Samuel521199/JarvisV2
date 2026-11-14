@@ -18,6 +18,8 @@
 
 ## v0.1.9 · 2026-11-13起（后续开发，应用未日用采用）
 
+2026-11-15净收益验收：精简卡/无卡三域单组条件同分、token增加19.4%；新增8项适用性挑战测试，记录可迁移方法重查当前参数与自然语言反例未自动过滤的边界。本轮无运行代码或日用应用变更；D调用账r3与源码灾备接续。[证据](docs/delivery-validation.md#advice-net-value-evidence-20261115)。
+
 2026-11-15接续验收：日用控制器已晋升协议3/generation3，应用保持v0.1.8/epoch10，业务/权限摘要和boot_id不变；D控制与调用账增量已核验。三域各一组full-v1/compact-v2真实配对条件同分、合计token减少19.6%，未证明总体/长期收益；原验证编码失败保留。[接续证据](docs/delivery-validation.md#goal-advice-compact-evidence-20261115)。
 
 2026-11-15条件经验精简开发：新增v2模型投影及v1原消息恢复，宿主完整证据不变；补历史最大读者门、已派发摘要保护与协议3前置写入保护。离线字节回放不计作模型收益；应用未日用采用。[验收与边界](docs/delivery-validation.md#goal-advice-compact-evidence-20261115)。

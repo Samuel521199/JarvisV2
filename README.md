@@ -2,7 +2,9 @@
 
 **源码 v0.1.9 后续开发，未日用采用。** 新增[大型陪聊平台长期记忆优化方案](docs/long-term-memory-scale-optimization.md#platform-memory-scope)，当前状态为 proposed。此仓库为独立 JarvisV2 工程；旧 JachinV2 的实现与验收不自动继承。下文日用功能描述按原有验收记录理解，源码版本不代表已安装或上线。见[本轮收尾记录](docs/evidence/memory-docs-closeout-20261113.md#memory-docs-closeout-scope)。
 
-**本轮实测：**经验卡精简三域各一组真实配对，声明条件同分，合计token由8,934降至7,183（-19.6%）；尚未证明长期收益。日用控制器已晋升协议3，应用仍v0.1.8，精简应用未日用采用。[实施与验收](docs/delivery-validation.md#goal-advice-compact-evidence-20261115)。
+**最新净成本对照：**三域各一组，精简卡与无卡条件同分但合计token多19.4%；尚未证明经验净收益。已验证明确前提/撤回/过期保护，同时记录自然语言反例不能自动过滤的缺口。[结果与下一步](docs/delivery-validation.md#advice-net-value-evidence-20261115)。
+
+**前轮实测：**经验卡精简三域各一组真实配对，声明条件同分，合计token由8,934降至7,183（-19.6%）；尚未证明长期收益。日用控制器已晋升协议3，应用仍v0.1.8，精简应用未日用采用。[实施与验收](docs/delivery-validation.md#goal-advice-compact-evidence-20261115)。
 
 **最新实测：**[条件经验三域配对](docs/delivery-validation.md#goal-advice-pair-evidence-20261114)各一组、条件同分，加卡组合计token增加52.8%；未证明长期收益。新增开发体积诊断帮助定位输入膨胀；日用从离线状态按原入口恢复至v0.1.8/epoch10，未采用本轮应用。
 

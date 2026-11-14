@@ -1,0 +1,119 @@
+{
+  "group": "no-advice",
+  "goal_id": "goal-14083c4eaeb4450cb5c295b6951c4254",
+  "planning_status": "REVIEW",
+  "proposal": {
+    "input_text": "{\"pairs\":[[18,13],[27,8],[34,11]],\"schema\":\"jarvis.practice-input.v1\"}",
+    "questions": [],
+    "schema": "jarvis.goal-plan.v1",
+    "steps": [
+      {
+        "capability": "plugin.advice-practice.v1",
+        "expected": "Current quote artifact",
+        "source": "input",
+        "title": "比较当前报价"
+      }
+    ],
+    "summary": "Dry comparison"
+  },
+  "plan_passed": true,
+  "planning_seconds": 0.03002849999938917,
+  "task_id": "task-94914daaa22949d9b2bab4ff7d594134",
+  "task_status": "SUCCEEDED",
+  "completion": {
+    "version": "completion-1.1.0",
+    "task_id": "task-94914daaa22949d9b2bab4ff7d594134",
+    "state": "VERIFIED",
+    "fingerprint": "ab00e73839a758fec3dfca12af53b579ba6efee10612b066c2edf43a4d98931f",
+    "acceptance": {
+      "revision": 1,
+      "rules": {
+        "coverage": "complete",
+        "criteria": [
+          {
+            "check": "text_equals",
+            "expected": "{\"exercises\":[{\"a\":18,\"answer\":234,\"b\":13},{\"a\":27,\"answer\":216,\"b\":8},{\"a\":34,\"answer\":374,\"b\":11}],\"schema\":\"jarvis.practice-result.v1\"}",
+            "id": "exact-current-comparison",
+            "step_id": "step-1"
+          }
+        ],
+        "requirements": [
+          {
+            "criterion_ids": [
+              "exact-current-comparison"
+            ],
+            "id": "current-frozen-artifact",
+            "kind": "literal",
+            "text": "Frozen current domain artifact, values, source/order and explicit limitations"
+          }
+        ]
+      }
+    },
+    "checks": [
+      {
+        "id": "exact-current-comparison",
+        "step_id": "step-1",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "score_scope": "declared_conditions_only",
+    "outcome_id": "outcome-f92d5c8bac80bbfd91f8b3434a4a3e97",
+    "requirement_coverage": {
+      "version": "declared-requirements-1",
+      "state": "SATISFIED",
+      "requirements": [
+        {
+          "criterion_ids": [
+            "exact-current-comparison"
+          ],
+          "id": "current-frozen-artifact",
+          "kind": "literal",
+          "text": "Frozen current domain artifact, values, source/order and explicit limitations",
+          "status": "passed",
+          "reason": "linked_checks"
+        }
+      ],
+      "complete": true,
+      "scope": "explicitly_declared_requirements",
+      "semantic_goal_verified": false
+    },
+    "evidence_ready": true,
+    "feedback": null,
+    "method": null,
+    "method_available": false,
+    "feedback_history": [],
+    "assessment_history": []
+  },
+  "saved_artifact_receipts": [
+    {
+      "bytes": 538,
+      "relative_path": "artifacts/task-94914daaa22949d9b2bab4ff7d594134/action-d0ff99849494bfeb827998944405d32e/result.json",
+      "sha256": "f364eab49d4224bd075c25689925f0070e901326d813d413d52d5b6103b96974",
+      "verified": true
+    }
+  ],
+  "artifact_checks": [
+    {
+      "sha256_matches": true,
+      "bytes_match": true,
+      "actual_text_matches_frozen_expected": true
+    }
+  ],
+  "passed": true,
+  "calls": [
+    {
+      "id": "call-5fd752e5bbbe4a68bd30b97bb3f8e7cf",
+      "run_id": "goal-14083c4eaeb4450cb5c295b6951c4254",
+      "phase": "goal-plan",
+      "status": "SUCCEEDED",
+      "input_digest": "e486fa3be84aab4eb11d69c181d787548c437f3d1af29912a9b4b90ecd6e02e1",
+      "usage": {
+        "total_tokens": 0
+      }
+    }
+  ],
+  "actual_model_calls": 1,
+  "planning_advice": null,
+  "receipt_bound": true
+}

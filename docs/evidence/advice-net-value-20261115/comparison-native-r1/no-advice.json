@@ -1,0 +1,123 @@
+{
+  "group": "no-advice",
+  "goal_id": "goal-b74c871b3d30440d905f0e5e8c2d53b1",
+  "planning_status": "REVIEW",
+  "proposal": {
+    "input_text": "{\"currency\":\"CNY\",\"max_delivery_days\":6,\"max_price_minor\":24100,\"offers\":[{\"delivery_days\":9,\"id\":\"D61\",\"price_minor\":20900,\"source\":\"synthetic:D61\"},{\"delivery_days\":5,\"id\":\"E23\",\"price_minor\":22800,\"source\":\"synthetic:E23\"},{\"delivery_days\":6,\"id\":\"F48\",\"price_minor\":22400,\"source\":\"synthetic:F48\"}],\"schema\":\"jarvis.quote-input.v1\"}",
+    "questions": [],
+    "schema": "jarvis.goal-plan.v1",
+    "steps": [
+      {
+        "capability": "plugin.advice-quote.v1",
+        "expected": "输出包含合格报价 ID 列表、选中的最低价 ID 及对应来源的 JSON 报告",
+        "source": "input",
+        "title": "比价并筛选最低报价"
+      }
+    ],
+    "summary": "读取当前报价输入，按预算和交付天数筛选出合规报价，挑选出最低价中标项并保留其来源信息，完成比价报告后由系统自动保存结果。"
+  },
+  "plan_passed": true,
+  "planning_seconds": 8.608593299999484,
+  "task_id": "task-0916e4311c294f069a22238829b4e7a6",
+  "task_status": "SUCCEEDED",
+  "completion": {
+    "version": "completion-1.1.0",
+    "task_id": "task-0916e4311c294f069a22238829b4e7a6",
+    "state": "VERIFIED",
+    "fingerprint": "7544f49bbde9626244f8bce42e90ada55492a359c4c6a87b41e8d27fe9485698",
+    "acceptance": {
+      "revision": 1,
+      "rules": {
+        "coverage": "complete",
+        "criteria": [
+          {
+            "check": "text_equals",
+            "expected": "{\"eligible_ids\":[\"E23\",\"F48\"],\"selected_id\":\"F48\",\"selected_source\":\"synthetic:F48\"}",
+            "id": "exact-current-comparison",
+            "step_id": "step-1"
+          }
+        ],
+        "requirements": [
+          {
+            "criterion_ids": [
+              "exact-current-comparison"
+            ],
+            "id": "current-frozen-artifact",
+            "kind": "literal",
+            "text": "Frozen current domain artifact, values, source/order and explicit limitations"
+          }
+        ]
+      }
+    },
+    "checks": [
+      {
+        "id": "exact-current-comparison",
+        "step_id": "step-1",
+        "status": "passed"
+      }
+    ],
+    "condition_score": 100.0,
+    "score_scope": "declared_conditions_only",
+    "outcome_id": "outcome-e65b9f70370a56efa69f9bd205b03c21",
+    "requirement_coverage": {
+      "version": "declared-requirements-1",
+      "state": "SATISFIED",
+      "requirements": [
+        {
+          "criterion_ids": [
+            "exact-current-comparison"
+          ],
+          "id": "current-frozen-artifact",
+          "kind": "literal",
+          "text": "Frozen current domain artifact, values, source/order and explicit limitations",
+          "status": "passed",
+          "reason": "linked_checks"
+        }
+      ],
+      "complete": true,
+      "scope": "explicitly_declared_requirements",
+      "semantic_goal_verified": false
+    },
+    "evidence_ready": true,
+    "feedback": null,
+    "method": null,
+    "method_available": false,
+    "feedback_history": [],
+    "assessment_history": []
+  },
+  "saved_artifact_receipts": [
+    {
+      "bytes": 475,
+      "relative_path": "artifacts/task-0916e4311c294f069a22238829b4e7a6/action-69fa7cfe2c7eb374fd8a6d485333fb43/result.json",
+      "sha256": "5ceee77a37a131a12b637dc0c581d10d3a38ced820bbcbcee28bcc895822c8ab",
+      "verified": true
+    }
+  ],
+  "artifact_checks": [
+    {
+      "sha256_matches": true,
+      "bytes_match": true,
+      "actual_text_matches_frozen_expected": true
+    }
+  ],
+  "passed": true,
+  "calls": [
+    {
+      "id": "call-aa702f5b67804c34baefe23b4ac1806d",
+      "run_id": "goal-b74c871b3d30440d905f0e5e8c2d53b1",
+      "phase": "goal-plan",
+      "status": "SUCCEEDED",
+      "input_digest": "9114ca66c92b1e0443480d3058114f781424bdf2e7318027cc45e34a394f239e",
+      "usage": {
+        "completion_tokens": 253,
+        "prompt_tokens": 1612,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 468,
+        "total_tokens": 2333
+      }
+    }
+  ],
+  "actual_model_calls": 1,
+  "planning_advice": null,
+  "receipt_bound": true
+}
