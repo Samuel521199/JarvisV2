@@ -14,7 +14,7 @@ from sdk.protocol import CoreError,canonical,decode,digest
 
 KEY='conditional_advice'
 VERSION=2
-SUPPORTED=(1,2,3)
+SUPPORTED=(1,2,3,4)
 BAD={'NEEDS_CORRECTION','INVALIDATED'}
 
 
@@ -40,6 +40,7 @@ class PlanningAdvice:
         if any(p.exists() for p in (root.parent/'JarvisLaunch.py',root/'deployment/launcher.json',root/'deployment/controller-protocol.json')):
             from control.controller_pin import read
             record=read(root)
+            if record.get('controller_protocol',0)>=5:return 4
             return 3 if record.get('controller_protocol',0)>=4 else (2 if record.get('controller_protocol',0)>=3 else 1)
         return VERSION
 
@@ -63,7 +64,7 @@ class PlanningAdvice:
         if not self.db.one("SELECT value FROM meta WHERE key='completion_schema'"):return False
         return bool(self.db.one("""SELECT g.goal_id FROM goal_context g
             JOIN goal_plans p ON p.id=g.goal_id JOIN task_completion c ON c.task_id=p.task_id
-            WHERE g.scope=? AND g.goal_id!=? AND json_extract(g.view,'$.conditional_advice.version') IN (1,2,3)
+            WHERE g.scope=? AND g.goal_id!=? AND json_extract(g.view,'$.conditional_advice.version') IN (1,2,3,4)
             AND json_extract(c.body,'$.state')='NEEDS_CORRECTION'
             AND (json_extract(c.body,'$.feedback.kind')='reject' OR EXISTS(
                 SELECT 1 FROM json_each(c.body,'$.checks') criterion WHERE json_extract(criterion.value,'$.status')='failed'))
@@ -89,7 +90,7 @@ class PlanningAdvice:
                     ref={'source_id':ident,'source_revision':row['revision'],'source_digest':text_digest(row['text'])}
                     try:
                         method=parse(row['text']);transfer=family(method)
-                        if version==3:
+                        if version in (3,4):
                             from modules.task_resource.advice_scope import eligible
                             if not eligible(method['requires'],selectors):continue
                     except CoreError:transfer=None
@@ -138,9 +139,9 @@ class PlanningAdvice:
                     or bundle['receipt']!=prior['receipt'] or bundle['families']!=prior['families']):
                     raise ValueError('Inherited dependency receipt changed')
                 return []
-            if bundle['version']==3:
+            if bundle['version'] in (3,4):
                 from modules.task_resource.advice_scope import selectors as advice_selectors
-                if selectors!=advice_selectors(plan,3):raise ValueError('Purpose conditions changed')
+                if selectors!=advice_selectors(plan,bundle['version']):raise ValueError('Purpose conditions changed')
             receipt=bundle['receipt'];refs=receipt['methods']
             if (set(receipt)!={'version','context_digest','methods'} or not isinstance(refs,list)
                 or not 1<=len(refs)<=2 or len({r['source_id'] for r in refs})!=len(refs)):
@@ -150,7 +151,7 @@ class PlanningAdvice:
             sources=[resolve(r['source_id']) for r in refs]
             if any(r is None for r in sources):raise ValueError('Source no longer authorized')
             result=select(sources,selectors,resolve,limit=2,max_bytes=3000)
-            if bundle['version']==3:
+            if bundle['version'] in (3,4):
                 from modules.task_resource.advice_scope import eligible
                 if any(not eligible(m['requires'],selectors) for m in result['methods']):raise ValueError('Unscoped advice')
             if result['receipt']!=receipt or any(self.held(context['scope'],r,plan['id'],family(m)) for r,m in zip(refs,result['methods'])):
@@ -251,9 +252,9 @@ class PlanningAdvice:
     def projection(self,plan,context,selectors):
         if not context or KEY not in context['view']:return None
         bundle=context['view'][KEY];current=False
-        if bundle.get('version')==3:
+        if bundle.get('version') in (3,4):
             from modules.task_resource.advice_scope import selectors as current_selectors
-            selectors=current_selectors(plan,3)
+            selectors=current_selectors(plan,bundle['version'])
         try:self.checked(plan,context,selectors);current=True
         except CoreError:pass
         stamp=bundle.get('dispatch',{});calls=[]

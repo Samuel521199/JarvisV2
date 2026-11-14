@@ -12,10 +12,10 @@ FIELDS={'schema','id','revision','status','recipe','requires','summary','counter
 
 def model_projection(methods,version):
     """Only after host revalidation; full receipts and dependencies stay on host."""
-    if type(version) is not int or version not in (1,2,3):
+    if type(version) is not int or version not in (1,2,3,4):
         raise CoreError('goal_context_changed','Unknown planning advice projection')
     result={'methods':methods,'advisory_only':True,'verified':False,'execution_authorized':False}
-    if version in (2,3):
+    if version in (2,3,4):
         keep=('id','recipe','requires','summary','counterexamples','source_id','source_revision')
         result['methods']=[{key:method[key] for key in keep} for method in methods]
         result['format']='compact-v2'

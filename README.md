@@ -2,7 +2,7 @@
 
 **源码 v0.1.9 后续开发，未日用采用。** 新增[大型陪聊平台长期记忆优化方案](docs/long-term-memory-scale-optimization.md#platform-memory-scope)，当前状态为 proposed。此仓库为独立 JarvisV2 工程；旧 JachinV2 的实现与验收不自动继承。下文日用功能描述按原有验收记录理解，源码版本不代表已安装或上线。见[本轮收尾记录](docs/evidence/memory-docs-closeout-20261113.md#memory-docs-closeout-scope)。
 
-**本轮开发：**已补有限用途识别与按输入格式/用途选择经验，保留旧任务冻结和恢复版本门；协议4控制器已日用采用，新选择应用仍未采用；24条新表述中正向仅4/12命中、负向0/12误选，泛化待补。[实施边界](docs/delivery-validation.md#advice-purpose-evidence-20261115)。
+**本轮开发：**组合用途识别新增操作/来源/顺序等槽位及未覆盖片段诊断；已见正向12/12、新构造表述12/16，反向0/16误选，泛化仍待补。旧任务语义冻结，协议5/新应用尚未日用采用；日用保持协议4与v0.1.8。[实施边界](docs/delivery-validation.md#advice-intent-evidence-20261115)。
 
 **最新净成本对照：**三域各一组，精简卡与无卡条件同分但合计token多19.4%；尚未证明经验净收益。已验证明确前提/撤回/过期保护，同时记录自然语言反例不能自动过滤的缺口。[结果与下一步](docs/delivery-validation.md#advice-net-value-evidence-20261115)。
 

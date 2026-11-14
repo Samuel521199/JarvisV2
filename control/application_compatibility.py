@@ -49,7 +49,7 @@ def required(root):
                     for candidate in [view,*history]:
                         if 'conditional_advice' not in candidate:continue
                         advice=candidate['conditional_advice']
-                        if not isinstance(advice,dict) or type(advice.get('version')) is not int or advice['version'] not in (1,2,3):
+                        if not isinstance(advice,dict) or type(advice.get('version')) is not int or advice['version'] not in (1,2,3,4):
                             raise CoreError('application_data_compatibility','Unknown goal planning advice version')
                         needs['goal_advice_schema']=max(needs.get('goal_advice_schema',0),advice['version'])
             current_texts=();historical_texts=();fact_texts=()
@@ -116,7 +116,7 @@ def require_compatible(root,package):
             policy=json.loads(advice.read_text(encoding='utf-8'))
             if (not isinstance(policy,dict) or set(policy)!={'schema','goal_advice_schema'}
                 or any(type(policy[k]) is not int for k in policy) or policy['schema']!=1
-                or policy['goal_advice_schema'] not in (1,2,3) or policy['goal_advice_schema']<needs['goal_advice_schema']):
+                or policy['goal_advice_schema'] not in (1,2,3,4) or policy['goal_advice_schema']<needs['goal_advice_schema']):
                 raise CoreError('application_data_compatibility','Unsupported goal planning advice reader')
         if needs.get('conditional_advice_schema'):
             advice=Path(package)/'config/conditional-advice-compatibility.json';reject_links(advice)

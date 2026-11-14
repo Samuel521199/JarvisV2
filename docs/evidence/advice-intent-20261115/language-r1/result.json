@@ -1,0 +1,3321 @@
+{
+  "known_v3_replay": {
+    "version": 3,
+    "rows": [
+      {
+        "id": "n01",
+        "domain": "notes",
+        "goal": "请整理资料；原样摘录每条原文；保留来源ID和顺序；不要概括；保存报告。",
+        "expected": true,
+        "matched": true,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1",
+          "task_purpose": "notes-excerpt-v1"
+        },
+        "diagnostic": null
+      },
+      {
+        "id": "n02",
+        "domain": "notes",
+        "goal": "整理当前资料\n原样摘录每条原文\n保留来源ID和顺序\n不把草稿估价写成确认结论",
+        "expected": true,
+        "matched": true,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1",
+          "task_purpose": "notes-excerpt-v1"
+        },
+        "diagnostic": null
+      },
+      {
+        "id": "n03",
+        "domain": "notes",
+        "goal": "把这些资料按原顺序逐条原样引用，附上各自来源ID，不要总结。",
+        "expected": true,
+        "matched": false,
+        "correct": false,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1"
+        },
+        "diagnostic": null
+      },
+      {
+        "id": "n04",
+        "domain": "notes",
+        "goal": "整理资料，逐字摘录各条原文，保持来源ID与顺序，保存报告。",
+        "expected": true,
+        "matched": false,
+        "correct": false,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1"
+        },
+        "diagnostic": null
+      },
+      {
+        "id": "n05",
+        "domain": "notes",
+        "goal": "请保留来源ID和顺序，将当前资料逐条照抄成报告，不改写。",
+        "expected": true,
+        "matched": false,
+        "correct": false,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1"
+        },
+        "diagnostic": null
+      },
+      {
+        "id": "n06",
+        "domain": "notes",
+        "goal": "Organize these notes by copying each source verbatim in order with its ID.",
+        "expected": true,
+        "matched": false,
+        "correct": false,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1"
+        },
+        "diagnostic": null
+      },
+      {
+        "id": "p01",
+        "domain": "practice",
+        "goal": "请生成当前乘法练习和正确答案；保留题目顺序；保存练习表；不得声称已经掌握。",
+        "expected": true,
+        "matched": true,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1",
+          "task_purpose": "practice-product-v1"
+        },
+        "diagnostic": null
+      },
+      {
+        "id": "p02",
+        "domain": "practice",
+        "goal": "用当前给出的数生成乘法练习和正确答案\n保留题目顺序\n不要评价学习者是否掌握",
+        "expected": true,
+        "matched": true,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1",
+          "task_purpose": "practice-product-v1"
+        },
+        "diagnostic": null
+      },
+      {
+        "id": "p03",
+        "domain": "practice",
+        "goal": "按顺序把当前整数对做成乘法练习，并附正确答案。",
+        "expected": true,
+        "matched": false,
+        "correct": false,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1"
+        },
+        "diagnostic": null
+      },
+      {
+        "id": "p04",
+        "domain": "practice",
+        "goal": "生成当前乘法练习及正确答案，保留题目顺序，保存练习表。",
+        "expected": true,
+        "matched": false,
+        "correct": false,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1"
+        },
+        "diagnostic": null
+      },
+      {
+        "id": "p05",
+        "domain": "practice",
+        "goal": "根据pairs出乘法题和答案，顺序不变，勿判断我是否掌握。",
+        "expected": true,
+        "matched": false,
+        "correct": false,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1"
+        },
+        "diagnostic": null
+      },
+      {
+        "id": "p06",
+        "domain": "practice",
+        "goal": "Make multiplication exercises and correct answers from these pairs, preserving their order.",
+        "expected": true,
+        "matched": false,
+        "correct": false,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1"
+        },
+        "diagnostic": null
+      },
+      {
+        "id": "x01",
+        "domain": "notes",
+        "goal": "整理资料，原样摘录每条原文，保留来源ID和顺序，只留下已确认结论",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1"
+        },
+        "diagnostic": null
+      },
+      {
+        "id": "x02",
+        "domain": "notes",
+        "goal": "整理资料，原样摘录每条原文，保留来源ID和顺序，但重写成摘要",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1"
+        },
+        "diagnostic": null
+      },
+      {
+        "id": "x03",
+        "domain": "notes",
+        "goal": "整理资料，原样摘录每条原文，删除来源ID，保存报告",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1"
+        },
+        "diagnostic": null
+      },
+      {
+        "id": "x04",
+        "domain": "notes",
+        "goal": "整理资料，原样摘录每条原文，保留来源ID和顺序，先按价格排序",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1"
+        },
+        "diagnostic": null
+      },
+      {
+        "id": "x05",
+        "domain": "notes",
+        "goal": "不要整理资料，原样摘录每条原文，保留来源ID和顺序",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1"
+        },
+        "diagnostic": null
+      },
+      {
+        "id": "x06",
+        "domain": "notes",
+        "goal": "整理资料，原样摘录每条原文，保留来源ID和顺序，发给供应商",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1"
+        },
+        "diagnostic": null
+      },
+      {
+        "id": "x07",
+        "domain": "practice",
+        "goal": "生成当前乘法练习和正确答案，保留题目顺序，并判断我已经掌握",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1"
+        },
+        "diagnostic": null
+      },
+      {
+        "id": "x08",
+        "domain": "practice",
+        "goal": "生成当前乘法练习和正确答案，保留题目顺序，但不要提供答案",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1"
+        },
+        "diagnostic": null
+      },
+      {
+        "id": "x09",
+        "domain": "practice",
+        "goal": "生成当前除法练习和正确答案，保留题目顺序",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1"
+        },
+        "diagnostic": null
+      },
+      {
+        "id": "x10",
+        "domain": "practice",
+        "goal": "生成当前乘法练习和正确答案，保留题目顺序，只计算第一题",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1"
+        },
+        "diagnostic": null
+      },
+      {
+        "id": "x11",
+        "domain": "practice",
+        "goal": "生成当前乘法练习和正确答案，保留题目顺序，随机打乱题目",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1"
+        },
+        "diagnostic": null
+      },
+      {
+        "id": "x12",
+        "domain": "practice",
+        "goal": "生成当前乘法练习和正确答案，保留题目顺序，上传到云端",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1"
+        },
+        "diagnostic": null
+      }
+    ],
+    "positive_matches": 4,
+    "positive_count": 12,
+    "false_matches": 0,
+    "negative_count": 12,
+    "negative_gate_passed": true
+  },
+  "known_v4_replay": {
+    "version": 4,
+    "rows": [
+      {
+        "id": "n01",
+        "domain": "notes",
+        "goal": "请整理资料；原样摘录每条原文；保留来源ID和顺序；不要概括；保存报告。",
+        "expected": true,
+        "matched": true,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1",
+          "task_purpose": "notes-excerpt-v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": true,
+          "slots": {
+            "operation": "copy",
+            "fidelity": "verbatim",
+            "source_ids": "keep",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 5,
+              "text": "请整理资料",
+              "slots": {}
+            },
+            {
+              "start": 6,
+              "end": 14,
+              "text": "原样摘录每条原文",
+              "slots": {
+                "operation": "copy",
+                "fidelity": "verbatim"
+              }
+            },
+            {
+              "start": 15,
+              "end": 24,
+              "text": "保留来源ID和顺序",
+              "slots": {
+                "source_ids": "keep",
+                "order": "input"
+              }
+            },
+            {
+              "start": 25,
+              "end": 29,
+              "text": "不要概括",
+              "slots": {}
+            },
+            {
+              "start": 30,
+              "end": 34,
+              "text": "保存报告",
+              "slots": {}
+            }
+          ],
+          "reason": "covered",
+          "task_purpose": "notes-excerpt-v1"
+        }
+      },
+      {
+        "id": "n02",
+        "domain": "notes",
+        "goal": "整理当前资料\n原样摘录每条原文\n保留来源ID和顺序\n不把草稿估价写成确认结论",
+        "expected": true,
+        "matched": true,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1",
+          "task_purpose": "notes-excerpt-v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": true,
+          "slots": {
+            "operation": "copy",
+            "fidelity": "verbatim",
+            "source_ids": "keep",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 6,
+              "text": "整理当前资料",
+              "slots": {}
+            },
+            {
+              "start": 7,
+              "end": 15,
+              "text": "原样摘录每条原文",
+              "slots": {
+                "operation": "copy",
+                "fidelity": "verbatim"
+              }
+            },
+            {
+              "start": 16,
+              "end": 25,
+              "text": "保留来源ID和顺序",
+              "slots": {
+                "source_ids": "keep",
+                "order": "input"
+              }
+            },
+            {
+              "start": 26,
+              "end": 38,
+              "text": "不把草稿估价写成确认结论",
+              "slots": {}
+            }
+          ],
+          "reason": "covered",
+          "task_purpose": "notes-excerpt-v1"
+        }
+      },
+      {
+        "id": "n03",
+        "domain": "notes",
+        "goal": "把这些资料按原顺序逐条原样引用，附上各自来源ID，不要总结。",
+        "expected": true,
+        "matched": true,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1",
+          "task_purpose": "notes-excerpt-v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": true,
+          "slots": {
+            "operation": "copy",
+            "fidelity": "verbatim",
+            "order": "input",
+            "source_ids": "keep"
+          },
+          "missing": [],
+          "uncovered": [],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 15,
+              "text": "把这些资料按原顺序逐条原样引用",
+              "slots": {
+                "operation": "copy",
+                "fidelity": "verbatim",
+                "order": "input"
+              }
+            },
+            {
+              "start": 16,
+              "end": 24,
+              "text": "附上各自来源ID",
+              "slots": {
+                "source_ids": "keep"
+              }
+            },
+            {
+              "start": 25,
+              "end": 29,
+              "text": "不要总结",
+              "slots": {}
+            }
+          ],
+          "reason": "covered",
+          "task_purpose": "notes-excerpt-v1"
+        }
+      },
+      {
+        "id": "n04",
+        "domain": "notes",
+        "goal": "整理资料，逐字摘录各条原文，保持来源ID与顺序，保存报告。",
+        "expected": true,
+        "matched": true,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1",
+          "task_purpose": "notes-excerpt-v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": true,
+          "slots": {
+            "operation": "copy",
+            "fidelity": "verbatim",
+            "source_ids": "keep",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 4,
+              "text": "整理资料",
+              "slots": {}
+            },
+            {
+              "start": 5,
+              "end": 13,
+              "text": "逐字摘录各条原文",
+              "slots": {
+                "operation": "copy",
+                "fidelity": "verbatim"
+              }
+            },
+            {
+              "start": 14,
+              "end": 23,
+              "text": "保持来源ID与顺序",
+              "slots": {
+                "source_ids": "keep",
+                "order": "input"
+              }
+            },
+            {
+              "start": 24,
+              "end": 28,
+              "text": "保存报告",
+              "slots": {}
+            }
+          ],
+          "reason": "covered",
+          "task_purpose": "notes-excerpt-v1"
+        }
+      },
+      {
+        "id": "n05",
+        "domain": "notes",
+        "goal": "请保留来源ID和顺序，将当前资料逐条照抄成报告，不改写。",
+        "expected": true,
+        "matched": true,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1",
+          "task_purpose": "notes-excerpt-v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": true,
+          "slots": {
+            "source_ids": "keep",
+            "order": "input",
+            "operation": "copy",
+            "fidelity": "verbatim"
+          },
+          "missing": [],
+          "uncovered": [],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 10,
+              "text": "请保留来源ID和顺序",
+              "slots": {
+                "source_ids": "keep",
+                "order": "input"
+              }
+            },
+            {
+              "start": 11,
+              "end": 23,
+              "text": "将当前资料逐条照抄成报告",
+              "slots": {
+                "operation": "copy",
+                "fidelity": "verbatim"
+              }
+            },
+            {
+              "start": 24,
+              "end": 27,
+              "text": "不改写",
+              "slots": {}
+            }
+          ],
+          "reason": "covered",
+          "task_purpose": "notes-excerpt-v1"
+        }
+      },
+      {
+        "id": "n06",
+        "domain": "notes",
+        "goal": "Organize these notes by copying each source verbatim in order with its ID.",
+        "expected": true,
+        "matched": true,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1",
+          "task_purpose": "notes-excerpt-v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": true,
+          "slots": {
+            "operation": "copy",
+            "fidelity": "verbatim",
+            "order": "input",
+            "source_ids": "keep"
+          },
+          "missing": [],
+          "uncovered": [],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 73,
+              "text": "Organize these notes by copying each source verbatim in order with its ID",
+              "slots": {
+                "operation": "copy",
+                "fidelity": "verbatim",
+                "order": "input",
+                "source_ids": "keep"
+              }
+            }
+          ],
+          "reason": "covered",
+          "task_purpose": "notes-excerpt-v1"
+        }
+      },
+      {
+        "id": "p01",
+        "domain": "practice",
+        "goal": "请生成当前乘法练习和正确答案；保留题目顺序；保存练习表；不得声称已经掌握。",
+        "expected": true,
+        "matched": true,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1",
+          "task_purpose": "practice-product-v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": true,
+          "slots": {
+            "operation": "multiply",
+            "answers": "correct",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 14,
+              "text": "请生成当前乘法练习和正确答案",
+              "slots": {
+                "operation": "multiply",
+                "answers": "correct"
+              }
+            },
+            {
+              "start": 15,
+              "end": 21,
+              "text": "保留题目顺序",
+              "slots": {
+                "order": "input"
+              }
+            },
+            {
+              "start": 22,
+              "end": 27,
+              "text": "保存练习表",
+              "slots": {}
+            },
+            {
+              "start": 28,
+              "end": 36,
+              "text": "不得声称已经掌握",
+              "slots": {}
+            }
+          ],
+          "reason": "covered",
+          "task_purpose": "practice-product-v1"
+        }
+      },
+      {
+        "id": "p02",
+        "domain": "practice",
+        "goal": "用当前给出的数生成乘法练习和正确答案\n保留题目顺序\n不要评价学习者是否掌握",
+        "expected": true,
+        "matched": true,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1",
+          "task_purpose": "practice-product-v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": true,
+          "slots": {
+            "operation": "multiply",
+            "answers": "correct",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 18,
+              "text": "用当前给出的数生成乘法练习和正确答案",
+              "slots": {
+                "operation": "multiply",
+                "answers": "correct"
+              }
+            },
+            {
+              "start": 19,
+              "end": 25,
+              "text": "保留题目顺序",
+              "slots": {
+                "order": "input"
+              }
+            },
+            {
+              "start": 26,
+              "end": 37,
+              "text": "不要评价学习者是否掌握",
+              "slots": {}
+            }
+          ],
+          "reason": "covered",
+          "task_purpose": "practice-product-v1"
+        }
+      },
+      {
+        "id": "p03",
+        "domain": "practice",
+        "goal": "按顺序把当前整数对做成乘法练习，并附正确答案。",
+        "expected": true,
+        "matched": true,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1",
+          "task_purpose": "practice-product-v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": true,
+          "slots": {
+            "operation": "multiply",
+            "order": "input",
+            "answers": "correct"
+          },
+          "missing": [],
+          "uncovered": [],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 15,
+              "text": "按顺序把当前整数对做成乘法练习",
+              "slots": {
+                "operation": "multiply",
+                "order": "input"
+              }
+            },
+            {
+              "start": 16,
+              "end": 22,
+              "text": "并附正确答案",
+              "slots": {
+                "answers": "correct"
+              }
+            }
+          ],
+          "reason": "covered",
+          "task_purpose": "practice-product-v1"
+        }
+      },
+      {
+        "id": "p04",
+        "domain": "practice",
+        "goal": "生成当前乘法练习及正确答案，保留题目顺序，保存练习表。",
+        "expected": true,
+        "matched": true,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1",
+          "task_purpose": "practice-product-v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": true,
+          "slots": {
+            "operation": "multiply",
+            "answers": "correct",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 13,
+              "text": "生成当前乘法练习及正确答案",
+              "slots": {
+                "operation": "multiply",
+                "answers": "correct"
+              }
+            },
+            {
+              "start": 14,
+              "end": 20,
+              "text": "保留题目顺序",
+              "slots": {
+                "order": "input"
+              }
+            },
+            {
+              "start": 21,
+              "end": 26,
+              "text": "保存练习表",
+              "slots": {}
+            }
+          ],
+          "reason": "covered",
+          "task_purpose": "practice-product-v1"
+        }
+      },
+      {
+        "id": "p05",
+        "domain": "practice",
+        "goal": "根据pairs出乘法题和答案，顺序不变，勿判断我是否掌握。",
+        "expected": true,
+        "matched": true,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1",
+          "task_purpose": "practice-product-v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": true,
+          "slots": {
+            "operation": "multiply",
+            "answers": "correct",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 14,
+              "text": "根据pairs出乘法题和答案",
+              "slots": {
+                "operation": "multiply",
+                "answers": "correct"
+              }
+            },
+            {
+              "start": 15,
+              "end": 19,
+              "text": "顺序不变",
+              "slots": {
+                "order": "input"
+              }
+            },
+            {
+              "start": 20,
+              "end": 28,
+              "text": "勿判断我是否掌握",
+              "slots": {}
+            }
+          ],
+          "reason": "covered",
+          "task_purpose": "practice-product-v1"
+        }
+      },
+      {
+        "id": "p06",
+        "domain": "practice",
+        "goal": "Make multiplication exercises and correct answers from these pairs, preserving their order.",
+        "expected": true,
+        "matched": true,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1",
+          "task_purpose": "practice-product-v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": true,
+          "slots": {
+            "operation": "multiply",
+            "answers": "correct",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 66,
+              "text": "Make multiplication exercises and correct answers from these pairs",
+              "slots": {
+                "operation": "multiply",
+                "answers": "correct"
+              }
+            },
+            {
+              "start": 67,
+              "end": 90,
+              "text": " preserving their order",
+              "slots": {
+                "order": "input"
+              }
+            }
+          ],
+          "reason": "covered",
+          "task_purpose": "practice-product-v1"
+        }
+      },
+      {
+        "id": "x01",
+        "domain": "notes",
+        "goal": "整理资料，原样摘录每条原文，保留来源ID和顺序，只留下已确认结论",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": false,
+          "slots": {
+            "operation": "copy",
+            "fidelity": "verbatim",
+            "source_ids": "keep",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [
+            {
+              "start": 24,
+              "end": 32,
+              "text": "只留下已确认结论"
+            }
+          ],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 4,
+              "text": "整理资料",
+              "slots": {}
+            },
+            {
+              "start": 5,
+              "end": 13,
+              "text": "原样摘录每条原文",
+              "slots": {
+                "operation": "copy",
+                "fidelity": "verbatim"
+              }
+            },
+            {
+              "start": 14,
+              "end": 23,
+              "text": "保留来源ID和顺序",
+              "slots": {
+                "source_ids": "keep",
+                "order": "input"
+              }
+            }
+          ],
+          "reason": "uncovered_clause"
+        }
+      },
+      {
+        "id": "x02",
+        "domain": "notes",
+        "goal": "整理资料，原样摘录每条原文，保留来源ID和顺序，但重写成摘要",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": false,
+          "slots": {
+            "operation": "copy",
+            "fidelity": "verbatim",
+            "source_ids": "keep",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [
+            {
+              "start": 24,
+              "end": 30,
+              "text": "但重写成摘要"
+            }
+          ],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 4,
+              "text": "整理资料",
+              "slots": {}
+            },
+            {
+              "start": 5,
+              "end": 13,
+              "text": "原样摘录每条原文",
+              "slots": {
+                "operation": "copy",
+                "fidelity": "verbatim"
+              }
+            },
+            {
+              "start": 14,
+              "end": 23,
+              "text": "保留来源ID和顺序",
+              "slots": {
+                "source_ids": "keep",
+                "order": "input"
+              }
+            }
+          ],
+          "reason": "uncovered_clause"
+        }
+      },
+      {
+        "id": "x03",
+        "domain": "notes",
+        "goal": "整理资料，原样摘录每条原文，删除来源ID，保存报告",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": false,
+          "slots": {
+            "operation": "copy",
+            "fidelity": "verbatim"
+          },
+          "missing": [
+            "source_ids",
+            "order"
+          ],
+          "uncovered": [
+            {
+              "start": 14,
+              "end": 20,
+              "text": "删除来源ID"
+            }
+          ],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 4,
+              "text": "整理资料",
+              "slots": {}
+            },
+            {
+              "start": 5,
+              "end": 13,
+              "text": "原样摘录每条原文",
+              "slots": {
+                "operation": "copy",
+                "fidelity": "verbatim"
+              }
+            },
+            {
+              "start": 21,
+              "end": 25,
+              "text": "保存报告",
+              "slots": {}
+            }
+          ],
+          "reason": "uncovered_clause"
+        }
+      },
+      {
+        "id": "x04",
+        "domain": "notes",
+        "goal": "整理资料，原样摘录每条原文，保留来源ID和顺序，先按价格排序",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": false,
+          "slots": {
+            "operation": "copy",
+            "fidelity": "verbatim",
+            "source_ids": "keep",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [
+            {
+              "start": 24,
+              "end": 30,
+              "text": "先按价格排序"
+            }
+          ],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 4,
+              "text": "整理资料",
+              "slots": {}
+            },
+            {
+              "start": 5,
+              "end": 13,
+              "text": "原样摘录每条原文",
+              "slots": {
+                "operation": "copy",
+                "fidelity": "verbatim"
+              }
+            },
+            {
+              "start": 14,
+              "end": 23,
+              "text": "保留来源ID和顺序",
+              "slots": {
+                "source_ids": "keep",
+                "order": "input"
+              }
+            }
+          ],
+          "reason": "uncovered_clause"
+        }
+      },
+      {
+        "id": "x05",
+        "domain": "notes",
+        "goal": "不要整理资料，原样摘录每条原文，保留来源ID和顺序",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": false,
+          "slots": {
+            "operation": "copy",
+            "fidelity": "verbatim",
+            "source_ids": "keep",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [
+            {
+              "start": 0,
+              "end": 6,
+              "text": "不要整理资料"
+            }
+          ],
+          "clauses": [
+            {
+              "start": 7,
+              "end": 15,
+              "text": "原样摘录每条原文",
+              "slots": {
+                "operation": "copy",
+                "fidelity": "verbatim"
+              }
+            },
+            {
+              "start": 16,
+              "end": 25,
+              "text": "保留来源ID和顺序",
+              "slots": {
+                "source_ids": "keep",
+                "order": "input"
+              }
+            }
+          ],
+          "reason": "uncovered_clause"
+        }
+      },
+      {
+        "id": "x06",
+        "domain": "notes",
+        "goal": "整理资料，原样摘录每条原文，保留来源ID和顺序，发给供应商",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": false,
+          "slots": {
+            "operation": "copy",
+            "fidelity": "verbatim",
+            "source_ids": "keep",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [
+            {
+              "start": 24,
+              "end": 29,
+              "text": "发给供应商"
+            }
+          ],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 4,
+              "text": "整理资料",
+              "slots": {}
+            },
+            {
+              "start": 5,
+              "end": 13,
+              "text": "原样摘录每条原文",
+              "slots": {
+                "operation": "copy",
+                "fidelity": "verbatim"
+              }
+            },
+            {
+              "start": 14,
+              "end": 23,
+              "text": "保留来源ID和顺序",
+              "slots": {
+                "source_ids": "keep",
+                "order": "input"
+              }
+            }
+          ],
+          "reason": "uncovered_clause"
+        }
+      },
+      {
+        "id": "x07",
+        "domain": "practice",
+        "goal": "生成当前乘法练习和正确答案，保留题目顺序，并判断我已经掌握",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": false,
+          "slots": {
+            "operation": "multiply",
+            "answers": "correct",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [
+            {
+              "start": 21,
+              "end": 29,
+              "text": "并判断我已经掌握"
+            }
+          ],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 13,
+              "text": "生成当前乘法练习和正确答案",
+              "slots": {
+                "operation": "multiply",
+                "answers": "correct"
+              }
+            },
+            {
+              "start": 14,
+              "end": 20,
+              "text": "保留题目顺序",
+              "slots": {
+                "order": "input"
+              }
+            }
+          ],
+          "reason": "uncovered_clause"
+        }
+      },
+      {
+        "id": "x08",
+        "domain": "practice",
+        "goal": "生成当前乘法练习和正确答案，保留题目顺序，但不要提供答案",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": false,
+          "slots": {
+            "operation": "multiply",
+            "answers": "correct",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [
+            {
+              "start": 21,
+              "end": 28,
+              "text": "但不要提供答案"
+            }
+          ],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 13,
+              "text": "生成当前乘法练习和正确答案",
+              "slots": {
+                "operation": "multiply",
+                "answers": "correct"
+              }
+            },
+            {
+              "start": 14,
+              "end": 20,
+              "text": "保留题目顺序",
+              "slots": {
+                "order": "input"
+              }
+            }
+          ],
+          "reason": "uncovered_clause"
+        }
+      },
+      {
+        "id": "x09",
+        "domain": "practice",
+        "goal": "生成当前除法练习和正确答案，保留题目顺序",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": false,
+          "slots": {
+            "order": "input"
+          },
+          "missing": [
+            "operation",
+            "answers"
+          ],
+          "uncovered": [
+            {
+              "start": 0,
+              "end": 13,
+              "text": "生成当前除法练习和正确答案"
+            }
+          ],
+          "clauses": [
+            {
+              "start": 14,
+              "end": 20,
+              "text": "保留题目顺序",
+              "slots": {
+                "order": "input"
+              }
+            }
+          ],
+          "reason": "uncovered_clause"
+        }
+      },
+      {
+        "id": "x10",
+        "domain": "practice",
+        "goal": "生成当前乘法练习和正确答案，保留题目顺序，只计算第一题",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": false,
+          "slots": {
+            "operation": "multiply",
+            "answers": "correct",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [
+            {
+              "start": 21,
+              "end": 27,
+              "text": "只计算第一题"
+            }
+          ],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 13,
+              "text": "生成当前乘法练习和正确答案",
+              "slots": {
+                "operation": "multiply",
+                "answers": "correct"
+              }
+            },
+            {
+              "start": 14,
+              "end": 20,
+              "text": "保留题目顺序",
+              "slots": {
+                "order": "input"
+              }
+            }
+          ],
+          "reason": "uncovered_clause"
+        }
+      },
+      {
+        "id": "x11",
+        "domain": "practice",
+        "goal": "生成当前乘法练习和正确答案，保留题目顺序，随机打乱题目",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": false,
+          "slots": {
+            "operation": "multiply",
+            "answers": "correct",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [
+            {
+              "start": 21,
+              "end": 27,
+              "text": "随机打乱题目"
+            }
+          ],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 13,
+              "text": "生成当前乘法练习和正确答案",
+              "slots": {
+                "operation": "multiply",
+                "answers": "correct"
+              }
+            },
+            {
+              "start": 14,
+              "end": 20,
+              "text": "保留题目顺序",
+              "slots": {
+                "order": "input"
+              }
+            }
+          ],
+          "reason": "uncovered_clause"
+        }
+      },
+      {
+        "id": "x12",
+        "domain": "practice",
+        "goal": "生成当前乘法练习和正确答案，保留题目顺序，上传到云端",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": false,
+          "slots": {
+            "operation": "multiply",
+            "answers": "correct",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [
+            {
+              "start": 21,
+              "end": 26,
+              "text": "上传到云端"
+            }
+          ],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 13,
+              "text": "生成当前乘法练习和正确答案",
+              "slots": {
+                "operation": "multiply",
+                "answers": "correct"
+              }
+            },
+            {
+              "start": 14,
+              "end": 20,
+              "text": "保留题目顺序",
+              "slots": {
+                "order": "input"
+              }
+            }
+          ],
+          "reason": "uncovered_clause"
+        }
+      }
+    ],
+    "positive_matches": 12,
+    "positive_count": 12,
+    "false_matches": 0,
+    "negative_count": 12,
+    "negative_gate_passed": true
+  },
+  "new_v4_first_pass": {
+    "version": 4,
+    "rows": [
+      {
+        "id": "n01",
+        "domain": "notes",
+        "goal": "请帮我逐字引用所有资料；保持来源编号及原始顺序；不要改写",
+        "expected": true,
+        "matched": true,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1",
+          "task_purpose": "notes-excerpt-v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": true,
+          "slots": {
+            "operation": "copy",
+            "fidelity": "verbatim",
+            "source_ids": "keep",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 11,
+              "text": "请帮我逐字引用所有资料",
+              "slots": {
+                "operation": "copy",
+                "fidelity": "verbatim"
+              }
+            },
+            {
+              "start": 12,
+              "end": 23,
+              "text": "保持来源编号及原始顺序",
+              "slots": {
+                "source_ids": "keep",
+                "order": "input"
+              }
+            },
+            {
+              "start": 24,
+              "end": 28,
+              "text": "不要改写",
+              "slots": {}
+            }
+          ],
+          "reason": "covered",
+          "task_purpose": "notes-excerpt-v1"
+        }
+      },
+      {
+        "id": "n02",
+        "domain": "notes",
+        "goal": "把这批笔记按原始顺序逐条照抄成报告，附上各自来源标识",
+        "expected": true,
+        "matched": true,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1",
+          "task_purpose": "notes-excerpt-v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": true,
+          "slots": {
+            "operation": "copy",
+            "fidelity": "verbatim",
+            "order": "input",
+            "source_ids": "keep"
+          },
+          "missing": [],
+          "uncovered": [],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 17,
+              "text": "把这批笔记按原始顺序逐条照抄成报告",
+              "slots": {
+                "operation": "copy",
+                "fidelity": "verbatim",
+                "order": "input"
+              }
+            },
+            {
+              "start": 18,
+              "end": 26,
+              "text": "附上各自来源标识",
+              "slots": {
+                "source_ids": "keep"
+              }
+            }
+          ],
+          "reason": "covered",
+          "task_purpose": "notes-excerpt-v1"
+        }
+      },
+      {
+        "id": "n03",
+        "domain": "notes",
+        "goal": "保留原顺序与来源ID；原样摘录每条原文",
+        "expected": true,
+        "matched": true,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1",
+          "task_purpose": "notes-excerpt-v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": true,
+          "slots": {
+            "source_ids": "keep",
+            "order": "input",
+            "operation": "copy",
+            "fidelity": "verbatim"
+          },
+          "missing": [],
+          "uncovered": [],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 10,
+              "text": "保留原顺序与来源ID",
+              "slots": {
+                "source_ids": "keep",
+                "order": "input"
+              }
+            },
+            {
+              "start": 11,
+              "end": 19,
+              "text": "原样摘录每条原文",
+              "slots": {
+                "operation": "copy",
+                "fidelity": "verbatim"
+              }
+            }
+          ],
+          "reason": "covered",
+          "task_purpose": "notes-excerpt-v1"
+        }
+      },
+      {
+        "id": "n04",
+        "domain": "notes",
+        "goal": "保留来源标识，保持输入顺序，将这些笔记逐条逐字摘录",
+        "expected": true,
+        "matched": true,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1",
+          "task_purpose": "notes-excerpt-v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": true,
+          "slots": {
+            "source_ids": "keep",
+            "order": "input",
+            "operation": "copy",
+            "fidelity": "verbatim"
+          },
+          "missing": [],
+          "uncovered": [],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 6,
+              "text": "保留来源标识",
+              "slots": {
+                "source_ids": "keep"
+              }
+            },
+            {
+              "start": 7,
+              "end": 13,
+              "text": "保持输入顺序",
+              "slots": {
+                "order": "input"
+              }
+            },
+            {
+              "start": 14,
+              "end": 25,
+              "text": "将这些笔记逐条逐字摘录",
+              "slots": {
+                "operation": "copy",
+                "fidelity": "verbatim"
+              }
+            }
+          ],
+          "reason": "covered",
+          "task_purpose": "notes-excerpt-v1"
+        }
+      },
+      {
+        "id": "n05",
+        "domain": "notes",
+        "goal": "Quote every note word for word; retain source identifiers; keep their input order.",
+        "expected": true,
+        "matched": true,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1",
+          "task_purpose": "notes-excerpt-v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": true,
+          "slots": {
+            "operation": "copy",
+            "fidelity": "verbatim",
+            "source_ids": "keep",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 30,
+              "text": "Quote every note word for word",
+              "slots": {
+                "operation": "copy",
+                "fidelity": "verbatim"
+              }
+            },
+            {
+              "start": 31,
+              "end": 57,
+              "text": " retain source identifiers",
+              "slots": {
+                "source_ids": "keep"
+              }
+            },
+            {
+              "start": 58,
+              "end": 81,
+              "text": " keep their input order",
+              "slots": {
+                "order": "input"
+              }
+            }
+          ],
+          "reason": "covered",
+          "task_purpose": "notes-excerpt-v1"
+        }
+      },
+      {
+        "id": "n06",
+        "domain": "notes",
+        "goal": "Please transcribe all sources verbatim. Preserve the source ids and original order. Do not rewrite.",
+        "expected": true,
+        "matched": true,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1",
+          "task_purpose": "notes-excerpt-v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": true,
+          "slots": {
+            "operation": "copy",
+            "fidelity": "verbatim",
+            "source_ids": "keep",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 38,
+              "text": "Please transcribe all sources verbatim",
+              "slots": {
+                "operation": "copy",
+                "fidelity": "verbatim"
+              }
+            },
+            {
+              "start": 39,
+              "end": 82,
+              "text": " Preserve the source ids and original order",
+              "slots": {
+                "source_ids": "keep",
+                "order": "input"
+              }
+            },
+            {
+              "start": 83,
+              "end": 98,
+              "text": " Do not rewrite",
+              "slots": {}
+            }
+          ],
+          "reason": "covered",
+          "task_purpose": "notes-excerpt-v1"
+        }
+      },
+      {
+        "id": "n07",
+        "domain": "notes",
+        "goal": "按给定顺序完整照录资料，并标明每条来源编号，不要摘要。",
+        "expected": true,
+        "matched": false,
+        "correct": false,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": false,
+          "slots": {},
+          "missing": [
+            "operation",
+            "fidelity",
+            "source_ids",
+            "order"
+          ],
+          "uncovered": [
+            {
+              "start": 0,
+              "end": 11,
+              "text": "按给定顺序完整照录资料"
+            },
+            {
+              "start": 12,
+              "end": 21,
+              "text": "并标明每条来源编号"
+            },
+            {
+              "start": 22,
+              "end": 26,
+              "text": "不要摘要"
+            }
+          ],
+          "clauses": [],
+          "reason": "uncovered_clause"
+        }
+      },
+      {
+        "id": "n08",
+        "domain": "notes",
+        "goal": "原文一字不改地整理成报告，来源ID和排列次序都沿用输入。",
+        "expected": true,
+        "matched": false,
+        "correct": false,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": false,
+          "slots": {},
+          "missing": [
+            "operation",
+            "fidelity",
+            "source_ids",
+            "order"
+          ],
+          "uncovered": [
+            {
+              "start": 0,
+              "end": 12,
+              "text": "原文一字不改地整理成报告"
+            },
+            {
+              "start": 13,
+              "end": 27,
+              "text": "来源ID和排列次序都沿用输入"
+            }
+          ],
+          "clauses": [],
+          "reason": "uncovered_clause"
+        }
+      },
+      {
+        "id": "p01",
+        "domain": "practice",
+        "goal": "制作当前乘法题；给出每题的正确答案；保持输入顺序",
+        "expected": true,
+        "matched": true,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1",
+          "task_purpose": "practice-product-v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": true,
+          "slots": {
+            "operation": "multiply",
+            "answers": "correct",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 7,
+              "text": "制作当前乘法题",
+              "slots": {
+                "operation": "multiply"
+              }
+            },
+            {
+              "start": 8,
+              "end": 17,
+              "text": "给出每题的正确答案",
+              "slots": {
+                "answers": "correct"
+              }
+            },
+            {
+              "start": 18,
+              "end": 24,
+              "text": "保持输入顺序",
+              "slots": {
+                "order": "input"
+              }
+            }
+          ],
+          "reason": "covered",
+          "task_purpose": "practice-product-v1"
+        }
+      },
+      {
+        "id": "p02",
+        "domain": "practice",
+        "goal": "用当前数对制作乘法练习及答案；顺序不变；勿评价学生是否掌握",
+        "expected": true,
+        "matched": true,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1",
+          "task_purpose": "practice-product-v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": true,
+          "slots": {
+            "operation": "multiply",
+            "answers": "correct",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 14,
+              "text": "用当前数对制作乘法练习及答案",
+              "slots": {
+                "operation": "multiply",
+                "answers": "correct"
+              }
+            },
+            {
+              "start": 15,
+              "end": 19,
+              "text": "顺序不变",
+              "slots": {
+                "order": "input"
+              }
+            },
+            {
+              "start": 20,
+              "end": 29,
+              "text": "勿评价学生是否掌握",
+              "slots": {}
+            }
+          ],
+          "reason": "covered",
+          "task_purpose": "practice-product-v1"
+        }
+      },
+      {
+        "id": "p03",
+        "domain": "practice",
+        "goal": "根据整数对出乘法题和正确答案，保持原始顺序，保存练习表",
+        "expected": true,
+        "matched": true,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1",
+          "task_purpose": "practice-product-v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": true,
+          "slots": {
+            "operation": "multiply",
+            "answers": "correct",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 14,
+              "text": "根据整数对出乘法题和正确答案",
+              "slots": {
+                "operation": "multiply",
+                "answers": "correct"
+              }
+            },
+            {
+              "start": 15,
+              "end": 21,
+              "text": "保持原始顺序",
+              "slots": {
+                "order": "input"
+              }
+            },
+            {
+              "start": 22,
+              "end": 27,
+              "text": "保存练习表",
+              "slots": {}
+            }
+          ],
+          "reason": "covered",
+          "task_purpose": "practice-product-v1"
+        }
+      },
+      {
+        "id": "p04",
+        "domain": "practice",
+        "goal": "Create multiplication questions from the pairs; add correct answers; retain their original order.",
+        "expected": true,
+        "matched": true,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1",
+          "task_purpose": "practice-product-v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": true,
+          "slots": {
+            "operation": "multiply",
+            "answers": "correct",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 46,
+              "text": "Create multiplication questions from the pairs",
+              "slots": {
+                "operation": "multiply"
+              }
+            },
+            {
+              "start": 47,
+              "end": 67,
+              "text": " add correct answers",
+              "slots": {
+                "answers": "correct"
+              }
+            },
+            {
+              "start": 68,
+              "end": 96,
+              "text": " retain their original order",
+              "slots": {
+                "order": "input"
+              }
+            }
+          ],
+          "reason": "covered",
+          "task_purpose": "practice-product-v1"
+        }
+      },
+      {
+        "id": "p05",
+        "domain": "practice",
+        "goal": "Generate multiplication exercises and answers from current pairs, keep input order, do not assess learner mastery.",
+        "expected": true,
+        "matched": true,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1",
+          "task_purpose": "practice-product-v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": true,
+          "slots": {
+            "operation": "multiply",
+            "answers": "correct",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 64,
+              "text": "Generate multiplication exercises and answers from current pairs",
+              "slots": {
+                "operation": "multiply",
+                "answers": "correct"
+              }
+            },
+            {
+              "start": 65,
+              "end": 82,
+              "text": " keep input order",
+              "slots": {
+                "order": "input"
+              }
+            },
+            {
+              "start": 83,
+              "end": 113,
+              "text": " do not assess learner mastery",
+              "slots": {}
+            }
+          ],
+          "reason": "covered",
+          "task_purpose": "practice-product-v1"
+        }
+      },
+      {
+        "id": "p06",
+        "domain": "practice",
+        "goal": "按原顺序把当前整数对做成乘法练习，并且给出正确答案",
+        "expected": true,
+        "matched": true,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1",
+          "task_purpose": "practice-product-v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": true,
+          "slots": {
+            "operation": "multiply",
+            "order": "input",
+            "answers": "correct"
+          },
+          "missing": [],
+          "uncovered": [],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 16,
+              "text": "按原顺序把当前整数对做成乘法练习",
+              "slots": {
+                "operation": "multiply",
+                "order": "input"
+              }
+            },
+            {
+              "start": 17,
+              "end": 25,
+              "text": "并且给出正确答案",
+              "slots": {
+                "answers": "correct"
+              }
+            }
+          ],
+          "reason": "covered",
+          "task_purpose": "practice-product-v1"
+        }
+      },
+      {
+        "id": "p07",
+        "domain": "practice",
+        "goal": "每组数字各出一道乘法题，写出正确结果，题序照旧。",
+        "expected": true,
+        "matched": false,
+        "correct": false,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": false,
+          "slots": {},
+          "missing": [
+            "operation",
+            "answers",
+            "order"
+          ],
+          "uncovered": [
+            {
+              "start": 0,
+              "end": 11,
+              "text": "每组数字各出一道乘法题"
+            },
+            {
+              "start": 12,
+              "end": 18,
+              "text": "写出正确结果"
+            },
+            {
+              "start": 19,
+              "end": 23,
+              "text": "题序照旧"
+            }
+          ],
+          "clauses": [],
+          "reason": "uncovered_clause"
+        }
+      },
+      {
+        "id": "p08",
+        "domain": "practice",
+        "goal": "Turn these pairs into a multiplication worksheet with solutions in the given sequence.",
+        "expected": true,
+        "matched": false,
+        "correct": false,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": false,
+          "slots": {},
+          "missing": [
+            "operation",
+            "answers",
+            "order"
+          ],
+          "uncovered": [
+            {
+              "start": 0,
+              "end": 85,
+              "text": "Turn these pairs into a multiplication worksheet with solutions in the given sequence"
+            }
+          ],
+          "clauses": [],
+          "reason": "uncovered_clause"
+        }
+      },
+      {
+        "id": "x01",
+        "domain": "notes",
+        "goal": "原样引用每条原文，保留来源标识和原顺序，然后删掉未确认的内容",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": false,
+          "slots": {
+            "operation": "copy",
+            "fidelity": "verbatim",
+            "source_ids": "keep",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [
+            {
+              "start": 20,
+              "end": 30,
+              "text": "然后删掉未确认的内容"
+            }
+          ],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 8,
+              "text": "原样引用每条原文",
+              "slots": {
+                "operation": "copy",
+                "fidelity": "verbatim"
+              }
+            },
+            {
+              "start": 9,
+              "end": 19,
+              "text": "保留来源标识和原顺序",
+              "slots": {
+                "source_ids": "keep",
+                "order": "input"
+              }
+            }
+          ],
+          "reason": "uncovered_clause"
+        }
+      },
+      {
+        "id": "x02",
+        "domain": "notes",
+        "goal": "不要逐字摘录每条原文，保留来源编号与顺序",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": false,
+          "slots": {
+            "source_ids": "keep",
+            "order": "input"
+          },
+          "missing": [
+            "operation",
+            "fidelity"
+          ],
+          "uncovered": [
+            {
+              "start": 0,
+              "end": 10,
+              "text": "不要逐字摘录每条原文"
+            }
+          ],
+          "clauses": [
+            {
+              "start": 11,
+              "end": 20,
+              "text": "保留来源编号与顺序",
+              "slots": {
+                "source_ids": "keep",
+                "order": "input"
+              }
+            }
+          ],
+          "reason": "uncovered_clause"
+        }
+      },
+      {
+        "id": "x03",
+        "domain": "notes",
+        "goal": "将这些资料逐条照抄成报告，保留来源ID，但按时间重新排序",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": false,
+          "slots": {
+            "operation": "copy",
+            "fidelity": "verbatim",
+            "source_ids": "keep"
+          },
+          "missing": [
+            "order"
+          ],
+          "uncovered": [
+            {
+              "start": 20,
+              "end": 28,
+              "text": "但按时间重新排序"
+            }
+          ],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 12,
+              "text": "将这些资料逐条照抄成报告",
+              "slots": {
+                "operation": "copy",
+                "fidelity": "verbatim"
+              }
+            },
+            {
+              "start": 13,
+              "end": 19,
+              "text": "保留来源ID",
+              "slots": {
+                "source_ids": "keep"
+              }
+            }
+          ],
+          "reason": "uncovered_clause"
+        }
+      },
+      {
+        "id": "x04",
+        "domain": "notes",
+        "goal": "请解释“逐字摘录每条原文，保留来源ID和顺序”这条命令",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": false,
+          "slots": {},
+          "missing": [
+            "operation",
+            "fidelity",
+            "source_ids",
+            "order"
+          ],
+          "uncovered": [
+            {
+              "start": 0,
+              "end": 12,
+              "text": "请解释“逐字摘录每条原文"
+            },
+            {
+              "start": 13,
+              "end": 27,
+              "text": "保留来源ID和顺序”这条命令"
+            }
+          ],
+          "clauses": [],
+          "reason": "uncovered_clause"
+        }
+      },
+      {
+        "id": "x05",
+        "domain": "notes",
+        "goal": "Copy each source verbatim; preserve source ids; reverse original order.",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": false,
+          "slots": {
+            "operation": "copy",
+            "fidelity": "verbatim",
+            "source_ids": "keep"
+          },
+          "missing": [
+            "order"
+          ],
+          "uncovered": [
+            {
+              "start": 47,
+              "end": 70,
+              "text": " reverse original order"
+            }
+          ],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 25,
+              "text": "Copy each source verbatim",
+              "slots": {
+                "operation": "copy",
+                "fidelity": "verbatim"
+              }
+            },
+            {
+              "start": 26,
+              "end": 46,
+              "text": " preserve source ids",
+              "slots": {
+                "source_ids": "keep"
+              }
+            }
+          ],
+          "reason": "uncovered_clause"
+        }
+      },
+      {
+        "id": "x06",
+        "domain": "notes",
+        "goal": "Copy each source verbatim; keep source ids; keep original order; remove the second source.",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": false,
+          "slots": {
+            "operation": "copy",
+            "fidelity": "verbatim",
+            "source_ids": "keep",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [
+            {
+              "start": 64,
+              "end": 89,
+              "text": " remove the second source"
+            }
+          ],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 25,
+              "text": "Copy each source verbatim",
+              "slots": {
+                "operation": "copy",
+                "fidelity": "verbatim"
+              }
+            },
+            {
+              "start": 26,
+              "end": 42,
+              "text": " keep source ids",
+              "slots": {
+                "source_ids": "keep"
+              }
+            },
+            {
+              "start": 43,
+              "end": 63,
+              "text": " keep original order",
+              "slots": {
+                "order": "input"
+              }
+            }
+          ],
+          "reason": "uncovered_clause"
+        }
+      },
+      {
+        "id": "x07",
+        "domain": "notes",
+        "goal": "原样摘录每条原文，保留来源ID和顺序，但是把暂估值写成成交价",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": false,
+          "slots": {
+            "operation": "copy",
+            "fidelity": "verbatim",
+            "source_ids": "keep",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [
+            {
+              "start": 19,
+              "end": 30,
+              "text": "但是把暂估值写成成交价"
+            }
+          ],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 8,
+              "text": "原样摘录每条原文",
+              "slots": {
+                "operation": "copy",
+                "fidelity": "verbatim"
+              }
+            },
+            {
+              "start": 9,
+              "end": 18,
+              "text": "保留来源ID和顺序",
+              "slots": {
+                "source_ids": "keep",
+                "order": "input"
+              }
+            }
+          ],
+          "reason": "uncovered_clause"
+        }
+      },
+      {
+        "id": "x08",
+        "domain": "notes",
+        "goal": "将这批笔记逐条照抄成报告，保持来源编号和顺序，发到群里",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.notes-input.v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": false,
+          "slots": {
+            "operation": "copy",
+            "fidelity": "verbatim",
+            "source_ids": "keep",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [
+            {
+              "start": 23,
+              "end": 27,
+              "text": "发到群里"
+            }
+          ],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 12,
+              "text": "将这批笔记逐条照抄成报告",
+              "slots": {
+                "operation": "copy",
+                "fidelity": "verbatim"
+              }
+            },
+            {
+              "start": 13,
+              "end": 22,
+              "text": "保持来源编号和顺序",
+              "slots": {
+                "source_ids": "keep",
+                "order": "input"
+              }
+            }
+          ],
+          "reason": "uncovered_clause"
+        }
+      },
+      {
+        "id": "x09",
+        "domain": "practice",
+        "goal": "制作乘法题，提供正确答案，保持输入顺序，但是把第一个答案改成零",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": false,
+          "slots": {
+            "operation": "multiply",
+            "answers": "correct",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [
+            {
+              "start": 20,
+              "end": 31,
+              "text": "但是把第一个答案改成零"
+            }
+          ],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 5,
+              "text": "制作乘法题",
+              "slots": {
+                "operation": "multiply"
+              }
+            },
+            {
+              "start": 6,
+              "end": 12,
+              "text": "提供正确答案",
+              "slots": {
+                "answers": "correct"
+              }
+            },
+            {
+              "start": 13,
+              "end": 19,
+              "text": "保持输入顺序",
+              "slots": {
+                "order": "input"
+              }
+            }
+          ],
+          "reason": "uncovered_clause"
+        }
+      },
+      {
+        "id": "x10",
+        "domain": "practice",
+        "goal": "根据数对出乘法题和答案，顺序不变，告诉我已经完全掌握",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": false,
+          "slots": {
+            "operation": "multiply",
+            "answers": "correct",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [
+            {
+              "start": 17,
+              "end": 26,
+              "text": "告诉我已经完全掌握"
+            }
+          ],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 11,
+              "text": "根据数对出乘法题和答案",
+              "slots": {
+                "operation": "multiply",
+                "answers": "correct"
+              }
+            },
+            {
+              "start": 12,
+              "end": 16,
+              "text": "顺序不变",
+              "slots": {
+                "order": "input"
+              }
+            }
+          ],
+          "reason": "uncovered_clause"
+        }
+      },
+      {
+        "id": "x11",
+        "domain": "practice",
+        "goal": "生成当前乘法练习及正确答案，保留题目顺序，只显示偶数题",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": false,
+          "slots": {
+            "operation": "multiply",
+            "answers": "correct",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [
+            {
+              "start": 21,
+              "end": 27,
+              "text": "只显示偶数题"
+            }
+          ],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 13,
+              "text": "生成当前乘法练习及正确答案",
+              "slots": {
+                "operation": "multiply",
+                "answers": "correct"
+              }
+            },
+            {
+              "start": 14,
+              "end": 20,
+              "text": "保留题目顺序",
+              "slots": {
+                "order": "input"
+              }
+            }
+          ],
+          "reason": "uncovered_clause"
+        }
+      },
+      {
+        "id": "x12",
+        "domain": "practice",
+        "goal": "Make multiplication exercises from these pairs; provide answers; do not preserve input order.",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": false,
+          "slots": {
+            "operation": "multiply",
+            "answers": "correct"
+          },
+          "missing": [
+            "order"
+          ],
+          "uncovered": [
+            {
+              "start": 64,
+              "end": 92,
+              "text": " do not preserve input order"
+            }
+          ],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 46,
+              "text": "Make multiplication exercises from these pairs",
+              "slots": {
+                "operation": "multiply"
+              }
+            },
+            {
+              "start": 47,
+              "end": 63,
+              "text": " provide answers",
+              "slots": {
+                "answers": "correct"
+              }
+            }
+          ],
+          "reason": "uncovered_clause"
+        }
+      },
+      {
+        "id": "x13",
+        "domain": "practice",
+        "goal": "Generate multiplication questions from current pairs; add answers; keep order; email the worksheet.",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": false,
+          "slots": {
+            "operation": "multiply",
+            "answers": "correct",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [
+            {
+              "start": 78,
+              "end": 98,
+              "text": " email the worksheet"
+            }
+          ],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 52,
+              "text": "Generate multiplication questions from current pairs",
+              "slots": {
+                "operation": "multiply"
+              }
+            },
+            {
+              "start": 53,
+              "end": 65,
+              "text": " add answers",
+              "slots": {
+                "answers": "correct"
+              }
+            },
+            {
+              "start": 66,
+              "end": 77,
+              "text": " keep order",
+              "slots": {
+                "order": "input"
+              }
+            }
+          ],
+          "reason": "uncovered_clause"
+        }
+      },
+      {
+        "id": "x14",
+        "domain": "practice",
+        "goal": "生成当前乘法练习和正确答案，保留题目顺序，如果有负数就改成除法",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": false,
+          "slots": {
+            "operation": "multiply",
+            "answers": "correct",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [
+            {
+              "start": 21,
+              "end": 31,
+              "text": "如果有负数就改成除法"
+            }
+          ],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 13,
+              "text": "生成当前乘法练习和正确答案",
+              "slots": {
+                "operation": "multiply",
+                "answers": "correct"
+              }
+            },
+            {
+              "start": 14,
+              "end": 20,
+              "text": "保留题目顺序",
+              "slots": {
+                "order": "input"
+              }
+            }
+          ],
+          "reason": "uncovered_clause"
+        }
+      },
+      {
+        "id": "x15",
+        "domain": "practice",
+        "goal": "如果明天下雨，生成当前乘法练习和正确答案，保留题目顺序",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": false,
+          "slots": {
+            "operation": "multiply",
+            "answers": "correct",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [
+            {
+              "start": 0,
+              "end": 6,
+              "text": "如果明天下雨"
+            }
+          ],
+          "clauses": [
+            {
+              "start": 7,
+              "end": 20,
+              "text": "生成当前乘法练习和正确答案",
+              "slots": {
+                "operation": "multiply",
+                "answers": "correct"
+              }
+            },
+            {
+              "start": 21,
+              "end": 27,
+              "text": "保留题目顺序",
+              "slots": {
+                "order": "input"
+              }
+            }
+          ],
+          "reason": "uncovered_clause"
+        }
+      },
+      {
+        "id": "x16",
+        "domain": "practice",
+        "goal": "生成当前乘法练习和正确答案，保留题目顺序，不要生成当前乘法练习",
+        "expected": false,
+        "matched": false,
+        "correct": true,
+        "selectors": {
+          "channel": "task",
+          "planner": "goal-plan-v1",
+          "input_kind": "text",
+          "input_schema": "jarvis.practice-input.v1"
+        },
+        "diagnostic": {
+          "version": "advice-intent-1",
+          "matched": false,
+          "slots": {
+            "operation": "multiply",
+            "answers": "correct",
+            "order": "input"
+          },
+          "missing": [],
+          "uncovered": [
+            {
+              "start": 21,
+              "end": 31,
+              "text": "不要生成当前乘法练习"
+            }
+          ],
+          "clauses": [
+            {
+              "start": 0,
+              "end": 13,
+              "text": "生成当前乘法练习和正确答案",
+              "slots": {
+                "operation": "multiply",
+                "answers": "correct"
+              }
+            },
+            {
+              "start": 14,
+              "end": 20,
+              "text": "保留题目顺序",
+              "slots": {
+                "order": "input"
+              }
+            }
+          ],
+          "reason": "uncovered_clause"
+        }
+      }
+    ],
+    "positive_matches": 12,
+    "positive_count": 16,
+    "false_matches": 0,
+    "negative_count": 16,
+    "negative_gate_passed": true
+  },
+  "runtime_unchanged": true,
+  "cloud_calls": 0,
+  "production_data_used": false,
+  "scope": "Advice-purpose selection only; unmatched advice does not block independent planning. Not task success or long-term learning."
+}

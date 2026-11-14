@@ -221,11 +221,11 @@ MemoryView 只授权本次读取与装配，不授予工具执行权限。实际
 | observation | task_id、完成指纹、state、condition_score、score_scope、coverage_complete、review_required；causal_contribution为null |
 | mode=inherited | 已审阅返工/持续安排的依赖继承，附parent_goal/parent_binding；递归最多8层，同域同权限重验，不把旧建议注入新模型输入 |
 | detail.planning_advice | 当前有效性、提供引用、真实模型回执及usage、结果观察；automatic_promotion=false，independent_successes=null，execution_authorized=false |
-| config/goal-advice-compatibility.json | 声明schema=1、goal_advice_schema=1、2或3；当前及历史取所需最大版本，读者须足够，未知/布尔版本拒绝。来源卡被忘记或当前变回v1不能抹去历史v2要求 |
+| config/goal-advice-compatibility.json | 声明schema=1、goal_advice_schema=1、2、3或4；当前及历史取所需最大版本，读者须足够，未知/布尔版本拒绝。来源卡被忘记或当前变回v1不能抹去历史v2要求 |
 
 v2仅向模型投影id、recipe、requires、summary、counterexamples、source_id、source_revision和外层候选/权限标记；方法卡本身仍为jarvis.method-card.v1。宿主持有原证据哈希、有效期、谱系、完整依赖并在派发/准入/执行时重验；不是删证据或自动晋升。已有模型回执的消息摘要不能被新投影覆盖，即使装配stamp缺失也按真实model_calls核对。
 
-已安装根在写v2之前验证原子入口绑定的控制器协议至少3；未晋升时新目标继续显式写v1，损坏/未知控制器拒绝创建。未托管的隔离开发根使用v2，恢复仍受原读者门约束。协议3读者认识1/2/3，下限只升不降；协议2入口见下限3拒绝，古老未版本化入口和同用户手工旧代码仍没有OS级隔离。当前部署状态见[精简验收](delivery-validation.md#goal-advice-compact-evidence-20261115)。v3进一步要求已安装控制器协议4；协议3托管根中的新候选仍写v2，协议4可写v3；现用v0.1.8应用未采用本候选，未托管开发根也暂留v2，测试隔离根显式启用v3。协议4读者认识1/2/3/4；新元数据的当前或历史最大版本为3时，声明1/2的应用拒绝，旧任务不批量重写。用途语义及部署状态见[选择性提供验收](delivery-validation.md#advice-purpose-evidence-20261115)。
+已安装根在写v2之前验证原子入口绑定的控制器协议至少3；未晋升时新目标继续显式写v1，损坏/未知控制器拒绝创建。未托管的隔离开发根使用v2，恢复仍受原读者门约束。协议3读者认识1/2/3，下限只升不降；协议2入口见下限3拒绝，古老未版本化入口和同用户手工旧代码仍没有OS级隔离。当前部署状态见[精简验收](delivery-validation.md#goal-advice-compact-evidence-20261115)。v3进一步要求已安装控制器协议4；协议3托管根中的新候选仍写v2，协议4可写v3；现用v0.1.8应用未采用本候选，未托管开发根也暂留v2，测试隔离根显式启用v3。协议4读者认识1/2/3/4；新元数据的当前或历史最大版本为3时，声明1/2的应用拒绝，旧任务不批量重写。用途语义及部署状态见[选择性提供验收](delivery-validation.md#advice-purpose-evidence-20261115)。v4组合语法固定为advice-intent-1，仅协议5托管根可写；旧协议4仍写v3，当前/历史v4需读者4，新候选开发协议5未日用晋升。原v3解释不变，未覆盖片段只作诊断，不能变成授权或静默丢弃的要求。见[组合用途验收](delivery-validation.md#advice-intent-evidence-20261115)。
 
 体积从同次装配取得，覆盖附加规则和完整消息封装；新投影message_exposure可为null，不能把缺失当0或父任务用量当子任务用量。旧程序丢弃这个可选字段后仍保留执行依赖和回执，新程序不伪造历史数值；已知观察字段不构成新的执行语义版本。
 

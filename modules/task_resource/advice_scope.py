@@ -65,12 +65,17 @@ def selectors(plan,version=2):
     from modules.task_resource import quote_checks,quote_request
     try:source=quote_checks.parse_source(plan['request']['input_text'])
     except CoreError:
-        if version==3:
-            selectors.update(inspect(plan['request']['goal'],plan['request']['input_text']))
+        if version in (3,4):
+            shape=inspect(plan['request']['goal'] if version==3 else '',plan['request']['input_text'])
+            if version==4 and shape:
+                from modules.task_resource.advice_intent import analyze
+                intent=analyze(plan['request']['goal'],shape['input_schema'])
+                if intent['matched']:shape['task_purpose']=intent['task_purpose']
+            selectors.update(shape)
         return selectors
     selectors.update(input_schema=source['schema'],currency=source['currency'],
         max_price_minor=source['max_price_minor'],max_delivery_days=source['max_delivery_days'])
     try:selectors['quote_requirements_ready']=quote_request.analyze(plan['request']['goal'],plan['request']['input_text'])['ready']
     except CoreError:selectors['quote_requirements_ready']=False
-    if version==3 and selectors['quote_requirements_ready']:selectors['task_purpose']='quote-lowest-v1'
+    if version in (3,4) and selectors['quote_requirements_ready']:selectors['task_purpose']='quote-lowest-v1'
     return selectors

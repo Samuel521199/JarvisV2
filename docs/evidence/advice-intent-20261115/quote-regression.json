@@ -1,0 +1,31 @@
+{
+  "passed": true,
+  "rows": [
+    {
+      "goal": "比较报价，预算不超过236元，交期不超过7天，在合格报价中选择最低价，保留来源引用，保存报告",
+      "expected_match": true,
+      "actual_match": true,
+      "v3_v4_selectors_equal": true
+    },
+    {
+      "goal": "比较报价，预算不超过236元，交期不超过7天，在合格报价中选择最高价，保留来源引用，保存报告",
+      "expected_match": false,
+      "actual_match": false,
+      "v3_v4_selectors_equal": true
+    },
+    {
+      "goal": "比较报价，预算不超过236元，交期不超过7天，在合格报价中选择最低价，保留来源引用，保存报告，只考虑绿色产品",
+      "expected_match": false,
+      "actual_match": false,
+      "v3_v4_selectors_equal": true
+    },
+    {
+      "goal": "比较报价，预算不超过235元，交期不超过7天，在合格报价中选择最低价，保留来源引用，保存报告",
+      "expected_match": false,
+      "actual_match": false,
+      "v3_v4_selectors_equal": true
+    }
+  ],
+  "cloud_calls": 0,
+  "scope": "unchanged quote selector regression; operator synthetic inputs"
+}

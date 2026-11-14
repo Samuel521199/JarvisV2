@@ -137,9 +137,9 @@ class CompactAdvice(unittest.TestCase):
     def test_projection_rejects_unknown_versions_and_does_not_mutate_full_methods(self):
         self.seed();ident=self.create();methods=goal_context.advice(self.core,ident);before=copy.deepcopy(methods)
         model_projection(methods,2);self.assertEqual(methods,before)
-        for version in (True,0,4,'2',None):
+        for version in (True,0,5,'2',None):
             with self.subTest(version=version),self.assertRaises(CoreError):model_projection(methods,version)
-        self.version(ident,4);self.code('goal_context_changed',goal_context.check,self.core,ident)
+        self.version(ident,5);self.code('goal_context_changed',goal_context.check,self.core,ident)
 
 
 if __name__=='__main__':unittest.main()
