@@ -3,6 +3,7 @@
 Uses existing goal context, source permissions, model calls and completion facts.
 It does not infer that exposure caused an outcome or promote advice into facts.
 """
+from pathlib import Path
 from adapters.models.native import message_bytes
 from modules.context_knowledge.memory import Memory
 from modules.context_knowledge.knowledge import Knowledge
@@ -12,7 +13,8 @@ from modules.task_resource.plans import Plans,planning_key
 from sdk.protocol import CoreError,canonical,decode,digest
 
 KEY='conditional_advice'
-VERSION=1
+VERSION=2
+SUPPORTED=(1,2)
 BAD={'NEEDS_CORRECTION','INVALIDATED'}
 
 
@@ -28,6 +30,18 @@ def binding(plan):
 
 class PlanningAdvice:
     def __init__(self,db):self.db=db
+
+    @staticmethod
+    def writer_version(root):
+        # An installed recovery controller must understand the new semantics
+        # before its application may persist them. Unmanaged development roots
+        # use source recovery and the normal data-reader compatibility checks.
+        root=Path(root)
+        if any(p.exists() for p in (root.parent/'JarvisLaunch.py',root/'deployment/launcher.json',root/'deployment/controller-protocol.json')):
+            from control.controller_pin import read
+            record=read(root)
+            return 2 if record.get('controller_protocol',0)>=3 else 1
+        return VERSION
 
     def allowed(self,scope,provider,enabled):
         if not enabled:return {}
@@ -49,7 +63,7 @@ class PlanningAdvice:
         if not self.db.one("SELECT value FROM meta WHERE key='completion_schema'"):return False
         return bool(self.db.one("""SELECT g.goal_id FROM goal_context g
             JOIN goal_plans p ON p.id=g.goal_id JOIN task_completion c ON c.task_id=p.task_id
-            WHERE g.scope=? AND g.goal_id!=? AND json_extract(g.view,'$.conditional_advice.version')=1
+            WHERE g.scope=? AND g.goal_id!=? AND json_extract(g.view,'$.conditional_advice.version') IN (1,2)
             AND json_extract(c.body,'$.state')='NEEDS_CORRECTION'
             AND (json_extract(c.body,'$.feedback.kind')='reject' OR EXISTS(
                 SELECT 1 FROM json_each(c.body,'$.checks') criterion WHERE json_extract(criterion.value,'$.status')='failed'))
@@ -90,7 +104,7 @@ class PlanningAdvice:
         bundle=context['view'].get(KEY)
         if not bundle:return None
         self.checked(parent,context,bundle['selectors'])
-        return {'version':VERSION,'mode':'inherited','binding':binding(plan),'parent_goal':parent['id'],
+        return {'version':bundle['version'],'mode':'inherited','binding':binding(plan),'parent_goal':parent['id'],
             'parent_binding':binding(parent),'selectors':bundle['selectors'],'receipt':bundle['receipt'],
             'dependencies':bundle['dependencies'],'families':bundle['families']}
 
@@ -98,7 +112,7 @@ class PlanningAdvice:
         if KEY not in context['view']:return []
         bundle=context['view'][KEY]
         try:
-            if (not isinstance(bundle,dict) or type(bundle.get('version')) is not int or bundle['version']!=VERSION
+            if (not isinstance(bundle,dict) or type(bundle.get('version')) is not int or bundle['version'] not in SUPPORTED
                 or bundle['binding']!=binding(plan) or (bundle.get('mode')!='inherited' and bundle['selectors']!=selectors)
                 or not context['enabled'] or context['view'].get('redacted')):raise ValueError('Advice binding changed')
             mode=bundle.get('mode')
@@ -114,7 +128,8 @@ class PlanningAdvice:
                 prior=row['view'].get(KEY)
                 if not prior:raise ValueError('Parent advice provenance missing')
                 self.checked(parent,row,prior['selectors'],destinations,depth+1)
-                if bundle['dependencies']!=prior['dependencies'] or bundle['receipt']!=prior['receipt'] or bundle['families']!=prior['families']:
+                if (bundle['version']!=prior['version'] or bundle['dependencies']!=prior['dependencies']
+                    or bundle['receipt']!=prior['receipt'] or bundle['families']!=prior['families']):
                     raise ValueError('Inherited dependency receipt changed')
                 return []
             receipt=bundle['receipt'];refs=receipt['methods']
@@ -178,7 +193,14 @@ class PlanningAdvice:
             full=message_bytes([{'role':'user','content':prompt}]);base=message_bytes([{'role':'user','content':base_prompt}])
             stamp['message_exposure']={'unit':'message_json_utf8_bytes','full_bytes':full,
                 'without_advice_bytes':base,'added_bytes':full-base}
+        if self.db.one('SELECT 1 FROM model_calls WHERE run_id=? AND phase=? AND input_digest!=? LIMIT 1',
+                (run_id,'goal-plan',stamp['input_digest'])):
+            raise CoreError('goal_context_changed','Advice input differs from the recorded model call')
         if bundle.get('dispatch')==stamp:return
+        prior=bundle.get('dispatch')
+        if (prior and (prior.get('run_id')!=run_id or prior.get('input_digest')!=stamp['input_digest'])
+            and self.db.one('SELECT 1 FROM model_calls WHERE run_id=? LIMIT 1',(run_id,))):
+            raise CoreError('goal_context_changed','Cannot replace an already recorded advice input')
         # Assembly is not dispatch. Projection consults the real model ledger.
         bundle['dispatch']=stamp
         with self.db.transaction() as tx:
@@ -193,7 +215,7 @@ class PlanningAdvice:
         if not row:return
         view=decode(row['view']);bundle=view.get(KEY)
         if not bundle or view.get('redacted'):return
-        if type(bundle.get('version')) is not int or bundle['version']!=VERSION:
+        if type(bundle.get('version')) is not int or bundle['version'] not in SUPPORTED:
             raise CoreError('goal_context_changed','Unknown planning advice version')
         observation={'task_id':task_id,'fingerprint':completion['fingerprint'],'state':completion['state'],
             'condition_score':completion['condition_score'],'score_scope':completion['score_scope'],
@@ -225,7 +247,7 @@ class PlanningAdvice:
                 (stamp['run_id'],'goal-plan'))
             calls=[{'id':r['id'],'status':r['status'],'usage':decode(r['usage']) if r['usage'] else None}
                 for r in calls if r['input_digest']==stamp['input_digest']]
-        return {'version':VERSION,'current':current,'offered':bundle.get('receipt',{}).get('methods',[]),
+        return {'version':bundle.get('version'),'current':current,'offered':bundle.get('receipt',{}).get('methods',[]),
             'model_calls':calls,'model_dispatched':any(r['status'] in {'DISPATCHING','UNKNOWN','ACKNOWLEDGED','SUCCEEDED','REJECTED','INVALID'} for r in calls),
             'observation':bundle.get('observation'),'inherited_from':bundle.get('parent_goal'),'advisory_only':True,'execution_authorized':False,
             'automatic_promotion':False,'independent_successes':None,'causal_contribution':None,

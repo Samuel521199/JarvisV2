@@ -38,7 +38,7 @@ class ApplicationCompatibility(unittest.TestCase):
             (source/'config/conditional-advice-compatibility.json').write_text(json.dumps({'schema':1,'conditional_advice_schema':1}))
             files.append('config/conditional-advice-compatibility.json')
         if goal_advice:
-            (source/'config/goal-advice-compatibility.json').write_text(json.dumps({'schema':1,'goal_advice_schema':1}))
+            (source/'config/goal-advice-compatibility.json').write_text(json.dumps({'schema':1,'goal_advice_schema':int(goal_advice)}))
             files.append('config/goal-advice-compatibility.json')
         archive=self.base/(name+'.zip');ident=build(source,files,archive,name)
         self.app.stage(archive);self.app.validate(ident,lambda _: {'passed':True,'scope':'synthetic protocol fixture'})
@@ -226,7 +226,7 @@ class ApplicationCompatibility(unittest.TestCase):
         self.assertEqual(require_compatible(self.root,self.app.record(new)['path'])['required']['goal_advice_schema'],1)
 
     def test_unknown_goal_advice_version_is_rejected(self):
-        new=self.candidate('new-goal-unknown',goal_advice=True);self.goal_advice_context(version=2)
+        new=self.candidate('new-goal-unknown',goal_advice=True);self.goal_advice_context(version=3)
         with self.assertRaises(CoreError):require_compatible(self.root,self.app.record(new)['path'])
 
     def test_boolean_goal_advice_declaration_is_rejected(self):
@@ -234,3 +234,27 @@ class ApplicationCompatibility(unittest.TestCase):
         path=Path(self.app.record(new)['path'])/'config/goal-advice-compatibility.json'
         path.write_text('{"schema":1,"goal_advice_schema":true}')
         with self.assertRaises(CoreError):require_compatible(self.root,self.app.record(new)['path'])
+
+    def test_compact_data_blocks_v1_reader_before_drain_and_accepts_v2_reader(self):
+        old=self.candidate('full-v1-reader',goal_advice=True);ident=self.candidate('compact-v2-reader',goal_advice=2)
+        self.app.adopt(old,self.driver);self.app.adopt(ident,self.driver);self.goal_advice_context(version=2)
+        before=self.app.state();events=list(self.driver.events)
+        with self.assertRaises(CoreError):self.app.rollback(self.driver)
+        self.assertEqual(self.app.state(),before);self.assertEqual(self.driver.events,events)
+        self.assertEqual(require_compatible(self.root,self.app.record(ident)['path'])['required']['goal_advice_schema'],2)
+
+    def test_historical_v2_requirement_survives_current_v1_and_redaction(self):
+        from sdk.protocol import canonical
+        old=self.candidate('history-v1-reader',goal_advice=True);self.goal_advice_context(version=2,historical=True)
+        core=Core(self.root)
+        try:
+            with core.db.transaction() as tx:
+                tx.execute('UPDATE goal_context SET view=?',(canonical({'conditional_advice':{'version':1}}),))
+        finally:core.close()
+        with self.assertRaises(CoreError):require_compatible(self.root,self.app.record(old)['path'])
+        package=Path(self.app.record(old)['path']);marker=package/'config/goal-advice-compatibility.json'
+        marker.write_text('{"schema":1,"goal_advice_schema":2}')
+        self.assertEqual(require_compatible(self.root,package)['required']['goal_advice_schema'],2)
+        for value in [True,3,0,'2']:
+            marker.write_text(json.dumps({'schema':1,'goal_advice_schema':value}))
+            with self.subTest(value=value),self.assertRaises(CoreError):require_compatible(self.root,package)

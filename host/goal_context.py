@@ -25,7 +25,9 @@ def advice_selectors(plan):
 def attach_advice(core,plan,view,scope,enabled):
     from host.planning_advice import PlanningAdvice,KEY
     offered=PlanningAdvice(core.db).offer(plan,scope,enabled,advice_selectors(plan))
-    if offered:view[KEY]=offered
+    if offered:
+        offered['version']=PlanningAdvice.writer_version(core.root)
+        view[KEY]=offered
     return view
 
 

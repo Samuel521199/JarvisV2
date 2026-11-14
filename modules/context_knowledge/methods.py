@@ -10,6 +10,18 @@ VERSION='conditional-advice-1'
 FIELDS={'schema','id','revision','status','recipe','requires','summary','counterexamples','evidence','expires'}
 
 
+def model_projection(methods,version):
+    """Only after host revalidation; full receipts and dependencies stay on host."""
+    if type(version) is not int or version not in (1,2):
+        raise CoreError('goal_context_changed','Unknown planning advice projection')
+    result={'methods':methods,'advisory_only':True,'verified':False,'execution_authorized':False}
+    if version==2:
+        keep=('id','recipe','requires','summary','counterexamples','source_id','source_revision')
+        result['methods']=[{key:method[key] for key in keep} for method in methods]
+        result['format']='compact-v2'
+    return result
+
+
 def text_digest(text):return hashlib.sha256(text.encode('utf-8')).hexdigest()
 
 

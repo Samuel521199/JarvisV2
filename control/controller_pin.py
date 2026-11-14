@@ -8,7 +8,8 @@ from control.paths import reject_links
 from sdk.controller_bootstrap import embedded,legacy
 from sdk.protocol import CoreError,decode,read_json
 
-PROTOCOL=2
+PROTOCOL=3
+SUPPORTED_PROTOCOLS=(1,2,3)
 FIELDS={'schema','controller_protocol','build','runtime_source_build','controller','controller_inventory_sha256',
     'data_root','port','generation','policy_anchor_build','policy_sha256','capsule_id','recovery_archive','recovery_sha256','launcher_backup','signature'}
 
@@ -61,7 +62,7 @@ def verify(root,record,*,files=True):
     if floor.exists():
         value=read_json(floor)
         if (not isinstance(value,dict) or set(value)!={'schema','minimum'} or value.get('schema')!=1
-            or any(type(v) is not int for v in value.values()) or value['minimum'] not in (1,PROTOCOL)):
+            or any(type(v) is not int for v in value.values()) or value['minimum'] not in SUPPORTED_PROTOCOLS):
             raise CoreError('controller_protocol','Unknown minimum controller protocol; preserve current state')
         minimum=value['minimum']
     if record['schema']==2:
@@ -76,7 +77,7 @@ def verify(root,record,*,files=True):
                 raise CoreError('controller_record','Controller recovery path escaped its installation')
         if record['build']!=record['controller_inventory_sha256']:
             raise CoreError('controller_record','Controller identity differs from inventory')
-        if (type(record.get('controller_protocol')) is not int or record['controller_protocol'] not in (1,PROTOCOL)
+        if (type(record.get('controller_protocol')) is not int or record['controller_protocol'] not in SUPPORTED_PROTOCOLS
             or record['controller_protocol']<minimum):
             raise CoreError('controller_protocol','Unsupported controller protocol')
         if type(record.get('generation')) is not int or record['generation']<1:

@@ -15,7 +15,7 @@
   - [开源提取器、编纂器与路由的适配要求（proposed）](#memory-extractor-adapter)
   - [MemoryView 与知识候选的必要语义（proposed）](#memory-view-contract)
   - [条件经验候选与使用前回执（conditional-advice-1）](#conditional-advice-contract)
-  - [目标规划建议与反证记录（goal-advice-schema1）](#goal-planning-advice-contract)
+  - [目标规划建议与反证记录（goal-advice-schema1/2）](#goal-planning-advice-contract)
 - [接口与数据契约](#interfaces)
   - [任务与动作分离](#interfaces-2)
   - [事件信封](#interfaces-3)
@@ -207,13 +207,13 @@ MemoryView 只授权本次读取与装配，不授予工具执行权限。实际
 调用者收到候选，仍须依据当前原任务核对适用性，实际使用前重验；该接口不自动将候选接入普通聊天或执行器，不注册新Bot、模型调用、反馈晋升或数据库迁移。初次只读阶段未接自动任务消费和普通界面；后续已补下节目标规划建议及共用目标/聊天展示，仍不能据此签收自主学习。
 
 <a id="goal-planning-advice-contract"></a>
-### 目标规划建议与反证记录（goal-advice-schema1）
+### 目标规划建议与反证记录（goal-advice-schema1/2）
 
 **implemented，未日用采用。** 元数据存于原goal_context.view的conditional_advice；原Core schema7及原事实/资料表不变。普通聊天和独立可执行经验通路保持原边界。[运行语义](knowledge-learning.md#goal-planning-advice-runtime)／[验证](delivery-validation.md#goal-planning-advice-evidence-20261114)。
 
 | 字段/端口 | 语义 |
 |---|---|
-| version=1、binding、selectors | 严格版本及已知字段；绑定完整请求、规划路由、能力目录、generation和planning_round，selectors由宿主取得 |
+| version=1/2、binding、selectors | v1恢复原完整模型消息，v2使用compact-v2投影；绑定完整请求、规划路由、能力目录、generation和planning_round，selectors由宿主取得。继承保留父版本，显式新一轮才重绑 |
 | receipt、dependencies、families | 原条件卡回执、卡与原始证据的完整修订列表；families按条件/摘要/反例形成，不因改名、续期、修订号或复制观察改变 |
 | dispatch | run_id及与既有RoutedModels一致的prompt/schema摘要；仅装配记录，实际派发需匹配model_calls中的持久回执 |
 | dispatch.message_exposure（可选） | 严格unit=message_json_utf8_bytes及full_bytes/without_advice_bytes/added_bytes三个非负整数，added=full-without；未知字段/单位、布尔数值或不一致值仅作观察未知。无新正文、授权或可信度；旧v1读者可忽略，消息正文不变；[实际旧包读回](delivery-validation.md#goal-advice-size-diagnostics)已验 |
@@ -221,7 +221,11 @@ MemoryView 只授权本次读取与装配，不授予工具执行权限。实际
 | observation | task_id、完成指纹、state、condition_score、score_scope、coverage_complete、review_required；causal_contribution为null |
 | mode=inherited | 已审阅返工/持续安排的依赖继承，附parent_goal/parent_binding；递归最多8层，同域同权限重验，不把旧建议注入新模型输入 |
 | detail.planning_advice | 当前有效性、提供引用、真实模型回执及usage、结果观察；automatic_promotion=false，independent_successes=null，execution_authorized=false |
-| config/goal-advice-compatibility.json | 严格{"schema":1,"goal_advice_schema":1}；当前或历史元数据存在即要求支持，未知版本拒绝；来源卡被忘记不能抹去该要求 |
+| config/goal-advice-compatibility.json | 声明schema=1、goal_advice_schema=1或2；当前及历史取所需最大版本，读者须足够，未知/布尔版本拒绝。来源卡被忘记或当前变回v1不能抹去历史v2要求 |
+
+v2仅向模型投影id、recipe、requires、summary、counterexamples、source_id、source_revision和外层候选/权限标记；方法卡本身仍为jarvis.method-card.v1。宿主持有原证据哈希、有效期、谱系、完整依赖并在派发/准入/执行时重验；不是删证据或自动晋升。已有模型回执的消息摘要不能被新投影覆盖，即使装配stamp缺失也按真实model_calls核对。
+
+已安装根在写v2之前验证原子入口绑定的控制器协议至少3；未晋升时新目标继续显式写v1，损坏/未知控制器拒绝创建。未托管的隔离开发根使用v2，恢复仍受原读者门约束。协议3读者认识1/2/3，下限只升不降；协议2入口见下限3拒绝，古老未版本化入口和同用户手工旧代码仍没有OS级隔离。当前部署状态见[精简验收](delivery-validation.md#goal-advice-compact-evidence-20261115)。
 
 体积从同次装配取得，覆盖附加规则和完整消息封装；新投影message_exposure可为null，不能把缺失当0或父任务用量当子任务用量。旧程序丢弃这个可选字段后仍保留执行依赖和回执，新程序不伪造历史数值；已知观察字段不构成新的执行语义版本。
 

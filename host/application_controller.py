@@ -64,7 +64,7 @@ def finish(root,record,event):
             if path.name=='controller-protocol.json' and path.exists():
                 current=read_json(path)
                 if (not isinstance(current,dict) or set(current)!={'schema','minimum'} or current.get('schema')!=1
-                    or any(type(v) is not int for v in current.values()) or current['minimum'] not in (1,pin.PROTOCOL)
+                    or any(type(v) is not int for v in current.values()) or current['minimum'] not in pin.SUPPORTED_PROTOCOLS
                     or current['minimum']>value['minimum']):
                     raise CoreError('controller_protocol','Never lower an existing or unknown controller protocol fence')
             write_json(path,value)
