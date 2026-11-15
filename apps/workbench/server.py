@@ -301,7 +301,7 @@ class Handler(BaseHTTPRequestHandler):
             return self.json({'error': 'invalid_request'}, 400)
         try:
             size = int(self.headers.get('Content-Length', '0'))
-            limit = 40000000 if route.path in {'/api/knowledge-transfer','/api/memory-transfer'} else 29000000 if route.path in ('/api/studio3d/assets','/api/studio3d/references','/api/image-studio/references') else 2097152 if route.path == '/api/studio3d/jobs' else 1600000 if route.path == '/api/project/write' else 200000
+            limit = 3000000 if route.path=='/api/english-learning' else 40000000 if route.path in {'/api/knowledge-transfer','/api/memory-transfer'} else 29000000 if route.path in ('/api/studio3d/assets','/api/studio3d/references','/api/image-studio/references') else 2097152 if route.path == '/api/studio3d/jobs' else 1600000 if route.path == '/api/project/write' else 200000
             if route.path == '/api/model-library/import':limit=90000000
             if route.path == '/api/studio3d/assets':
                 from modules.skills.studio3d.assets import MAX_GLB_UPLOAD_BYTES
@@ -496,7 +496,7 @@ class Handler(BaseHTTPRequestHandler):
             from host.studio3d_viewer import CSP
             self.send_header('Content-Security-Policy',CSP.replace("frame-ancestors 'none'","frame-ancestors 'self'") if viewer=='library' else CSP)
         else:
-            self.send_header("Content-Security-Policy", ("sandbox allow-scripts allow-downloads; default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; base-uri 'none'; form-action 'none'" if anatomy else "default-src 'self'; connect-src 'self'; img-src 'self'; script-src 'self'; style-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'".replace("frame-ancestors 'none'", "frame-ancestors 'self'" if conversation else "frame-ancestors 'none'")))
+            self.send_header("Content-Security-Policy", ("sandbox allow-scripts allow-downloads; default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; base-uri 'none'; form-action 'none'" if anatomy else "default-src 'self'; media-src 'self' blob: data:; connect-src 'self'; img-src 'self'; script-src 'self'; style-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'".replace("frame-ancestors 'none'", "frame-ancestors 'self'" if conversation else "frame-ancestors 'none'")))
         self.end_headers(); self.wfile.write(body)
 
 
@@ -573,9 +573,14 @@ def _serve(args):
         print("Keep this link private: it unlocks the workbench for this OS user.", flush=True)
     else:
         print("Jarvis core workbench (test mode, no access key): http://127.0.0.1:" + str(server.server_port), flush=True)
+    lifecycle=logs.get('lifecycle')
+    lifecycle.info('host_ready pid=%s boot=%s build=%s epoch=%s',__import__('os').getpid(),server.boot_id,args.application_build,args.application_epoch)
     try: server.serve_forever()
-    except KeyboardInterrupt: pass
+    except KeyboardInterrupt:lifecycle.warning('host_keyboard_interrupt boot=%s',server.boot_id)
+    except BaseException:
+        lifecycle.exception('host_serve_failed boot=%s',server.boot_id);raise
     finally:
+        lifecycle.info('host_cleanup_started boot=%s',server.boot_id)
         from host.knowledge import close as close_knowledge
         close_knowledge(server.data_root)
         from host.knowledge_extraction import close as close_extraction
@@ -586,4 +591,8 @@ def _serve(args):
         server.server_close(); server.local_models.close(); server.dialogues.close(); server.development_runner.close(); server.background_lane.close()
 
 
-if __name__ == "__main__": main()
+if __name__ == "__main__":
+    try:main()
+    except BaseException as exc:
+        logs.get('lifecycle').error('host_main_exit type=%s',type(exc).__name__)
+        raise

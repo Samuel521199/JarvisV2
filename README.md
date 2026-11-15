@@ -1,5 +1,7 @@
 # JARVIS
 
+2026-11-16日用v0.1.12/epoch18、控制器8：旧服务离线有系统关机/重启证据，已补升级前真实健康检查和退出记录；本机英文朗读、录音回听及确认转写后的口语内容评价可用，口语与文字统计分开。自动英文转写、发音评分及独立听力评估尚未完成。[结果与边界](docs/delivery-validation.md#english-voice-evidence-20261116)。
+
 2026-11-15已日用采用v0.1.11/epoch14、控制器协议7：个人跨会话文字学习记录、错题变式、记忆提示和保守进步统计可用。原数据保留、相容恢复版和独立盘还原核验通过；开发三类合成答题不计本人表现，日用首题等待作答。真实跨日保持与口语提升仍待验。[方法、实测与入口](docs/delivery-validation.md#english-learning-evidence-20261115)。
 
 2026-11-15真实使用验证：已启动Jarvis内置英语练习，面向生活、沟通与工作资料，等待真实作答；两份材料辅助交付通过，不代表自动修复闭环或学习提升。9次模型调用22,745 token。[结果与使用入口](docs/delivery-validation.md#daily-real-tasks-evidence-20261115)。
@@ -26,7 +28,7 @@
 <p align="center"><strong>与你交流 · 为你办事 · 与你一同成长</strong></p>
 <p align="center">A personal AI companion, built around your computer and your context.</p>
 <p align="center">
-  <img src="https://img.shields.io/badge/source-v0.1.11-38bdf8?style=for-the-badge" alt="Source v0.1.11">
+  <img src="https://img.shields.io/badge/source-v0.1.12-38bdf8?style=for-the-badge" alt="Source v0.1.12">
   <img src="https://img.shields.io/badge/Local_First-0f172a?style=for-the-badge" alt="Local first">
   <img src="https://img.shields.io/badge/Python-3.13-3776AB?style=for-the-badge" alt="Python 3.13">
   <img src="https://img.shields.io/badge/Stage-Early_Preview-8b5cf6?style=for-the-badge" alt="Early preview">
@@ -37,7 +39,7 @@
 
 一个以普通 PC 为主要载体、以个人为主、以其家庭或以其为中心的小团体为辅，能够长期相处、自主工作并持续成长的 AI 助手与伙伴。最终目标是在明确目标与有效授权内独立完成任务、验证结果并交付。
 
-**这里是工程与文档的主入口。** 最近日用验收记录 **v0.1.11 · 早期预览，已日用采用**（[当前状态](docs/current-state.md)）（首个 GitHub 发布为 v0.1.0），历史开发证据保持原编号，版本号规则见 [CHANGELOG](CHANGELOG.md#changelog-rules)。本机日用/开发、候选检查、备份升级和相容回退已有共用入口；低打扰持续安排接入Gmail只读检查、规则筛选、共用待办/提醒与有限跟进，和固定文字计划一起复用原队列、授权、结果反馈与恢复。模型库与原有个人/专业功能保留。[受控 MCP 接入](docs/tasks-agents.md#mcp-runtime)使用原任务体系。当前自主研发仍受限于纯文本能力，完整助手与 K0—K6 按分项证据判断。
+**这里是工程与文档的主入口。** 最近日用验收记录 **v0.1.12 · 早期预览，已日用采用**（[当前状态](docs/current-state.md)）（首个 GitHub 发布为 v0.1.0），历史开发证据保持原编号，版本号规则见 [CHANGELOG](CHANGELOG.md#changelog-rules)。本机日用/开发、候选检查、备份升级和相容回退已有共用入口；低打扰持续安排接入Gmail只读检查、规则筛选、共用待办/提醒与有限跟进，和固定文字计划一起复用原队列、授权、结果反馈与恢复。模型库与原有个人/专业功能保留。[受控 MCP 接入](docs/tasks-agents.md#mcp-runtime)使用原任务体系。当前自主研发仍受限于纯文本能力，完整助手与 K0—K6 按分项证据判断。
 
 **先读这一页：[当前真实状态](docs/current-state.md)**：能运行什么、哪些只是设计、证据边界与已知风险都在一页内。按版本的变更流水见 [CHANGELOG](CHANGELOG.md)。
 

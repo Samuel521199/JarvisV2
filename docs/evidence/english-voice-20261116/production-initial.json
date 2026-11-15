@@ -1,0 +1,132 @@
+{
+  "passed": false,
+  "before_state": {
+    "active": {
+      "build": "1d6d656e0b9c7d3c456d4b90e860259107478c6d16913df97dfc24fa5a819b1f",
+      "epoch": 14,
+      "slot": "B",
+      "version": "0.1.11"
+    },
+    "epoch": 14,
+    "error": null,
+    "pending": null,
+    "pending_epoch": null,
+    "phase": "active",
+    "previous": {
+      "build": "ed2d839791f7f02033c0b6c338f68929adde0441b676a4ce4ee57c45fa070da2",
+      "epoch": 13,
+      "slot": "A",
+      "version": "0.1.10-english-recovery.1"
+    },
+    "schema": 1
+  },
+  "before_controller": {
+    "build": "90a874306fd1d0679cbba24be0bd29fbc86656564f09fe609b44bf685fb74738",
+    "capsule_id": "e75cea3206084bb7b8b1ab03674536d9",
+    "controller": "E:\\Jarvis\\runtime\\user-data\\deployment\\controllers\\90a874306fd1d0679cbba24be0bd29fbc86656564f09fe609b44bf685fb74738",
+    "controller_inventory_sha256": "90a874306fd1d0679cbba24be0bd29fbc86656564f09fe609b44bf685fb74738",
+    "controller_protocol": 7,
+    "data_root": "E:\\Jarvis\\runtime\\user-data",
+    "generation": 6,
+    "launcher_backup": "E:\\Jarvis\\runtime\\user-data\\deployment\\controller-changes\\e75cea3206084bb7b8b1ab03674536d9",
+    "policy_anchor_build": "c019b64ea9de2dfdbec375811a7c81cc2f1bb93fff31a5aa5002f752805ed3ae",
+    "policy_sha256": "ed2a6f6b201c60ff0c1bc07e5c2ff4df462fc9c92d17bd8e848aa879e446a827",
+    "port": 18282,
+    "recovery_archive": "E:\\Jarvis\\runtime\\user-data\\deployment\\controller-changes\\e75cea3206084bb7b8b1ab03674536d9\\controller.zip",
+    "recovery_sha256": "0f990fdaf13639395a5a9a1b0b48299cc3c00c26061eb847fe904cac9049cb38",
+    "runtime_source_build": "1d6d656e0b9c7d3c456d4b90e860259107478c6d16913df97dfc24fa5a819b1f",
+    "schema": 2,
+    "signature": "0a3158024dcfc6a1c9a14d6a1000984ba00cf13ac719066576f06dc226343c59"
+  },
+  "before_instance": {
+    "application_build": "1d6d656e0b9c7d3c456d4b90e860259107478c6d16913df97dfc24fa5a819b1f",
+    "application_epoch": 14,
+    "boot_id": "a74eb670281292935e0cfae4",
+    "environment": "stable",
+    "family_version": "1.0.0",
+    "presence_protocol": 2,
+    "root_digest": "8cc158ee4a5679f150274a3c358bab6cb1fd3ed989534aa73464bcb45a9b2170",
+    "service": "jarvis-workbench"
+  },
+  "steps": [
+    {
+      "name": "live-baseline-confirmed",
+      "result": {
+        "application_build": "1d6d656e0b9c7d3c456d4b90e860259107478c6d16913df97dfc24fa5a819b1f",
+        "application_epoch": 14,
+        "boot_id": "a74eb670281292935e0cfae4",
+        "environment": "stable",
+        "family_version": "1.0.0",
+        "presence_protocol": 2,
+        "root_digest": "8cc158ee4a5679f150274a3c358bab6cb1fd3ed989534aa73464bcb45a9b2170",
+        "service": "jarvis-workbench"
+      }
+    },
+    {
+      "name": "candidate-independent-qualified",
+      "result": {
+        "prepared_build": "b83730095522966d9b9824d98842049a92403224d0b73ae1e74f2d09883d1212",
+        "expected_epoch": 14,
+        "validation": {
+          "schema": 1,
+          "passed": true,
+          "reviewed_source": true,
+          "architecture_passed": true,
+          "architecture_error_count": 0,
+          "architecture_sample": [],
+          "policy_sha256": "ed2a6f6b201c60ff0c1bc07e5c2ff4df462fc9c92d17bd8e848aa879e446a827",
+          "tests_passed": true,
+          "tests_summary": "207 0 0 1",
+          "runtime_intact": true,
+          "test_log": "0.1.12-f7ed127d837b443d93c637496096585d.log",
+          "test_log_sha256": "0618ee6354e19545e4f4c5219be44cec161cf7205cfa59525f518c4d681f31d5"
+        },
+        "daily_restarted": false
+      }
+    },
+    {
+      "name": "fallback-independent-qualified",
+      "result": {
+        "approval": {
+          "receipt": {
+            "build": "0aaa34d45cfefeb483915c9eb76939615951c235988583825fad4144a49f692a",
+            "data_schema": 7,
+            "report": {
+              "schema": 1,
+              "passed": true,
+              "reviewed_source": true,
+              "architecture_passed": true,
+              "architecture_error_count": 0,
+              "architecture_sample": [],
+              "policy_sha256": "ed2a6f6b201c60ff0c1bc07e5c2ff4df462fc9c92d17bd8e848aa879e446a827",
+              "tests_passed": true,
+              "tests_summary": "207 0 0 1",
+              "runtime_intact": true,
+              "test_log": "0.1.11-voice-recovery.1-2796f74652cd4a7ba700730729be77bc.log",
+              "test_log_sha256": "82f8fcfc55a8d84d9cca4b8975481ccaecd0a57a1847648d44fadbabb2165fb5"
+            },
+            "validated_at": 1794783473.802425
+          },
+          "mac": "316b9a61e8fe743cf150c78cc378f71e4cc955b6a4165dae6584be58e0764085"
+        },
+        "build": "0aaa34d45cfefeb483915c9eb76939615951c235988583825fad4144a49f692a",
+        "path": "E:\\Jarvis\\runtime\\user-data\\deployment\\packages\\0aaa34d45cfefeb483915c9eb76939615951c235988583825fad4144a49f692a",
+        "version": "0.1.11-voice-recovery.1",
+        "report": {
+          "schema": 1,
+          "passed": true,
+          "reviewed_source": true,
+          "architecture_passed": true,
+          "architecture_error_count": 0,
+          "architecture_sample": [],
+          "policy_sha256": "ed2a6f6b201c60ff0c1bc07e5c2ff4df462fc9c92d17bd8e848aa879e446a827",
+          "tests_passed": true,
+          "tests_summary": "207 0 0 1",
+          "runtime_intact": true,
+          "test_log": "0.1.11-voice-recovery.1-2796f74652cd4a7ba700730729be77bc.log",
+          "test_log_sha256": "82f8fcfc55a8d84d9cca4b8975481ccaecd0a57a1847648d44fadbabb2165fb5"
+        }
+      }
+    }
+  ]
+}

@@ -13,11 +13,14 @@ from sdk.protocol import CoreError
 from tools import workstation
 
 
+LIVE_CHECK=workstation.require_live_daily
+
 class WorkstationTests(unittest.TestCase):
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup);self.base=Path(self.temp.name).resolve()
         self.daily=self.base/'daily/user-data';self.dev=self.base/'development/user-data'
         for root in [self.daily,self.dev]:Core.initialize(root).close()
+        guard=patch.object(workstation,'require_live_daily');guard.start();self.addCleanup(guard.stop)
         self.grant={'client_id':'a'*32,'token':'synthetic-local-grant','allowed_providers':['vertex'],
             'daily_call_limit':64,'max_output_tokens':4096}
         for root in [self.daily,self.dev]:write_secret(root/'private/development-bridge.dpapi',self.grant)
@@ -168,5 +171,11 @@ class WorkstationTests(unittest.TestCase):
             with self.assertRaises(CoreError):workstation.apply(self.daily,self.dev)
         backup.assert_not_called();restart.assert_not_called()
 
+
+    def test_persisted_active_registration_after_shutdown_is_not_live(self):
+        with patch.object(workstation,'controller',return_value=(self.base,18282)),patch.object(workstation,'state',return_value={'phase':'active','epoch':7,'active':{'build':'a'*64}}),patch('adapters.application_host.WorkbenchProcess') as driver:
+            driver.return_value.running.return_value=False
+            with self.assertRaisesRegex(ValueError,'system restart'):LIVE_CHECK(self.daily)
+            driver.return_value.identity.assert_not_called()
 
 if __name__=='__main__':unittest.main()

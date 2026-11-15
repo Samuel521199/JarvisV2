@@ -1,0 +1,697 @@
+{
+  "passed": true,
+  "before_state": {
+    "active": {
+      "build": "1d6d656e0b9c7d3c456d4b90e860259107478c6d16913df97dfc24fa5a819b1f",
+      "epoch": 14,
+      "slot": "B",
+      "version": "0.1.11"
+    },
+    "epoch": 14,
+    "error": null,
+    "pending": null,
+    "pending_epoch": null,
+    "phase": "active",
+    "previous": {
+      "build": "ed2d839791f7f02033c0b6c338f68929adde0441b676a4ce4ee57c45fa070da2",
+      "epoch": 13,
+      "slot": "A",
+      "version": "0.1.10-english-recovery.1"
+    },
+    "schema": 1
+  },
+  "before_controller": {
+    "build": "90a874306fd1d0679cbba24be0bd29fbc86656564f09fe609b44bf685fb74738",
+    "capsule_id": "e75cea3206084bb7b8b1ab03674536d9",
+    "controller": "E:\\Jarvis\\runtime\\user-data\\deployment\\controllers\\90a874306fd1d0679cbba24be0bd29fbc86656564f09fe609b44bf685fb74738",
+    "controller_inventory_sha256": "90a874306fd1d0679cbba24be0bd29fbc86656564f09fe609b44bf685fb74738",
+    "controller_protocol": 7,
+    "data_root": "E:\\Jarvis\\runtime\\user-data",
+    "generation": 6,
+    "launcher_backup": "E:\\Jarvis\\runtime\\user-data\\deployment\\controller-changes\\e75cea3206084bb7b8b1ab03674536d9",
+    "policy_anchor_build": "c019b64ea9de2dfdbec375811a7c81cc2f1bb93fff31a5aa5002f752805ed3ae",
+    "policy_sha256": "ed2a6f6b201c60ff0c1bc07e5c2ff4df462fc9c92d17bd8e848aa879e446a827",
+    "port": 18282,
+    "recovery_archive": "E:\\Jarvis\\runtime\\user-data\\deployment\\controller-changes\\e75cea3206084bb7b8b1ab03674536d9\\controller.zip",
+    "recovery_sha256": "0f990fdaf13639395a5a9a1b0b48299cc3c00c26061eb847fe904cac9049cb38",
+    "runtime_source_build": "1d6d656e0b9c7d3c456d4b90e860259107478c6d16913df97dfc24fa5a819b1f",
+    "schema": 2,
+    "signature": "0a3158024dcfc6a1c9a14d6a1000984ba00cf13ac719066576f06dc226343c59"
+  },
+  "before_instance": {
+    "application_build": "1d6d656e0b9c7d3c456d4b90e860259107478c6d16913df97dfc24fa5a819b1f",
+    "application_epoch": 14,
+    "boot_id": "a74eb670281292935e0cfae4",
+    "environment": "stable",
+    "family_version": "1.0.0",
+    "presence_protocol": 2,
+    "root_digest": "8cc158ee4a5679f150274a3c358bab6cb1fd3ed989534aa73464bcb45a9b2170",
+    "service": "jarvis-workbench"
+  },
+  "steps": [
+    {
+      "name": "live-baseline-confirmed",
+      "result": {
+        "application_build": "1d6d656e0b9c7d3c456d4b90e860259107478c6d16913df97dfc24fa5a819b1f",
+        "application_epoch": 14,
+        "boot_id": "a74eb670281292935e0cfae4",
+        "environment": "stable",
+        "family_version": "1.0.0",
+        "presence_protocol": 2,
+        "root_digest": "8cc158ee4a5679f150274a3c358bab6cb1fd3ed989534aa73464bcb45a9b2170",
+        "service": "jarvis-workbench"
+      }
+    },
+    {
+      "name": "candidate-independent-qualified",
+      "result": {
+        "prepared_build": "b83730095522966d9b9824d98842049a92403224d0b73ae1e74f2d09883d1212",
+        "expected_epoch": 14,
+        "validation": {
+          "schema": 1,
+          "passed": true,
+          "reviewed_source": true,
+          "architecture_passed": true,
+          "architecture_error_count": 0,
+          "architecture_sample": [],
+          "policy_sha256": "ed2a6f6b201c60ff0c1bc07e5c2ff4df462fc9c92d17bd8e848aa879e446a827",
+          "tests_passed": true,
+          "tests_summary": "207 0 0 1",
+          "runtime_intact": true,
+          "test_log": "0.1.12-f7ed127d837b443d93c637496096585d.log",
+          "test_log_sha256": "0618ee6354e19545e4f4c5219be44cec161cf7205cfa59525f518c4d681f31d5"
+        },
+        "daily_restarted": false
+      }
+    },
+    {
+      "name": "fallback-independent-qualified",
+      "result": {
+        "approval": {
+          "receipt": {
+            "build": "0aaa34d45cfefeb483915c9eb76939615951c235988583825fad4144a49f692a",
+            "data_schema": 7,
+            "report": {
+              "schema": 1,
+              "passed": true,
+              "reviewed_source": true,
+              "architecture_passed": true,
+              "architecture_error_count": 0,
+              "architecture_sample": [],
+              "policy_sha256": "ed2a6f6b201c60ff0c1bc07e5c2ff4df462fc9c92d17bd8e848aa879e446a827",
+              "tests_passed": true,
+              "tests_summary": "207 0 0 1",
+              "runtime_intact": true,
+              "test_log": "0.1.11-voice-recovery.1-2796f74652cd4a7ba700730729be77bc.log",
+              "test_log_sha256": "82f8fcfc55a8d84d9cca4b8975481ccaecd0a57a1847648d44fadbabb2165fb5"
+            },
+            "validated_at": 1794783473.802425
+          },
+          "mac": "316b9a61e8fe743cf150c78cc378f71e4cc955b6a4165dae6584be58e0764085"
+        },
+        "build": "0aaa34d45cfefeb483915c9eb76939615951c235988583825fad4144a49f692a",
+        "path": "E:\\Jarvis\\runtime\\user-data\\deployment\\packages\\0aaa34d45cfefeb483915c9eb76939615951c235988583825fad4144a49f692a",
+        "version": "0.1.11-voice-recovery.1",
+        "report": {
+          "schema": 1,
+          "passed": true,
+          "reviewed_source": true,
+          "architecture_passed": true,
+          "architecture_error_count": 0,
+          "architecture_sample": [],
+          "policy_sha256": "ed2a6f6b201c60ff0c1bc07e5c2ff4df462fc9c92d17bd8e848aa879e446a827",
+          "tests_passed": true,
+          "tests_summary": "207 0 0 1",
+          "runtime_intact": true,
+          "test_log": "0.1.11-voice-recovery.1-2796f74652cd4a7ba700730729be77bc.log",
+          "test_log_sha256": "82f8fcfc55a8d84d9cca4b8975481ccaecd0a57a1847648d44fadbabb2165fb5"
+        }
+      }
+    },
+    {
+      "name": "controller8-same-boot-fixed-policy-data-preserved",
+      "result": {
+        "passed": true,
+        "original_files": 1953,
+        "original_rows": 3669,
+        "original_databases": 12,
+        "changed_files": [],
+        "changed_tables": [],
+        "completion_bodies_verified_against": "2026-11-15-english-r2 stopped snapshot companion increment",
+        "completion_body_count": 7,
+        "derived_timestamp_only_rows": 2,
+        "raw_initial_comparison": {
+          "passed": false,
+          "original_files": 1953,
+          "original_rows": 3669,
+          "original_databases": 12,
+          "changed_files": [],
+          "changed_tables": [
+            {
+              "database": "state/core.sqlite3",
+              "table": "task_completion",
+              "missing_or_changed_rows": 2
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "stopped",
+      "result": {
+        "active": {
+          "build": "1d6d656e0b9c7d3c456d4b90e860259107478c6d16913df97dfc24fa5a819b1f",
+          "epoch": 14,
+          "slot": "B",
+          "version": "0.1.11"
+        },
+        "epoch": 14,
+        "error": null,
+        "pending": null,
+        "pending_epoch": null,
+        "phase": "stopped",
+        "previous": {
+          "build": "ed2d839791f7f02033c0b6c338f68929adde0441b676a4ce4ee57c45fa070da2",
+          "epoch": 13,
+          "slot": "A",
+          "version": "0.1.10-english-recovery.1"
+        },
+        "schema": 1
+      }
+    },
+    {
+      "name": "full-independent-backup",
+      "result": {
+        "files": 16867,
+        "bytes": 357646124,
+        "sqlite_integrity_ok": 42,
+        "snapshot": "D:\\Jarvis-Recovery\\jarvis\\2026-11-16-voice-r1\\snapshot"
+      }
+    },
+    {
+      "name": "inert-restore-verified",
+      "result": {
+        "files": 16867,
+        "sqlite_integrity_ok": 42,
+        "destination": "E:\\Jarvis\\validation\\english-voice-restored-20261116",
+        "byte_exact": true,
+        "work_started": false,
+        "missing_projects": [],
+        "operational_restore_complete": false,
+        "remaining": "Paths, machine-bound optional tools, restored controller identity and execution permissions require separate reconciliation before starting this copy."
+      }
+    },
+    {
+      "name": "readonly-fallback-adopted",
+      "result": {
+        "active": {
+          "build": "0aaa34d45cfefeb483915c9eb76939615951c235988583825fad4144a49f692a",
+          "version": "0.1.11-voice-recovery.1",
+          "slot": "A",
+          "epoch": 15
+        },
+        "epoch": 15,
+        "error": null,
+        "pending": null,
+        "pending_epoch": null,
+        "phase": "active",
+        "previous": {
+          "build": "1d6d656e0b9c7d3c456d4b90e860259107478c6d16913df97dfc24fa5a819b1f",
+          "epoch": 14,
+          "slot": "B",
+          "version": "0.1.11"
+        },
+        "schema": 1
+      }
+    },
+    {
+      "name": "voice-runtime-adopted",
+      "result": {
+        "active": {
+          "build": "b83730095522966d9b9824d98842049a92403224d0b73ae1e74f2d09883d1212",
+          "version": "0.1.12",
+          "slot": "B",
+          "epoch": 16
+        },
+        "epoch": 16,
+        "error": null,
+        "pending": null,
+        "pending_epoch": null,
+        "phase": "active",
+        "previous": {
+          "build": "0aaa34d45cfefeb483915c9eb76939615951c235988583825fad4144a49f692a",
+          "epoch": 15,
+          "slot": "A",
+          "version": "0.1.11-voice-recovery.1"
+        },
+        "schema": 1
+      }
+    },
+    {
+      "name": "business-preservation",
+      "result": {
+        "passed": true,
+        "original_files": 1953,
+        "original_rows": 3669,
+        "original_databases": 12,
+        "changed_files": [],
+        "changed_tables": [],
+        "derived_timestamp_changes": [
+          {
+            "task_id": "task-c10e37a68b8149128ddb4c3a5239468a",
+            "field": "checked",
+            "before": 1794783566.4224133,
+            "after": 1794783644.3087654
+          },
+          {
+            "task_id": "task-d5fcfc0115ea45eca29d747ac430f5ff",
+            "field": "checked",
+            "before": 1794783566.424989,
+            "after": 1794783644.3139105
+          }
+        ]
+      }
+    },
+    {
+      "name": "original-entries-readable",
+      "result": {
+        "/api/instance": true,
+        "/api/health": true,
+        "/api/goals": true,
+        "/api/tools": true,
+        "/api/developments": true,
+        "/api/chats": true,
+        "/api/network": true,
+        "/api/task-runner": true,
+        "/api/development-runner": true
+      }
+    },
+    {
+      "name": "learning-source-preserved-no-synthetic-oral-results",
+      "result": {
+        "config": {
+          "domains": [
+            "life",
+            "communication",
+            "work"
+          ],
+          "enabled": true,
+          "revision": 1
+        },
+        "written_progress": {
+          "certified_level": null,
+          "domains": {
+            "communication": {
+              "assisted": 0,
+              "attempts": 0,
+              "delayed_success_rate": null,
+              "delayed_successes": 0,
+              "delayed_variants": 0,
+              "independent": 0,
+              "interpretation": "AI estimates on text tasks; not certified proficiency or causal learning gains"
+            },
+            "life": {
+              "assisted": 0,
+              "attempts": 0,
+              "delayed_success_rate": null,
+              "delayed_successes": 0,
+              "delayed_variants": 0,
+              "independent": 0,
+              "interpretation": "AI estimates on text tasks; not certified proficiency or causal learning gains"
+            },
+            "work": {
+              "assisted": 0,
+              "attempts": 0,
+              "delayed_success_rate": null,
+              "delayed_successes": 0,
+              "delayed_variants": 0,
+              "independent": 0,
+              "interpretation": "AI estimates on text tasks; not certified proficiency or causal learning gains"
+            }
+          },
+          "review": [
+            {
+              "count": 0,
+              "difficulty": 1,
+              "domain": "life",
+              "due": null,
+              "due_now": false,
+              "label": "礼貌地请求物品或帮助",
+              "reason": "new",
+              "stage": 0,
+              "target": "life.request"
+            },
+            {
+              "count": 0,
+              "difficulty": 1,
+              "domain": "communication",
+              "due": null,
+              "due_now": false,
+              "label": "没听清时请求重说并核对意思",
+              "reason": "new",
+              "stage": 0,
+              "target": "communication.clarify"
+            },
+            {
+              "count": 0,
+              "difficulty": 1,
+              "domain": "work",
+              "due": null,
+              "due_now": false,
+              "label": "读懂工作通知的行动、时间与限制",
+              "reason": "new",
+              "stage": 0,
+              "target": "work.notice"
+            },
+            {
+              "count": 0,
+              "difficulty": 1,
+              "domain": "life",
+              "due": null,
+              "due_now": false,
+              "label": "问路并确认地点",
+              "reason": "new",
+              "stage": 0,
+              "target": "life.directions"
+            },
+            {
+              "count": 0,
+              "difficulty": 1,
+              "domain": "communication",
+              "due": null,
+              "due_now": false,
+              "label": "商量时间并确认安排",
+              "reason": "new",
+              "stage": 0,
+              "target": "communication.arrange"
+            },
+            {
+              "count": 0,
+              "difficulty": 1,
+              "domain": "work",
+              "due": null,
+              "due_now": false,
+              "label": "写简短清晰的工作回复",
+              "reason": "new",
+              "stage": 0,
+              "target": "work.email"
+            },
+            {
+              "count": 0,
+              "difficulty": 1,
+              "domain": "life",
+              "due": null,
+              "due_now": false,
+              "label": "说明日常遇到的问题并请求处理",
+              "reason": "new",
+              "stage": 0,
+              "target": "life.problem"
+            },
+            {
+              "count": 0,
+              "difficulty": 1,
+              "domain": "communication",
+              "due": null,
+              "due_now": false,
+              "label": "表达意见并礼貌询问对方",
+              "reason": "new",
+              "stage": 0,
+              "target": "communication.opinion"
+            },
+            {
+              "count": 0,
+              "difficulty": 1,
+              "domain": "work",
+              "due": null,
+              "due_now": false,
+              "label": "用自己的话解释工作资料的关键意思",
+              "reason": "new",
+              "stage": 0,
+              "target": "work.explain"
+            }
+          ],
+          "trend_state": "insufficient_comparable_samples",
+          "trends": []
+        },
+        "oral_progress": {
+          "certified_level": null,
+          "domains": {
+            "communication": {
+              "assisted": 0,
+              "attempts": 0,
+              "delayed_success_rate": null,
+              "delayed_successes": 0,
+              "delayed_variants": 0,
+              "independent": 0,
+              "interpretation": "AI estimates on text tasks; not certified proficiency or causal learning gains"
+            },
+            "life": {
+              "assisted": 0,
+              "attempts": 0,
+              "delayed_success_rate": null,
+              "delayed_successes": 0,
+              "delayed_variants": 0,
+              "independent": 0,
+              "interpretation": "AI estimates on text tasks; not certified proficiency or causal learning gains"
+            },
+            "work": {
+              "assisted": 0,
+              "attempts": 0,
+              "delayed_success_rate": null,
+              "delayed_successes": 0,
+              "delayed_variants": 0,
+              "independent": 0,
+              "interpretation": "AI estimates on text tasks; not certified proficiency or causal learning gains"
+            }
+          },
+          "review": [
+            {
+              "count": 0,
+              "difficulty": 1,
+              "domain": "life",
+              "due": null,
+              "due_now": false,
+              "label": "礼貌地请求物品或帮助",
+              "reason": "new",
+              "stage": 0,
+              "target": "life.request"
+            },
+            {
+              "count": 0,
+              "difficulty": 1,
+              "domain": "communication",
+              "due": null,
+              "due_now": false,
+              "label": "没听清时请求重说并核对意思",
+              "reason": "new",
+              "stage": 0,
+              "target": "communication.clarify"
+            },
+            {
+              "count": 0,
+              "difficulty": 1,
+              "domain": "work",
+              "due": null,
+              "due_now": false,
+              "label": "读懂工作通知的行动、时间与限制",
+              "reason": "new",
+              "stage": 0,
+              "target": "work.notice"
+            },
+            {
+              "count": 0,
+              "difficulty": 1,
+              "domain": "life",
+              "due": null,
+              "due_now": false,
+              "label": "问路并确认地点",
+              "reason": "new",
+              "stage": 0,
+              "target": "life.directions"
+            },
+            {
+              "count": 0,
+              "difficulty": 1,
+              "domain": "communication",
+              "due": null,
+              "due_now": false,
+              "label": "商量时间并确认安排",
+              "reason": "new",
+              "stage": 0,
+              "target": "communication.arrange"
+            },
+            {
+              "count": 0,
+              "difficulty": 1,
+              "domain": "work",
+              "due": null,
+              "due_now": false,
+              "label": "写简短清晰的工作回复",
+              "reason": "new",
+              "stage": 0,
+              "target": "work.email"
+            },
+            {
+              "count": 0,
+              "difficulty": 1,
+              "domain": "life",
+              "due": null,
+              "due_now": false,
+              "label": "说明日常遇到的问题并请求处理",
+              "reason": "new",
+              "stage": 0,
+              "target": "life.problem"
+            },
+            {
+              "count": 0,
+              "difficulty": 1,
+              "domain": "communication",
+              "due": null,
+              "due_now": false,
+              "label": "表达意见并礼貌询问对方",
+              "reason": "new",
+              "stage": 0,
+              "target": "communication.opinion"
+            },
+            {
+              "count": 0,
+              "difficulty": 1,
+              "domain": "work",
+              "due": null,
+              "due_now": false,
+              "label": "用自己的话解释工作资料的关键意思",
+              "reason": "new",
+              "stage": 0,
+              "target": "work.explain"
+            }
+          ],
+          "trend_state": "insufficient_comparable_samples",
+          "trends": []
+        },
+        "exercises": 1
+      }
+    },
+    {
+      "name": "complete",
+      "result": {
+        "passed": true
+      }
+    },
+    {
+      "name": "final-source-revocation-guard-adopted",
+      "result": {
+        "passed": true,
+        "build": "ac2bf29e1d61c4a9ebf70adb58d16c55dfc6622c4ca672092c45a1e85224c4f5",
+        "validation": {
+          "architecture_error_count": 0,
+          "architecture_passed": true,
+          "architecture_sample": [],
+          "passed": true,
+          "policy_sha256": "ed2a6f6b201c60ff0c1bc07e5c2ff4df462fc9c92d17bd8e848aa879e446a827",
+          "reviewed_source": true,
+          "runtime_intact": true,
+          "schema": 1,
+          "test_log": "0.1.12-034002024ea54664979def264bfaa365.log",
+          "test_log_sha256": "fdc73230ecf561f6ae163685fc79ac917c1d9033deb58981914d686af3e7e936",
+          "tests_passed": true,
+          "tests_summary": "207 0 0 1"
+        },
+        "stopped_backup": {
+          "folder": "E:\\Jarvis\\backups\\english-voice-20261116\\source-guard-stopped-backup",
+          "files": 1993,
+          "sqlite_integrity_ok": 19
+        },
+        "preservation": {
+          "passed": true,
+          "original_files": 1953,
+          "original_rows": 3669,
+          "original_databases": 12,
+          "changed_files": [],
+          "changed_tables": []
+        },
+        "derived_timestamp_changes": [
+          {
+            "task_id": "task-c10e37a68b8149128ddb4c3a5239468a",
+            "before": 1794783777.8129687,
+            "after": 1794783789.3905504
+          },
+          {
+            "task_id": "task-d5fcfc0115ea45eca29d747ac430f5ff",
+            "before": 1794783777.8155181,
+            "after": 1794783789.3960233
+          }
+        ],
+        "after_state": {
+          "active": {
+            "build": "ac2bf29e1d61c4a9ebf70adb58d16c55dfc6622c4ca672092c45a1e85224c4f5",
+            "version": "0.1.12",
+            "slot": "B",
+            "epoch": 18
+          },
+          "epoch": 18,
+          "error": null,
+          "pending": null,
+          "pending_epoch": null,
+          "phase": "active",
+          "previous": {
+            "build": "0aaa34d45cfefeb483915c9eb76939615951c235988583825fad4144a49f692a",
+            "epoch": 17,
+            "slot": "A",
+            "version": "0.1.11-voice-recovery.1"
+          },
+          "schema": 1
+        }
+      }
+    }
+  ],
+  "after_state": {
+    "active": {
+      "build": "ac2bf29e1d61c4a9ebf70adb58d16c55dfc6622c4ca672092c45a1e85224c4f5",
+      "version": "0.1.12",
+      "slot": "B",
+      "epoch": 18
+    },
+    "epoch": 18,
+    "error": null,
+    "pending": null,
+    "pending_epoch": null,
+    "phase": "active",
+    "previous": {
+      "build": "0aaa34d45cfefeb483915c9eb76939615951c235988583825fad4144a49f692a",
+      "epoch": 17,
+      "slot": "A",
+      "version": "0.1.11-voice-recovery.1"
+    },
+    "schema": 1
+  },
+  "after_controller": {
+    "build": "5f8d3f519ed519d6f6a66edac876b963265ea5f6dc7dc1bcb66f845112e53998",
+    "capsule_id": "dc66683ed7b04f569ffa00c747dd382a",
+    "controller": "E:\\Jarvis\\runtime\\user-data\\deployment\\controllers\\5f8d3f519ed519d6f6a66edac876b963265ea5f6dc7dc1bcb66f845112e53998",
+    "controller_inventory_sha256": "5f8d3f519ed519d6f6a66edac876b963265ea5f6dc7dc1bcb66f845112e53998",
+    "controller_protocol": 8,
+    "data_root": "E:\\Jarvis\\runtime\\user-data",
+    "generation": 7,
+    "launcher_backup": "E:\\Jarvis\\runtime\\user-data\\deployment\\controller-changes\\dc66683ed7b04f569ffa00c747dd382a",
+    "policy_anchor_build": "c019b64ea9de2dfdbec375811a7c81cc2f1bb93fff31a5aa5002f752805ed3ae",
+    "policy_sha256": "ed2a6f6b201c60ff0c1bc07e5c2ff4df462fc9c92d17bd8e848aa879e446a827",
+    "port": 18282,
+    "recovery_archive": "E:\\Jarvis\\runtime\\user-data\\deployment\\controller-changes\\dc66683ed7b04f569ffa00c747dd382a\\controller.zip",
+    "recovery_sha256": "7722a10290d4183e58fa172ec696a26a57e35fc2f672713b59641d0ca6e4270e",
+    "runtime_source_build": "b83730095522966d9b9824d98842049a92403224d0b73ae1e74f2d09883d1212",
+    "schema": 2,
+    "signature": "df00232263995f039a873b680a2d147ff46df928e540215af2418452e22da93a"
+  },
+  "after_instance": {
+    "application_build": "ac2bf29e1d61c4a9ebf70adb58d16c55dfc6622c4ca672092c45a1e85224c4f5",
+    "application_epoch": 18,
+    "boot_id": "d7701ee0dfa9e9c15548c977",
+    "environment": "stable",
+    "family_version": "1.0.0",
+    "presence_protocol": 2,
+    "root_digest": "8cc158ee4a5679f150274a3c358bab6cb1fd3ed989534aa73464bcb45a9b2170",
+    "service": "jarvis-workbench"
+  },
+  "automatic_stt_implemented": false,
+  "pronunciation_assessment_implemented": false
+}

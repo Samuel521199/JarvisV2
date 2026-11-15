@@ -144,7 +144,19 @@ def backup(root,destination):
         return {'folder':str(destination),'files':len(files),'sqlite_integrity_ok':databases}
 
 
+def require_live_daily(root):
+    from adapters.application_host import WorkbenchProcess
+    _,port=controller(root);current=state(root)
+    if current['phase']!='active' or not current['active']:
+        raise ValueError('Daily is not active; start through its managed launcher before preparing an update')
+    driver=WorkbenchProcess(root,port)
+    if not driver.running(current['active'],current['epoch']):
+        raise ValueError('Daily registration survived a stopped host or system restart; start daily through its managed launcher before preparing an update')
+    return driver.identity(current['active'],current['epoch'])
+
+
 def prepare(root,development,source,*,controller_only=False):
+    require_live_daily(root)
     source=source.resolve();names=tracked_runtime(source)
     # Never silently ship only the tracked half of a newly added runtime feature.
     untracked=subprocess.check_output(['git','-C',str(source),'ls-files','--others','--exclude-standard','-z']).decode().split('\0')
@@ -184,6 +196,7 @@ def prepare(root,development,source,*,controller_only=False):
 
 
 def apply_controller(root,development,*,reviewed_source=False):
+    require_live_daily(root)
     record=json.loads((development/'state/workstation-controller-update.json').read_text(encoding='utf-8'))
     if record.get('kind')!='controller':raise ValueError('Expected a controller-only preparation')
     require_prepared(root,record)

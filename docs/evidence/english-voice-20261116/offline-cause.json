@@ -1,0 +1,20 @@
+{
+  "shutdown": {
+    "TimeCreated": "2026-11-15T15:21:52.4588071+08:00",
+    "Id": 1074,
+    "ProviderName": "User32",
+    "Message": "进程 C:\\Windows\\SystemApps\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\StartMenuExperienceHost.exe (DESKTOP-5H5I1G7) 由于以下原因已代表用户 DESKTOP-5H5I1G7\\samuel 启动计算机 DESKTOP-5H5I1G7 的 关闭电源: 其他(计划外)\r\n 原因代码: 0x0\r\n 关机类型: 关闭电源\r\n 注释: "
+  },
+  "next_os_boot": {
+    "TimeCreated": "2026-11-15T22:26:35.0510163+08:00",
+    "Id": 12,
+    "ProviderName": "Microsoft-Windows-Kernel-General",
+    "Message": "操作系统已在系统时间 ‎2026‎-‎11‎-‎15T14:26:34.500000000Z 启动。"
+  },
+  "old_application": "0.1.10 epoch12",
+  "last_recorded_http": "2026-11-15 14:28:44",
+  "no_later_host_start_until": "2026-11-15 23:24:38",
+  "finding": "Windows shutdown terminated old processes; persisted active registration outlived the process and OS boot. Update preparation checked registration but not listener identity. No evidence of an application crash needed to explain observed offline state; earlier unnoticed exits cannot be excluded without historic process receipts.",
+  "fixed": "Preparation and controller apply now require actual healthy matching root/build/epoch. Managed child supervisor retains exit status; host logs lifecycle and enables faulthandler. Existing managed launcher performs explicit recovery; no autorun or automatic replay added.",
+  "not_proven": "Exact individual old process exit code was not retained. Initial recovery validation health timeout is a separate unresolved event."
+}

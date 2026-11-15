@@ -44,7 +44,7 @@ class ApplicationCompatibility(unittest.TestCase):
             (source/'config/repair-return-compatibility.json').write_text(json.dumps({'schema':1,'repair_return_schema':1}))
             files.append('config/repair-return-compatibility.json')
         if english:
-            (source/'config/english-learning-compatibility.json').write_text('{"schema":1,"english_learning_schema":1}')
+            (source/'config/english-learning-compatibility.json').write_text('{"schema":1,"english_learning_schema":2}')
             files.append('config/english-learning-compatibility.json')
         archive=self.base/(name+'.zip');ident=build(source,files,archive,name)
         self.app.stage(archive);self.app.validate(ident,lambda _: {'passed':True,'scope':'synthetic protocol fixture'})

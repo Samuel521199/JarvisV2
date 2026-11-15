@@ -75,7 +75,9 @@ class WorkbenchProcess:
         logs = self.root / 'deployment/logs'
         logs.mkdir(exist_ok=True)
         with (logs / (str(epoch) + '.stdout.log')).open('ab') as out, (logs / (str(epoch) + '.stderr.log')).open('ab') as error:
-            process = subprocess.Popen([sys.executable, '-I', '-B', str(package / 'apps/workbench/server.py'),
+            entry=package / 'apps/workbench/supervisor.py'
+            if not entry.exists():entry=package / 'apps/workbench/server.py'
+            process = subprocess.Popen([sys.executable, '-I', '-B', str(entry),
                                         '--data-root', str(self.root), '--port', str(self.port),
                                         '--application-build', selected['build'], '--application-epoch', str(epoch)],
                                        cwd=package, stdin=subprocess.DEVNULL, stdout=out, stderr=error,

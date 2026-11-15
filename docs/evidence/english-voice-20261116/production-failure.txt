@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "E:\Jarvis\dev\docs\evidence\english-voice-20261116\deploy.py", line 65, in <module>
+    try:main()
+        ~~~~^^
+  File "E:\Jarvis\dev\docs\evidence\english-voice-20261116\deploy.py", line 28, in main
+    after=helpers.fingerprint(DAILY);helpers.write(PRIVATE/'after-controller.json',after);check=helpers.retained(before,after);assert check['passed'],check
+                                                                                                                                      ~~~~~^^^^^^^^^^
+AssertionError: {'passed': False, 'original_files': 1953, 'original_rows': 3669, 'original_databases': 12, 'changed_files': [], 'changed_tables': [{'database': 'state/core.sqlite3', 'table': 'task_completion', 'missing_or_changed_rows': 2}]}

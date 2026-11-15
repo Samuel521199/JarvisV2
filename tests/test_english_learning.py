@@ -165,9 +165,9 @@ class LearningFlow(unittest.TestCase):
         from control.application_compatibility import require_compatible
         package=self.root/'reader';(package/'config').mkdir(parents=True)
         declaration=package/'config/english-learning-compatibility.json'
-        declaration.write_text('{"schema":1,"english_learning_schema":1}')
+        declaration.write_text('{"schema":1,"english_learning_schema":2}')
         self.assertTrue(require_compatible(self.root,package)['compatible'])
-        declaration.write_text('{"schema":true,"english_learning_schema":1}')
+        declaration.write_text('{"schema":true,"english_learning_schema":2}')
         with self.assertRaises(CoreError):require_compatible(self.root,package)
         store=Store(self.root)
         store.db.execute('PRAGMA user_version=99');store.close()
@@ -201,5 +201,35 @@ class LearningFlow(unittest.TestCase):
         self.assertIn(source,result['prompt']);self.assertIn(source,reply)
         value['source_quote']='Friday at 8 p.m.'
         with self.assertRaises(CoreError):learning.parse(canonical(value),job)
+
+    def test_oral_recording_bound_to_answer_separate_from_written_progress(self):
+        import base64,io,wave
+        raw=io.BytesIO()
+        with wave.open(raw,'wb') as audio:
+            audio.setparams((1,2,16000,16000,'NONE','not compressed'));audio.writeframes(b'\x00\x00'*16000)
+        saved=self.call({'action':'record','audio':base64.b64encode(raw.getvalue()).decode()})['recording']
+        self.question()
+        self.call({'action':'oral_answer','request_id':'english-spoken-answer','chat_id':self.chat,'provider':'openai','model':'gpt-test','reasoning':'default','exercise_id':'english-question','answer':'Could I have a box, please?','assistance':'independent','audio_id':saved['id']})
+        self.run_reply('english-spoken-answer',self.rating())
+        state=self.call({'action':'status'})
+        self.assertEqual(state['progress']['domains']['life']['attempts'],0)
+        self.assertEqual(state['oral_progress']['domains']['life']['attempts'],1)
+        self.assertIsNone(state['exercises'][0]['assessment']['speech']['pronunciation_score'])
+        restored=self.call({'action':'recording','exercise_id':'english-question'})
+        self.assertEqual(base64.b64decode(restored['audio']),raw.getvalue())
+        self.assertNotIn(saved['sha256'],str(self.calls))
+        original=self.chats.turn('english-spoken-answer')['reply']
+        self.chats.db.execute('UPDATE turns SET reply=? WHERE id=?',('redacted','english-spoken-answer'))
+        with self.assertRaises(CoreError):self.call({'action':'recording','exercise_id':'english-question'})
+        with self.assertRaises(CoreError):self.call({'action':'speak','exercise_id':'english-question'})
+        self.chats.db.execute('UPDATE turns SET reply=? WHERE id=?',(original,'english-spoken-answer'))
+        self.call({'action':'withdraw','exercise_id':'english-question'})
+        with self.assertRaises(CoreError):self.call({'action':'recording','exercise_id':'english-question'})
+        self.assertEqual(self.call({'action':'status'})['oral_progress']['domains']['life']['attempts'],0)
+
+    def test_invalid_audio_and_recording_paths_rejected(self):
+        from host.english_audio import inspect,read
+        with self.assertRaises(CoreError):inspect(b'not wave')
+        with self.assertRaises(CoreError):read(self.root,'../../private/key')
 
 if __name__=='__main__':unittest.main()

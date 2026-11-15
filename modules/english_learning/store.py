@@ -5,7 +5,7 @@ import time
 from control.paths import child
 from sdk.protocol import CoreError, canonical
 
-SCHEMA=1
+SCHEMA=2
 DAY=86400
 INTERVALS=(1,3,7,14,30)
 TARGETS={
@@ -26,7 +26,7 @@ class Store:
         self.db=sqlite3.connect(child(root,'state/english-learning.sqlite3'),timeout=5,isolation_level=None)
         self.db.row_factory=sqlite3.Row
         version=self.db.execute('PRAGMA user_version').fetchone()[0]
-        if version not in (0,SCHEMA):
+        if version not in (0,1,SCHEMA):
             self.db.close();raise CoreError('english_schema','Unknown English learning data version')
         self.db.execute('PRAGMA synchronous=FULL')
         self.db.executescript('''
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS settings(id INTEGER PRIMARY KEY CHECK(id=1),body TEXT
 CREATE TABLE IF NOT EXISTS exercises(id TEXT PRIMARY KEY,chat_id TEXT NOT NULL,body TEXT NOT NULL,withdrawn INTEGER NOT NULL DEFAULT 0,hints INTEGER NOT NULL DEFAULT 0,exposed INTEGER NOT NULL DEFAULT 0);
 CREATE TABLE IF NOT EXISTS assessments(id TEXT PRIMARY KEY,exercise_id TEXT UNIQUE NOT NULL,body TEXT NOT NULL,disputed INTEGER NOT NULL DEFAULT 0);
 CREATE TABLE IF NOT EXISTS jobs(id TEXT PRIMARY KEY,chat_id TEXT NOT NULL,kind TEXT NOT NULL,body TEXT NOT NULL,state TEXT NOT NULL,candidate TEXT,reply_digest TEXT);
-PRAGMA user_version=1;
+PRAGMA user_version=2;
 ''')
         self.db.execute('INSERT OR IGNORE INTO settings VALUES(1,?)',(canonical({'enabled':False,'revision':0,'domains':['life','communication','work']}),))
 
@@ -74,7 +74,7 @@ PRAGMA user_version=1;
             body=current['body'];value=current['candidate']
             if self.config()['revision']!=body['revision'] or not self.config()['enabled']:raise CoreError('english_stale','Learning permission changed')
             if current['kind']=='question':
-                content={**value,'target':body['target'],'difficulty':body['difficulty'],'created':now,'question_turn':job['id'],'material_origin':body['material_origin']}
+                content={**value,'target':body['target'],'difficulty':body['difficulty'],'created':now,'question_turn':job['id'],'material_origin':body['material_origin'],'practice_mode':body.get('practice_mode','text')}
                 self.db.execute('INSERT INTO exercises(id,chat_id,body) VALUES(?,?,?)',(job['id'],job['chat_id'],canonical(content)))
             else:
                 exercise=self.exercise(body['exercise_id'])
@@ -82,6 +82,7 @@ PRAGMA user_version=1;
                 content={**value,'answer':body['answer'],'assistance':body['assistance'],'hints':body['hints'],'exposed':body['exposed'],
                     'created':now,'answer_turn':job['id'],'chat_id':job['chat_id'],'target':exercise['body']['target'],'difficulty':exercise['body']['difficulty'],
                     'prompt':exercise['body']['prompt'],'judge':'model_provisional','model_receipt':model_receipt,'schema':1}
+                if body.get('speech'):content['speech']=body['speech']
                 self.db.execute('INSERT INTO assessments(id,exercise_id,body) VALUES(?,?,?)',(job['id'],body['exercise_id'],canonical(content)))
             self.db.execute("UPDATE jobs SET state='RECORDED' WHERE id=?",(job['id'],));self.db.execute('COMMIT')
         except BaseException:self.db.execute('ROLLBACK');raise
