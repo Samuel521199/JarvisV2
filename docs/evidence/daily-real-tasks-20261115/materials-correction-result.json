@@ -1,0 +1,94 @@
+{
+  "status": "SUCCEEDED",
+  "error": null,
+  "usage": {
+    "completion_tokens": 330,
+    "prompt_tokens": 1481,
+    "reasoning_in_completion": false,
+    "reasoning_tokens": 1088,
+    "total_tokens": 2899
+  },
+  "reply": "{\"document\":\"## 事实\\n- [F1] WHO资料指出：任何量的身体活动好过完全不活动，应减少久坐。这里的“量”不能改写为“任何强度都适合个人”。来源：https://www.who.int/news-room/fact-sheets/detail/physical-activity/ ，核对日期2026-11-15。\\n- [F2] British Council提供A1至B2的日常及工作沟通口语资源。资源分级不代表已经测定用户英语等级。来源：https://learnenglish.britishcouncil.org/free-resources/speaking ，核对日期2026-11-15。\\n- [F3] 用户已明确：工作20年，英语重点是生活交流、日常沟通和工作资料；个人健康也是关注方向。实际英语水平、录音表现及个人健康情况未提供。\\n\\n## 已确认计划\\n- [P1] 后续根据用户真实作答调整英语练习；不把文字材料交付当作口语提升，不依据上述人群资料作个人诊断。\\n\\n## 建议（未采纳）\\n- 无\",\"evidence\":{\"facts\":[{\"quote\":\"WHO资料指出：任何量的身体活动好过完全不活动，应减少久坐。这里的“量”不能改写为“任何强度都适合个人”。来源：https://www.who.int/news-room/fact-sheets/detail/physical-activity/ ，核对日期2026-11-15。\",\"source\":\"F1\"},{\"quote\":\"British Council提供A1至B2的日常及工作沟通口语资源。资源分级不代表已经测定用户英语等级。来源：https://learnenglish.britishcouncil.org/free-resources/speaking ，核对日期2026-11-15。\",\"source\":\"F2\"},{\"quote\":\"用户已明确：工作20年，英语重点是生活交流、日常沟通和工作资料；个人健康也是关注方向。实际英语水平、录音表现及个人健康情况未提供。\",\"source\":\"F3\"}],\"plans\":[{\"quote\":\"后续根据用户真实作答调整英语练习；不把文字材料交付当作口语提升，不依据上述人群资料作个人诊断。\",\"source\":\"P1\"}],\"suggestions\":[]}}",
+  "delivery_review": {
+    "basis_digest": "ee75361cc7459d22c8285a7b85c3fbb6138a08a844f784e7c65864be67355770",
+    "basis_revision": 1,
+    "checks": [
+      {
+        "id": "body_shape",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_facts_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_coverage",
+        "status": "passed"
+      },
+      {
+        "id": "body_plans_grounding",
+        "status": "passed"
+      },
+      {
+        "id": "body_document_parity",
+        "status": "passed"
+      }
+    ],
+    "method": "source_excerpt",
+    "mode": "shadow",
+    "quality_score": null,
+    "reason": "bounded_document_check_only",
+    "rendering": {
+      "basis_digest": "ee75361cc7459d22c8285a7b85c3fbb6138a08a844f784e7c65864be67355770",
+      "basis_revision": 1,
+      "document_digest": "5d9b9dead5f57ed25616ad18c703163f1067a6483f8a78086b77d4a875697de5",
+      "mode": "explicit_render",
+      "model_calls": 0,
+      "original_checks": [
+        {
+          "id": "body_shape",
+          "status": "passed"
+        },
+        {
+          "id": "body_facts_coverage",
+          "status": "passed"
+        },
+        {
+          "id": "body_facts_grounding",
+          "status": "passed"
+        },
+        {
+          "id": "body_plans_coverage",
+          "status": "passed"
+        },
+        {
+          "id": "body_plans_grounding",
+          "status": "passed"
+        },
+        {
+          "id": "body_document_parity",
+          "status": "failed"
+        }
+      ],
+      "original_reply_digest": "7734021f27b713275e2440ac925cb0f417c33602c3c29b505551c2c649928158",
+      "quality_score": null,
+      "reason": "current_source_structure_only",
+      "reply_digest": "6efe5301d3926e4344c0988adc3d599ac90c7d17c456139942b27c0321d54694",
+      "state": "RENDERED",
+      "version": "body-document-1"
+    },
+    "reply_digest": "6efe5301d3926e4344c0988adc3d599ac90c7d17c456139942b27c0321d54694",
+    "stale": false,
+    "state": "EXCERPT_MATCH",
+    "version": "delivery-shadow-1",
+    "would_block": false
+  },
+  "request_id": "daily-real-materials-correction-20261115-r1",
+  "chat_id": "chat-73a488939ea0450290c39dcfd2d71345",
+  "source_gate_passed": true,
+  "business_repair_return_claimed": false
+}

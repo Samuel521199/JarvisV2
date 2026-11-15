@@ -1,0 +1,168 @@
+{
+  "actions": [],
+  "approved_package": null,
+  "calls": [
+    {
+      "error": null,
+      "model": "gemini-3.8-flash",
+      "phase": "plan",
+      "status": "SUCCEEDED",
+      "usage": "{\"completion_tokens\":137,\"prompt_tokens\":370,\"reasoning_in_completion\":false,\"reasoning_tokens\":427,\"total_tokens\":934}"
+    },
+    {
+      "error": null,
+      "model": "gemini-3.8-flash",
+      "phase": "code-0",
+      "status": "SUCCEEDED",
+      "usage": "{\"completion_tokens\":158,\"prompt_tokens\":769,\"reasoning_in_completion\":false,\"reasoning_tokens\":727,\"total_tokens\":1654}"
+    }
+  ],
+  "grant": {
+    "body": {
+      "capabilities": [
+        "model.generate.v1",
+        "development.build.v1",
+        "release.activate.v1",
+        "artifact.write.v1",
+        "plugin.reviewed-materials.v1"
+      ],
+      "expires_at": 1794726547.1513288,
+      "grant_id": "workbench-c1316f05caea27a1e662b61b7608af3d",
+      "max_cost_units": 10,
+      "principal_id": "owner.local",
+      "schema": "jarvis.grant.v1",
+      "scope_id": "personal"
+    },
+    "revoked": 0,
+    "spent": 3
+  },
+  "package": {
+    "bundle": {
+      "acceptance_digest": "b1fc98816e94dbd60e00d8e960ed51acdfe1d4e25e7ec1c827772475ad65f070",
+      "capability": "plugin.reviewed-materials.v1",
+      "files": {
+        "main.py": "import json\n\n\ndef run(text: str) -> str:\n    payload = json.loads(text)\n    if not isinstance(payload, dict):\n        raise ValueError(\"Expected a JSON object\")\n    if \"markdown\" not in payload:\n        raise ValueError(\"Missing 'markdown' field\")\n    content = payload[\"markdown\"]\n    if not isinstance(content, str):\n        raise ValueError(\"'markdown' field must be a string\")\n    return content\n"
+      },
+      "recipe": "python313-pure-text.v1",
+      "schema": "jarvis.pure-package.v1",
+      "state_schema": 0
+    },
+    "capability": "plugin.reviewed-materials.v1",
+    "created": 1794725665.0262742,
+    "id": "pkg-dc8de768702138728c962cbf735b64cec1cbd132b9af81d78652253de6578917",
+    "report": "{\"acceptance_digest\":\"b1fc98816e94dbd60e00d8e960ed51acdfe1d4e25e7ec1c827772475ad65f070\",\"case_count\":4,\"independent_cases\":2,\"package_id\":\"pkg-dc8de768702138728c962cbf735b64cec1cbd132b9af81d78652253de6578917\",\"passed\":true,\"public_cases\":2,\"worker\":{\"active_process_limit\":1,\"appcontainer_verified\":true,\"backend\":\"windows-lpac-job\",\"capabilities\":[\"registryRead\"],\"cpu_limit_seconds\":3,\"elapsed_seconds\":0.2847,\"memory_limit_bytes\":268435456,\"network_capabilities\":[],\"peak_memory_bytes\":12992512,\"wall_limit_seconds\":8}}",
+    "spec": {
+      "capability": "plugin.reviewed-materials.v1",
+      "description": "Pure run(text)->str. Input is a JSON object with one string field markdown. Return that string exactly, preserving whitespace, Unicode and links, including empty string. No file or network access. This tool delivers already reviewed material; it does not author, fact-check, teach or score proficiency. No hardcoded examples.",
+      "evaluation_cases": [
+        {
+          "expected": "中英对照：hello\n- 保留来源 https://example.invalid/a",
+          "input": "{\"markdown\": \"中英对照：hello\\n- 保留来源 https://example.invalid/a\"}"
+        },
+        {
+          "expected": "  leading\n\ntrailing  ",
+          "input": "{\"markdown\": \"  leading\\n\\ntrailing  \"}"
+        }
+      ],
+      "goal": "交付已审阅的当前文本，保持内容逐字不变；不创作事实、不评判学习能力。",
+      "grant_id": "workbench-c1316f05caea27a1e662b61b7608af3d",
+      "limits": {
+        "max_attempts": 2,
+        "max_model_calls": 4,
+        "max_seconds": 900
+      },
+      "principal_id": "owner.local",
+      "public_cases": [
+        {
+          "expected": "# Reviewed\n\nKeep this sentence.",
+          "input": "{\"markdown\": \"# Reviewed\\n\\nKeep this sentence.\"}"
+        },
+        {
+          "expected": "",
+          "input": "{\"markdown\": \"\"}"
+        }
+      ],
+      "request_id": "daily-reviewed-delivery-20261115-r1",
+      "sample_input": "{\"markdown\": \"# Reviewed\\n\\nKeep this sentence.\"}",
+      "schema": "jarvis.development.v1",
+      "scope_id": "personal"
+    },
+    "status": "VERIFIED"
+  },
+  "parent_goal": null,
+  "routes": {
+    "code": [
+      {
+        "id": "vertex",
+        "model": "gemini-3.8-flash",
+        "parameters": {
+          "max_output_tokens": 8192,
+          "thinking_level": "MEDIUM"
+        }
+      }
+    ],
+    "plan": [
+      {
+        "id": "vertex",
+        "model": "gemini-3.8-flash",
+        "parameters": {
+          "max_output_tokens": 8192,
+          "thinking_level": "MEDIUM"
+        }
+      }
+    ]
+  },
+  "run": {
+    "attempt": 0,
+    "cancel": 0,
+    "candidate": "{\"files\":[{\"content\":\"import json\\n\\n\\ndef run(text: str) -> str:\\n    payload = json.loads(text)\\n    if not isinstance(payload, dict):\\n        raise ValueError(\\\"Expected a JSON object\\\")\\n    if \\\"markdown\\\" not in payload:\\n        raise ValueError(\\\"Missing 'markdown' field\\\")\\n    content = payload[\\\"markdown\\\"]\\n    if not isinstance(content, str):\\n        raise ValueError(\\\"'markdown' field must be a string\\\")\\n    return content\\n\",\"path\":\"main.py\"}],\"schema\":\"jarvis.code-candidate.v1\",\"summary\":\"Implement run(text) to parse the JSON input and return the raw markdown string unchanged.\"}",
+    "created": 1794725647.1528885,
+    "deadline": 1794726547.1528885,
+    "digest": "b1fc98816e94dbd60e00d8e960ed51acdfe1d4e25e7ec1c827772475ad65f070",
+    "error": "review_required",
+    "id": "dev-196ed83370544527876e0069aa0603f8",
+    "phase": "verified",
+    "plan": "{\"capability\":\"plugin.reviewed-materials.v1\",\"schema\":\"jarvis.development-plan.v1\",\"steps\":[\"Parse the input string as a standard JSON object to extract the 'markdown' field.\",\"Validate that the parsed object conforms strictly to the schema containing the 'markdown' string.\",\"Return the exact 'markdown' string value directly without modification, preserving all whitespace, links, and Unicode characters.\",\"Verify that the function executes entirely in memory without file system access, network calls, or external dependencies.\"],\"summary\":\"Implement a pure, stateless transformation tool that parses incoming JSON to extract and return the raw 'markdown' string verbatim without modification or side effects.\"}",
+    "release_id": "pkg-dc8de768702138728c962cbf735b64cec1cbd132b9af81d78652253de6578917",
+    "request_id": "daily-reviewed-delivery-20261115-r1",
+    "spec": {
+      "capability": "plugin.reviewed-materials.v1",
+      "description": "Pure run(text)->str. Input is a JSON object with one string field markdown. Return that string exactly, preserving whitespace, Unicode and links, including empty string. No file or network access. This tool delivers already reviewed material; it does not author, fact-check, teach or score proficiency. No hardcoded examples.",
+      "evaluation_cases": [
+        {
+          "expected": "中英对照：hello\n- 保留来源 https://example.invalid/a",
+          "input": "{\"markdown\": \"中英对照：hello\\n- 保留来源 https://example.invalid/a\"}"
+        },
+        {
+          "expected": "  leading\n\ntrailing  ",
+          "input": "{\"markdown\": \"  leading\\n\\ntrailing  \"}"
+        }
+      ],
+      "goal": "交付已审阅的当前文本，保持内容逐字不变；不创作事实、不评判学习能力。",
+      "grant_id": "workbench-c1316f05caea27a1e662b61b7608af3d",
+      "limits": {
+        "max_attempts": 2,
+        "max_model_calls": 4,
+        "max_seconds": 900
+      },
+      "principal_id": "owner.local",
+      "public_cases": [
+        {
+          "expected": "# Reviewed\n\nKeep this sentence.",
+          "input": "{\"markdown\": \"# Reviewed\\n\\nKeep this sentence.\"}"
+        },
+        {
+          "expected": "",
+          "input": "{\"markdown\": \"\"}"
+        }
+      ],
+      "request_id": "daily-reviewed-delivery-20261115-r1",
+      "sample_input": "{\"markdown\": \"# Reviewed\\n\\nKeep this sentence.\"}",
+      "schema": "jarvis.development.v1",
+      "scope_id": "personal"
+    },
+    "status": "WAITING",
+    "task_id": null
+  },
+  "task": null
+}

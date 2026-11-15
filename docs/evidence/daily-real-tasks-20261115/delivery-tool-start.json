@@ -1,0 +1,45 @@
+{
+  "development_id": "dev-196ed83370544527876e0069aa0603f8",
+  "spec": {
+    "schema": "jarvis.development.v1",
+    "request_id": "daily-reviewed-delivery-20261115-r1",
+    "principal_id": "owner.local",
+    "scope_id": "personal",
+    "goal": "交付已审阅的当前文本，保持内容逐字不变；不创作事实、不评判学习能力。",
+    "capability": "plugin.reviewed-materials.v1",
+    "description": "Pure run(text)->str. Input is a JSON object with one string field markdown. Return that string exactly, preserving whitespace, Unicode and links, including empty string. No file or network access. This tool delivers already reviewed material; it does not author, fact-check, teach or score proficiency. No hardcoded examples.",
+    "public_cases": [
+      {
+        "input": "{\"markdown\": \"# Reviewed\\n\\nKeep this sentence.\"}",
+        "expected": "# Reviewed\n\nKeep this sentence."
+      },
+      {
+        "input": "{\"markdown\": \"\"}",
+        "expected": ""
+      }
+    ],
+    "evaluation_cases": [
+      {
+        "input": "{\"markdown\": \"中英对照：hello\\n- 保留来源 https://example.invalid/a\"}",
+        "expected": "中英对照：hello\n- 保留来源 https://example.invalid/a"
+      },
+      {
+        "input": "{\"markdown\": \"  leading\\n\\ntrailing  \"}",
+        "expected": "  leading\n\ntrailing  "
+      }
+    ],
+    "sample_input": "{\"markdown\": \"# Reviewed\\n\\nKeep this sentence.\"}",
+    "limits": {
+      "max_attempts": 2,
+      "max_model_calls": 4,
+      "max_seconds": 900
+    }
+  },
+  "route": {
+    "provider": "vertex",
+    "model": "gemini-3.8-flash",
+    "reasoning": "default"
+  },
+  "operator_specification_setup": 1,
+  "shared_setup_cost_not_per_task": true
+}

@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "goal_ids": [
+    "goal-521c6672f95b43d393c05cb47e246b08"
+  ],
+  "turn_ids": [
+    "daily-real-english-20261115-r1"
+  ],
+  "setup_run_ids": [],
+  "interventions": {
+    "user_requirements_replies": 2,
+    "user_runtime_corrections": 0,
+    "operator_runtime_decisions": [
+      {
+        "kind": "identify_semantic_errors_and_request_correction",
+        "evidence": "materials-semantic-review.json"
+      },
+      {
+        "kind": "design_bounded_delivery_capability",
+        "evidence": "delivery-tool-start.json"
+      },
+      {
+        "kind": "review_candidate_and_approve_exact_package",
+        "evidence": "english-rejoin-start.json"
+      },
+      {
+        "kind": "review_material_and_amend_original_goal",
+        "evidence": "english-rejoin-start.json"
+      },
+      {
+        "kind": "fix_rejected_admission_payload",
+        "evidence": "operator-admission-failure.json"
+      },
+      {
+        "kind": "link_corrected_source_material_to_delivery",
+        "evidence": "materials-goal-start.json"
+      }
+    ],
+    "operator_setup_not_free": [
+      "source lookup and selection",
+      "rubric/prompt design",
+      "test harness and accounting development"
+    ],
+    "operator_time_minutes": null,
+    "why_time_unknown": "No per-activity human stopwatch was recorded; wall time is not labor time."
+  }
+}

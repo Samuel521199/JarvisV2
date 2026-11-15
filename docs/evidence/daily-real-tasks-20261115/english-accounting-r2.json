@@ -1,0 +1,170 @@
+{
+  "schema": 1,
+  "observed_at": 1794726666.6530893,
+  "goal_ids": [
+    "goal-521c6672f95b43d393c05cb47e246b08"
+  ],
+  "turn_ids": [
+    "daily-real-english-20261115-r1",
+    "daily-real-english-coach-20261115-r1"
+  ],
+  "scores": [
+    {
+      "id": "goal-521c6672f95b43d393c05cb47e246b08",
+      "status": "ACCEPTED",
+      "task_id": "task-c10e37a68b8149128ddb4c3a5239468a",
+      "error": null,
+      "condition_score": 100.0,
+      "completion_state": "VERIFIED",
+      "checked": 1794726662.4094148,
+      "scope": "stored completion snapshot; not a fresh source revalidation or a proficiency/health score"
+    }
+  ],
+  "work_calls": [
+    {
+      "id": "call-55d8962d75244398824bf77be5374375",
+      "run_id": "goal-521c6672f95b43d393c05cb47e246b08",
+      "phase": "goal-plan",
+      "status": "SUCCEEDED",
+      "error": null,
+      "usage": {
+        "completion_tokens": 244,
+        "prompt_tokens": 1564,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 551,
+        "total_tokens": 2359
+      },
+      "ledger": "core.model_calls"
+    },
+    {
+      "id": "call-98e4ec8a8fcd464684b434cea71b23d1",
+      "run_id": "goal-521c6672f95b43d393c05cb47e246b08-g1",
+      "phase": "goal-plan",
+      "status": "SUCCEEDED",
+      "error": null,
+      "usage": {
+        "completion_tokens": 1472,
+        "prompt_tokens": 2980,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 602,
+        "total_tokens": 5054
+      },
+      "ledger": "core.model_calls"
+    },
+    {
+      "id": 663,
+      "turn_id": "daily-real-english-20261115-r1",
+      "status": "SUCCEEDED",
+      "error": null,
+      "usage": {
+        "completion_tokens": 1201,
+        "prompt_tokens": 249,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 953,
+        "total_tokens": 2403
+      },
+      "ledger": "dialogue.attempts"
+    },
+    {
+      "id": 666,
+      "turn_id": "daily-real-english-coach-20261115-r1",
+      "status": "SUCCEEDED",
+      "error": null,
+      "usage": {
+        "completion_tokens": 264,
+        "prompt_tokens": 1994,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 909,
+        "total_tokens": 3167
+      },
+      "ledger": "dialogue.attempts"
+    }
+  ],
+  "work_tokens": {
+    "calls": 4,
+    "reported_tokens": {
+      "prompt_tokens": 6787,
+      "completion_tokens": 3181,
+      "reasoning_tokens": 3015,
+      "total_tokens": 12983
+    },
+    "missing_receipts_by_metric": {
+      "prompt_tokens": [],
+      "completion_tokens": [],
+      "reasoning_tokens": [],
+      "total_tokens": []
+    },
+    "total_tokens_complete": true,
+    "total_tokens": 12983,
+    "reasoning_added_to_total": false,
+    "zero_calls": false
+  },
+  "shared_setup_calls": [],
+  "shared_setup_tokens": {
+    "calls": 0,
+    "reported_tokens": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "reasoning_tokens": 0,
+      "total_tokens": 0
+    },
+    "missing_receipts_by_metric": {
+      "prompt_tokens": [],
+      "completion_tokens": [],
+      "reasoning_tokens": [],
+      "total_tokens": []
+    },
+    "total_tokens_complete": true,
+    "total_tokens": 0,
+    "reasoning_added_to_total": false,
+    "zero_calls": true
+  },
+  "interventions": {
+    "user_requirements_replies": 2,
+    "user_runtime_corrections": 0,
+    "operator_runtime_decisions": [
+      {
+        "kind": "identify_semantic_errors_and_request_correction",
+        "evidence": "materials-semantic-review.json"
+      },
+      {
+        "kind": "design_bounded_delivery_capability",
+        "evidence": "delivery-tool-start.json"
+      },
+      {
+        "kind": "review_candidate_and_approve_exact_package",
+        "evidence": "english-rejoin-start.json"
+      },
+      {
+        "kind": "review_material_and_amend_original_goal",
+        "evidence": "english-rejoin-start.json"
+      },
+      {
+        "kind": "fix_rejected_admission_payload",
+        "evidence": "operator-admission-failure.json"
+      },
+      {
+        "kind": "link_corrected_source_material_to_delivery",
+        "evidence": "materials-goal-start.json"
+      },
+      {
+        "kind": "start_existing_english_coach_and_label_chat",
+        "evidence": "english-coach-start.json"
+      }
+    ],
+    "operator_setup_not_free": [
+      "source lookup and selection",
+      "rubric/prompt design",
+      "test harness and accounting development"
+    ],
+    "operator_time_minutes": null,
+    "why_time_unknown": "No per-activity human stopwatch was recorded; wall time is not labor time.",
+    "additional_user_scope_clarification": "Jarvis-native English learning, not buying a service"
+  },
+  "interventions_source": "explicit operator record; not inferred from API request count",
+  "monetary_cost": null,
+  "monetary_cost_reason": "token receipts are not invoices",
+  "codex_and_web_tokens_included": false,
+  "proxy_mirrors_counted": false,
+  "writes_or_dispatches": false
+}
