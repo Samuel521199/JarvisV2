@@ -82,6 +82,18 @@ class Core:
                                        self._development_task, lambda: RunLock(self.root), self._publication_check, self._development_parent_check)
 
     def _development_parent_check(self, ident):
+        from modules.task_resource.repair_returns import guard as guard_repair
+        source=guard_repair(self.db,ident)
+        if source:
+            self._goal_memory_check(source)
+            from modules.task_resource.repair_returns import get as repair_record
+            from host.work_revisions import source as work_source
+            from control.policy.grants import GrantStore
+            mandate=repair_record(self.db,ident)
+            if work_source(self,mandate['source_goal'],1)[2]!=mandate['source_digest']:
+                raise CoreError('repair_source_changed','Original repair evidence changed')
+            task=self.tasks.get(source)
+            GrantStore.authorize(self.db.connection,task['body'],task['body']['steps'][0]['capability'])
         parent=self.db.one('SELECT p.id,p.cancel,g.status FROM goal_growth g JOIN goal_plans p ON p.id=g.goal_id WHERE g.development_id=?',(ident,))
         if parent and (parent['cancel'] or parent['status']=='CANCELLED'):
             raise CoreError('cancelled','Parent goal was cancelled')
@@ -92,6 +104,10 @@ class Core:
             check(self,parent['id'],destinations)
 
     def _publication_check(self, ident, package):
+        from modules.task_resource.repair_returns import get as repair_record
+        mandate=repair_record(self.db,ident)
+        if mandate and mandate.get('package_id')!=package:
+            raise CoreError('review_required','Automatic repair requires original-input shadow verification')
         row = self.db.one('SELECT approved_package FROM development_controls WHERE run_id=?', (ident,))
         grant = self.development.get(ident)['spec']['grant_id']
         if (row and row['approved_package'] != package) or (not row and grant.startswith('workbench-')):
@@ -293,6 +309,8 @@ class Core:
             self._execution_permit.check(self.root, task_id)
         row=self.db.one('SELECT id FROM goal_plans WHERE task_id=?',(task_id,))
         if row:
+            from modules.task_resource.repair_returns import guard_task as guard_return
+            guard_return(self.db,row['id'])
             from host.goal_context import check
             check(self,row['id'])
             from host.work_revisions import check as check_work

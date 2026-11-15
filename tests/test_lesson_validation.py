@@ -38,17 +38,20 @@ class LessonValidationTests(unittest.TestCase):
     edit_source=fixture.TaskLessonTests.edit_source
     rules=fixture.TaskLessonTests.rules
 
-    def candidate(self,domain='practice',overfit=False,stages=1):
+    def candidate(self,domain='practice',overfit=False,stages=1,wrong_original=False):
         goal,data,logic=TOOLS[domain];text=canonical(data)
         source="import json\ndef run(text):\n    v=json.loads(text)\n    "+logic+"\n    return json.dumps(result,ensure_ascii=False,sort_keys=True,separators=(',',':'))\n"
         # Test fixture computes the original output; validation uses separate
         # host oracles on newly generated inputs, never this fixture function.
         ns={};exec(source,ns);expected=ns['run'](text)
         if overfit:source='def run(text):\n    return '+repr(expected)+'\n'
+        if wrong_original:source="def run(text):\n    return '{}'\n"
         cap='plugin.lesson-'+domain+'.v1'
         spec={'schema':'jarvis.development.v1','request_id':'lesson-tool-'+domain,'principal_id':'owner.local','scope_id':'personal','grant_id':'development-test',
             'goal':'Synthetic '+domain,'capability':cap,'description':'Synthetic validation fixture','public_cases':[{'input':text,'expected':expected}],
             'evaluation_cases':[{'input':'\n'+text,'expected':expected}],'sample_input':text,'limits':{'max_attempts':1,'max_model_calls':1,'max_seconds':120}}
+        if wrong_original:
+            for case in spec['public_cases']+spec['evaluation_cases']:case['expected']='{}'
         package=self.core.packages.stage({'schema':'jarvis.code-candidate.v1','summary':'Local validation fixture','files':[{'path':'main.py','content':source}]},spec)
         self.assertTrue(self.core.packages.verify(package)['passed']);self.core.packages.activate(package,0)
         ident=self.create(request_id='lesson-goal-'+domain,goal=goal,input_text=text)
@@ -69,7 +72,7 @@ class LessonValidationTests(unittest.TestCase):
         rules['requirements'][0].update(text='Explicit current structured output from every stage',criterion_ids=[c['id'] for c in rules['criteria']])
         tid=goals.command(self.root,{'action':'approve','id':ident,'revision':self.detail(ident)['plan']['revision'],'acceptance':rules})['task_id']
         self.core.run_task(tid);completion=refresh(self.core,tid)
-        self.assertEqual(completion['learning_candidate']['state'],'CANDIDATE',completion)
+        self.assertEqual(completion['learning_candidate']['state'],'COUNTEREVIDENCE' if wrong_original else 'CANDIDATE',completion)
         return ident,tid
 
     def enable(self,limit=4):

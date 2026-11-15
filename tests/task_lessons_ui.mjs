@@ -39,4 +39,10 @@ for(const repair of [null,{id:'dev-fixture',status:'WAITING'}]){
  assert.ok(!buttons(parent).some(s=>s.includes('发布')));
  if(repair)assert.ok(text(parent).includes('原工具尚未替换'));
 }
-console.log('12 completion candidate/validation/repair render checks passed; no promotion action added');
+for(const status of ['CLOSED','WAITING','REGRESSED','CANCELLED']){
+ const parent=new Element('main');completionView(parent,{state:'NEEDS_CORRECTION',task_id:'original',checks:[],learning_candidate:{state:'COUNTEREVIDENCE',history:{observations:1,distinct_inputs:1},repair:{id:'repair',status:'SUCCEEDED',return:{status,child_task:'returned',before_score:0,actual:{condition_score:100}}}}});
+ assert.ok(text(parent).includes('0 → 100（不代表综合智能评分）'));
+ assert.ok(buttons(parent).includes('查看返工的实际验收'));
+ assert.equal(buttons(parent).includes('撤销本次自动修复授权'),!['REGRESSED','CANCELLED'].includes(status));
+}
+console.log('16 completion candidate/validation/repair-return render checks passed');

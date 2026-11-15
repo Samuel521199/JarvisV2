@@ -67,8 +67,8 @@ def learning_candidate(core,task,completion,tx):
         if result['next_step']=='independent_validation':
             result['next_step']={'FAILED':'resolve_validation_failure','INTERRUPTED':'review_validation_run',
                                  'PASSED':'compare_real_tasks'}.get(verdict,result['next_step'])
-        if trial:
-            row=core.db.one("SELECT data FROM events WHERE kind='learning.repair_created' AND json_extract(data,'$.key')=? ORDER BY seq DESC LIMIT 1",(trial['key'],))
+        if trial or result['state']=='COUNTEREVIDENCE':
+            row=core.db.one("SELECT data FROM events WHERE kind='learning.repair_created' AND task_id=? ORDER BY seq DESC LIMIT 1",(task['id'],))
             if row:
                 run_id=decode(row['data'])['development_id']
                 try:
@@ -77,6 +77,10 @@ def learning_candidate(core,task,completion,tx):
                 except CoreError as error:
                     if error.code!='not_found':raise
                     result['repair']={'id':run_id,'status':'UNAVAILABLE','error':'not_found','original_tool_replaced':False}
+                from modules.task_resource.repair_returns import get as repair_return
+                mandate=repair_return(core.db,run_id)
+                if mandate:
+                    result['repair']['return']={k:mandate.get(k) for k in ('status','error','child_goal','child_task','before_score','actual')}
     return result
 
 

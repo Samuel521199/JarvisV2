@@ -553,6 +553,8 @@ def _serve(args):
             return bool(tasks['active'] or tasks['queued'] or any(r['lane']=='foreground' for r in dialogues['queued']+dialogues['running']))
         def idle_maintenance():
             mail_http.advance(server)
+            from host.repair_return import advance as advance_returns
+            advance_returns(server.data_root,server.background_lane,interrupted=learning_interrupted)
             from host.lesson_validation import advance as advance_lessons
             advance_lessons(server.data_root,server.background_lane,interrupted=learning_interrupted)
         server.task_runner = TaskRunner(server.data_root, foreground_pending=lambda: any(r["lane"] == "foreground" for r in server.dialogues.state()["queued"]),maintenance=idle_maintenance)

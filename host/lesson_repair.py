@@ -20,6 +20,20 @@ def linked(core,key):
 
 def prepare(core,task_id):
     candidate=refresh(core,task_id,transaction=core.db.connection if core.db.connection.in_transaction else None).get('learning_candidate')
+    if candidate and candidate['state']=='COUNTEREVIDENCE' and candidate['scope']=='personal':
+        from host.work_revisions import source_snapshot
+        p,text,_,snapshot=source_snapshot(core,candidate['goal_id'],1)
+        purpose=candidate['applicability'].get('purpose')
+        final='step-'+str(len(p['proposal']['steps']))
+        action=next(a for a in snapshot['actions'] if a['step_id']==final)
+        if purpose not in lesson_checks.PURPOSES or lesson_checks.score(purpose,text,decode(action['result'])['text'])['passed']:
+            raise CoreError('lesson_repair','No supported current-output failure was established')
+        key=digest([lesson_checks.VERSION,'business-output',candidate['family'],candidate['fingerprint']])
+        seed=key[:32];title,description=lesson_repairs.description(purpose);old=linked(core,key)
+        return {'key':key,'fingerprint':candidate['fingerprint'],'purpose':purpose,
+            'capability':'plugin.repair-'+key[:24]+'.v1','goal':title,'description':description,
+            'public_cases':lesson_repairs.examples(purpose,seed),'holdout_count':4,'limits':dict(LIMITS),
+            'development_id':old['development_id'] if old else None,'failure_kind':'current_output'}
     if not candidate or candidate['state']!='CANDIDATE' or candidate['next_step']!='resolve_validation_failure' or candidate['scope']!='personal':
         raise CoreError('lesson_repair','Repair needs a current personal candidate with a failed local trial')
     trial=candidate['validation']['trial'];purpose=candidate['applicability'].get('purpose')
@@ -34,7 +48,7 @@ def prepare(core,task_id):
         'public_cases':lesson_repairs.examples(purpose,trial['seed']),'holdout_count':4,'limits':dict(LIMITS),
         'development_id':old['development_id'] if old else None}
 
-def begin(core,value):
+def begin(core,value,after_admit=None):
     if value['reviewed'] is not True:raise CoreError('review_required','Review the synthetic contract and separate development budget')
     resolved=resolve_routes(core,value['routes'])
     with RunLock(core.root,'development'),core.db.transaction() as tx:
@@ -46,6 +60,7 @@ def begin(core,value):
         if old:
             control=core.db.one('SELECT routes FROM development_controls WHERE run_id=?',(old['development_id'],))
             if not control or decode(control['routes'])!=resolved:raise CoreError('conflict','Repair route changed')
+            if after_admit:after_admit(core,old['development_id'],draft,tx)
             return {'id':old['development_id'],'existing':True}
         cap=draft['capability']
         if core.packages.slot(cap) or core.db.one('SELECT id FROM packages WHERE capability=?',(cap,)):
@@ -60,4 +75,5 @@ def begin(core,value):
         core.db.event(tx,value['id'],EVENT,{'key':draft['key'],'fingerprint':draft['fingerprint'],'development_id':ident,
             'source_task':value['id'],'verifier':lesson_checks.VERSION,'evaluation_seed':seed,'spec_digest':digest(spec),
             'provenance_only':True,'original_tool_replaced':False})
+        if after_admit:after_admit(core,ident,draft,tx)
         return {'id':ident,'existing':False}

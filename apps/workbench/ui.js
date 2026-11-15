@@ -119,6 +119,13 @@ export function completionView(parent,data,{refresh=()=>{}}={}){
   }else if(data.task_id&&learning.next_step==='resolve_validation_failure'&&validation?.trial?.source_task===data.task_id){
    actions.append(button('根据失败用例准备修复',async()=>{const {openLessonRepair}=await import('./development.js');await openLessonRepair(data.task_id,refresh);}));
   }
+  if(learning.repair?.return){
+   const r=learning.repair.return,label={AUTHORIZED:'待修复',SHADOW_RUNNING:'原输入验证中',ADOPTING:'采用候选中',RETURNING:'原工作返工中',WAITING:'等待处理',CLOSED:'实际验收通过',FAILED:'修复停止',CANCELLED:'已撤销',REGRESSED:'复核发现变化'}[r.status]||r.status;box.append(el('p',`修复回接：${label}${r.error?' · '+r.error:''}${r.actual?' · 原条件评分 '+r.before_score+' → '+r.actual.condition_score+'（不代表综合智能评分）':''}`,'note'));
+   if(r.child_task)actions.append(button('查看返工的实际验收',async()=>details('返工实际验收',await post('/api/operations',{action:'completion_detail',id:r.child_task}))));
+   if(!['CANCELLED','FAILED','REGRESSED'].includes(r.status))actions.append(button('撤销本次自动修复授权',async()=>{await post('/api/operations',{action:'lesson_repair_return_cancel',id:learning.repair.id});await refresh();}));
+  }else if(data.task_id&&(learning.next_step==='resolve_validation_failure'||learning.state==='COUNTEREVIDENCE')&&(!learning.repair||['READY','WAITING'].includes(learning.repair.status))){
+   actions.append(button('修复后自动回接本次任务',async()=>{const {openLessonRepair}=await import('./development.js');await openLessonRepair(data.task_id,refresh,true);}));
+  }
   actions.append(button('查看经验依据与待验证项',()=>details('经验候选与验证缺口',learning)));
  }
  if(data.method_available)actions.append(button('用这个方法处理新文本',()=>{

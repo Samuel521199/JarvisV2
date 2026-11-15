@@ -177,6 +177,8 @@ def command(root,value,receipt=None):
             plans.edit(ident,value['revision'],value['proposal']);return detail(core,ident)
         schedule=Scheduling(core.db) if action=='approve_and_run' else None
         with admission(core.root), goal_context.LOCK, core.db.transaction() as tx:
+            from modules.task_resource.repair_returns import guard_task as guard_return
+            guard_return(core.db,ident)
             goal_context.check(core,ident)
             work_revisions.check(core,ident,execution=True)
             row=plans.get(ident)
