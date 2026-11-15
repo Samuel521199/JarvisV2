@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "E:\Jarvis\validation\daily-upgrade-native-20261115\installation\user-data\deployment\controllers\d404d4c0048c3bccda788ccddfcc43c84450316a05135eaf4d64e11848c7a6e6\apps\development\releases.py", line 9, in <module>
+    main()
+    ~~~~^^
+  File "E:\Jarvis\validation\daily-upgrade-native-20261115\installation\user-data\deployment\controllers\d404d4c0048c3bccda788ccddfcc43c84450316a05135eaf4d64e11848c7a6e6\host\application_release.py", line 140, in main
+    value = app.adopt(args.build, driver, expected_epoch=args.expected_epoch)
+  File "E:\Jarvis\validation\daily-upgrade-native-20261115\installation\user-data\deployment\controllers\d404d4c0048c3bccda788ccddfcc43c84450316a05135eaf4d64e11848c7a6e6\modules\release_recovery\application.py", line 263, in adopt
+    require_compatible(self.root,candidate['path'])
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\Jarvis\validation\daily-upgrade-native-20261115\installation\user-data\deployment\controllers\d404d4c0048c3bccda788ccddfcc43c84450316a05135eaf4d64e11848c7a6e6\control\application_compatibility.py", line 119, in require_compatible
+    raise CoreError('application_data_compatibility','Target cannot preserve repair-return authority')
+sdk.protocol.CoreError: Target cannot preserve repair-return authority

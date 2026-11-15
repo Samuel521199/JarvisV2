@@ -96,7 +96,7 @@
 
 | 字段／文件 | 语义与校验 |
 |---|---|
-| schema=2、controller_protocol=1或2、generation | 当前产生协议2；仅在下限允许时读取协议1，拒绝未知协议；generation随控制器指针提交递增，与应用epoch分开 |
+| schema=2、controller_protocol=1—6、generation | 当前产生协议6；仅在下限允许时读取已知旧协议，拒绝未知协议；generation随控制器指针提交递增，与应用epoch分开 |
 | build、controller_inventory_sha256 | 控制器全部文件摘要清单的SHA256，两者必须相同；包括冻结的旧评价策略，所以不等于运行来源包摘要 |
 | runtime_source_build、policy_anchor_build、policy_sha256 | 分别为独立准入的运行来源、评价策略原锚点与实际冻结策略摘要；启动时复核来源未退役、准入签名和策略仍有效 |
 | controller、data_root、port | 安装内直属控制器目录、固定数据根与端口；拒绝链接、越界路径、额外文件和内容变化 |
@@ -226,7 +226,7 @@ MemoryView 只授权本次读取与装配，不授予工具执行权限。实际
 
 v2仅向模型投影id、recipe、requires、summary、counterexamples、source_id、source_revision和外层候选/权限标记；方法卡本身仍为jarvis.method-card.v1。宿主持有原证据哈希、有效期、谱系、完整依赖并在派发/准入/执行时重验；不是删证据或自动晋升。已有模型回执的消息摘要不能被新投影覆盖，即使装配stamp缺失也按真实model_calls核对。
 
-已安装根在写v2之前验证原子入口绑定的控制器协议至少3；未晋升时新目标继续显式写v1，损坏/未知控制器拒绝创建。未托管的隔离开发根使用v2，恢复仍受原读者门约束。协议3读者认识1/2/3，下限只升不降；协议2入口见下限3拒绝，古老未版本化入口和同用户手工旧代码仍没有OS级隔离。当前部署状态见[精简验收](delivery-validation.md#goal-advice-compact-evidence-20261115)。v3进一步要求已安装控制器协议4；协议3托管根中的新候选仍写v2，协议4可写v3；现用v0.1.8应用未采用本候选，未托管开发根也暂留v2，测试隔离根显式启用v3。协议4读者认识1/2/3/4；新元数据的当前或历史最大版本为3时，声明1/2的应用拒绝，旧任务不批量重写。用途语义及部署状态见[选择性提供验收](delivery-validation.md#advice-purpose-evidence-20261115)。v4组合语法固定为advice-intent-1，仅协议5托管根可写；旧协议4仍写v3，当前/历史v4需读者4，新候选开发协议5未日用晋升。原v3解释不变，未覆盖片段只作诊断，不能变成授权或静默丢弃的要求。见[组合用途验收](delivery-validation.md#advice-intent-evidence-20261115)。
+已安装根在写v2之前验证原子入口绑定的控制器协议至少3；未晋升时新目标继续显式写v1，损坏/未知控制器拒绝创建。未托管的隔离开发根使用v2，恢复仍受原读者门约束。协议3读者认识1/2/3，下限只升不降；协议2入口见下限3拒绝，古老未版本化入口和同用户手工旧代码仍没有OS级隔离。当前部署状态见[精简验收](delivery-validation.md#goal-advice-compact-evidence-20261115)。v3进一步要求已安装控制器协议4；协议3托管根中的新候选仍写v2，协议4可写v3；当轮日用v0.1.8应用未采用本候选，未托管开发根也暂留v2，测试隔离根显式启用v3。协议4读者认识1/2/3/4；新元数据的当前或历史最大版本为3时，声明1/2的应用拒绝，旧任务不批量重写。用途语义及部署状态见[选择性提供验收](delivery-validation.md#advice-purpose-evidence-20261115)。v4组合语法固定为advice-intent-1，仅协议5托管根可写；旧协议4仍写v3，当前/历史v4需读者4，协议5当轮尚未日用晋升；后续日用已采用协议6/v0.1.10，协议至少5可写v4。原v3解释不变，未覆盖片段只作诊断，不能变成授权或静默丢弃的要求。见[组合用途验收](delivery-validation.md#advice-intent-evidence-20261115)。
 
 体积从同次装配取得，覆盖附加规则和完整消息封装；新投影message_exposure可为null，不能把缺失当0或父任务用量当子任务用量。旧程序丢弃这个可选字段后仍保留执行依赖和回执，新程序不伪造历史数值；已知观察字段不构成新的执行语义版本。
 
@@ -1316,7 +1316,7 @@ policy精确字段为query、interval_seconds、lookback_hours、due_delay_secon
 
 `learning.repair_created`字段key、fingerprint、development_id、source_task、verifier、evaluation_seed、spec_digest及provenance_only=true；仅追溯关联，不是新的父任务权限依赖。修复只处理Host合成数据，新授权不复活源grant。Completion附repair进度但不更改原失败结论；同一key重复提交不能换路线、重发授权或取消后重新开始。旧读者忽略事件仍执行原审阅门；原标准研发状态和UNKNOWN规则继续有效。[权威范围](knowledge-learning.md#lesson-repair-runtime)。
 
-另行授权 `lesson_repair_begin_auto` 与撤销 `lesson_repair_return_cancel` 使用 `learning.repair_return` 审计状态（AUTHORIZED、SHADOW_RUNNING、ADOPTING、RETURNING、WAITING、CLOSED、FAILED、CANCELLED、REGRESSED）。包含来源/验收摘要、deadline、revision、child_goal/task、精确package_id和前后条件评分；CAS阻止旧进度覆盖撤销。返工请求含已授权的本机原任务数据，只作恢复用途，不送模型或当作知识卡。新编排依赖原grant、发布审阅、WorkBudgets与工作谱系，不以事件替代权限。UNKNOWN和影子回执丢失不自动重放。见[实施与范围](knowledge-learning.md#repair-return-runtime)。
+另行授权 `lesson_repair_begin_auto` 与撤销 `lesson_repair_return_cancel` 使用 `learning.repair_return` 审计状态（AUTHORIZED、SHADOW_RUNNING、ADOPTING、RETURNING、WAITING、CLOSED、FAILED、CANCELLED、REGRESSED）。包含来源/验收摘要、deadline、revision、child_goal/task、精确package_id和前后条件评分；CAS阻止旧进度覆盖撤销。返工请求含已授权的本机原任务数据，只作恢复用途，不送模型或当作知识卡。新编排依赖原grant、发布审阅、WorkBudgets与工作谱系，不以事件替代权限。UNKNOWN和影子回执丢失不自动重放。见[实施与范围](knowledge-learning.md#repair-return-runtime)。协议6将所有learning.repair_return记录（含终态）视为repair_return_schema=1依赖；原记录缺省schema按1读取，未知显式schema拒绝。候选须声明config/repair-return-compatibility.json={schema:1,repair_return_schema:1}，不能以取消来绕过旧版拦截。托管写入授权前核验原子入口的协议至少6，损坏身份拒绝；未托管开发根沿原授权规则。当前v0.1.10已采用，见[日用验收](delivery-validation.md#daily-upgrade-evidence-20261115)。
 
 <!-- book-footer:start -->
 [返回工程主入口](../README.md) · [全书目录](../README.md#book-tree) · [上一章：主人利益原则、身份授权与停止控制](security-sovereignty.md) · [下一章：技术栈、源码目录与运行数据](stack-project-layout.md)

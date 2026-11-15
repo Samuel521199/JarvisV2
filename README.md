@@ -1,5 +1,9 @@
 # JARVIS
 
+2026-11-15日用升级完成：v0.1.10/epoch12，控制器协议6；相容v0.1.9回退包、完整D盘备份和还原核验已完成。升级前业务记录与配置保留；开发重启不影响日用。已开启既有本地验证（最多4组/24小时），具体任务授权后可自动修复、采用、返工并复核。尚无新的日用修复样本，语言覆盖和长期学习收益仍未签收。[当前采用与验证](docs/delivery-validation.md#daily-upgrade-evidence-20261115)。
+
+以下为分阶段历史记录，保留各轮当时的部署和验证边界。
+
 **源码 v0.1.9 后续开发，未日用采用。** 新增[大型陪聊平台长期记忆优化方案](docs/long-term-memory-scale-optimization.md#platform-memory-scope)，当前状态为 proposed。此仓库为独立 JarvisV2 工程；旧 JachinV2 的实现与验收不自动继承。下文日用功能描述按原有验收记录理解，源码版本不代表已安装或上线。见[本轮收尾记录](docs/evidence/memory-docs-closeout-20261113.md#memory-docs-closeout-scope)。
 
 **本轮开发：**已补单次授权的修复自动采用、原工作返工和实际产物重验；三域真实模型合成失败案例均保留原0分，返工声明条件100分。撤权、未知结果和反证有停止出口；日用未采用，长期学习净收益未证明。[闭环范围与实测](docs/delivery-validation.md#repair-return-evidence-20261115)。
