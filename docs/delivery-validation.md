@@ -201,7 +201,7 @@
 
 [事前协议](evidence/lesson-repair-20261115/native-r2/protocol.json)和[真实结果](evidence/lesson-repair-20261115/native-r2/summary.json)包含冻结规格、原失败、工具检查回执、调用用量和清理；临时模型代理凭据已删除。首次[夹具初始化失败](evidence/lesson-repair-20261115/native-r1/summary.json)因向已初始化设置再次install而被拒绝，三域均未发真实模型请求，额度仍21/64；修正为初始化时使用冻结目录后再执行，旧失败不覆盖。
 
-[271项回归](evidence/lesson-repair-20261115/regressions.json)全部通过，含8项修复专项，测试期间源码未变；覆盖原研发、目标成长、代理、并发、Completion和知识链。独立安装包核验待下一步完成。共用卡12项DOM检查通过；这不等于截图或完整交互验收。源码架构使用原Host组合和领域服务，不新增主循环或重复知识系统。原任务评分与候选成功、工具发布和用户业务成功仍是不同证据。[实施权威](knowledge-learning.md#lesson-repair-runtime)。D灾备已补[最新模型用量一致快照](evidence/lesson-repair-20261115/budget-disaster-copy.json)，它不构成防回滚，也不是新的业务全量备份。
+[271项回归](evidence/lesson-repair-20261115/regressions.json)全部通过，含8项修复专项，测试期间源码未变；覆盖原研发、目标成长、代理、并发、Completion和知识链。正式提交3256e61的[独立安装包267ea69](evidence/lesson-repair-20261115/qualified-r1/independent-package/result.json)沿原固定策略ed2a6f6完成207项检查，206通过、1平台跳过；[包内8项修复专项重放](evidence/lesson-repair-20261115/qualified-r1/package-repair-replay.json)全部通过，运行导入均来自包内且事后字节未变。未创建日用ready记录或采用；已见重放不充当独立用户留出。[共用卡12项DOM检查](evidence/lesson-repair-20261115/ui-check.json)通过，两个修改的JS文件语法检查通过；这不等于截图或完整交互验收。源码架构使用原Host组合和领域服务，不新增主循环或重复知识系统。原任务评分与候选成功、工具发布和用户业务成功仍是不同证据。[实施权威](knowledge-learning.md#lesson-repair-runtime)。D灾备已补[最新模型用量一致快照](evidence/lesson-repair-20261115/budget-disaster-copy.json)，它不构成防回滚，也不是新的业务全量备份。
 
 下一步优先补**真实任务与替代方法对照、结果采用后的撤回传播、原任务回接和收益追踪**。自动经验晋升、跨根资源租约、多Bot负责人及长期陪伴/学习效果仍保留原未完成状态；不因三个合成修复成功而宣布完整自进化。
 
