@@ -39,6 +39,14 @@ def required(root):
     if path.exists():
         db=sqlite3.connect(path.as_uri()+'?mode=ro',uri=True,timeout=5)
         try:
+            if db.execute("SELECT 1 FROM sqlite_master WHERE name='events'").fetchone():
+                for row in db.execute("SELECT data FROM events WHERE kind='learning.repair_return'"):
+                    mandate=json.loads(row[0])
+                    if not isinstance(mandate,dict) or type(mandate.get('schema',1)) is not int or mandate.get('schema',1)!=1:
+                        raise CoreError('application_data_compatibility','Unknown repair-return mandate schema')
+                    # Terminal history still binds child authority and regression
+                    # checks. Cancelling a mandate does not permit an old reader.
+                    needs['repair_return_schema']=1
             row=db.execute("SELECT value FROM meta WHERE key='standing_schema'").fetchone()
             if row:
                 if row[0]!='1':raise CoreError('application_data_compatibility','Unknown standing-work schema')
@@ -105,6 +113,14 @@ def require_compatible(root,package):
             standing=Path(package)/'config/standing-compatibility.json';reject_links(standing)
             if not standing.exists() or standing.stat().st_size>1024 or json.loads(standing.read_text(encoding='utf-8'))!={'schema':1,'standing_schema':1}:
                 raise CoreError('application_data_compatibility','Target cannot serve existing standing mandates')
+        if needs.get('repair_return_schema'):
+            repair=Path(package)/'config/repair-return-compatibility.json';reject_links(repair)
+            if not repair.exists() or repair.stat().st_size>1024:
+                raise CoreError('application_data_compatibility','Target cannot preserve repair-return authority')
+            policy=json.loads(repair.read_text(encoding='utf-8'))
+            if (not isinstance(policy,dict) or set(policy)!={'schema','repair_return_schema'}
+                    or any(type(v) is not int or v!=1 for v in policy.values())):
+                raise CoreError('application_data_compatibility','Unsupported repair-return reader')
         if needs.get('mail_watch_schema'):
             mail=Path(package)/'config/mail-standing-compatibility.json';reject_links(mail)
             if not mail.exists() or mail.stat().st_size>1024 or json.loads(mail.read_text(encoding='utf-8'))!={'schema':1,'mail_watch_schema':1}:

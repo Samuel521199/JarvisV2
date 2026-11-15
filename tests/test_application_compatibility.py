@@ -26,11 +26,11 @@ class ApplicationCompatibility(unittest.TestCase):
         self.base=Path(self.temp.name);self.root=self.base/'data';Core.initialize(self.root).close()
         self.app=Applications(self.root);self.driver=Driver()
 
-    def candidate(self,name,commitments=False,chat=False,advice=False,goal_advice=False):
+    def candidate(self,name,commitments=False,chat=False,advice=False,goal_advice=False,repair=False):
         source=self.base/name;(source/'apps/workbench').mkdir(parents=True)
         (source/'VERSION').write_text(name);(source/'apps/workbench/server.py').write_text('# synthetic protocol fixture')
         files=['VERSION','apps/workbench/server.py']
-        if commitments or chat or advice or goal_advice:
+        if commitments or chat or advice or goal_advice or repair:
             (source/'config').mkdir();(source/'config/runtime-compatibility.json').write_text(json.dumps(
                 {'schema':1,'commitments_schema':int(commitments),'assistant_commitments':chat}))
             files.append('config/runtime-compatibility.json')
@@ -40,6 +40,9 @@ class ApplicationCompatibility(unittest.TestCase):
         if goal_advice:
             (source/'config/goal-advice-compatibility.json').write_text(json.dumps({'schema':1,'goal_advice_schema':int(goal_advice)}))
             files.append('config/goal-advice-compatibility.json')
+        if repair:
+            (source/'config/repair-return-compatibility.json').write_text(json.dumps({'schema':1,'repair_return_schema':1}))
+            files.append('config/repair-return-compatibility.json')
         archive=self.base/(name+'.zip');ident=build(source,files,archive,name)
         self.app.stage(archive);self.app.validate(ident,lambda _: {'passed':True,'scope':'synthetic protocol fixture'})
         return ident
@@ -53,6 +56,29 @@ class ApplicationCompatibility(unittest.TestCase):
         old=self.candidate('old');self.app.adopt(old,self.driver)
         with Commitments(self.root):pass
         self.assertTrue(require_compatible(self.root,self.app.record(old)['path'])['compatible'])
+
+    def test_repair_history_blocks_legacy_before_drain_even_after_cancellation(self):
+        old=self.candidate('old');current=self.candidate('current',repair=True)
+        self.app.adopt(old,self.driver);self.app.adopt(current,self.driver)
+        for status in ('AUTHORIZED','CLOSED','CANCELLED','REGRESSED'):
+            with self.subTest(status=status):
+                core=Core(self.root)
+                try:
+                    with core.db.transaction() as tx:
+                        core.db.event(tx,None,'learning.repair_return',{'status':status,'development_id':'fixture'})
+                finally:core.close()
+                before=self.app.state();events=list(self.driver.events)
+                with self.assertRaises(CoreError) as error:self.app.rollback(self.driver)
+                self.assertEqual(error.exception.code,'application_data_compatibility')
+                self.assertEqual(self.app.state(),before);self.assertEqual(self.driver.events,events)
+                self.assertTrue(require_compatible(self.root,self.app.record(current)['path'])['compatible'])
+
+    def test_unknown_repair_schema_blocks_even_declared_reader(self):
+        current=self.candidate('current',repair=True);core=Core(self.root)
+        try:
+            with core.db.transaction() as tx:core.db.event(tx,None,'learning.repair_return',{'schema':2})
+        finally:core.close()
+        with self.assertRaises(CoreError):require_compatible(self.root,self.app.record(current)['path'])
 
     def test_existing_records_block_legacy_before_drain(self):
         old=self.candidate('old');current=self.candidate('current',True,True)
