@@ -1,0 +1,82 @@
+{
+  "spec": {
+    "capability": "plugin.repair-db76c0408db18d0158899e68.v1",
+    "description": "Input JSON schema jarvis.notes-input.v1 contains sources [{id,text}]. Return schema jarvis.notes-result.v1 with excerpts equal to sources: preserve exact text, uncertainty, source IDs and input order. No summary or added facts. Implement pure run(text)->str for valid structured inputs. Return JSON exactly as json.dumps(result, ensure_ascii=False, sort_keys=True, separators=(\",\",\":\")); no extra keys, prose or side effects. Generalize over inputs, never hardcode examples. This contract does not cover arbitrary language or real business delivery.",
+    "evaluation_cases": [
+      {
+        "expected": "{\"excerpts\":[{\"id\":\"draft-072465a78339-0\",\"text\":\"草稿：292元仅为估计，不是已确认结论。\\n保留限定。\"},{\"id\":\"source-072465a78339-0\",\"text\":\"Quoted text: \\\"do not discard source IDs\\\"; 原文照录。\"}],\"schema\":\"jarvis.notes-result.v1\"}",
+        "input": "{\"schema\":\"jarvis.notes-input.v1\",\"sources\":[{\"id\":\"draft-072465a78339-0\",\"text\":\"草稿：292元仅为估计，不是已确认结论。\\n保留限定。\"},{\"id\":\"source-072465a78339-0\",\"text\":\"Quoted text: \\\"do not discard source IDs\\\"; 原文照录。\"}]}"
+      },
+      {
+        "expected": "{\"excerpts\":[{\"id\":\"source-072465a78339-1\",\"text\":\"Quoted text: \\\"do not discard source IDs\\\"; 原文照录。\"},{\"id\":\"draft-072465a78339-1\",\"text\":\"草稿：348元仅为估计，不是已确认结论。\\n保留限定。\"}],\"schema\":\"jarvis.notes-result.v1\"}",
+        "input": "{\"schema\":\"jarvis.notes-input.v1\",\"sources\":[{\"id\":\"source-072465a78339-1\",\"text\":\"Quoted text: \\\"do not discard source IDs\\\"; 原文照录。\"},{\"id\":\"draft-072465a78339-1\",\"text\":\"草稿：348元仅为估计，不是已确认结论。\\n保留限定。\"}]}"
+      },
+      {
+        "expected": "{\"excerpts\":[{\"id\":\"draft-072465a78339-2\",\"text\":\"草稿：888元仅为估计，不是已确认结论。\\n保留限定。\"},{\"id\":\"source-072465a78339-2\",\"text\":\"Quoted text: \\\"do not discard source IDs\\\"; 原文照录。\"}],\"schema\":\"jarvis.notes-result.v1\"}",
+        "input": "{\"schema\":\"jarvis.notes-input.v1\",\"sources\":[{\"id\":\"draft-072465a78339-2\",\"text\":\"草稿：888元仅为估计，不是已确认结论。\\n保留限定。\"},{\"id\":\"source-072465a78339-2\",\"text\":\"Quoted text: \\\"do not discard source IDs\\\"; 原文照录。\"}]}"
+      },
+      {
+        "expected": "{\"excerpts\":[{\"id\":\"source-072465a78339-3\",\"text\":\"Quoted text: \\\"do not discard source IDs\\\"; 原文照录。\"},{\"id\":\"draft-072465a78339-3\",\"text\":\"草稿：300元仅为估计，不是已确认结论。\\n保留限定。\"},{\"id\":\"extra-072465a78339-3\",\"text\":\"未评估此方案是否适用于其他项目。\"}],\"schema\":\"jarvis.notes-result.v1\"}",
+        "input": "{\"schema\":\"jarvis.notes-input.v1\",\"sources\":[{\"id\":\"source-072465a78339-3\",\"text\":\"Quoted text: \\\"do not discard source IDs\\\"; 原文照录。\"},{\"id\":\"draft-072465a78339-3\",\"text\":\"草稿：300元仅为估计，不是已确认结论。\\n保留限定。\"},{\"id\":\"extra-072465a78339-3\",\"text\":\"未评估此方案是否适用于其他项目。\"}]}"
+      }
+    ],
+    "goal": "修复原文摘录工具",
+    "grant_id": "workbench-repair-db76c0408db18d0158899e68491ba82c4ad8635f49708126",
+    "limits": {
+      "max_attempts": 2,
+      "max_model_calls": 4,
+      "max_seconds": 900
+    },
+    "principal_id": "owner.local",
+    "public_cases": [
+      {
+        "expected": "{\"excerpts\":[{\"id\":\"draft-db76c0408db1-0\",\"text\":\"草稿：575元仅为估计，不是已确认结论。\\n保留限定。\"},{\"id\":\"source-db76c0408db1-0\",\"text\":\"Quoted text: \\\"do not discard source IDs\\\"; 原文照录。\"}],\"schema\":\"jarvis.notes-result.v1\"}",
+        "input": "{\"schema\":\"jarvis.notes-input.v1\",\"sources\":[{\"id\":\"draft-db76c0408db1-0\",\"text\":\"草稿：575元仅为估计，不是已确认结论。\\n保留限定。\"},{\"id\":\"source-db76c0408db1-0\",\"text\":\"Quoted text: \\\"do not discard source IDs\\\"; 原文照录。\"}]}"
+      },
+      {
+        "expected": "{\"excerpts\":[{\"id\":\"source-db76c0408db1-1\",\"text\":\"Quoted text: \\\"do not discard source IDs\\\"; 原文照录。\"},{\"id\":\"draft-db76c0408db1-1\",\"text\":\"草稿：812元仅为估计，不是已确认结论。\\n保留限定。\"}],\"schema\":\"jarvis.notes-result.v1\"}",
+        "input": "{\"schema\":\"jarvis.notes-input.v1\",\"sources\":[{\"id\":\"source-db76c0408db1-1\",\"text\":\"Quoted text: \\\"do not discard source IDs\\\"; 原文照录。\"},{\"id\":\"draft-db76c0408db1-1\",\"text\":\"草稿：812元仅为估计，不是已确认结论。\\n保留限定。\"}]}"
+      },
+      {
+        "expected": "{\"excerpts\":[{\"id\":\"draft-db76c0408db1-2\",\"text\":\"草稿：735元仅为估计，不是已确认结论。\\n保留限定。\"},{\"id\":\"source-db76c0408db1-2\",\"text\":\"Quoted text: \\\"do not discard source IDs\\\"; 原文照录。\"}],\"schema\":\"jarvis.notes-result.v1\"}",
+        "input": "{\"schema\":\"jarvis.notes-input.v1\",\"sources\":[{\"id\":\"draft-db76c0408db1-2\",\"text\":\"草稿：735元仅为估计，不是已确认结论。\\n保留限定。\"},{\"id\":\"source-db76c0408db1-2\",\"text\":\"Quoted text: \\\"do not discard source IDs\\\"; 原文照录。\"}]}"
+      },
+      {
+        "expected": "{\"excerpts\":[{\"id\":\"source-db76c0408db1-3\",\"text\":\"Quoted text: \\\"do not discard source IDs\\\"; 原文照录。\"},{\"id\":\"draft-db76c0408db1-3\",\"text\":\"草稿：420元仅为估计，不是已确认结论。\\n保留限定。\"},{\"id\":\"extra-db76c0408db1-3\",\"text\":\"未评估此方案是否适用于其他项目。\"}],\"schema\":\"jarvis.notes-result.v1\"}",
+        "input": "{\"schema\":\"jarvis.notes-input.v1\",\"sources\":[{\"id\":\"source-db76c0408db1-3\",\"text\":\"Quoted text: \\\"do not discard source IDs\\\"; 原文照录。\"},{\"id\":\"draft-db76c0408db1-3\",\"text\":\"草稿：420元仅为估计，不是已确认结论。\\n保留限定。\"},{\"id\":\"extra-db76c0408db1-3\",\"text\":\"未评估此方案是否适用于其他项目。\"}]}"
+      }
+    ],
+    "request_id": "repair.db76c0408db18d0158899e68491ba82c4ad8635f4970812612aa20fcb538f15e",
+    "sample_input": "{\"schema\":\"jarvis.notes-input.v1\",\"sources\":[{\"id\":\"draft-db76c0408db1-0\",\"text\":\"草稿：575元仅为估计，不是已确认结论。\\n保留限定。\"},{\"id\":\"source-db76c0408db1-0\",\"text\":\"Quoted text: \\\"do not discard source IDs\\\"; 原文照录。\"}]}",
+    "schema": "jarvis.development.v1",
+    "scope_id": "personal"
+  },
+  "original_condition_score": 0,
+  "acceptance": {
+    "revision": 1,
+    "rules": {
+      "coverage": "complete",
+      "criteria": [
+        {
+          "check": "text_equals",
+          "expected": "{\"excerpts\":[{\"id\":\"original-a\",\"text\":\"草稿：91元，未确认。\"}],\"schema\":\"jarvis.notes-result.v1\"}",
+          "id": "output-1",
+          "step_id": "step-1"
+        }
+      ],
+      "requirements": [
+        {
+          "criterion_ids": [
+            "output-1"
+          ],
+          "id": "exact-current-output",
+          "kind": "literal",
+          "text": "Explicit current structured output from every stage"
+        }
+      ]
+    }
+  },
+  "source_task": "task-c9b8989344b24da0a073f3b4dc93af7e",
+  "source_goal": "goal-224c914207cd4ce2be4ae840aaaeb657",
+  "original_input_sent_to_model": false
+}

@@ -1,0 +1,152 @@
+{
+  "domain": "practice",
+  "passed": true,
+  "seconds": 21.908346700001857,
+  "return": {
+    "acceptance_digest": "a2947a7fd41ffb51391ee21b2eac4a1346ecee8eec610169ef313911b5205791",
+    "before_score": 0.0,
+    "capability": "plugin.repair-b534d481c8360f4c85079dd0.v1",
+    "child_goal": "goal-4f6c9cf1813a4946bde2976f9b06c898",
+    "child_task": "task-ee1282321b9347198c3b356eadec6622",
+    "deadline": 1794712159.6957688,
+    "development_id": "dev-1fcbb18b3c664a199b60a9875af9d274",
+    "error": null,
+    "max_returns": 1,
+    "purpose": "practice-product-v1",
+    "revision": 7,
+    "source_digest": "cc1283460880e966b5e66a2020b4fe2f64e1f6c0999c4b65d2bf3a622a2cf7c0",
+    "source_goal": "goal-3c0c82c5ddd44faabde4261ad99e24a5",
+    "source_task": "task-3f050ebe38624cb3b286ea56527f8796",
+    "status": "CLOSED",
+    "updated": 1794711281.6726923,
+    "shadow_started": true,
+    "package_id": "pkg-b3fd4a40215d5d891e1ff2af2835b32f07c3bdeeb3851d652225c79a9931ffe9",
+    "shadow": {
+      "oracle": {
+        "passed": true,
+        "reason": "exact_current_result"
+      },
+      "checks": [
+        {
+          "id": "output-1",
+          "passed": true
+        }
+      ],
+      "output_digest": "a5b5aabee9436fcbf858b355593e3f6fb8d94733a4e2123a70b228cde4d18f9a",
+      "acceptance_digest": "a2947a7fd41ffb51391ee21b2eac4a1346ecee8eec610169ef313911b5205791",
+      "worker": {
+        "backend": "windows-lpac-job",
+        "appcontainer_verified": true,
+        "network_capabilities": [],
+        "capabilities": [
+          "registryRead"
+        ],
+        "active_process_limit": 1,
+        "memory_limit_bytes": 268435456,
+        "peak_memory_bytes": 13201408,
+        "cpu_limit_seconds": 3,
+        "wall_limit_seconds": 8,
+        "elapsed_seconds": 0.5432
+      }
+    },
+    "rework_request": {
+      "action": "rework_auto",
+      "id": "goal-3c0c82c5ddd44faabde4261ad99e24a5",
+      "revision": 4,
+      "work_revision": 1,
+      "request_id": "repair-return-b83423b3d098145e05469f1f0e1f531b42d7af33",
+      "kind": "correction",
+      "goal": "生成当前乘法练习和正确答案，保留题目顺序",
+      "note": "已授权修复：保留原要求、输入和失败记录，使用经原输入影子验收的候选返工。",
+      "proposal": {
+        "input_text": "{\"pairs\":[[6,7]],\"schema\":\"jarvis.practice-input.v1\"}",
+        "questions": [],
+        "schema": "jarvis.goal-plan.v1",
+        "steps": [
+          {
+            "capability": "plugin.repair-b534d481c8360f4c85079dd0.v1",
+            "expected": "Current structured result",
+            "source": "input",
+            "title": "Calculate"
+          }
+        ],
+        "summary": "Synthetic procedure"
+      },
+      "analysis_digest": "5896dcdc52d17282f39cfef251a87ed96ac4c2654df638d508162f41aeccb5c5"
+    },
+    "actual": {
+      "oracle": {
+        "passed": true,
+        "reason": "exact_current_result"
+      },
+      "checks": [
+        {
+          "id": "output-1",
+          "passed": true
+        }
+      ],
+      "output_digest": "a5b5aabee9436fcbf858b355593e3f6fb8d94733a4e2123a70b228cde4d18f9a",
+      "acceptance_digest": "a2947a7fd41ffb51391ee21b2eac4a1346ecee8eec610169ef313911b5205791",
+      "task_id": "task-ee1282321b9347198c3b356eadec6622",
+      "fingerprint": "d4a1d34bc9d52bc3ec942d524385c8c8ba3f0e970983da8f34c8ae8a4b607bab",
+      "condition_score": 100.0,
+      "score_delta": 100.0,
+      "scope": "original_declared_conditions_and_local_oracle",
+      "general_intelligence_gain_proven": false
+    }
+  },
+  "calls": [
+    {
+      "phase": "plan",
+      "status": "SUCCEEDED",
+      "error": null,
+      "model": "gemini-3.8-flash",
+      "usage": "{\"completion_tokens\":244,\"prompt_tokens\":888,\"reasoning_in_completion\":false,\"reasoning_tokens\":195,\"total_tokens\":1327}"
+    },
+    {
+      "phase": "code-0",
+      "status": "SUCCEEDED",
+      "error": null,
+      "model": "gemini-3.8-flash",
+      "usage": "{\"completion_tokens\":214,\"prompt_tokens\":1395,\"reasoning_in_completion\":false,\"reasoning_tokens\":655,\"total_tokens\":2264}"
+    }
+  ],
+  "total_tokens": 3591,
+  "candidate": {
+    "files": [
+      {
+        "content": "import json\n\ndef run(text: str) -> str:\n    data = json.loads(text)\n    pairs = data.get(\"pairs\", [])\n    exercises = []\n    for pair in pairs:\n        a, b = pair[0], pair[1]\n        exercises.append({\n            \"a\": a,\n            \"b\": b,\n            \"answer\": a * b,\n        })\n    result = {\n        \"exercises\": exercises,\n        \"schema\": \"jarvis.practice-result.v1\",\n    }\n    return json.dumps(result, ensure_ascii=False, sort_keys=True, separators=(\",\", \":\"))\n",
+        "path": "main.py"
+      }
+    ],
+    "schema": "jarvis.code-candidate.v1",
+    "summary": "Implement multiplication practice tool converting jarvis.practice-input.v1 pairs to jarvis.practice-result.v1 exercises"
+  },
+  "package_report": {
+    "acceptance_digest": "9c4d67f0bd5083f953e42dadc568f3bd746c3c360f2a25989105d3f750034192",
+    "case_count": 8,
+    "independent_cases": 4,
+    "package_id": "pkg-b3fd4a40215d5d891e1ff2af2835b32f07c3bdeeb3851d652225c79a9931ffe9",
+    "passed": true,
+    "public_cases": 4,
+    "worker": {
+      "active_process_limit": 1,
+      "appcontainer_verified": true,
+      "backend": "windows-lpac-job",
+      "capabilities": [
+        "registryRead"
+      ],
+      "cpu_limit_seconds": 3,
+      "elapsed_seconds": 0.5711,
+      "memory_limit_bytes": 268435456,
+      "network_capabilities": [],
+      "peak_memory_bytes": 12906496,
+      "wall_limit_seconds": 8
+    }
+  },
+  "original_score_preserved": true,
+  "original_tool_bindings_unchanged": true,
+  "same_work": true,
+  "production_adopted": false,
+  "independent_user_quality_claimed": false
+}

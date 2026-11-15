@@ -7,6 +7,7 @@
 
 **本章导航**
 
+- [修复自动采用、原工作返工与实际效果（2026-11-15）](#repair-return-evidence-20261115)
 - [失败候选接入修复研发（2026-11-15）](#lesson-repair-evidence-20261115)
 - [过程候选的本地新输入验证（2026-11-15）](#lesson-validation-evidence-20261115)
 - [目标任务自动回顾与经验候选（2026-11-15）](#task-lessons-evidence-20261115)
@@ -178,6 +179,38 @@
 - [个人助理开发收尾与兼容升级（2026-11-09）](#assistant-release-20261109)
 - [网页精灵共享能力与排空修复（2026-11-04）](#companion-shared-evidence)
 <!-- book-nav:end -->
+
+<a id="repair-return-evidence-20261115"></a>
+## 修复自动采用、原工作返工与实际效果（2026-11-15）
+
+**结论：受支持三域的有界修复闭环已在隔离数据根实测；日用应用未采用。** 一次明确授权后，可以完成隐藏测试、原输入影子检查、精确候选自动采用、同一工作返工、实际交付及原要求重验。原工具、原任务0分及失败记录保留；修复成功的是原工作的新版本，不把历史失败改成成功。
+
+| 改进 | 事前预测 | 本轮实际结果 | 判断 |
+|---|---|---|---|
+| 自动采用 | 合成检查之外，还必须通过原输入与原声明条件 | 三域均完成原输入影子检查后自动采用；仅适用于一次授权的单步纯文本任务 | 达到本轮范围 |
+| 原工作回接 | 不制造第二个独立业务负责人；不重复执行原任务 | 三域均产生同一工作的新版本，原工具绑定不变 | 达到；未证明任意多步骤任务 |
+| 实际效果 | 原失败仍0分，返工按相同条件达100分 | 资料、练习、报价均0→100；得分只覆盖声明条件与本地判定器 | 达到；不等于通用质量100分 |
+| 防止虚高 | 原本100分但新输入失败时不能宣称增加100分 | 确定性测试记录100→100；保留原合成FAILED | 达到 |
+| 持续复核 | 新反证应否定CLOSED，不能只累积成功次数 | 迟到拒绝反馈触发REGRESSED、撤销修复执行权限并隔离精确候选 | 定向故障测试通过，长期真实使用待验 |
+| 原机制兼容 | 沿原预算、账本、工作谱系、回执与取消，不更改旧语义 | 实际旧v0.1.8读取返工100分，错误包仍需审阅；取消工作后执行门返回work_conflict | 达到旧读者定向验证 |
+
+[真实模型协议](evidence/repair-return-20261115/native-r2/protocol.json)在调用前冻结范围与预期；[结果汇总](evidence/repair-return-20261115/native-r2/summary.json)来源为操作者编写的合成业务失败输入，使用真实NativeModel和实际受限Worker，**不是独立真实用户任务留出**。路线vertex / gemini-3.8-flash / default，无回退，无UNKNOWN重试；每类2次模型调用，调用账从27/64升至33/64，未增额度或清账。
+
+| 类型 | 原条件评分 | 返工条件评分 | 模型token | 修复至回接耗时 | 证据 |
+|---|---:|---:|---:|---:|---|
+| 资料摘录 | 0 | 100 | 4,084 | 23.33秒 | [实测](evidence/repair-return-20261115/native-r2/notes/result.json) |
+| 乘法练习 | 0 | 100 | 3,591 | 21.91秒 | [实测](evidence/repair-return-20261115/native-r2/practice/result.json) |
+| 结构化报价 | 0 | 100 | 6,090 | 27.53秒 | [实测](evidence/repair-return-20261115/native-r2/quote/result.json) |
+
+合计13,765 token。这是本轮修复开销，不是节省额度，也不能和前轮不同输入、不同模型候选的总量直接算净收益。三域源代码摘要在模型试验前后不变；临时代理凭据和隔离根均清理，未读取生产记忆。
+
+[最终源码旧版实测](evidence/repair-return-20261115/legacy-reader-final.json)使用真实日用build c019b64，但只对临时数据根操作，未切换日用。旧版能读取标准返工和条件评分，保留新审计、grant、动作及工作记录；工作取消后历史评分仍可查看，执行权限被阻止。它不运行新的自动回接编排。
+
+**失败记录保留。** [并行试验中断记录](evidence/repair-return-20261115/parallel-run-failure.json)及[部分回归输出](evidence/repair-return-20261115/regressions-r1-interrupted.txt)保留隔离Worker超时（可读视图仅规范行尾空白，[原始字节与摘要](evidence/repair-return-20261115/interrupted-raw-logs.json)另行保留）；首个native-r1在模型调用前初始化失败。没有增加Worker时限或删掉验收，串行重跑的真实模型三域和旧版检查通过。扩大回归391项首轮390通过、1项在setUp发布测试夹具时发生worker_timeout，未进入测试本体；[完整失败输出](evidence/repair-return-20261115/regressions-r2.txt)与[失败夹具回执](evidence/repair-return-20261115/regression-initialization-failure.json)保留。复测通过也不能证明间歇工作器超时已消除，不能把超时当作候选语义错误或把旧版必然更好作为结论。[最终保护复验53项](evidence/repair-return-20261115/final-guards-r1.json)全部通过，含19项回接专项及此前失败的同一用例；代码在这次复验期间未变。另有[16项共用完成卡检查](evidence/repair-return-20261115/ui-check.json)及JS语法检查通过，未冒称完整浏览器交互。升级交接暂停、研发中学习许可撤回、取消与入账竞争、精确包绑定、正常追加新需求都补了保护；原正确100分任务不因工具泛化改进而自动变成拒绝状态。运行实现提交为45b9c4c，应用仍未日用采用。[最终独立包7ffe5ad3](evidence/repair-return-20261115/qualified-r1/independent-package/result.json)沿原策略ed2a6f6完成207项固定检查（206通过、1平台跳过），未创建日用ready或采用记录。[包内22项复验](evidence/repair-return-20261115/qualified-r1/package-repair-replay.json)全部通过，包含19项回接专项与3份此前真实模型候选的完整回接重放；运行导入全部来自包内，包字节事后未变。真实模型初测后增加了上述保护，最终包重放沿用其候选，不冒充另一次模型生成或新用户留出。最新[模型用量一致灾备](evidence/repair-return-20261115/budget-disaster-copy.json)已存D盘；它不是全量业务备份或防回滚证明。
+
+最终包还保留了可直接查看的[资料产物](evidence/repair-return-20261115/qualified-r1/actual-artifacts/notes.txt)、[练习产物](evidence/repair-return-20261115/qualified-r1/actual-artifacts/practice.txt)和[报价产物](evidence/repair-return-20261115/qualified-r1/actual-artifacts/quote.txt)；[字节与交付回执核验](evidence/repair-return-20261115/qualified-r1/actual-artifacts/verification.json)全部通过，来自已真实生成候选在最终包的再次本机执行，新增真实模型调用0。[可视报告](evidence/repair-return-20261115/report.html)将预测、评分、验证和实际产物放在一起。
+
+**仍未覆盖：** 任意多步骤链、未完成原任务、无独立语义判定器的任务、无法无损继承的来源型验收；影子回执丢失需要停止并处理，不猜成功。长期学习、知识库自动晋升、净token收益和独立用户满意度未证明；三位一体及自愈目标只在上述有界流程获得证据。当前日用仍v0.1.8/epoch10，本轮为v0.1.9开发源码。见[实施权威](knowledge-learning.md#repair-return-runtime)。
 
 <a id="lesson-repair-evidence-20261115"></a>
 ## 失败候选接入修复研发（2026-11-15）

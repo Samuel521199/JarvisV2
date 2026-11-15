@@ -1,0 +1,82 @@
+{
+  "spec": {
+    "capability": "plugin.repair-b534d481c8360f4c85079dd0.v1",
+    "description": "Input JSON schema jarvis.practice-input.v1 contains pairs [[a,b],...]. Return schema jarvis.practice-result.v1 with exercises [{a,b,answer:a*b},...] in input order, including zero, negative and large integers. Do not claim learning mastery. Implement pure run(text)->str for valid structured inputs. Return JSON exactly as json.dumps(result, ensure_ascii=False, sort_keys=True, separators=(\",\",\":\")); no extra keys, prose or side effects. Generalize over inputs, never hardcode examples. This contract does not cover arbitrary language or real business delivery.",
+    "evaluation_cases": [
+      {
+        "expected": "{\"exercises\":[{\"a\":71,\"answer\":1704,\"b\":24},{\"a\":0,\"answer\":0,\"b\":76},{\"a\":-27,\"answer\":-297,\"b\":11}],\"schema\":\"jarvis.practice-result.v1\"}",
+        "input": "{\"pairs\":[[71,24],[0,76],[-27,11]],\"schema\":\"jarvis.practice-input.v1\"}"
+      },
+      {
+        "expected": "{\"exercises\":[{\"a\":-23,\"answer\":-253,\"b\":11},{\"a\":0,\"answer\":0,\"b\":81},{\"a\":27,\"answer\":216,\"b\":8}],\"schema\":\"jarvis.practice-result.v1\"}",
+        "input": "{\"pairs\":[[-23,11],[0,81],[27,8]],\"schema\":\"jarvis.practice-input.v1\"}"
+      },
+      {
+        "expected": "{\"exercises\":[{\"a\":42,\"answer\":1134,\"b\":27},{\"a\":0,\"answer\":0,\"b\":58},{\"a\":-46,\"answer\":-322,\"b\":7},{\"a\":1000000,\"answer\":-1000000000000,\"b\":-1000000}],\"schema\":\"jarvis.practice-result.v1\"}",
+        "input": "{\"pairs\":[[42,27],[0,58],[-46,7],[1000000,-1000000]],\"schema\":\"jarvis.practice-input.v1\"}"
+      },
+      {
+        "expected": "{\"exercises\":[{\"a\":-14,\"answer\":-70,\"b\":5},{\"a\":0,\"answer\":0,\"b\":77},{\"a\":29,\"answer\":754,\"b\":26}],\"schema\":\"jarvis.practice-result.v1\"}",
+        "input": "{\"pairs\":[[-14,5],[0,77],[29,26]],\"schema\":\"jarvis.practice-input.v1\"}"
+      }
+    ],
+    "goal": "修复乘法练习工具",
+    "grant_id": "workbench-repair-b534d481c8360f4c85079dd040a4c090fdcf2e43dbd8ec19",
+    "limits": {
+      "max_attempts": 2,
+      "max_model_calls": 4,
+      "max_seconds": 900
+    },
+    "principal_id": "owner.local",
+    "public_cases": [
+      {
+        "expected": "{\"exercises\":[{\"a\":84,\"answer\":1512,\"b\":18},{\"a\":0,\"answer\":0,\"b\":72},{\"a\":-19,\"answer\":-171,\"b\":9}],\"schema\":\"jarvis.practice-result.v1\"}",
+        "input": "{\"pairs\":[[84,18],[0,72],[-19,9]],\"schema\":\"jarvis.practice-input.v1\"}"
+      },
+      {
+        "expected": "{\"exercises\":[{\"a\":-31,\"answer\":-62,\"b\":2},{\"a\":0,\"answer\":0,\"b\":58},{\"a\":66,\"answer\":1518,\"b\":23}],\"schema\":\"jarvis.practice-result.v1\"}",
+        "input": "{\"pairs\":[[-31,2],[0,58],[66,23]],\"schema\":\"jarvis.practice-input.v1\"}"
+      },
+      {
+        "expected": "{\"exercises\":[{\"a\":32,\"answer\":544,\"b\":17},{\"a\":0,\"answer\":0,\"b\":66},{\"a\":-41,\"answer\":-369,\"b\":9},{\"a\":1000000,\"answer\":-1000000000000,\"b\":-1000000}],\"schema\":\"jarvis.practice-result.v1\"}",
+        "input": "{\"pairs\":[[32,17],[0,66],[-41,9],[1000000,-1000000]],\"schema\":\"jarvis.practice-input.v1\"}"
+      },
+      {
+        "expected": "{\"exercises\":[{\"a\":-35,\"answer\":-70,\"b\":2},{\"a\":0,\"answer\":0,\"b\":25},{\"a\":42,\"answer\":504,\"b\":12}],\"schema\":\"jarvis.practice-result.v1\"}",
+        "input": "{\"pairs\":[[-35,2],[0,25],[42,12]],\"schema\":\"jarvis.practice-input.v1\"}"
+      }
+    ],
+    "request_id": "repair.b534d481c8360f4c85079dd040a4c090fdcf2e43dbd8ec19dfe7f3d748e625c9",
+    "sample_input": "{\"pairs\":[[84,18],[0,72],[-19,9]],\"schema\":\"jarvis.practice-input.v1\"}",
+    "schema": "jarvis.development.v1",
+    "scope_id": "personal"
+  },
+  "original_condition_score": 0,
+  "acceptance": {
+    "revision": 1,
+    "rules": {
+      "coverage": "complete",
+      "criteria": [
+        {
+          "check": "text_equals",
+          "expected": "{\"exercises\":[{\"a\":6,\"answer\":42,\"b\":7}],\"schema\":\"jarvis.practice-result.v1\"}",
+          "id": "output-1",
+          "step_id": "step-1"
+        }
+      ],
+      "requirements": [
+        {
+          "criterion_ids": [
+            "output-1"
+          ],
+          "id": "exact-current-output",
+          "kind": "literal",
+          "text": "Explicit current structured output from every stage"
+        }
+      ]
+    }
+  },
+  "source_task": "task-3f050ebe38624cb3b286ea56527f8796",
+  "source_goal": "goal-3c0c82c5ddd44faabde4261ad99e24a5",
+  "original_input_sent_to_model": false
+}

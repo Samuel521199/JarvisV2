@@ -1,0 +1,82 @@
+{
+  "spec": {
+    "capability": "plugin.repair-eb251e738709adb0904e572b.v1",
+    "description": "Input JSON schema jarvis.quote-input.v1 contains currency, max_price_minor, max_delivery_days, offers [{id,price_minor,delivery_days,source}]. Eligible means price <= budget AND delivery <= limit. Return schema jarvis.quote-result.v1, eligible_ids in input order, selected_id and selected_source of the cheapest eligible offer. For ties select the first in input order; if none, both selected fields are null. Implement pure run(text)->str for valid structured inputs. Return JSON exactly as json.dumps(result, ensure_ascii=False, sort_keys=True, separators=(\",\",\":\")); no extra keys, prose or side effects. Generalize over inputs, never hardcode examples. This contract does not cover arbitrary language or real business delivery.",
+    "evaluation_cases": [
+      {
+        "expected": "{\"eligible_ids\":[\"bound-0112b847cfed-0\",\"cheap-0112b847cfed-0\"],\"schema\":\"jarvis.quote-result.v1\",\"selected_id\":\"cheap-0112b847cfed-0\",\"selected_source\":\"synthetic:cheap-0112b847cfed-0\"}",
+        "input": "{\"currency\":\"CNY\",\"max_delivery_days\":6,\"max_price_minor\":45271,\"offers\":[{\"delivery_days\":6,\"id\":\"bound-0112b847cfed-0\",\"price_minor\":45271,\"source\":\"synthetic:bound-0112b847cfed-0\"},{\"delivery_days\":7,\"id\":\"late-0112b847cfed-0\",\"price_minor\":1,\"source\":\"synthetic:late-0112b847cfed-0\"},{\"delivery_days\":5,\"id\":\"cheap-0112b847cfed-0\",\"price_minor\":45148,\"source\":\"synthetic:cheap-0112b847cfed-0\"}],\"schema\":\"jarvis.quote-input.v1\"}"
+      },
+      {
+        "expected": "{\"eligible_ids\":[\"bound-0112b847cfed-1\",\"cheap-0112b847cfed-1\"],\"schema\":\"jarvis.quote-result.v1\",\"selected_id\":\"bound-0112b847cfed-1\",\"selected_source\":\"synthetic:bound-0112b847cfed-1\"}",
+        "input": "{\"currency\":\"CNY\",\"max_delivery_days\":10,\"max_price_minor\":42062,\"offers\":[{\"delivery_days\":10,\"id\":\"bound-0112b847cfed-1\",\"price_minor\":41939,\"source\":\"synthetic:bound-0112b847cfed-1\"},{\"delivery_days\":11,\"id\":\"late-0112b847cfed-1\",\"price_minor\":1,\"source\":\"synthetic:late-0112b847cfed-1\"},{\"delivery_days\":9,\"id\":\"cheap-0112b847cfed-1\",\"price_minor\":41939,\"source\":\"synthetic:cheap-0112b847cfed-1\"}],\"schema\":\"jarvis.quote-input.v1\"}"
+      },
+      {
+        "expected": "{\"eligible_ids\":[],\"schema\":\"jarvis.quote-result.v1\",\"selected_id\":null,\"selected_source\":null}",
+        "input": "{\"currency\":\"CNY\",\"max_delivery_days\":10,\"max_price_minor\":30767,\"offers\":[{\"delivery_days\":11,\"id\":\"bound-0112b847cfed-2\",\"price_minor\":30767,\"source\":\"synthetic:bound-0112b847cfed-2\"},{\"delivery_days\":11,\"id\":\"late-0112b847cfed-2\",\"price_minor\":1,\"source\":\"synthetic:late-0112b847cfed-2\"},{\"delivery_days\":11,\"id\":\"cheap-0112b847cfed-2\",\"price_minor\":30644,\"source\":\"synthetic:cheap-0112b847cfed-2\"}],\"schema\":\"jarvis.quote-input.v1\"}"
+      },
+      {
+        "expected": "{\"eligible_ids\":[\"cheap-0112b847cfed-3\",\"bound-0112b847cfed-3\"],\"schema\":\"jarvis.quote-result.v1\",\"selected_id\":\"cheap-0112b847cfed-3\",\"selected_source\":\"synthetic:cheap-0112b847cfed-3\"}",
+        "input": "{\"currency\":\"CNY\",\"max_delivery_days\":11,\"max_price_minor\":10605,\"offers\":[{\"delivery_days\":10,\"id\":\"cheap-0112b847cfed-3\",\"price_minor\":10482,\"source\":\"synthetic:cheap-0112b847cfed-3\"},{\"delivery_days\":12,\"id\":\"late-0112b847cfed-3\",\"price_minor\":1,\"source\":\"synthetic:late-0112b847cfed-3\"},{\"delivery_days\":11,\"id\":\"bound-0112b847cfed-3\",\"price_minor\":10605,\"source\":\"synthetic:bound-0112b847cfed-3\"}],\"schema\":\"jarvis.quote-input.v1\"}"
+      }
+    ],
+    "goal": "修复报价比较工具",
+    "grant_id": "workbench-repair-eb251e738709adb0904e572b9c74c94ce97e8cf40295c9f5",
+    "limits": {
+      "max_attempts": 2,
+      "max_model_calls": 4,
+      "max_seconds": 900
+    },
+    "principal_id": "owner.local",
+    "public_cases": [
+      {
+        "expected": "{\"eligible_ids\":[\"bound-eb251e738709-0\",\"cheap-eb251e738709-0\"],\"schema\":\"jarvis.quote-result.v1\",\"selected_id\":\"cheap-eb251e738709-0\",\"selected_source\":\"synthetic:cheap-eb251e738709-0\"}",
+        "input": "{\"currency\":\"CNY\",\"max_delivery_days\":4,\"max_price_minor\":29105,\"offers\":[{\"delivery_days\":4,\"id\":\"bound-eb251e738709-0\",\"price_minor\":29105,\"source\":\"synthetic:bound-eb251e738709-0\"},{\"delivery_days\":5,\"id\":\"late-eb251e738709-0\",\"price_minor\":1,\"source\":\"synthetic:late-eb251e738709-0\"},{\"delivery_days\":3,\"id\":\"cheap-eb251e738709-0\",\"price_minor\":28982,\"source\":\"synthetic:cheap-eb251e738709-0\"}],\"schema\":\"jarvis.quote-input.v1\"}"
+      },
+      {
+        "expected": "{\"eligible_ids\":[\"bound-eb251e738709-1\",\"cheap-eb251e738709-1\"],\"schema\":\"jarvis.quote-result.v1\",\"selected_id\":\"bound-eb251e738709-1\",\"selected_source\":\"synthetic:bound-eb251e738709-1\"}",
+        "input": "{\"currency\":\"CNY\",\"max_delivery_days\":11,\"max_price_minor\":15871,\"offers\":[{\"delivery_days\":11,\"id\":\"bound-eb251e738709-1\",\"price_minor\":15748,\"source\":\"synthetic:bound-eb251e738709-1\"},{\"delivery_days\":12,\"id\":\"late-eb251e738709-1\",\"price_minor\":1,\"source\":\"synthetic:late-eb251e738709-1\"},{\"delivery_days\":10,\"id\":\"cheap-eb251e738709-1\",\"price_minor\":15748,\"source\":\"synthetic:cheap-eb251e738709-1\"}],\"schema\":\"jarvis.quote-input.v1\"}"
+      },
+      {
+        "expected": "{\"eligible_ids\":[],\"schema\":\"jarvis.quote-result.v1\",\"selected_id\":null,\"selected_source\":null}",
+        "input": "{\"currency\":\"CNY\",\"max_delivery_days\":10,\"max_price_minor\":45554,\"offers\":[{\"delivery_days\":11,\"id\":\"bound-eb251e738709-2\",\"price_minor\":45554,\"source\":\"synthetic:bound-eb251e738709-2\"},{\"delivery_days\":11,\"id\":\"late-eb251e738709-2\",\"price_minor\":1,\"source\":\"synthetic:late-eb251e738709-2\"},{\"delivery_days\":11,\"id\":\"cheap-eb251e738709-2\",\"price_minor\":45431,\"source\":\"synthetic:cheap-eb251e738709-2\"}],\"schema\":\"jarvis.quote-input.v1\"}"
+      },
+      {
+        "expected": "{\"eligible_ids\":[\"cheap-eb251e738709-3\",\"bound-eb251e738709-3\"],\"schema\":\"jarvis.quote-result.v1\",\"selected_id\":\"cheap-eb251e738709-3\",\"selected_source\":\"synthetic:cheap-eb251e738709-3\"}",
+        "input": "{\"currency\":\"CNY\",\"max_delivery_days\":6,\"max_price_minor\":30143,\"offers\":[{\"delivery_days\":5,\"id\":\"cheap-eb251e738709-3\",\"price_minor\":30020,\"source\":\"synthetic:cheap-eb251e738709-3\"},{\"delivery_days\":7,\"id\":\"late-eb251e738709-3\",\"price_minor\":1,\"source\":\"synthetic:late-eb251e738709-3\"},{\"delivery_days\":6,\"id\":\"bound-eb251e738709-3\",\"price_minor\":30143,\"source\":\"synthetic:bound-eb251e738709-3\"}],\"schema\":\"jarvis.quote-input.v1\"}"
+      }
+    ],
+    "request_id": "repair.eb251e738709adb0904e572b9c74c94ce97e8cf40295c9f5fa5776e21060bf95",
+    "sample_input": "{\"currency\":\"CNY\",\"max_delivery_days\":4,\"max_price_minor\":29105,\"offers\":[{\"delivery_days\":4,\"id\":\"bound-eb251e738709-0\",\"price_minor\":29105,\"source\":\"synthetic:bound-eb251e738709-0\"},{\"delivery_days\":5,\"id\":\"late-eb251e738709-0\",\"price_minor\":1,\"source\":\"synthetic:late-eb251e738709-0\"},{\"delivery_days\":3,\"id\":\"cheap-eb251e738709-0\",\"price_minor\":28982,\"source\":\"synthetic:cheap-eb251e738709-0\"}],\"schema\":\"jarvis.quote-input.v1\"}",
+    "schema": "jarvis.development.v1",
+    "scope_id": "personal"
+  },
+  "original_condition_score": 0,
+  "acceptance": {
+    "revision": 1,
+    "rules": {
+      "coverage": "complete",
+      "criteria": [
+        {
+          "check": "text_equals",
+          "expected": "{\"eligible_ids\":[\"original-q\"],\"schema\":\"jarvis.quote-result.v1\",\"selected_id\":\"original-q\",\"selected_source\":\"synthetic:original-q\"}",
+          "id": "output-1",
+          "step_id": "step-1"
+        }
+      ],
+      "requirements": [
+        {
+          "criterion_ids": [
+            "output-1"
+          ],
+          "id": "exact-current-output",
+          "kind": "literal",
+          "text": "Explicit current structured output from every stage"
+        }
+      ]
+    }
+  },
+  "source_task": "task-6ba7de2785cc4ec2854ad69656e12cdf",
+  "source_goal": "goal-7191c905d1df462c9b469194b77d0874",
+  "original_input_sent_to_model": false
+}

@@ -1316,6 +1316,8 @@ policy精确字段为query、interval_seconds、lookback_hours、due_delay_secon
 
 `learning.repair_created`字段key、fingerprint、development_id、source_task、verifier、evaluation_seed、spec_digest及provenance_only=true；仅追溯关联，不是新的父任务权限依赖。修复只处理Host合成数据，新授权不复活源grant。Completion附repair进度但不更改原失败结论；同一key重复提交不能换路线、重发授权或取消后重新开始。旧读者忽略事件仍执行原审阅门；原标准研发状态和UNKNOWN规则继续有效。[权威范围](knowledge-learning.md#lesson-repair-runtime)。
 
+另行授权 `lesson_repair_begin_auto` 与撤销 `lesson_repair_return_cancel` 使用 `learning.repair_return` 审计状态（AUTHORIZED、SHADOW_RUNNING、ADOPTING、RETURNING、WAITING、CLOSED、FAILED、CANCELLED、REGRESSED）。包含来源/验收摘要、deadline、revision、child_goal/task、精确package_id和前后条件评分；CAS阻止旧进度覆盖撤销。返工请求含已授权的本机原任务数据，只作恢复用途，不送模型或当作知识卡。新编排依赖原grant、发布审阅、WorkBudgets与工作谱系，不以事件替代权限。UNKNOWN和影子回执丢失不自动重放。见[实施与范围](knowledge-learning.md#repair-return-runtime)。
+
 <!-- book-footer:start -->
 [返回工程主入口](../README.md) · [全书目录](../README.md#book-tree) · [上一章：主人利益原则、身份授权与停止控制](security-sovereignty.md) · [下一章：技术栈、源码目录与运行数据](stack-project-layout.md)
 <!-- book-footer:end -->

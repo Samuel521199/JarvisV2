@@ -1,0 +1,152 @@
+{
+  "domain": "quote",
+  "passed": true,
+  "seconds": 27.52981439999712,
+  "return": {
+    "acceptance_digest": "dd6dc1adbc64a959a2980a576e6a57ac81aabc4aa12a710eecc5b14398f25fd8",
+    "before_score": 0.0,
+    "capability": "plugin.repair-eb251e738709adb0904e572b.v1",
+    "child_goal": "goal-28154d3f9b98490c8a61610f9610f71c",
+    "child_task": "task-042ffe6014c249ebb68568dd5e2effc1",
+    "deadline": 1794712189.167,
+    "development_id": "dev-df22b9b719c44be4b08cee4f6544c1b3",
+    "error": null,
+    "max_returns": 1,
+    "purpose": "quote-lowest-v1",
+    "revision": 7,
+    "source_digest": "a0b35300fcb92e3b9d2a1ca7b98c50404037e88c52c0269c358e9fe5d282ed31",
+    "source_goal": "goal-7191c905d1df462c9b469194b77d0874",
+    "source_task": "task-6ba7de2785cc4ec2854ad69656e12cdf",
+    "status": "CLOSED",
+    "updated": 1794711316.7630813,
+    "shadow_started": true,
+    "package_id": "pkg-166b09bc105d91d037d6374a115e1a5b671419f871cfed2c2d50690fa32a672e",
+    "shadow": {
+      "oracle": {
+        "passed": true,
+        "reason": "quote_verified"
+      },
+      "checks": [
+        {
+          "id": "output-1",
+          "passed": true
+        }
+      ],
+      "output_digest": "26c1d165f30acddc899e05329bc70d43740eddb87a54f7a335fb4f8db3a6adb9",
+      "acceptance_digest": "dd6dc1adbc64a959a2980a576e6a57ac81aabc4aa12a710eecc5b14398f25fd8",
+      "worker": {
+        "backend": "windows-lpac-job",
+        "appcontainer_verified": true,
+        "network_capabilities": [],
+        "capabilities": [
+          "registryRead"
+        ],
+        "active_process_limit": 1,
+        "memory_limit_bytes": 268435456,
+        "peak_memory_bytes": 12869632,
+        "cpu_limit_seconds": 3,
+        "wall_limit_seconds": 8,
+        "elapsed_seconds": 0.8837
+      }
+    },
+    "rework_request": {
+      "action": "rework_auto",
+      "id": "goal-7191c905d1df462c9b469194b77d0874",
+      "revision": 4,
+      "work_revision": 1,
+      "request_id": "repair-return-62a2054bb2342aaf0c070142025b18ea84c59e39",
+      "kind": "correction",
+      "goal": "比较报价，预算不超过200元，交期不超过7天，在合格报价中选择最低价，保留来源引用，保存报告",
+      "note": "已授权修复：保留原要求、输入和失败记录，使用经原输入影子验收的候选返工。",
+      "proposal": {
+        "input_text": "{\"currency\":\"CNY\",\"max_delivery_days\":7,\"max_price_minor\":20000,\"offers\":[{\"delivery_days\":6,\"id\":\"original-q\",\"price_minor\":19100,\"source\":\"synthetic:original-q\"}],\"schema\":\"jarvis.quote-input.v1\"}",
+        "questions": [],
+        "schema": "jarvis.goal-plan.v1",
+        "steps": [
+          {
+            "capability": "plugin.repair-eb251e738709adb0904e572b.v1",
+            "expected": "Current structured result",
+            "source": "input",
+            "title": "Calculate"
+          }
+        ],
+        "summary": "Synthetic procedure"
+      },
+      "analysis_digest": "995b4bc367d2a4db896a4344265743799d3156b92b0dce1e07af34360b01a2ef"
+    },
+    "actual": {
+      "oracle": {
+        "passed": true,
+        "reason": "quote_verified"
+      },
+      "checks": [
+        {
+          "id": "output-1",
+          "passed": true
+        }
+      ],
+      "output_digest": "26c1d165f30acddc899e05329bc70d43740eddb87a54f7a335fb4f8db3a6adb9",
+      "acceptance_digest": "dd6dc1adbc64a959a2980a576e6a57ac81aabc4aa12a710eecc5b14398f25fd8",
+      "task_id": "task-042ffe6014c249ebb68568dd5e2effc1",
+      "fingerprint": "f35291b9c535e50b88f6b551e8660e8ef71024c742886e4e97a96cdd4a74142f",
+      "condition_score": 100.0,
+      "score_delta": 100.0,
+      "scope": "original_declared_conditions_and_local_oracle",
+      "general_intelligence_gain_proven": false
+    }
+  },
+  "calls": [
+    {
+      "phase": "plan",
+      "status": "SUCCEEDED",
+      "error": null,
+      "model": "gemini-3.8-flash",
+      "usage": "{\"completion_tokens\":237,\"prompt_tokens\":1615,\"reasoning_in_completion\":false,\"reasoning_tokens\":600,\"total_tokens\":2452}"
+    },
+    {
+      "phase": "code-0",
+      "status": "SUCCEEDED",
+      "error": null,
+      "model": "gemini-3.8-flash",
+      "usage": "{\"completion_tokens\":383,\"prompt_tokens\":2114,\"reasoning_in_completion\":false,\"reasoning_tokens\":1141,\"total_tokens\":3638}"
+    }
+  ],
+  "total_tokens": 6090,
+  "candidate": {
+    "files": [
+      {
+        "content": "import json\n\ndef run(text: str) -> str:\n    data = json.loads(text)\n    max_price = data.get(\"max_price_minor\")\n    max_days = data.get(\"max_delivery_days\")\n    offers = data.get(\"offers\", [])\n\n    eligible_ids = []\n    cheapest_offer = None\n\n    for offer in offers:\n        price = offer.get(\"price_minor\")\n        delivery = offer.get(\"delivery_days\")\n        if price is not None and delivery is not None and max_price is not None and max_days is not None:\n            if price <= max_price and delivery <= max_days:\n                eligible_ids.append(offer.get(\"id\"))\n                if cheapest_offer is None or price < cheapest_offer.get(\"price_minor\"):\n                    cheapest_offer = offer\n\n    result = {\n        \"eligible_ids\": eligible_ids,\n        \"schema\": \"jarvis.quote-result.v1\",\n        \"selected_id\": cheapest_offer.get(\"id\") if cheapest_offer else None,\n        \"selected_source\": cheapest_offer.get(\"source\") if cheapest_offer else None,\n    }\n\n    return json.dumps(result, ensure_ascii=False, sort_keys=True, separators=(\",\", \":\"))\n",
+        "path": "main.py"
+      }
+    ],
+    "schema": "jarvis.code-candidate.v1",
+    "summary": "Implement quote offer evaluation filtering by price and delivery limits and selecting the cheapest eligible offer."
+  },
+  "package_report": {
+    "acceptance_digest": "ff4046a4802503de7aa0255a365a9500352bfcce4b7745ca86b9c850c24be191",
+    "case_count": 8,
+    "independent_cases": 4,
+    "package_id": "pkg-166b09bc105d91d037d6374a115e1a5b671419f871cfed2c2d50690fa32a672e",
+    "passed": true,
+    "public_cases": 4,
+    "worker": {
+      "active_process_limit": 1,
+      "appcontainer_verified": true,
+      "backend": "windows-lpac-job",
+      "capabilities": [
+        "registryRead"
+      ],
+      "cpu_limit_seconds": 3,
+      "elapsed_seconds": 0.8106,
+      "memory_limit_bytes": 268435456,
+      "network_capabilities": [],
+      "peak_memory_bytes": 12763136,
+      "wall_limit_seconds": 8
+    }
+  },
+  "original_score_preserved": true,
+  "original_tool_bindings_unchanged": true,
+  "same_work": true,
+  "production_adopted": false,
+  "independent_user_quality_claimed": false
+}

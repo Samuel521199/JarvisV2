@@ -1,0 +1,152 @@
+{
+  "domain": "notes",
+  "passed": true,
+  "seconds": 23.330468899999687,
+  "return": {
+    "acceptance_digest": "172bc0ef1c8235f8697768ebd5cde70a4e2f8f19f3350cddb33f3040e98fb597",
+    "before_score": 0.0,
+    "capability": "plugin.repair-db76c0408db18d0158899e68.v1",
+    "child_goal": "goal-f1374fa933d84dd7a11dcc936d1c7bb7",
+    "child_task": "task-191957323c034545a4aaf881decaf2e9",
+    "deadline": 1794712128.6231065,
+    "development_id": "dev-ec9768887587496e873f3044261fef12",
+    "error": null,
+    "max_returns": 1,
+    "purpose": "notes-excerpt-v1",
+    "revision": 7,
+    "source_digest": "3981329404bbdd38c6ad9b666689bbb79f8dad01849d74154c3015c3f0ba241f",
+    "source_goal": "goal-224c914207cd4ce2be4ae840aaaeb657",
+    "source_task": "task-c9b8989344b24da0a073f3b4dc93af7e",
+    "status": "CLOSED",
+    "updated": 1794711252.0326176,
+    "shadow_started": true,
+    "package_id": "pkg-bd7f5ec6d83603b436eb2f3c01d1e7808100f4cf67515cd6ada0670bb01cba2f",
+    "shadow": {
+      "oracle": {
+        "passed": true,
+        "reason": "exact_current_result"
+      },
+      "checks": [
+        {
+          "id": "output-1",
+          "passed": true
+        }
+      ],
+      "output_digest": "195b9dfb7f0166aaf7a047f01ae0c6e7470db56f1df451206f4497ed6faabe94",
+      "acceptance_digest": "172bc0ef1c8235f8697768ebd5cde70a4e2f8f19f3350cddb33f3040e98fb597",
+      "worker": {
+        "backend": "windows-lpac-job",
+        "appcontainer_verified": true,
+        "network_capabilities": [],
+        "capabilities": [
+          "registryRead"
+        ],
+        "active_process_limit": 1,
+        "memory_limit_bytes": 268435456,
+        "peak_memory_bytes": 13103104,
+        "cpu_limit_seconds": 3,
+        "wall_limit_seconds": 8,
+        "elapsed_seconds": 0.602
+      }
+    },
+    "rework_request": {
+      "action": "rework_auto",
+      "id": "goal-224c914207cd4ce2be4ae840aaaeb657",
+      "revision": 4,
+      "work_revision": 1,
+      "request_id": "repair-return-7beb119ebbcd2a1ae1597ccc4f4c86bf106d35c0",
+      "kind": "correction",
+      "goal": "整理资料，原样摘录每条原文，保留来源ID和顺序",
+      "note": "已授权修复：保留原要求、输入和失败记录，使用经原输入影子验收的候选返工。",
+      "proposal": {
+        "input_text": "{\"schema\":\"jarvis.notes-input.v1\",\"sources\":[{\"id\":\"original-a\",\"text\":\"草稿：91元，未确认。\"}]}",
+        "questions": [],
+        "schema": "jarvis.goal-plan.v1",
+        "steps": [
+          {
+            "capability": "plugin.repair-db76c0408db18d0158899e68.v1",
+            "expected": "Current structured result",
+            "source": "input",
+            "title": "Calculate"
+          }
+        ],
+        "summary": "Synthetic procedure"
+      },
+      "analysis_digest": "fa062f9d11d263c77994d84459bd007b66645e8e23ba237aa8f2fbf9bbb50b14"
+    },
+    "actual": {
+      "oracle": {
+        "passed": true,
+        "reason": "exact_current_result"
+      },
+      "checks": [
+        {
+          "id": "output-1",
+          "passed": true
+        }
+      ],
+      "output_digest": "195b9dfb7f0166aaf7a047f01ae0c6e7470db56f1df451206f4497ed6faabe94",
+      "acceptance_digest": "172bc0ef1c8235f8697768ebd5cde70a4e2f8f19f3350cddb33f3040e98fb597",
+      "task_id": "task-191957323c034545a4aaf881decaf2e9",
+      "fingerprint": "fe0da8e2fe03e63b7cc84c451f5b9bf60468a6008f72a1869fa1297acad0855a",
+      "condition_score": 100.0,
+      "score_delta": 100.0,
+      "scope": "original_declared_conditions_and_local_oracle",
+      "general_intelligence_gain_proven": false
+    }
+  },
+  "calls": [
+    {
+      "phase": "plan",
+      "status": "SUCCEEDED",
+      "error": null,
+      "model": "gemini-3.8-flash",
+      "usage": "{\"completion_tokens\":202,\"prompt_tokens\":1289,\"reasoning_in_completion\":false,\"reasoning_tokens\":250,\"total_tokens\":1741}"
+    },
+    {
+      "phase": "code-0",
+      "status": "SUCCEEDED",
+      "error": null,
+      "model": "gemini-3.8-flash",
+      "usage": "{\"completion_tokens\":192,\"prompt_tokens\":1753,\"reasoning_in_completion\":false,\"reasoning_tokens\":398,\"total_tokens\":2343}"
+    }
+  ],
+  "total_tokens": 4084,
+  "candidate": {
+    "files": [
+      {
+        "content": "import json\n\ndef run(text: str) -> str:\n    data = json.loads(text)\n    sources = data.get(\"sources\", [])\n    excerpts = [{\"id\": s[\"id\"], \"text\": s[\"text\"]} for s in sources]\n    result = {\n        \"excerpts\": excerpts,\n        \"schema\": \"jarvis.notes-result.v1\"\n    }\n    return json.dumps(result, ensure_ascii=False, sort_keys=True, separators=(\",\", \":\"))\n",
+        "path": "main.py"
+      }
+    ],
+    "schema": "jarvis.code-candidate.v1",
+    "summary": "Implement run(text) to parse notes input, preserve source IDs and exact texts into excerpts, and output jarvis.notes-result.v1 JSON."
+  },
+  "package_report": {
+    "acceptance_digest": "addbcf773c2ead4bee3bd091876bb5611952814b7be067f133d027c98cbf2eed",
+    "case_count": 8,
+    "independent_cases": 4,
+    "package_id": "pkg-bd7f5ec6d83603b436eb2f3c01d1e7808100f4cf67515cd6ada0670bb01cba2f",
+    "passed": true,
+    "public_cases": 4,
+    "worker": {
+      "active_process_limit": 1,
+      "appcontainer_verified": true,
+      "backend": "windows-lpac-job",
+      "capabilities": [
+        "registryRead"
+      ],
+      "cpu_limit_seconds": 3,
+      "elapsed_seconds": 0.6076,
+      "memory_limit_bytes": 268435456,
+      "network_capabilities": [],
+      "peak_memory_bytes": 12894208,
+      "wall_limit_seconds": 8
+    }
+  },
+  "original_score_preserved": true,
+  "original_tool_bindings_unchanged": true,
+  "same_work": true,
+  "production_adopted": false,
+  "independent_user_quality_claimed": false
+}
