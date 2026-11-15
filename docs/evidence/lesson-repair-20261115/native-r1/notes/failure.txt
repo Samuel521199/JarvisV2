@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "E:\Jarvis\dev\docs\evidence\lesson-repair-20261115\run_native_repairs.py", line 37, in main
+    case.core.preferences.install(catalog,{})
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "E:\Jarvis\dev\modules\preferences\store.py", line 140, in install
+    if self.read(): raise CoreError('settings_exist', 'Existing settings are not overwritten by migration')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sdk.protocol.CoreError: Existing settings are not overwritten by migration

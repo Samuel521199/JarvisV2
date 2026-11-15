@@ -1312,6 +1312,10 @@ policy精确字段为query、interval_seconds、lookback_hours、due_delay_secon
 
 原events新增`learning.validation_policy`、`learning.validation_started`、`learning.validation_finished`。START含key（验证器版本+族摘要）、family、source_task、fingerprint、seed、challenge摘要、批次数/时限及policy_revision；FINISH含key、状态、每例通过与输出摘要、Worker证据、耗时和无晋升声明。未完成预留仍计24小时额度；没有FINISH只能判UNKNOWN_OR_RUNNING。投影附validation，FAILED/INTERRUPTED/PASSED分别给出修复、核对、真实任务对照下一步，不能覆盖当前来源/反证状态。新增记录不是事实、业务动作或许可，旧应用忽略它们不会运行验证；原grant检查不扩充其业务预算。[执行与边界](knowledge-learning.md#lesson-validation-runtime)。
 
+`lesson_repair_prepare`仅接收id并返回当前指纹、验证key、公开合成规格、默认固定额度和已有development_id；不创建grant。`lesson_repair_begin`接收id/key/fingerprint/routes/reviewed，必须再次重查当前证据；预算固定4次调用/2轮/900秒，Host不接受模型或页面扩大预算。结果是标准development.v1及原development_controls，grant以workbench-repair前缀保护，控制行缺失不能隐式发布。
+
+`learning.repair_created`字段key、fingerprint、development_id、source_task、verifier、evaluation_seed、spec_digest及provenance_only=true；仅追溯关联，不是新的父任务权限依赖。修复只处理Host合成数据，新授权不复活源grant。Completion附repair进度但不更改原失败结论；同一key重复提交不能换路线、重发授权或取消后重新开始。旧读者忽略事件仍执行原审阅门；原标准研发状态和UNKNOWN规则继续有效。[权威范围](knowledge-learning.md#lesson-repair-runtime)。
+
 <!-- book-footer:start -->
 [返回工程主入口](../README.md) · [全书目录](../README.md#book-tree) · [上一章：主人利益原则、身份授权与停止控制](security-sovereignty.md) · [下一章：技术栈、源码目录与运行数据](stack-project-layout.md)
 <!-- book-footer:end -->

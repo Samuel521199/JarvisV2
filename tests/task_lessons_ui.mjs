@@ -33,4 +33,10 @@ for(const [status,next,label] of [['PASSED','compare_real_tasks','合成输出�
 }
 const broken=new Element('main');completionView(broken,{state:'VERIFIED',checks:[],learning_candidate:{state:'CANDIDATE',next_step:'independent_validation',history:{observations:1,distinct_inputs:1},validation:{policy:{enabled:false,max_trials_24h:4,revision:1},policy_error:'invalid_policy',trials_in_24h:0,trial:null}}});
 assert.ok(text(broken).includes('自动验证已停止'));assert.deepEqual(buttons(broken),['查看经验依据与待验证项']);
-console.log('10 completion candidate/validation render checks passed; no promotion action added');
+for(const repair of [null,{id:'dev-fixture',status:'WAITING'}]){
+ const parent=new Element('main');completionView(parent,{state:'VERIFIED',task_id:'task-fixture',checks:[],learning_candidate:{state:'CANDIDATE',next_step:'resolve_validation_failure',history:{observations:1,distinct_inputs:1},repair,validation:{policy:{enabled:true,max_trials_24h:4,revision:2},trials_in_24h:1,trial:{source_task:'task-fixture',result:{status:'FAILED'}}}}});
+ assert.ok(buttons(parent).includes(repair?'查看修复研发':'根据失败用例准备修复'));
+ assert.ok(!buttons(parent).some(s=>s.includes('发布')));
+ if(repair)assert.ok(text(parent).includes('原工具尚未替换'));
+}
+console.log('12 completion candidate/validation/repair render checks passed; no promotion action added');

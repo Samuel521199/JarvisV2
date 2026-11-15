@@ -67,6 +67,16 @@ def learning_candidate(core,task,completion,tx):
         if result['next_step']=='independent_validation':
             result['next_step']={'FAILED':'resolve_validation_failure','INTERRUPTED':'review_validation_run',
                                  'PASSED':'compare_real_tasks'}.get(verdict,result['next_step'])
+        if trial:
+            row=core.db.one("SELECT data FROM events WHERE kind='learning.repair_created' AND json_extract(data,'$.key')=? ORDER BY seq DESC LIMIT 1",(trial['key'],))
+            if row:
+                run_id=decode(row['data'])['development_id']
+                try:
+                    run=core.development.get(run_id)
+                    result['repair']={'id':run_id,**{k:run[k] for k in ('status','phase','error','release_id')},'original_tool_replaced':False}
+                except CoreError as error:
+                    if error.code!='not_found':raise
+                    result['repair']={'id':run_id,'status':'UNAVAILABLE','error':'not_found','original_tool_replaced':False}
     return result
 
 

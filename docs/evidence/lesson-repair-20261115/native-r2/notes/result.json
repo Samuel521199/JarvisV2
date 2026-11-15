@@ -1,0 +1,63 @@
+{
+  "domain": "notes",
+  "passed": true,
+  "seconds": 17.29123200000322,
+  "status": "WAITING",
+  "phase": "verified",
+  "error": "review_required",
+  "candidate_attempt": 0,
+  "calls": [
+    {
+      "phase": "plan",
+      "status": "SUCCEEDED",
+      "error": null,
+      "model": "gemini-3.8-flash",
+      "usage": "{\"completion_tokens\":190,\"prompt_tokens\":1309,\"reasoning_in_completion\":false,\"reasoning_tokens\":503,\"total_tokens\":2002}"
+    },
+    {
+      "phase": "code-0",
+      "status": "SUCCEEDED",
+      "error": null,
+      "model": "gemini-3.8-flash",
+      "usage": "{\"completion_tokens\":193,\"prompt_tokens\":1761,\"reasoning_in_completion\":false,\"reasoning_tokens\":376,\"total_tokens\":2330}"
+    }
+  ],
+  "total_tokens": 4332,
+  "original_bindings_unchanged": true,
+  "original_failed_trial_preserved": true,
+  "repair_link_matches": true,
+  "new_tool_published": false,
+  "package_report": {
+    "acceptance_digest": "ac8a1dc0b8f1948b19580118ce1e7e88b4bcdd2ad7dccc5deccfd45965545e16",
+    "case_count": 8,
+    "independent_cases": 4,
+    "package_id": "pkg-da2c3b2d33980866c711454116801f5ea104b9ae69dfe843ef12b202b59f3688",
+    "passed": true,
+    "public_cases": 4,
+    "worker": {
+      "active_process_limit": 1,
+      "appcontainer_verified": true,
+      "backend": "windows-lpac-job",
+      "capabilities": [
+        "registryRead"
+      ],
+      "cpu_limit_seconds": 3,
+      "elapsed_seconds": 0.2607,
+      "memory_limit_bytes": 268435456,
+      "network_capabilities": [],
+      "peak_memory_bytes": 13307904,
+      "wall_limit_seconds": 8
+    }
+  },
+  "candidate": {
+    "files": [
+      {
+        "content": "import json\n\ndef run(text: str) -> str:\n    data = json.loads(text)\n    sources = data.get(\"sources\", [])\n    excerpts = [{\"id\": s[\"id\"], \"text\": s[\"text\"]} for s in sources]\n    result = {\n        \"excerpts\": excerpts,\n        \"schema\": \"jarvis.notes-result.v1\"\n    }\n    return json.dumps(result, ensure_ascii=False, sort_keys=True, separators=(\",\", \":\"))\n",
+        "path": "main.py"
+      }
+    ],
+    "schema": "jarvis.code-candidate.v1",
+    "summary": "Implement run(text) in main.py to transform jarvis.notes-input.v1 sources into jarvis.notes-result.v1 excerpts."
+  },
+  "production_adopted": false
+}

@@ -329,7 +329,10 @@ class Core:
                             providers[key]=CodexModel(route,self.root)
                         else:providers[key] = NativeModel(route, self.credentials.get, child(self.root, 'temp'))
                 gateway = RoutedModels(self.db, providers, list(providers))
-                gateway.network_check = NetworkGate(self.root).require_online
+                # Native model adapters enforce the authenticated development
+                # proxy themselves. CLI routes retain the external-action gate.
+                external_cli=any(r['adapter']=='codex-cli' for items in routes.values() for r in items)
+                gateway.network_check = NetworkGate(self.root).require_online if external_cli else NetworkGate(self.root).require_model_online
                 gateway.phase_order = lambda phase: [digest(r) for r in routes['plan' if phase == 'plan' else 'code']]
                 self.routed_models = gateway; self.development.models = gateway
             with RunLock(self.root):

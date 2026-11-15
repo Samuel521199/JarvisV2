@@ -28,6 +28,23 @@ export function developmentView(parent,settings){
 
 async function startDevelopment(id,retry=false,onChange=async()=>{}){await post('/api/development-runner',{id,network_enabled:true,retry_unknown:retry});closeModal();notice('研发已在后台开始，前台聊天可继续。');await onChange();}
 
+export async function openLessonRepair(taskId,onChange=async()=>{}){
+ const draft=await post('/api/operations',{action:'lesson_repair_prepare',id:taskId});
+ if(draft.development_id)return openDevelopment(draft.development_id,onChange);
+ const {settings}=await get('/api/snapshot'),body=modal(draft.goal),form=el('form'),error=el('p',undefined,'form-error');
+ body.append(el('p','根据失败的合成用例生成独立工具候选，与原工具并存。旧业务任务和原评分不会被改写。','note'),el('pre',draft.description));
+ const cases=el('details');cases.append(el('summary','原失败输入与应有结果'),el('pre',JSON.stringify(draft.public_cases,null,2)));body.append(cases);
+ const plan=routeChoice(settings,'规划 · 首选'),code=routeChoice(settings,'编码 · 首选'),submit=el('button','开始限定修复','primary');submit.type='submit';
+ form.append(plan.node,code.node,el('p',`另生成 ${draft.holdout_count} 个不给编码模型看的新测试；最多 ${draft.limits.max_model_calls} 次模型调用、${draft.limits.max_attempts} 轮候选、${draft.limits.max_seconds} 秒（包括等待）。会调用所选模型，次数不是费用硬上限；检查通过后仍需审阅发布。`,'note'),error,submit);
+ form.onsubmit=async e=>{e.preventDefault();submit.disabled=true;let created=null;
+  try{created=await post('/api/operations',{action:'lesson_repair_begin',id:taskId,key:draft.key,fingerprint:draft.fingerprint,reviewed:true,routes:{plan:[plan.value()],code:[code.value()]}});
+   if(!created.existing)await post('/api/development-runner',{id:created.id,network_enabled:true,retry_unknown:false});
+   await onChange();await openDevelopment(created.id,onChange);
+  }catch(ex){error.textContent=ex.message;if(created)form.append(button('查看已创建的修复任务',()=>openDevelopment(created.id,onChange)));}
+  finally{submit.disabled=false;}};
+ body.append(form);
+}
+
 export async function openDevelopment(id,onChange=async()=>{}){const data=await post('/api/development',{action:'detail',id}),r=data.run,b=modal(r.spec.goal),steps=el('div',undefined,'growth-steps');for(const [name,yes] of [['目标冻结',true],['模型规划',!!r.plan],['候选代码',!!r.candidate],['独立检查',!!r.release_id],['审阅发布',!!data.approved_package||!!r.task_id],['实际交付',r.status==='SUCCEEDED']])steps.append(el('span',name,yes?'reached':''));b.append(steps,el('p',(states[r.status]||r.status)+' · '+r.phase+(r.error?' · '+errorText(r.error):'')),el('p','剩余 '+Math.max(0,Math.floor(r.deadline-Date.now()/1000))+' 秒 · '+r.spec.limits.max_model_calls+' 次模型调用上限 · 已使用 '+(data.grant?.spent||0)+' 个操作预算单位','note'));
  const addDetails=(label,value)=>{const d=el('details');d.append(el('summary',label),el('pre',typeof value==='string'?value:JSON.stringify(value,null,2)));b.append(d);};addDetails('冻结的目标、案例与模型档位',{spec:r.spec,routes:data.routes});if(r.plan)addDetails('模型规划',JSON.parse(r.plan));if(r.candidate){const candidate=JSON.parse(r.candidate);for(const f of candidate.files||[])addDetails('候选文件 · '+f.path,f.content);}if(data.calls?.length)addDetails('模型调用与失败记录',data.calls);if(data.package?.report)addDetails('独立检查回执',JSON.parse(data.package.report));if(data.actions?.length){const delivered=data.actions.find(a=>a.step_id==='use'&&a.status==='CONFIRMED');if(delivered){const result=JSON.parse(delivered.result);if(typeof result.text==='string'){const output=card('实际输出','以下内容来自执行回执');output.append(el('pre',result.text),button('导出结果文本',()=>download('jarvis-result.txt',result.text)));b.append(output);}}}if(data.actions?.length)addDetails('执行结果与产物回执',data.actions.map(a=>({...a,result:a.result?JSON.parse(a.result):null})));b.append(button('刷新当前进度',()=>openDevelopment(id,onChange)));
  if(r.status==='WAITING'&&r.phase==='verified'&&r.error==='review_required')b.append(button('认可此候选，发布并交付',async()=>{await post('/api/development',{action:'approve',id,package_id:r.release_id});await startDevelopment(id,false,onChange);},'primary'));

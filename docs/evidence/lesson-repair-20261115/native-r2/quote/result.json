@@ -1,0 +1,63 @@
+{
+  "domain": "quote",
+  "passed": true,
+  "seconds": 19.927249799999117,
+  "status": "WAITING",
+  "phase": "verified",
+  "error": "review_required",
+  "candidate_attempt": 0,
+  "calls": [
+    {
+      "phase": "plan",
+      "status": "SUCCEEDED",
+      "error": null,
+      "model": "gemini-3.8-flash",
+      "usage": "{\"completion_tokens\":277,\"prompt_tokens\":1540,\"reasoning_in_completion\":false,\"reasoning_tokens\":375,\"total_tokens\":2192}"
+    },
+    {
+      "phase": "code-0",
+      "status": "SUCCEEDED",
+      "error": null,
+      "model": "gemini-3.8-flash",
+      "usage": "{\"completion_tokens\":405,\"prompt_tokens\":2079,\"reasoning_in_completion\":false,\"reasoning_tokens\":925,\"total_tokens\":3409}"
+    }
+  ],
+  "total_tokens": 5601,
+  "original_bindings_unchanged": true,
+  "original_failed_trial_preserved": true,
+  "repair_link_matches": true,
+  "new_tool_published": false,
+  "package_report": {
+    "acceptance_digest": "f72fdceabf529b4fdd5b38a4cde46274a14f09b6555249ebccdebe8a858a0920",
+    "case_count": 8,
+    "independent_cases": 4,
+    "package_id": "pkg-074522ac95a9b7342f30ac0ed9065bb57c75a95484591367a7792dc093f364b1",
+    "passed": true,
+    "public_cases": 4,
+    "worker": {
+      "active_process_limit": 1,
+      "appcontainer_verified": true,
+      "backend": "windows-lpac-job",
+      "capabilities": [
+        "registryRead"
+      ],
+      "cpu_limit_seconds": 3,
+      "elapsed_seconds": 0.2495,
+      "memory_limit_bytes": 268435456,
+      "network_capabilities": [],
+      "peak_memory_bytes": 12910592,
+      "wall_limit_seconds": 8
+    }
+  },
+  "candidate": {
+    "files": [
+      {
+        "content": "import json\n\ndef run(text: str) -> str:\n    data = json.loads(text)\n    max_price = data.get(\"max_price_minor\")\n    max_delivery = data.get(\"max_delivery_days\")\n    offers = data.get(\"offers\", [])\n\n    eligible_ids = []\n    best_offer = None\n\n    for offer in offers:\n        price = offer.get(\"price_minor\")\n        delivery = offer.get(\"delivery_days\")\n        if (\n            price is not None\n            and delivery is not None\n            and price <= max_price\n            and delivery <= max_delivery\n        ):\n            eligible_ids.append(offer.get(\"id\"))\n            if best_offer is None or price < best_offer.get(\"price_minor\"):\n                best_offer = offer\n\n    result = {\n        \"eligible_ids\": eligible_ids,\n        \"schema\": \"jarvis.quote-result.v1\",\n        \"selected_id\": best_offer.get(\"id\") if best_offer is not None else None,\n        \"selected_source\": best_offer.get(\"source\") if best_offer is not None else None,\n    }\n\n    return json.dumps(result, ensure_ascii=False, sort_keys=True, separators=(\",\", \":\"))\n",
+        "path": "main.py"
+      }
+    ],
+    "schema": "jarvis.code-candidate.v1",
+    "summary": "Implement run(text) in main.py to filter eligible quote offers within budget and delivery constraints, pick the cheapest offer (preserving order for ties), and output the standardized JSON result."
+  },
+  "production_adopted": false
+}

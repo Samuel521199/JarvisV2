@@ -99,8 +99,8 @@ export function completionView(parent,data,{refresh=()=>{}}={}){
   if(data.feedback?.kind==='reject')actions.append(button('撤回这次纠正',()=>feedback('withdraw')));
  }
  if(data.learning_candidate){
-  const learning=data.learning_candidate,states={CANDIDATE:'已整理为待验证经验',COUNTEREVIDENCE:'已记录需要纠正的反证',WITHDRAWN:'经验来源已失效',INCOMPLETE:'经验仍缺少完整验收依据'};
-  box.append(el('p',states[learning.state]||'经验等待核对','note'));
+  const learning=data.learning_candidate,candidateStates={CANDIDATE:'已整理为待验证经验',COUNTEREVIDENCE:'已记录需要纠正的反证',WITHDRAWN:'经验来源已失效',INCOMPLETE:'经验仍缺少完整验收依据'};
+  box.append(el('p',candidateStates[learning.state]||'经验等待核对','note'));
   box.append(el('p',`同类过程历史记录 ${learning.history.observations} 项，涉及 ${learning.history.distinct_inputs} 组输入；这些记录尚未独立验证，不会自动成为事实或执行许可。`,'note'));
   const next={resolve_validation_failure:'新输入检查未通过，先修复并形成新版本再验证。',review_validation_run:'验证已中断，需要先核对原因和回执。',compare_real_tasks:'合成检查已通过；下一步比较真实任务效果与成本。',independent_validation:'支持的过程可先做本地新输入检查；仍需真实任务和无经验对照。',resolve_counterevidence:'先解决已记录的纠正或失败，再验证适用边界。',restore_current_sources:'来源或记忆许可已失效，候选不能继续使用。',complete_acceptance:'先补齐本次任务的可验证要求。',review_history_window:'当前仅展示有限历史，需要核对更早的记录。'};
   box.append(el('p',next[learning.next_step]||'等待进一步验证。','note'));
@@ -112,6 +112,12 @@ export function completionView(parent,data,{refresh=()=>{}}={}){
    if(trial)box.append(el('p',result?.status==='PASSED'?'历史合成输出检查通过；不代表当前来源仍有效、完整交付或长期收益。':result?.status==='FAILED'?'候选未通过新输入检查，不能按历史成功次数直接采用。':result?'验证已中断，原因和已用额度保留。':'尚无完成回执，请结合后台运行状态核对；不会自动重放。','note'));
    if(validation.policy_error)box.append(el('p','验证设置无法读取，自动验证已停止；请先修复设置。','form-error'));
    if(!validation.policy_error)actions.append(button(policy.enabled?'暂停本地自动验证':'开启本地自动验证',async()=>{await post('/api/operations',{action:'lesson_validation_configure',enabled:!policy.enabled,max_trials_24h:policy.max_trials_24h,revision:policy.revision});await refresh();}));
+  }
+  if(learning.repair){
+   box.append(el('p',`修复研发：${states[learning.repair.status]||learning.repair.status} · 原验证结论保留，原工具尚未替换。`,'note'));
+   actions.append(button('查看修复研发',async()=>{const {openDevelopment}=await import('./development.js');await openDevelopment(learning.repair.id,refresh);}));
+  }else if(data.task_id&&learning.next_step==='resolve_validation_failure'&&validation?.trial?.source_task===data.task_id){
+   actions.append(button('根据失败用例准备修复',async()=>{const {openLessonRepair}=await import('./development.js');await openLessonRepair(data.task_id,refresh);}));
   }
   actions.append(button('查看经验依据与待验证项',()=>details('经验候选与验证缺口',learning)));
  }

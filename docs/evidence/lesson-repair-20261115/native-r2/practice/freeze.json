@@ -1,0 +1,156 @@
+{
+  "spec": {
+    "capability": "plugin.repair-ed67ea3691b323d2c5df0a77.v1",
+    "description": "Input JSON schema jarvis.practice-input.v1 contains pairs [[a,b],...]. Return schema jarvis.practice-result.v1 with exercises [{a,b,answer:a*b},...] in input order, including zero, negative and large integers. Do not claim learning mastery. Implement pure run(text)->str for valid structured inputs. Return JSON exactly as json.dumps(result, ensure_ascii=False, sort_keys=True, separators=(\",\",\":\")); no extra keys, prose or side effects. Generalize over inputs, never hardcode examples. This contract does not cover arbitrary language or real business delivery.",
+    "evaluation_cases": [
+      {
+        "expected": "{\"exercises\":[{\"a\":22,\"answer\":528,\"b\":24},{\"a\":0,\"answer\":0,\"b\":29},{\"a\":-49,\"answer\":-343,\"b\":7}],\"schema\":\"jarvis.practice-result.v1\"}",
+        "input": "{\"pairs\":[[22,24],[0,29],[-49,7]],\"schema\":\"jarvis.practice-input.v1\"}"
+      },
+      {
+        "expected": "{\"exercises\":[{\"a\":-29,\"answer\":-290,\"b\":10},{\"a\":0,\"answer\":0,\"b\":99},{\"a\":26,\"answer\":676,\"b\":26}],\"schema\":\"jarvis.practice-result.v1\"}",
+        "input": "{\"pairs\":[[-29,10],[0,99],[26,26]],\"schema\":\"jarvis.practice-input.v1\"}"
+      },
+      {
+        "expected": "{\"exercises\":[{\"a\":73,\"answer\":2190,\"b\":30},{\"a\":0,\"answer\":0,\"b\":59},{\"a\":-42,\"answer\":-420,\"b\":10},{\"a\":1000000,\"answer\":-1000000000000,\"b\":-1000000}],\"schema\":\"jarvis.practice-result.v1\"}",
+        "input": "{\"pairs\":[[73,30],[0,59],[-42,10],[1000000,-1000000]],\"schema\":\"jarvis.practice-input.v1\"}"
+      },
+      {
+        "expected": "{\"exercises\":[{\"a\":-17,\"answer\":-85,\"b\":5},{\"a\":0,\"answer\":0,\"b\":75},{\"a\":15,\"answer\":375,\"b\":25}],\"schema\":\"jarvis.practice-result.v1\"}",
+        "input": "{\"pairs\":[[-17,5],[0,75],[15,25]],\"schema\":\"jarvis.practice-input.v1\"}"
+      }
+    ],
+    "goal": "修复乘法练习工具",
+    "grant_id": "workbench-repair-ed67ea3691b323d2c5df0a770e87b8591d1758b1f8c4206d",
+    "limits": {
+      "max_attempts": 2,
+      "max_model_calls": 4,
+      "max_seconds": 900
+    },
+    "principal_id": "owner.local",
+    "public_cases": [
+      {
+        "expected": "{\"exercises\":[{\"a\":74,\"answer\":740,\"b\":10},{\"a\":0,\"answer\":0,\"b\":54},{\"a\":-16,\"answer\":-80,\"b\":5}],\"schema\":\"jarvis.practice-result.v1\"}",
+        "input": "{\"pairs\":[[74,10],[0,54],[-16,5]],\"schema\":\"jarvis.practice-input.v1\"}"
+      },
+      {
+        "expected": "{\"exercises\":[{\"a\":-30,\"answer\":-210,\"b\":7},{\"a\":0,\"answer\":0,\"b\":14},{\"a\":67,\"answer\":737,\"b\":11}],\"schema\":\"jarvis.practice-result.v1\"}",
+        "input": "{\"pairs\":[[-30,7],[0,14],[67,11]],\"schema\":\"jarvis.practice-input.v1\"}"
+      },
+      {
+        "expected": "{\"exercises\":[{\"a\":89,\"answer\":623,\"b\":7},{\"a\":0,\"answer\":0,\"b\":33},{\"a\":-34,\"answer\":-68,\"b\":2},{\"a\":1000000,\"answer\":-1000000000000,\"b\":-1000000}],\"schema\":\"jarvis.practice-result.v1\"}",
+        "input": "{\"pairs\":[[89,7],[0,33],[-34,2],[1000000,-1000000]],\"schema\":\"jarvis.practice-input.v1\"}"
+      },
+      {
+        "expected": "{\"exercises\":[{\"a\":-46,\"answer\":-92,\"b\":2},{\"a\":0,\"answer\":0,\"b\":85},{\"a\":20,\"answer\":160,\"b\":8}],\"schema\":\"jarvis.practice-result.v1\"}",
+        "input": "{\"pairs\":[[-46,2],[0,85],[20,8]],\"schema\":\"jarvis.practice-input.v1\"}"
+      }
+    ],
+    "request_id": "repair.ed67ea3691b323d2c5df0a770e87b8591d1758b1f8c4206d2e62e019b31e2d01",
+    "sample_input": "{\"pairs\":[[74,10],[0,54],[-16,5]],\"schema\":\"jarvis.practice-input.v1\"}",
+    "schema": "jarvis.development.v1",
+    "scope_id": "personal"
+  },
+  "original_condition_score": 100.0,
+  "original_trial": {
+    "challenge": {
+      "cases": [
+        {
+          "id": "case-1",
+          "input_digest": "0e715699eff290f90391032b80f3a40bc25dc4099b4de47375e24a99e7ace7f6"
+        },
+        {
+          "id": "case-2",
+          "input_digest": "5ecd494369198819156b39bc7e168dbfd52a422cf89892ad0ebf504d281bd59e"
+        },
+        {
+          "id": "case-3",
+          "input_digest": "b1255635556009a4146c8f63e11939a5abacc65e3012a9a1dfc566d07f2541d6"
+        },
+        {
+          "id": "case-4",
+          "input_digest": "e593755f117af26f3c1c074fccebe31eacf9a6d02600facb6d99ac6e67cd94a3"
+        }
+      ],
+      "purpose": "practice-product-v1",
+      "scope": "synthetic pure-text output only; no delivery, model benefit, or generalization guarantee",
+      "verifier": "lesson-challenge-1"
+    },
+    "family": "e6e213415da9340635c7ead7ad263f2875b75935169ad6bc954e8c953da450b8",
+    "fingerprint": "1db5517cb6e64d2c44f894c47699c8188e65c0bdd3700af1c19d990fea06affe",
+    "key": "ed67ea3691b323d2c5df0a770e87b8591d1758b1f8c4206d2e62e019b31e2d01",
+    "max_total_seconds": 18,
+    "max_worker_batches": 1,
+    "policy_revision": 2,
+    "seed": "d8f277a5e89d59632ef26ac0b6951ab5",
+    "source_task": "task-c1efca740d004f198b82e05446cfd1b4",
+    "synthetic_inputs_only": true,
+    "worker_wall_seconds": 8,
+    "result": {
+      "automatic_promotion": false,
+      "business_artifacts_written": false,
+      "cases": [
+        {
+          "id": "case-1",
+          "output_digest": "a5b5aabee9436fcbf858b355593e3f6fb8d94733a4e2123a70b228cde4d18f9a",
+          "passed": false,
+          "reason": "current_result_mismatch"
+        },
+        {
+          "id": "case-2",
+          "output_digest": "a5b5aabee9436fcbf858b355593e3f6fb8d94733a4e2123a70b228cde4d18f9a",
+          "passed": false,
+          "reason": "current_result_mismatch"
+        },
+        {
+          "id": "case-3",
+          "output_digest": "a5b5aabee9436fcbf858b355593e3f6fb8d94733a4e2123a70b228cde4d18f9a",
+          "passed": false,
+          "reason": "current_result_mismatch"
+        },
+        {
+          "id": "case-4",
+          "output_digest": "a5b5aabee9436fcbf858b355593e3f6fb8d94733a4e2123a70b228cde4d18f9a",
+          "passed": false,
+          "reason": "current_result_mismatch"
+        }
+      ],
+      "cloud_calls": 0,
+      "key": "ed67ea3691b323d2c5df0a770e87b8591d1758b1f8c4206d2e62e019b31e2d01",
+      "scope": "synthetic pure-text output only; no delivery, model benefit, or generalization guarantee",
+      "seconds": 0.4116522999975132,
+      "status": "FAILED",
+      "workers": [
+        {
+          "active_process_limit": 1,
+          "appcontainer_verified": true,
+          "backend": "windows-lpac-job",
+          "capabilities": [
+            "registryRead"
+          ],
+          "cpu_limit_seconds": 3,
+          "elapsed_seconds": 0.2659,
+          "memory_limit_bytes": 268435456,
+          "network_capabilities": [],
+          "peak_memory_bytes": 12902400,
+          "wall_limit_seconds": 8
+        }
+      ]
+    },
+    "state": "FINISHED"
+  },
+  "synthetic_only": true,
+  "original_input_sent_to_repair_model": false,
+  "evaluation_inputs_hidden_from_coder": true,
+  "proxy_before": {
+    "allowed_providers": [
+      "vertex"
+    ],
+    "build_id": "30b79127b81e04a57cdc8aae76f607ea38b499b3fa4d92abf0020700e17848bc",
+    "calls_in_24h": 23,
+    "daily_call_limit": 64,
+    "external_tools_exposed": false,
+    "production_memory_exposed": false,
+    "profile": "development-bridge"
+  }
+}

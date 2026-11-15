@@ -14,7 +14,8 @@ def command(root, value):
             'completion_detail':{'id'},'acceptance_set':{'id','revision','rules'},
             'completion_feedback':{'id','request_id','fingerprint','kind','note'},
             'experience_reuse':{'id','request_id','text'},'experience_review':{'id','revision'},
-            'lesson_validation_configure':{'enabled','max_trials_24h','revision'}}
+            'lesson_validation_configure':{'enabled','max_trials_24h','revision'},
+            'lesson_repair_prepare':{'id'},'lesson_repair_begin':{'id','key','fingerprint','routes','reviewed'}}
     if not isinstance(value,dict) or value.get('action') not in fields or set(value)!={'action'}|fields[value['action']]:
         raise CoreError('invalid_request','Unexpected settings operation')
     core=Core(root)
@@ -28,6 +29,9 @@ def command(root, value):
             return service(core).configure(value['enabled'])
         if action=='task_submit':return {'task_id':core.tasks.submit(value['task'])}
         if ident is not None and (not isinstance(ident,str) or len(ident)>100):raise CoreError('invalid_request','Invalid identifier')
+        if action in {'lesson_repair_prepare','lesson_repair_begin'}:
+            from host.lesson_repair import prepare,begin
+            return prepare(core,ident) if action=='lesson_repair_prepare' else begin(core,value)
         if action in {'completion_detail','acceptance_set','completion_feedback','experience_reuse','experience_review'}:
             from host.completion import command as complete
             return complete(core,value)

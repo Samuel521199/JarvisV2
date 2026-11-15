@@ -1,0 +1,63 @@
+{
+  "domain": "practice",
+  "passed": true,
+  "seconds": 13.065077100000053,
+  "status": "WAITING",
+  "phase": "verified",
+  "error": "review_required",
+  "candidate_attempt": 0,
+  "calls": [
+    {
+      "phase": "plan",
+      "status": "SUCCEEDED",
+      "error": null,
+      "model": "gemini-3.8-flash",
+      "usage": "{\"completion_tokens\":183,\"prompt_tokens\":879,\"reasoning_in_completion\":false,\"reasoning_tokens\":317,\"total_tokens\":1379}"
+    },
+    {
+      "phase": "code-0",
+      "status": "SUCCEEDED",
+      "error": null,
+      "model": "gemini-3.8-flash",
+      "usage": "{\"completion_tokens\":208,\"prompt_tokens\":1324,\"reasoning_in_completion\":false,\"reasoning_tokens\":390,\"total_tokens\":1922}"
+    }
+  ],
+  "total_tokens": 3301,
+  "original_bindings_unchanged": true,
+  "original_failed_trial_preserved": true,
+  "repair_link_matches": true,
+  "new_tool_published": false,
+  "package_report": {
+    "acceptance_digest": "f860fdc91eae4c9052c37d1f05267cf165fbb3bcf7235d1446dbe0d75ff03d87",
+    "case_count": 8,
+    "independent_cases": 4,
+    "package_id": "pkg-f42f398e46c9f81ff0e9c9e9f57180c19671bb183fbbdd427271df532820caf2",
+    "passed": true,
+    "public_cases": 4,
+    "worker": {
+      "active_process_limit": 1,
+      "appcontainer_verified": true,
+      "backend": "windows-lpac-job",
+      "capabilities": [
+        "registryRead"
+      ],
+      "cpu_limit_seconds": 3,
+      "elapsed_seconds": 0.2402,
+      "memory_limit_bytes": 268435456,
+      "network_capabilities": [],
+      "peak_memory_bytes": 13352960,
+      "wall_limit_seconds": 8
+    }
+  },
+  "candidate": {
+    "files": [
+      {
+        "content": "import json\n\ndef run(text: str) -> str:\n    data = json.loads(text)\n    pairs = data.get(\"pairs\", [])\n    exercises = []\n    for pair in pairs:\n        a, b = pair[0], pair[1]\n        exercises.append({\"a\": a, \"b\": b, \"answer\": a * b})\n    result = {\n        \"exercises\": exercises,\n        \"schema\": \"jarvis.practice-result.v1\"\n    }\n    return json.dumps(result, ensure_ascii=False, sort_keys=True, separators=(\",\", \":\"))\n",
+        "path": "main.py"
+      }
+    ],
+    "schema": "jarvis.code-candidate.v1",
+    "summary": "Implement run function in main.py to parse input pairs, compute products, and format according to jarvis.practice-result.v1 schema."
+  },
+  "production_adopted": false
+}
