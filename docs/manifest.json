@@ -2,7 +2,7 @@
   "schema_version": 1,
   "design_status": "proposed",
   "project_state": "modular-workbench-projects-text-skills-and-bounded-development-partially-implemented",
-  "runtime_version": "0.1.10",
+  "runtime_version": "0.1.11",
   "entry": "README.md",
   "book": {
     "parts": [
@@ -64,6 +64,22 @@
     ]
   },
   "documents": [
+    {
+      "id": "english-learning-method",
+      "path": "docs/english-learning-method.md",
+      "title": "Jarvis 实用英语学习方法与记忆设计",
+      "owns": [
+        "english-method-scope",
+        "english-method-evidence",
+        "english-memory-methods",
+        "english-lesson-loop",
+        "english-progress-rules",
+        "english-implementation-gates"
+      ],
+      "status": "implemented",
+      "kind": "reference",
+      "reader_summary": "科学学习方法、记忆策略、跨会话学习证据与评价限制；长期效果待实测。"
+    },
     {
       "id": "daily-real-tasks-report-20261115",
       "path": "docs/evidence/daily-real-tasks-20261115/report.md",
@@ -584,7 +600,8 @@
         "conditional-advice-contract",
         "goal-planning-advice-contract",
         "controller-pointer-contract",
-        "task-lesson-event-contract"
+        "task-lesson-event-contract",
+        "english-learning-contract"
       ],
       "status": "proposed",
       "kind": "chapter",
@@ -795,7 +812,8 @@
         "lesson-repair-evidence-20261115",
         "repair-return-evidence-20261115",
         "daily-real-tasks-evidence-20261115",
-        "daily-upgrade-evidence-20261115"
+        "daily-upgrade-evidence-20261115",
+        "english-learning-evidence-20261115"
       ],
       "status": "proposed",
       "kind": "chapter",
@@ -1051,6 +1069,17 @@
       "kind": "skill",
       "status": "implemented",
       "reader_summary": "Jarvis 模型按需读取的 Blender 制作与局部改模指令"
+    },
+    {
+      "id": "english-learning-report-20261115",
+      "path": "docs/evidence/english-learning-20261115/report.md",
+      "title": "Jarvis 跨会话英语学习与日用升级验收",
+      "owns": [
+        "english-learning-report-20261115"
+      ],
+      "status": "verified",
+      "kind": "evidence",
+      "reader_summary": "文字学习、真实模型合成答题、兼容回退与日用采用；实际个人提升待验。"
     }
   ],
   "generated_diagrams": [

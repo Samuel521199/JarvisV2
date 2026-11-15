@@ -14,6 +14,14 @@ from sdk.protocol import CoreError
 
 def required(root):
     root=Path(root).resolve();needs={'commitments_schema':0,'assistant_commitments':False}
+    learning=child(root,'state/english-learning.sqlite3')
+    if learning.exists():
+        db=sqlite3.connect(learning.as_uri()+'?mode=ro',uri=True,timeout=5)
+        try:
+            if db.execute('PRAGMA user_version').fetchone()[0]!=1:
+                raise CoreError('application_data_compatibility','Unknown personal learning schema')
+            needs['english_learning_schema']=1  # Disabled/withdrawn history still needs a compatible reader.
+        finally:db.close()
     for name in ('commitments','dialogue'):
         path=child(root,'state/'+name+'.sqlite3')
         if not path.exists():continue
@@ -97,6 +105,13 @@ def required(root):
 def require_compatible(root,package):
     try:
         needs=required(root);path=Path(package)/'config/runtime-compatibility.json';reject_links(path)
+        if needs.get('english_learning_schema'):
+            path_learning=Path(package)/'config/english-learning-compatibility.json';reject_links(path_learning)
+            if not path_learning.exists() or path_learning.stat().st_size>1024:
+                raise CoreError('application_data_compatibility','Target cannot preserve personal learning records')
+            learning_policy=json.loads(path_learning.read_text(encoding='utf-8'))
+            if learning_policy!={'schema':1,'english_learning_schema':1} or any(type(v) is not int for v in learning_policy.values()):
+                raise CoreError('application_data_compatibility','Unsupported personal learning reader')
         declared={'schema':1,'commitments_schema':0,'assistant_commitments':False}
         if path.exists():
             if path.stat().st_size>4096:raise ValueError('Declaration too large')

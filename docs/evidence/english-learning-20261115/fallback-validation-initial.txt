@@ -1,0 +1,22 @@
+[Jarvis] Managed version is ready; background work continues after this launcher closes.
+[Jarvis] Managed version is ready; background work continues after this launcher closes.
+RESULT 207 0 1 1
+
+...........................................s.........E.........................................................................................................................................................
+======================================================================
+ERROR: test_real_workbench_drain_restart_cookie_and_chat_continuity (test_application_runtime.ApplicationRuntimeTests.test_real_workbench_drain_restart_cookie_and_chat_continuity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\Jarvis\runtime\user-data\deployment\validation\application-check-9w8mr7pd\tests\test_application_runtime.py", line 132, in test_real_workbench_drain_restart_cookie_and_chat_continuity
+    second = launch('b' * 64, 2)
+  File "E:\Jarvis\runtime\user-data\deployment\validation\application-check-9w8mr7pd\tests\test_application_runtime.py", line 109, in launch
+    driver.health(selected, epoch)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "E:\Jarvis\runtime\user-data\deployment\validation\application-check-9w8mr7pd\adapters\application_host.py", line 100, in health
+    raise CoreError('application_health_timeout', 'Candidate health was not confirmed')
+sdk.protocol.CoreError: Candidate health was not confirmed
+
+----------------------------------------------------------------------
+Ran 207 tests in 106.299s
+
+FAILED (errors=1, skipped=1)

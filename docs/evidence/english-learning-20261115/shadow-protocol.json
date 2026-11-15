@@ -1,0 +1,29 @@
+{
+  "scope": "Synthetic learner answers in development only; real model, not actual user performance",
+  "cases": {
+    "life": {
+      "text": "教学示例情境：在咖啡店点一杯小杯不加糖的热咖啡。",
+      "answer": "I'd like a small hot coffee with no sugar, please.",
+      "expect": "meaning=2; accept equivalent wording"
+    },
+    "communication": {
+      "text": "教学示例情境：没有听清对方说明，请对方说慢一点，并重说最后一句。",
+      "answer": "Could you speak a little more slowly and repeat the last sentence, please?",
+      "expect": "meaning=2; polite equivalent wording"
+    },
+    "work": {
+      "text": "教学示例：The office will be closed on Friday. Please submit your report by Thursday at 3 p.m. 任务：读懂应该何时交报告。",
+      "answer": "We need to submit the report on Friday at 3 p.m.",
+      "expect": "meaning<=1; must identify Thursday deadline"
+    }
+  },
+  "route": {
+    "provider": "vertex",
+    "model": "gemini-3.8-flash",
+    "reasoning": "default"
+  },
+  "max_paid_calls": 9,
+  "automatic_unknown_retry": false,
+  "runtime_source": "working tree before qualification",
+  "started_at": 1794754571.4418602
+}

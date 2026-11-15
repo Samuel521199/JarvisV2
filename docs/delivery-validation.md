@@ -7,6 +7,7 @@
 
 **本章导航**
 
+- [跨会话英语学习与日用采用（2026-11-15）](#english-learning-evidence-20261115)
 - [日用真实任务与英语学习接续（2026-11-15）](#daily-real-tasks-evidence-20261115)
 - [日用采用、数据保留与持续验证（2026-11-15）](#daily-upgrade-evidence-20261115)
 - [修复自动采用、原工作返工与实际效果（2026-11-15）](#repair-return-evidence-20261115)
@@ -181,6 +182,16 @@
 - [个人助理开发收尾与兼容升级（2026-11-09）](#assistant-release-20261109)
 - [网页精灵共享能力与排空修复（2026-11-04）](#companion-shared-evidence)
 <!-- book-nav:end -->
+
+<a id="english-learning-evidence-20261115"></a>
+## 跨会话英语学习与日用采用（2026-11-15）
+
+2026-11-15已日用采用v0.1.11/epoch14、控制器协议7：个人跨会话文字学习记录、错题变式、记忆提示和保守进步统计可用。原数据保留、相容恢复版和独立盘还原核验通过；开发三类合成答题不计本人表现，日用首题等待作答。真实跨日保持与口语提升仍待验。
+
+123个唯一专项回归最终通过；新版和恢复版分别通过冻结207项中的206项，1项平台跳过。真实模型开发8次8,481 token，日用首题1次822 token；2处产品问题人工修正，原失败保留。原生回退和只读再核验、完整D盘快照及惰性还原通过。
+
+[完整结果、预测差距与后续门](evidence/english-learning-20261115/report.md#english-learning-report-20261115)；[科学方法和记忆设计](english-learning-method.md#english-method-scope)；[学习数据契约](contracts.md#english-learning-contract)。
+
 
 <a id="daily-real-tasks-evidence-20261115"></a>
 ## 日用真实任务与英语学习接续（2026-11-15）

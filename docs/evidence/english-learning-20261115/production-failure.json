@@ -1,0 +1,23 @@
+{
+  "error": "Traceback (most recent call last):\n  File \"E:\\Jarvis\\dev\\docs\\evidence\\english-learning-20261115\\deploy.py\", line 85, in <module>\n    try:main()\n        ~~~~^^\n  File \"E:\\Jarvis\\dev\\docs\\evidence\\english-learning-20261115\\deploy.py\", line 69, in main\n    after=helpers.fingerprint(DAILY);helpers.write(PRIVATE/'after-application.json',after);check=helpers.retained(before,after);step('original-data-retained',check);assert check['passed'],check\n                                                                                                                                                                            ~~~~~^^^^^^^^^^\nAssertionError: {'passed': False, 'original_files': 1952, 'original_rows': 3664, 'original_databases': 11, 'changed_files': [], 'changed_tables': [{'database': 'state/core.sqlite3', 'table': 'task_completion', 'missing_or_changed_rows': 2}]}\n",
+  "state": {
+    "active": {
+      "build": "1d6d656e0b9c7d3c456d4b90e860259107478c6d16913df97dfc24fa5a819b1f",
+      "epoch": 14,
+      "slot": "B",
+      "version": "0.1.11"
+    },
+    "epoch": 14,
+    "error": null,
+    "pending": null,
+    "pending_epoch": null,
+    "phase": "active",
+    "previous": {
+      "build": "ed2d839791f7f02033c0b6c338f68929adde0441b676a4ce4ee57c45fa070da2",
+      "epoch": 13,
+      "slot": "A",
+      "version": "0.1.10-english-recovery.1"
+    },
+    "schema": 1
+  }
+}

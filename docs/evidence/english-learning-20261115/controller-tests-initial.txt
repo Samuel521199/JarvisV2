@@ -1,0 +1,59 @@
+test_active_controller_source_cannot_be_retired_as_unused_application_code (test_application_controller.ControllerTransitions.test_active_controller_source_cannot_be_retired_as_unused_application_code) ... ok
+test_application_installation_does_not_rebind_an_independent_controller (test_application_controller.ControllerTransitions.test_application_installation_does_not_rebind_an_independent_controller) ... ok
+test_committed_launcher_remains_authoritative_when_cache_write_fails (test_application_controller.ControllerTransitions.test_committed_launcher_remains_authoritative_when_cache_write_fails) ... ok
+test_corrupt_bootstrap_and_cache_recover_only_with_signed_activation_evidence (test_application_controller.ControllerTransitions.test_corrupt_bootstrap_and_cache_recover_only_with_signed_activation_evidence) ... ok
+test_failure_before_atomic_commit_keeps_original_bootstrap_and_cache (test_application_controller.ControllerTransitions.test_failure_before_atomic_commit_keeps_original_bootstrap_and_cache) ... ok
+test_late_data_change_is_checked_before_controller_commit (test_application_controller.ControllerTransitions.test_late_data_change_is_checked_before_controller_commit) ... ok
+test_live_release_lock_and_unknown_protocol_refuse_transitions (test_application_controller.ControllerTransitions.test_live_release_lock_and_unknown_protocol_refuse_transitions) ... FAIL
+test_missing_bootstrap_cannot_reinstall_legacy_below_protocol_floor (test_application_controller.ControllerTransitions.test_missing_bootstrap_cannot_reinstall_legacy_below_protocol_floor) ... ok
+test_other_policy_approval_is_not_current_independent_qualification (test_application_controller.ControllerTransitions.test_other_policy_approval_is_not_current_independent_qualification) ... ok
+test_promotion_changes_controller_not_application_and_keeps_frozen_policy (test_application_controller.ControllerTransitions.test_promotion_changes_controller_not_application_and_keeps_frozen_policy) ... ok
+test_protocol2_record_is_known_before_floor3_and_rejected_afterwards (test_application_controller.ControllerTransitions.test_protocol2_record_is_known_before_floor3_and_rejected_afterwards) ... FAIL
+test_protocol_floor_advances_and_current_verifier_rejects_legacy_record (test_application_controller.ControllerTransitions.test_protocol_floor_advances_and_current_verifier_rejects_legacy_record) ... FAIL
+test_recovery_refuses_wrong_identity_or_changed_archive (test_application_controller.ControllerTransitions.test_recovery_refuses_wrong_identity_or_changed_archive) ... ok
+test_registration_repair_raises_an_older_floor_without_replacing_root (test_application_controller.ControllerTransitions.test_registration_repair_raises_an_older_floor_without_replacing_root) ... FAIL
+test_stale_epoch_build_controller_and_unreviewed_source_never_replace_pointer (test_application_controller.ControllerTransitions.test_stale_epoch_build_controller_and_unreviewed_source_never_replace_pointer) ... ok
+test_tampered_controller_is_refused_then_recovered_to_fresh_verified_copy (test_application_controller.ControllerTransitions.test_tampered_controller_is_refused_then_recovered_to_fresh_verified_copy) ... ok
+test_unmanifested_import_is_refused_before_controller_code_runs (test_application_controller.ControllerTransitions.test_unmanifested_import_is_refused_before_controller_code_runs) ... ok
+test_withdrawn_source_qualification_cannot_be_revived_by_recovery_capsule (test_application_controller.ControllerTransitions.test_withdrawn_source_qualification_cannot_be_revived_by_recovery_capsule) ... ok
+
+======================================================================
+FAIL: test_live_release_lock_and_unknown_protocol_refuse_transitions (test_application_controller.ControllerTransitions.test_live_release_lock_and_unknown_protocol_refuse_transitions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\Jarvis\dev\tests\test_application_controller.py", line 143, in test_live_release_lock_and_unknown_protocol_refuse_transitions
+    with self.assertRaises(CoreError):pin.read(self.root)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+AssertionError: CoreError not raised
+
+======================================================================
+FAIL: test_protocol2_record_is_known_before_floor3_and_rejected_afterwards (test_application_controller.ControllerTransitions.test_protocol2_record_is_known_before_floor3_and_rejected_afterwards)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\Jarvis\dev\tests\test_application_controller.py", line 225, in test_protocol2_record_is_known_before_floor3_and_rejected_afterwards
+    self.assertEqual(pin.read(self.root)['controller_protocol'],6)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 7 != 6
+
+======================================================================
+FAIL: test_protocol_floor_advances_and_current_verifier_rejects_legacy_record (test_application_controller.ControllerTransitions.test_protocol_floor_advances_and_current_verifier_rejects_legacy_record)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\Jarvis\dev\tests\test_application_controller.py", line 193, in test_protocol_floor_advances_and_current_verifier_rejects_legacy_record
+    self.assertEqual(result['record']['controller_protocol'],6)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 7 != 6
+
+======================================================================
+FAIL: test_registration_repair_raises_an_older_floor_without_replacing_root (test_application_controller.ControllerTransitions.test_registration_repair_raises_an_older_floor_without_replacing_root)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\Jarvis\dev\tests\test_application_controller.py", line 207, in test_registration_repair_raises_an_older_floor_without_replacing_root
+    self.assertEqual(read_json(path)['minimum'],6)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 7 != 6
+
+----------------------------------------------------------------------
+Ran 18 tests in 25.142s
+
+FAILED (failures=4)

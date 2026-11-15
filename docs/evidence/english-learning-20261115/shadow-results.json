@@ -1,0 +1,184 @@
+{
+  "scope": "Development synthetic learner answers with real provider, not actual user progress",
+  "attempts": [
+    {
+      "turn_id": "english-shadow-20261115-life-question",
+      "provider": "vertex",
+      "model": "gemini-3.8-flash",
+      "status": "UNKNOWN",
+      "usage": {},
+      "error": "model_context"
+    },
+    {
+      "turn_id": "english-shadow-20261115-life-question-r2",
+      "provider": "vertex",
+      "model": "gemini-3.8-flash",
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 123,
+        "prompt_tokens": 264,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 455,
+        "total_tokens": 842
+      },
+      "error": null
+    },
+    {
+      "turn_id": "english-shadow-20261115-communication-question-r2",
+      "provider": "vertex",
+      "model": "gemini-3.8-flash",
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 113,
+        "prompt_tokens": 274,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 653,
+        "total_tokens": 1040
+      },
+      "error": null
+    },
+    {
+      "turn_id": "english-shadow-20261115-work-question-r2",
+      "provider": "vertex",
+      "model": "gemini-3.8-flash",
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 158,
+        "prompt_tokens": 283,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 704,
+        "total_tokens": 1145
+      },
+      "error": null
+    },
+    {
+      "turn_id": "english-shadow-20261115-work-question-r3",
+      "provider": "vertex",
+      "model": "gemini-3.8-flash",
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 89,
+        "prompt_tokens": 387,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 728,
+        "total_tokens": 1204
+      },
+      "error": null
+    },
+    {
+      "turn_id": "english-shadow-20261115-life-answer",
+      "provider": "vertex",
+      "model": "gemini-3.8-flash",
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 142,
+        "prompt_tokens": 391,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 728,
+        "total_tokens": 1261
+      },
+      "error": null
+    },
+    {
+      "turn_id": "english-shadow-20261115-communication-answer",
+      "provider": "vertex",
+      "model": "gemini-3.8-flash",
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 139,
+        "prompt_tokens": 402,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 205,
+        "total_tokens": 746
+      },
+      "error": null
+    },
+    {
+      "turn_id": "english-shadow-20261115-work-answer",
+      "provider": "vertex",
+      "model": "gemini-3.8-flash",
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 155,
+        "prompt_tokens": 410,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 431,
+        "total_tokens": 996
+      },
+      "error": null
+    },
+    {
+      "turn_id": "english-shadow-20261115-cross-review",
+      "provider": "vertex",
+      "model": "gemini-3.8-flash",
+      "status": "SUCCEEDED",
+      "usage": {
+        "completion_tokens": 141,
+        "prompt_tokens": 383,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 723,
+        "total_tokens": 1247
+      },
+      "error": null
+    }
+  ],
+  "external_successful_calls": 8,
+  "total_known_tokens": 8481,
+  "local_unknown_before_dispatch": 1,
+  "automatic_unknown_retries": 0,
+  "operator_corrections": 2,
+  "retained_failures": [
+    "native message format rejected before external call",
+    "first work question substituted supplied material"
+  ],
+  "grading_results": [
+    {
+      "domain": "life",
+      "meaning_form_appropriacy": [
+        2,
+        2,
+        2
+      ],
+      "expected_condition_passed": true
+    },
+    {
+      "domain": "communication",
+      "meaning_form_appropriacy": [
+        2,
+        2,
+        2
+      ],
+      "expected_condition_passed": true
+    },
+    {
+      "domain": "work",
+      "meaning_form_appropriacy": [
+        0,
+        2,
+        2
+      ],
+      "expected_condition_passed": true
+    }
+  ],
+  "cross_chat_review": {
+    "passed": true,
+    "target": "work.notice",
+    "background": [
+      {
+        "answer": "We need to submit the report on Friday at 3 p.m.",
+        "assistance": "independent",
+        "correction": "We need to submit the report by Thursday at 3 p.m.",
+        "error_tags": [
+          "meaning"
+        ],
+        "memory_cue": "by + 截止时间（表示“最晚在某时之前”，如 by Thursday）"
+      }
+    ],
+    "dependencies": [
+      "english-shadow-20261115-work-answer",
+      "english-shadow-20261115-work-question-r3"
+    ]
+  },
+  "causal_learning_gain": null,
+  "currency_cost": null
+}

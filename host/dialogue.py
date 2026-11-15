@@ -123,7 +123,10 @@ class DialogueHost:
 
     def run(self, ident):
         store = Dialogues(self.root); attempt = None; result = None; view = None; memory_db = None
+        from host import english_learning
+        learning_job=None
         try:
+            learning_job=english_learning.binding(self.root,ident)
             with self.lock:
                 entry = self.running.get(ident)
                 if entry and entry['lane'] == 'foreground':
@@ -131,6 +134,7 @@ class DialogueHost:
             def checkpoint():
                 if self.closing.is_set(): raise CoreError('chat_cancelled', 'Server is closing')
                 StopGate(self.root).require_running(); store.checkpoint(ident)
+                if learning_job:english_learning.checkpoint(self.root,ident)
                 if view is not None:memory.refresh_view(self.root,view,chats=store,memory_db=memory_db)
             checkpoint()
             for route in decode(store.turn(ident)['routes']):
@@ -151,9 +155,15 @@ class DialogueHost:
                         view['dependencies']=[{'id':r['id'],'revision':r['revision']} for r in view['facts']]
                         view['dependencies'].extend(r for item in items for r in item.get('memory_dependencies',[]))
                     memory.refresh_view(self.root,view,chats=store,memory_db=memory_db);messages = store.context(ident, view)
+                learning_messages=english_learning.context(self.root,store.turn(ident)) if learning_job else None
+                if learning_messages is not None:messages=learning_messages
                 checkpoint()
                 attempt = store.start_attempt(ident, route)
-                if request.get('assistant_mode',False):
+                if learning_messages is not None:
+                    result=client.complete(messages,checkpoint,json_mode=True)
+                    try:result=english_learning.materialize(self.root,ident,result)
+                    except CoreError as exc:result={**result,'status':'INVALID','code':exc.code}
+                elif request.get('assistant_mode',False):
                     messages[-1]['content']+='\n\n'+instruction
                     result=client.complete(messages,checkpoint,json_mode=True)
                     if result['status']=='SUCCEEDED':
@@ -182,6 +192,9 @@ class DialogueHost:
                 result['delivery_review']=observe_delivery(delivery_turn,result)
                 if rendering and result['delivery_review'] is not None:result['delivery_review']['rendering']=rendering
                 checkpoint(); store.finish(ident, result)
+                if learning_job:
+                    try:english_learning.completed(self.root,ident)
+                    except (CoreError,OSError,sqlite3.Error):pass  # Reconcile the durable reply on the next learning view; never repeat the paid call.
                 try:
                     turn=store.turn(ident)
                     session_workspace.publish_reply(self.root,store.read(turn['chat_id']),turn)

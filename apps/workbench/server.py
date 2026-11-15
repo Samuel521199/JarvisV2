@@ -454,6 +454,9 @@ class Handler(BaseHTTPRequestHandler):
                 finally: store.close()
             if route.path == '/api/chat/send':
                 return self.json(self.server.dialogues.submit(body), 202)
+            if route.path == '/api/english-learning':
+                from host.english_learning import command as learning_command
+                return self.json(learning_command(root,body,self.server.dialogues))
             if route.path == '/api/chats' or route.path == '/api/chat/cancel':
                 store = Dialogues(root)
                 try:

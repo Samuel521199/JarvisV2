@@ -1,0 +1,10 @@
+{
+  "turn_id": "english-shadow-20261115-life-question",
+  "stored_status": "UNKNOWN",
+  "error": "model_context",
+  "cause": "Learning context used system role, but native gateway accepts user/assistant only. Mock did not cover this contract.",
+  "bridge_calls_since_trial_started": 0,
+  "provider_dispatch": "not reached: native validation precedes bridge invocation",
+  "original_receipt_preserved": true,
+  "fix": "Reuse existing single-user-message gateway contract; add actual gateway preflight test; new corrected question request, no replay of old ID."
+}

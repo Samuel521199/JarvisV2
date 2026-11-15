@@ -1,0 +1,323 @@
+{
+  "job": {
+    "chat_id": "chat-f16fed86965143e9a1fc3dc54d1ce978",
+    "id": "english-shadow-20261115-communication-answer",
+    "kind": "answer",
+    "state": "RECORDED"
+  },
+  "state": {
+    "config": {
+      "domains": [
+        "life",
+        "communication",
+        "work"
+      ],
+      "enabled": true,
+      "revision": 1
+    },
+    "exercises": [
+      {
+        "assessment": null,
+        "chat_id": "chat-959b1ce3af3d415f9b5d99df2c3ba889",
+        "exercise": {
+          "created": 1794754860.6722593,
+          "difficulty": 1,
+          "material_origin": "user_provided",
+          "prompt": "本次提供的资料：\n教学示例：The office will be closed on Friday. Please submit your report by Thursday at 3 p.m. 任务：读懂应该何时交报告。\n\n问题：根据上面的通知内容，请用英语回答：报告最晚必须在什么时间之前提交？",
+          "question_turn": "english-shadow-20261115-work-question-r3",
+          "schema": "jarvis.english-learning.v1",
+          "target": "work.notice"
+        },
+        "exposed": false,
+        "hints": 0,
+        "id": "english-shadow-20261115-work-question-r3"
+      },
+      {
+        "assessment": {
+          "answer": "Could you speak a little more slowly and repeat the last sentence, please?",
+          "answer_quote": "Could you speak a little more slowly and repeat the last sentence, please?",
+          "answer_turn": "english-shadow-20261115-communication-answer",
+          "appropriacy": 2,
+          "assistance": "independent",
+          "chat_id": "chat-f16fed86965143e9a1fc3dc54d1ce978",
+          "confidence": "high",
+          "correction": "Could you speak a bit slower and repeat the last sentence, please?",
+          "created": 1794754959.272091,
+          "difficulty": 1,
+          "disputed": false,
+          "error_tags": [],
+          "exposed": 0,
+          "feedback": "原句表达准确且礼貌，“Could you speak a little more slowly”与“repeat the last sentence”完整传达了放慢语速和重述最后一句的请求，末尾加“please”得体自然。",
+          "form": 2,
+          "hints": 0,
+          "id": "english-shadow-20261115-communication-answer",
+          "judge": "model_provisional",
+          "meaning": 2,
+          "memory_cue": "speak a little more slowly / repeat the last sentence",
+          "model_receipt": {
+            "model": "gemini-3.8-flash",
+            "provider": "vertex",
+            "usage": {
+              "completion_tokens": 139,
+              "prompt_tokens": 402,
+              "reasoning_in_completion": false,
+              "reasoning_tokens": 205,
+              "total_tokens": 746
+            }
+          },
+          "prompt": "【教学示例】在与外国同事线上沟通时，由于杂音干扰，你没听清对方刚才说的最后一条要求。请用一句简短礼貌的英语，请求对方讲得慢一点，并把最后那句话重复一遍。",
+          "schema": 1,
+          "target": "communication.clarify"
+        },
+        "chat_id": "chat-f16fed86965143e9a1fc3dc54d1ce978",
+        "exercise": {
+          "created": 1794754684.8525972,
+          "difficulty": 1,
+          "material_origin": "user_provided",
+          "prompt": "【教学示例】在与外国同事线上沟通时，由于杂音干扰，你没听清对方刚才说的最后一条要求。请用一句简短礼貌的英语，请求对方讲得慢一点，并把最后那句话重复一遍。",
+          "question_turn": "english-shadow-20261115-communication-question-r2",
+          "reference": "Could you please speak a little slower and repeat the last sentence?",
+          "schema": "jarvis.english-learning.v1",
+          "target": "communication.clarify"
+        },
+        "exposed": false,
+        "hints": 0,
+        "id": "english-shadow-20261115-communication-question-r2"
+      },
+      {
+        "assessment": {
+          "answer": "I'd like a small hot coffee with no sugar, please.",
+          "answer_quote": "I'd like a small hot coffee with no sugar, please.",
+          "answer_turn": "english-shadow-20261115-life-answer",
+          "appropriacy": 2,
+          "assistance": "independent",
+          "chat_id": "chat-21135b76260546cfb32bac5bc6106a88",
+          "confidence": "high",
+          "correction": "Hi, could I get a small hot coffee with no sugar, please?",
+          "created": 1794754951.6446388,
+          "difficulty": 1,
+          "disputed": false,
+          "error_tags": [],
+          "exposed": 0,
+          "feedback": "原句'I'd like a small hot coffee with no sugar, please.'表达完整准确，使用了礼貌的'I'd like'和'please'，完全符合日常点单习惯。",
+          "form": 2,
+          "hints": 0,
+          "id": "english-shadow-20261115-life-answer",
+          "judge": "model_provisional",
+          "meaning": 2,
+          "memory_cue": "点单核心语块：I'd like a [size] [drink], please.",
+          "model_receipt": {
+            "model": "gemini-3.8-flash",
+            "provider": "vertex",
+            "usage": {
+              "completion_tokens": 142,
+              "prompt_tokens": 391,
+              "reasoning_in_completion": false,
+              "reasoning_tokens": 728,
+              "total_tokens": 1261
+            }
+          },
+          "prompt": "【教学示例】情境：你在一家咖啡店点单。请用英语礼貌地向店员表达：“你好，请给我一杯小杯的热咖啡，不要加糖，谢谢。”",
+          "schema": 1,
+          "target": "life.request"
+        },
+        "chat_id": "chat-21135b76260546cfb32bac5bc6106a88",
+        "exercise": {
+          "created": 1794754675.109257,
+          "difficulty": 1,
+          "material_origin": "user_provided",
+          "prompt": "【教学示例】情境：你在一家咖啡店点单。请用英语礼貌地向店员表达：“你好，请给我一杯小杯的热咖啡，不要加糖，谢谢。”",
+          "question_turn": "english-shadow-20261115-life-question-r2",
+          "reference": "Hi, could I have a small hot coffee with no sugar, please?",
+          "schema": "jarvis.english-learning.v1",
+          "target": "life.request"
+        },
+        "exposed": false,
+        "hints": 0,
+        "id": "english-shadow-20261115-life-question-r2"
+      }
+    ],
+    "jobs": [
+      {
+        "chat_id": "chat-f16fed86965143e9a1fc3dc54d1ce978",
+        "id": "english-shadow-20261115-communication-answer",
+        "kind": "answer",
+        "state": "RECORDED"
+      },
+      {
+        "chat_id": "chat-21135b76260546cfb32bac5bc6106a88",
+        "id": "english-shadow-20261115-life-answer",
+        "kind": "answer",
+        "state": "RECORDED"
+      },
+      {
+        "chat_id": "chat-959b1ce3af3d415f9b5d99df2c3ba889",
+        "id": "english-shadow-20261115-work-question-r3",
+        "kind": "question",
+        "state": "RECORDED"
+      },
+      {
+        "chat_id": "chat-959b1ce3af3d415f9b5d99df2c3ba889",
+        "id": "english-shadow-20261115-work-question-r2",
+        "kind": "question",
+        "state": "RECORDED"
+      },
+      {
+        "chat_id": "chat-f16fed86965143e9a1fc3dc54d1ce978",
+        "id": "english-shadow-20261115-communication-question-r2",
+        "kind": "question",
+        "state": "RECORDED"
+      },
+      {
+        "chat_id": "chat-21135b76260546cfb32bac5bc6106a88",
+        "id": "english-shadow-20261115-life-question-r2",
+        "kind": "question",
+        "state": "RECORDED"
+      },
+      {
+        "chat_id": "chat-b20841f563314b62a4cb285f08430ee6",
+        "id": "english-shadow-20261115-life-question",
+        "kind": "question",
+        "state": "UNKNOWN"
+      }
+    ],
+    "method_version": "1.0.0",
+    "progress": {
+      "certified_level": null,
+      "domains": {
+        "communication": {
+          "assisted": 0,
+          "attempts": 1,
+          "delayed_success_rate": null,
+          "delayed_successes": 0,
+          "delayed_variants": 0,
+          "independent": 1,
+          "interpretation": "AI estimates on text tasks; not certified proficiency or causal learning gains"
+        },
+        "life": {
+          "assisted": 0,
+          "attempts": 1,
+          "delayed_success_rate": null,
+          "delayed_successes": 0,
+          "delayed_variants": 0,
+          "independent": 1,
+          "interpretation": "AI estimates on text tasks; not certified proficiency or causal learning gains"
+        },
+        "work": {
+          "assisted": 0,
+          "attempts": 0,
+          "delayed_success_rate": null,
+          "delayed_successes": 0,
+          "delayed_variants": 0,
+          "independent": 0,
+          "interpretation": "AI estimates on text tasks; not certified proficiency or causal learning gains"
+        }
+      },
+      "review": [
+        {
+          "count": 1,
+          "difficulty": 1,
+          "domain": "life",
+          "due": 1794841351.6446388,
+          "due_now": false,
+          "label": "礼貌地请求物品或帮助",
+          "reason": "optional_practice",
+          "stage": 1,
+          "target": "life.request"
+        },
+        {
+          "count": 1,
+          "difficulty": 1,
+          "domain": "communication",
+          "due": 1794841359.272091,
+          "due_now": false,
+          "label": "没听清时请求重说并核对意思",
+          "reason": "optional_practice",
+          "stage": 1,
+          "target": "communication.clarify"
+        },
+        {
+          "count": 0,
+          "difficulty": 1,
+          "domain": "work",
+          "due": null,
+          "due_now": false,
+          "label": "读懂工作通知的行动、时间与限制",
+          "reason": "new",
+          "stage": 0,
+          "target": "work.notice"
+        },
+        {
+          "count": 0,
+          "difficulty": 1,
+          "domain": "life",
+          "due": null,
+          "due_now": false,
+          "label": "问路并确认地点",
+          "reason": "new",
+          "stage": 0,
+          "target": "life.directions"
+        },
+        {
+          "count": 0,
+          "difficulty": 1,
+          "domain": "communication",
+          "due": null,
+          "due_now": false,
+          "label": "商量时间并确认安排",
+          "reason": "new",
+          "stage": 0,
+          "target": "communication.arrange"
+        },
+        {
+          "count": 0,
+          "difficulty": 1,
+          "domain": "work",
+          "due": null,
+          "due_now": false,
+          "label": "写简短清晰的工作回复",
+          "reason": "new",
+          "stage": 0,
+          "target": "work.email"
+        },
+        {
+          "count": 0,
+          "difficulty": 1,
+          "domain": "life",
+          "due": null,
+          "due_now": false,
+          "label": "说明日常遇到的问题并请求处理",
+          "reason": "new",
+          "stage": 0,
+          "target": "life.problem"
+        },
+        {
+          "count": 0,
+          "difficulty": 1,
+          "domain": "communication",
+          "due": null,
+          "due_now": false,
+          "label": "表达意见并礼貌询问对方",
+          "reason": "new",
+          "stage": 0,
+          "target": "communication.opinion"
+        },
+        {
+          "count": 0,
+          "difficulty": 1,
+          "domain": "work",
+          "due": null,
+          "due_now": false,
+          "label": "用自己的话解释工作资料的关键意思",
+          "reason": "new",
+          "stage": 0,
+          "target": "work.explain"
+        }
+      ],
+      "trend_state": "insufficient_comparable_samples",
+      "trends": []
+    },
+    "scope": "personal_text_learning",
+    "withheld_assessments": 0
+  }
+}

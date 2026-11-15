@@ -9,6 +9,7 @@
 
 - [实现状态索引（先看这里）](#contracts-implementation-index)
 - [独立控制器指针与恢复契约](#controller-pointer-contract)
+- [个人英语学习记录契约](#english-learning-contract)
 - [个人助手核心接口（设计）](#personal-assistant-contracts)
   - [身份、个人上下文与行动意图的边界](#personal-context-contract)
 - [记忆组件的替换契约（proposed）](#memory-provider-contracts)
@@ -92,20 +93,41 @@
 <a id="controller-pointer-contract"></a>
 ## 独立控制器指针与恢复契约
 
-**implemented，当前控制器协议2；限已审阅第一方源码和同Windows用户。** 根`JarvisLaunch.py`中的固定模板携带签名记录，是原子提交权威；`deployment/launcher.json`是可修复缓存。未登记协议下限时兼容旧schema1入口；登记后受支持入口拒绝重新安装旧入口。协议2读取目标建议依赖，必须先晋升控制器再写入新格式。操作流程归[独立晋升](evolution-release.md#independent-controller-runtime)，实测归[验收](delivery-validation.md#controller-promotion-evidence-20261114)。
+**implemented，当前源码控制器协议7；限已审阅第一方源码和同Windows用户。** 根`JarvisLaunch.py`中的固定模板携带签名记录，是原子提交权威；`deployment/launcher.json`是可修复缓存。未登记协议下限时兼容旧schema1入口；登记后受支持入口拒绝重新安装旧入口。协议2读取目标建议依赖，协议6识别修复回接历史，协议7增加个人学习schema1；必须先晋升控制器再写入新格式。操作流程归[独立晋升](evolution-release.md#independent-controller-runtime)，实际安装以[当前状态](current-state.md)为准。
 
 | 字段／文件 | 语义与校验 |
 |---|---|
-| schema=2、controller_protocol=1—6、generation | 当前产生协议6；仅在下限允许时读取已知旧协议，拒绝未知协议；generation随控制器指针提交递增，与应用epoch分开 |
+| schema=2、controller_protocol=1—7、generation | 当前产生协议7；仅在下限允许时读取已知旧协议，拒绝未知协议；generation随控制器指针提交递增，与应用epoch分开 |
 | build、controller_inventory_sha256 | 控制器全部文件摘要清单的SHA256，两者必须相同；包括冻结的旧评价策略，所以不等于运行来源包摘要 |
 | runtime_source_build、policy_anchor_build、policy_sha256 | 分别为独立准入的运行来源、评价策略原锚点与实际冻结策略摘要；启动时复核来源未退役、准入签名和策略仍有效 |
 | controller、data_root、port | 安装内直属控制器目录、固定数据根与端口；拒绝链接、越界路径、额外文件和内容变化 |
 | capsule_id、recovery_archive、recovery_sha256、launcher_backup | 签名绑定的恢复副本和事件位置；恢复只能重建expected_controller原身份，改用新目录而不覆盖坏目录 |
 | signature | 既有DPAPI密钥保护的本机HMAC；不在日志导出密钥，不新增模型发放权限 |
-| controller-protocol.json | 严格schema1/minimum1或2；晋升可单调提高1→2，repair只补登记、不降低；旧协议1版本化控制器拒绝下限2，未知版本拒绝 |
+| controller-protocol.json | 严格schema1/minimum1—7；晋升单调提高已知下限，repair只补登记、不降低；旧控制器不认识新下限时拒绝，不猜测兼容 |
 | registration_pending | 原子根入口已经提交但派生登记未完；读取根入口实际记录，显式修复缓存，不谎称晋升失败并反向切旧 |
 
 晋升同时固定当前应用epoch/build与原控制器指针摘要；提交前复查包和实际数据需求。应用生命周期仍走原Applications事务；控制器恢复不回放旧业务数据库、不清除STOP、不恢复已撤回的来源准入。损坏元数据只能由匹配签名事件及已知身份恢复；没有证据时保持拒绝。下限只约束受支持、版本化入口及可信当前CLI；古老未版本化schema1代码并不读取新下限，同用户手工执行旧程序或整体回滚控制/数据目录不在此保证内。灾备必须先覆盖最新相配增量，不能从D旧副本直接启动。此契约不代表完整跨业务库迁移或任意代码热更新已实现。
+
+<a id="english-learning-contract"></a>
+## 个人英语学习记录契约
+
+**implemented，v0.1.11，文字学习schema1。** `modules/english_learning`拥有独立学习存储与调度规则；`host/english_learning`连接原Dialogues、技能、模型队列与身份门。现有聊天表未增加字段，原技能版本不变。入口`POST /api/english-learning`复用原本机认证、owner范围、STOP及应用接纳检查。
+
+| 数据或动作 | 约束 |
+|---|---|
+| state/english-learning.sqlite3 | user_version=1；settings、exercises、assessments、jobs；不支持的版本拒绝，关闭功能后历史仍受兼容保护 |
+| configure | enabled布尔值与revision严格CAS；开关变化使旧在途评价失效 |
+| start / answer | 唯一english-请求ID与完整命令摘要绑定；通过原模型路由/账本，不产生新的动作权限。重复ID不得改变输入 |
+| 出题 | 一题、参考与提示分开；提供资料时逐字source_quote校验；工作材料原文由宿主展示。结构约束不等于全面语义正确证明 |
+| 作答事实 | 宿主保存原答；模型answer_quote必须逐字匹配。提示、答案暴露和本人声明的外部辅助分别记录 |
+| 评价 | 意思/形式/得体各0—2，模型置信与理由；模型评价可争议，低置信/争议/失效来源不影响复习和趋势 |
+| 持久接续 | 候选先落库，原聊天成功回复及摘要匹配才记RECORDED；崩溃后核对原回执，不为补记记录重发模型请求 |
+| UNKNOWN / FAILED / INVALIDATED | 分别保留结果不确定、已知未完成、来源或权限变化；不自动重试未知付费调用 |
+| hint / reveal / withdraw / dispute | 辅助不可刷独立成绩；撤回或异议停止相关评价用于调整。撤回不物理删除原聊天，来源会话另行管理 |
+| 当前复习与进步 | 有效来源重验、最多2条相关评价和3道近期题、消息24KB上限；间隔及趋势规则见[方法](english-learning-method.md#english-progress-rules)。没有音频不评口语/发音 |
+| 兼容采用与回退 | 托管写入先核验协议7；发现学习库即要求目标包声明schema1。只读恢复包阻止已有学习job按普通聊天派发；不回滚业务库或撤回状态 |
+
+学习记录是个人表现证据，不能作为一般知识事实或外部授权。当前只接个人聊天；项目/家庭其他身份不自动获得个人学习史。普通聊天保持原模式，不从引用、粘贴或模型回答猜测学习成绩。日用采用与真实效果须以验收回执判断。
 
 <a id="personal-assistant-contracts"></a>
 ## 个人助手核心接口（设计）

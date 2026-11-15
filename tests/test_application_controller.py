@@ -139,10 +139,10 @@ class ControllerTransitions(unittest.TestCase):
 
     def test_live_release_lock_and_unknown_protocol_refuse_transitions(self):
         with RunLock(self.root,'application-release'),self.assertRaises(CoreError):self.promote()
-        record=self.promote()['record'];path=self.root/'deployment/controller-protocol.json';path.write_text('{"schema":1,"minimum":7}')
+        record=self.promote()['record'];path=self.root/'deployment/controller-protocol.json';path.write_text(json.dumps({'schema':1,'minimum':pin.PROTOCOL+1}))
         with self.assertRaises(CoreError):pin.read(self.root)
         with self.assertRaises(CoreError):controllers.recover(self.root,expected_controller=record['build'],expected_epoch=self.before['epoch'],expected_build=self.old)
-        self.assertEqual(read_json(path)['minimum'],7)
+        self.assertEqual(read_json(path)['minimum'],pin.PROTOCOL+1)
 
     def test_late_data_change_is_checked_before_controller_commit(self):
         original=controllers.publish_files
@@ -190,8 +190,8 @@ class ControllerTransitions(unittest.TestCase):
         old=(self.home/'JarvisLaunch.py').read_bytes()
         write=self.root/'deployment/controller-protocol.json'
         result=self.promote();committed=(self.home/'JarvisLaunch.py').read_bytes()
-        self.assertEqual(result['record']['controller_protocol'],6)
-        self.assertEqual(read_json(write),{'schema':1,'minimum':6})
+        self.assertEqual(result['record']['controller_protocol'],pin.PROTOCOL)
+        self.assertEqual(read_json(write),{'schema':1,'minimum':pin.PROTOCOL})
         (self.home/'JarvisLaunch.py').write_bytes(old)
         with self.assertRaises(CoreError):pin.read(self.root)
         (self.home/'JarvisLaunch.py').write_bytes(committed)
@@ -204,11 +204,11 @@ class ControllerTransitions(unittest.TestCase):
         path.write_text('{"schema":1,"minimum":2}')
         repaired=controllers.repair(self.root,expected_controller=record['build'])
         self.assertEqual(repaired['registration_pending'],[])
-        self.assertEqual(read_json(path)['minimum'],6)
+        self.assertEqual(read_json(path)['minimum'],pin.PROTOCOL)
         self.assertEqual((self.home/'JarvisLaunch.py').read_bytes(),root)
-        path.write_text('{"schema":1,"minimum":7}')
+        path.write_text(json.dumps({'schema':1,'minimum':pin.PROTOCOL+1}))
         with self.assertRaises(CoreError):controllers.repair(self.root,expected_controller=record['build'])
-        self.assertEqual(read_json(path)['minimum'],7)
+        self.assertEqual(read_json(path)['minimum'],pin.PROTOCOL+1)
 
     def test_protocol2_record_is_known_before_floor3_and_rejected_afterwards(self):
         from control.application_runtime import LocalApprovals
@@ -222,7 +222,7 @@ class ControllerTransitions(unittest.TestCase):
         floor.write_text('{"schema":1,"minimum":3}')
         with self.assertRaises(CoreError) as error:pin.verify(self.root,prior,files=False)
         self.assertEqual(error.exception.code,'controller_protocol')
-        self.assertEqual(pin.read(self.root)['controller_protocol'],6)
+        self.assertEqual(pin.read(self.root)['controller_protocol'],pin.PROTOCOL)
 
 
 if __name__=='__main__':unittest.main()

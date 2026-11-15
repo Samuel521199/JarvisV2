@@ -26,11 +26,11 @@ class ApplicationCompatibility(unittest.TestCase):
         self.base=Path(self.temp.name);self.root=self.base/'data';Core.initialize(self.root).close()
         self.app=Applications(self.root);self.driver=Driver()
 
-    def candidate(self,name,commitments=False,chat=False,advice=False,goal_advice=False,repair=False):
+    def candidate(self,name,commitments=False,chat=False,advice=False,goal_advice=False,repair=False,english=False):
         source=self.base/name;(source/'apps/workbench').mkdir(parents=True)
         (source/'VERSION').write_text(name);(source/'apps/workbench/server.py').write_text('# synthetic protocol fixture')
         files=['VERSION','apps/workbench/server.py']
-        if commitments or chat or advice or goal_advice or repair:
+        if commitments or chat or advice or goal_advice or repair or english:
             (source/'config').mkdir();(source/'config/runtime-compatibility.json').write_text(json.dumps(
                 {'schema':1,'commitments_schema':int(commitments),'assistant_commitments':chat}))
             files.append('config/runtime-compatibility.json')
@@ -43,6 +43,9 @@ class ApplicationCompatibility(unittest.TestCase):
         if repair:
             (source/'config/repair-return-compatibility.json').write_text(json.dumps({'schema':1,'repair_return_schema':1}))
             files.append('config/repair-return-compatibility.json')
+        if english:
+            (source/'config/english-learning-compatibility.json').write_text('{"schema":1,"english_learning_schema":1}')
+            files.append('config/english-learning-compatibility.json')
         archive=self.base/(name+'.zip');ident=build(source,files,archive,name)
         self.app.stage(archive);self.app.validate(ident,lambda _: {'passed':True,'scope':'synthetic protocol fixture'})
         return ident
@@ -79,6 +82,17 @@ class ApplicationCompatibility(unittest.TestCase):
             with core.db.transaction() as tx:core.db.event(tx,None,'learning.repair_return',{'schema':2})
         finally:core.close()
         with self.assertRaises(CoreError):require_compatible(self.root,self.app.record(current)['path'])
+
+    def test_learning_records_block_incompatible_rollback_before_host_drain(self):
+        from modules.english_learning.store import Store
+        old=self.candidate('old');current=self.candidate('new',english=True)
+        self.app.adopt(old,self.driver);self.app.adopt(current,self.driver)
+        learning=Store(self.root);learning.close()
+        before=self.app.state();events=list(self.driver.events)
+        with self.assertRaises(CoreError) as error:self.app.rollback(self.driver)
+        self.assertEqual(error.exception.code,'application_data_compatibility')
+        self.assertEqual(self.app.state(),before);self.assertEqual(self.driver.events,events)
+        self.assertTrue(require_compatible(self.root,self.app.record(current)['path'])['compatible'])
 
     def test_existing_records_block_legacy_before_drain(self):
         old=self.candidate('old');current=self.candidate('current',True,True)
