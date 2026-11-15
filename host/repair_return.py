@@ -1,5 +1,6 @@
 """One authorized repair returns through the existing work, budget and receipt ledgers."""
 import time
+from pathlib import Path
 from control.application_runtime import require_accepting
 from control.policy.grants import GrantStore
 from control.recovery.gate import RunLock
@@ -13,7 +14,16 @@ from modules.task_resource.work_budgets import WorkBudgets
 from sdk.protocol import CoreError, decode, digest
 
 
+def require_controller(root):
+    root=Path(root)
+    if any(p.exists() for p in (root.parent/'JarvisLaunch.py',root/'deployment/launcher.json',root/'deployment/controller-protocol.json')):
+        from control.controller_pin import read
+        if read(root).get('controller_protocol',0)<6:
+            raise CoreError('controller_protocol','Repair return requires the installed mandate-aware controller')
+
+
 def authorize(core, source_task, ident, draft, tx):
+    require_controller(core.root)
     old=records.get(core.db,ident)
     if old:return old  # Never renew a deadline, cancellation or one-shot allowance.
     assessment=refresh(core,source_task,transaction=tx)

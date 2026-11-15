@@ -30,6 +30,12 @@ class RecoverySnapshotTests(unittest.TestCase):
         self.assertEqual(error.exception.code,'busy')
         self.assertFalse((self.base/'backup').exists())
 
+    def test_learning_writers_block_capture_before_creating_destination(self):
+        for lane in ('repair-return',):
+            with self.subTest(lane=lane),RunLock(self.root,lane):
+                with self.assertRaises(CoreError):self.capture()
+                self.assertFalse((self.base/'backup').exists())
+
     def test_tampered_file_rejected_before_creating_restore(self):
         self.capture();(self.base/'backup/assets/part.bin').write_bytes(b'wrong')
         with self.assertRaisesRegex(ValueError,'content changed'):restore(self.base/'backup',self.base/'restored')
