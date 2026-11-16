@@ -267,12 +267,12 @@ class Engine:
         ticket_path=self.folder/'ticket.json'
         if not self.config['auto_updates'] or not ticket_path.exists():self.status('ready');return
         ticket=verified(self.root,ticket_path)
-        commit=ticket['prepared'].get('completion_commit')
-        if commit and (completion is None or completion.state.get('head')!=commit or completion.state.get('status')!='queued'):
-            self.status('waiting_for_independent_check_exit');return
         rejected=set(self.journal.get('quarantined_builds',[]))|{self.journal.get('failed_build')}
         if ticket['id']==self.journal.get('ticket') or ticket['prepared']['build'] in rejected:
             self.status('ready_quarantined' if self.journal.get('failed_build') else 'ready');return
+        commit=ticket['prepared'].get('completion_commit')
+        if commit and (completion is None or completion.state.get('head')!=commit or completion.state.get('status')!='queued'):
+            self.status('waiting_for_independent_check_exit');return
         if ticket['prepared']['build']==current['active']['build']:
             self.save(ticket=ticket['id'],phase='complete');self.status('ready');return
         if not self.idle():self.idle_since=None;self.status('waiting_for_idle');return

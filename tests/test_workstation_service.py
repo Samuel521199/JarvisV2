@@ -90,6 +90,18 @@ class ServiceTests(unittest.TestCase):
         for journal in [{'phase':'complete','ticket':ticket['id']},{'phase':'quarantined','failed_build':ticket['prepared']['build']}]:
             e=self.engine();e.journal.update(journal);e.tick();e.operator.apply.assert_not_called()
 
+    def test_consumed_completion_ticket_stays_ready_after_documentation_commit(self):
+        ticket=self.ticket();ticket['prepared']['completion_commit']='old-reviewed-head'
+        service.signed(self.root,service.base(self.root)/'ticket.json',ticket)
+        e=self.engine();e.completion=Mock();e.completion.state={'head':'documentation-head','status':'no_runtime_change'}
+        e.journal.update(phase='complete',ticket=ticket['id']);e.tick()
+        self.assertEqual(service.read(e.folder/'status.json')['status'],'ready');e.operator.apply.assert_not_called()
+        # A genuinely new ticket still needs its matching independent checker
+        # to exit successfully; consuming an old ticket grants no new admission.
+        e.journal.pop('ticket');e.tick()
+        self.assertEqual(service.read(e.folder/'status.json')['status'],'waiting_for_independent_check_exit')
+        e.operator.apply.assert_not_called()
+
     def test_unsigned_ticket_refused(self):
         self.ticket();path=service.base(self.root)/'ticket.json';envelope=service.read(path);envelope['value']['prepared']['build']='c'*64;write_json(path,envelope)
         e=self.engine()

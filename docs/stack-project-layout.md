@@ -918,6 +918,8 @@ Windows自启登记在当前用户`HKCU/.../Run`的独立JarvisDaily条目，不
 
 观察期内管理器重新启动时，仍保留原观察代际；目标退出后不能先重启故障版本而改变绑定，累计三次失败再沿原基线回退。2026-11-16的真实受控Host退出演练已验证该分支，合成数据中的撤回和历史保持；恢复包可读语音/学习/模型的新格式但暂时禁用语音及学习输入。该演练不是主人日用故障或业务质量验收，原失败及修复见[独立复核](evidence/shared-speech-20261116/independent-review.json)。
 
+已消费或已隔离的票据先去重，再检查新票据对应的独立检查是否退出；后续文档收尾提交不会让已完成票据误显为仍待检查，也不重复采用。新票据仍必须匹配其完成提交及成功退出的检查器。正式语音收尾已通过28项管理器和19项完成检测测试，更新固定摘要胶囊及登录入口后实际状态为ready，日用版本未重启；[当前胶囊与采用回执](evidence/shared-speech-20261116/daily-adoption.json)。
+
 `JarvisPC.bat status`显示管理心跳；底层`python -m tools.workstation_service status --daily-data <日用根>`可核对签名策略。`pause`暂停自动启动/更新动作但不停止当前日用，`resume`显式恢复；`disable-startup`只撤销本模块登记且未被主人改写的自启项，保留原值。管理代码或不支持的控制器协议变动需重新审阅安装，不让应用候选自行更新其准入权威。[实现、真实故障演练及未验边界](delivery-validation.md#daily-automation-evidence-20261116)。
 
 <a id="external-storage-local-layout"></a>
