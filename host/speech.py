@@ -2,7 +2,7 @@
 import base64,json,re,threading,time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
-from control.application_runtime import require_accepting
+from control.application_runtime import coordination,require_accepting
 from control.paths import child
 from control.recovery.gate import RunLock,StopGate
 from host import speech_sources
@@ -11,17 +11,26 @@ from modules.speech.store import Store
 from sdk.protocol import CoreError,digest
 
 
-def writer(root):
-    require_accepting(root)
+def compatible_controller(root):
     root=Path(root)
     if any(p.exists() for p in (root.parent/'JarvisLaunch.py',root/'deployment/launcher.json',root/'deployment/controller-protocol.json')):
         from control.controller_pin import read
         if read(root)['controller_protocol']<10:raise CoreError('controller_protocol','Shared speech needs a compatible controller before writing new data')
 
 
+def writer(root):
+    require_accepting(root);compatible_controller(root)
+
+
 class Speech:
     def __init__(self,root,models,runner):
-        writer(root);self.root=root;self.models=models;self.runner=runner;self.lock=threading.RLock();self.closing=threading.Event();self.futures={}
+        # The managed Host constructs participants before publishing active.
+        # Initialize/reconcile the durable lane during that owned startup, but
+        # every command and worker checkpoint still requires active admission.
+        compatible_controller(root);current=coordination(root)
+        if current is not None and current['phase'] not in {'starting','active'}:
+            raise CoreError('application_maintenance','Speech initialization requires a starting or active Host')
+        self.root=root;self.models=models;self.runner=runner;self.lock=threading.RLock();self.closing=threading.Event();self.futures={}
         self.lease=RunLock(root,'speech');self.lease.__enter__();self.pool=ThreadPoolExecutor(max_workers=1,thread_name_prefix='shared-speech')
         try:
             with Store(root) as store:store.db.execute("UPDATE requests SET state='UNKNOWN',error='host_restarted' WHERE state IN ('QUEUED','RUNNING')")

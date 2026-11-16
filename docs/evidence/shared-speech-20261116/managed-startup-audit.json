@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "original_production_failure": {
+    "version": "0.1.14",
+    "epoch": 28,
+    "fixed_independent_checks_and_process_health_passed": true,
+    "actual_speech_status": {"available": false, "error": "application_maintenance"},
+    "cause": "Speech constructor used the active-only request writer gate while the managed Host was still starting",
+    "reviewer_code_only_rollback_epoch": 29,
+    "rollback_version": "0.1.13-speech-recovery.1",
+    "database_restored": false,
+    "scope": "Functional probe found this failure; the process-health observer did not detect semantic readiness"
+  },
+  "correction": {
+    "version": "0.1.14.1",
+    "initialization": "Valid compatible controller; only starting or active coordination may initialize and reconcile the durable speech lane",
+    "requests_and_worker_checkpoints": "Still active-only; draining, stopped, blocked and malformed coordination remain closed",
+    "lifecycle_tests": 3,
+    "shared_speech_regression_tests": 11,
+    "fixed_independent_tests": 215,
+    "fixed_independent_skipped": 1,
+    "qualified_build": "9f5c25f82a7f431ee0d61318852595084d67d924dfdd25cedf4dde38e17c9f97"
+  },
+  "actual_managed_fixture": {
+    "shared_speech_initialization_verified_through_real_http": true,
+    "schema_4_1_3_full_bridge_full": true,
+    "owned_host_exit_automatically_restores_compatible_bridge": true,
+    "history_and_withdrawal_unchanged": true,
+    "fixture_stopped": true,
+    "paid_model_calls": 0,
+    "scope": "Synthetic state, real controlled processes; verified qualification reused only for identical signed package manifests"
+  },
+  "production_corrected_adoption": "pending at this evidence point"
+}
