@@ -1,0 +1,86 @@
+{
+  "date": "2026-11-16",
+  "timezone": "Asia/Shanghai",
+  "scope": "periodic completion Git inspection; manager-only update",
+  "diagnosis": {
+    "windows_boot_time": "2026-11-16T20:41:30+08:00",
+    "logon_manager_pid": 28024,
+    "daily_host_pid": 9796,
+    "observed_period_seconds": 30,
+    "git_children_per_poll": 7,
+    "before_capture": {
+      "at": "20:46:13-20:46:15 CST",
+      "git_direct_children": 7,
+      "conhost_children": 7,
+      "terminal_processes": 7
+    },
+    "cause": "pythonw manager launched console Git without CREATE_NO_WINDOW; each poll opened transient console/Terminal windows"
+  },
+  "fix": {
+    "file": "tools/workstation_completion.py",
+    "creationflags": "subprocess.CREATE_NO_WINDOW on Windows, 0 elsewhere",
+    "installed_capsule": "56733743f5457cb1cadd5e82301bfded861bd604a5fd36733e166baff8f85208",
+    "startup_registration": "same current-user JarvisDaily entry; digest repinned",
+    "daily_application_version": "0.1.14.1",
+    "controller_protocol": 10,
+    "daily_application_restarted": false,
+    "additional_path": "Completion.resources_changed uses the hidden Git reader with original TOPS/RUNTIME_DATA policy; no controller promotion required"
+  },
+  "validation": {
+    "observation_seconds": 65.07,
+    "manager_pid": 22448,
+    "manager_status": "ready",
+    "heartbeat_versions": 4,
+    "manager_git_launches": 21,
+    "headless_console_children": 21,
+    "visible_console_windows": 0,
+    "all_new_terminal_processes": 0,
+    "same_daily_instance": true,
+    "dialogue_counts_unchanged": true,
+    "dialogue_counts": {
+      "chats": 659,
+      "turns": 670,
+      "attempts": 668,
+      "sqlite_sequence": 1,
+      "delivery_bases": 1
+    },
+    "instance": {
+      "application_build": "9f5c25f82a7f431ee0d61318852595084d67d924dfdd25cedf4dde38e17c9f97",
+      "application_epoch": 31,
+      "boot_id": "be78bd0c3efbb2413d0c3980",
+      "environment": "stable",
+      "family_version": "1.0.0",
+      "presence_protocol": 2,
+      "root_digest": "8cc158ee4a5679f150274a3c358bab6cb1fd3ed989534aa73464bcb45a9b2170",
+      "service": "jarvis-workbench"
+    },
+    "service_sha256": "b423143f42986d71e786da582c7e8124e1f85c9723c2de5ed5fde7835f60eb1a",
+    "runtime_file_selection_matches_original": true,
+    "runtime_file_count": 711,
+    "installed_resource_probe": {
+      "installed_completion_capsule": "56733743f5457cb1cadd5e82301bfded861bd604a5fd36733e166baff8f85208",
+      "application_runtime_changed": false,
+      "launched_by": "pythonw",
+      "calls": "actual installed Completion.resources_changed()",
+      "readonly": true
+    }
+  },
+  "tests": {
+    "completion": 20,
+    "service": 28,
+    "passed": 48,
+    "commands": [
+      "python -m unittest discover -s tests -p test_workstation_completion.py",
+      "python -m unittest discover -s tests -p test_workstation_service.py"
+    ]
+  },
+  "preserved_failures": [
+    "Initial dotted unittest module invocation failed because tests is not a Python package; corrected to discovery.",
+    "An initial diagnostic assertion incorrectly required zero conhost processes. Hidden console helpers can exist with CREATE_NO_WINDOW. Its 65-second capture is retained separately; subsequent verification measured actual visible ConsoleWindowClass/CASCADIA windows and Terminal processes."
+  ],
+  "boundaries": [
+    "No microphone access, model call, dependency installation, business data restore or reboot for this repair.",
+    "65-second post-fix window observation does not establish perpetual absence of every other application console.",
+    "Previous completion-state ValueError is historical metadata; the live completion status recovered to waiting_for_development_finish while this work is uncommitted."
+  ]
+}

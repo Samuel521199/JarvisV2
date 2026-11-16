@@ -45,6 +45,7 @@ class CompletionTests(unittest.TestCase):
             completion.git(self.source,'status','--porcelain')
         args=run.call_args.args[0];self.assertIn('core.fsmonitor=false',args);self.assertNotIn('fetch',args)
         self.assertEqual(run.call_args.kwargs['env']['GIT_NO_REPLACE_OBJECTS'],'1')
+        self.assertEqual(run.call_args.kwargs['creationflags'],getattr(completion.subprocess,'CREATE_NO_WINDOW',0))
 
     def test_dirty_wrong_branch_unreviewed_and_wrong_head_rejected(self):
         for patch_value in [{'clean':False},{'branch':'other'},{'reviewed':False},{'head':'c'*40}]:
@@ -81,6 +82,21 @@ class CompletionTests(unittest.TestCase):
         with patch.object(completion,'repository',return_value=self.repo),patch.object(e,'resources_changed',return_value=False),patch.object(e,'spawn') as spawn:
             e.tick();spawn.assert_not_called()
         self.assertEqual(e.state['status'],'no_runtime_change');self.assertFalse(e.state['attempts'][0]['checked'])
+
+    def test_runtime_comparison_uses_hidden_git_and_preserves_package_selection(self):
+        e=self.engine();self.operator.state.return_value={'active':{'build':'c'*64}}
+        files={'VERSION':{'sha256':'v'},'apps/workbench/server.py':{'sha256':'s'},
+            'tools/architecture-baseline.json':{'sha256':'a'},'evals/text-analyzer.json':{'sha256':'e'}}
+        names=[*files,'docs/note.md','tests/sample.py','apps/asset.blend','apps/asset.glb','apps/asset.fbx','apps/cache.pyc']
+        self.operator.sha.side_effect=lambda path:files[path.relative_to(self.source).as_posix()]['sha256']
+        with patch.object(completion,'inspect_package',return_value=(None,{'files':files})),patch.object(completion,'git',return_value=('\0'.join(names)+'\0').encode()) as git:
+            self.assertFalse(e.resources_changed())
+            git.assert_called_once_with(str(self.source),'ls-files','-z')
+            self.operator.tracked_runtime.assert_not_called()
+            self.operator.sha.side_effect=None;self.operator.sha.return_value='changed'
+            self.assertTrue(e.resources_changed())
+            git.return_value=('\0'.join(names+['host/new_module.py'])+'\0').encode()
+            self.assertTrue(e.resources_changed())
 
     def test_test_runs_are_bounded_per_day(self):
         e=self.engine();e.state.update(seen_head='b'*40,stable_since=800,

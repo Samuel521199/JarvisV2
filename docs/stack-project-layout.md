@@ -920,6 +920,8 @@ Windows自启登记在当前用户`HKCU/.../Run`的独立JarvisDaily条目，不
 
 已消费或已隔离的票据先去重，再检查新票据对应的独立检查是否退出；后续文档收尾提交不会让已完成票据误显为仍待检查，也不重复采用。新票据仍必须匹配其完成提交及成功退出的检查器。正式语音收尾已通过28项管理器和19项完成检测测试，更新固定摘要胶囊及登录入口后实际状态为ready，日用版本未重启；[当前胶囊与采用回执](evidence/shared-speech-20261116/daily-adoption.json)。
 
+2026-11-16晚间定位并修复周期闪窗：管理器每轮源码检查启动7个Git进程，缺少Windows隐藏控制台标志，实际捕获对应的控制台及Windows Terminal启动。后台Git现显式使用`CREATE_NO_WINDOW`，保留原只读参数、超时和所有准入条件；经原安装入口重新固定管理胶囊、登记原登录项并恢复管理，未重启日用Host。48项相关测试通过，完成提交后的文件清单检查也复用隐藏Git并保持原711项运行文件选择；实际检查继续执行，窗口可见性及业务数据核对见[闪窗复验](evidence/shared-speech-20261116/console-flash.json)。隐藏的conhost辅助进程可能正常存在，不能用其进程数量判定可见闪窗。
+
 `JarvisPC.bat status`显示管理心跳；底层`python -m tools.workstation_service status --daily-data <日用根>`可核对签名策略。`pause`暂停自动启动/更新动作但不停止当前日用，`resume`显式恢复；`disable-startup`只撤销本模块登记且未被主人改写的自启项，保留原值。管理代码或不支持的控制器协议变动需重新审阅安装，不让应用候选自行更新其准入权威。[实现、真实故障演练及未验边界](delivery-validation.md#daily-automation-evidence-20261116)。
 
 <a id="external-storage-local-layout"></a>

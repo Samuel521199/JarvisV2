@@ -17,7 +17,7 @@ import uuid
 from control.atomic import write_json
 from control.paths import reject_links
 from control.worker.process import OwnedProcess
-from modules.release_recovery.application import inspect_package
+from modules.release_recovery.application import inspect_package, TOPS, RUNTIME_DATA
 
 TRAILER='Jarvis-Reviewed: complete'
 QUIET_SECONDS=120
@@ -28,7 +28,8 @@ WALL_SECONDS=600
 def git(source,*arguments):
     env=dict(os.environ,GIT_CONFIG_NOSYSTEM='1',GIT_CONFIG_GLOBAL=os.devnull,GIT_NO_REPLACE_OBJECTS='1',GIT_OPTIONAL_LOCKS='0')
     result=subprocess.run(['git','-c','core.fsmonitor=false','-c','core.untrackedCache=false','-c','core.hooksPath='+os.devnull,
-        '-C',str(source),*arguments],capture_output=True,env=env,timeout=10)
+        '-C',str(source),*arguments],capture_output=True,env=env,timeout=10,
+        creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
     if result.returncode:raise ValueError('Completion Git inspection failed')
     if len(result.stdout)>4*1024**2:raise ValueError('Completion Git output exceeds limit')
     return result.stdout
@@ -103,7 +104,12 @@ class Completion:
         current=self.operator.state(self.root);active=current.get('active')
         if not active:return True
         _,manifest=inspect_package(self.root/'deployment/packages'/active['build'])
-        names=self.operator.tracked_runtime(Path(self.config['source']))
+        # Older pinned controllers enumerate through a console-creating Git
+        # wrapper. Use our hidden reader and the same authoritative package
+        # policy so completion checks do not reopen a window after a commit.
+        names=[name for name in git(self.config['source'],'ls-files','-z').decode().split('\0') if name and (
+            name.split('/')[0] in TOPS or name in {'VERSION','tools/architecture-baseline.json',*RUNTIME_DATA})
+            and not name.endswith(('.pyc','.blend','.glb','.fbx'))]
         return set(names)!=set(manifest['files']) or any(
             self.operator.sha(Path(self.config['source'])/name)!=manifest['files'][name]['sha256'] for name in names)
 
