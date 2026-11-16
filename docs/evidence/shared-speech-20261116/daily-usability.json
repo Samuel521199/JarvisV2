@@ -1,0 +1,122 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "scope": "Actual daily0.1.14.1 synthetic technical voice pipeline plus a real waiting oral exercise; no personal recording or synthetic learning grade",
+  "active": {
+    "build": "9f5c25f82a7f431ee0d61318852595084d67d924dfdd25cedf4dde38e17c9f97",
+    "epoch": 30,
+    "slot": "A",
+    "version": "0.1.14.1"
+  },
+  "controller_protocol": 10,
+  "model": "funasr-nano-int8-20251217",
+  "recognition": {
+    "reference": "你好，这是一条语音功能技术测试。请用一句简短的问候回答。",
+    "recognized": "你好这是一条语音功能技术测试请用一句简短的问候回答",
+    "audio_sha256": "19f788622b1748f2608b574d1fcf477867a0145da5263fe2bb0a347a2b02e7ab",
+    "model_inference_seconds": 0.1345976000011433,
+    "post_saved_audio_to_result_wall_seconds": 11.123684199999843,
+    "cold_start_included": true,
+    "flags": [],
+    "network": false,
+    "memory": {
+      "gpu_bytes": 0,
+      "peak_rss_bytes": 439824384,
+      "private_bytes": 1247801344,
+      "rss_bytes": 439824384
+    }
+  },
+  "normal_dialogue": {
+    "model": "gemini-3.8-flash",
+    "provider": "vertex",
+    "reply_length": 22,
+    "reply_sha256": "726ca7295a1e082dcc742445b811c79bb57323af6602e799b1da6a6887891264",
+    "status": "SUCCEEDED",
+    "usage": {
+      "completion_tokens": 14,
+      "prompt_tokens": 65,
+      "reasoning_in_completion": false,
+      "reasoning_tokens": 457,
+      "total_tokens": 536
+    }
+  },
+  "local_reply_audio": {
+    "audio_sha256": "6066a4b77696865458ab63ac7a0879be2038a103554c4814f76f90b0f44eb233",
+    "network": false,
+    "provider": "windows_installed_voice",
+    "seconds": 8.73
+  },
+  "english_npc_audio": {
+    "audio_sha256": "97f32e1610024e7df8f6e41b226858fb4b35730e779df77ab2d7c037dbf7fd35",
+    "network": false,
+    "provider": "windows_installed_voice",
+    "seconds": 3.88
+  },
+  "oral_ready": {
+    "assessment": null,
+    "chat_id": "chat-0626e7d5250f4db4a44ce871cb6688d7",
+    "exercise_id": "english-oral-ready-6bc04d7516f142af84b8af3010459638",
+    "prompt": "【教学示例 · 虚构场景】街角咖啡店\n任务：向店员要一杯小杯热咖啡，不加糖，外带。\n对方：Hi! What can I get for you?",
+    "synthetic_answers_submitted": 0
+  },
+  "synthetic_learning_answers": 0,
+  "personal_assessments": 0,
+  "technical_chat_archived": true,
+  "technical_result_marked_viewed": true,
+  "stt_default_retained_and_worker_standby": true,
+  "embedding_selection_preserved": true,
+  "ui": {
+    "scope": "Actual daily UI, no recording or grading; suppress only viewed receipts to preserve previous unread state",
+    "passed": true,
+    "page_errors": [],
+    "microphone_calls": 0,
+    "voice_panel_ready": true,
+    "oral_scene_visible": true,
+    "answer_empty": true
+  },
+  "post_use_preservation": {
+    "passed": true,
+    "scope": "Read-only per-database row-hash inclusion after appended technical dialogue and real waiting oral question; not an atomic all-database snapshot",
+    "tables": {
+      "dialogue.sqlite3:turns": {
+        "original_rows": 668,
+        "current_rows": 670,
+        "missing_or_changed_original_rows": 0
+      },
+      "english-learning.sqlite3:settings": {
+        "original_rows": 1,
+        "current_rows": 1,
+        "missing_or_changed_original_rows": 0
+      },
+      "english-learning.sqlite3:exercises": {
+        "original_rows": 2,
+        "current_rows": 3,
+        "missing_or_changed_original_rows": 0
+      },
+      "english-learning.sqlite3:assessments": {
+        "original_rows": 0,
+        "current_rows": 0,
+        "missing_or_changed_original_rows": 0
+      },
+      "english-learning.sqlite3:jobs": {
+        "original_rows": 2,
+        "current_rows": 3,
+        "missing_or_changed_original_rows": 0
+      },
+      "english-learning.sqlite3:software_sessions": {
+        "original_rows": 1,
+        "current_rows": 2,
+        "missing_or_changed_original_rows": 0
+      }
+    },
+    "synthetic_learning_answers": 0,
+    "personal_assessments": 0,
+    "expected_header_delta": "Prepared oral question updates its existing personal chat timestamp; technical chat is new and archived. Original turn bodies and learning rows are preserved."
+  },
+  "limits": [
+    "Synthetic input is not personal microphone/accent validation",
+    "Exactly one ordinary configured online model call; recognition/installed voice synthesis are local",
+    "No pronunciation grading or learning improvement claim",
+    "The prepared oral exercise awaits the real user; no answer submitted"
+  ]
+}
