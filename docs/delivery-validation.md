@@ -7,6 +7,7 @@
 
 **本章导航**
 
+- [项目外独立英语软件与日用接入（2026-11-16）](#english-city-plugin-evidence-20261116)
 - [离线归因与英语语音练习（2026-11-16）](#english-voice-evidence-20261116)
 - [跨会话英语学习与日用采用（2026-11-15）](#english-learning-evidence-20261115)
 - [日用真实任务与英语学习接续（2026-11-15）](#daily-real-tasks-evidence-20261115)
@@ -183,6 +184,16 @@
 - [个人助理开发收尾与兼容升级（2026-11-09）](#assistant-release-20261109)
 - [网页精灵共享能力与排空修复（2026-11-04）](#companion-shared-evidence)
 <!-- book-nav:end -->
+
+<a id="english-city-plugin-evidence-20261116"></a>
+## 项目外独立英语软件与日用接入（2026-11-16）
+
+2026-11-16已日用采用v0.1.13/epoch26、控制器9：项目目录外的独立English City 1.0.0已接入，三个场景可自由写答或录音确认转写推进，进度、词汇观察和原复习共用来源。修复固定关卡重复刷变式的统计问题，原成绩保留；相容回退及独立盘灾备通过。自动ASR/发音测评与本人长期提升仍待验。
+
+130个唯一Jarvis专项ID、项目外软件自身7项均通过；最终固定207项中206通过、1条件跳过。开发真实模型10次16,305 token，只属合成学习者技术验证。日用首段咖啡店剧情已准备，0模型调用、无代答；120秒25次探测通过，不能替代长期教育效果。
+
+[完整结果、使用入口、所有权、修复与灾备](evidence/english-city-plugin-20261116/report.md#english-city-plugin-report-20261116)；[独立软件契约](contracts.md#ai-mediated-software-contract)。
+
 
 <a id="english-voice-evidence-20261116"></a>
 ## 离线归因与英语语音练习（2026-11-16）

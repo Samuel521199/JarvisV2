@@ -1,0 +1,79 @@
+<div id="jarvis-city-preview" aria-label="英语城市剧情预演" class="viz-dotted-background">
+ <style>
+ #jarvis-city-preview{color-scheme:light dark}
+ #jarvis-city-preview .game{background:light-dark(#f5f8fc,#151e2b);color:light-dark(#17283d,#e2ebf8);border-radius:18px;padding:24px;font:15px/1.65 system-ui,sans-serif;box-sizing:border-box}
+ #jarvis-city-preview .head{display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap;padding-right:76px}
+ #jarvis-city-preview h2{font-size:22px;font-weight:600;margin:0}
+ #jarvis-city-preview p{margin:0}
+ #jarvis-city-preview .sub{color:light-dark(#52667d,#b3c3d7);font-size:13px}
+ #jarvis-city-preview .route{display:flex;flex-wrap:wrap;gap:10px;margin:20px 0}
+ #jarvis-city-preview button{font:inherit;border:1px solid light-dark(#bccbdc,#425773);border-radius:10px;background:light-dark(#fff,#202f43);color:inherit;padding:10px 14px;text-align:left;min-height:44px}
+ #jarvis-city-preview button[aria-pressed=true],#jarvis-city-preview .next{background:light-dark(#174f84,#a8d4ff);color:light-dark(#fff,#10253a);border-color:transparent}
+ #jarvis-city-preview button:disabled{opacity:.5;cursor:default}
+ #jarvis-city-preview .scene{padding:22px;background:light-dark(#fff,#1d2a3b);border-radius:14px;display:grid;gap:14px}
+ #jarvis-city-preview .eyebrow{color:light-dark(#355b7d,#b3d5f2);font-size:13px;letter-spacing:.08em}
+ #jarvis-city-preview .goal{font-weight:600}
+ #jarvis-city-preview blockquote{margin:0;padding:12px 16px;border-left:3px solid light-dark(#2771b5,#8cc8fa);background:light-dark(#ecf4fc,#253c55);border-radius:0 8px 8px 0}
+ #jarvis-city-preview .choices{display:grid;gap:10px;margin-top:8px}
+ #jarvis-city-preview .feedback{display:grid;gap:8px;margin-top:16px;min-height:48px}
+ #jarvis-city-preview .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+ #jarvis-city-preview .note{margin-top:18px;color:light-dark(#52667d,#b3c3d7);font-size:13px}
+ @media(max-width:480px){#jarvis-city-preview .game{padding:14px}#jarvis-city-preview .scene{padding:16px}#jarvis-city-preview .head{padding-right:0}#jarvis-city-preview h2{font-size:20px}}
+ </style>
+ <div class="game">
+  <div class="head"><div><p class="eyebrow">JARVIS · ENGLISH CITY</p><h2>用英语，把今天过好</h2></div><span class="sub">剧情预演 · 不计学习成绩</span></div>
+  <nav class="route" aria-label="选择情境"><button type="button" data-scene="cafe" aria-pressed="true">街角咖啡店</button><button type="button" data-scene="arrange" aria-pressed="false">和朋友改约</button><button type="button" data-scene="work" aria-pressed="false">同事的新通知</button></nav>
+  <div class="scene"><p class="eyebrow" id="city-stage"></p><p class="goal" id="city-goal"></p><blockquote id="city-npc"></blockquote><div class="choices" id="city-choices"></div><div class="feedback" aria-live="polite" id="city-feedback"></div></div>
+  <div class="actions"><button type="button" id="city-hint">给一点提示</button><button type="button" class="next" id="city-next" disabled>继续剧情</button></div>
+  <p class="note">点击一种剧情走向查看回应。示例台词和NPC回应是预设内容；正式游戏设计为自己说或写，接受多种正确表达。</p>
+ </div>
+</div>
+<script>
+(()=>{
+ const root=document.getElementById('jarvis-city-preview');
+ const scenes={
+ cafe:[
+  {goal:'你想买小杯热咖啡，不加糖，外带。',npc:'Hi! What can I get for you?',hint:'先表达想要什么，再补上杯型、冷热、糖和外带。',choices:[
+   ['完整提出请求','I’d like a small hot coffee with no sugar, to go, please.','店员：Sure! One small hot coffee, no sugar, to go.','任务信息完整；正式游戏也接受分句和其他等效表达。',true],
+   ['只提出饮品，等待补问','A coffee, please.','店员：Of course. What size would you like?','对方继续配合。你还需要补充杯型、冷热、糖与外带。',false],
+   ['不知道怎么开始','我想先得到一点帮助。','Jarvis：先想清楚你需要什么；我们可以一句一句表达。','有辅助也能继续剧情；辅助完成与独立表现分别记录。',false]]},
+  {goal:'店员复述错了。请把订单说清楚。',npc:'A large iced coffee with sugar?',hint:'可以用“Actually…”引出纠正，不必长篇解释。',choices:[
+   ['礼貌纠正误解','Actually, a small hot coffee, no sugar, please.','店员：Sorry about that! A small hot coffee, no sugar. To go?','纠正关键条件后继续确认。小误解是练习机会。',true],
+   ['没听清，请对方重说','Could you say that again, please?','店员：Of course. Did you want a large iced coffee?','主动澄清是有效沟通策略。重说后还需要核对订单。',false],
+   ['先确认订单，稍后再看','Yes, that’s right.','剧情示例：收到的饮品与本关目标不同。','先检查意思和任务条件；语法正确仍可能表达了错误的信息。',false]]},
+  {goal:'这杯饮品已确认。现在桌上没有餐巾纸。',npc:'Here you go. Anything else?',hint:'把“礼貌请求物品”的能力用到新的东西上。',choices:[
+   ['自己提出新请求','Could I have some napkins, please?','店员：Of course. Here are some napkins.','同一请求能力换了对象。这是当场迁移练习，还不是隔天保持证据。',true],
+   ['今天先到这里','No, thank you.','Jarvis：好，今天就到这里。可以随时接着练。','可选支线可以跳过，不扣分、不失去进度。',true]]}],
+ arrange:[
+  {goal:'你下午三点有事，想把见面改到四点。',npc:'Are we still meeting at three?',hint:'告诉对方你想调整时间，并提出一个明确的新时间。',choices:[
+   ['提出新的见面时间','Could we meet at four instead?','朋友：Four works for me. See you then!','不需要照搬唯一句式；清楚提出四点即可继续确认。',true],
+   ['只说自己有事','I’m busy at three.','朋友：No problem. What time would work for you?','意思清楚，但还缺可行的新安排。',false],
+   ['先请求对方慢一点','Could you speak more slowly, please?','朋友：Sure. Are we meeting at three o’clock?','合理求助后继续任务；不因请求重说羞辱或扣生命。',false]]},
+  {goal:'再确认一次，避免双方记错时间。',npc:'Great. Let’s meet outside the station.',hint:'核对时间，也可以顺便核对地点。',choices:[
+   ['确认时间和地点','Just to confirm, four o’clock outside the station?','朋友：Exactly. See you at four!','确认动作保留在学习记录中，不只记录语法。',true],
+   ['发现自己仍不确定','Do you mean the main entrance?','朋友：Yes, the main entrance.','澄清地点也是推进任务；正式游戏仍要核对剩余时间条件。',false]]}],
+ work:[
+  {goal:'读懂这份教学通知：报告最晚什么时候交？',npc:'The office will be closed on Friday. Please submit your report by Thursday at 3 p.m.',hint:'区分办公室关闭的时间，与“by”后面的截止时间。',choices:[
+   ['指出真正的截止时间','We need to submit the report by Thursday at 3 p.m.','同事：That’s right. Please send it before the deadline.','以原文条件为依据；语言形式和意义分别评价。',true],
+   ['把关闭日期当作截止日','We need to submit it on Friday.','剧情示例：周五才提交，会错过周四的截止时间。','不覆盖原答；下次换成预约或酒店时间再练习。',false],
+   ['先核对自己的理解','Is the deadline Thursday at three?','同事：Yes, Thursday at 3 p.m.','主动确认也是成功沟通，不必把疑问句改成标准陈述句。',true]]},
+  {goal:'同事又补充一句。请说清楚接下来要做什么。',npc:'Please send the report to Maya, not to the whole team.',hint:'除了截止时间，还要核对接收人和否定条件。',choices:[
+   ['确认行动、对象和时间','I’ll send it to Maya by Thursday at three.','同事：Thanks. Please let me know if anything changes.','可以先准备草稿；剧情中的发送不会真的操作邮件。',true],
+   ['没听清接收人','Could you repeat the name, please?','同事：Maya. Send it only to Maya.','求助保留为过程证据，不冒充未求助就听懂。',false]]}]
+ };
+ let state={scene:'cafe',step:0,choice:null,hint:false};
+ function restore(value){const v=value?.privateContent;if(v&&scenes[v.scene]&&Number.isInteger(v.step)&&v.step>=0&&v.step<scenes[v.scene].length){state={scene:v.scene,step:v.step,choice:Number.isInteger(v.choice)?v.choice:null,hint:!!v.hint};if(state.choice!==null&&!scenes[state.scene][state.step].choices[state.choice])state.choice=null;}}
+ function save(){window.openai?.setWidgetState?.({modelContent:{preview:'english-city',scene:state.scene,step:state.step+1,notLearnerAssessment:true},privateContent:state}).catch(()=>{});}
+ function render(){const level=scenes[state.scene][state.step];root.querySelectorAll('[data-scene]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.scene===state.scene)));
+ root.querySelector('#city-stage').textContent=`第 ${state.step+1} 幕 / 共 ${scenes[state.scene].length} 幕 · 教学虚构场景`;
+ root.querySelector('#city-goal').textContent=level.goal;root.querySelector('#city-npc').textContent=level.npc;
+ const choices=root.querySelector('#city-choices');choices.replaceChildren();level.choices.forEach((c,i)=>{const b=document.createElement('button');b.type='button';b.textContent=c[0];b.setAttribute('aria-pressed',String(state.choice===i));b.onclick=()=>{state.choice=i;render();save();};choices.append(b);});
+ const feedback=root.querySelector('#city-feedback');feedback.replaceChildren();if(state.hint){const p=document.createElement('p');p.textContent='Jarvis提示：'+level.hint;feedback.append(p);}if(state.choice!==null){const c=level.choices[state.choice];for(const text of ['示例表达：'+c[1],c[2],c[3]]){const p=document.createElement('p');p.textContent=text;feedback.append(p);}}
+ const next=root.querySelector('#city-next');next.disabled=state.choice===null||!level.choices[state.choice]?.[4];next.textContent=state.step===scenes[state.scene].length-1?'看本关小结':'继续剧情';
+ }
+ root.querySelectorAll('[data-scene]').forEach(b=>b.onclick=()=>{state={scene:b.dataset.scene,step:0,choice:null,hint:false};render();save();});
+ root.querySelector('#city-hint').onclick=()=>{state.hint=true;render();save();};
+ root.querySelector('#city-next').onclick=()=>{if(state.step<scenes[state.scene].length-1){state.step++;state.choice=null;state.hint=false;render();save();}else{const box=root.querySelector('#city-feedback');box.replaceChildren();for(const text of ['这一段剧情已走完。','正式游戏将在这里展示你的原答、帮助记录、一个记忆语块和下次变式。','本预演没有收集真实作答，不产生能力分数或掌握结论。']){const p=document.createElement('p');p.textContent=text;box.append(p);}root.querySelector('#city-next').disabled=true;}};
+ restore(window.openai?.widgetState);window.addEventListener('openai:set_globals',event=>{if(event.detail?.globals?.widgetState){restore(event.detail.globals.widgetState);render();}});render();
+})();
+</script>

@@ -46,6 +46,13 @@ class Scheduling(unittest.TestCase):
         self.assertFalse(progress(rows)['trends'])
 
 
+    def test_repair_wording_does_not_make_the_same_software_task_a_new_delayed_variant(self):
+        rows=[record(str(i),DAY*i,prompt='repair wording '+str(i),game={'software':{'id':'english-city'},'scene':'cafe','node':0}) for i in range(6)]
+        self.assertEqual(schedule(rows)['life.request']['stage'],1)
+        self.assertEqual(progress(rows)['domains']['life']['delayed_variants'],0)
+        self.assertFalse(progress(rows)['trends'])
+
+
 class LearningFlow(unittest.TestCase):
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory(prefix='jarvis-english-');self.root=Path(self.temp.name)
@@ -165,9 +172,9 @@ class LearningFlow(unittest.TestCase):
         from control.application_compatibility import require_compatible
         package=self.root/'reader';(package/'config').mkdir(parents=True)
         declaration=package/'config/english-learning-compatibility.json'
-        declaration.write_text('{"schema":1,"english_learning_schema":2}')
+        declaration.write_text('{"schema":1,"english_learning_schema":3}')
         self.assertTrue(require_compatible(self.root,package)['compatible'])
-        declaration.write_text('{"schema":true,"english_learning_schema":2}')
+        declaration.write_text('{"schema":true,"english_learning_schema":3}')
         with self.assertRaises(CoreError):require_compatible(self.root,package)
         store=Store(self.root)
         store.db.execute('PRAGMA user_version=99');store.close()

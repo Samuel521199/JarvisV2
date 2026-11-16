@@ -5,7 +5,7 @@ import time
 from control.paths import child
 from sdk.protocol import CoreError, canonical
 
-SCHEMA=2
+SCHEMA=3
 DAY=86400
 INTERVALS=(1,3,7,14,30)
 TARGETS={
@@ -23,10 +23,11 @@ TARGETS={
 
 class Store:
     def __init__(self,root):
+        self.root=root
         self.db=sqlite3.connect(child(root,'state/english-learning.sqlite3'),timeout=5,isolation_level=None)
         self.db.row_factory=sqlite3.Row
         version=self.db.execute('PRAGMA user_version').fetchone()[0]
-        if version not in (0,1,SCHEMA):
+        if version not in (0,1,2,SCHEMA):
             self.db.close();raise CoreError('english_schema','Unknown English learning data version')
         self.db.execute('PRAGMA synchronous=FULL')
         self.db.executescript('''
@@ -34,8 +35,10 @@ CREATE TABLE IF NOT EXISTS settings(id INTEGER PRIMARY KEY CHECK(id=1),body TEXT
 CREATE TABLE IF NOT EXISTS exercises(id TEXT PRIMARY KEY,chat_id TEXT NOT NULL,body TEXT NOT NULL,withdrawn INTEGER NOT NULL DEFAULT 0,hints INTEGER NOT NULL DEFAULT 0,exposed INTEGER NOT NULL DEFAULT 0);
 CREATE TABLE IF NOT EXISTS assessments(id TEXT PRIMARY KEY,exercise_id TEXT UNIQUE NOT NULL,body TEXT NOT NULL,disputed INTEGER NOT NULL DEFAULT 0);
 CREATE TABLE IF NOT EXISTS jobs(id TEXT PRIMARY KEY,chat_id TEXT NOT NULL,kind TEXT NOT NULL,body TEXT NOT NULL,state TEXT NOT NULL,candidate TEXT,reply_digest TEXT);
-PRAGMA user_version=2;
+CREATE TABLE IF NOT EXISTS software_sessions(id TEXT PRIMARY KEY,body TEXT NOT NULL);
+
 ''')
+        self.db.execute('PRAGMA user_version='+str(3 if version==3 else 2))
         self.db.execute('INSERT OR IGNORE INTO settings VALUES(1,?)',(canonical({'enabled':False,'revision':0,'domains':['life','communication','work']}),))
 
     def close(self):self.db.close()
@@ -83,6 +86,12 @@ PRAGMA user_version=2;
                     'created':now,'answer_turn':job['id'],'chat_id':job['chat_id'],'target':exercise['body']['target'],'difficulty':exercise['body']['difficulty'],
                     'prompt':exercise['body']['prompt'],'judge':'model_provisional','model_receipt':model_receipt,'schema':1}
                 if body.get('speech'):content['speech']=body['speech']
+                if body.get('game'):
+                    game=body['game'];s=json.loads(self.db.execute('SELECT body FROM software_sessions WHERE id=?',(game['session_id'],)).fetchone()[0])
+                    if s['revision']!=game['revision'] or s['exercise_id']!=body['exercise_id'] or s['state']!='ACTIVE':raise CoreError('english_stale','Software session changed during evaluation')
+                    content['game']=value['game'];transition=value['game']['transition']
+                    s.update(node=transition['node'],attempt=transition['attempt'],state=transition['state'],revision=s['revision']+1,exercise_id=None,dependencies=s['dependencies']+[body['exercise_id'],job['id']])
+                    self.db.execute('UPDATE software_sessions SET body=? WHERE id=?',(canonical(s),s['id']))
                 self.db.execute('INSERT INTO assessments(id,exercise_id,body) VALUES(?,?,?)',(job['id'],body['exercise_id'],canonical(content)))
             self.db.execute("UPDATE jobs SET state='RECORDED' WHERE id=?",(job['id'],));self.db.execute('COMMIT')
         except BaseException:self.db.execute('ROLLBACK');raise
@@ -96,6 +105,14 @@ def success(row):
     return row['meaning']==2 and row['form']>=1 and row['appropriacy']>=1 and row['confidence'] in ('medium','high')
 
 
+def recall_key(row):
+    game=row.get('game')
+    if game:
+        # A changed repair label/NPC reply is still the same fixed software task.
+        return ('software-task',game['software'].get('id','english-city'),game['scene'],game['node'])
+    return ('prompt',row['prompt'])
+
+
 def schedule(records,now=None):
     """Compute solely from valid evidence; same-day repetitions cannot inflate stage."""
     now=time.time() if now is None else now;result={}
@@ -104,8 +121,8 @@ def schedule(records,now=None):
         stage=0;last_credit=None;last_prompt=None
         for row in rows:
             if not independent(row) or not success(row):stage=0;last_credit=None;last_prompt=None;continue
-            if last_credit is None or row['created']-last_credit>=DAY and row['prompt']!=last_prompt:
-                stage=min(stage+1,len(INTERVALS));last_credit=row['created'];last_prompt=row['prompt']
+            if last_credit is None or row['created']-last_credit>=DAY and recall_key(row)!=last_prompt:
+                stage=min(stage+1,len(INTERVALS));last_credit=row['created'];last_prompt=recall_key(row)
         due=rows[-1]['created']+DAY*INTERVALS[max(stage-1,0)] if rows else None
         result[key]={'target':key,'domain':domain,'label':label,'count':len(rows),'stage':stage,'due':due,'due_now':due is not None and due<=now,
                      'difficulty':min(3,1+stage//2),'reason':'due_review' if due is not None and due<=now else 'new' if not rows else 'optional_practice'}
@@ -118,7 +135,7 @@ def progress(records,now=None):
         rows=[r for r in records if TARGETS[r['target']][0]==domain];solo=[r for r in rows if independent(r)]
         delayed=[]
         for row in solo:
-            if any(old['target']==row['target'] and old['difficulty']==row['difficulty'] and row['created']-old['created']>=DAY and old['prompt']!=row['prompt'] for old in records):delayed.append(row)
+            if any(old['target']==row['target'] and old['difficulty']==row['difficulty'] and row['created']-old['created']>=DAY and recall_key(old)!=recall_key(row) for old in records):delayed.append(row)
         domains[domain]={'attempts':len(rows),'independent':len(solo),'assisted':len(rows)-len(solo),'delayed_variants':len(delayed),
             'delayed_successes':sum(success(r) for r in delayed),'delayed_success_rate':sum(success(r) for r in delayed)/len(delayed) if delayed else None,
             'interpretation':'AI estimates on text tasks; not certified proficiency or causal learning gains'}
@@ -129,7 +146,7 @@ def progress(records,now=None):
             rows=sorted((r for r in records if r['target']==key and r['difficulty']==level and independent(r) and r['confidence']!='low'),key=lambda r:r['created'])
             unique=[];seen=set()
             for row in rows:
-                if row['prompt'] not in seen:unique.append(row);seen.add(row['prompt'])
+                if recall_key(row) not in seen:unique.append(row);seen.add(recall_key(row))
             if len(unique)<6 or unique[-3]['created']-unique[2]['created']<DAY:continue
             early=unique[:3];late=unique[-3:]
             score=lambda group:round(sum(r['meaning']+r['form']+r['appropriacy'] for r in group)/len(group),2)

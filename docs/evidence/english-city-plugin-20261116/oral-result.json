@@ -1,0 +1,237 @@
+{
+  "passed": true,
+  "recording": {
+    "bytes": 88524,
+    "format": "pcm16-mono-16000",
+    "id": "audio-d13a31c92e814ab086dfeeae2ed32390",
+    "pronunciation_score": null,
+    "recognition": "user_confirmed_transcript",
+    "seconds": 2.765,
+    "sha256": "1a2168d3e9534572c18ed201085ae0f8463aa8938c9499a0d8d3c20cd4641cc2"
+  },
+  "assessment": {
+    "answer": "Could we meet at four instead?",
+    "answer_quote": "Could we meet at four instead?",
+    "answer_turn": "english-city-oral-shadow-a",
+    "appropriacy": 2,
+    "assistance": "independent",
+    "chat_id": "chat-d582f213da4e4fd8bebfd38babd1c782",
+    "confidence": "high",
+    "correction": "Could we meet at four instead?",
+    "created": 1794807509.13678,
+    "difficulty": 1,
+    "disputed": false,
+    "error_tags": [],
+    "exposed": 0,
+    "feedback": "句子表达非常准确地道，使用“Could we... instead?”礼貌且清晰地提出了改约时间。",
+    "form": 2,
+    "game": {
+      "evidence": {
+        "intent": "Could we meet at four instead?",
+        "time": "four"
+      },
+      "evidence_sources": {
+        "intent": "english-city-oral-shadow-a",
+        "time": "english-city-oral-shadow-a"
+      },
+      "focus_items": [],
+      "intent": "answer",
+      "node": 0,
+      "npc_reply": "Sure, four works for me. See you then!",
+      "requirements": {
+        "intent": "met",
+        "time": "met"
+      },
+      "requirements_text": {
+        "intent": "propose meeting at four instead",
+        "time": "four oclock"
+      },
+      "scene": "arrange",
+      "session_id": "game-city-oral-shadow-q",
+      "software": {
+        "build": "b8cc43700a309abe34aa5de22c01b2b578e731d33b5abf54c42515d5017e88e5",
+        "id": "english-city",
+        "release": "E:\\Jarvis\\validation\\english-city-development\\releases\\b8cc43700a309abe34aa5de22c01b2b578e731d33b5abf54c42515d5017e88e5",
+        "revision": 8,
+        "version": "1.0.0"
+      },
+      "transition": {
+        "attempt": 0,
+        "missing": [],
+        "node": 1,
+        "passed": true,
+        "reason": "continue",
+        "schema": 1,
+        "state": "ACTIVE"
+      }
+    },
+    "hints": 0,
+    "id": "english-city-oral-shadow-a",
+    "judge": "model_provisional",
+    "meaning": 2,
+    "memory_cue": "meet at [time] instead（改在……时间见面）",
+    "model_receipt": {
+      "model": "gemini-3.8-flash",
+      "provider": "vertex",
+      "usage": {
+        "completion_tokens": 158,
+        "prompt_tokens": 788,
+        "reasoning_in_completion": false,
+        "reasoning_tokens": 448,
+        "total_tokens": 1394
+      }
+    },
+    "prompt": "【教学示例 · 虚构场景】和朋友改约\n任务：你三点有事，想把见面时间改到四点。\n对方：Are we still meeting at three?",
+    "schema": 1,
+    "speech": {
+      "bytes": 88524,
+      "format": "pcm16-mono-16000",
+      "id": "audio-d13a31c92e814ab086dfeeae2ed32390",
+      "pronunciation_score": null,
+      "recognition": "user_confirmed_transcript",
+      "seconds": 2.765,
+      "sha256": "1a2168d3e9534572c18ed201085ae0f8463aa8938c9499a0d8d3c20cd4641cc2"
+    },
+    "target": "communication.arrange"
+  },
+  "oral_progress": {
+    "certified_level": null,
+    "domains": {
+      "communication": {
+        "assisted": 0,
+        "attempts": 1,
+        "delayed_success_rate": null,
+        "delayed_successes": 0,
+        "delayed_variants": 0,
+        "independent": 1,
+        "interpretation": "AI estimates on text tasks; not certified proficiency or causal learning gains"
+      },
+      "life": {
+        "assisted": 0,
+        "attempts": 1,
+        "delayed_success_rate": null,
+        "delayed_successes": 0,
+        "delayed_variants": 0,
+        "independent": 1,
+        "interpretation": "AI estimates on text tasks; not certified proficiency or causal learning gains"
+      },
+      "work": {
+        "assisted": 0,
+        "attempts": 0,
+        "delayed_success_rate": null,
+        "delayed_successes": 0,
+        "delayed_variants": 0,
+        "independent": 0,
+        "interpretation": "AI estimates on text tasks; not certified proficiency or causal learning gains"
+      }
+    },
+    "review": [
+      {
+        "count": 1,
+        "difficulty": 1,
+        "domain": "life",
+        "due": 1794869514.4496398,
+        "due_now": false,
+        "label": "礼貌地请求物品或帮助",
+        "reason": "optional_practice",
+        "stage": 1,
+        "target": "life.request"
+      },
+      {
+        "count": 0,
+        "difficulty": 1,
+        "domain": "communication",
+        "due": null,
+        "due_now": false,
+        "label": "没听清时请求重说并核对意思",
+        "reason": "new",
+        "stage": 0,
+        "target": "communication.clarify"
+      },
+      {
+        "count": 0,
+        "difficulty": 1,
+        "domain": "work",
+        "due": null,
+        "due_now": false,
+        "label": "读懂工作通知的行动、时间与限制",
+        "reason": "new",
+        "stage": 0,
+        "target": "work.notice"
+      },
+      {
+        "count": 0,
+        "difficulty": 1,
+        "domain": "life",
+        "due": null,
+        "due_now": false,
+        "label": "问路并确认地点",
+        "reason": "new",
+        "stage": 0,
+        "target": "life.directions"
+      },
+      {
+        "count": 1,
+        "difficulty": 1,
+        "domain": "communication",
+        "due": 1794893909.13678,
+        "due_now": false,
+        "label": "商量时间并确认安排",
+        "reason": "optional_practice",
+        "stage": 1,
+        "target": "communication.arrange"
+      },
+      {
+        "count": 0,
+        "difficulty": 1,
+        "domain": "work",
+        "due": null,
+        "due_now": false,
+        "label": "写简短清晰的工作回复",
+        "reason": "new",
+        "stage": 0,
+        "target": "work.email"
+      },
+      {
+        "count": 0,
+        "difficulty": 1,
+        "domain": "life",
+        "due": null,
+        "due_now": false,
+        "label": "说明日常遇到的问题并请求处理",
+        "reason": "new",
+        "stage": 0,
+        "target": "life.problem"
+      },
+      {
+        "count": 0,
+        "difficulty": 1,
+        "domain": "communication",
+        "due": null,
+        "due_now": false,
+        "label": "表达意见并礼貌询问对方",
+        "reason": "new",
+        "stage": 0,
+        "target": "communication.opinion"
+      },
+      {
+        "count": 0,
+        "difficulty": 1,
+        "domain": "work",
+        "due": null,
+        "due_now": false,
+        "label": "用自己的话解释工作资料的关键意思",
+        "reason": "new",
+        "stage": 0,
+        "target": "work.explain"
+      }
+    ],
+    "trend_state": "insufficient_comparable_samples",
+    "trends": []
+  },
+  "written_progress_unchanged": true,
+  "byte_exact_replay": true,
+  "external_calls": 1,
+  "raw_audio_sent_to_model": false,
+  "actual_user_speech": false
+}

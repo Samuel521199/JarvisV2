@@ -10,6 +10,10 @@
 - [实现状态索引（先看这里）](#contracts-implementation-index)
 - [独立控制器指针与恢复契约](#controller-pointer-contract)
 - [个人英语学习记录契约](#english-learning-contract)
+- [AI 系统调用独立软件的契约](#ai-mediated-software-contract)
+  - [首版机器协议](#ai-software-wire)
+  - [安装与状态提交](#ai-software-state)
+  - [停用、撤回与恢复](#ai-software-recovery)
 - [个人助手核心接口（设计）](#personal-assistant-contracts)
   - [身份、个人上下文与行动意图的边界](#personal-context-contract)
 - [记忆组件的替换契约（proposed）](#memory-provider-contracts)
@@ -93,23 +97,25 @@
 <a id="controller-pointer-contract"></a>
 ## 独立控制器指针与恢复契约
 
-**implemented，当前源码控制器协议8；限已审阅第一方源码和同Windows用户。** 根`JarvisLaunch.py`中的固定模板携带签名记录，是原子提交权威；`deployment/launcher.json`是可修复缓存。未登记协议下限时兼容旧schema1入口；登记后受支持入口拒绝重新安装旧入口。协议2读取目标建议依赖，协议6识别修复回接历史，协议7增加个人学习schema1；必须先晋升控制器再写入新格式。操作流程归[独立晋升](evolution-release.md#independent-controller-runtime)，实际安装以[当前状态](current-state.md)为准。
+**implemented，当前源码控制器协议9；限已审阅第一方源码和同Windows用户。** 根`JarvisLaunch.py`中的固定模板携带签名记录，是原子提交权威；`deployment/launcher.json`是可修复缓存。未登记协议下限时兼容旧schema1入口；登记后受支持入口拒绝重新安装旧入口。协议2读取目标建议依赖，协议6识别修复回接历史，协议7增加个人学习schema1；必须先晋升控制器再写入新格式。操作流程归[独立晋升](evolution-release.md#independent-controller-runtime)，实际安装以[当前状态](current-state.md)为准。
 
 | 字段／文件 | 语义与校验 |
 |---|---|
-| schema=2、controller_protocol=1—8、generation | 当前产生协议8；仅在下限允许时读取已知旧协议，拒绝未知协议；generation随控制器指针提交递增，与应用epoch分开 |
+| schema=2、controller_protocol=1—9、generation | 当前产生协议9；仅在下限允许时读取已知旧协议，拒绝未知协议；generation随控制器指针提交递增，与应用epoch分开 |
 | build、controller_inventory_sha256 | 控制器全部文件摘要清单的SHA256，两者必须相同；包括冻结的旧评价策略，所以不等于运行来源包摘要 |
 | runtime_source_build、policy_anchor_build、policy_sha256 | 分别为独立准入的运行来源、评价策略原锚点与实际冻结策略摘要；启动时复核来源未退役、准入签名和策略仍有效 |
 | controller、data_root、port | 安装内直属控制器目录、固定数据根与端口；拒绝链接、越界路径、额外文件和内容变化 |
 | capsule_id、recovery_archive、recovery_sha256、launcher_backup | 签名绑定的恢复副本和事件位置；恢复只能重建expected_controller原身份，改用新目录而不覆盖坏目录 |
 | signature | 既有DPAPI密钥保护的本机HMAC；不在日志导出密钥，不新增模型发放权限 |
-| controller-protocol.json | 严格schema1/minimum1—8；晋升单调提高已知下限，repair只补登记、不降低；旧控制器不认识新下限时拒绝，不猜测兼容 |
+| controller-protocol.json | 严格schema1/minimum1—9；晋升单调提高已知下限，repair只补登记、不降低；旧控制器不认识新下限时拒绝，不猜测兼容 |
 | registration_pending | 原子根入口已经提交但派生登记未完；读取根入口实际记录，显式修复缓存，不谎称晋升失败并反向切旧 |
 
 晋升同时固定当前应用epoch/build与原控制器指针摘要；提交前复查包和实际数据需求。应用生命周期仍走原Applications事务；控制器恢复不回放旧业务数据库、不清除STOP、不恢复已撤回的来源准入。损坏元数据只能由匹配签名事件及已知身份恢复；没有证据时保持拒绝。下限只约束受支持、版本化入口及可信当前CLI；古老未版本化schema1代码并不读取新下限，同用户手工执行旧程序或整体回滚控制/数据目录不在此保证内。灾备必须先覆盖最新相配增量，不能从D旧副本直接启动。此契约不代表完整跨业务库迁移或任意代码热更新已实现。
 
 <a id="english-learning-contract"></a>
 ## 个人英语学习记录契约
+
+**v0.1.13增量 implemented：**游戏软件源码在Jarvis项目外，通过[独立软件契约](#ai-mediated-software-contract)接入；首次游戏状态写入才升级学习格式3，普通学习仍可保持格式2。协议9保护新状态，原答/评价/剧情推进原子提交，固定软件出题不付费，模型评价沿原账本。
 
 **2026-11-16增量 implemented：**学习schema2支持音频摘要与确认转写的口语内容记录，协议8在写入前核验；能读取schema1并保留历史。record保存最长60秒、16kHz单声道PCM WAV；oral_start/口语原答沿同一队列，oral_progress与文字统计分开。recording重验启用、撤回和来源；speak仅朗读已暴露参考或已完成评价，使用本机Windows英文音色。音频不发给文本模型，转写仍按原路由发送；不能据转写评发音。原生相容恢复版只读保留schema2并阻止学习派发。[本轮证据](delivery-validation.md#english-voice-evidence-20261116)。下表与上述增量共同构成当前契约。
 
@@ -127,9 +133,56 @@
 | UNKNOWN / FAILED / INVALIDATED | 分别保留结果不确定、已知未完成、来源或权限变化；不自动重试未知付费调用 |
 | hint / reveal / withdraw / dispute | 辅助不可刷独立成绩；撤回或异议停止相关评价用于调整。撤回不物理删除原聊天，来源会话另行管理 |
 | 当前复习与进步 | 有效来源重验、最多2条相关评价和3道近期题、消息24KB上限；间隔及趋势规则见[方法](english-learning-method.md#english-progress-rules)。没有音频不评口语/发音 |
-| 兼容采用与回退 | 托管写入先核验协议8；发现学习库即要求目标包声明支持相应schema1或2。只读恢复包阻止已有学习job按普通聊天派发；不回滚业务库或撤回状态 |
+| 兼容采用与回退 | 托管写入先核验协议9；发现学习库即要求目标包声明支持相应schema1、2或3。只读恢复包阻止已有学习job按普通聊天派发；不回滚业务库或撤回状态 |
 
 学习记录是个人表现证据，不能作为一般知识事实或外部授权。当前只接个人聊天；项目/家庭其他身份不自动获得个人学习史。普通聊天保持原模式，不从引用、粘贴或模型回答猜测学习成绩。日用采用与真实效果须以验收回执判断。
+
+<a id="ai-mediated-software-contract"></a>
+## AI 系统调用独立软件的契约
+
+**2026-11-16按用户要求 accepted；英语城市第一方接入 implemented，通用第三方生态仍 proposed。** 软件可以先面向AI提供能力和状态接口，由Jarvis决定何时调用、怎样呈现、怎样衔接用户的计划与学习记录。独立软件拥有自己的源码、版本与领域规则；Jarvis拥有用户授权、个人数据、统一记忆、调用计量与工作接续。两者不能因为界面显示在工作台里就合并成同一个实现。
+
+首个实现为独立软件 **English City 1.0.0**：本机源码与独立测试在 `E:/Jarvis/software/english-city/source`，发布包在其同级 `releases/<build>`。源码不放在Jarvis项目目录、不导入Jarvis模块，也不进入Jarvis应用或控制器发布清单。`E:/Jarvis/dev`仅维护调用适配器、学习证据桥接、呈现及集成测试。其他AI客户端可直接实现其JSON协议；没有Jarvis安装也可运行独立软件自己的测试和描述接口。
+
+| 职责 | 独立软件 | Jarvis |
+|---|---|---|
+| 场景与业务规则 | 拥有场景、节点、条件和允许的剧情转换 | 接收结构化结果并呈现，不在UI复制另一套关卡规则 |
+| 模型与声音 | 不获取供应商Key，不自行调用模型或麦克风 | 复用原模型队列、账本、录音/确认转写和本机朗读；原有未知结果规则保留 |
+| 个人进度 | 按客户端提交的状态给下一步提议，不直接写个人库 | 原子保存当前节点、来源、原答、辅助、评价、单词/语块观察和下一次候选复习 |
+| 计划 | 返回本软件可用的任务描述 | 首版按原到期复习和练习覆盖推荐领域，用户可改选；不是任意软件的完整自主安排器 |
+| 权限与故障 | 不能凭输出获得外部行动授权 | 检查启用、版本摘要、会话revision、来源、STOP、请求幂等、输入输出与资源上限 |
+| 版本与替换 | 独立版本与不可变发布目录 | 当前回合绑定精确build/revision；同版本重新启用需用户明确核验，变更build后不自动迁移旧状态 |
+
+<a id="ai-software-wire"></a>
+### 首版机器协议
+
+输入为一条UTF-8 JSON：`{"schema":1,"operation":"describe","arguments":{}}`。输出为`{"ok":true,"result":{...}}`或`{"ok":false,"error":"invalid_software_request"}`。支持：
+
+- `describe`：身份、版本、场景、操作列表和客户端拥有状态的声明。
+- `lesson`：输入scene、node、attempt，返回该节点的题目、NPC原文、参考、提示、条件ID与语块；默认不将参考答案呈现给用户。
+- `advance`：输入未改动的lesson与经过校验的评价，输出唯一允许的下一节点、补问/暂停/完成状态。它不认证语义评价正确，不直接写分数。
+
+进程每次处理一个有界请求后退出，不是驻留服务；适配器复用已有OwnedProcess限制进程数量、内存、CPU、时间和输出，环境不继承供应商凭据。**这是经审阅第一方软件的调用和生命周期边界，不是已验证的第三方OS安全沙箱。** 首版不提供任意代码自动发现/安装，不声称完整MCP或通用应用协议兼容。
+
+<a id="ai-software-state"></a>
+### 安装与状态提交
+
+`tools/install_english_city.py`是Jarvis的显式集成安装入口，从项目目录外的已审阅源码读版本，生成代码摘要和独立软件清单，写入外部发布目录；Jarvis只保存`config/software.json`里的版本绑定、启用与revision。不安装依赖、不初始化独立Git仓库，不让软件读取Jarvis业务库。登记与启用变更使用原OS锁机制的`software-config`通道，并纳入停机快照锁。
+
+学习库新增格式为schema3；普通学习仍可保持schema2，首次真正创建游戏状态才升到3。托管写入前核验控制器协议9，目标包必须声明兼容相应格式。`software_sessions`与原学习jobs、exercises、assessments同库；评价确认与节点推进在同一事务提交，重复核对不能推进两次。
+
+固定场景出题经原对话队列交付，来源标记为本地软件、token为0，不虚构模型调用；自由回答通过原模型队列评价内容。模型必须逐字引用当前或该回合此前有效用户原答作为条件依据，宿主保存具体source ID；NPC说过的话不能冒充用户已经表达。正确的补充回答可以接上先前信息，但不得覆盖首答。引用绑定和状态规则不能替代独立语义正确性评价，全部AI评价仍可异议。
+
+剧情通关与学习掌握分开；原文字/口语统计与错题复习继续复用，口语仍为录音后本人确认转写的内容评价。单词与易错语块观察来自有来源的可争议评价，不能当成永久能力标签或一般知识事实。NPC朗读单独调用，不标成“揭示参考答案”。
+
+<a id="ai-software-recovery"></a>
+### 停用、撤回与恢复
+
+停用软件保留进度和学习事实，阻止新调用与旧在途结果采用；普通聊天和普通学习继续可用。相同build重新启用后，由用户明确“核验后接续原进度”，重新检查来源、未决调用和当前软件绑定，不能复活原权限。不同build需单独设计状态迁移或开始新场景；UNKNOWN不自动重发。暂停时若存在未决调用，先核对原回执，不隐式重复付费。
+
+删除来源、撤回评价或提出异议后，相关词汇观察停止参与召回；依赖这些评价的剧情暂停接续，原始事实保留。用户改目标或要求暂停时，不以扣分或强制完成旧目标代替确认。首版只提供三个固定场景；任意新目标的动态场景生成仍待实现。
+
+灾备同时覆盖Jarvis数据根及独立软件目录。只备份Jarvis Git仓库不能恢复独立软件；只备份游戏软件也不能恢复个人学习记录。回退版保留新格式只读、暂停学习派发，恢复新版后可接续；不得用还原旧个人库的方式回退代码。原子恢复、机器绑定密钥与跨机恢复边界仍遵守原发布/灾备契约。
 
 <a id="personal-assistant-contracts"></a>
 ## 个人助手核心接口（设计）

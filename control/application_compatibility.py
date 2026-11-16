@@ -19,7 +19,7 @@ def required(root):
         db=sqlite3.connect(learning.as_uri()+'?mode=ro',uri=True,timeout=5)
         try:
             version=db.execute('PRAGMA user_version').fetchone()[0]
-            if version not in (1,2):
+            if version not in (1,2,3):
                 raise CoreError('application_data_compatibility','Unknown personal learning schema')
             needs['english_learning_schema']=version  # Disabled/withdrawn history still needs a compatible reader.
         finally:db.close()
@@ -111,7 +111,7 @@ def require_compatible(root,package):
             if not path_learning.exists() or path_learning.stat().st_size>1024:
                 raise CoreError('application_data_compatibility','Target cannot preserve personal learning records')
             learning_policy=json.loads(path_learning.read_text(encoding='utf-8'))
-            if set(learning_policy)!={'schema','english_learning_schema'} or any(type(v) is not int for v in learning_policy.values()) or learning_policy['schema']!=1 or learning_policy['english_learning_schema'] not in (1,2) or learning_policy['english_learning_schema']<needs['english_learning_schema']:
+            if set(learning_policy)!={'schema','english_learning_schema'} or any(type(v) is not int for v in learning_policy.values()) or learning_policy['schema']!=1 or learning_policy['english_learning_schema'] not in (1,2,3) or learning_policy['english_learning_schema']<needs['english_learning_schema']:
                 raise CoreError('application_data_compatibility','Unsupported personal learning reader')
         declared={'schema':1,'commitments_schema':0,'assistant_commitments':False}
         if path.exists():

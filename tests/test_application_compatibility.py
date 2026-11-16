@@ -44,7 +44,7 @@ class ApplicationCompatibility(unittest.TestCase):
             (source/'config/repair-return-compatibility.json').write_text(json.dumps({'schema':1,'repair_return_schema':1}))
             files.append('config/repair-return-compatibility.json')
         if english:
-            (source/'config/english-learning-compatibility.json').write_text('{"schema":1,"english_learning_schema":2}')
+            (source/'config/english-learning-compatibility.json').write_text('{"schema":1,"english_learning_schema":3}')
             files.append('config/english-learning-compatibility.json')
         archive=self.base/(name+'.zip');ident=build(source,files,archive,name)
         self.app.stage(archive);self.app.validate(ident,lambda _: {'passed':True,'scope':'synthetic protocol fixture'})
@@ -114,6 +114,16 @@ class ApplicationCompatibility(unittest.TestCase):
         finally:db.close()
         with self.assertRaises(CoreError):self.app.adopt(current,self.driver)
         self.assertEqual(self.driver.events,[])
+
+    def test_empty_unknown_commitment_schema_is_not_mistaken_for_english_schema(self):
+        current=self.candidate('current',True,True)
+        with Commitments(self.root):pass
+        db=sqlite3.connect(self.root/'state/commitments.sqlite3')
+        try:db.execute('PRAGMA user_version=3');db.commit()
+        finally:db.close()
+        before=self.app.state()
+        with self.assertRaises(CoreError):self.app.adopt(current,self.driver)
+        self.assertEqual(self.app.state(),before);self.assertEqual(self.driver.events,[])
 
     def test_new_chat_actions_require_chat_reader_not_just_store_reader(self):
         store_only=self.candidate('store-only',True,False)

@@ -12,7 +12,7 @@ from control.paths import reject_links
 from control.recovery.gate import RunLock
 
 LANES=['application-release','workbench-host','task-runner','executor','dialogue','planning',
-       'development','local-models','image-generation','mail','repair-return']
+       'development','local-models','image-generation','mail','repair-return','software-config']
 
 
 def digest(path):

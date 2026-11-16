@@ -139,6 +139,10 @@ class DialogueHost:
             checkpoint()
             for route in decode(store.turn(ident)['routes']):
                 checkpoint()
+                if learning_job and learning_job['body'].get('fixed_question'):
+                    from sdk.protocol import canonical
+                    result=english_learning.materialize(self.root,ident,{'status':'SUCCEEDED','text':canonical(learning_job['body']['fixed_question']),'usage':{'prompt_tokens':0,'completion_tokens':0,'total_tokens':0},'provider':'local-software','model':learning_job['body']['game']['software']['version']})
+                    break
                 client = NativeModel(route, Credentials(self.root).get, child(self.root, 'temp'))
                 if not client.available():
                     result = {'status': 'REJECTED', 'code': 'local_runtime_not_prepared' if route['adapter'] == 'local' else 'credential_unavailable'}
