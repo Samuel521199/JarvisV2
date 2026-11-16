@@ -1,0 +1,56 @@
+test_activation_failed_replacement_keeps_old_rollback_and_retirement (test_local_models.ModelsCase.test_activation_failed_replacement_keeps_old_rollback_and_retirement) ... ok
+test_corrupt_optional_state_does_not_prevent_core_and_releases_lease (test_local_models.ModelsCase.test_corrupt_optional_state_does_not_prevent_core_and_releases_lease) ... ERROR
+test_corruption_rejected_and_unknown_adapter_never_ready (test_local_models.ModelsCase.test_corruption_rejected_and_unknown_adapter_never_ready) ... ok
+test_download_resume_full_response_restart_and_digest (test_local_models.ModelsCase.test_download_resume_full_response_restart_and_digest) ... ok
+test_missing_dependencies_low_memory_and_bad_fields (test_local_models.ModelsCase.test_missing_dependencies_low_memory_and_bad_fields) ... ok
+test_multilingual_fixed_dimension_and_immutable_revision (test_local_models.ModelsCase.test_multilingual_fixed_dimension_and_immutable_revision) ... ok
+test_offline_inference_and_no_raw_input_in_state (test_local_models.ModelsCase.test_offline_inference_and_no_raw_input_in_state) ... ok
+test_revision_and_single_owner (test_local_models.ModelsCase.test_revision_and_single_owner) ... ok
+test_stop_unloads_and_restart_does_not_autoload (test_local_models.ModelsCase.test_stop_unloads_and_restart_does_not_autoload) ... ok
+
+======================================================================
+ERROR: test_corrupt_optional_state_does_not_prevent_core_and_releases_lease (test_local_models.ModelsCase.test_corrupt_optional_state_does_not_prevent_core_and_releases_lease)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "E:\Jarvis\dev\tests\test_local_models.py", line 126, in test_corrupt_optional_state_does_not_prevent_core_and_releases_lease
+    self.assertEqual(create_manager(root).snapshot()['manager']['error'],'model_state_version')
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+KeyError: 'error'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\soft\Python313\Lib\shutil.py", line 625, in _rmtree_unsafe
+    os.unlink(fullname)
+    ~~~~~~~~~^^^^^^^^^^
+PermissionError: [WinError 32] 另一个程序正在使用此文件，进程无法访问。: 'C:\\Users\\samuel\\AppData\\Local\\Temp\\jarvis-model-corrupt-8d8b7wdc\\state\\local-models.lock'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "E:\Jarvis\dev\tests\test_local_models.py", line 113, in test_corrupt_optional_state_does_not_prevent_core_and_releases_lease
+    with tempfile.TemporaryDirectory(prefix='jarvis-model-corrupt-') as temp:
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\soft\Python313\Lib\tempfile.py", line 946, in __exit__
+    self.cleanup()
+    ~~~~~~~~~~~~^^
+  File "D:\soft\Python313\Lib\tempfile.py", line 950, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\soft\Python313\Lib\tempfile.py", line 930, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "D:\soft\Python313\Lib\shutil.py", line 790, in rmtree
+    return _rmtree_unsafe(path, onexc)
+  File "D:\soft\Python313\Lib\shutil.py", line 629, in _rmtree_unsafe
+    onexc(os.unlink, fullname, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\soft\Python313\Lib\tempfile.py", line 905, in onexc
+    _os.unlink(path)
+    ~~~~~~~~~~^^^^^^
+PermissionError: [WinError 32] 另一个程序正在使用此文件，进程无法访问。: 'C:\\Users\\samuel\\AppData\\Local\\Temp\\jarvis-model-corrupt-8d8b7wdc\\state\\local-models.lock'
+
+----------------------------------------------------------------------
+Ran 9 tests in 1.690s
+
+FAILED (errors=1)

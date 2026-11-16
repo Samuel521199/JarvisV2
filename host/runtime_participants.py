@@ -39,7 +39,8 @@ def snapshot(root, server):
     def models(obj):
         with obj.lock:
             return sum(future is not None and not future.done()
-                       for future in (obj.future, obj.recall_future))
+                       for future in (obj.future, obj.recall_future)) + int(
+                           getattr(getattr(obj,'speech',None),'busy',False))
 
     service('mailbox', mailbox)
     service('family', family)
@@ -48,6 +49,18 @@ def snapshot(root, server):
         rows.append({'id': 'local_models', 'state': 'not_started', 'active': 0})
     else:
         service('local_models', models)
+
+    def speech(obj):
+        with obj.lock:
+            return sum(not future.done() for future in obj.futures.values())
+
+    voice=getattr(server,'speech',None)
+    # Only the known inert fallback is exempt; an unknown service shape must
+    # fail inspection instead of silently allowing a managed handoff.
+    if voice is not None and (type(voice).__module__,type(voice).__name__)==('host.speech','Unavailable'):
+        rows.append({'id':'speech','state':'not_started','active':0})
+    else:
+        service('speech',speech)
 
     from host import studio3d, studio3d_learning, image_generation, knowledge, knowledge_extraction
 

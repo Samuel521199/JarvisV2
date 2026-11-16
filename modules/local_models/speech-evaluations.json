@@ -1,0 +1,95 @@
+{
+  "schema": 1,
+  "models": {
+    "sensevoice-small-int8-20250909": {
+      "summary": {
+        "zh": {
+          "samples": 12,
+          "units": 137,
+          "edits": 10,
+          "error_rate": 0.072992700729927,
+          "metric": "CER-like CJK character units",
+          "round_trip_p50_seconds": 0.03973509999923408,
+          "round_trip_p95_seconds": 0.06573390000266954
+        },
+        "en": {
+          "samples": 12,
+          "units": 106,
+          "edits": 37,
+          "error_rate": 0.3490566037735849,
+          "metric": "WER",
+          "round_trip_p50_seconds": 0.0606967000021541,
+          "round_trip_p95_seconds": 0.12504409999746713
+        },
+        "mixed": {
+          "samples": 12,
+          "units": 194,
+          "edits": 36,
+          "error_rate": 0.18556701030927836,
+          "metric": "MER",
+          "round_trip_p50_seconds": 0.0666455999999016,
+          "round_trip_p95_seconds": 0.11131380000006175
+        }
+      },
+      "cold_start_seconds": 7.616252399999212,
+      "peak_working_set_bytes": 417280000,
+      "max_observed_private_bytes": 1215315968,
+      "gpu_bytes": 0,
+      "scope": "36 public ASCEND test recordings, no personal samples, no cloud, not unseen relative to upstream training; references retained outside Git",
+      "manifest_fingerprint": "baa8188933791596112a6d85b6d1b2d4e4a57131f39be261cbbab7dd5a531aa0",
+      "worker_fingerprint": "ebdda2971e114ff9814884e73c3184f6278023a6e01b0a8ff4242a499110f3be",
+      "corpus": "CAiRE/ASCEND main/test CC-BY-SA-4.0",
+      "personal_samples": 0,
+      "device": "Ryzen AI Max+ 395; Windows; CPU 2 threads",
+      "dependencies": {
+        "numpy": "2.4.6",
+        "onnxruntime": "1.24.3"
+      }
+    },
+    "funasr-nano-int8-20251217": {
+      "summary": {
+        "zh": {
+          "samples": 12,
+          "units": 137,
+          "edits": 6,
+          "error_rate": 0.043795620437956206,
+          "metric": "CER-like CJK character units",
+          "round_trip_p50_seconds": 0.041016099999978906,
+          "round_trip_p95_seconds": 0.07024350000210688
+        },
+        "en": {
+          "samples": 12,
+          "units": 106,
+          "edits": 23,
+          "error_rate": 0.2169811320754717,
+          "metric": "WER",
+          "round_trip_p50_seconds": 0.0582856000000902,
+          "round_trip_p95_seconds": 0.1028145999989647
+        },
+        "mixed": {
+          "samples": 12,
+          "units": 194,
+          "edits": 39,
+          "error_rate": 0.20103092783505155,
+          "metric": "MER",
+          "round_trip_p50_seconds": 0.05446250000022701,
+          "round_trip_p95_seconds": 0.08694069999910425
+        }
+      },
+      "cold_start_seconds": 6.8420648999999685,
+      "peak_working_set_bytes": 505487360,
+      "max_observed_private_bytes": 1310224384,
+      "gpu_bytes": 0,
+      "scope": "36 public ASCEND test recordings, no personal samples, no cloud, not unseen relative to upstream training; references retained outside Git",
+      "manifest_fingerprint": "37dd5232e605317926c5c8b9e8f4280d5d00c7b0d8314e36ee6c16942a9cbc4a",
+      "worker_fingerprint": "ebdda2971e114ff9814884e73c3184f6278023a6e01b0a8ff4242a499110f3be",
+      "corpus": "CAiRE/ASCEND main/test CC-BY-SA-4.0",
+      "personal_samples": 0,
+      "device": "Ryzen AI Max+ 395; Windows; CPU 2 threads",
+      "dependencies": {
+        "numpy": "2.4.6",
+        "onnxruntime": "1.24.3"
+      }
+    }
+  }
+}

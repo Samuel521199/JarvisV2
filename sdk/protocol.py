@@ -43,13 +43,15 @@ def _object(pairs):
     return result
 
 
-def decode(raw: bytes | str) -> Any:
+def decode(raw: bytes | str, *, max_bytes: int = MAX_MESSAGE_BYTES) -> Any:
+    if type(max_bytes) is not int or max_bytes < 1:
+        raise CoreError("invalid_contract", "Expected a positive JSON byte limit")
     if isinstance(raw, str):
         try:
             raw = raw.encode("utf-8")
         except UnicodeError as exc:
             raise CoreError("invalid_json", "Invalid Unicode in JSON") from exc
-    if len(raw) > MAX_MESSAGE_BYTES:
+    if len(raw) > max_bytes:
         raise CoreError("message_too_large", "JSON message exceeds limit")
     try:
         result = json.loads(raw.decode("utf-8"), object_pairs_hook=_object,

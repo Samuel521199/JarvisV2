@@ -173,6 +173,7 @@
 - [应用级准入、A/B 交接与恢复核验（2026-11-04）](#application-release-evidence)
 - [253 项架构修复、兼容与日用采用（2026-11-04，v0.1.2）](#architecture-repair-evidence)
 - [E盘外接迁移、恢复与离线记忆切换（2026-11-13）](#external-storage-evidence-20261113)
+- [共用离线语音实现与本机验收（2026-11-16）](#shared-speech-delivery-20261116)
 - [明确请求覆盖、独立新样本与控制器组合验收（2026-11-09）](#commitment-coverage-evidence)
 - [新增语言样本、真实模型影子与旧版回退核验（2026-11-08起始）](#commitment-shadow-evidence)
 - [聊天待办受理与时间澄清核验（2026-11-08，开发工作树）](#chat-commitments-evidence)
@@ -3728,6 +3729,11 @@ JPF/r1 不改写；本轮是 V-TRI/V-CLC 的局部接线证据，完整场景仍
 | 恢复/迁移工具最终回归 | 9项恢复测试＋12项Codex迁移测试，共21项通过 | SQLite按文件头识别并合并WAL；保留无关-wal/-shm及依赖锁；第二数据根活跃写入会阻止快照 |
 
 下一道实际验收门：退出Codex→执行离线迁移→重启并从E打开工程→核对原会话/记忆/目标/设置和新写入落E→核对旧目录退役。C临时清理和D原件仍待处理。没有这一步，本节保持部分verified，不签收“全部数据均已离开C/D盘”。后续自然请求、知识收益、统一预算、多Bot和自愈依然按原实施跟踪推进。
+
+<a id="shared-speech-delivery-20261116"></a>
+## 共用离线语音实现与本机验收（2026-11-16）
+
+源码v0.1.14，共用STT/TTS端口、三入口自动转写、确认后原队列接纳与原英语证据/剧情接续已实现；两款模型各36段公开真人录音本机CPU对照完成。本人未提供录音，未证明本人识别率、发音或长期学习收益；完整离线LLM未实现。隔离回退夹具读取新格式且阻止重放，正式日用采用/回退和数据保留另由独立控制器签收。[测量、验证及剩余项](evidence/shared-speech-20261116/report.md#shared-speech-evidence-20261116)。
 
 <!-- book-footer:start -->
 [返回工程主入口](../README.md) · [全书目录](../README.md#book-tree) · [上一章：系统自身模型与能力认知](self-model.md) · [下一章：架构决策、批判性评审与评分](decisions-review.md)

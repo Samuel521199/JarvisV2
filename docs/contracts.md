@@ -10,6 +10,7 @@
 - [实现状态索引（先看这里）](#contracts-implementation-index)
 - [独立控制器指针与恢复契约](#controller-pointer-contract)
 - [个人英语学习记录契约](#english-learning-contract)
+- [共用语音请求与来源契约（v1已实现，扩展proposed）](#shared-speech-contract)
 - [AI 系统调用独立软件的契约](#ai-mediated-software-contract)
   - [首版机器协议](#ai-software-wire)
   - [安装与状态提交](#ai-software-state)
@@ -136,6 +137,38 @@
 | 兼容采用与回退 | 托管写入先核验协议9；发现学习库即要求目标包声明支持相应schema1、2或3。只读恢复包阻止已有学习job按普通聊天派发；不回滚业务库或撤回状态 |
 
 学习记录是个人表现证据，不能作为一般知识事实或外部授权。当前只接个人聊天；项目/家庭其他身份不自动获得个人学习史。普通聊天保持原模式，不从引用、粘贴或模型回答猜测学习成绩。日用采用与真实效果须以验收回执判断。
+
+<a id="shared-speech-contract"></a>
+## 共用语音请求与来源契约（v1已实现，扩展proposed）
+
+[共用语音底座](models-offline.md#shared-speech-foundation)已有以下严格v1 API；后表为更完整的端口语义，未列入实际API的字段仍proposed。复用原身份、会话、任务、模型中心、权限、费用与恢复体系；英语软件经同一端口调用，不直接持有麦克风或模型凭据。
+
+`POST /api/speech`复用原本机访问、同源及nonce门，响应schema为jarvis.speech.v1；按action严格检查字段，不接受额外权限声明。共享scope字段为purpose（chat/english-learning）、chat_id、exercise_id（chat须null）。
+
+| action | 除action外的实际字段 | 结果与约束 |
+|---|---|---|
+| status | 无 | 配置、STT可用性/选择、最近20个状态；来源失效只给WITHHELD，不返回原识别正文 |
+| configure | enabled, revision | 修订比较，关闭取消后续处理，不删除历史 |
+| record | id, audio, scope字段 | 本机base64 PCM；audio-加32位hex；与当前范围绑定 |
+| warm | id, scope字段 | 明确打开语音入口后可预热，不开麦克风 |
+| transcribe | id, audio_id, scope字段, language | speech-请求ID；language为auto/zh/en；异步，仅最终候选文字，置信度/发音分为空 |
+| cancel / withdraw | id | 取消排队/在途；撤回已完成来源使其对话及学习依赖失效；不自动重放 |
+| speak | id, scope字段, source_id | 来源为同会话已成功turn，或学习的npc/reference；来源有效、参考已曝光才读；聊天截前450字 |
+| audio | id | 只返回仍有效的TTS原结果，重新核对音频及来源摘要 |
+| submit | id, command | 用户确认后沿原聊天命令进入原DialogueHost；服务绑定voice-speech ID和正文摘要，重试去重 |
+
+英语原端口增加asr_answer，字段为request_id/chat_id/provider/model/reasoning/exercise_id/answer/assistance/speech_id；区别于保留的oral_answer/audio_id。原音、原识别、确认原话和模型回执分开保存，ASR来源撤回也阻止剧情接续。English4只在首个ASR答案迁移，普通文字/手动录音仍保留原格式；新写入要求受管控制器10，兼容阅读器声明分别覆盖speech1/English4/模型用途3。不支持自动识别后直接执行业务或无人确认评分。
+
+| 对象 | 最少关联与约束 |
+|---|---|
+| SpeechRequest | schema、request_id、conversation/turn/utterance_id、purpose、actor/device引用、当前权限/设备租约修订、STT/TTS操作、输入内容摘要、语言/隐私策略与预算引用。不得由音频内容自行扩大权限 |
+| Transcript | 原音频引用及摘要、分段/修订、partial或final、原识别文本、用户更正及来源、识别器/量化/运行时build、错误/不确定标记。语言跨度和置信度仅在提供者实际支持时填入，不能虚构可校准概率 |
+| SpokenOutput | 待朗读文本/来源摘要、语言、音色/模型build、播放代际、原会话与取消范围；过期播放结果不能替换当前声音，发声不代表业务执行完成 |
+| RouteReceipt | 每个阶段实际本地/远端提供者、上传的是音频还是文本、用量/耗时/资源/失败、当前网络策略。音频未外发而转写文本外发仍不属于完全离线 |
+
+接纳同一utterance的final时核对请求/输入摘要、会话与设备代际、purpose和当前权限；跨入口重试复用原ID，内容变更冲突。partial不会生成业务命令，最终文本沿原用户消息和受理链进入一次；晚结果、暂停、撤回、停止与UNKNOWN仍由原所有者决定，不能为“补回语音体验”恢复旧授权或重发未知效果。
+
+识别结果默认是对原声音的候选转写；更正ASR错误与改写英语表达分别记录。学习评价必须绑定真正使用的转写版本与有效原答/音频，异议或撤回停止其进入复习/趋势；普通聊天不默认变成学习样本。STT不授予声纹身份或发音评分能力；本地LLM与TTS的能力和失败分别记录，不以一项成功代替整条语音链验收。
 
 <a id="ai-mediated-software-contract"></a>
 ## AI 系统调用独立软件的契约

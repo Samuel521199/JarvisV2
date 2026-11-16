@@ -90,7 +90,7 @@ export function localModelsView(body){
  function rememberDisclosure(node,id,set){node.open=set.has(id);node.addEventListener('toggle',()=>{if(node.isConnected){if(node.open)set.add(id);else set.delete(id);}});}
  function drawModel(m,busy){
   const p=purposeOf(m),c=el('article',undefined,'card lm-model');c.dataset.modelId=m.id;c.setAttribute('aria-label',m.title);
-  const head=el('div',undefined,'lm-model-heading'),name=el('div');name.append(el('h3',m.title),el('p',`${p.name} · ${languageLabel(m)}${m.dimension?' · '+m.dimension+' 维':''}`,'note'));
+  const head=el('div',undefined,'lm-model-heading'),name=el('div');name.append(el('h3',m.id==='funasr-nano-int8-20251217'?m.title+' · CTC导出版':m.id==='sensevoice-small-int8-20250909'?m.title+' · WSYue变体':m.title),el('p',`${p.name} · ${languageLabel(m)}${m.dimension?' · '+m.dimension+' 维':''}`,'note'));
   const badges=el('div',undefined,'lm-badges');
   if(m.selected)badges.append(el('span','当前默认','lm-badge selected'));
   const statusLabel=m.loaded?'运行中':canStart(m)?'可启动':m.disk_bytes?'文件待检查':m.files.length?'可下载':'参考候选';
@@ -106,13 +106,14 @@ export function localModelsView(body){
    if(a.benchmark)c.append(el('p',`检索回归 ${Math.round(a.benchmark.hit_at_1*a.benchmark.sample_count)}/${a.benchmark.sample_count} 命中 · 短查询 p50 ${a.benchmark.latency_ms.p50.toFixed(1)} ms · 限本评测集`,'lm-quality-line'));
    else c.append(el('p',m.kind==='embedding'?'本机检索效果待测；语言覆盖分不代表准确率。':m.kind==='tts'?'自然度、首音延迟与情绪表达待测。':m.kind==='stt'?'各语言识别错误率与实时率待测。':'本机任务效果待测。','note'));
   }
+  if(m.speech_evaluation){const t=m.speech_evaluation;const table=el('table'),head=el('tr');for(const h of ['公开录音','错误率','热推理p95'])head.append(el('th',h));table.append(head);for(const [key,name] of [['zh','中文 CER'],['en','英文 WER'],['mixed','混说 MER']]){const r=t.summary[key],tr=el('tr');for(const v of [name+' · '+r.samples+'段',(r.error_rate*100).toFixed(1)+'%',(r.round_trip_p95_seconds*1000).toFixed(0)+' ms'])tr.append(el('td',v));table.append(tr);}c.append(table,el('p',`本机CPU 2线程 · 冷启动 ${t.cold_start_seconds.toFixed(1)}秒 · 峰值工作集 ${bytes(t.peak_working_set_bytes)} · 私有提交 ${bytes(t.max_observed_private_bytes)}。公开小样本，不代表你的口音准确率；延迟不含录音和首次加载。`,'note'));}
   if(m.error)c.append(el('p','需要处理：'+m.error,'danger'));
   const actions=el('div',undefined,'lm-model-actions');
   const expand=el('details',undefined,'lm-details');rememberDisclosure(expand,m.id,expanded);expand.append(el('summary','资源明细与评分依据'),assessmentView(m));
   const mainAction=m.loaded?'standby':m.files.length&&['failed','damaged'].includes(m.state)?'repair':completeFiles(m)&&m.adapter_ready?'start':m.files.length&&!completeFiles(m)?'download':null;
   if(mainAction){const b=button({standby:'待命 · 释放内存',start:'启动模型',download:'下载 / 续传',repair:'检查并修复文件'}[mainAction],()=>act(mainAction,m.id),'lm-primary');b.disabled=busy;actions.append(b);}
   else actions.append(el('span','运行适配待接入','note'));
-  if(m.adapter_ready&&completeFiles(m)){const b=button('本机评测',()=>act('benchmark',m.id));b.disabled=busy;actions.append(b);}
+  if(m.kind==='embedding'&&m.adapter_ready&&completeFiles(m)){const b=button('本机评测',()=>act('benchmark',m.id));b.disabled=busy;actions.append(b);}
   if(a?.benchmark)actions.append(button('查看评测结果',()=>showBenchmark(m.title,a.benchmark)));
   const source=link('官方模型页 ↗',m.source);source.target='_blank';source.rel='noopener noreferrer';actions.append(source);c.append(actions,expand);
   const maintenance=el('details',undefined,'lm-maintenance');rememberDisclosure(maintenance,m.id,maintenanceOpen);maintenance.append(el('summary','文件维护与版本管理'));
@@ -135,9 +136,10 @@ export function localModelsView(body){
   else guide.append(el('p','按用途分组展示。先找到需要的能力，再比较同类模型；模型已下载、能启动和效果已验证是不同状态。','note'));
   if(category==='embedding')guide.append(el('p','E5 INT8 是已接通的轻量基线；EmbeddingGemma 与 Qwen3 的候选版本需在同一环境对测。语言覆盖、资源和速度分不等于综合效果排名。','lm-choice-note'));
   status.textContent=job?`${jobs[job.action]||job.action||'上次操作'} · ${outcomes[job.status]||job.status}${job.model?' · '+(models.find(m=>m.id===job.model)?.title||job.model):''}${job.error?' · '+job.error:''}${job.downloaded_bytes?' · '+bytes(job.downloaded_bytes):''}`:'后台待命 · 选择分类不会启动或下载模型';
-  controls.replaceChildren(button('取消当前操作',()=>act('cancel')),button('回退上一模型',()=>act('rollback')),button('取消默认并释放内存',()=>act('unselect')),button('解除旧模型保留',()=>act('retire_previous')),button('管理器自身说明',()=>details('本地模型底座',{ui_version:localModelsUiVersion,...state.manager,runtime:state.runtime})));
-  controls.append(el('p',`默认：${state.selected||'未选择'} · 回退保留：${state.previous||'无'}。资源为最近推理采样；后台操作在切换分类后继续显示。`,'note'));
+  controls.replaceChildren(button('取消当前操作',()=>act('cancel')),button('回退上一检索模型',()=>act('rollback')),button('取消检索默认并释放内存',()=>act('unselect')),button('解除旧检索模型保留',()=>act('retire_previous')),button('管理器自身说明',()=>details('本地模型底座',{ui_version:localModelsUiVersion,...state.manager,runtime:state.runtime})));
+  controls.append(el('p',`检索默认：${state.selected||'未选择'} · 回退保留：${state.previous||'无'} · 语音默认：${state.purpose_models?.stt?.selected||'未选择'}。资源为最近推理采样；后台操作在切换分类后继续显示。`,'note'));
   const bs=controls.querySelectorAll('button');bs[0].disabled=!busy;bs[1].disabled=busy||!state.previous;bs[2].disabled=busy||!state.selected;bs[3].disabled=busy||!state.previous;
+  const stt=state.purpose_models?.stt;if(stt){for(const [action,label,disabled] of [['speech_rollback','回退上一语音模型',!stt.previous],['speech_unselect','取消语音默认并待命',!stt.selected],['speech_retire_previous','解除旧语音模型保留',!stt.previous]]){const b=button(label,()=>act(action));b.disabled=busy||disabled;controls.append(b);}}
   if(busy)manager.open=true;
   const term=normalize(search.value).trim();
   const visible=models.filter(m=>{

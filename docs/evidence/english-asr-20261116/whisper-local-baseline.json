@@ -1,0 +1,71 @@
+{
+  "model": "openai/whisper-base.en",
+  "backend": "existing torch/transformers, float32 CPU",
+  "threads": 4,
+  "load_seconds": 0.108,
+  "device": "cpu",
+  "cuda_used": false,
+  "peak_working_set_bytes": 831377408,
+  "private_bytes_at_end": 2333769728,
+  "rows": [
+    {
+      "id": "cafe",
+      "text": "Could I have a small hot coffee with no sugar? To go, please?",
+      "audio_seconds": 6.155,
+      "inference_seconds": 0.647,
+      "rtf": 0.105,
+      "reference": "Could I have a small hot coffee with no sugar, to go, please?",
+      "word_edits": 0,
+      "reference_words": 13
+    },
+    {
+      "id": "arrange",
+      "text": "I can't meet at 3. Could we meet at 4 instead?",
+      "audio_seconds": 5.195,
+      "inference_seconds": 0.558,
+      "rtf": 0.108,
+      "reference": "I can't meet at three. Could we meet at four instead?",
+      "word_edits": 2,
+      "reference_words": 11
+    },
+    {
+      "id": "work",
+      "text": "Please submit your report by Thursday at 3pm, not Friday.",
+      "audio_seconds": 5.91,
+      "inference_seconds": 0.533,
+      "rtf": 0.09,
+      "reference": "Please submit your report by Thursday at three p.m., not Friday.",
+      "word_edits": 3,
+      "reference_words": 12
+    },
+    {
+      "id": "learner-error",
+      "text": "He go to work yesterday.",
+      "audio_seconds": 2.675,
+      "inference_seconds": 0.422,
+      "rtf": 0.158,
+      "reference": "He go to work yesterday.",
+      "word_edits": 0,
+      "reference_words": 5
+    },
+    {
+      "id": "negation",
+      "text": "I don't want sugar. And I can't meet at 3.",
+      "audio_seconds": 4.36,
+      "inference_seconds": 0.566,
+      "rtf": 0.13,
+      "reference": "I don't want sugar, and I can't meet at three.",
+      "word_edits": 1,
+      "reference_words": 10
+    }
+  ],
+  "passed": true,
+  "synthetic_only": true,
+  "actual_user_speech": false,
+  "word_edits": 6,
+  "reference_words": 51,
+  "wer": 0.11764705882352941,
+  "normalization": "Lowercase English words, contractions retained, no digit/number normalization; diagnostic only, not leaderboard.",
+  "external_model_calls": 0,
+  "production_changed": false
+}

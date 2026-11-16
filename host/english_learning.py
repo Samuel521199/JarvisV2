@@ -29,7 +29,8 @@ def records(store,chats):
     values=[];withheld=0
     for row in store.db.execute('SELECT a.body,a.disputed,e.withdrawn,e.body AS exercise FROM assessments a JOIN exercises e ON e.id=a.exercise_id'):
         value=json.loads(row['body']);exercise=json.loads(row['exercise'])
-        if row['disputed'] or row['withdrawn'] or value['confidence']=='low' or not all(source_valid(chats,i,store) for i in (value['answer_turn'],exercise['question_turn'])):
+        from host.speech_receipts import learning_valid
+        if not learning_valid(store.root,value) or row['disputed'] or row['withdrawn'] or value['confidence']=='low' or not all(source_valid(chats,i,store) for i in (value['answer_turn'],exercise['question_turn'])):
             withheld+=1;continue
         values.append(value)
     return values,withheld
@@ -49,6 +50,8 @@ def check_job(store,chats,job):
         from host.english_game import check
         check(store,chats,body['game'],body.get('exercise_id'))
     if job['kind']=='answer':
+        from host.speech_receipts import learning_valid
+        if body.get('speech',{}).get('asr') and not learning_valid(store.root,{**body,'chat_id':job['chat_id']}):raise CoreError('english_stale','Speech input withdrawn or changed')
         ex=store.exercise(body['exercise_id'])
         if ex['withdrawn'] or ex['hints']!=body['hints'] or ex['exposed']!=body['exposed']:raise CoreError('english_stale','Exercise changed')
 
@@ -178,6 +181,7 @@ def completed(root,ident):
 
 
 def view(store,chats):
+    from host.speech_receipts import learning_valid
     reconcile(store,chats);valid,withheld=records(store,chats);cfg=store.config();data=progress([r for r in valid if not r.get('speech')]);oral=progress([r for r in valid if r.get('speech')])
     exercises=[]
     for row in store.db.execute('SELECT * FROM exercises ORDER BY rowid DESC LIMIT 60'):
@@ -190,7 +194,7 @@ def view(store,chats):
         if ex['exposed'] or a:body['reference']=ex['body']['reference']
         if ex['hints']:body['hint']=ex['body']['hint']
         exercises.append({'id':ex['id'],'chat_id':ex['chat_id'],'hints':ex['hints'],'exposed':bool(ex['exposed']),'exercise':body,
-            'assessment':({'id':a['id'],**json.loads(a['body']),'disputed':bool(a['disputed'])} if a and source_valid(chats,a['id'],store) else None)})
+            'assessment':({'id':a['id'],**json.loads(a['body']),'disputed':bool(a['disputed'])} if a and source_valid(chats,a['id'],store) and learning_valid(store.root,json.loads(a['body'])) else None)})
     jobs=[{'id':r['id'],'chat_id':r['chat_id'],'kind':r['kind'],'state':r['state']} for r in store.db.execute('SELECT * FROM jobs ORDER BY rowid DESC LIMIT 12')]
     from host.english_game import overview
     games=overview(store,chats,valid)
@@ -199,10 +203,13 @@ def view(store,chats):
 
 def command(root,value,runner):
     if not isinstance(value,dict) or not isinstance(value.get('action'),str):raise CoreError('english_invalid','Expected learning command')
-    action=value['action'];schemas={'software_configure':{'enabled','revision'},'game_rebind':{'session_id','revision'},'game_start':{'request_id','chat_id','provider','model','reasoning','scene','mode'},'game_next':{'request_id','chat_id','provider','model','reasoning','session_id','revision'},'game_pause':{'session_id','revision'},'game_resume':{'session_id','revision'},'speak_npc':{'exercise_id'},'speak':{'exercise_id'},'oral_start':{'request_id','chat_id','provider','model','reasoning','domain','study_text'},'record':{'audio'},'recording':{'exercise_id'},'oral_answer':{'request_id','chat_id','provider','model','reasoning','exercise_id','answer','assistance','audio_id'},'status':set(),'configure':{'enabled','revision'},'start':{'request_id','chat_id','provider','model','reasoning','domain','study_text'},
+    action=value['action'];schemas={'software_configure':{'enabled','revision'},'game_rebind':{'session_id','revision'},'game_start':{'request_id','chat_id','provider','model','reasoning','scene','mode'},'game_next':{'request_id','chat_id','provider','model','reasoning','session_id','revision'},'game_pause':{'session_id','revision'},'game_resume':{'session_id','revision'},'speak_npc':{'exercise_id'},'speak':{'exercise_id'},'oral_start':{'request_id','chat_id','provider','model','reasoning','domain','study_text'},'record':{'audio'},'recording':{'exercise_id'},'asr_answer':{'request_id','chat_id','provider','model','reasoning','exercise_id','answer','assistance','speech_id'},'oral_answer':{'request_id','chat_id','provider','model','reasoning','exercise_id','answer','assistance','audio_id'},'status':set(),'configure':{'enabled','revision'},'start':{'request_id','chat_id','provider','model','reasoning','domain','study_text'},
         'answer':{'request_id','chat_id','provider','model','reasoning','exercise_id','answer','assistance'},'hint':{'exercise_id'},'reveal':{'exercise_id'},'withdraw':{'exercise_id'},'dispute':{'assessment_id'}}
     if action not in schemas or set(value)!={'action',*schemas[action]}:raise CoreError('english_invalid','Unexpected learning fields')
     StopGate(root).require_running();writer(root)
+    if action=='asr_answer':
+        from host.speech import writer as speech_writer
+        speech_writer(root)
     outgoing=None
     with LOCK:
         store=Store(root);chats=Dialogues(root)
@@ -233,8 +240,14 @@ def command(root,value,runner):
                 if not store.config()['enabled'] or ex['withdrawn'] or not source_valid(chats,ex['id'],store):raise CoreError('english_stale','Recording source unavailable')
                 row=store.db.execute('SELECT body,disputed FROM assessments WHERE exercise_id=?',(ex['id'],)).fetchone()
                 if not row or row['disputed'] or not source_valid(chats,json.loads(row['body'])['answer_turn'],store):raise CoreError('english_missing','No available oral recording')
-                ident=json.loads(row['body']).get('speech',{}).get('id')
-                from host.english_audio import read
+                receipt=json.loads(row['body']).get('speech',{})
+                from host.speech_receipts import learning_valid
+                if not learning_valid(root,json.loads(row['body'])):raise CoreError('english_stale','Speech input withdrawn')
+                ident=receipt.get('id')
+                if receipt.get('storage')=='speech':
+                    from host.speech_audio import read
+                else:
+                    from host.english_audio import read
                 import base64
                 raw,meta=read(root,ident)
                 return {'recording':meta,'audio':base64.b64encode(raw).decode('ascii')}
@@ -254,7 +267,7 @@ def command(root,value,runner):
                     column='hints' if action=='hint' else 'exposed';store.db.execute('UPDATE exercises SET '+column+'=1 WHERE id=?',(ex['id'],))
             elif action=='dispute':
                 if not store.db.execute('UPDATE assessments SET disputed=1 WHERE id=?',(value['assessment_id'],)).rowcount:raise CoreError('english_missing','Unknown assessment')
-            elif action in ('start','oral_start','game_start','game_next','answer','oral_answer'):
+            elif action in ('start','oral_start','game_start','game_next','answer','oral_answer','asr_answer'):
                 cfg=store.config()
                 if not cfg['enabled']:raise CoreError('english_disabled','Enable personal learning records first')
                 if not isinstance(value['request_id'],str) or not re.fullmatch(r'english-[A-Za-z0-9_-]{1,80}',value['request_id']):raise CoreError('english_invalid','Invalid learning request ID')
@@ -295,10 +308,14 @@ def command(root,value,runner):
                             body['game']=ex['body']['game']
                             from host.english_game import check
                             check(store,chats,body['game'],ex['id'])
-                            if ex['body'].get('practice_mode')=='oral' and action!='oral_answer':raise CoreError('english_audio','Record and confirm a transcript for oral game turns')
+                            if ex['body'].get('practice_mode')=='oral' and action not in ('oral_answer','asr_answer'):raise CoreError('english_audio','Record and confirm a transcript for oral game turns')
                         if action=='oral_answer':
                             from host.english_audio import read
                             _,receipt=read(root,value['audio_id']);body['speech']=receipt
+                        if action=='asr_answer':
+                            from host.speech_sources import learning_receipt
+                            body['speech']=learning_receipt(root,value['speech_id'],value['chat_id'],ex['id'],value['answer'])
+                            store.db.execute('PRAGMA user_version=4')
                         body.update(exercise_id=ex['id'],answer=value['answer'],assistance=value['assistance'],hints=ex['hints'],exposed=ex['exposed'],dependencies=[ex['id']]);text=value['answer'];kind='answer'
                     outgoing={'request_id':value['request_id'],'chat_id':value['chat_id'],'text':text,'provider':value['provider'],'model':value['model'],'reasoning':value['reasoning'],'skill':'english-coach','memory_enabled':False,'assistant_mode':False}
                     body.update(command=outgoing,command_digest=digest(outgoing));store.add_job(value['request_id'],value['chat_id'],kind,body)

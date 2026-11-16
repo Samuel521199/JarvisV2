@@ -144,6 +144,19 @@ class ServiceTests(unittest.TestCase):
         e.app.adopt.assert_called_once_with('a'*64,e.driver,rollback=True,expected_epoch=4)
         self.assertEqual(e.journal['phase'],'quarantined');e.operator.start_daily.assert_not_called()
 
+    def test_restarted_manager_keeps_observed_epoch_until_three_failures_rollback(self):
+        e=self.engine();e.started=False
+        target={**self.state,'epoch':4,'active':{'build':'b'*64,'epoch':4},'previous':self.state['active']}
+        e.app.state.return_value=target;e.driver.running.return_value=False
+        e.app.approved.return_value={'path':str(self.base)};e.app.adopt.return_value=copy.deepcopy(self.state)
+        e.journal.update(phase='observing',target='b'*64,adopted_epoch=4,baseline=self.state['active'],observe_until=2000)
+        with patch.object(service,'require_compatible'):
+            for expected in (1,2):
+                e.tick();self.assertEqual(e.bad,expected);e.app.adopt.assert_not_called();e.operator.start_daily.assert_not_called()
+            e.tick()
+        e.app.adopt.assert_called_once_with('a'*64,e.driver,rollback=True,expected_epoch=4)
+        self.assertEqual(e.journal['phase'],'quarantined');e.operator.start_daily.assert_not_called()
+
     def test_incompatible_baseline_never_launched(self):
         e=self.engine();target={**self.state,'epoch':4,'active':{'build':'b'*64,'epoch':4},'previous':self.state['active']}
         e.app.state.return_value=target;e.app.approved.return_value={'path':str(self.base)}

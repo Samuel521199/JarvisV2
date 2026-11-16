@@ -311,6 +311,108 @@
           "url": "https://huggingface.co/Qwen/Qwen3-TTS-12Hz-0.6B-CustomVoice"
         }
       ]
+    },
+    "sensevoice-small-int8-20250909": {
+      "manifest_fingerprint": "baa8188933791596112a6d85b6d1b2d4e4a57131f39be261cbbab7dd5a531aa0",
+      "checked_at": "2026-11-16",
+      "profile": "CPU 2线程 · 公开短录音工作集，私有提交另列",
+      "languages_count": 5,
+      "expected": {
+        "disk": {
+          "low": 237431441,
+          "high": 237431441,
+          "basis": "pinned_artifacts"
+        },
+        "ram": {
+          "low": 352215040,
+          "high": 479871999,
+          "basis": "public_trial_working_set_plus_15_percent"
+        },
+        "vram": {
+          "low": 0,
+          "high": 0,
+          "basis": "cpu_backend"
+        }
+      },
+      "official": [],
+      "notes": [
+        "公开小样本不代表本人准确率；STT错误率和延迟见语音专用评测，不使用检索排名。",
+        "工作集不包含全部私有提交、共享环境或宿主；不是内存硬上限。"
+      ],
+      "sources": [
+        {
+          "title": "固定候选模型来源",
+          "url": "https://huggingface.co/csukuangfj/sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2025-09-09"
+        }
+      ]
+    },
+    "funasr-nano-int8-20251217": {
+      "manifest_fingerprint": "37dd5232e605317926c5c8b9e8f4280d5d00c7b0d8314e36ee6c16942a9cbc4a",
+      "checked_at": "2026-11-16",
+      "profile": "CPU 2线程 · 公开短录音工作集，私有提交另列",
+      "languages_count": 3,
+      "expected": {
+        "disk": {
+          "low": 264471717,
+          "high": 264471717,
+          "basis": "pinned_artifacts"
+        },
+        "ram": {
+          "low": 381288448,
+          "high": 581310464,
+          "basis": "public_trial_working_set_plus_15_percent"
+        },
+        "vram": {
+          "low": 0,
+          "high": 0,
+          "basis": "cpu_backend"
+        }
+      },
+      "official": [],
+      "notes": [
+        "公开小样本不代表本人准确率；STT错误率和延迟见语音专用评测，不使用检索排名。",
+        "工作集不包含全部私有提交、共享环境或宿主；不是内存硬上限。"
+      ],
+      "sources": [
+        {
+          "title": "固定候选模型来源",
+          "url": "https://huggingface.co/csukuangfj/sherpa-onnx-sense-voice-funasr-nano-int8-2025-12-17"
+        }
+      ]
+    },
+    "whisper-base-en-research": {
+      "manifest_fingerprint": "dc7218f754b7e89037c55f06a7d923147855c1291905997bd329d1293f4281b3",
+      "checked_at": "2026-11-16",
+      "profile": "CPU研究候选 · 尚无Jarvis运行适配",
+      "languages_count": 1,
+      "expected": {
+        "disk": {
+          "low": 294355250,
+          "high": 294355250,
+          "basis": "pinned_artifacts"
+        },
+        "ram": {
+          "low": 536870912,
+          "high": 3221225472,
+          "basis": "engineering_estimate_not_runtime_bound"
+        },
+        "vram": {
+          "low": 0,
+          "high": 0,
+          "basis": "cpu_backend"
+        }
+      },
+      "official": [],
+      "notes": [
+        "英文历史候选，保留来源与原探测，尚未接入通用推理。",
+        "工作集不包含全部私有提交、共享环境或宿主；不是内存硬上限。"
+      ],
+      "sources": [
+        {
+          "title": "固定候选模型来源",
+          "url": "https://huggingface.co/openai/whisper-base.en"
+        }
+      ]
     }
   }
 }

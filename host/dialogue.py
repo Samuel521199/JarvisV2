@@ -53,6 +53,8 @@ class DialogueHost:
             if not settings: raise CoreError('settings_missing', 'Configure model connections first')
             cfg = settings['catalog']
             if not isinstance(command, dict): raise CoreError('chat_invalid', 'Expected a conversation request')
+            from host.speech_sources import check_turn as check_speech_turn
+            check_speech_turn(self.root,command.get('request_id'),command)
             selected = command.get('provider', 'auto')
             route = resolve(cfg, selected, command.get('model') or None, command.get('reasoning', 'default'))
             if 'reference_image' in command or 'reference_images' in command:
@@ -134,6 +136,8 @@ class DialogueHost:
             def checkpoint():
                 if self.closing.is_set(): raise CoreError('chat_cancelled', 'Server is closing')
                 StopGate(self.root).require_running(); store.checkpoint(ident)
+                from host.speech_sources import check_turn as check_speech_turn
+                check_speech_turn(self.root,ident,decode(store.turn(ident)['request']))
                 if learning_job:english_learning.checkpoint(self.root,ident)
                 if view is not None:memory.refresh_view(self.root,view,chats=store,memory_db=memory_db)
             checkpoint()

@@ -29,7 +29,7 @@ def prepare(store,chats,value):
         if description.get('id')!='english-city' or description.get('version')!=software['version']:raise CoreError('software_integrity','Software identity mismatch')
         ident='game-'+value['request_id'][8:]
         s={'id':ident,'chat_id':value['chat_id'],'software':software,'scene':value['scene'],'mode':value['mode'],'node':0,'attempt':0,'state':'ACTIVE','revision':0,'dependencies':[],'exercise_id':None,'created':time.time()}
-        store.db.execute('PRAGMA user_version=3')
+        store.db.execute('PRAGMA user_version='+str(max(3,store.db.execute('PRAGMA user_version').fetchone()[0])))
         prior=store.db.execute('SELECT body FROM software_sessions WHERE id=?',(ident,)).fetchone()
         if prior:s=json.loads(prior[0])
         else:store.db.execute('INSERT INTO software_sessions VALUES(?,?)',(ident,json.dumps(s,ensure_ascii=False)))

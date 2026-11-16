@@ -1,9 +1,9 @@
-import {voicePractice} from './english-voice.js';
+import {speechInput,speechOutput} from './speech-input.js';
 import {el,button,field,post,markdown} from './ui.js';
 
 const labels={life:'生活交流',communication:'日常沟通',work:'工作资料'};
 export async function englishLearningView(parent,{route,ensureChat,refreshChat=async()=>{}}){
- let disposed=false,timer=null,state=null,draft='',material='',domain='auto',assistance='independent',selected=null,pending=null,working=false,recorded=null,voiceCleanup=()=>{},oralMode=false,gameScene='auto',gameSession=null,requestEpoch=0;
+ let disposed=false,timer=null,state=null,draft='',material='',domain='auto',assistance='independent',selected=null,pending=null,working=false,recorded=null,asrId=null,draftVersion=0,recognitionVersion=0,recordedExercise=null,speaker=null,voiceCleanup=()=>{},oralMode=false,gameScene='auto',gameSession=null,requestEpoch=0;
  const error=el('p',undefined,'form-error');
  function setBusy(value){parent.setAttribute('aria-busy',String(value));for(const n of parent.querySelectorAll('button,input,select,textarea')){if(value&&!n.disabled){n.disabled=true;n.dataset.englishBusy='true';}else if(!value&&n.dataset.englishBusy){n.disabled=false;delete n.dataset.englishBusy;}}}
  async function load(){if(working){timer=setTimeout(()=>load().catch(e=>error.textContent=e.message),1800);return;}const epoch=requestEpoch;const value=await post('/api/english-learning',{action:'status'});if(!disposed&&!working&&epoch===requestEpoch){state=value;render();}}
@@ -17,14 +17,15 @@ export async function englishLearningView(parent,{route,ensureChat,refreshChat=a
   try{
    if(!pending){const chat_id=ex?.chat_id||extra.chat_id||await ensureChat();pending={action:kind,request_id:'english-'+crypto.randomUUID(),chat_id,...route(),...(kind==='game_start'||kind==='game_next'?extra:['start','oral_start'].includes(kind)?{domain,study_text:material}:{exercise_id:ex.id,answer:draft,assistance})};}
    if(kind==='oral_answer'&&!pending.audio_id){const saved=await post('/api/english-learning',{action:'record',audio:recorded});pending.audio_id=saved.recording.id;}
-   state=await post('/api/english-learning',pending);if(['game_start','game_next','start','oral_start'].includes(pending.action)){selected=pending.request_id;const session=state.games?.sessions.find(s=>s.exercise_id===selected);if(session)gameSession=session.id;}pending=null;recorded=null;draft='';if(!disposed)render();await refreshChat();
+   if(kind==='asr_answer'&&!pending.speech_id)pending.speech_id=asrId;
+   state=await post('/api/english-learning',pending);if(['game_start','game_next','start','oral_start'].includes(pending.action)){selected=pending.request_id;const session=state.games?.sessions.find(s=>s.exercise_id===selected);if(session)gameSession=session.id;}pending=null;recorded=null;asrId=null;recordedExercise=null;draft='';if(!disposed)render();await refreshChat();
   }catch(e){error.textContent=e.message+'；请求若已受理，不会因再次核对而重复调用模型。';}
   finally{working=false;setBusy(false);}
  }
- async function listenNpc(ex){try{const r=await post('/api/english-learning',{action:'speak_npc',exercise_id:ex.id});if(disposed)return;const audio=el('audio');audio.controls=true;audio.src='data:audio/wav;base64,'+r.audio;parent.append(audio);await audio.play();}catch(e){error.textContent='角色朗读未完成：'+e.message;}}
- async function listen(ex){try{const r=await post('/api/english-learning',{action:'speak',exercise_id:ex.id});if(disposed)return;const audio=el('audio');audio.controls=true;audio.src='data:audio/wav;base64,'+r.audio;parent.append(audio);await audio.play();}catch(e){error.textContent='本机英文朗读未完成：'+e.message;}}
+ async function listenNpc(ex){await speaker.play({purpose:'english-learning',chat_id:ex.chat_id,exercise_id:ex.id,source_id:'npc'});}
+ async function listen(ex){await speaker.play({purpose:'english-learning',chat_id:ex.chat_id,exercise_id:ex.id,source_id:'reference'});}
  function render(){
-  clearTimeout(timer);voiceCleanup();voiceCleanup=()=>{};parent.replaceChildren();parent.append(el('p','先尝试表达 → 看纠错与记忆提示 → 换情境再用 → 隔天回忆。每次少量练习；评分是AI对文字任务的估计，可以提出异议。','note'));
+  clearTimeout(timer);voiceCleanup();speaker?.close();voiceCleanup=()=>{};parent.replaceChildren();speaker=speechOutput(parent,message=>error.textContent=message);parent.append(el('p','先尝试表达 → 看纠错与记忆提示 → 换情境再用 → 隔天回忆。每次少量练习；评分是AI对文字任务的估计，可以提出异议。','note'));
   const enabled=el('input');enabled.type='checkbox';enabled.checked=state.config.enabled;
   enabled.onchange=()=>act({action:'configure',enabled:enabled.checked,revision:state.config.revision});
   parent.append(field('保存并使用个人跨会话学习记录',enabled),el('p','仅英语学习面板的作答进入学习记录；普通聊天保持原方式。关闭后停止使用与新增，已有记录保留。不会自动创建提醒。','note'));
@@ -64,12 +65,13 @@ export async function englishLearningView(parent,{route,ensureChat,refreshChat=a
   const due=(oralMode?state.oral_progress:state.progress).review.filter(x=>x.due_now);parent.append(el('p',`当前到期 ${due.length} 项。未复习不自动扣分；也可先练一个新场景。`,'note'));
   const waiting=state.exercises.filter(x=>!x.assessment&&(x.exercise.practice_mode==='oral')===oralMode&&(!x.exercise.game||state.games.sessions.some(s=>s.id===x.exercise.game.session_id&&s.state==='ACTIVE')));let current=waiting.find(x=>x.id===selected)||waiting[0];if(selected&&state.jobs.some(j=>j.id===selected&&j.state==='PENDING')&&!state.exercises.some(e=>e.id===selected)){current=null;parent.append(el('p','正在准备这一题，先保留原进度。','note'));}
   if(current){
+   if(recordedExercise!==current.id){recorded=null;asrId=null;recordedExercise=current.id;draft='';}
    selected=current.id;parent.append(el('h3',current.exercise.game?'剧情回合 · 自由表达':'待作答'),markdown(current.exercise.prompt));if(current.exercise.game)parent.append(button('听角色说话（不揭示答案）',()=>listenNpc(current)));
    if(current.exercise.hint)parent.append(el('p','提示：'+current.exercise.hint));if(current.exercise.reference){parent.append(el('p','参考：'+current.exercise.reference),button('听参考表达 / 跟读',()=>listen(current)));}
-   const answer=el('textarea');answer.rows=4;answer.maxLength=3000;answer.value=draft;answer.placeholder='尝试你的英文表达；阅读题可按题目要求作答。';answer.oninput=()=>draft=answer.value;
+   const answer=el('textarea');answer.rows=4;answer.maxLength=3000;answer.value=draft;answer.placeholder='尝试你的英文表达；阅读题可按题目要求作答。';answer.oninput=()=>{draft=answer.value;draftVersion++;};
    const help=el('input');help.type='checkbox';help.checked=assistance==='assisted';help.onchange=()=>assistance=help.checked?'assisted':'independent';
-   if(oralMode){const voice=el('div');voiceCleanup=voicePractice(voice,{onRecording:value=>{recorded=value;},onError:message=>error.textContent=message});parent.append(voice);}
-   const actions=el('div',undefined,'row'),send=button('提交这次实际作答',()=>{if(oralMode&&!recorded&&!pending){error.textContent='请先录音并确认转写；文字练习可关闭口语模式。';return;}submit(oralMode?'oral_answer':'answer',current);},'primary');send.disabled=!state.config.enabled;
+   if(oralMode){const voice=el('div');voiceCleanup=speechInput(voice,{scope:{purpose:'english-learning',chat_id:current.chat_id,exercise_id:current.id},onRecording:value=>{recorded=value;asrId=null;if(value===null)recognitionVersion=draftVersion;},onRecognized:(text,id)=>{asrId=id;if(text!==null){if(draftVersion===recognitionVersion){draft=text;answer.value=text;}else error.textContent='已保留你编辑的回答；识别候选：'+text;}},onError:message=>error.textContent=message});parent.append(voice);}
+   const actions=el('div',undefined,'row'),send=button('提交这次实际作答',()=>{if(oralMode&&!recorded&&!pending){error.textContent='请先录音并确认转写；文字练习可关闭口语模式。';return;}submit(oralMode?(asrId?'asr_answer':'oral_answer'):'answer',current);},'primary');send.disabled=!state.config.enabled;
    actions.append(send,button('给我提示',()=>act({action:'hint',exercise_id:current.id})),button('查看参考答案',()=>act({action:'reveal',exercise_id:current.id})),button('撤回这道题',()=>act({action:'withdraw',exercise_id:current.id})));
    parent.append(field('我的回答',answer),field('这次用了翻译、他人帮助或其他提示',help),actions);
    for(const other of waiting.filter(x=>x.id!==selected).slice(0,5))parent.append(button('接续：'+other.exercise.prompt.slice(0,40),()=>{selected=other.id;draft='';render();}));
@@ -81,6 +83,7 @@ export async function englishLearningView(parent,{route,ensureChat,refreshChat=a
    if(a.game)box.append(el('p','角色回应：'+a.game.npc_reply),el('p',a.game.transition.passed?'本回合任务条件已满足（不等于掌握）。':'本回合还需澄清：'+a.game.transition.missing.map(k=>a.game.requirements_text?.[k]||k).join('、')));
    box.append(markdown(ex.exercise.prompt),el('p','我的原答：'+a.answer),el('p',a.feedback),el('p','参考表达：'+a.correction),el('p','记忆提示：'+a.memory_cue));
    box.append(el('p',a.hints||a.exposed||a.assistance==='assisted'?'有辅助作答；不计独立表现。':'记录为独立作答；外部辅助依赖本人如实标记。','note'));
+   if(a.speech?.asr)box.append(el('p','离线原识别：'+a.speech.asr.raw_text),el('p',a.speech.asr.corrected?'已由你核对修正；评价使用确认后的原话。':'你已确认识别文字。','note'));
    if(a.speech){box.append(el('p','口语转写内容评价；未评发音。录音 '+a.speech.seconds.toFixed(1)+' 秒。'),button('回听原录音',async()=>{try{const r=await post('/api/english-learning',{action:'recording',exercise_id:ex.id});const audio=el('audio');audio.controls=true;audio.src='data:audio/wav;base64,'+r.audio;box.append(audio);}catch(e){error.textContent=e.message;}}));}
    box.append(button('听参考 / 跟读',()=>listen(ex)));
    box.append(button('这次评价不准确',()=>act({action:'dispute',assessment_id:a.id})),button('撤回这条学习记录',()=>act({action:'withdraw',exercise_id:ex.id})));parent.append(box);
@@ -90,5 +93,5 @@ export async function englishLearningView(parent,{route,ensureChat,refreshChat=a
   parent.append(error,button('刷新学习记录',load));setBusy(working);if(pending)parent.append(button('核对刚才的请求',()=>submit(pending.action)));
   if(state.jobs.some(j=>j.state==='PENDING'))timer=setTimeout(()=>load().catch(e=>{error.textContent=e.message;}),1800);
  }
- await load();return()=>{disposed=true;clearTimeout(timer);voiceCleanup();window.speechSynthesis?.cancel();};
+ await load();return()=>{disposed=true;clearTimeout(timer);voiceCleanup();speaker?.close();window.speechSynthesis?.cancel();};
 }

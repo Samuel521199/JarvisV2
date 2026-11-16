@@ -3,7 +3,7 @@
 <a id="english-method-scope"></a>
 ## 结论与适用范围
 
-v0.1.12增加本机朗读/跟读、录音回听与本人确认转写的口语内容评价；文字与口语趋势分开。自动转写、发音和独立听力测评仍待接入。[实际范围](evidence/english-voice-20261116/report.md#english-voice-report-20261116)。
+v0.1.12增加本机朗读/跟读、录音回听与本人确认转写的口语内容评价；文字与口语趋势分开。自动转写、发音和独立听力测评仍待接入。自动转写先按[本地小模型选型](models-offline.md#english-asr-model-selection)推进，选型结果不代表已上线。[实际范围](evidence/english-voice-20261116/report.md#english-voice-report-20261116)。
 
 文字学习能力已在v0.1.11日用采用；[工程实测与剩余边界](evidence/english-learning-20261115/report.md#english-learning-report-20261115)。下文教学安排是可调整建议，长期个人效果尚待真实使用验证。
 
@@ -157,6 +157,8 @@ v0.1.12增加本机朗读/跟读、录音回听与本人确认转写的口语内
 
 <a id="english-game-integration"></a>
 ### 与现有 Jarvis 的衔接和不破坏原机制的要求
+
+通用录音、STT与TTS应复用Jarvis的[共用语音底座](models-offline.md#shared-speech-foundation)，英语软件保留独立领域规则。该底座当前proposed；不能因学习面板已有朗读/录音就认为通用语音聊天已实现。
 
 | 层次 | 复用现有能力 | 本轮接入与仍待补的内容 |
 |---|---|---|

@@ -1,0 +1,58 @@
+Traceback (most recent call last):
+  File "D:\soft\Python313\Lib\getpass.py", line 172, in getuser
+    import pwd
+ModuleNotFoundError: No module named 'pwd'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "E:\Jarvis\software\english-speech\research\whisper_probe.py", line 7, in <module>
+    from transformers import WhisperFeatureExtractor,WhisperTokenizer,WhisperForConditionalGeneration
+  File "<frozen importlib._bootstrap>", line 1412, in _handle_fromlist
+  File "D:\soft\Python313\Lib\site-packages\transformers\utils\import_utils.py", line 2317, in __getattr__
+    module = self._get_module(self._class_to_module[name])
+  File "D:\soft\Python313\Lib\site-packages\transformers\utils\import_utils.py", line 2347, in _get_module
+    raise e
+  File "D:\soft\Python313\Lib\site-packages\transformers\utils\import_utils.py", line 2345, in _get_module
+    return importlib.import_module("." + module_name, self.__name__)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\soft\Python313\Lib\importlib\__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\soft\Python313\Lib\site-packages\transformers\models\whisper\modeling_whisper.py", line 27, in <module>
+    from ...generation import GenerationMixin
+  File "<frozen importlib._bootstrap>", line 1412, in _handle_fromlist
+  File "D:\soft\Python313\Lib\site-packages\transformers\utils\import_utils.py", line 2317, in __getattr__
+    module = self._get_module(self._class_to_module[name])
+  File "D:\soft\Python313\Lib\site-packages\transformers\utils\import_utils.py", line 2347, in _get_module
+    raise e
+  File "D:\soft\Python313\Lib\site-packages\transformers\utils\import_utils.py", line 2345, in _get_module
+    return importlib.import_module("." + module_name, self.__name__)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\soft\Python313\Lib\importlib\__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\soft\Python313\Lib\site-packages\transformers\generation\utils.py", line 43, in <module>
+    from ..masking_utils import create_masks_for_generate
+  File "D:\soft\Python313\Lib\site-packages\transformers\masking_utils.py", line 40, in <module>
+    from torch._dynamo._trace_wrapped_higher_order_op import TransformGetItemToIndex
+  File "D:\soft\Python313\Lib\site-packages\torch\_dynamo\__init__.py", line 13, in <module>
+    from . import (
+    ...<6 lines>...
+    )
+  File "D:\soft\Python313\Lib\site-packages\torch\_dynamo\aot_compile.py", line 17, in <module>
+    from torch._dynamo.package import SystemInfo
+  File "D:\soft\Python313\Lib\site-packages\torch\_dynamo\package.py", line 1173, in <module>
+    DynamoCache = DiskDynamoCache(os.path.join(cache_dir(), "dynamo"))
+                                               ~~~~~~~~~^^
+  File "D:\soft\Python313\Lib\site-packages\torch\_dynamo\package.py", line 1170, in cache_dir
+    return cache_dir()
+  File "D:\soft\Python313\Lib\site-packages\torch\_inductor\runtime\cache_dir_utils.py", line 17, in cache_dir
+    os.environ["TORCHINDUCTOR_CACHE_DIR"] = cache_dir = default_cache_dir()
+                                                        ~~~~~~~~~~~~~~~~~^^
+  File "D:\soft\Python313\Lib\site-packages\torch\_inductor\runtime\cache_dir_utils.py", line 23, in default_cache_dir
+    sanitized_username = re.sub(r'[\\/:*?"<>|]', "_", getpass.getuser())
+                                                      ~~~~~~~~~~~~~~~^^
+  File "D:\soft\Python313\Lib\getpass.py", line 175, in getuser
+    raise OSError('No username set in the environment') from e
+OSError: No username set in the environment

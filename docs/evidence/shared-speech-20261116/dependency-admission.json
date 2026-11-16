@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "scope": "Explicit owner-reviewed additive STT import admission, separate from automatic application completion",
+  "permissions": {
+    "adapters/models/local_speech_worker.py": ["numpy==2.4.6", "onnxruntime==1.24.3"],
+    "adapters/models/speech_features.py": ["numpy==2.4.6"]
+  },
+  "policy": {"original_checker_sha256": "13647ebcd902b9fa508870b88805b7f827bd5a57ca7e5047f4f39f55a79b38be", "arbitrary_candidate_checker": false, "original_baseline_and_tests_preserved": true, "fixed_additional_tests": 8, "host_core_import_permissions_changed": false, "dependencies_installed": false, "application_adopted": false},
+  "local_related_tests": {"speech_boundaries": 8, "original_architecture_boundaries": 6, "policy_source_constraints": 4, "controller_transitions": 18},
+  "isolated_fixture": {"old_tests": 240, "old_failures": 0, "old_skipped": 1, "new_tests": 248, "new_failures": 0, "new_skipped": 1, "application_state_unchanged": true},
+  "production_registration": {"old_tests": 207, "old_failures": 0, "old_skipped": 1, "new_tests": 215, "new_failures": 0, "new_skipped": 1, "runtime_intact": true, "application_state_unchanged": true, "daily_and_development_boots_unchanged": true, "controller_protocol": 9, "controller_generation": 10},
+  "preserved_failures": ["Initial fixture placed added test inventory in application SDK; old installer checks rejected missing additional test bytes. Moved added tests solely into independent controller overlay.", "Second isolated fixture passed both gates but exposed unsupported legacy record fields before pointer switch. Added explicit legacy defaults and retried corrected operator; no application switch occurred.", "Initial frozen production wrapper imported an unavailable developer convenience module before qualification. Replaced wrapper with read-only stdlib census; no controller/application change occurred."],
+  "limitations": ["Not an arbitrary policy-upgrade facility", "Not OS-level inference isolation", "Dependency admission is not a successful shared speech application release", "Policy-source qualification uses an approved existing application, not unfinished speech implementation"]
+}

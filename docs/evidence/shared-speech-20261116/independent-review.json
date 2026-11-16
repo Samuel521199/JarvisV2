@@ -1,0 +1,124 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "scope": "Independent boundary and real HTTP/CPU STT checks before any speech application adoption",
+  "reviewer_regressions": {
+    "total": 47,
+    "failures": 0,
+    "errors": 0,
+    "sources_unchanged": true
+  },
+  "http_bounds": {
+    "tests": 6,
+    "passed": true,
+    "seven_and_sixty_second_pcm_json": "Accepted by real Handler and strict decoder, disposable domain receiver",
+    "oversized": "Rejected above declared 3MB before domain call",
+    "unchanged": [
+      "nonce requirement",
+      "duplicate key / NaN / surrogate refusal",
+      "ordinary HTTP size",
+      "default SDK JSON limit"
+    ]
+  },
+  "real_http_inference": {
+    "passed": true,
+    "model": "funasr-nano-int8-20251217",
+    "public_clips": [
+      "00083",
+      "00052",
+      "00132"
+    ],
+    "languages": [
+      "zh",
+      "en",
+      "mixed"
+    ],
+    "end_to_end_seconds": [
+      0.5627919,
+      0.5868418,
+      0.5493937
+    ],
+    "cold_start_excluded": true,
+    "actual_model_and_audio_digest_bound": true,
+    "busy_handoff_block_observed": true,
+    "original_embedding_selection_unchanged": true,
+    "automatic_chat_submission": false,
+    "external_model_calls": 0,
+    "sources_unchanged": true,
+    "scope": "Previously measured public clips; verifies integration and timing, not transcription accuracy or personal learning"
+  },
+  "data_baseline": {
+    "read_only_census": true,
+    "chats": 658,
+    "turns": 668,
+    "learning_exercises": 2,
+    "software_sessions": 1,
+    "existing_model_registrations": 8,
+    "existing_config_file_hashes_unchanged_after_policy": true,
+    "policy_phase_delta": "One derived task_completion table refreshes checked timestamp during normal running; other captured business tables unchanged"
+  },
+  "staged_inactive_models": {
+    "verified_files": 4,
+    "bytes": 501903158,
+    "location": "Daily user-data/local-models on E drive",
+    "existing_settings_changed": false,
+    "loaded": false
+  },
+  "preserved_failures": [
+    "Independent HTTP probe first retained a short Chinese success and a later unspecific record rejection",
+    "Detailed second probe bound to unchanged sources identified English clip 00052 as HTTP400/message_too_large: 3MB route still used 262144-byte default JSON decoder",
+    "After explicit audio-route decoder repair, actual seven/sixty-second framing and three-language HTTP inference passed; default global size was not raised",
+    "An in-progress shared speech regression reported two fake calls after ordinary chat; withdrawn voice zero-call assertion had passed. Final stable full-source checks remain required"
+  ],
+  "stable_snapshot_regressions": {
+    "tests": 271,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "runtime_and_test_sources_unchanged": true,
+    "external_english_source_explicitly_bound": true
+  },
+  "fixed_controller_qualification": {
+    "full_package": "2ced49463bc34f4bdee45427b223c071f6b0ad255436d11e47036e762e0391b3",
+    "recovery_package": "8d32fb8adeba88960bb5f1009b19311989b36b6c5bb52944fb3fe26a69fc7aff",
+    "each_tests": 215,
+    "each_failures": 0,
+    "each_skipped": 1,
+    "runtime_intact": true,
+    "initial_120_second_timeout_retained": true,
+    "serial_diagnostic_seconds": 34.736,
+    "serial_real_qualification_seconds": 41.264,
+    "scope": "Original 120-second gate retained; serial execution succeeded, initial concurrent-load contribution is not conclusively isolated",
+    "full_package_after_json_import_fix": "8b19d94d610fbd66c26b91ed782440ea02091d40c5f01b178953535e2b9b2321"
+  },
+  "management_fix": {
+    "observed_problem": "New Engine during observation restarted a disappeared target, advanced its epoch and entered attention instead of rolling back",
+    "correction": "Keep the observed epoch and original three-failure threshold after management restart",
+    "related_tests": 27,
+    "failures": 0,
+    "source_sha256": "4cfb429145796afd107d72c3790c6ea0520f88d5ff239748856b7021741457ea"
+  },
+  "managed_recovery_fixture": {
+    "protocol": 10,
+    "learning_schema": 4,
+    "speech_schema": 1,
+    "model_schema": 3,
+    "actual_full_bridge_full_round_trip": true,
+    "actual_owned_host_exit_causes_bound_bridge_rollback": true,
+    "history_and_withdrawal_unchanged": true,
+    "fixture_stopped": true,
+    "qualification_basis": "Verified code qualification reports reused only for identical manifests; additional real-process/new-data checks, no owner database copied",
+    "limitations": "Recovery temporarily disables learning/speech inputs; no old database restored"
+  },
+  "additional_preserved_failures": [
+    "Fixture setup tried copying its own OS-locked lease files, then lacked a controller parent directory; both failed before host start and old trees remain",
+    "First forced-exit fixture killed only the supervisor, while healthy child continued; no rollback was appropriate",
+    "Actual host exit then exposed the management restart/observation defect. Original attention journal retained; corrected management code passed live rollback"
+  ],
+  "deployment_status": "Approved full/recovery artifacts and live rollback fixture verified; production adoption still pending at this evidence point",
+  "controller_inventory_branch": {
+    "related_tests": 18,
+    "passed": true,
+    "scope": "Real native source-index branch now exercised; missing explicit json import corrected before any controller promotion"
+  }
+}

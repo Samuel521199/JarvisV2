@@ -1,5 +1,11 @@
 # 版本记录
 
+## 0.1.14 — 共用本机中英混说语音（2026-11-16，源码验证，日用待独立采用）
+
+- 原模型中心新增STT独立默认/回退，保留embedding默认；两款固定INT8候选本机CPU对照，各语言12段公开录音，分别记录误差、内存和冷/热延迟。
+- 工作台、精简对话与项目外英语软件共用录音/识别/朗读。停止录音后自动转写，确认后进入原对话/英语学习，原音、原识别和确认文字分开保存。
+- 来源撤回、剧情暂停、STOP、UNKNOWN不重放、新数据阅读器和控制器10写入门已接线。本人录音、完整离线LLM和长期学习收益待验。[证据](docs/evidence/shared-speech-20261116/report.md#shared-speech-evidence-20261116)。
+
 2026-11-16免命令开发收尾：配置分支的干净、稳定、带开发者审阅完成尾注的提交可自动触发固定控制器检查；自有Job限资源，不占日用对话槽，不拉Git或调用模型。成功清理检查进程树后自动入队，沿原备份/采用/回退；失败或中断同提交不盲重试。保留首次清单缺项及请求计数时序失败，修正清单后新提交整链通过。[规则](docs/stack-project-layout.md#daily-automation-runtime)／[验收](docs/delivery-validation.md#completion-update-evidence-20261116)。
 
 2026-11-16日用自动管理：新增当前用户登录自启（仅日用）、外接盘有界等待、固定摘要管理胶囊和单实例监督；准备通过的已审阅候选可自动登记，在空闲后沿原流程备份/切换/健康观察。失败代码回退、同票据去重、失败版本隔离及停止/代际/兼容保护保持；不自动拉取Git或审阅开发树。[操作](docs/stack-project-layout.md#daily-automation-runtime)／[验收](docs/delivery-validation.md#daily-automation-evidence-20261116)。

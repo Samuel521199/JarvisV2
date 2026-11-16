@@ -1,0 +1,32 @@
+{
+  "date": "2026-11-16",
+  "scope": "Read-only code/installation inspection, not an end-to-end speech test",
+  "daily_online": true,
+  "registered_software": [
+    "english-city"
+  ],
+  "implemented": [
+    "English local Windows voice synthesis",
+    "Manual PCM recording and playback",
+    "User-confirmed transcript oral-content evaluation"
+  ],
+  "shared_automatic_stt_implemented": false,
+  "normal_chat_local_model_ready": false,
+  "code_evidence": {
+    "stt_commands": "host/english_learning.py: command schema contains record/oral_answer but no automatic transcription command",
+    "tts": "host/english_learning.py: synthesize returns windows_installed_voice, network=false",
+    "local_chat": "adapters/models/native.py: available() returns False for local adapter"
+  },
+  "changed_runtime": false,
+  "enabled_new_services": false,
+  "installed_dependencies": false,
+  "documentation_validation": {
+    "passed": true,
+    "documents": 40,
+    "chapters": 25,
+    "diagrams": 46,
+    "local_links": 5093,
+    "errors": 0
+  },
+  "design_status": "accepted requirement, proposed implementation"
+}

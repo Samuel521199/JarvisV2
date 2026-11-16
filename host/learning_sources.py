@@ -11,4 +11,6 @@ def active_chat(chats,ident):
 def source_valid(chats,ident,store):
     row=chats.db.execute('SELECT t.status,c.removed,t.request,t.reply,t.digest FROM turns t JOIN chats c ON c.id=t.chat_id WHERE t.id=?',(ident,)).fetchone()
     job=store.job(ident)
-    return bool(row and job and job['state']=='RECORDED' and row['status']=='SUCCEEDED' and not row['removed'] and row['digest']==job['body']['command_digest'] and digest(row['reply'])==job['reply_digest'])
+    from host.speech_receipts import learning_valid
+    speech_ok=not job or learning_valid(store.root,{**job['body'],'chat_id':job['chat_id']})
+    return bool(speech_ok and row and job and job['state']=='RECORDED' and row['status']=='SUCCEEDED' and not row['removed'] and row['digest']==job['body']['command_digest'] and digest(row['reply'])==job['reply_digest'])

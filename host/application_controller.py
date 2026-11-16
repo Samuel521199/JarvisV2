@@ -6,6 +6,7 @@ The atomic JarvisLaunch.py replacement is authoritative; launcher.json is a cach
 """
 import ast
 import hashlib
+import json
 import os
 from pathlib import Path
 import re
@@ -114,6 +115,14 @@ def promote(root,build,*,expected_epoch,expected_build,expected_controller,revie
         # Both the controller and current application must handle current data.
         require_compatible(root,package);require_compatible(root,app.approved(expected_build,fresh=False)['path'])
         files={name:(package/name).read_bytes() for name in manifest['files']};files.update(overlay)
+        # The fixed SDK policy can now include additive owner-reviewed tests.
+        # Keep this controller's native source inventory consistent with its
+        # actual policy bytes; candidate operation permissions are unchanged.
+        native='modules/skills/studio3d/worker-programs.json'
+        if native in files:
+            source_index=json.loads(files[native])
+            source_index['sources']['sdk/application_policy.py']=hashlib.sha256(files['sdk/application_policy.py']).hexdigest()
+            files[native]=(json.dumps(source_index,indent=2)+'\n').encode()
         ident,folder,index=publish_files(root,files)
         change=root/'deployment/controller-changes'/uuid.uuid4().hex;backup(root,change)
         archive=change/'controller.zip'

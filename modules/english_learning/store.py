@@ -5,7 +5,7 @@ import time
 from control.paths import child
 from sdk.protocol import CoreError, canonical
 
-SCHEMA=3
+SCHEMA=4
 DAY=86400
 INTERVALS=(1,3,7,14,30)
 TARGETS={
@@ -27,7 +27,7 @@ class Store:
         self.db=sqlite3.connect(child(root,'state/english-learning.sqlite3'),timeout=5,isolation_level=None)
         self.db.row_factory=sqlite3.Row
         version=self.db.execute('PRAGMA user_version').fetchone()[0]
-        if version not in (0,1,2,SCHEMA):
+        if version not in (0,1,2,3,SCHEMA):
             self.db.close();raise CoreError('english_schema','Unknown English learning data version')
         self.db.execute('PRAGMA synchronous=FULL')
         self.db.executescript('''
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS jobs(id TEXT PRIMARY KEY,chat_id TEXT NOT NULL,kind T
 CREATE TABLE IF NOT EXISTS software_sessions(id TEXT PRIMARY KEY,body TEXT NOT NULL);
 
 ''')
-        self.db.execute('PRAGMA user_version='+str(3 if version==3 else 2))
+        self.db.execute('PRAGMA user_version='+str(max(2,version)))
         self.db.execute('INSERT OR IGNORE INTO settings VALUES(1,?)',(canonical({'enabled':False,'revision':0,'domains':['life','communication','work']}),))
 
     def close(self):self.db.close()

@@ -1,5 +1,7 @@
 # 当前真实状态
 
+2026-11-16源码v0.1.14：共用中文/英文/混说CPU语音、三入口录音后自动转写、确认回接原对话与英语学习已在隔离实例验证；两模型各36段公开录音对照完成。日用采用仍待独立控制器核验，本人录音及完整离线LLM待验。[结果与边界](evidence/shared-speech-20261116/report.md#shared-speech-evidence-20261116)。
+
 2026-11-16免命令发布接线：日用管理器已增加开发完成提交识别、后台独立检查和自动签名入队；主人不必手输prepare命令。只接配置分支的干净、稳定、开发者明确审阅完成的提交，WIP/并行未完保持等待；失败同提交不重试。隔离整链已实际验证一次失败被拦、修正后新提交通过独立门并自动备份/换包；不把该范围当自动审阅或生产业务质量证明。[规则](stack-project-layout.md#daily-automation-runtime)／[证据](delivery-validation.md#completion-update-evidence-20261116)。
 
 2026-11-16日用自动管理：已按本人选择启用当前用户登录后仅日用自启，开发按需；固定摘要管理胶囊已运行。经审阅和独立检查的候选可在空闲后自动备份、切换、健康观察；不健康候选代码回退并隔离，STOP/代际/兼容/未知结果保护不绕过。只证明本机有界流程，不是自动审阅发布、任意任务零停机或业务语义自愈。[规则](stack-project-layout.md#daily-automation-runtime)／[证据与限制](delivery-validation.md#daily-automation-evidence-20261116)。

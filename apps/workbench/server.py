@@ -301,7 +301,7 @@ class Handler(BaseHTTPRequestHandler):
             return self.json({'error': 'invalid_request'}, 400)
         try:
             size = int(self.headers.get('Content-Length', '0'))
-            limit = 3000000 if route.path=='/api/english-learning' else 40000000 if route.path in {'/api/knowledge-transfer','/api/memory-transfer'} else 29000000 if route.path in ('/api/studio3d/assets','/api/studio3d/references','/api/image-studio/references') else 2097152 if route.path == '/api/studio3d/jobs' else 1600000 if route.path == '/api/project/write' else 200000
+            limit = 3000000 if route.path in ('/api/english-learning','/api/speech') else 40000000 if route.path in {'/api/knowledge-transfer','/api/memory-transfer'} else 29000000 if route.path in ('/api/studio3d/assets','/api/studio3d/references','/api/image-studio/references') else 2097152 if route.path == '/api/studio3d/jobs' else 1600000 if route.path == '/api/project/write' else 200000
             if route.path == '/api/model-library/import':limit=90000000
             if route.path == '/api/studio3d/assets':
                 from modules.skills.studio3d.assets import MAX_GLB_UPLOAD_BYTES
@@ -324,6 +324,7 @@ class Handler(BaseHTTPRequestHandler):
             elif route.path == '/api/model-library/import':
                 from host.model_library import decode_import
                 body=decode_import(raw)
+            elif route.path in ('/api/speech','/api/english-learning'):body=decode(raw,max_bytes=limit)
             else:body=decode(raw)
             root = data_root(self.server.data_root)
             if runtime_http.post(self, route.path, body): return
@@ -454,6 +455,8 @@ class Handler(BaseHTTPRequestHandler):
                 finally: store.close()
             if route.path == '/api/chat/send':
                 return self.json(self.server.dialogues.submit(body), 202)
+            if route.path == '/api/speech':
+                return self.json(self.server.speech.command(body))
             if route.path == '/api/english-learning':
                 from host.english_learning import command as learning_command
                 return self.json(learning_command(root,body,self.server.dialogues))
@@ -548,6 +551,8 @@ def _serve(args):
         except (ImportError, CoreError, OSError, sqlite3.Error):
             pass  # optional skill; its own readiness endpoint reports the problem
         server.local_models = create_manager(server.data_root)
+        from host.speech import create as create_speech
+        server.speech = create_speech(server.data_root,server.local_models,server.dialogues)
         server.background_lane = BackgroundLane(server.data_root)
         def learning_interrupted():
             runner=getattr(server,'task_runner',None)
@@ -588,7 +593,7 @@ def _serve(args):
         server.family.close()
         server.task_runner.close(drain=False)
         if hasattr(server,'mailbox'):server.mailbox.close()
-        server.server_close(); server.local_models.close(); server.dialogues.close(); server.development_runner.close(); server.background_lane.close()
+        server.server_close(); server.speech.close(); server.local_models.close(); server.dialogues.close(); server.development_runner.close(); server.background_lane.close()
 
 
 if __name__ == "__main__":

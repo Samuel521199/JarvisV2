@@ -53,6 +53,11 @@ class ControllerTransitions(unittest.TestCase):
             (source/'config').mkdir()
             for file in ['controller-compatibility.json','conditional-advice-compatibility.json']:
                 shutil.copyfile(PROJECT/'config'/file,source/'config'/file)
+            # Exercise the real native policy overlay path, not only a
+            # synthetic controller without a Studio3D source inventory.
+            native=source/'modules/skills/studio3d/worker-programs.json'
+            native.parent.mkdir(parents=True)
+            native.write_text(json.dumps({'sources':{'sdk/application_policy.py':'candidate-policy'}}))
         files=[p.relative_to(source).as_posix() for p in source.rglob('*') if p.is_file()]
         archive=self.base/(name+'.zip');ident=build(source,files,archive,name);self.app.stage(archive);return ident
 
@@ -70,6 +75,9 @@ class ControllerTransitions(unittest.TestCase):
         self.assertEqual(self.app.state(),self.before);self.assertEqual(self.driver.events,['start'])
         self.assertNotEqual(record['build'],self.old);self.assertEqual(record['runtime_source_build'],self.new)
         for name,raw in self.policy.items():self.assertEqual((Path(record['controller'])/name).read_bytes(),raw)
+        import hashlib
+        native=read_json(Path(record['controller'])/'modules/skills/studio3d/worker-programs.json')
+        self.assertEqual(native['sources']['sdk/application_policy.py'],hashlib.sha256(self.policy['sdk/application_policy.py']).hexdigest())
         launched=self.launch();self.assertEqual(launched.returncode,0,launched.stderr)
         self.assertIn('SYNTHETIC_CONTROLLER_LAUNCHED',launched.stdout)
         self.assertEqual((self.root/'state/business-sentinel').read_bytes(),b'preserve current business, rights and corrections')

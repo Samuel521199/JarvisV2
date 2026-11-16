@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "runtime": "onnx-sensevoice-v1",
+  "worker": "adapters/models/local_speech_worker.py",
+  "support_workers": [
+    "adapters/models/speech_features.py"
+  ],
+  "runtime_manifest": "modules/local_models/runtime.json",
+  "dependencies": [
+    {
+      "import": "numpy",
+      "distribution": "numpy",
+      "version": "2.4.6"
+    },
+    {
+      "import": "onnxruntime",
+      "distribution": "onnxruntime",
+      "version": "1.24.3"
+    }
+  ],
+  "scope": "CPU subprocess only; no Host imports, network, model-code or installation authority"
+}

@@ -44,6 +44,11 @@ def install(root, installation, package, *, port=18282):
     from sdk.application_policy import TESTS, TEST_SUPPORT
     for name in ['sdk/application_policy.py','tools/check_architecture.py','tools/architecture-baseline.json',*('tests/'+name for name in TESTS + TEST_SUPPORT)]:
         files[name]=(ROOT/name).read_bytes()
+    native='modules/skills/studio3d/worker-programs.json'
+    if native in files:
+        source_index=json.loads(files[native])
+        source_index['sources']['sdk/application_policy.py']=hashlib.sha256(files['sdk/application_policy.py']).hexdigest()
+        files[native]=(json.dumps(source_index,indent=2)+'\n').encode()
     hashes={name:hashlib.sha256(raw).hexdigest() for name,raw in sorted(files.items())}
     if controller.exists():
         if any(not (controller/name).is_file() or hashlib.sha256((controller/name).read_bytes()).hexdigest()!=sha for name,sha in hashes.items()):

@@ -202,6 +202,164 @@
       "runtime": "unavailable",
       "files": [],
       "recipe": "not_prepared"
+    },
+    {
+      "id": "sensevoice-small-int8-20250909",
+      "kind": "stt",
+      "title": "SenseVoice Small INT8",
+      "source": "https://huggingface.co/csukuangfj/sherpa-onnx-sense-voice-zh-en-ja-ko-yue-int8-2025-09-09",
+      "revision": "355f4d4884d8afd08aef04b9007a8556d7b463b2",
+      "license": "Apache-2.0 (upstream); converted model attribution retained",
+      "languages": [
+        "zh",
+        "en",
+        "mixed-zh-en",
+        "yue",
+        "ja",
+        "ko"
+      ],
+      "dimension": 0,
+      "dimensions": [],
+      "max_tokens": 0,
+      "runtime": "onnx-sensevoice-v1",
+      "files": [
+        {
+          "name": "model.int8.onnx",
+          "path": "model.int8.onnx",
+          "bytes": 237115547,
+          "sha256": "12ca1a2ae7ecf3e0019ef2822307ee0b5cadc9196569e379b4c4026f8205276d"
+        },
+        {
+          "name": "tokens.txt",
+          "path": "tokens.txt",
+          "bytes": 315894,
+          "sha256": "f449eb28dc567533d7fa59be34e2abca8784f771850c78a47fb731a31429a1dc"
+        }
+      ],
+      "recipe": "sensevoice-cpu-greedy-v1"
+    },
+    {
+      "id": "funasr-nano-int8-20251217",
+      "kind": "stt",
+      "title": "FunASR Nano INT8",
+      "source": "https://huggingface.co/csukuangfj/sherpa-onnx-sense-voice-funasr-nano-int8-2025-12-17",
+      "revision": "ebb95fbda2a034d9a8f3b2d2cba32c104b60bed3",
+      "license": "Apache-2.0 (upstream); converted model attribution retained",
+      "languages": [
+        "zh",
+        "en",
+        "mixed-zh-en",
+        "ja"
+      ],
+      "dimension": 0,
+      "dimensions": [],
+      "max_tokens": 0,
+      "runtime": "onnx-sensevoice-v1",
+      "files": [
+        {
+          "name": "model.int8.onnx",
+          "path": "model.int8.onnx",
+          "bytes": 263531902,
+          "sha256": "9dc6e72aa8bc6f5966cf2857a0ce3a425b1d72e91500e147d66329f407c017a1"
+        },
+        {
+          "name": "tokens.txt",
+          "path": "tokens.txt",
+          "bytes": 939815,
+          "sha256": "2db4bb25d046e8849e336c9465e248e1694914d996c58c71bdeca18cfb722992"
+        }
+      ],
+      "recipe": "sensevoice-cpu-greedy-v1"
+    },
+    {
+      "id": "whisper-base-en-research",
+      "kind": "stt",
+      "title": "Whisper base.en · English research archive",
+      "source": "https://huggingface.co/openai/whisper-base.en",
+      "revision": "911407f4214e0e1d82085af863093ec0b66f9cd6",
+      "license": "MIT",
+      "languages": [
+        "en"
+      ],
+      "dimension": 0,
+      "dimensions": [],
+      "max_tokens": 448,
+      "runtime": "whisper-research-not-adapted",
+      "recipe": "english-only-research-safetensors",
+      "files": [
+        {
+          "name": "README.md",
+          "path": "README.md",
+          "bytes": 14846,
+          "sha256": "767c687e78cb62c9607ce6ff077ab3368dae8072cee8cab6aeaa1246fc6a021c"
+        },
+        {
+          "name": "added_tokens.json",
+          "path": "added_tokens.json",
+          "bytes": 34604,
+          "sha256": "560be47bea388757f8d4cc185c5d82067426cbb6361e38016dd90ddc01ab203a"
+        },
+        {
+          "name": "config.json",
+          "path": "config.json",
+          "bytes": 1937,
+          "sha256": "160c1df40a60d4ef5a6014d536fd845c33aabfd1f318458ac7f87cfe91ebbe76"
+        },
+        {
+          "name": "generation_config.json",
+          "path": "generation_config.json",
+          "bytes": 1531,
+          "sha256": "c5750f05d94777579e00ce26ef65e5d87c108439f90e3ac519df2587b9d5d41f"
+        },
+        {
+          "name": "merges.txt",
+          "path": "merges.txt",
+          "bytes": 456318,
+          "sha256": "1ce1664773c50f3e0cc8842619a93edc4624525b728b188a9e0be33b7726adc5"
+        },
+        {
+          "name": "model.safetensors",
+          "path": "model.safetensors",
+          "bytes": 290401888,
+          "sha256": "d4dd5542fd6a1d35639e21384238f3bfe6c557c849d392b5905d33ee29e71db5"
+        },
+        {
+          "name": "normalizer.json",
+          "path": "normalizer.json",
+          "bytes": 52666,
+          "sha256": "bf1c507dc8724ca9cf9903640dacfb69dae2f00edee4f21ceba106a7392f26dd"
+        },
+        {
+          "name": "preprocessor_config.json",
+          "path": "preprocessor_config.json",
+          "bytes": 184990,
+          "sha256": "9b5cd03a36fbb8a627c64d98a5b5b126ead95a77720723944487311f0110b666"
+        },
+        {
+          "name": "special_tokens_map.json",
+          "path": "special_tokens_map.json",
+          "bytes": 1830,
+          "sha256": "014f8f802366ed818919550be0ad9e35907327cb9e142e8aaa102420f460bda8"
+        },
+        {
+          "name": "tokenizer.json",
+          "path": "tokenizer.json",
+          "bytes": 2405679,
+          "sha256": "5eb60cec1e77aeeb6869a2bb5a8e01a84c3fe5d072d75369343021fe6f5310d0"
+        },
+        {
+          "name": "tokenizer_config.json",
+          "path": "tokenizer_config.json",
+          "bytes": 805,
+          "sha256": "14f84bdf4b9ecdbd4738ddc81c17a1baedfc02bb93c6e049c951e15a1b40b70d"
+        },
+        {
+          "name": "vocab.json",
+          "path": "vocab.json",
+          "bytes": 798156,
+          "sha256": "3ba3c3109ff33976c4bd966589c11ee14fcaa1f4c9e5e154c2ed7f99d80709e7"
+        }
+      ]
     }
   ]
 }

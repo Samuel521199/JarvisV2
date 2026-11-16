@@ -40,6 +40,8 @@ def validate(item):
         names.add(f['name'].lower())
     if item['runtime']=='onnx-e5-v1' and (item['kind']!='embedding' or item['dimension']!=384 or item['dimensions']!=[384] or {f['name'] for f in item['files']}!={'model.onnx','tokenizer.json'} or item['max_tokens']!=512 or item['recipe']!='e5-prefix-mean-l2-v1'):
         raise CoreError('model_manifest', 'E5 adapter contract mismatch')
+    if item['runtime']=='onnx-sensevoice-v1' and (item['kind']!='stt' or item['dimension']!=0 or item['dimensions'] or {f['name'] for f in item['files']}!={'model.int8.onnx','tokens.txt'} or item['recipe']!='sensevoice-cpu-greedy-v1'):
+        raise CoreError('model_manifest','STT adapter contract mismatch')
     return item
 
 

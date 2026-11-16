@@ -245,7 +245,13 @@ class Engine:
         except OSError:healthy=False
         if not healthy:
             self.bad+=1
-            if self.journal.get('phase')=='observing' and self.bad>=3:self.rollback(current,'candidate_disappeared')
+            if self.journal.get('phase')=='observing':
+                # A manager restart does not grant another start of the observed
+                # candidate: it would advance its epoch and invalidate the bound
+                # rollback. Count the original three failures, then roll back.
+                self.started=True
+                if self.bad>=3:self.rollback(current,'candidate_disappeared')
+                self.status('unhealthy_observing');return
             elif (not self.started or current['phase']=='active') and self.bad>= (1 if not self.started else 3):
                 self.restart();self.started=True
             self.status('restarting' if self.bad==0 else 'offline');return

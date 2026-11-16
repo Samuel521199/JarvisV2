@@ -19,9 +19,18 @@ def required(root):
         db=sqlite3.connect(learning.as_uri()+'?mode=ro',uri=True,timeout=5)
         try:
             version=db.execute('PRAGMA user_version').fetchone()[0]
-            if version not in (1,2,3):
+            if version not in (1,2,3,4):
                 raise CoreError('application_data_compatibility','Unknown personal learning schema')
             needs['english_learning_schema']=version  # Disabled/withdrawn history still needs a compatible reader.
+        finally:db.close()
+    for name,key,allowed in (('speech','speech_schema',(1,)),('local-models','local_models_schema',(1,2,3))):
+        path=child(root,('config/' if name=='local-models' else 'state/')+name+'.sqlite3')
+        if not path.exists():continue
+        db=sqlite3.connect(path.as_uri()+'?mode=ro',uri=True,timeout=5)
+        try:
+            version=db.execute('PRAGMA user_version').fetchone()[0]
+            if version not in allowed:raise CoreError('application_data_compatibility','Unknown speech/model purpose schema')
+            if name=='speech' or version==3:needs[key]=version
         finally:db.close()
     for name in ('commitments','dialogue'):
         path=child(root,'state/'+name+'.sqlite3')
@@ -111,8 +120,14 @@ def require_compatible(root,package):
             if not path_learning.exists() or path_learning.stat().st_size>1024:
                 raise CoreError('application_data_compatibility','Target cannot preserve personal learning records')
             learning_policy=json.loads(path_learning.read_text(encoding='utf-8'))
-            if set(learning_policy)!={'schema','english_learning_schema'} or any(type(v) is not int for v in learning_policy.values()) or learning_policy['schema']!=1 or learning_policy['english_learning_schema'] not in (1,2,3) or learning_policy['english_learning_schema']<needs['english_learning_schema']:
+            if set(learning_policy)!={'schema','english_learning_schema'} or any(type(v) is not int for v in learning_policy.values()) or learning_policy['schema']!=1 or learning_policy['english_learning_schema'] not in (1,2,3,4) or learning_policy['english_learning_schema']<needs['english_learning_schema']:
                 raise CoreError('application_data_compatibility','Unsupported personal learning reader')
+        for key,file,maximum in (('speech_schema','speech-compatibility.json',1),('local_models_schema','local-models-compatibility.json',3)):
+            if not needs.get(key):continue
+            declaration=Path(package)/'config'/file;reject_links(declaration)
+            if not declaration.exists() or declaration.stat().st_size>1024:raise CoreError('application_data_compatibility','Target cannot preserve shared speech sources and model purposes')
+            value=json.loads(declaration.read_text(encoding='utf-8'))
+            if not isinstance(value,dict) or set(value)!={'schema',key} or type(value['schema']) is not int or value['schema']!=1 or type(value[key]) is not int or not needs[key]<=value[key]<=maximum:raise CoreError('application_data_compatibility','Unsupported shared speech reader')
         declared={'schema':1,'commitments_schema':0,'assistant_commitments':False}
         if path.exists():
             if path.stat().st_size>4096:raise ValueError('Declaration too large')

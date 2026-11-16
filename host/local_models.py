@@ -29,10 +29,10 @@ TIMEOUT_RESTART=3  # consecutive local timeouts before the worker is treated as 
 
 
 class Worker:
-    def __init__(self, folder):
+    def __init__(self, folder, script=None):
         env={k:v for k,v in os.environ.items() if k in ('SystemRoot','WINDIR','PATH','TEMP','TMP')}
         env.update(HF_HUB_OFFLINE='1',TRANSFORMERS_OFFLINE='1',TOKENIZERS_PARALLELISM='false')
-        self.process=subprocess.Popen([sys.executable,'-I','-B',str(PROJECT/'adapters/models/local_embedding_worker.py'),str(folder)],
+        self.process=subprocess.Popen([sys.executable,'-I','-B',str(script or PROJECT/'adapters/models/local_embedding_worker.py'),str(folder)],
             stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.DEVNULL,text=True,encoding='utf-8',env=env,
             creationflags=subprocess.CREATE_NO_WINDOW if os.name=='nt' else 0)
         self.queue=queue.Queue(maxsize=8)
@@ -102,7 +102,11 @@ class LocalModels:
             self.measurement_context=context(runtime_status());self.profiles=profiles()
             self.descriptor=read_json(PROJECT/'modules/local_models/descriptor.json')
             with self.db() as db:
-                if db.execute('PRAGMA user_version').fetchone()[0] not in (0,1,2):raise CoreError('model_state_version','A newer model state requires its compatible manager')
+                if db.execute('PRAGMA user_version').fetchone()[0] not in (0,1,2,3):raise CoreError('model_state_version','A newer model state requires its compatible manager')
+                if db.execute('PRAGMA user_version').fetchone()[0]==3:
+                    if not db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='purpose_models'").fetchone():raise CoreError('model_state_version','Missing purpose selection contract')
+                    selected=db.execute("SELECT selected,previous,revision FROM purpose_models WHERE kind='stt'").fetchone()
+                    if not selected or type(selected[2]) is not int or selected[2]<1:raise CoreError('model_state_version','Unbound purpose selection contract')
                 db.execute('CREATE TABLE IF NOT EXISTS models(id TEXT PRIMARY KEY, manifest TEXT NOT NULL, state TEXT NOT NULL, error TEXT, checked REAL)')
                 db.execute('CREATE TABLE IF NOT EXISTS manager(id INTEGER PRIMARY KEY CHECK(id=1),revision INTEGER,selected TEXT,previous TEXT,job TEXT)')
                 db.execute('INSERT OR IGNORE INTO manager VALUES(1,0,NULL,NULL,NULL)')
@@ -112,7 +116,9 @@ class LocalModels:
                 db.execute("UPDATE models SET state='interrupted',error='host_restarted' WHERE state IN ('downloading','checking','starting','repairing')")
                 old=db.execute('SELECT job FROM manager WHERE id=1').fetchone()[0]
                 if old and json.loads(old).get('status')=='running':db.execute('UPDATE manager SET job=? WHERE id=1',(canonical({'status':'interrupted','error':'host_restarted'}),))
-                db.execute('PRAGMA user_version=2')
+                db.execute('PRAGMA user_version='+str(max(2,db.execute('PRAGMA user_version').fetchone()[0])))
+            from host.speech_models import SpeechModels
+            self.speech=SpeechModels(self,lambda folder:Worker(folder,PROJECT/'adapters/models/local_speech_worker.py'))
         except BaseException:
             self.pool.shutdown(wait=False);self.lease.__exit__(None,None,None)
             raise
@@ -124,7 +130,8 @@ class LocalModels:
         while not self.guard_stop.wait(1):
             if StopGate(self.root).state()!='ready':
                 self.cancel.set()
-                with self.lock:self._stop()
+                with self.lock:
+                    self._stop();self.speech.stop()
 
     def db(self):
         # sqlite context commits but does not close; keep an explicit closing wrapper.
@@ -161,22 +168,24 @@ class LocalModels:
                 db.execute('INSERT OR REPLACE INTO observations VALUES(?,?,?,?)',
                     (item['id'],fingerprint,'artifact',canonical({'verified_disk_bytes':size,'updated_at':time.time()})))
             if result is not None or benchmark is not None:
-                key=self.measurement_context['id']
+                key=(self.speech.context if item['kind']=='stt' else self.measurement_context)['id']
                 row=db.execute('SELECT data FROM observations WHERE model=? AND fingerprint=? AND context=?',(item['id'],fingerprint,key)).fetchone()
                 value=json.loads(row[0]) if row else {}
                 if result is not None:value=merge_sample(value,result.get('memory'),result.get('workload'))
                 if benchmark is not None:value['benchmark']=benchmark
                 if value:
-                    value['context']=self.measurement_context
+                    value['context']=self.speech.context if item['kind']=='stt' else self.measurement_context
                     db.execute('INSERT OR REPLACE INTO observations VALUES(?,?,?,?)',(item['id'],fingerprint,key,canonical(value)))
 
     def snapshot(self):
         with self.lock:
             if self.worker and self.worker.process.poll() is not None:
                 ident=self.loaded;self._stop();self._state(ident,'failed','worker_exited')
+            if self.speech.worker and self.speech.worker.process.poll() is not None:self.speech.stop()
+            if StopGate(self.root).state()!='ready':self.speech.stop()
             if self.worker and StopGate(self.root).state()!='ready':self._stop()
             with self.db() as db:
-                meta=dict(db.execute('SELECT * FROM manager WHERE id=1').fetchone())
+                meta=dict(db.execute('SELECT * FROM manager WHERE id=1').fetchone());state_version=db.execute('PRAGMA user_version').fetchone()[0]
                 rows=[dict(x) for x in db.execute('SELECT * FROM models ORDER BY id')]
                 events=[dict(x) for x in db.execute('SELECT * FROM events ORDER BY seq DESC LIMIT 20')]
                 observations={}
@@ -192,16 +201,20 @@ class LocalModels:
                     if p.is_file():partial+=p.stat().st_size
                 row.update(item,disk_bytes=size,partial_bytes=partial,download_bytes=sum(f['bytes'] for f in item['files']),
                     loaded=item['id']==self.loaded,selected=item['id']==meta['selected'],vector_space=space(item) if item['kind']=='embedding' else None,
-                    adapter_ready=runtime['ready'] and item['runtime']=='onnx-e5-v1',memory=self.telemetry if item['id']==self.loaded else {'rss_bytes':0,'gpu_bytes':0})
-                row['assessment']=assess(item,observations.get((item['id'],identity(item)),{}),self.measurement_context,self.profiles)
+                    adapter_ready=(runtime_status(speech=True)['ready'] if item['kind']=='stt' else runtime['ready']) and item['runtime'] in ('onnx-e5-v1','onnx-sensevoice-v1'),memory=self.telemetry if item['id']==self.loaded else {'rss_bytes':0,'gpu_bytes':0})
+                row['assessment']=assess(item,observations.get((item['id'],identity(item)),{}),self.speech.context if item['kind']=='stt' else self.measurement_context,self.profiles)
+                if item['kind']=='stt':
+                    purpose=self.speech.state();row.update(selected=item['id']==purpose['selected'],loaded=item['id']==self.speech.loaded,memory=self.speech.memory if item['id']==self.speech.loaded else {'rss_bytes':0,'gpu_bytes':0})
+                    trial=read_json(PROJECT/'modules/local_models/speech-evaluations.json')['models'].get(item['id'])
+                    if trial and trial['manifest_fingerprint']==identity(item) and trial['worker_fingerprint']==self.speech.context['worker_sha256']:row['speech_evaluation']=trial
             return {'schema':self.api_version,'revision':meta['revision'],'observed_at':time.time(),'selected':meta['selected'],'previous':meta['previous'],
                 'job':json.loads(meta['job']) if meta['job'] else None,'models':rows,'events':events,
-                'runtime':runtime,'manager':{**self.descriptor,
-                'supported_runtime':['onnx-e5-v1'],'replaceable':True,'replacement_state':'requires_candidate_tests_and_host_restart',
+                'runtime':runtime,'purpose_models':{'stt':self.speech.state()},'manager':{**self.descriptor,'state_schema':state_version,
+                'supported_runtime':['onnx-e5-v1','onnx-sensevoice-v1'],'replaceable':True,'replacement_state':'requires_candidate_tests_and_host_restart',
                 'startup':'no_models_autoloaded','weights_location':'user-data/local-models','gpu_backend':'CPU only'}}
 
     def command(self,body):
-        actions={'download','repair','verify','start','standby','uninstall','activate','rollback','unselect','embed','benchmark','register','cancel','retire_previous'}
+        actions={'download','repair','verify','start','standby','uninstall','activate','rollback','unselect','embed','benchmark','register','cancel','retire_previous','speech_rollback','speech_unselect','speech_retire_previous'}
         if not isinstance(body,dict) or body.get('action') not in actions:raise CoreError('model_command','Invalid operation')
         action=body['action'];expected={'action','revision'}
         if action in {'download','repair','verify','start','standby','uninstall','activate','benchmark'}:expected.add('id')
@@ -242,6 +255,7 @@ class LocalModels:
         self.worker=None;self.loaded=None;self.telemetry=None
 
     def _start(self,item):
+        if item['kind']=='stt':return self.speech.start(item)
         if item['runtime']!='onnx-e5-v1':raise CoreError('model_adapter_missing','Runtime adapter not installed')
         if not runtime_status()['ready']:raise CoreError('model_runtime_missing','Pinned optional dependencies are missing or changed')
         if not self._verify(item):raise CoreError('model_integrity','Repair artifacts before starting')
@@ -257,7 +271,7 @@ class LocalModels:
         try:
             hello=candidate.wait(self._check)
             if not hello.get('ready') or hello.get('dimension')!=item['dimension']:raise CoreError('model_dimension','Worker contract mismatch')
-            probe=candidate.request(['你好 hello'],'query',self._check)
+            probe=candidate.request(['浣犲ソ hello'],'query',self._check)
             self._validate_vectors(item,probe,1)
             self._observe(item,probe)
             with self.lock:
@@ -285,7 +299,7 @@ class LocalModels:
             elif action in ('download','repair'):
                 item=self.item(ident)
                 if not item['files']:raise CoreError('model_recipe_missing','A pinned artifact recipe is required')
-                if self.loaded==ident:raise CoreError('model_in_use','Standby before repairing a loaded model')
+                if self.loaded==ident or self.speech.loaded==ident:raise CoreError('model_in_use','Standby before repairing a loaded model')
                 self._check(True);self._state(ident,'downloading')
                 remaining=sum(f['bytes'] for f in item['files']);folder=self.folder(ident);folder.mkdir(exist_ok=True)
                 if shutil.disk_usage(folder).free<remaining+64*1024**2:raise CoreError('model_disk','Insufficient temporary disk capacity')
@@ -307,14 +321,34 @@ class LocalModels:
                 if action=='rollback':
                     with self.db() as db:ident=db.execute('SELECT previous FROM manager WHERE id=1').fetchone()[0]
                     if not ident:raise CoreError('model_previous_missing','No previous model')
-                self._start(self.item(ident));self._state(ident,'ready')
-                if action!='start':
+                item=self.item(ident)
+                if action!='start' and item['kind']=='stt':self.speech.select(item)
+                else:self._start(item)
+                self._state(ident,'ready')
+                if action!='start' and item['kind']!='stt':
                     self._check()
                     with self.db() as db:db.execute('UPDATE manager SET previous=selected,selected=? WHERE id=1 AND (selected IS NULL OR selected!=?)',(ident,ident))
-                result={'loaded':ident,'space':space(self.item(ident)),'index_migration':'new_space_required'}
+                result={'loaded':ident,'purpose':'stt','embedding_default_unchanged':True} if self.item(ident)['kind']=='stt' else {'loaded':ident,'space':space(self.item(ident)),'index_migration':'new_space_required'}
+            elif action in ('speech_rollback','speech_unselect','speech_retire_previous'):
+                from host.speech import writer
+                writer(self.root)
+                if self.speech.busy:raise CoreError('model_in_use','STT inference is in progress')
+                if action=='speech_rollback':
+                    previous=self.speech.state()['previous']
+                    if not previous:raise CoreError('model_previous_missing','No previous STT model')
+                    self.speech.select(self.item(previous))
+                else:
+                    if action=='speech_unselect':self.speech.stop()
+                    with self.db() as db:
+                        db.execute('PRAGMA user_version=3')
+                        db.execute("UPDATE purpose_models SET "+("previous=selected,selected=NULL" if action=='speech_unselect' else "previous=NULL")+",revision=revision+1 WHERE kind='stt'")
+                result={'purpose':'stt','embedding_default_unchanged':True}
             elif action=='standby':
                 with self.lock:
                     if self.loaded==ident:self._stop()
+                    if self.speech.loaded==ident:
+                        if self.speech.busy:raise CoreError('model_in_use','STT inference is in progress')
+                        self.speech.stop()
                 result={'loaded':False,'files_preserved':True}
             elif action=='unselect':
                 with self.lock:self._stop()
@@ -323,7 +357,7 @@ class LocalModels:
                 with self.db() as db:db.execute('UPDATE manager SET previous=NULL WHERE id=1')
             elif action=='uninstall':
                 with self.db() as db:meta=db.execute('SELECT selected,previous FROM manager WHERE id=1').fetchone()
-                if self.loaded==ident or ident in tuple(meta):raise CoreError('model_in_use','Selected, loaded or recovery model is retained')
+                if self.loaded==ident or self.speech.loaded==ident or ident in tuple(meta) or ident in (self.speech.state()['selected'],self.speech.state()['previous']):raise CoreError('model_in_use','Selected, loaded or recovery model is retained')
                 item=self.item(ident);folder=self.folder(ident)
                 for f in item['files']:
                     path=child(folder,f['name']);part=child(folder,f['name']+'.part');self._check();path.unlink(missing_ok=True);part.unlink(missing_ok=True)
@@ -340,6 +374,7 @@ class LocalModels:
                 self._observe(item,result)
             elif action=='benchmark':
                 item=self.item(ident)
+                if item['kind']!='embedding':raise CoreError('model_benchmark_kind','Retrieval benchmark is only for embedding models; STT uses audio/reference trials')
                 # A benchmark must not evict another active model or change defaults.
                 if self.loaded and self.loaded!=ident:raise CoreError('model_in_use','Standby the other model before benchmarking')
                 was_loaded=self.loaded==ident
@@ -484,7 +519,7 @@ class LocalModels:
     def close(self):
         self.closed=True;self.cancel.set();self.pool.shutdown(wait=True)
         self.guard_stop.set();self.guard.join(timeout=3)
-        with self.lock:self._stop()
+        with self.lock:self._stop();self.speech.stop()
         MANAGERS.pop(str(self.root),None)
         self.lease.__exit__(None,None,None)
 

@@ -1,0 +1,422 @@
+{
+  "_id": "63314d954db0a767bbe88341",
+  "id": "openai/whisper-base.en",
+  "private": false,
+  "pipeline_tag": "automatic-speech-recognition",
+  "library_name": "transformers",
+  "tags": [
+    "transformers",
+    "pytorch",
+    "tf",
+    "jax",
+    "safetensors",
+    "whisper",
+    "automatic-speech-recognition",
+    "audio",
+    "hf-asr-leaderboard",
+    "en",
+    "arxiv:2212.04356",
+    "license:apache-2.0",
+    "model-index",
+    "eval-results",
+    "endpoints_compatible",
+    "deploy:azure",
+    "region:us"
+  ],
+  "downloads": 200829,
+  "likes": 62,
+  "modelId": "openai/whisper-base.en",
+  "author": "openai",
+  "sha": "911407f4214e0e1d82085af863093ec0b66f9cd6",
+  "lastModified": "2024-01-22T17:55:08.000Z",
+  "gated": false,
+  "disabled": false,
+  "widgetData": [
+    {
+      "example_title": "Librispeech sample 1",
+      "src": "https://cdn-media.huggingface.co/speech_samples/sample1.flac"
+    },
+    {
+      "example_title": "Librispeech sample 2",
+      "src": "https://cdn-media.huggingface.co/speech_samples/sample2.flac"
+    }
+  ],
+  "model-index": [
+    {
+      "name": "whisper-base.en",
+      "results": [
+        {
+          "task": {
+            "name": "Automatic Speech Recognition",
+            "type": "automatic-speech-recognition"
+          },
+          "dataset": {
+            "name": "LibriSpeech (clean)",
+            "type": "librispeech_asr",
+            "config": "clean",
+            "split": "test",
+            "args": {
+              "language": "en"
+            }
+          },
+          "metrics": [
+            {
+              "name": "Test WER",
+              "type": "wer",
+              "value": null,
+              "verified": false
+            }
+          ]
+        },
+        {
+          "task": {
+            "name": "Automatic Speech Recognition",
+            "type": "automatic-speech-recognition"
+          },
+          "dataset": {
+            "name": "LibriSpeech (other)",
+            "type": "librispeech_asr",
+            "config": "other",
+            "split": "test",
+            "args": {
+              "language": "en"
+            }
+          },
+          "metrics": [
+            {
+              "name": "Test WER",
+              "type": "wer",
+              "value": 12.803978669490565,
+              "verified": false
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "config": {
+    "architectures": [
+      "WhisperForConditionalGeneration"
+    ],
+    "model_type": "whisper",
+    "tokenizer_config": {
+      "bos_token": {
+        "__type": "AddedToken",
+        "content": "<|endoftext|>",
+        "lstrip": false,
+        "normalized": true,
+        "rstrip": false,
+        "single_word": false
+      },
+      "eos_token": {
+        "__type": "AddedToken",
+        "content": "<|endoftext|>",
+        "lstrip": false,
+        "normalized": true,
+        "rstrip": false,
+        "single_word": false
+      },
+      "unk_token": {
+        "__type": "AddedToken",
+        "content": "<|endoftext|>",
+        "lstrip": false,
+        "normalized": true,
+        "rstrip": false,
+        "single_word": false
+      },
+      "pad_token": null
+    }
+  },
+  "cardData": {
+    "language": [
+      "en"
+    ],
+    "tags": [
+      "audio",
+      "automatic-speech-recognition",
+      "hf-asr-leaderboard"
+    ],
+    "widget": [
+      {
+        "example_title": "Librispeech sample 1",
+        "src": "https://cdn-media.huggingface.co/speech_samples/sample1.flac"
+      },
+      {
+        "example_title": "Librispeech sample 2",
+        "src": "https://cdn-media.huggingface.co/speech_samples/sample2.flac"
+      }
+    ],
+    "model-index": [
+      {
+        "name": "whisper-base.en",
+        "results": [
+          {
+            "task": {
+              "name": "Automatic Speech Recognition",
+              "type": "automatic-speech-recognition"
+            },
+            "dataset": {
+              "name": "LibriSpeech (clean)",
+              "type": "librispeech_asr",
+              "config": "clean",
+              "split": "test",
+              "args": {
+                "language": "en"
+              }
+            },
+            "metrics": [
+              {
+                "name": "Test WER",
+                "type": "wer",
+                "value": null,
+                "verified": false
+              }
+            ]
+          },
+          {
+            "task": {
+              "name": "Automatic Speech Recognition",
+              "type": "automatic-speech-recognition"
+            },
+            "dataset": {
+              "name": "LibriSpeech (other)",
+              "type": "librispeech_asr",
+              "config": "other",
+              "split": "test",
+              "args": {
+                "language": "en"
+              }
+            },
+            "metrics": [
+              {
+                "name": "Test WER",
+                "type": "wer",
+                "value": 12.803978669490565,
+                "verified": false
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "pipeline_tag": "automatic-speech-recognition",
+    "license": "apache-2.0"
+  },
+  "transformersInfo": {
+    "auto_model": "AutoModelForSpeechSeq2Seq",
+    "pipeline_tag": "automatic-speech-recognition",
+    "processor": "AutoProcessor"
+  },
+  "siblings": [
+    {
+      "rfilename": ".gitattributes",
+      "blobId": "3476589a58942b0e9ef94ae0efb29355707f95bb",
+      "size": 1438
+    },
+    {
+      "rfilename": "README.md",
+      "blobId": "3ab94a9aa98899b9eac2e38231e0f36cea5760ef",
+      "size": 14846
+    },
+    {
+      "rfilename": "added_tokens.json",
+      "blobId": "0b661e7eeafa60f4366f802cc18d99a08574861c",
+      "size": 34604
+    },
+    {
+      "rfilename": "config.json",
+      "blobId": "0e9af059a5d452f97d3493ffb4da98712c8fd711",
+      "size": 1937
+    },
+    {
+      "rfilename": "flax_model.msgpack",
+      "blobId": "4065ee7c8269982bfa661bb4de283e66bd3a5d96",
+      "size": 290382449,
+      "lfs": {
+        "sha256": "e2dd00fb9f37f497421bdd7a8b17b5378f95e7543e6b50f79b936ccdd55b7815",
+        "size": 290382449,
+        "pointerSize": 134
+      }
+    },
+    {
+      "rfilename": "generation_config.json",
+      "blobId": "1cde9fc2a32ad94f4db760e67a2375e229215f58",
+      "size": 1531
+    },
+    {
+      "rfilename": "merges.txt",
+      "blobId": "226b0752cac7789c48f0cb3ec53eda48b7be36cc",
+      "size": 456318
+    },
+    {
+      "rfilename": "model.safetensors",
+      "blobId": "06465e107106c6acecd174a85bfba78299c4d682",
+      "size": 290401888,
+      "lfs": {
+        "sha256": "d4dd5542fd6a1d35639e21384238f3bfe6c557c849d392b5905d33ee29e71db5",
+        "size": 290401888,
+        "pointerSize": 134
+      }
+    },
+    {
+      "rfilename": "normalizer.json",
+      "blobId": "dd6ae819ad738ac1a546e9f9282ef325c33b9ea0",
+      "size": 52666
+    },
+    {
+      "rfilename": "preprocessor_config.json",
+      "blobId": "c2048dfa9fd94a052e62e908d2c4dfb18534b4d2",
+      "size": 184990
+    },
+    {
+      "rfilename": "pytorch_model.bin",
+      "blobId": "bcea3b0d9e0c73e7000ef6592b5c944f1cb36018",
+      "size": 290451159,
+      "lfs": {
+        "sha256": "404fa07b37813e1a425ae22348db6f7d0b359f72acd8d457927cc0d029beb278",
+        "size": 290451159,
+        "pointerSize": 134
+      }
+    },
+    {
+      "rfilename": "special_tokens_map.json",
+      "blobId": "7e6b5b4f006274b7085b597005a9ad73c639eb80",
+      "size": 1830
+    },
+    {
+      "rfilename": "tf_model.h5",
+      "blobId": "5cd558dcbf788dcd330362439cebac60c393b765",
+      "size": 290659576,
+      "lfs": {
+        "sha256": "40ecea6544a8a7a684d822c7519d05aa2b9cadff93113b7a01a25f0135b30149",
+        "size": 290659576,
+        "pointerSize": 134
+      }
+    },
+    {
+      "rfilename": "tokenizer.json",
+      "blobId": "b5bd266de2f9b9a68efe13fb48ac6830ca71c0bb",
+      "size": 2405679
+    },
+    {
+      "rfilename": "tokenizer_config.json",
+      "blobId": "6b53d4f2b480c9267ffc419c7628159d25f3072a",
+      "size": 805
+    },
+    {
+      "rfilename": "vocab.json",
+      "blobId": "84ef7fb594b5c0979e48bdeddb60a0adef33df0b",
+      "size": 798156
+    }
+  ],
+  "spaces": [
+    "Steveeeeeeen/smallest-s2s",
+    "OpenSound/EzAudio",
+    "gobeldan/insanely-fast-whisper-webui",
+    "OpenSound/EzAudio-ControlNet",
+    "microsoft/paza-bench",
+    "gabrielchua/hey-gemma",
+    "sanchit-gandhi/chatGPT",
+    "mfielding92/insanely-fast-whisper-webui-zero",
+    "innev/whisper-Base",
+    "Codegeass321/ChatDocxAI",
+    "tensorgirl/Farmers_Helper_Bot",
+    "DataDiva88/AutomatedProblemSolver_Final_Assignment",
+    "pwenker/pronunciation_trainer",
+    "weijiang2024/Suanfamama_Speech_Recognition_Synthesis",
+    "Agents-MCP-Hackathon/MedCodeMCP",
+    "awacke1/ASR-openai-whisper-large",
+    "jawadrashid/whisper",
+    "sampsontan/llama3-rag",
+    "Ericboi229-gmx-co-uk/insanely-fast-whisper-webui",
+    "frimelle/RepeatAfterMe",
+    "awacke1/GradioDatasetsExampleWithStreaming",
+    "gowdu2005/automaticspeechrecognition",
+    "vitorcalvi/MMESA-CPU",
+    "ericguan04/speech-transcription",
+    "voldemortuk/Solution_2",
+    "Lesterchia1/FPOC2_AI-Tutor_Chatbot",
+    "Agents-MCP-Hackathon/vibe-fine-tuner-agent",
+    "gpaasch/MedCodeMCP",
+    "Natwar/Omni_RAG_Analyst",
+    "jameshuntercarter/EzAudio-ControlNet",
+    "xuankhoi/Alzheimer-Detection-Website",
+    "abdullah/chatGPT",
+    "msibertman/speech_transcription",
+    "msibertman/rank_speech",
+    "ericckfeng/whisper-Base-Clone",
+    "jduckles/test-diarize",
+    "Rakib/Bangla_ASR_Demo",
+    "mrolando/asistente_voz",
+    "KevinGeng/Laronix_Recording",
+    "Arafath10/test",
+    "premsid/Speech-to-Screenplay_SCEM-Team2",
+    "neelsk/mediSpace2",
+    "tkay264/test-u",
+    "smravi10/sampler",
+    "shreeshanaik-18/Accolade-Project",
+    "shivaninuji/Accolade-project",
+    "smravi10/Raptly",
+    "JPLTedCas/QuirohelpASRServer",
+    "yalgar/asr_model",
+    "mjavadpur/STTSample",
+    "dawood/stream_asr",
+    "adityachavan198/converse",
+    "akki2825/accents_unplugged_whisper_base.en",
+    "aymonc/comms_itr_backend_1",
+    "JHK123/space-demo",
+    "iblfe/test",
+    "akki2825/accents_unplugged_whisper_base_mirror_1",
+    "TelEl/accents_unplugged_whisper_base.en",
+    "livvie/accents_unplugged_whisper_base.en",
+    "DaliaCaRo/accents_unplugged_whisper_base.en",
+    "juliakaczor/accents_unplugged_whisper_base.en",
+    "LottieW/accents_unplugged_whisper_base.en",
+    "alvinasvk/accents_unplugged_whisper_base.en",
+    "adirsingh96/mm",
+    "mindmime/gradio",
+    "dhanishetty/OVC",
+    "Sameer45/c-h-a-t-b-o-t",
+    "jaimin/Whisper",
+    "abdoeid/stream_asr",
+    "reallynicejam/Hokkien-English",
+    "deepakchawla-cb/fractalego-personal-speech-to-text-model",
+    "Vickyage/accents_unplugged_whisper_base.en",
+    "simonraj/Audio",
+    "micoirvin-up/my_alexa",
+    "atonyman/tts-stt-ftw",
+    "cerkut/stream_asr",
+    "jawadrashid/whisperdemo",
+    "fawadrashid/audio_transcription",
+    "zivzhao/insanely-fast-whisper-webui",
+    "Malek-AI/whisper-base.en",
+    "zewdu444/speech_to_report_vehicle",
+    "chandrans/genai",
+    "sinatayebati/Talking-Duck",
+    "cursoai/Diego_imdb_audio_input",
+    "tahsin84/test_model",
+    "wzeyal/targem",
+    "youngtsai/rank_speech",
+    "jseema/InterfaceDonna",
+    "peddlertech/translate-demo",
+    "beeguy/voice-text-rtime",
+    "SameerMahajan/Recognize_Speech",
+    "RajashekarV/Demo",
+    "Muggle14/asr-with-prompt-demo",
+    "nekin12/So_a_imatge",
+    "gosha2602/insanely-fast-whisper-webui",
+    "hrguarinv/fastlane",
+    "Celestat/tele-sync",
+    "miraghe/5073_T7",
+    "aurelben/parlons-nous",
+    "Jiaofeng/parakeet-ctc-0.6b"
+  ],
+  "createdAt": "2022-09-26T06:58:29.000Z",
+  "safetensors": {
+    "parameters": {
+      "F32": 72593408
+    },
+    "total": 72593408
+  },
+  "usedStorage": 1742799310
+}
