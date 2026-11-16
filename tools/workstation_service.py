@@ -12,6 +12,7 @@ import importlib.util
 import json
 import os
 from pathlib import Path
+import shlex
 import shutil
 import sqlite3
 import subprocess
@@ -31,6 +32,9 @@ from control.application_compatibility import require_compatible
 from sdk.protocol import canonical,CoreError
 
 SCHEMA=1
+POLICY_SCHEMA=2
+PASSIVE_SECONDS=3600
+ACTIVE_SECONDS=30
 
 
 def base(root):
@@ -61,10 +65,12 @@ def verified(root,path):
 
 def policy(root):
     value=verified(root,base(root)/'policy.json')
-    if (value.get('schema')!=SCHEMA or value.get('daily_data')!=str(Path(root).resolve())
+    if (value.get('schema')!=POLICY_SCHEMA or value.get('daily_data')!=str(Path(root).resolve())
             or type(value.get('enabled')) is not bool or type(value.get('auto_updates')) is not bool
             or value.get('development_autostart') is not False
-            or value.get('poll_seconds')!=30 or value.get('idle_seconds')!=60
+            or value.get('poll_seconds')!=PASSIVE_SECONDS or value.get('active_seconds')!=ACTIVE_SECONDS
+            or value.get('offline_restart') is not False or value.get('source_notification') is not True
+            or value.get('idle_seconds')!=60
             or value.get('observation_seconds')!=180 or value.get('restart_limit')!=3):
         raise ValueError('Unsupported automation policy; no action taken')
     development=Path(value['development_data']).resolve();backup=Path(value['backup_root']).resolve()
@@ -74,6 +80,97 @@ def policy(root):
             or daily==backup or daily in backup.parents or backup in daily.parents):
         raise ValueError('Daily, development and backup directories must be separate')
     return value
+
+
+def event_name(root):
+    return 'Local\\JarvisDailyWake-'+hashlib.sha256(str(Path(root).resolve()).casefold().encode()).hexdigest()[:24]
+
+
+class WakeSignal:
+    """One auto-reset kernel event; hints wake existing management, never start it."""
+    def __init__(self,root):
+        if os.name!='nt':raise ValueError('Windows local notification only')
+        import ctypes
+        from ctypes import wintypes
+        self.api=ctypes.WinDLL('kernel32',use_last_error=True)
+        self.api.CreateEventW.argtypes=[ctypes.c_void_p,wintypes.BOOL,wintypes.BOOL,wintypes.LPCWSTR]
+        self.api.CreateEventW.restype=wintypes.HANDLE
+        self.api.WaitForSingleObject.argtypes=[wintypes.HANDLE,wintypes.DWORD]
+        self.api.CloseHandle.argtypes=[wintypes.HANDLE]
+        self.handle=self.api.CreateEventW(None,False,False,event_name(root))
+        if not self.handle:raise ctypes.WinError(ctypes.get_last_error())
+
+    def wait(self,seconds):
+        result=self.api.WaitForSingleObject(self.handle,max(1,min(int(seconds*1000),3600000)))
+        if result not in (0,258):raise OSError('Management notification wait failed')
+        return result==0
+
+    def close(self):
+        if self.handle:self.api.CloseHandle(self.handle);self.handle=None
+
+
+def signal(root):
+    if os.name!='nt':return False
+    import ctypes
+    from ctypes import wintypes
+    api=ctypes.WinDLL('kernel32',use_last_error=True)
+    api.OpenEventW.argtypes=[wintypes.DWORD,wintypes.BOOL,wintypes.LPCWSTR];api.OpenEventW.restype=wintypes.HANDLE
+    api.SetEvent.argtypes=[wintypes.HANDLE];api.CloseHandle.argtypes=[wintypes.HANDLE]
+    handle=api.OpenEventW(2,False,event_name(root))
+    if not handle:return False
+    try:return bool(api.SetEvent(handle))
+    finally:api.CloseHandle(handle)
+
+
+def notify_completion(root):
+    selected=policy(root)
+    if not selected['enabled'] or not selected.get('completion',{}).get('enabled'):
+        return {'notified':False,'reason':'disabled'}
+    if StopGate(root).state()!='ready':return {'notified':False,'reason':'owner_stopped'}
+    request={'schema':1,'id':uuid.uuid4().hex,'source':selected['completion']['source'],'created':time.time()}
+    signed(root,base(root)/'notification.json',request)
+    return {'notified':signal(root),'request':request['id'],'authority':'wake hint only; original review and checks still required'}
+
+
+class Schedule:
+    """Hourly fallback; only an in-flight operation has a short-lived timer."""
+    def __init__(self,clock=time.time):
+        self.clock=clock;self.passive_at=clock()+PASSIVE_SECONDS;self.source_at=None;self.last_notification=None
+
+    def source_due(self,root):
+        now=self.clock();due=False
+        if now>=self.passive_at:self.passive_at=now+PASSIVE_SECONDS;due=True
+        if self.source_at is not None and now>=self.source_at:self.source_at=None;due=True
+        path=base(root)/'notification.json'
+        if path.exists():
+            value=verified(root,path);selected=policy(root)
+            if (value.get('schema')!=1 or value.get('source')!=selected.get('completion',{}).get('source')
+                    or not isinstance(value.get('id'),str) or len(value['id'])!=32
+                    or type(value.get('created')) not in (int,float)):
+                raise ValueError('Invalid local completion notification')
+            if value['id']!=self.last_notification:
+                self.last_notification=value['id']
+                if -5<=now-value['created']<=86400:due=True
+        return due
+
+    def after_tick(self,engine,source_checked):
+        if getattr(engine,'last_status',None) in {'offline_no_update_checks','manual_stop','owner_stopped','no_active_build','disabled'}:
+            self.source_at=None;return
+        completion=getattr(engine,'completion',None)
+        if source_checked:
+            self.source_at=(completion.state['stable_since']+120
+                if engine.source_inspected and completion is not None
+                and completion.state.get('status')=='waiting_for_quiet_snapshot' else None)
+
+    def delay(self,engine):
+        deadlines=[self.passive_at]
+        if self.source_at is not None:deadlines.append(self.source_at)
+        completion=getattr(engine,'completion',None)
+        if engine.journal.get('phase')=='observing' or (completion is not None and completion.process is not None):
+            deadlines.append(self.clock()+ACTIVE_SECONDS)
+        elif getattr(engine,'last_status',None)=='waiting_for_idle' and engine.idle_since is not None:
+            deadlines.append(max(self.clock()+1,engine.idle_since+60))
+        return max(1,min(deadlines)-self.clock())
 
 
 @contextmanager
@@ -147,6 +244,7 @@ class Engine:
         self.journal.update(patch,updated=self.clock());write_json(self.folder/'journal.json',self.journal)
 
     def status(self,status,**extra):
+        self.last_status=status
         completion=getattr(self,'completion',None)
         if completion is not None:extra['completion']={k:completion.state.get(k) for k in ('status','head','seen_head','error')}
         write_json(self.folder/'status.json',{'schema':SCHEMA,'pid':os.getpid(),'status':status,
@@ -218,29 +316,41 @@ class Engine:
             else:self.save(phase='attention',error=type(exc).__name__)
             raise
 
-    def tick(self):
+    def logon_start(self):
+        """The existing explicit login-start action, separate from supervision."""
+        if not self.config['enabled'] or StopGate(self.root).state()!='ready':return
+        current=self.app.state()
+        if current['phase']=='active' and current['active'] and self.journal.get('phase') not in {'observing','applying','rolling_back','attention'}:
+            if not self.driver.running(current['active'],current['epoch']):self.restart()
+
+    def tick(self,*,check_source=True):
+        self.source_check_requested=check_source
+        self.source_inspected=False
         self.config=policy(self.root)
         if not self.config['enabled']:self.close();self.status('disabled');return
         if StopGate(self.root).state()!='ready':self.close();self.status('owner_stopped');return
         completion=getattr(self,'completion',None)
-        if completion is not None:
-            try:completion.poll()
-            except Exception as exc:completion.save(status='attention',error=type(exc).__name__)
         current=self.app.state();phase=self.journal.get('phase')
         if phase in {'applying','rolling_back'}:
             # Never replay an ambiguous local transition. Reconcile only its state.
             if current['phase']=='active' and current.get('active',{}).get('build')==self.journal.get('target') and phase=='applying':
                 self.save(phase='observing',adopted_epoch=current['epoch'],observe_until=self.clock()+self.config['observation_seconds'])
             else:self.save(phase='attention',error='interrupted_transition');self.status('attention');return
-        if self.journal.get('phase')=='attention':self.status('attention');return
-        if current['phase'] not in {'active','stopped'}:self.status('maintenance_owned_elsewhere');return
-        if not current['active']:self.status('no_active_build');return
+        if self.journal.get('phase')=='attention':self.close();self.status('attention');return
+        if current['phase'] not in {'active','stopped'}:self.close();self.status('maintenance_owned_elsewhere');return
+        if not current['active']:self.close();self.status('no_active_build');return
         if current['phase']=='stopped':
+            if completion is not None:completion.close()
             self.started=True;self.status('manual_stop');return
         try:healthy=self.driver.running(current['active'],current['epoch'])
         except CoreError as exc:
-            self.bad+=1;self.status('unhealthy',error=exc.code)
-            if self.journal.get('phase')=='observing' and self.bad>=3:self.rollback(current,exc.code)
+            self.bad+=1
+            if self.journal.get('phase')=='observing':
+                if self.bad>=3:self.rollback(current,exc.code)
+                self.status('unhealthy',error=exc.code)
+            else:
+                if completion is not None:completion.close()
+                self.status('offline_no_update_checks',error=exc.code)
             return
         except OSError:healthy=False
         if not healthy:
@@ -252,16 +362,19 @@ class Engine:
                 self.started=True
                 if self.bad>=3:self.rollback(current,'candidate_disappeared')
                 self.status('unhealthy_observing');return
-            elif (not self.started or current['phase']=='active') and self.bad>= (1 if not self.started else 3):
-                self.restart();self.started=True
-            self.status('restarting' if self.bad==0 else 'offline');return
+            if completion is not None:completion.close()
+            self.status('offline_no_update_checks');return
         self.started=True;self.bad=0
+        if completion is not None:
+            try:completion.poll()
+            except Exception as exc:completion.save(status='attention',error=type(exc).__name__)
         if self.journal.get('phase')=='observing':
             if current['active']['build']!=self.journal['target'] or current['epoch']!=self.journal['adopted_epoch']:
                 self.save(phase='attention',error='observation_baseline_changed')
             elif self.clock()>=self.journal['observe_until']:self.save(phase='complete',error=None)
             self.status('observing');return
-        if completion is not None:
+        if completion is not None and check_source:
+            self.source_inspected=True
             try:completion.tick()
             except Exception as exc:completion.save(status='attention',error=type(exc).__name__)
         ticket_path=self.folder/'ticket.json'
@@ -270,6 +383,8 @@ class Engine:
         rejected=set(self.journal.get('quarantined_builds',[]))|{self.journal.get('failed_build')}
         if ticket['id']==self.journal.get('ticket') or ticket['prepared']['build'] in rejected:
             self.status('ready_quarantined' if self.journal.get('failed_build') else 'ready');return
+        if self.clock()>=ticket['expires']:
+            self.save(ticket=ticket['id'],phase='rejected',error='ticket_expired');self.status('ready');return
         commit=ticket['prepared'].get('completion_commit')
         if commit and (completion is None or completion.state.get('head')!=commit or completion.state.get('status')!='queued'):
             self.status('waiting_for_independent_check_exit');return
@@ -309,12 +424,13 @@ def install(root,development,backup_root,operator_path=None):
     (capsule/'files.json').write_bytes(inventory)
     completion=completion_module.settings(development.parent)
     if (folder/'policy.json').exists():
-        prior=policy(root).get('completion')
+        prior=verified(root,folder/'policy.json').get('completion')
         if prior and prior.get('source')==str(development.parent):
             completion_module.validate(prior);completion=prior
-    value={'schema':SCHEMA,'enabled':True,'auto_updates':True,'daily_data':str(root),
+    value={'schema':POLICY_SCHEMA,'enabled':True,'auto_updates':True,'daily_data':str(root),
         'development_data':str(development),'development_autostart':False,'backup_root':str(backup_root),
-        'poll_seconds':30,'idle_seconds':60,'observation_seconds':180,'restart_limit':3,'completion':completion}
+        'poll_seconds':PASSIVE_SECONDS,'active_seconds':ACTIVE_SECONDS,'offline_restart':False,'source_notification':True,
+        'idle_seconds':60,'observation_seconds':180,'restart_limit':3,'completion':completion}
     signed(root,folder/'policy.json',value)
     from sdk.workstation_bootstrap import service_bootstrap
     bootstrap=service_bootstrap(ident,helper,digest(helper_inventory))
@@ -348,7 +464,7 @@ try:
   time.sleep(5)
  else:raise RuntimeError('Daily drive unavailable after 15 minutes')
  if hashlib.sha256(target.read_bytes()).hexdigest()!=EXPECTED:raise RuntimeError('Service bootstrap changed; register reviewed startup again')
- sys.argv=[str(target)]
+ sys.argv=[str(target),'--logon-start']
  runpy.run_path(str(target),run_name='__main__')
 except Exception as exc:
  if log.exists() and log.stat().st_size>262144:log.write_text('')
@@ -383,6 +499,31 @@ def unregister_startup(root):
     return {'disabled':True,'daily_stopped':False}
 
 
+def register_notification(root):
+    """Register only this manager's local hook; never replace an owner hook."""
+    selected=policy(root);source=Path(selected['completion']['source'])
+    load_completion().repository(source)
+    configured=subprocess.run(['git','-C',str(source),'config','--get','core.hooksPath'],
+        capture_output=True,timeout=10,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
+    if configured.returncode!=1:raise ValueError('Preserve the existing custom Git hooks configuration')
+    hooks=source/'.git/hooks';reject_links(hooks)
+    if not hooks.is_dir():raise ValueError('Local notification requires this installation own Git hooks directory')
+    hook=hooks/'post-commit';reject_links(hook);receipt=base(root)/'notification-hook.json'
+    if hook.exists():
+        old=read(receipt) if receipt.exists() else {}
+        if old.get('path')!=str(hook) or old.get('sha256')!=digest(hook):
+            raise ValueError('Preserve the existing owner post-commit hook')
+    python=Path(sys.executable).with_name('pythonw.exe')
+    bootstrap=Path(root).resolve().parent/'JarvisService.py'
+    if not python.is_file() or not bootstrap.is_file():raise ValueError('Install the reviewed service first')
+    command=' '.join(shlex.quote(str(p).replace('\\','/')) for p in (python,'-X','utf8','-I','-B',bootstrap,'--notify-completion'))
+    payload=('#!/bin/sh\n# JarvisDaily managed local completion hint; no update authority.\n'+command+' >/dev/null 2>&1\nexit 0\n').encode()
+    if hook.exists():shutil.copy2(hook,base(root)/('notification-hook-backup-'+uuid.uuid4().hex+'.sh'))
+    temporary=hook.with_suffix('.pending');temporary.write_bytes(payload);temporary.replace(hook)
+    value={'schema':1,'path':str(hook),'sha256':digest(hook),'source':str(source),'mechanism':'post-commit to existing local event','passive_seconds':PASSIVE_SECONDS}
+    write_json(receipt,value);return value
+
+
 def load_operator(path):
     spec=importlib.util.spec_from_file_location('jarvis_pinned_operator',path);module=importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module);return module
@@ -398,22 +539,26 @@ def load_completion():
 
 
 def main():
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('action',choices=['install','register-startup','disable-startup','run','status','pause','resume'])
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('action',choices=['install','register-startup','register-notification','disable-startup','run','status','pause','resume','notify'])
     parser.add_argument('--daily-data',type=Path,required=True);parser.add_argument('--development-data',type=Path)
     parser.add_argument('--backup-root',type=Path);parser.add_argument('--operator',type=Path);parser.add_argument('--once',action='store_true')
     parser.add_argument('--prepare-completion')
+    parser.add_argument('--notify-completion',action='store_true');parser.add_argument('--logon-start',action='store_true')
     args=parser.parse_args();root=args.daily_data.resolve()
     if args.action=='install':
         if not args.development_data or not args.backup_root:parser.error('Installation needs existing development and backup roots')
         print(json.dumps(install(root,args.development_data,args.backup_root)));return
     if args.action=='register-startup':print(json.dumps(register_startup(root)));return
+    if args.action=='register-notification':print(json.dumps(register_notification(root)));return
     if args.action=='disable-startup':print(json.dumps(unregister_startup(root)));return
+    if args.action=='notify' or args.notify_completion:print(json.dumps(notify_completion(root)));return
     if args.action in {'pause','resume'}:
         value=policy(root)
         if args.action=='resume':
             receipt=read(base(root)/'startup.json');bootstrap=root.parent/'JarvisService.py'
             if digest(bootstrap)!=receipt['service_bootstrap_sha256']:raise ValueError('Register the reviewed startup bootstrap again')
         value['enabled']=args.action=='resume';signed(root,base(root)/'policy.json',value)
+        signal(root)
         if args.action=='resume':
             log=base(root)/'management.log'
             with log.open('ab') as stream:
@@ -432,16 +577,21 @@ def main():
                 config,args.prepare_completion,queue)))
         return
     with lease(root):
-        engine=Engine(root,load_operator(args.operator))
+        wake=WakeSignal(root);engine=Engine(root,load_operator(args.operator));schedule=Schedule()
         try:
+            if args.logon_start:engine.logon_start()
             while True:
-                try:engine.tick();engine.error_count=0
+                source_checked=False
+                try:
+                    source_checked=schedule.source_due(root)
+                    engine.tick(check_source=source_checked);engine.error_count=0
                 except Exception as exc:
                     engine.error_count+=1;engine.status('attention',error=type(exc).__name__)
                     if engine.error_count>=3:return
                 if args.once or not engine.config['enabled']:return
-                time.sleep(engine.config['poll_seconds'])
-        finally:engine.close()
+                schedule.after_tick(engine,source_checked)
+                wake.wait(schedule.delay(engine))
+        finally:engine.close();wake.close()
 
 
 if __name__=='__main__':main()

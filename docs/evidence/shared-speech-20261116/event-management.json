@@ -1,0 +1,96 @@
+{
+  "date": "2026-11-16",
+  "timezone": "Asia/Shanghai",
+  "status": "implemented_and_locally_verified",
+  "scope": "daily management scheduling only; application and controller remain unchanged",
+  "policy": {
+    "schema": 2,
+    "passive_seconds": 3600,
+    "local_commit_notification": true,
+    "offline_source_checks": false,
+    "offline_restart": false,
+    "explicit_logon_start_preserved": true,
+    "owned_check_interval_seconds": 30,
+    "post_upgrade_observation_seconds": 180,
+    "review_quiet_seconds": 120,
+    "busy_wait_uses_hourly_fallback": true,
+    "maintenance_cancels_only_owned_check": true
+  },
+  "installed_capsule": "664cf5a1cd976ed1ad1b6dbc02e6f3a047d4acecb6eed5499cb25a8c8f111b99",
+  "daily_version": "0.1.14.1",
+  "controller_protocol": 10,
+  "application_runtime_changed": false,
+  "tests": {
+    "service": 31,
+    "notifications": 14,
+    "completion": 20,
+    "passed": 65,
+    "failed": 0,
+    "skipped": 0,
+    "commands": [
+      "python -m unittest discover -s tests -p test_workstation_service.py",
+      "python -m unittest discover -s tests -p test_workstation_notifications.py",
+      "python -m unittest discover -s tests -p test_workstation_completion.py"
+    ],
+    "includes": "real owned process exit and compatible rollback; after observation, missing process does not restart or inspect source; signed notification, event auto-reset, hour boundary, stop and owner-hook preservation; external maintenance cancels owned checker and does not rearm a stale source timer"
+  },
+  "live_validation": {
+    "passive": {
+      "observation_seconds": 65,
+      "manager_git_launches": 0,
+      "status_unchanged": true,
+      "visible_console_windows": 0
+    },
+    "active_notification": {
+      "hook_exit_code": 0,
+      "notification_changed": true,
+      "manager_acknowledged": true,
+      "ack_seconds": 1.064,
+      "manager_git_launches": 7
+    },
+    "post_notification_idle_seconds": 35,
+    "post_notification_status_unchanged": true,
+    "total_visible_console_windows": 0,
+    "new_terminal_processes": 0,
+    "same_daily_instance": true,
+    "dialogue_counts_unchanged": true,
+    "instance": {
+      "application_build": "9f5c25f82a7f431ee0d61318852595084d67d924dfdd25cedf4dde38e17c9f97",
+      "application_epoch": 31,
+      "boot_id": "be78bd0c3efbb2413d0c3980",
+      "environment": "stable",
+      "family_version": "1.0.0",
+      "presence_protocol": 2,
+      "root_digest": "8cc158ee4a5679f150274a3c358bab6cb1fd3ed989534aa73464bcb45a9b2170",
+      "service": "jarvis-workbench"
+    },
+    "dialogue_counts": {
+      "chats": 659,
+      "turns": 670,
+      "attempts": 668,
+      "sqlite_sequence": 1,
+      "delivery_bases": 1
+    },
+    "manager_pid": 13088
+  },
+  "preservation": {
+    "same_daily_instance": true,
+    "same_dialogue_counts": true,
+    "business_database_restore": false,
+    "model_calls": 0,
+    "dependency_install": false,
+    "windows_reboot": false
+  },
+  "preserved_diagnostic_failure": {
+    "file": "management-validation-manager-startup-race.json in local backup",
+    "reason": "Probe started before new manager ready and read the previous stopped manager PID. Fixed diagnostic baseline to require a live pythonw manager with non-disabled status; retained original failed capture."
+  },
+  "limits": [
+    "Hourly expiry was verified with controlled clock tests, not by claiming a full hour of live observation.",
+    "The exact installed post-commit script was executed in the live check; the final real completion commit will use the registered hook.",
+    "Explicit login parameter is tested in isolation; its next natural login execution remains to observe.",
+    "Raw uncommitted edits do not authorize installation. Notifications are hints; original branch, clean tree, review, fixed checks, budget, STOP and compatibility gates remain."
+  ],
+  "recovery": "Restore a matched management capsule/bootstrap/signed policy/startup shim; never restore business databases to undo this scheduling change.",
+  "recovery_directory": "D:\\Jarvis-Recovery\\management-fixes\\event-management-20261116\\final-664cf5a1"
+}

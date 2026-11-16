@@ -19,8 +19,9 @@ class ServiceTests(unittest.TestCase):
         self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup)
         self.base=Path(self.temp.name).resolve();self.root=self.base/'daily/user-data';self.dev=self.base/'dev/user-data'
         Core.initialize(self.root).close();Core.initialize(self.dev).close();LocalApprovals(self.root).initialize()
-        self.config={'schema':1,'enabled':True,'auto_updates':True,'daily_data':str(self.root),'development_data':str(self.dev),
-            'development_autostart':False,'backup_root':str(self.base/'backups'),'poll_seconds':30,'idle_seconds':60,
+        self.config={'schema':2,'enabled':True,'auto_updates':True,'daily_data':str(self.root),'development_data':str(self.dev),
+            'development_autostart':False,'backup_root':str(self.base/'backups'),'poll_seconds':3600,
+            'active_seconds':30,'offline_restart':False,'source_notification':True,'idle_seconds':60,
             'observation_seconds':180,'restart_limit':3}
         service.base(self.root).mkdir(parents=True,exist_ok=True)
         service.signed(self.root,service.base(self.root)/'policy.json',self.config)
@@ -68,10 +69,27 @@ class ServiceTests(unittest.TestCase):
         e=self.engine();e.started=False;e.app.state.return_value={**self.state,'phase':'stopped'};e.tick()
         e.operator.start_daily.assert_not_called();self.assertEqual(service.read(e.folder/'status.json')['status'],'manual_stop')
 
-    def test_first_missing_active_host_starts_only_daily(self):
-        e=self.engine();e.started=False;e.driver.running.return_value=False;e.tick()
-        e.operator.start_daily.assert_called_once_with(self.root);self.assertTrue(e.started)
+    def test_missing_active_host_does_not_restart_or_inspect_source(self):
+        e=self.engine();e.started=False;e.driver.running.return_value=False;e.completion=Mock(state={});e.tick()
+        e.operator.start_daily.assert_not_called();e.completion.tick.assert_not_called();e.completion.poll.assert_not_called()
+        e.completion.close.assert_called_once()
+        self.assertEqual(service.read(e.folder/'status.json')['status'],'offline_no_update_checks')
         e.operator.start_development.assert_not_called()
+
+    def test_login_start_is_explicit_and_separate_from_offline_supervision(self):
+        e=self.engine();e.driver.running.return_value=False;e.logon_start()
+        e.operator.start_daily.assert_called_once_with(self.root)
+        e=self.engine();e.app.state.return_value={**self.state,'phase':'stopped'};e.logon_start()
+        e.operator.start_daily.assert_not_called()
+
+    def test_online_health_tick_does_not_imply_source_inspection(self):
+        e=self.engine();e.completion=Mock(state={});e.tick(check_source=False)
+        e.completion.poll.assert_called_once();e.completion.tick.assert_not_called()
+
+    def test_new_policy_refuses_fast_passive_poll_or_offline_restart(self):
+        for patch_value in ({'poll_seconds':30},{'offline_restart':True},{'source_notification':False}):
+            service.signed(self.root,service.base(self.root)/'policy.json',{**self.config,**patch_value})
+            with self.assertRaises(ValueError):service.policy(self.root)
 
     def test_restarts_are_bounded_and_reserved_before_failure(self):
         e=self.engine();e.journal['restarts']=[998,999,1000];self.assertFalse(e.restart());e.operator.start_daily.assert_not_called()
@@ -82,8 +100,9 @@ class ServiceTests(unittest.TestCase):
 
     def test_other_maintenance_owner_not_disturbed(self):
         for phase in ['draining','starting','blocked']:
-            e=self.engine();e.app.state.return_value={**self.state,'phase':phase};e.tick()
+            e=self.engine();e.completion=Mock(state={});e.app.state.return_value={**self.state,'phase':phase};e.tick()
             e.driver.running.assert_not_called();e.operator.start_daily.assert_not_called()
+            e.completion.close.assert_called_once();e.completion.poll.assert_not_called();e.completion.tick.assert_not_called()
 
     def test_already_consumed_and_quarantined_not_replayed(self):
         ticket=self.ticket()
@@ -264,8 +283,9 @@ class NativeAutomationTests(unittest.TestCase):
             original=sentinel.read_bytes()
             try:
                 app.adopt(versions[0],driver)
-                config={'schema':1,'enabled':True,'auto_updates':True,'daily_data':str(root),'development_data':str(dev),
-                    'development_autostart':False,'backup_root':str(base/'backups'),'poll_seconds':30,'idle_seconds':60,
+                config={'schema':2,'enabled':True,'auto_updates':True,'daily_data':str(root),'development_data':str(dev),
+                    'development_autostart':False,'backup_root':str(base/'backups'),'poll_seconds':3600,
+                    'active_seconds':30,'offline_restart':False,'source_notification':True,'idle_seconds':60,
                     'observation_seconds':180,'restart_limit':3}
                 service.base(root).mkdir(parents=True);service.signed(root,service.base(root)/'policy.json',config)
                 baseline=copy.deepcopy(app.state()['active']);e=object.__new__(service.Engine)
@@ -298,6 +318,15 @@ class NativeAutomationTests(unittest.TestCase):
                 self.assertEqual(app.state()['active']['build'],versions[0]);self.assertEqual(e.journal['phase'],'quarantined')
                 self.assertEqual(sentinel.read_bytes(),original);driver.health(app.state()['active'],app.state()['epoch'])
                 self.assertEqual(e.journal['failed_build'],versions[1])
+                # Once observation has ended, an ordinary missing daily process
+                # is not an invitation to inspect Git or start the application.
+                restored=app.state();child=driver.processes[restored['epoch']]
+                child.terminate();child.wait(timeout=5);e.completion=Mock(state={})
+                e.tick(check_source=True)
+                self.assertEqual(service.read(service.base(root)/'status.json')['status'],'offline_no_update_checks')
+                e.completion.tick.assert_not_called();e.completion.poll.assert_not_called()
+                self.assertFalse(driver.running(restored['active'],restored['epoch']))
+                self.assertEqual(sentinel.read_bytes(),original)
             finally:
                 current=app.state()
                 if current['phase']=='active':app.stop(driver)
