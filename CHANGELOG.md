@@ -1,5 +1,9 @@
 # 版本记录
 
+2026-11-16免命令开发收尾：配置分支的干净、稳定、带开发者审阅完成尾注的提交可自动触发固定控制器检查；自有Job限资源，不占日用对话槽，不拉Git或调用模型。成功清理检查进程树后自动入队，沿原备份/采用/回退；失败或中断同提交不盲重试。保留首次清单缺项及请求计数时序失败，修正清单后新提交整链通过。[规则](docs/stack-project-layout.md#daily-automation-runtime)／[验收](docs/delivery-validation.md#completion-update-evidence-20261116)。
+
+2026-11-16日用自动管理：新增当前用户登录自启（仅日用）、外接盘有界等待、固定摘要管理胶囊和单实例监督；准备通过的已审阅候选可自动登记，在空闲后沿原流程备份/切换/健康观察。失败代码回退、同票据去重、失败版本隔离及停止/代际/兼容保护保持；不自动拉取Git或审阅开发树。[操作](docs/stack-project-layout.md#daily-automation-runtime)／[验收](docs/delivery-validation.md#daily-automation-evidence-20261116)。
+
 ## 0.1.13 — 项目外独立英语软件接入（2026-11-16，已日用采用）
 
 - English City 1.0.0源码、测试与不可变发布均在项目外；Jarvis只含受控适配、原工作台呈现和客户端进度。三个固定场景、自由文字/确认转写口语、NPC朗读、补答、词汇观察及暂停恢复已接原学习机制。

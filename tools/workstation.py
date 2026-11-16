@@ -155,7 +155,7 @@ def require_live_daily(root):
     return driver.identity(current['active'],current['epoch'])
 
 
-def prepare(root,development,source,*,controller_only=False):
+def prepare(root,development,source,*,controller_only=False,queue_callback=None):
     require_live_daily(root)
     source=source.resolve();names=tracked_runtime(source)
     # Never silently ship only the tracked half of a newly added runtime feature.
@@ -192,7 +192,13 @@ def prepare(root,development,source,*,controller_only=False):
         if digest(read(root))!=controller_token or state(root)!=before:raise ValueError('Controller or application baseline changed during preparation')
         record.update(kind='controller',expected_controller=controller_token,expected_build=before['active']['build'])
     write_json(development/('state/workstation-controller-update.json' if controller_only else 'state/workstation-update.json'),record)
-    return {'prepared_build':ident,'expected_epoch':expected,'validation':record['validation'],'daily_restarted':False}
+    result={'prepared_build':ident,'expected_epoch':expected,'validation':record['validation'],'daily_restarted':False}
+    if not controller_only:
+        if queue_callback is None:
+            from tools.workstation_service import queue
+            queue_callback=queue
+        result['automation']=queue_callback(root,development,record)
+    return result
 
 
 def apply_controller(root,development,*,reviewed_source=False):
@@ -232,8 +238,8 @@ def conditional_stop(root,expected_epoch,expected_build):
     return Applications(root).stop(WorkbenchProcess(root,port),expected_epoch=expected_epoch,expected_build=expected_build)
 
 
-def apply(root,development):
-    record=json.loads((development/'state/workstation-update.json').read_text(encoding='utf-8'));require_prepared(root,record)
+def apply(root,development,*,prepared_record=None,backup_root=None):
+    record=prepared_record or json.loads((development/'state/workstation-update.json').read_text(encoding='utf-8'));require_prepared(root,record)
     before=state(root)
     if before['active'] and before['active']['build']==record['build']:
         return {'unchanged':True,'state':before}
@@ -247,7 +253,7 @@ def apply(root,development):
     receipt={'schema':1,'before':before,'build':record['build'],'backup':None,'after':None,'passed':False}
     name=datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'-'+uuid.uuid4().hex[:8]
     try:
-        receipt['backup']=backup(root,root.parent/'backups'/name)
+        receipt['backup']=backup(root,(Path(backup_root) if backup_root else root.parent/'backups')/name)
         adopted=release(root,'adopt','--build',record['build'],'--expected-epoch',record['expected_epoch'])
         if adopted['phase']!='active' or adopted['active']['build']!=record['build']:
             raise ValueError('Candidate was not adopted; inspect controller recovery result')
@@ -281,6 +287,8 @@ def main():
             dev_live=instance(18283);dev_expected=hashlib.sha256(str(dev).casefold().encode()).hexdigest()
             result={'daily_data':str(daily),'development_data':str(dev),'daily_state':state(daily),
                 'daily_online':bool(live and live.get('root_digest')==expected),'development_online':bool(dev_live and dev_live.get('root_digest')==dev_expected)}
+            automation=daily/'deployment/automation/status.json'
+            if automation.exists():result['automation']=json.loads(automation.read_text(encoding='utf-8'))
         elif args.action=='start-daily':result=start_daily(daily)
         elif args.action in {'start-development','restart-development','stop-development'}:
             from host.development_runtime import start,stop

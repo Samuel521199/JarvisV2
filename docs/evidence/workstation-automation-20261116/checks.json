@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "scope": "Owner-authorized daily logon startup and reviewed local candidate automation; development remains manual",
+  "automation_protocol": 1,
+  "tests": {"related_unique_tests": 136, "passed": 136, "failures": 0, "errors": 0, "skipped": 0, "new_service_tests": 25, "fixture_cleanup_recheck": "passed"},
+  "native_fixture": {"real_owned_processes": true, "normal_stop": true, "sqlite_backup": true, "candidate_adoption": true, "candidate_exit_injected": true, "baseline_code_restored": true, "business_sentinel_bytes_unchanged": true, "failed_candidate_quarantined": true, "controller_cli_and_git_inventory": "adapted to isolated fixture; not production failure injection"},
+  "startup": {"registry_scope": "current-user Run at logon", "registry_readback_verified": true, "same_entry_launched_and_ready": true, "pause_resume_preserves_daily_and_development_boot": true, "development_autostart": false, "elevation": false, "actual_reboot_or_logon_test": false, "bounded_external_drive_wait_seconds": 900},
+  "policy": {"signature": "existing local DPAPI/HMAC", "poll_seconds": 30, "idle_seconds": 60, "health_observation_seconds": 180, "health_failures_before_candidate_rollback": 3, "restart_limit_per_hour": 3, "candidate_ticket_valid_seconds": 86400, "source_review_required": true, "independent_validation_required": true, "automatic_git_fetch_or_review": false, "business_snapshot_auto_restore": false},
+  "isolation": {"pinned_service_and_operator": true, "existing_helper_inventory_verified_before_import": true, "unique_service_lock": true, "stop_latch_respected": true, "manual_stopped_respected": true, "other_maintenance_owned_elsewhere": true, "stale_or_modified_candidates_refused": true, "unknown_transition_not_replayed": true},
+  "limitations": ["Next actual Windows logon remains unverified", "Health probes do not establish business-semantic correctness", "Rollback is refused if its code cannot read current data", "Same OS user and machine resources remain shared", "External drive, interpreter and required account must remain available", "No paid model request or historical UNKNOWN replay is part of this mechanism"]
+}
