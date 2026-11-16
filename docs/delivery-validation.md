@@ -3733,7 +3733,7 @@ JPF/r1 不改写；本轮是 V-TRI/V-CLC 的局部接线证据，完整场景仍
 <a id="shared-speech-delivery-20261116"></a>
 ## 共用离线语音实现与本机验收（2026-11-16）
 
-源码v0.1.14，共用STT/TTS端口、三入口自动转写、确认后原队列接纳与原英语证据/剧情接续已实现；两款模型各36段公开真人录音本机CPU对照完成。本人未提供录音，未证明本人识别率、发音或长期学习收益；完整离线LLM未实现。隔离回退夹具读取新格式且阻止重放，正式日用采用/回退和数据保留另由独立控制器签收。[测量、验证及剩余项](evidence/shared-speech-20261116/report.md#shared-speech-evidence-20261116)。
+v0.1.14.1已自动日用采用至epoch30、控制器10；共用STT/TTS端口、三入口自动转写、确认后原队列接纳与原英语证据/剧情接续可用。固定独立215项（1项平台跳过）、实际语音就绪、三分钟观察、兼容代码回退和原数据对照通过；初次v0.1.14进程健康通过却语音不可用的失败保留。两款模型各36段公开真人录音本机CPU对照完成；本人识别率、发音、长期学习收益及完整离线LLM未签收。[测量、失败及使用范围](evidence/shared-speech-20261116/report.md#shared-speech-evidence-20261116)／[正式采用](evidence/shared-speech-20261116/daily-adoption.json)。
 
 <!-- book-footer:start -->
 [返回工程主入口](../README.md) · [全书目录](../README.md#book-tree) · [上一章：系统自身模型与能力认知](self-model.md) · [下一章：架构决策、批判性评审与评分](decisions-review.md)

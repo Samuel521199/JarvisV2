@@ -158,7 +158,7 @@ v0.1.12增加本机朗读/跟读、录音回听与本人确认转写的口语内
 <a id="english-game-integration"></a>
 ### 与现有 Jarvis 的衔接和不破坏原机制的要求
 
-通用录音、STT与TTS应复用Jarvis的[共用语音底座](models-offline.md#shared-speech-foundation)，英语软件保留独立领域规则。该底座当前proposed；不能因学习面板已有朗读/录音就认为通用语音聊天已实现。
+通用录音、STT与TTS复用Jarvis的[共用语音底座](models-offline.md#shared-speech-foundation)，英语软件保留独立领域规则。v0.1.14.1已接入本机中英混说识别、确认发送和朗读；完整离线LLM、发音评分与长期学习收益仍未实现或验证，具体采用证据和边界随该权威节维护。
 
 | 层次 | 复用现有能力 | 本轮接入与仍待补的内容 |
 |---|---|---|

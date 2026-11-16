@@ -1,0 +1,119 @@
+{
+  "schema": 1,
+  "date": "2026-11-16",
+  "version": "0.1.14.1",
+  "epoch": 30,
+  "build": "9f5c25f82a7f431ee0d61318852595084d67d924dfdd25cedf4dde38e17c9f97",
+  "controller_protocol": 10,
+  "controller_generation": 12,
+  "fixed_policy_sha256": "f53a5f2265b77352e1562b4ac7a206246c30379d9a9aa905ec98973592791560",
+  "reviewed_completion_commits": [
+    "94ed34b8b867c2584b1f0a6d8a9b2ddfc8c37c57",
+    "5ac6c5a443e62c665c7cfb764ff7813f708dd585"
+  ],
+  "automatic_completion_check_backup_adoption_and_180_second_observation": true,
+  "observation": {
+    "adopted_epoch": 30,
+    "baseline": {
+      "build": "8d32fb8adeba88960bb5f1009b19311989b36b6c5bb52944fb3fe26a69fc7aff",
+      "epoch": 29,
+      "slot": "B",
+      "version": "0.1.13-speech-recovery.1"
+    },
+    "error": null,
+    "observe_until": 1794823164.6302228,
+    "phase": "complete",
+    "restarts": [],
+    "started": 1794822976.5680475,
+    "target": "9f5c25f82a7f431ee0d61318852595084d67d924dfdd25cedf4dde38e17c9f97",
+    "ticket": "3198d247aceb49c9be0c7e5507d55e74",
+    "updated": 1794823164.869403
+  },
+  "independent_fixed_tests": {
+    "total": 215,
+    "failed": 0,
+    "skipped": 1,
+    "runtime_intact": true
+  },
+  "actual_daily_speech": {
+    "available": true,
+    "local_worker_started_then_standby": true,
+    "frontends_match_approved_package": true,
+    "default_stt": "funasr-nano-int8-20251217",
+    "original_embedding_selection_preserved": true,
+    "personal_audio_or_score_created": false
+  },
+  "data_preservation": {
+    "passed": true,
+    "unchanged_original_tables": 91,
+    "additive_tables": [
+      {
+        "table": "local-models.sqlite3:models",
+        "before": 8,
+        "after": 11
+      },
+      {
+        "table": "local-models.sqlite3:events",
+        "before": 5,
+        "after": 11
+      },
+      {
+        "table": "local-models.sqlite3:observations",
+        "before": 2,
+        "after": 5
+      }
+    ],
+    "classified_changes": [
+      {
+        "table": "local-models.sqlite3:manager",
+        "before": 1,
+        "after": 1
+      },
+      {
+        "table": "core.sqlite3:task_completion",
+        "before": 7,
+        "after": 7
+      }
+    ],
+    "task_completion_bodies_preserved_checked_time_refreshes": true,
+    "original_embedding_selection_preserved": true,
+    "original_config_and_credential_hashes_preserved_except_mutable_local_login_session_cache": true,
+    "config_changed": [
+      "private/workbench-sessions.dpapi"
+    ],
+    "original_chats": 658,
+    "original_turns": 668,
+    "learning_exercises": 2,
+    "learning_assessments": 0,
+    "speech_requests": 0,
+    "speech_schema": 1,
+    "live_learning_schema": 3,
+    "model_state_schema": 3,
+    "consistent_stopped_backup_verified_before_adoption": true,
+    "business_database_restored": false
+  },
+  "consistent_stopped_backup": {
+    "files": 1997,
+    "folder": "D:\\Jarvis-Recovery\\automatic-updates\\20261116T095618Z-5d61ad51",
+    "sqlite_integrity_ok": 19
+  },
+  "business_database_restored": false,
+  "development_refreshed_with_daily_identity_and_epoch_unchanged": true,
+  "development_autostart": false,
+  "D_release_archive": {
+    "archive": "D:\\Jarvis-Recovery\\releases\\shared-speech-20261116\\0.1.14.1.zip",
+    "build": "9f5c25f82a7f431ee0d61318852595084d67d924dfdd25cedf4dde38e17c9f97",
+    "sha256": "2307361d7e54fefca4220f4ebf5fa6056f099f97b8d770a54d77d100c4cf6632",
+    "verified": true
+  },
+  "recovery_scope": "Compatible code-only bridge preserves new schema data and disables learning/speech inputs; no old database restore",
+  "original_semantic_failure_retained": "managed-startup-audit.json: process health did not prove speech readiness; reviewer detected and code-only rolled back the first 0.1.14 adoption",
+  "deployment_external_model_calls": 0,
+  "remaining": [
+    "Personal accent/noise/numbers/negation accuracy",
+    "Pronunciation grading and long-term learning gains",
+    "Complete offline LLM conversation",
+    "Natural OS logon after a real reboot not performed",
+    "Process health cannot certify arbitrary business semantics"
+  ]
+}

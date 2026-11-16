@@ -46,7 +46,7 @@
 <a id="shared-speech-foundation"></a>
 ## Jarvis共用语音底座与离线闭环（部分implemented / verified）
 
-**2026-11-16源码v0.1.14：共用本机STT/TTS、三入口自动转写与原对话/英语接续已实现并做隔离验证；日用采用另由独立控制器核验。本地LLM尚未接通，完整离线聊天仍proposed。** [实际误差、资源、来源撤回与兼容结果](evidence/shared-speech-20261116/report.md#shared-speech-evidence-20261116)。
+**2026-11-16已自动日用采用v0.1.14.1/epoch30：共用本机STT/TTS、三入口自动转写与原对话/英语接续已实现；实际语音就绪、兼容恢复、三分钟观察及原数据保留通过。本地LLM尚未接通，完整离线聊天仍proposed。** [实际误差、资源、来源撤回、初次失败及兼容结果](evidence/shared-speech-20261116/report.md#shared-speech-evidence-20261116)。
 
 **按本人要求：Jarvis应拥有可离线运行的语音聊天能力；英语软件继续独立。** 推荐共用一套语音服务和会话管理，STT、回答模型、TTS分别可替换，英语剧情和学习规则由独立软件持有。共享语音能力不要求合并所有业务源码、模型、进程或数据；沿[统一系统准则](architecture.md#unified-system-principle)与[独立软件契约](contracts.md#ai-mediated-software-contract)实施。
 

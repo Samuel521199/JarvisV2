@@ -5,7 +5,10 @@
     "version": "0.1.14",
     "epoch": 28,
     "fixed_independent_checks_and_process_health_passed": true,
-    "actual_speech_status": {"available": false, "error": "application_maintenance"},
+    "actual_speech_status": {
+      "available": false,
+      "error": "application_maintenance"
+    },
     "cause": "Speech constructor used the active-only request writer gate while the managed Host was still starting",
     "reviewer_code_only_rollback_epoch": 29,
     "rollback_version": "0.1.13-speech-recovery.1",
@@ -31,5 +34,11 @@
     "paid_model_calls": 0,
     "scope": "Synthetic state, real controlled processes; verified qualification reused only for identical signed package manifests"
   },
-  "production_corrected_adoption": "pending at this evidence point"
+  "production_corrected_adoption": {
+    "version": "0.1.14.1",
+    "epoch": 30,
+    "speech_ready": true,
+    "automatic_observation_complete": true,
+    "data_preserved": true
+  }
 }
