@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';
+import {workGroups,relativeTime} from '../apps/workbench/work-groups.js';
+const item=(id,unread=true,state='finished',unit='chat:a',project='p')=>({id,source:'dialogue',title:'任务 '+id,state,attention:{key:'dialogue:'+id,version:id,unread},context:{project_id:project,project_name:'游戏资产',unit_id:unit,chat_id:'a',updated_at:100}});
+let rows=[item('one'),item('two'),item('three',true,'finished','chat:b')],view=workGroups(rows);
+assert.equal(view.unread_count,2);assert.equal(view.counts.unread,2);assert.equal(view.projects.length,1);assert.equal(view.units[0].members.length,2);
+rows=rows.map(x=>x.id==='three'?x:{...x,attention:{...x.attention,unread:false}});view=workGroups(rows);
+assert.equal(view.unread_count,1);assert.equal(view.counts.history,1);assert.equal(view.counts.unread,1);
+rows.push(item('new-feedback'));assert.equal(workGroups(rows).unread_count,2,'new feedback returns the same logical work to unread');
+view=workGroups([item('pending',true,'needs_input'),item('run',false,'running'),item('queue',false,'queued')]);
+assert.equal(view.counts.attention,1);assert.equal(view.counts.active,1);assert.equal(view.units[1].state,'running');
+assert.equal(workGroups([item('read-question',false,'needs_input')]).counts.attention,1,'reading is not answering');
+assert.equal(workGroups([item('unknown',false,'unknown')]).counts.attention,1,'unknown effects require review rather than silent retries');
+const routine={...item('sync'),source:'mail',context:{routine:true}};
+assert.equal(workGroups([routine]).unread_count,0,'successful background reads are not deliverable notifications');
+assert.equal(workGroups([{...routine,state:'failed'}]).unread_count,1,'read-only operation failures are never hidden');
+assert.equal(relativeTime(100,130),'刚刚');assert.equal(relativeTime(100,220),'2分钟前');
+assert.equal(workGroups([item('a',true,'finished','a','p'),item('b',true,'finished','b','q')]).projects.length,2);
+console.log('Work units, exact minus-one read count, new feedback and active-state grouping passed');

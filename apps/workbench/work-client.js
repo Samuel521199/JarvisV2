@@ -1,9 +1,15 @@
 import {get,post,details} from './ui.js';
 
+const channel=typeof BroadcastChannel==='function'?new BroadcastChannel('jarvis-work-attention'):null,confirmed=new Set();
+function remember(value){if(typeof value?.key!=='string'||value.key.length>200||!/^[a-f0-9]{64}$/.test(value.version||''))return;confirmed.add(value.key+':'+value.version);if(confirmed.size>2000)confirmed.delete(confirmed.values().next().value);}
+function changed(){window.dispatchEvent(new Event('jarvis:work-viewed'));}
+if(channel)channel.onmessage=event=>{remember(event.data);changed();};
+
 // Both surfaces read the original task projection and use the original commands.
 export const workApi={
- state:()=>get('/api/work-status'),
- viewed:item=>post('/api/work-status',{action:'viewed',key:item.attention.key,version:item.attention.version}),
+ async state(){const data=await get('/api/work-status');for(const item of data.items)if(item.attention&&confirmed.has(item.attention.key+':'+item.attention.version))item.attention={...item.attention,unread:false};return data;},
+ async viewed(item){const result=await post('/api/work-status',{action:'viewed',key:item.attention.key,version:item.attention.version});remember(result);changed();channel?.postMessage({key:result.key,version:result.version});return result;},
+ async viewedGroup(unit){for(const item of unit.members)if(item.attention?.unread)await this.viewed(item);},
  cancel(item){
   if(item.source==='dialogue')return post('/api/chat/cancel',{request_id:item.id});
   if(item.source==='tasks')return post('/api/operations',{action:'task_cancel',id:item.id});
