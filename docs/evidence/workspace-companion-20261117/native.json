@@ -1,0 +1,53 @@
+{
+  "passed": true,
+  "scope": "Actual compiled Tauri IPC and read-only Win32 visibility; synthetic data only",
+  "checks": [
+    "Native workbench uses selected existing conversation and removes access key from address",
+    "Fold hides actual HWND, retaining WebView and draft",
+    "Reopen reuses the same HWND and draft",
+    "Full workbench has no direct native IPC permissions; fold delegates to the original dock",
+    "Repeated open selects a different conversation without spawning another window"
+  ],
+  "visibility": [
+    {
+      "workbench": [
+        {
+          "handle": 463522,
+          "visible": true
+        }
+      ]
+    },
+    {
+      "workbench": [
+        {
+          "handle": 463522,
+          "visible": true
+        }
+      ]
+    },
+    {
+      "workbench": [
+        {
+          "handle": 463522,
+          "visible": false
+        }
+      ]
+    },
+    {
+      "workbench": [
+        {
+          "handle": 463522,
+          "visible": true
+        }
+      ]
+    },
+    {
+      "workbench": [
+        {
+          "handle": 463522,
+          "visible": true
+        }
+      ]
+    }
+  ]
+}

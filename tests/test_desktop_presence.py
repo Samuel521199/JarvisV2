@@ -30,4 +30,8 @@ class DesktopPresence(unittest.TestCase):
         self.assertNotIn('allow-presence-drag',dock['permissions']);self.assertNotIn('allow-presence-workbench',robot['permissions'])
         self.assertTrue(all(p.startswith('allow-presence-') for c in (dock,robot) for p in c['permissions']))
 
+    def test_full_workbench_does_not_gain_direct_native_permissions(self):
+        cfg=json.loads((ROOT/'apps/desktop/tauri.conf.json').read_text())
+        self.assertFalse(any('workbench' in c['windows'] for c in cfg['app']['security']['capabilities']))
+
 if __name__=='__main__':unittest.main()

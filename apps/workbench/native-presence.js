@@ -1,3 +1,4 @@
+import {nativeWorkbenchController} from './presentation.js';
 // Optional native window adapter. Business work remains in the shared Host APIs.
 document.documentElement.classList.add('native-presence');
 const robotSurface=location.pathname==='/companion/native-robot';
@@ -39,7 +40,8 @@ document.addEventListener('pointerup',()=>pointer=null);
 robot.addEventListener('click',event=>{if(dragged){event.stopImmediatePropagation();event.preventDefault();dragged=false;}},true);
 robot.onclick=()=>invoke('presence_toggle').catch(()=>{});
 }else{
-document.getElementById('open-full').addEventListener('click',event=>{event.stopImmediatePropagation();invoke('presence_workbench').catch(()=>{});},true);
+// Only the existing dock owns native presentation authority.
+nativeWorkbenchController();
 window.addEventListener('jarvis:native:toggle-chat',()=>robot.onclick?.());
 const dot=document.getElementById('presence-dot');let previous='';
 const status=new MutationObserver(()=>{const next=dot.dataset.state||'idle';if(next===previous)return;previous=next;invoke('presence_status',{status:next}).catch(()=>{});});

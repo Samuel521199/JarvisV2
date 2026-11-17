@@ -1,3 +1,5 @@
+import {workspaceBrowser} from './workspace-browser.js';
+import {expandWorkbench} from './presentation.js';
 import {$,el,button,get,run,initModal,applyPreferences} from './ui.js';
 import {mountMailCompanion} from './mail-companion.js';
 import {workApi} from './work-client.js';
@@ -5,11 +7,11 @@ import {workStatusView} from './work-status.js';
 import {conversationGroups} from './conversation-groups.js';
 import {workGroups} from './work-groups.js';
 
-let frame=null,selected='',mode='',cleanup=()=>{},mail=null,refreshing=false,groups=[];
+let frame=null,selected='',mode='',cleanup=()=>{},mail=null,refreshing=false,workspaceView=null;
 const collapsed=new Set(),placementKey='jarvis.companion.placement.v1',selectionKey='jarvis.companion.chat.v1';
 function rememberSelection(id){selected=id;try{localStorage.setItem(selectionKey,id);}catch{}}
 function hide(){
- cleanup();cleanup=()=>{};mode='';$('card').hidden=true;$('project-dialog').hidden=true;
+ workspaceView?.close();workspaceView=null;cleanup();cleanup=()=>{};mode='';$('card').hidden=true;$('project-dialog').hidden=true;
  $('robot').setAttribute('aria-expanded','false');$('project-button').setAttribute('aria-expanded','false');
  if(mail&&!$('mail-dialog').hidden)mail.close();
 }
@@ -28,25 +30,9 @@ function openChat(id=selected){
  }else if(selected)chooseChat(selected);
 }
 function work(key=null,project=null){card(key?'Jarvis · 工作详情':'Jarvis · 当前工作','work');cleanup=workStatusView($('card-content'),{focusKey:key,focusProject:project,onOpenChat:openChat});}
-function renderProjects(){
- const panel=$('project-dialog');panel.replaceChildren();
- const head=el('div',undefined,'top');head.append(el('strong','项目与会话'),button('×',hide,'close'));head.lastChild.setAttribute('aria-label','关闭项目与会话');panel.append(head);
- const list=el('div',undefined,'project-list');panel.append(list);
- for(const group of groups){
-  const row=el('section',undefined,'project-group'),heading=button('',()=>{collapsed.has(group.id)?collapsed.delete(group.id):collapsed.add(group.id);renderProjects();},'project-heading');
-  heading.title=group.path||group.title;heading.setAttribute('aria-expanded',String(!collapsed.has(group.id)));
-  heading.append(el('span',collapsed.has(group.id)?'▸':'▾','chevron'),el('span',group.project?'▱':'◌','folder'),el('span',group.title),el('span',String(group.chats.length),'count-small'));row.append(heading);
-  if(!collapsed.has(group.id)){
-   if(group.path)row.append(el('small',group.path,'project-path'));
-   for(const chat of group.chats){const b=button('',()=>openChat(chat.id),'project-chat'+(chat.id===selected?' active':''));b.append(el('span',chat.title,'chat-title'));b.title=chat.title;row.append(b);}
-   if(!group.chats.length)row.append(el('span','暂无会话','project-row-empty'));
-  }list.append(row);
- }
- panel.append(el('p','与工作台使用相同项目、会话与专属文件夹。','foot'));
-}
 async function projects(){
- hide();mode='projects';$('project-dialog').hidden=false;$('project-button').setAttribute('aria-expanded','true');$('project-dialog').textContent='正在读取项目与会话…';
- const [p,c]=await Promise.all([get('/api/projects'),get('/api/chats')]);if(mode!=='projects')return;groups=conversationGroups(p,c);renderProjects();
+ hide();mode='projects';$('project-dialog').hidden=false;$('project-button').setAttribute('aria-expanded','true');
+ workspaceView=workspaceBrowser($('project-dialog'),{onOpenChat:openChat,onClose:hide,selected:()=>selected});await workspaceView.ready;
 }
 function paint(data){
  const projection=workGroups(data.items),active=projection.units.filter(i=>i.state==='running').length;
@@ -77,10 +63,10 @@ async function boot(){
  let placement='right';try{placement=localStorage.getItem(placementKey)||'right';}catch{}
  if(!['left','right','desktop'].includes(placement))placement='right';$('placement').value=placement;document.querySelector('main').dataset.place=placement;
  $('placement').onchange=()=>{document.querySelector('main').dataset.place=$('placement').value;try{localStorage.setItem(placementKey,$('placement').value);}catch{}};
- mail=mountMailCompanion();$('dock-button').onclick=()=>mail.open();$('robot').onclick=()=>mode==='chat'&&!$('card').hidden?hide():openChat();$('project-button').onclick=()=>run(projects);$('work-button').onclick=()=>work();$('close-card').onclick=hide;
- $('open-full').onclick=()=>window.open(mode==='chat'&&selected?'/#chat='+encodeURIComponent(selected):'/','_blank','noopener');
+ mail=mountMailCompanion();$('dock-button').onclick=()=>run(()=>{workspaceView?.close();workspaceView=null;mail.open();});$('robot').onclick=()=>run(()=>mode==='chat'&&!$('card').hidden?hide():openChat());$('project-button').onclick=()=>run(projects);$('work-button').onclick=()=>run(()=>work());$('close-card').onclick=()=>run(hide);
+ $('open-full').onclick=()=>run(async()=>{await expandWorkbench(selected);hide();});
  document.addEventListener('jarvis:mail-opened',()=>{cleanup();cleanup=()=>{};mode='mail';$('card').hidden=true;$('project-dialog').hidden=true;$('robot').setAttribute('aria-expanded','false');$('project-button').setAttribute('aria-expanded','false');});
- document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!$('modal').open)hide();});
+ document.addEventListener('keydown',event=>{if(event.key==='Escape'&&!$('modal').open)run(hide);});
  window.addEventListener('message',event=>{
   if(event.origin!==location.origin||event.source!==frame?.contentWindow)return;const message=event.data;
   if(message?.type==='jarvis:conversation:changed'&&typeof message.chat_id==='string'&&/^chat-[0-9a-f]{32}$/.test(message.chat_id))rememberSelection(message.chat_id);
@@ -89,6 +75,7 @@ async function boot(){
  });
  document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh();});if(location.pathname==='/companion/native')await import('./native-presence.js');await refresh();const timer=setInterval(refresh,5000);
  window.addEventListener('jarvis:work-viewed',refresh);
+ window.addEventListener('jarvis:workspace-selection',event=>rememberSelection(event.detail));
  window.addEventListener('pagehide',()=>{clearInterval(timer);cleanup();},{once:true});
 }
 if(location.pathname==='/companion/native-robot')import('./native-presence.js');else run(boot);

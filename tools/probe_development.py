@@ -59,7 +59,7 @@ def probe(root, live_model=False):
     result = {'schema': 1, 'checked_at_unix': time.time(), 'development_data': str(root),
               'anonymous_rejected': True, 'mail_actions_rejected': True,
               'formal_mail_accounts_not_copied': True,
-              'model_credentials_not_copied': True, 'google_only_public_catalog': True}
+              'model_credentials_not_copied': True, 'shared_public_catalog': True}
     if live_model:
         chat = post('/api/chats', {})['id']
         post('/api/chat/update', {'id': chat, 'patch': {'title': '开发环境 · 已授权模型代理验收'}})

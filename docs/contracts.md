@@ -75,7 +75,7 @@
 - [正文忠实性 1.12.0 的实际契约](#workflow-fidelity-contract)
 - [交付影子核对 1.13.0 的实际契约](#workflow-shadow-contract)
   - [显式来源文档渲染契约（2026-11-13开发）](#source-document-render-contract)
-- [原生精灵双窗口协议 2](#native-two-window-contract)
+- [原生精灵呈现协议 2](#native-two-window-contract)
 - [持久委托与持续办事契约（v0.1.6）](#standing-work-contract)
 - [Gmail 持续委托契约（v0.1.7）](#mail-standing-contract)
 - [过程候选审计投影](#task-lesson-event-contract)
@@ -1353,9 +1353,11 @@ v1的输入及结果含义保持；新增`jarvis.work-trials.v2`在每轮增加�
 文档是一份对用户声明的忠实表示，不是独立事实核查、通用语义判官或执行授权。先后两组模型调用不能单独证明因果质量收益；同原始回复的确定性重放另存证据，不反改原失败。机制正文归[运行说明](core-bootstrap.md#source-document-render-runtime)，实测归[本轮验收](delivery-validation.md#request-document-evidence-20261113)。
 
 <a id="native-two-window-contract"></a>
-## 原生精灵双窗口协议 2
+## 原生精灵呈现协议 2
 
-原生进程只有两个呈现窗口：`presence`加载`/companion/native`，负责停靠标签和展开卡片；`robot`加载`/companion/native-robot`，只呈现机器人。两者仍复用同一个`companion.html`及机器人SVG，后者跳过工作/邮件后台轮询，不启动第二套任务或聊天逻辑。拖动只对`robot`调用系统窗口拖动，标签不会跟随；不按标签边界钳制机器人坐标。托盘的屏幕菜单移动标签停靠处，“召回精灵”恢复机器人到主屏；多显示器真实操作仍须分项验收。
+v0.1.17 保留两个常驻轻窗口，并增加一个按需创建、反复复用的完整工作台窗口。`workbench` 加载 `/workbench/native`，使用同一数据根与 WebView 存储；第一次展开后后续只显示/隐藏，关闭按钮收回窗口而不退出 Host，隐藏后暂停该页的常规状态轮询。完整窗口本身没有原生 IPC 能力授权，收回通过同源呈现通道交给原 `presence` 页，以受限 `presence_workbench` 命令执行；不增加第三个原生权限角色。选中会话以校验的稳定 ID 传递，访问钥匙只在 fragment/stdin 中传递并从地址移除，既有 HTTP 查询拒绝、Owner/Cookie/Origin/nonce 与任务准入保持。
+
+两个常驻轻窗口为：`presence`加载`/companion/native`，负责停靠标签和展开卡片；`robot`加载`/companion/native-robot`，只呈现机器人。两者仍复用同一个`companion.html`及机器人SVG，后者跳过工作/邮件后台轮询，不启动第二套任务或聊天逻辑。拖动只对`robot`调用系统窗口拖动，标签不会跟随；不按标签边界钳制机器人坐标。托盘的屏幕菜单移动标签停靠处，“召回精灵”恢复机器人到主屏；多显示器真实操作仍须分项验收。
 
 宿主`/api/instance.presence_protocol=2`，可选二进制登记也声明协议2；启动器拒绝不匹配组合。启动信息以stdin传递协议、数据根、固定回环地址和访问钥匙，不将钥匙放入进程参数或日志。两个WebView使用数据根下的`optional/desktop-presence/webview`，不会为新版本改用全局应用配置目录。旧原型遗留的试验缓存不在本轮业务数据迁移/清理范围。
 
@@ -1363,7 +1365,7 @@ v1的输入及结果含义保持；新增`jarvis.work-trials.v2`在每轮增加�
 |---|---|---|
 | `presence_regions` | presence/native、robot/native-robot分别授权 | 验证有界矩形和DPI，更新调用者自己的原生区域；没有有效区域前保持窗口隐藏 |
 | `presence_drag`、`presence_toggle` | 仅robot/native-robot | 系统拖动机器人，或通知停靠页开合同一个聊天卡片 |
-| `presence_status`、`presence_workbench` | 仅presence/native | 向机器人转发限定状态枚举，或打开固定工作台地址 |
+| `presence_status`、`presence_workbench` | 仅presence/native | 向机器人转发限定状态枚举，或按需显示/收回同源的唯一工作台窗口 |
 
 权限由显式AppManifest生成，按窗口和精确页面路径授予，不授予文件、终端、任意系统操作或通用Tauri核心权限。Root/Robot导航仅允许既定回环源；HTTP的Owner/Cookie/Origin/nonce和家庭隔离继续生效，CSP保持原样。几何更新为单请求在途、后续保留最新值，隐藏/滚动/动画结束重新取样，避免旧区域反向覆盖新区域。
 

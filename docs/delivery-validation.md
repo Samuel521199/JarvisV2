@@ -175,6 +175,7 @@
 - [E盘外接迁移、恢复与离线记忆切换（2026-11-13）](#external-storage-evidence-20261113)
 - [共用离线语音实现与本机验收（2026-11-16）](#shared-speech-delivery-20261116)
 - [Eachlabs 与邮件共用阅读整理验收（2026-11-17）](#eachlabs-mail-evidence-20261117)
+- [精灵项目管理与可展开工作台验收（2026-11-17）](#workspace-companion-evidence-20261117)
 - [明确请求覆盖、独立新样本与控制器组合验收（2026-11-09）](#commitment-coverage-evidence)
 - [新增语言样本、真实模型影子与旧版回退核验（2026-11-08起始）](#commitment-shadow-evidence)
 - [聊天待办受理与时间澄清核验（2026-11-08，开发工作树）](#chat-commitments-evidence)
@@ -3740,6 +3741,11 @@ v0.1.14.1已自动日用采用至epoch30、控制器10；共用STT/TTS端口、�
 ## Eachlabs 与邮件共用阅读整理验收（2026-11-17）
 
 v0.1.16 的改动、适用回归、浏览器交互、真实供应商调用与日用升级分别见[权威记录](evidence/eachlabs-mail-20261117/report.md#eachlabs-mail-results)。邮件浏览器使用合成 Gmail 适配器，不改真实邮箱；阅读偏好及批量动作仍沿原账号/准确审阅/未知不重放门。真实 Gmail 旧授权过期，重连状态不能由本机测试代替。
+
+<a id="workspace-companion-evidence-20261117"></a>
+## 精灵项目管理与可展开工作台验收（2026-11-17）
+
+v0.1.17 复用原项目/会话服务与恢复语义；共用菜单、草稿保存协调、正文查看及原生工作台显示/隐藏见[权威记录](evidence/workspace-companion-20261117/report.md#workspace-companion-results)。合成浏览器、真实编译外壳、固定独立检查和日用采用分别登记；不在真实项目上试删，不把普通呈现操作当取消后台任务。
 
 <!-- book-footer:start -->
 [返回工程主入口](../README.md) · [全书目录](../README.md#book-tree) · [上一章：系统自身模型与能力认知](self-model.md) · [下一章：架构决策、批判性评审与评分](decisions-review.md)

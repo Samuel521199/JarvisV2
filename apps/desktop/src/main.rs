@@ -3,7 +3,7 @@ use serde::Deserialize;
 use std::io::{self, Read};
 use std::sync::atomic::{AtomicBool,Ordering};
 use tauri::{Manager, State, WebviewUrl, WebviewWindow, WebviewWindowBuilder};
-#[derive(Deserialize)]
+#[derive(Deserialize,Clone)]
 struct Launch { protocol:u8, data_root:String, origin:String, access:String, #[serde(default)] diagnostics:bool }
 #[derive(Deserialize)]
 struct Rect { x:f64, y:f64, width:f64, height:f64, rounded:bool }
@@ -45,19 +45,34 @@ fn presence_status(window:WebviewWindow,status:String)->Result<(),String>{
     }
     Ok(())
 }
-fn open_workbench(cfg:&Launch)->Result<(),String>{
-    #[cfg(windows)] {
-        use std::ffi::c_void;
-        #[link(name="shell32")] extern "system" {fn ShellExecuteW(a:*mut c_void,b:*const u16,c:*const u16,d:*const u16,e:*const u16,f:i32)->isize;}
-        let verb:Vec<u16>="open\0".encode_utf16().collect();
-        let url:Vec<u16>=format!("{}#access={}\0",cfg.origin,cfg.access).encode_utf16().collect();
-        let value=unsafe{ShellExecuteW(std::ptr::null_mut(),verb.as_ptr(),url.as_ptr(),std::ptr::null(),std::ptr::null(),1)};
-        if value<=32{return Err("browser unavailable".into());} Ok(())
+fn valid_chat(id:&str)->bool{id.len()==37&&id.starts_with("chat-")&&id[5..].bytes().all(|b|b.is_ascii_hexdigit()&&!b.is_ascii_uppercase())}
+fn open_workbench(app:&tauri::AppHandle,cfg:&Launch,chat:Option<&str>)->Result<(),String>{
+    if let Some(id)=chat {if !valid_chat(id){return Err("invalid conversation context".into());}}
+    if let Some(window)=app.get_webview_window("workbench") {
+        if let Some(id)=chat {window.eval(format!("window.dispatchEvent(new CustomEvent('jarvis:workbench-select',{{detail:{}}}))",serde_json::to_string(id).unwrap())).map_err(|_|"workbench context unavailable")?;}
+        let _=window.eval("window.dispatchEvent(new CustomEvent('jarvis:workbench-visibility',{detail:true}))");window.show().map_err(|_|"workbench unavailable")?;return window.set_focus().map_err(|_|"workbench focus unavailable".into());
     }
-    #[cfg(not(windows))] {let _=cfg;Err("platform adapter unavailable".into())}
+    let mut url:tauri::Url=cfg.origin.parse().map_err(|_|"invalid local origin")?;
+    url.set_path("/workbench/native");
+    url.set_fragment(Some(&format!("access={}{}",cfg.access,chat.map(|id|format!("&chat={id}")).unwrap_or_default())));let expected=url.origin();
+    let window=WebviewWindowBuilder::new(app,"workbench",WebviewUrl::External(url))
+        .data_directory(std::path::PathBuf::from(&cfg.data_root).join("optional/desktop-presence/webview"))
+        .title("Jarvis 工作台").inner_size(1180.0,800.0).min_inner_size(720.0,520.0)
+        .decorations(true).transparent(false).shadow(true).resizable(true).visible(true)
+        .on_navigation(move |destination|destination.origin()==expected).build().map_err(|_|"workbench creation failed")?;
+    let close=window.clone();window.on_window_event(move |event|{if let tauri::WindowEvent::CloseRequested{api,..}=event{api.prevent_close();let _=close.eval("window.dispatchEvent(new CustomEvent('jarvis:workbench-visibility',{detail:false}))");let _=close.hide();}});
+    window.set_focus().map_err(|_|"workbench focus unavailable".into())
 }
 #[tauri::command]
-fn presence_workbench(cfg:State<Launch>)->Result<(),String>{open_workbench(&cfg)}
+async fn presence_workbench(window:WebviewWindow,cfg:State<'_,Launch>,action:Option<String>,chat_id:Option<String>)->Result<(),String>{
+    if window.label()!="presence"{return Err("invalid presentation source".into());}
+    let chat=chat_id.as_deref().filter(|id|!id.is_empty());if let Some(id)=chat{if !valid_chat(id){return Err("invalid conversation context".into());}}
+    match action.as_deref().unwrap_or("open"){
+        "open"=>open_workbench(window.app_handle(),&cfg,chat),
+        "hide"=>{if let Some(full)=window.app_handle().get_webview_window("workbench"){let _=full.eval("window.dispatchEvent(new CustomEvent('jarvis:workbench-visibility',{detail:false}))");full.hide().map_err(|_|"workbench unavailable".into())}else{Ok(())}},
+        _=>Err("invalid presentation action".into())
+    }
+}
 fn position(window:&WebviewWindow,index:usize)->tauri::Result<()> {
     let monitors=window.available_monitors()?;
     let monitor=monitors.get(index).or_else(||monitors.first()).ok_or(tauri::Error::InvalidWindowHandle)?;
@@ -124,7 +139,7 @@ fn main(){
                         "show"|"hide"=>{let show=event.id.as_ref()=="show";state.visible.store(show,Ordering::Release);
                             for label in ["presence","robot"] {if let Some(window)=app.get_webview_window(label){if show&&state.ready(label).load(Ordering::Acquire){let _=window.show();}else if !show{let _=window.hide();}}}},
                         "recall"=>{if let Some(robot)=app.get_webview_window("robot"){let _=position(&robot,0);if state.robot_ready.load(Ordering::Acquire){state.visible.store(true,Ordering::Release);let _=robot.show();}}},
-                        "workbench"=>{let _=open_workbench(&app.state::<Launch>());},"quit"=>app.exit(0),
+                        "workbench"=>{let handle=app.clone();let cfg=app.state::<Launch>().inner().clone();tauri::async_runtime::spawn(async move{let _=open_workbench(&handle,&cfg,None);});},"quit"=>app.exit(0),
                         id=>{if let Some(index)=id.strip_prefix("screen-").and_then(|n|n.parse::<usize>().ok()){if let Some(dock)=app.get_webview_window("presence"){let _=position(&dock,index);}}}
                     }
                 }).build(app)?;
