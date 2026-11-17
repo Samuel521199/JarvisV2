@@ -1,12 +1,61 @@
 {
   "schema": 1,
   "date": "2026-11-17",
-  "status": "source verified; daily update pending",
+  "status": "daily adopted; fixed independent gate and three-minute observation passed; native panel refreshed and checked",
   "problem": "Background sync shared the busy flag with reading and disabled every mail row. Its finally handler could also release a pending read guard.",
   "fix": "Sync uses checking only, read retains busy. Repeated sync remains suppressed; cached reading stays available; selected body and closed panel are preserved.",
-  "authorization_probe": {"authorization":"SUCCEEDED","connection":"connected","read_permission":true,"modify_permission":true,"scope":"read-only metadata, no credential values or message bodies"},
-  "verification": {"browser_scenario_groups":3,"browser_errors":0,"mail_reading_tests":6,"mail_companion_tests":11,"browser_transport":"Synthetic deferred promises; actual component and browser. No real mailbox writes or remote model calls.","baseline":"Old component fails the row-enabled assertion while sync is pending; original failure retained locally."},
+  "authorization_probe": {
+    "authorization": "SUCCEEDED",
+    "connection": "connected",
+    "read_permission": true,
+    "modify_permission": true,
+    "scope": "read-only metadata, no credential values or message bodies"
+  },
+  "verification": {
+    "browser_scenario_groups": 3,
+    "browser_errors": 0,
+    "mail_reading_tests": 6,
+    "mail_companion_tests": 11,
+    "browser_transport": "Synthetic deferred promises; actual component and browser. No real mailbox writes or remote model calls.",
+    "baseline": "Old component fails the row-enabled assertion while sync is pending; original failure retained locally.",
+    "independent_gate": {
+      "tests": 215,
+      "passed": 214,
+      "skipped": 1,
+      "failures": 0,
+      "policy_sha256": "f53a5f2265b77352e1562b4ac7a206246c30379d9a9aa905ec98973592791560",
+      "test_log_sha256": "74dc151ad5c2227ab54eceabb53814bf2f1d4a18764f0fbd2e8144f4c2271e0d"
+    },
+    "native_panel": {
+      "source": "Installed original protocol-2 desktop webview, actual Computer Use observation",
+      "during_sync": "Only refresh disabled; message rows visibly available",
+      "settled_accessibility_rows": 10,
+      "settled_enabled_rows": 10,
+      "real_message_opened_for_testing": false
+    }
+  },
   "model_calls": 0,
   "real_mail_deleted_or_marked_read_for_testing": false,
-  "local_evidence": "E:/Jarvis/backups/mail-click-20261117"
+  "local_evidence": "E:/Jarvis/backups/mail-click-20261117",
+  "deployment": {
+    "build": "49d560e319327744af65a1e0f04d9e6a02cc7cd97d4ff8c06f3c8d79aa0e19e4",
+    "epoch": 37,
+    "version": "0.1.16.2",
+    "backup": {
+      "folder": "D:\\Jarvis-Recovery\\automatic-updates\\20261117T095431Z-c44e393f",
+      "files": 2017,
+      "sqlite_integrity_ok": 20
+    },
+    "observed_seconds": 180.47827553749084,
+    "gmail_connection_and_read_scope_preserved": true,
+    "owner_work_receipts_preserved": true,
+    "model_settings_preserved": true,
+    "previous_code_compatible": true,
+    "method": "Clean isolated candidate, original pinned controller review/adoption; parallel native/workspace edits excluded"
+  },
+  "preserved_diagnostic_failures": [
+    "Initial idle observation stopped when real workers became busy; no adoption attempted. Subsequent uninterrupted idle observation passed.",
+    "Initial post-adoption assertion expected the transient in-memory OAuth job status to survive restart. Corrected to saved account connection and read capability; original successful authorization and persistent connection independently recorded.",
+    "First git commit refused unregistered new test/evidence paths; no commit made. Explicit intent registration then scoped commit succeeded."
+  ]
 }
