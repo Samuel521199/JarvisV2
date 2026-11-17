@@ -1,0 +1,137 @@
+{
+  "passed": true,
+  "scope": "original row multiset retained; new legitimate rows allowed; selected model/credential digests unchanged",
+  "checks": {
+    "state/dialogue.sqlite3": {
+      "chats": {
+        "before_rows": 664,
+        "after_rows": 664,
+        "original_rows_missing_or_changed": 0
+      },
+      "turns": {
+        "before_rows": 675,
+        "after_rows": 675,
+        "original_rows_missing_or_changed": 0
+      },
+      "attempts": {
+        "before_rows": 673,
+        "after_rows": 673,
+        "original_rows_missing_or_changed": 0
+      },
+      "delivery_bases": {
+        "before_rows": 1,
+        "after_rows": 1,
+        "original_rows_missing_or_changed": 0
+      }
+    },
+    "state/english-learning.sqlite3": {
+      "settings": {
+        "before_rows": 1,
+        "after_rows": 1,
+        "original_rows_missing_or_changed": 0
+      },
+      "exercises": {
+        "before_rows": 3,
+        "after_rows": 3,
+        "original_rows_missing_or_changed": 0
+      },
+      "assessments": {
+        "before_rows": 0,
+        "after_rows": 0,
+        "original_rows_missing_or_changed": 0
+      },
+      "jobs": {
+        "before_rows": 3,
+        "after_rows": 3,
+        "original_rows_missing_or_changed": 0
+      },
+      "software_sessions": {
+        "before_rows": 2,
+        "after_rows": 2,
+        "original_rows_missing_or_changed": 0
+      }
+    },
+    "state/commitments.sqlite3": {
+      "commitments": {
+        "before_rows": 2,
+        "after_rows": 2,
+        "original_rows_missing_or_changed": 0
+      },
+      "operations": {
+        "before_rows": 5,
+        "after_rows": 5,
+        "original_rows_missing_or_changed": 0
+      },
+      "history": {
+        "before_rows": 8,
+        "after_rows": 8,
+        "original_rows_missing_or_changed": 0
+      },
+      "mail_sources": {
+        "before_rows": 2,
+        "after_rows": 2,
+        "original_rows_missing_or_changed": 0
+      }
+    },
+    "state/workspace.sqlite3": {
+      "projects": {
+        "before_rows": 4,
+        "after_rows": 4,
+        "original_rows_missing_or_changed": 0
+      },
+      "session_folders": {
+        "before_rows": 661,
+        "after_rows": 661,
+        "original_rows_missing_or_changed": 0
+      },
+      "session_delivery_errors": {
+        "before_rows": 0,
+        "after_rows": 0,
+        "original_rows_missing_or_changed": 0
+      },
+      "session_retractions": {
+        "before_rows": 0,
+        "after_rows": 0,
+        "original_rows_missing_or_changed": 0
+      }
+    },
+    "private/model-credentials.dpapi": {
+      "unchanged": true
+    },
+    "private/development-bridge.dpapi": {
+      "unchanged": true
+    },
+    "config/local-models.sqlite3": {
+      "physical_file_digest_unchanged": false,
+      "pre_adoption_sqlite_backup_tables": {
+        "models": {
+          "before_rows": 11,
+          "after_rows": 11,
+          "all_rows_equal": true
+        },
+        "manager": {
+          "before_rows": 1,
+          "after_rows": 1,
+          "all_rows_equal": true
+        },
+        "events": {
+          "before_rows": 12,
+          "after_rows": 12,
+          "all_rows_equal": true
+        },
+        "observations": {
+          "before_rows": 5,
+          "after_rows": 5,
+          "all_rows_equal": true
+        },
+        "purpose_models": {
+          "before_rows": 1,
+          "after_rows": 1,
+          "all_rows_equal": true
+        }
+      },
+      "all_semantic_records_unchanged": true,
+      "note": "The early raw-file digest check failed; retained separately. All rows in every table match the consistent pre-adoption backup."
+    }
+  }
+}
