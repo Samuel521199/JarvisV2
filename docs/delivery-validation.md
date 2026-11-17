@@ -174,6 +174,7 @@
 - [253 项架构修复、兼容与日用采用（2026-11-04，v0.1.2）](#architecture-repair-evidence)
 - [E盘外接迁移、恢复与离线记忆切换（2026-11-13）](#external-storage-evidence-20261113)
 - [共用离线语音实现与本机验收（2026-11-16）](#shared-speech-delivery-20261116)
+- [Eachlabs 与邮件共用阅读整理验收（2026-11-17）](#eachlabs-mail-evidence-20261117)
 - [明确请求覆盖、独立新样本与控制器组合验收（2026-11-09）](#commitment-coverage-evidence)
 - [新增语言样本、真实模型影子与旧版回退核验（2026-11-08起始）](#commitment-shadow-evidence)
 - [聊天待办受理与时间澄清核验（2026-11-08，开发工作树）](#chat-commitments-evidence)
@@ -3734,6 +3735,11 @@ JPF/r1 不改写；本轮是 V-TRI/V-CLC 的局部接线证据，完整场景仍
 ## 共用离线语音实现与本机验收（2026-11-16）
 
 v0.1.14.1已自动日用采用至epoch30、控制器10；共用STT/TTS端口、三入口自动转写、确认后原队列接纳与原英语证据/剧情接续可用。固定独立215项（1项平台跳过）、实际语音就绪、三分钟观察、兼容代码回退和原数据对照通过；初次v0.1.14进程健康通过却语音不可用的失败保留。两款模型各36段公开真人录音本机CPU对照完成；本人识别率、发音、长期学习收益及完整离线LLM未签收。[测量、失败及使用范围](evidence/shared-speech-20261116/report.md#shared-speech-evidence-20261116)／[正式采用](evidence/shared-speech-20261116/daily-adoption.json)。
+
+<a id="eachlabs-mail-evidence-20261117"></a>
+## Eachlabs 与邮件共用阅读整理验收（2026-11-17）
+
+v0.1.16 的改动、适用回归、浏览器交互、真实供应商调用与日用升级分别见[权威记录](evidence/eachlabs-mail-20261117/report.md#eachlabs-mail-results)。邮件浏览器使用合成 Gmail 适配器，不改真实邮箱；阅读偏好及批量动作仍沿原账号/准确审阅/未知不重放门。真实 Gmail 旧授权过期，重连状态不能由本机测试代替。
 
 <!-- book-footer:start -->
 [返回工程主入口](../README.md) · [全书目录](../README.md#book-tree) · [上一章：系统自身模型与能力认知](self-model.md) · [下一章：架构决策、批判性评审与评分](decisions-review.md)

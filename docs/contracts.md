@@ -933,7 +933,7 @@ knowledge_schema 当前为 4；迁移、回滚限制、恢复决策及排除清�
 <a id="gmail-contracts"></a>
 ## Gmail 契约与恢复状态（1.0.0）
 
-`GET /api/mail` 返回连接状态、真实授权能力、任务/草稿/规则，不返回令牌或 client secret。`POST /api/mail` 严格校验 action：configure、authorize、cancel_authorization、disconnect、job、detail、cancel、resume、draft、review、approve、rule、remove_rule。接口复用 Host/Origin/nonce 与家庭主人门，家庭成员不可访问。
+`GET /api/mail` 返回连接状态、真实授权能力、任务/草稿/规则，不返回令牌或 client secret。`POST /api/mail` 严格校验 action：configure、authorize、cancel_authorization、disconnect、job、detail、cancel、resume、draft、review、approve、rule、remove_rule。接口复用 Host/Origin/nonce 与家庭主人门，家庭成员不可访问。v0.1.16 增加 `cached_message`、`view_preferences`、`folder_rule`，一般只读 job 增加 `counts`。正文缓存、阅读偏好和个人分类绑定账号 generation，变更代际拒绝旧命令；分类规则/偏好沿原加密 MailStore 与修订检查保存。读取缓存不调用网络、不隐式改远端标签；两端的打开后已读动作共用现有 review/approve，批量只组合逐封票据，不新增绕过审阅的写入操作。
 
 一般 job 只受理 check/list/read/analyze/reconcile；send/remote_draft/change/undo 必须 review 后以 review_id、request_id approve。票据十分钟有效，绑定账号 generation、草稿修订和准确内容；重复确认复用任务，更改草稿需重审。
 

@@ -1,3 +1,4 @@
+import {openMailMessage,readingPreference,mailReaderActions,changeMailBatch,undoMailBatch,mailFolderEditor} from './mail-reading.js';
 import {mailWorkSection} from './mail-work.js';
 import {localDraftForm} from './mail-draft.js';
 import {mailApi} from './mail-client.js';
@@ -18,6 +19,7 @@ function cleanText(value){return String(value||'').replace(/[\u034f\u200b-\u200f
 
 export function mountMailCompanion(){
  const dock=document.getElementById('mail-dock'),toggle=document.getElementById('dock-button'),panel=document.getElementById('mail-dialog');
+ const selectedIds=new Set();let folderFilter='',lastChanges=[];
  let state=null,detail=null,filter='all',busy=false,checking=false,auto=false,buffer=null,draftId='',draftRevision=0,controller=new AbortController(),generation='',message='';
  function open(){
   document.dispatchEvent(new Event('jarvis:mail-opened'));
@@ -30,7 +32,7 @@ export function mountMailCompanion(){
  function paintDock(){
   const status=state?.status||'unchecked',count=state?.unread_count;
   const value=status==='auth_required'?'!':Number.isInteger(count)?(count>99?'99+':String(count)):'·';
-  dock.dataset.connection=status;toggle.querySelector('.count').textContent=value;
+  dock.dataset.connection=status;const badge=toggle.querySelector('.count');if(badge.textContent!==value){badge.classList.remove('mail-count-changed');void badge.offsetWidth;badge.classList.add('mail-count-changed');}badge.textContent=value;
   const label='邮件 · '+(statuses[status]||'待检查')+(Number.isInteger(count)?' · 收件箱 '+count+' 封未读':'');
   toggle.title=label;toggle.setAttribute('aria-label',label);dock.setAttribute('aria-label',label);
   const preview=dock.querySelector('.dock-preview');preview.replaceChildren(el('strong',label));
@@ -40,7 +42,7 @@ export function mountMailCompanion(){
  }
  async function cached(){
   const next=await mailApi.overview();
-  if(generation&&generation!==next.account_generation){detail=null;buffer=null;draftId='';draftRevision=0;}
+  if(generation&&generation!==next.account_generation){detail=null;buffer=null;draftId='';draftRevision=0;selectedIds.clear();folderFilter='';lastChanges=[];}
   generation=next.account_generation;state=next;paintDock();return next;
  }
  async function sync(){
@@ -61,16 +63,17 @@ export function mountMailCompanion(){
   const content=el('div',undefined,'content'),error=el('p',message,'mail-live-error');error.id='mail-live-error';error.hidden=!message;error.setAttribute('role','alert');content.append(error,action('重要邮件持续助手',async()=>{const {openMailStanding}=await import('./mail-standing.js');await openMailStanding();},'action'));panel.append(content);return content;
  }
  function render(){
-  if(panel.hidden)return;const content=head();
+  if(panel.hidden)return;panel.classList.toggle('mail-reading',!!detail);const content=head();content.classList.add('mail-ui-enter');
   if(!state){content.append(el('p','正在读取 Jarvis 邮箱状态…','lead'));return;}
   if(state.status==='auth_required'||state.status==='disconnected'){
    content.append(el('p',state.status==='auth_required'?'Google 需要重新授权；原邮箱和任务仍保留。':'连接 Gmail 后，这里显示真实邮件。','lead'));
    const pending=['RUNNING','WAITING_BROWSER'].includes(state.authorization?.status);
-   content.append(action(pending?'等待 Google 本人确认…':state.configured?'重新连接 Gmail':'打开连接设置',async()=>{
+   const reconnect=action(pending?'等待 Google 本人确认…':state.configured?'重新连接 Gmail':'打开连接设置',async()=>{
     if(!state.configured){window.open('/settings#mail','_blank','noopener');return;}
     await mailApi.command({action:'authorize',level:state.capabilities?.modify?'manage':'read'});await cached();render();
-   },'action primary'),external('连接设置','/settings#mail'));
-   content.querySelector('button.action').disabled=pending;return;
+   },'action primary');reconnect.disabled=pending;content.append(reconnect,external('连接设置','/settings#mail'));
+   if(!state.items?.length)return;
+   content.append(el('p','以下为本机缓存；可以阅读已缓存正文，远端状态待重新授权后核对。','hint'));
   }
   if(buffer){renderDraft(content);return;}
   if(detail){renderDetail(content);return;}
@@ -80,33 +83,34 @@ export function mountMailCompanion(){
   content.append(el('p',scope+' · 以下为最近 '+state.items.length+' 封'+(state.has_more?'，可到工作台查看更早邮件':''),'lead'));
   const tabs=el('div',undefined,'live-mail-tabs');
   for(const [key,label] of [['all','最近'],['important','重要'],['promotion','订阅'],['suspicious','可疑']]){
-   const b=action(label,()=>{filter=key;render();},'action'+(filter===key?' selected':''));b.setAttribute('aria-pressed',String(filter===key));tabs.append(b);
+   const b=action(label,()=>{filter=key;selectedIds.clear();render();},'action'+(filter===key?' selected':''));b.setAttribute('aria-pressed',String(filter===key));tabs.append(b);
   }
   content.append(tabs);
-  const items=state.items.filter(m=>filter==='all'||m.classification.category===filter);
+  const folders=el('div',undefined,'mail-folder-tabs'),groups=new Map();for(const m of state.items){const name=m.classification.folder||'待整理';groups.set(name,(groups.get(name)||0)+1);}folders.append(action('全部分类',()=>{folderFilter='';selectedIds.clear();render();},'action'+(!folderFilter?' selected':'')));for(const [name,count] of groups)folders.append(action(name+' '+count,()=>{folderFilter=name;selectedIds.clear();render();},'action'+(folderFilter===name?' selected':'')));folders.append(action('个性化规则',()=>mailFolderEditor(async()=>{await cached();render();})));content.append(el('p','本地整理 · 0 云端 token · 分类数量仅为当前批次','hint'),folders);readingPreference(content,state,async()=>{await cached();render();});
+  const items=state.items.filter(m=>(filter==='all'||m.classification.category===filter)&&(!folderFilter||(m.classification.folder||'待整理')===folderFilter));
+  const selection=el('div',undefined,'mail-selection-bar');selection.append(action('选择本批',()=>{for(const m of items)selectedIds.add(m.id);render();}),action('清空',()=>{selectedIds.clear();render();}),el('span','已选 '+selectedIds.size+' 封'));for(const [change,label] of [['read','标为已读'],['trash','移入垃圾箱']]){const b=action(label,()=>changeMailBatch(state.items.filter(m=>selectedIds.has(m.id)),change,changesDone));b.disabled=busy||!selectedIds.size||!state.capabilities.modify||state.network_blocked||state.status==='auth_required';selection.append(b);}if(lastChanges.length)selection.append(action('撤销上一批',()=>undoMailBatch(lastChanges,async()=>{lastChanges=[];await cached();render();})));content.append(selection);
+
   for(const m of items){
-   const row=el('div',undefined,'row'),b=action('',()=>read(m.id),'live-mail-row'),title=el('span',undefined,'row-title');
+   const row=el('div',undefined,'row mail-select-row'),check=el('input'),b=action('',()=>read(m.id),'live-mail-row'),title=el('span',undefined,'row-title');check.type='checkbox';check.checked=selectedIds.has(m.id);check.setAttribute('aria-label','选择邮件 '+(m.subject||'无主题'));check.onchange=()=>{check.checked?selectedIds.add(m.id):selectedIds.delete(m.id);render();};
    title.append(el('strong',m.from.replace(/<[^>]+>/g,'').replace(/^"|"$/g,'').trim()||m.from||'未知发件人'),el('small',(m.unread?'● ':'')+(categories[m.classification.category]||'普通'),'state'));
    b.append(title,el('strong',m.subject||'无主题','live-mail-subject'),el('span',cleanText(m.snippet)||'此邮件没有摘要。','row-text'));
-   b.title=m.classification.reason;b.disabled=busy;row.append(b);content.append(row);
+   b.append(el('small',(m.classification.folder||'待整理')+' · '+(m.classification.folder_reason||m.classification.reason),'mail-folder-hint'));b.title=(m.classification.folder_reason||m.classification.reason);b.disabled=busy;row.append(check,b);content.append(row);
   }
   if(!items.length)content.append(el('p',state.items.length?'本批没有此类邮件。':'点击刷新读取邮件。','lead'));
   const controls=el('label',undefined,'live-mail-auto'),box=el('input');box.type='checkbox';box.checked=auto;
   box.onchange=()=>{auto=box.checked;};controls.append(box,el('span','本页面可见时，每 2 分钟检查一次（无模型）'));content.append(controls);
-  content.append(el('p','分类来自本地规则，可能误判。查看不自动标为已读；正文不加载远程图片。','hint'));
+  content.append(el('p','分类可纠正；没有上传正文或调用云端分类。已读状态按开关同步；正文不加载远程图片。','hint'));
  }
+ async function changesDone(jobs){lastChanges=jobs.filter(j=>j.status==='SUCCEEDED'&&j.operation==='change');selectedIds.clear();for(const job of lastChanges)if(detail?.id===job.result?.message?.id){detail={...detail,...job.result.message};if(detail.labels?.includes('TRASH'))detail=null;}await cached();render();}
  async function read(id){
-  if(busy)return;busy=true;const expected=generation;
-  try{
-   const job=await mailApi.run('read',{message_id:id},{signal:controller.signal});await cached();
-   if(expected!==generation)throw Error('邮箱连接已变化，请重新选择邮件。');
-   if(job.status==='SUCCEEDED'){detail=job.result;render();}else showError(jobErrors[job.status]||'读取未完成。');
-  }finally{busy=false;}
+  if(busy)return;busy=true;const expected=generation;message='正在读取正文…';render();
+  try{await openMailMessage(id,{state,signal:controller.signal,visible:()=>!panel.hidden&&generation===expected,onDisplay:async value=>{detail=value;message=value.from_cache?'显示本机缓存正文':'';render();},onChanged:async value=>{detail=value;message='正文已打开，已读状态已同步';await cached();render();}});}
+  catch(error){message=error.message;}finally{busy=false;if(!panel.hidden)render();}
  }
  function renderDetail(content){
   content.append(action('← 返回邮件',()=>{detail=null;render();}),el('h3',detail.subject||'无主题'),el('p',detail.from+' · '+detail.date,'tiny'));
   if(detail.classification)content.append(el('p',detail.classification.reason,'hint'));
-  const body=el('div',cleanText(detail.body||detail.snippet)||'邮件没有文字内容。','mail-detail-body');content.append(body);void mailWorkSection(content,detail);
+  const body=el('div',cleanText(detail.body||detail.snippet)||'邮件没有文字内容。','mail-detail-body');body.tabIndex=0;content.append(body);mailReaderActions(content,detail,state,changesDone);const work=el('details',undefined,'mail-work-details');work.append(el('summary','待办与处理反馈'));let workLoaded=false;work.ontoggle=()=>{if(work.open&&!workLoaded){workLoaded=true;void mailWorkSection(work,detail);}};content.append(work);
   const buttons=el('div',undefined,'actions');buttons.append(action('起草回复',()=>{
    buffer={to:senderAddress(detail.from),subject:/^re:/i.test(detail.subject)?detail.subject:'Re: '+detail.subject,body:''};draftId='';draftRevision=0;render();
   },'action primary'),external('完整管理 ↗','/settings#mail'));

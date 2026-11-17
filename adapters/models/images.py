@@ -10,9 +10,11 @@ class ImageModel:
     def __init__(self,config,credential_loader):
         self.config=config;self.credential_loader=credential_loader
     def generate(self,value,reference_pngs=None,checkpoint=lambda:None):
-        validate(value);images=validate_encoded([encode_png(x) for x in (reference_pngs or [])]);checkpoint()
+        profile=self.config.get('image_profile')
+        validate(value,{profile['model']:profile} if profile else None);images=validate_encoded([encode_png(x) for x in (reference_pngs or [])]);checkpoint()
         credential=self.credential_loader(self.config['id'],self.config.get('credential_id'))
-        payload=canonical({'config':{'adapter':self.config['adapter']},'credential':credential,'request':value,'images':images}).encode()
+        config={k:self.config[k] for k in ('adapter','image_profile','end_user_id','prediction_receipt') if k in self.config}
+        payload=canonical({'config':config,'credential':credential,'request':value,'images':images}).encode()
         env={k:os.environ[k] for k in ('SystemRoot','WINDIR') if k in os.environ}
         p=subprocess.Popen([sys.executable,'-I','-B',str(PROJECT/'adapters/models/image_transport.py')],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.DEVNULL,env=env,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
         deadline=time.monotonic()+TIMEOUT_SECONDS

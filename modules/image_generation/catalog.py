@@ -18,14 +18,15 @@ def dimensions(size,ratio):
     return [int(n*scale) for n in BASE_PIXELS[ratio]]
 
 
-def validate(value):
+def validate(value,models=None):
+    models=MODELS if models is None else models
     if not isinstance(value,dict) or set(value)!={'model','prompt','size','aspect_ratio'}:
         raise CoreError('image_invalid','Expected explicit image request')
-    if not isinstance(value['model'],str) or value['model'] not in MODELS:
-        raise CoreError('image_invalid','Choose a reviewed Nano Banana model')
+    if not isinstance(value['model'],str) or value['model'] not in models:
+        raise CoreError('image_invalid','Choose a configured image model')
     if not isinstance(value['prompt'],str) or not 1<=len(value['prompt'].strip())<=8000:
         raise CoreError('image_invalid','Image prompt must contain 1..8000 characters')
     if not isinstance(value['size'],str) or not isinstance(value['aspect_ratio'],str):raise CoreError('image_invalid','Expected size and ratio strings')
-    if value['size'] not in MODELS[value['model']]['sizes'] or value['aspect_ratio'] not in RATIOS:
+    if value['size'] not in models[value['model']]['sizes'] or value['aspect_ratio'] not in models[value['model']].get('ratios',RATIOS):
         raise CoreError('image_invalid','Unsupported size or aspect ratio')
     return dict(value)

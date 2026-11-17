@@ -77,6 +77,20 @@ def run():
     raw=sys.stdin.buffer.read(17*1024**2+1)
     if len(raw)>17*1024**2:return {'status':'REJECTED','code':'image_input_limit'}
     p=json.loads(raw)
+    if p['config']['adapter']=='eachlabs':
+        from adapters.models.eachlabs import image
+        from modules.image_generation.profiles import validate as validate_profile
+        config=p['config'];profile=validate_profile(config['image_profile'])
+        validate(p['request'],{profile['model']:profile});validate_encoded(p.get('images',[]))
+        def progress(value):
+            if config.get('prediction_receipt'):
+                path=Path(config['prediction_receipt']);path.parent.mkdir(parents=True,exist_ok=True)
+                temporary=path.with_suffix('.pending');temporary.write_text(json.dumps(value,allow_nan=False),encoding='utf-8');temporary.replace(path)
+        try:return image(config,p['credential'],p['request'],p.get('images',[]),progress)
+        except urllib.error.HTTPError as exc:return {'status':'REJECTED' if 400<=exc.code<500 else 'UNKNOWN','code':'http_'+str(exc.code)}
+        except (TimeoutError,socket.timeout):return {'status':'UNKNOWN','code':'eachlabs_timeout'}
+        except (ValueError,KeyError,TypeError):return {'status':'UNKNOWN','code':'eachlabs_invalid_reply'}
+        except Exception:return {'status':'UNKNOWN','code':'eachlabs_transport'}
     try:url,headers,body=request(p['config'],p['credential'],p['request'],p.get('images',[]))
     except Exception:return {'status':'REJECTED','code':'image_config_or_auth'}
     try:return extract(post(url,body,headers,timeout=240,max_bytes=MAX_REPLY))

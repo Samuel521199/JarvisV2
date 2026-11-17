@@ -1,4 +1,4 @@
-"""Owner-started development sidecar: Google text models and metadata only.
+"""Owner-started development sidecar: explicitly shared text models and metadata.
 
 No memory, mail, filesystem, shell or MCP execution endpoint. The production
 service is not patched or restarted. Same-user malicious code is not isolated.
@@ -73,9 +73,9 @@ class Bridge:
         catalog['providers'] = {name: {k: v for k, v in item.items() if k not in {'credential_id', 'keys', 'balance_hint'}}
                                 for name, item in catalog['providers'].items()
                                 if name in self.policy['allowed_providers'] and item.get('enabled', True)
-                                and item.get('adapter', name) in {'vertex', 'gemini'}}
+                                and item.get('adapter', name) in {'vertex','gemini','eachlabs','openai','xai','bailian','compatible'}}
         if not catalog['providers']:
-            raise CoreError('development_route_not_allowed', 'No Google route is permitted')
+            raise CoreError('development_route_not_allowed', 'No configured shared route is permitted')
         if catalog['default_provider'] not in catalog['providers']:
             catalog['default_provider'] = next(iter(catalog['providers']))
         catalog['fallback_order'] = [n for n in catalog.get('fallback_order', []) if n in catalog['providers']]
@@ -109,11 +109,11 @@ class Bridge:
             raise CoreError('development_request_invalid', 'Invalid development messages')
         config = self.configuration()['catalog']
         route = resolve(config, value['provider'], value['model'])
-        if route['adapter'] not in {'vertex', 'gemini'}:
-            raise CoreError('development_provider_changed', 'This bridge permits Google providers only')
+        if route['adapter'] not in {'vertex','gemini','eachlabs','openai','xai','bailian','compatible'}:
+            raise CoreError('development_provider_changed', 'This adapter is not a shared remote text route')
         # Caller parameters are never trusted as arbitrary vendor options.
         if value['reasoning'] != route['parameters']:
-            level = value['reasoning'].get('thinking_level', '')
+            level = value['reasoning'].get('thinking_level', value['reasoning'].get('reasoning_effort',''))
             if not isinstance(level, str):
                 raise CoreError('development_parameters_changed', 'Invalid reasoning level')
             adjusted = resolve(config, value['provider'], value['model'], level.lower())

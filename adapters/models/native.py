@@ -57,8 +57,8 @@ class NativeModel:
             if reference_png is not None and reference_pngs is not None:raise CoreError('model_image_invalid','Choose one image envelope')
             raw_images=[reference_png] if reference_png is not None else reference_pngs
             if not isinstance(raw_images,list) or not 1<=len(raw_images)<=2:raise CoreError('model_image_invalid','One or two images required')
-            if self.config['adapter'] not in {'vertex','gemini'} or messages[-1]['role']!='user':
-                raise CoreError('model_vision_unsupported','Reference images require an explicit Gemini route and user message')
+            if self.config['adapter'] not in {'vertex','gemini','eachlabs'} or messages[-1]['role']!='user':
+                raise CoreError('model_vision_unsupported','Reference images require an explicit supported route and user message')
             images = validate_encoded([encode_png(raw) for raw in raw_images])
         if self.network and self.network.read()['blocked']:
             return {'status': 'REJECTED', 'code': 'network_disabled'}
@@ -67,11 +67,15 @@ class NativeModel:
         environment = {k: os.environ[k] for k in ('SystemRoot', 'WINDIR') if k in os.environ}
         if self.temp_dir:
             self.temp_dir.mkdir(exist_ok=True); environment.update(TEMP=str(self.temp_dir), TMP=str(self.temp_dir))
+        config=dict(self.config)
+        if config['adapter']=='eachlabs' and self.temp_dir:
+            from control.eachlabs_identity import owner_id
+            config['end_user_id']=owner_id(self.temp_dir.parent)
         checkpoint()
         process = subprocess.Popen([sys.executable, '-I', '-B', str(PROJECT / 'adapters/models/native_transport.py')],
             stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, env=environment,
             creationflags=subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0)
-        payload = canonical({'config': self.config, 'credential': credential, 'messages': messages, 'json_mode': json_mode, 'images': images}).encode()
+        payload = canonical({'config': config, 'credential': credential, 'messages': messages, 'json_mode': json_mode, 'images': images}).encode()
         deadline = time.monotonic() + self.config['timeout_seconds']
         try:
             while True:

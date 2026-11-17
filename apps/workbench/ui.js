@@ -180,4 +180,4 @@ export function acceptanceDialog(steps,submit,{inputText='',reviewRequest=null,r
 }
 
 // Environment identity is presented on every workbench surface using this client.
-fetch('/api/instance',{cache:'no-store'}).then(r=>r.json()).then(value=>{if(value.environment!=='development')return;document.title='[开发版] '+document.title;const link=document.createElement('link');link.rel='stylesheet';link.href='/development.css';document.head.append(link);const badge=el('div','开发版 · 独立测试数据 · Google 共享代理 · 真实账号操作关闭','development-badge');badge.setAttribute('role','status');document.body.append(badge);}).catch(()=>{});
+fetch('/api/instance',{cache:'no-store'}).then(r=>r.json()).then(value=>{if(value.environment!=='development')return;document.title='[开发版] '+document.title;const link=document.createElement('link');link.rel='stylesheet';link.href='/development.css';document.head.append(link);const badge=el('div','开发版 · 独立测试数据 · 已授权模型共享代理 · 真实账号操作关闭','development-badge');badge.setAttribute('role','status');document.body.append(badge);}).catch(()=>{});

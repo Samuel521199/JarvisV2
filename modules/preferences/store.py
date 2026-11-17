@@ -12,6 +12,16 @@ LEVELS = {'none', 'minimal', 'low', 'medium', 'high', 'xhigh', 'max', 'off', 'on
 PARAMS = {'max_output_tokens', 'reasoning_effort', 'thinking_level', 'enable_thinking'}
 
 
+def allowed_adapters(config):
+    policy=config.get('usage_policy')
+    if not isinstance(policy,dict):return ADAPTERS
+    if (policy.get('schema')!='provider-policy.v1' or set(policy)-{'schema','allowed_adapters','exhaustion'}
+            or not isinstance(policy.get('allowed_adapters'),list) or not policy['allowed_adapters']
+            or any(x not in ADAPTERS for x in policy['allowed_adapters'])):
+        raise CoreError('settings_invalid','Unknown provider policy')
+    return set(policy['allowed_adapters'])
+
+
 def validate_catalog(config):
     if not isinstance(config, dict) or config.get('schema_version') != 1:
         raise CoreError('settings_invalid', 'Unknown model catalog format')
@@ -67,6 +77,8 @@ def validate_catalog(config):
             if type(profile.get('enabled', True)) is not bool: raise CoreError('settings_invalid', 'Invalid model enable flag')
         if not item.get('models', {}).get(item['model'], {}).get('enabled', True): raise CoreError('settings_invalid', 'Default model is disabled')
     if not providers[config['default_provider']].get('enabled', True): raise CoreError('settings_invalid', 'Default provider is disabled')
+    if providers[config['default_provider']].get('adapter',config['default_provider']) not in allowed_adapters(config):
+        raise CoreError('settings_invalid','Default provider is outside the saved provider policy')
     return config
 
 
@@ -79,7 +91,7 @@ def fallback_routes(catalog, primary, *, limit=None):
     routes = []
     if catalog.get('automatic_fallback'):
         for name in catalog.get('fallback_order', []):
-            if name != primary['id'] and catalog['providers'][name].get('enabled', True):
+            if name != primary['id'] and catalog['providers'][name].get('enabled', True) and catalog['providers'][name].get('adapter',name) in allowed_adapters(catalog):
                 routes.append(resolve(catalog, name))
                 if limit and len(routes) >= limit: break
     return routes
@@ -89,6 +101,7 @@ def resolve(config, provider=None, model=None, reasoning='default'):
     provider = config['default_provider'] if provider in (None, 'auto') else provider
     item = config['providers'].get(provider)
     if not item or not item.get('enabled', True): raise CoreError('model_disabled', 'Provider is not enabled')
+    if item.get('adapter',provider) not in allowed_adapters(config):raise CoreError('model_disabled','Provider is outside the saved provider policy')
     model = model or item['model']; profile = item['models'].get(model)
     if not profile or not profile.get('enabled', True): raise CoreError('model_disabled', 'Model is not enabled')
     params = deepcopy(profile.get('parameters', {}))
@@ -193,5 +206,6 @@ class Preferences:
                             'reasoning_levels': m.get('reasoning_levels', []), 'parameters': m.get('parameters', {}),
                             'tier': m.get('tier', ''),'price':m.get('price'),'notes':m.get('notes','')} for mid, m in item['models'].items()]})
         return {'configured': True, 'revision': value['revision'], 'default_provider': config['default_provider'],
+                'connection_policy':config.get('usage_policy'),'available_adapters':sorted(allowed_adapters(config)),
                 'automatic_fallback': config['automatic_fallback'], 'fallback_order': config['fallback_order'],
                 'connections': connections, 'coding': {**value['coding'], 'adapter_state': 'not_implemented'}, 'ui': self.ui()}

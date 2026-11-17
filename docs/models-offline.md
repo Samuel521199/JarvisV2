@@ -40,7 +40,7 @@
   - [资源、离线与运行依赖](#local-model-resource-runtime)
   - [资源校准与多维评价](#local-model-calibration)
   - [API 与恢复入口](#local-model-api)
-- [Nano Banana 图片模型接入（1.1.0）](#nano-banana-models)
+- [Eachlabs 图片模型与接入政策（v0.1.16）](#nano-banana-models)
 <!-- book-nav:end -->
 
 <a id="shared-speech-foundation"></a>
@@ -477,33 +477,24 @@ LLM、STT、TTS、嵌入和推理引擎分别版本化。替换模型时检查�
 宿主未运行时可在项目根使用 `python -B -m tools.local_models list`，以及 `download/repair/verify/uninstall <模型ID>`、`retire_previous`。CLI 与 Web 共用管理器和租约，不能同时写同一数据根。发布源码仅包含清单、源码、版本约束和来源链接，下载模型不进入 Git；目录归属见[项目结构](stack-project-layout.md#local-model-layout)。
 
 <a id="nano-banana-models"></a>
-## Nano Banana 图片模型接入（1.1.0）
+## Eachlabs 图片模型与接入政策（v0.1.16）
 
-2026-10-25核对Google官方目录。图片模型在图片工作室独立管理，复用已配置的Vertex服务账户或Gemini API Key，不加入普通文字自动回退链，也不更改当前聊天默认模型。
+2026-11-17 主人明确：只禁止 Google 官方模型直连，允许 Eachlabs 提供的 Gemini / Nano Banana，Gmail 保留。当前模型设置以后台持久配置为准：云端允许 Eachlabs，本地离线适配器独立保留；其他云端连接停用且退出备选。移除旧官方连接会封存其目录和凭据到原 DPAPI 容器，活动查找不再返回；历史账本不删除，代码回退不能自动恢复封存授权。旧适配器只为历史与兼容回归保留，不代表当前可选或可回退。
 
-| 角色 | 名称与模型ID | 发布与当前目录状态 |
+设置 → 模型与费用 → 接入方可以维护允许接入、连接、模型 ID、推理档位、默认与备选；设置 → 图片工作室可从 Eachlabs 实际目录导入生成与编辑 slug、版本、尺寸/画幅及单次本地规划预留额，再保存默认和启停。模型 ID 是配置数据，不在业务代码硬编码替换。开发共享设置只变更已配对开发端的明确提供者范围，保留原调用额度、令牌和隔离边界；旧冻结代理失去原授权，需采用已审阅代理后正常重启开发。
+
+| 用途 | 当前配置与协议 | 失败/成本边界 |
 |---|---|---|
-| 最新主线，默认推荐 | Nano Banana 2.1 · `gemini-nano-banana-2.1` | 2026-10-06 GA |
-| 按发布时间次新，轻量分支 | Nano Banana 2 Lite · `gemini-3.1-flash-lite-image` | Gemini Developer API于2026-06-30 GA；只支持1K |
-| 上一代主线，兼容对照 | Nano Banana 2 · `gemini-3.1-flash-image` | 稳定版2026-05-28；Google已宣布弃用、尚未公布停用日期 |
+| 文字与显式视觉 | Eachlabs `v1/chat/completions`；模型按后台选择，显式图片以 data URL 输入 | 只走允许的连接，不退回官方；无供应商价格或成本则记未知 |
+| 图片生成 | Eachlabs `v1/prediction`；保存实际模型详情返回的版本和允许参数 | 每任务只创建一次预测，后续只轮询；中断/超时不自动重建 |
+| 图片编辑 | 后台单独指定 edit slug/版本；只上传本次明确选择的参考图 | 申请一小时保留，但实际服从供应商存储政策；持链接者可读 |
+| 身份与用量 | 每本机主人保存稳定的匿名 `end_user_id`，开发代理沿日用身份 | 不发送邮箱/姓名；尚未验证多用户映射；规划额、回执和账单分栏 |
 
-“次新”按时间与按主线有不同含义，目录同时保留说明，不把Lite当作质量升级。来源：[模型名与日期](https://firebase.google.com/docs/ai-logic/models?api=dev)、[2.1模型卡](https://ai.google.dev/gemini-api/docs/models/gemini-nano-banana-2.1)、[更新与弃用记录](https://ai.google.dev/gemini-api/docs/changelog)。这些是云端图片模型，不是手机本地Gemini Nano。
+本次实际目录可用 Nano Banana 2.1、2 Lite、2 的生成/编辑对，详情版本均为 `0.0.1`。这只是本次接口快照，不承诺以后版本不变；重新导入保留修订检查。支持档位来自 Eachlabs 元数据，不继承旧官方价格；目录未给出确定美元单价时，界面使用主人配置的规划预留额并明确不是报价或硬扣费上限。图片成功回执保存预测 ID、实际像素、引用摘要和供应商返回成本；缺失成本不记 0。
 
-接入协议使用官方`generateContent`：Vertex为global区域项目端点、OAuth服务账户；Gemini Developer API为generativelanguage.googleapis.com、x-goog-api-key。原文档也介绍Interactions API，但现有Jarvis复用已接通的Generate Content认证链。单次图片请求显式声明TEXT/IMAGE与imageConfig，解析inlineData；不继承文字聊天的JSON响应模式、推理档位或采样参数。2.1不支持部分采样参数，详见[Cloud模型说明](https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/nano-banana-2-1)。
+上限仍为单张输出、显式参考、原总耗时与 STOP/取消检查；请求受理时冻结路线和模型档案。Eachlabs 媒体链接限定 HTTPS、公网地址和审阅的存储域，不携带模型 API Key 跟随外链或重定向。编辑参考并不等于允许读取个人全部图片。Gmail 的 Google OAuth/API 与模型路由独立，不能通过全局断网实现模型禁用。
 
-1.1.0已开放以下官方档位，实际参数按模型限制；每次一张，不因切换模型而静默保留无效档位：
-
-| 模型 | 分辨率档位 | 正方形像素 | 图片输出公开价（USD，未含输入和思考） |
-|---|---|---|---|
-| 2.1 | 1K / 2K / 4K | 1024² / 2048² / 4096² | 0.0336 / 0.0504 / 0.1134 |
-| 2 Lite | 1K | 1024² | 0.0336 |
-| 上一代2 | 512 / 1K / 2K / 4K | 512² / 1024² / 2048² / 4096² | 0.04482 / 0.0672 / 0.1008 / 0.1512 |
-
-支持14种画幅。K是生成档位，长边会随比例变化：16:9的1K/2K/4K分别为1376×768、2752×1536、5504×3072；4K的21:9为6336×2688、8:1为12288×1536，并非原生8K档位。界面按选择显示规格参考，交付后另记实际尺寸。512的21:9在指南表中写792×168，与比例冲突；宿主以1K尺寸减半得到792×336，等待真实回执验证。[分辨率规格](https://ai.google.dev/gemini-api/docs/generate-content/image-generation)、[Lite模型限制](https://ai.google.dev/gemini-api/docs/models/gemini-3.1-flash-lite-image)。指南存在冲突：Lite表格列512而模型卡限1K；2.1的4K表格列2520Token而两份价表均列3780。宿主分别采用模型卡限制和价表3780计算预估，不隐藏差异；结算按实际回执。
-
-Vertex/global Standard与Developer API Standard本次核对的单价一致，但保留各自来源快照：[Vertex价表](https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing)、[Gemini API价表](https://ai.google.dev/gemini-api/docs/pricing)。每百万Token，2.1输入/文字与思考/图片为1.5/7.5/30美元，Lite为0.25/1.5/30，上一代2为0.5/3/60。缓存输入独立处理，图片与文字输出不能共用一个输出费率。实际调用冻结价格、来源与本地30天复核期限，过期时阻止新提交；这不是供应商停服日期。统一调用账本与图片总览使用同一估算器。缺少分项、未知结果或历史无快照均保留未知；优惠、税费、合同价及余额不自动推断。手工账单记录另存并保留修订，不覆盖原始估算，当前未连接Google Billing导出。
-
-图片后台持久保存默认连接、模型、分辨率、画幅、设计类别、模型启停和单次费用预留额阈值；修订冲突拒绝覆盖。预留额不是Google硬扣费限额。搜索增强、视频输入和thoughtSignature连续会话编辑仍未接入。编辑仍限两张PNG，每张不超过7MB、合计12MiB与1600万像素；高分辨率输出不代表同尺寸图片一定可直接回送编辑或3D参考。操作与组合规则见[图片工作室](tasks-agents.md#image-studio-workflow)，真实结果见[验收](delivery-validation.md#nano-banana-evidence)。
+当前实现与真实状态见[本轮验收](evidence/eachlabs-mail-20261117/report.md#eachlabs-mail-results)。供应商依据：[路由协议](https://docs.eachlabs.ai/llm-router/overview)、[模型目录](https://docs.eachlabs.ai/llm-router/model-catalog)、[接口索引](https://docs.eachlabs.ai/llms.txt)。历史官方接入记录不作为当前配置与价格依据。
 
 <!-- book-footer:start -->
 [返回工程主入口](../README.md) · [全书目录](../README.md#book-tree) · [上一章：技术栈、源码目录与运行数据](stack-project-layout.md) · [下一章：记忆、知识库与持续学习](knowledge-learning.md)

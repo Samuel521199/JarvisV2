@@ -17,11 +17,14 @@ def project(account,configured,jobs,rules,messages,authorization,network_blocked
     rows=[]
     for original in source.get('messages',[])[:10]:
         mail=cached.get(original['id'],original)
-        if 'INBOX' not in mail.get('labels',[]):continue
+        if 'INBOX' not in mail.get('labels',[]) or set(mail.get('labels',[]))&{'TRASH','SPAM'}:continue
         classification=classify(mail,rules)
         rows.append({k:mail.get(k,'') for k in ('id','thread_id','from','subject','date','snippet')}
                     | {'unread':'UNREAD' in mail.get('labels',[]),'classification':classification})
     counts=source.get('counts') if latest and latest['operation']=='sync' else None
+    count_job=max((j for j in jobs if generation and j.get('generation')==generation and j.get('status')=='SUCCEEDED'
+        and j.get('operation')=='counts' and isinstance(j.get('result'),dict)),key=lambda j:j.get('updated',0),default=None)
+    if count_job and count_job.get('updated',0)>=(latest or {}).get('updated',0):counts=count_job['result'].get('counts')
     unread=counts.get('messagesUnread') if isinstance(counts,dict) else None
     if type(unread) is not int or unread<0:unread=None
     checked=account.get('checked_at') or 0

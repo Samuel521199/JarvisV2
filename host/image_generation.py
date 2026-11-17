@@ -11,6 +11,7 @@ from modules.preferences.store import Preferences,resolve
 from modules.skills.catalog import Skills
 from modules.image_generation.catalog import MODELS,RATIOS,VERSION,CHECKED,validate
 from modules.image_generation import settings as image_settings
+from modules.image_generation import profiles
 from modules.image_generation.catalog import dimensions
 from modules.image_generation.rates import snapshot as price_snapshot,quote
 from modules.image_generation.design import RECIPES,compile_brief
@@ -19,6 +20,23 @@ from sdk.protocol import CoreError,canonical,digest
 
 LOCK=threading.Lock();ACTIVE=set();GUARD=threading.Lock()
 TERMINAL={'SUCCEEDED','FAILED','CANCELLED','UNKNOWN'}
+
+
+def models(root):
+    current=profiles.read(root)
+    return current['models'] if current['configured'] else MODELS
+
+
+def image_quote(root,adapter,value,references):
+    if adapter!='eachlabs':
+        if models(root).get(value['model'],{}).get('adapter')=='eachlabs':raise CoreError('image_invalid','Model and connection do not match')
+        return quote(adapter,value,references)
+    profile=models(root).get(value['model'])
+    if not profile or profile.get('adapter')!='eachlabs':raise CoreError('image_catalog','Import this Eachlabs image profile first')
+    if references and not profile.get('edit_model'):raise CoreError('image_invalid','This configured model has no edit endpoint')
+    price=profile['price']
+    return {'currency':'USD','image_output_estimate':None,'planning_allowance':price['planning_usd'],'price':price,
+        'not_hard_billing_cap':True,'note':'本地配置的规划预留额，不是供应商报价或硬限额；实际费用等待Eachlabs回执。'}
 
 def ident(value):
     if not isinstance(value,str) or not re.fullmatch('[a-f0-9]{32}',value):raise CoreError('image_invalid','Expected image task ID')
@@ -89,9 +107,15 @@ def readiness(root):
     p=Preferences(root)
     try:public=p.public(Credentials(root).available)
     finally:p.close()
-    routes=[{'id':c['id'],'label':c['label'],'adapter':c['adapter'],'credential_available':c['credential_available']} for c in public['connections'] if c['enabled'] and c['adapter'] in {'vertex','gemini'}]
+    routes=[{'id':c['id'],'label':c['label'],'adapter':c['adapter'],'credential_available':c['credential_available']} for c in public['connections'] if c['enabled'] and c['adapter'] in {'vertex','gemini','eachlabs'}]
     config=image_settings.read(root)
-    return {'version':VERSION,'checked_at':CHECKED,'models':[{'id':k,**v,'enabled':k in config['enabled_models'],'dimensions':{s:{a:dimensions(s,a) for a in RATIOS} for s in v['sizes']},'rates':{a:price_snapshot(a,k) for a in ('vertex','gemini')}} for k,v in MODELS.items()],'ratios':RATIOS,'routes':routes,'settings':config,'recipes':[{'id':k,**v} for k,v in RECIPES.items()],'default_model':config['model'],'ready':any(r['credential_available'] for r in routes),'network_blocked':NetworkGate(root).read()['blocked'],'limits':{'reference_pngs':2,'reference_bytes':12*1024**2,'output_images':1,'wall_seconds':270},'scope':'Explicit single-turn generation or edit; no automatic retries, fallback, search grounding or default chat routing. Official model listing does not prove account access.'}
+    registry=models(root);inventory=[]
+    for key,profile in registry.items():
+        if profile.get('adapter')=='eachlabs':
+            inventory.append({'id':key,**profile,'role':'Eachlabs · 后台配置','enabled':key in config['enabled_models'],'rates':{'eachlabs':profile['price']}})
+        elif any(r['adapter'] in {'vertex','gemini'} for r in routes):
+            inventory.append({'id':key,**profile,'enabled':key in config['enabled_models'],'dimensions':{s:{a:dimensions(s,a) for a in RATIOS} for s in profile['sizes']},'rates':{a:price_snapshot(a,key) for a in ('vertex','gemini')}})
+    return {'version':VERSION,'checked_at':max((p['price']['checked_at'] for p in registry.values() if p.get('adapter')=='eachlabs'),default=CHECKED),'models':inventory,'catalog_revision':profiles.read(root)['revision'],'ratios':RATIOS,'routes':routes,'settings':config,'recipes':[{'id':k,**v} for k,v in RECIPES.items()],'default_model':config['model'],'ready':any(r['credential_available'] for r in routes),'network_blocked':NetworkGate(root).read()['blocked'],'limits':{'reference_pngs':2,'reference_bytes':12*1024**2,'output_images':1,'wall_seconds':270},'scope':'Explicit single-image request; configured provider only; no automatic POST replay or provider fallback.'}
 
 def configure(root,body):
     StopGate(root).require_running()
@@ -100,14 +124,14 @@ def configure(root,body):
         p=Preferences(root)
         try:
             current=p.read();route=resolve(current['catalog'],body['provider']) if current else None
-            if not route or route['adapter'] not in {'vertex','gemini'}:raise CoreError('image_settings_invalid','Select a configured Google connection')
+            if not route or route['adapter'] not in {'vertex','gemini','eachlabs'}:raise CoreError('image_settings_invalid','Select a configured image connection')
         finally:p.close()
-    return image_settings.save(root,body)
+    return image_settings.save(root,body,models(root))
 
 def prepared(root,body):
     required={'id','provider','model','prompt','size','aspect_ratio'}
     if not isinstance(body,dict) or not required<=set(body) or set(body)-required-{'references','design','derived_from'}:raise CoreError('image_invalid','Invalid image task')
-    value=validate({k:body[k] for k in ('model','prompt','size','aspect_ratio')})
+    value=validate({k:body[k] for k in ('model','prompt','size','aspect_ratio')},models(root))
     value['prompt'],design=compile_brief(value['prompt'],body.get('design'))
     config=image_settings.read(root)
     if value['model'] not in config['enabled_models']:raise CoreError('image_model_disabled','Image model disabled in image settings')
@@ -115,41 +139,47 @@ def prepared(root,body):
 
 def preview(root,body):
     value,design,config=prepared(root,body)
-    if not isinstance(body['provider'],str) or body['provider']=='auto':raise CoreError('image_invalid','Select an explicit Google connection')
+    if not isinstance(body['provider'],str) or body['provider']=='auto':raise CoreError('image_invalid','Select an explicit image connection')
     p=Preferences(root)
     try:current=p.read();route=resolve(current['catalog'],body['provider']) if current else None
     finally:p.close()
-    if not route or route['adapter'] not in {'vertex','gemini'}:raise CoreError('image_invalid','Select Google')
+    if not route or route['adapter'] not in {'vertex','gemini','eachlabs'}:raise CoreError('image_invalid','Select a supported image connection')
     refs=body.get('references',[])
     if not isinstance(refs,list) or len(refs)>2:raise CoreError('image_invalid','At most two references')
-    q=quote(route['adapter'],value,len(refs))
-    return {'request':value,'design':design,'quote':q,'allowed':q['planning_allowance']<=config['max_estimate_usd'],'max_estimate_usd':config['max_estimate_usd'],'expected_pixels':dimensions(value['size'],value['aspect_ratio'])}
+    q=image_quote(root,route['adapter'],value,len(refs))
+    profile=models(root)[value['model']]
+    expected=profile['dimensions'][value['size']][value['aspect_ratio']] if profile.get('adapter')=='eachlabs' else dimensions(value['size'],value['aspect_ratio'])
+    return {'request':value,'design':design,'quote':q,'allowed':q['planning_allowance']<=config['max_estimate_usd'],'max_estimate_usd':config['max_estimate_usd'],'expected_pixels':expected}
 
 def start(root,body):
     enabled(root);NetworkGate(root).require_online()
     value,design,config=prepared(root,body);key=ident(body['id'])
     refs=body.get('references',[])
     if not isinstance(refs,list) or len(refs)>2 or any(not isinstance(x,str) or not re.fullmatch('[a-f0-9]{32}',x) for x in refs):raise CoreError('image_invalid','Choose at most two local PNG references')
-    if not isinstance(body['provider'],str) or body['provider']=='auto':raise CoreError('image_invalid','Select an explicit official Google connection')
+    if not isinstance(body['provider'],str) or body['provider']=='auto':raise CoreError('image_invalid','Select an explicit configured connection')
     p=Preferences(root)
     try:
         current=p.read()
-        if not current:raise CoreError('settings_missing','Configure Google first')
+        if not current:raise CoreError('settings_missing','Configure an image provider first')
         route=resolve(current['catalog'],body['provider'])
     finally:p.close()
-    if route['adapter'] not in {'gemini','vertex'}:raise CoreError('image_invalid','Use Google AI Studio or Vertex')
-    if not Credentials(root).available(route['id'],route.get('credential_id')):raise CoreError('credential_missing','Configure this Google connection')
+    if route['adapter'] not in {'gemini','vertex','eachlabs'}:raise CoreError('image_invalid','Unsupported image provider')
+    if not Credentials(root).available(route['id'],route.get('credential_id')):raise CoreError('credential_missing','Configure this connection key')
     route.update(model=value['model'],parameters={})
-    quoted=quote(route['adapter'],value,len(refs))
+    quoted=image_quote(root,route['adapter'],value,len(refs))
     from datetime import date
     if date.today().isoformat()>quoted['price']['valid_until']:raise CoreError('image_price_expired','Price snapshot needs review')
     if quoted['planning_allowance']>config['max_estimate_usd']:raise CoreError('image_budget','Estimated allowance exceeds saved threshold')
     route['billing_profile']={**route['billing_profile'],'price':None,'image_price':quoted['price'],'purpose':'image_generation','billing_note':'Standard list-price estimate; provider invoice, credits and tax remain separate.'}
+    if route['adapter']=='eachlabs':
+        from control.eachlabs_identity import owner_id
+        route.update(image_profile=models(root)[value['model']],end_user_id=owner_id(root),prediction_receipt=str(child(root,'temp/eachlabs-image-'+key+'.json')))
+        route['billing_profile'].pop('image_price',None)
     from host.studio3d_reference import record
     pairs=[record(root,i) for i in refs]
     from adapters.models.vision import encode_png,validate_encoded
     validate_encoded([encode_png(raw) for _,raw in pairs])
-    if any(len(raw)>7*1000**2 for _,raw in pairs):raise CoreError('image_invalid','Google inline reference must be at most 7 MB each')
+    if any(len(raw)>7*1000**2 for _,raw in pairs):raise CoreError('image_invalid','Each reference must be at most 7 MB')
     if body.get('derived_from'):
         parent=state(root,ident(body['derived_from']))
         if parent['status']!='SUCCEEDED' or parent['receipt']['file']['sha256'] not in [r['sha256'] for r,_ in pairs]:raise CoreError('image_design_invalid','Revision must use the parent image as an explicit reference')
@@ -197,10 +227,11 @@ def run(root,key,value,route,pairs,lease):
         checkpoint();im=result['images'][0];raw=base64.b64decode(im['data'],validate=True);dimensions=raster(raw,im['mimeType'])
         folder=child(root,'artifacts/image-generation/'+key);folder.mkdir(parents=True,exist_ok=False);name='image.png' if im['mimeType']=='image/png' else 'image.jpg'
         (folder/name).write_bytes(raw);url='/api/image-studio/files/'+key+'/'+name
-        receipt={'id':key,'version':VERSION,'provider':route['id'],'adapter':route['adapter'],'model':value['model'],'request':value,'file':{'name':name,'url':url,'mime':im['mimeType'],'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest(),'resolution':dimensions},'usage':usage,'cost':None,'cost_note':'待Google账单核对，未用文本费率估算图片','elapsed_seconds':time.monotonic()-started,'text':result.get('text',''),'references':[{'id':r['id'],'sha256':r['sha256'],'sent_to_provider':route['id']} for r,_ in pairs],'source':MODELS[value['model']]['source'],'license':'Google API generated output; subject to provider terms and input rights; not guaranteed exclusive or historically accurate.'}
+        receipt={'id':key,'version':VERSION,'provider':route['id'],'adapter':route['adapter'],'model':value['model'],'request':value,'file':{'name':name,'url':url,'mime':im['mimeType'],'bytes':len(raw),'sha256':hashlib.sha256(raw).hexdigest(),'resolution':dimensions},'usage':usage,'cost':None,'cost_note':'等待供应商账单核对','elapsed_seconds':time.monotonic()-started,'text':result.get('text',''),'references':[{'id':r['id'],'sha256':r['sha256'],'sent_to_provider':route['id']} for r,_ in pairs],'source':route.get('image_profile',models(root).get(value['model'],{}))['source'],'license':'AI generated output; provider terms and input rights apply; no exclusivity or factual accuracy guarantee.'}
         job=state(root,key)
         from modules.image_generation.catalog import dimensions as expected_dimensions
-        receipt.update(billing=billing,design=job['design'],quote=job['quote'],derived_from=job['request'].get('derived_from'),cost_note='费用为调用时单价快照与实际用量的估算，账单金额单独对账。',technical_checks={'expected_pixels':expected_dimensions(value['size'],value['aspect_ratio']),'actual_pixels':dimensions,'resolution_matches':dimensions==expected_dimensions(value['size'],value['aspect_ratio']),'visual_acceptance':'pending_human_review'},reference_compatible=im['mimeType']=='image/png' and len(raw)<=7*1000**2 and dimensions[0]*dimensions[1]<=16000000 and max(dimensions)<=8192)
+        expected=(route['image_profile']['dimensions'][value['size']][value['aspect_ratio']] if route['adapter']=='eachlabs' else expected_dimensions(value['size'],value['aspect_ratio']))
+        receipt.update(prediction_id=result.get('prediction_id'),billing=billing,design=job['design'],quote=job['quote'],derived_from=job['request'].get('derived_from'),cost_note='规划预留、供应商用量回执和手工账单分开记录。',technical_checks={'expected_pixels':expected,'actual_pixels':dimensions,'resolution_matches':dimensions==expected,'visual_acceptance':'pending_human_review'},reference_compatible=im['mimeType']=='image/png' and len(raw)<=7*1000**2 and dimensions[0]*dimensions[1]<=16000000 and max(dimensions)<=8192)
         checkpoint();(folder/'receipt.json').write_text(canonical(receipt),encoding='utf-8')
         store.finish(turn,{'status':'SUCCEEDED','text':'图片已生成：['+name+']('+url+')\n\n'+result.get('text',''),'usage':usage,'provider':route['id'],'model':route['model']})
         update(root,key,status='SUCCEEDED',receipt=canonical(receipt))
@@ -211,6 +242,13 @@ def run(root,key,value,route,pairs,lease):
         if store and turn:store.finish(turn,{'status':status,'code':code,'usage':usage})
         update(root,key,status=status,error=code)
     finally:
+        if route.get('prediction_receipt'):
+            try:
+                from pathlib import Path
+                path=Path(route['prediction_receipt'])
+                if path.exists() and path.stat().st_size<=16384:
+                    current=state(root,key);update(root,key,quote=canonical({**(current['quote'] or {}),'remote_prediction':json.loads(path.read_text(encoding='utf-8'))}))
+            except (OSError,ValueError,CoreError):pass
         if store:store.close()
         with GUARD:ACTIVE.discard((str(root),key))
         lease.__exit__(None,None,None);LOCK.release()
@@ -227,7 +265,7 @@ def reference(root,key):
     row=state(root,key)
     if row['status']!='SUCCEEDED' or row['receipt']['file']['mime']!='image/png':raise CoreError('image_invalid','Choose a delivered PNG for Studio3D')
     raw,_=file(root,key,row['receipt']['file']['name'])
-    return upload(root,{'name':'Nano-Banana-'+key[:8]+'.png','source':'Google '+row['receipt']['model']+'; Jarvis image task '+key,'license':'AI generated reference; input rights and Google terms apply; not measured real-world evidence.','data':base64.b64encode(raw).decode()})
+    return upload(root,{'name':'Jarvis-Image-'+key[:8]+'.png','source':row['receipt']['adapter']+' '+row['receipt']['model']+'; Jarvis image task '+key,'license':'AI generated reference; input rights and provider terms apply; not measured real-world evidence.','data':base64.b64encode(raw).decode()})
 
 
 def upload(root,body):
@@ -274,11 +312,11 @@ def summary(root):
     groups={}
     for r in rows:
         request=json.loads(r['request']);key=request['provider']+'/'+request['model']
-        group=groups.setdefault(key,{'provider':request['provider'],'model':request['model'],'tasks':0,'estimated_usd':0,'unknown':0,'pending':0,'invoice_count':0,'invoice_usd':0,'invoice_cny':0})
+        group=groups.setdefault(key,{'provider':request['provider'],'model':request['model'],'tasks':0,'estimated_usd':0,'reported_usd':0,'unknown':0,'pending':0,'invoice_count':0,'invoice_usd':0,'invoice_cny':0})
         group['tasks']+=1;billing=json.loads(r['billing']) if r['billing'] else {}
-        if billing.get('amount') is not None:group['estimated_usd']+=billing['amount']
+        if billing.get('amount') is not None:group['reported_usd' if billing.get('reason')=='provider_reported_cost' else 'estimated_usd']+=billing['amount']
         elif r['status'] in TERMINAL:group['unknown']+=1
         else:group['pending']+=1
         if r['id'] in invoices:
             invoice=invoices[r['id']];group['invoice_count']+=1;group['invoice_'+invoice['currency'].lower()]+=invoice['amount']
-    return {'groups':list(groups.values()),'scope':'all local image jobs; estimates and manually entered invoice amounts are separate, not added together','invoice_import':'manual only; no Google account balance or billing-export connection'}
+    return {'groups':list(groups.values()),'scope':'all local image jobs; estimates/provider receipts and manually entered invoices are separate, not added together','invoice_import':'manual only; no account balance or billing export attached'}

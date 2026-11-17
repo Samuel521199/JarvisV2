@@ -3,7 +3,7 @@ from copy import deepcopy
 from datetime import datetime, timezone
 import re
 import uuid
-from modules.preferences.store import validate_catalog, validate_coding, resolve, ADAPTERS
+from modules.preferences.store import validate_catalog, validate_coding, resolve, ADAPTERS,allowed_adapters
 from sdk.pricing import validate_price
 from sdk.protocol import CoreError, canonical, decode
 
@@ -22,6 +22,8 @@ def manage(store, value, vault=None):
         'add_key': {'connection','label','secret','replace_key'},
         'coding': {'enabled','model','reasoning'},
         'routing': {'enabled','routes'},
+        'remove_connection': {'connection'},
+        'provider_policy': {'allowed_adapters'},
     }
     if not isinstance(value,dict) or value.get('action') not in fields or set(value)!=(fields[value['action']]|{'action','revision'}):
         raise CoreError('settings_invalid','Unexpected management command')
@@ -37,7 +39,19 @@ def manage(store, value, vault=None):
         for key in {'enabled','default','active'} & set(value):
             if type(value[key]) is not bool: raise CoreError('settings_invalid','Expected boolean')
         pending_credential=None
-        if action=='routing':
+        if action=='provider_policy':
+            config['usage_policy']={'schema':'provider-policy.v1','allowed_adapters':value['allowed_adapters'],'exhaustion':'notify_on_provider_exhaustion'}
+            permitted=allowed_adapters(config)
+            for name,provider in config['providers'].items():
+                if provider.get('adapter',name) not in permitted:provider['enabled']=False
+            config['fallback_order']=[name for name in config['fallback_order'] if config['providers'][name].get('adapter',name) in permitted]
+        elif action=='remove_connection':
+            if value['connection']==config['default_provider']:raise CoreError('settings_invalid','Choose another default before removing a connection')
+            if vault is None:raise CoreError('vault_unavailable','Credential retirement requires the local vault')
+            vault.retire(value['connection'],deepcopy(item))
+            del config['providers'][value['connection']]
+            config['fallback_order']=[name for name in config['fallback_order'] if name!=value['connection']]
+        elif action=='routing':
             routes=value['routes']
             if not isinstance(routes,list) or not 1<=len(routes)<=8:raise CoreError('settings_invalid','Choose one to eight routes')
             order=[]
@@ -51,7 +65,7 @@ def manage(store, value, vault=None):
             if value['default']: config['default_provider']=value['connection']
         elif action=='add_connection':
             adapter=value['adapter']
-            if adapter not in ADAPTERS-{'local'}: raise CoreError('settings_invalid','Unsupported adapter')
+            if adapter not in (allowed_adapters(config)-{'local'}): raise CoreError('settings_invalid','Adapter is outside the saved provider policy')
             ident=adapter+'-'+uuid.uuid4().hex[:10];model=text(value['model'],100)
             item={'adapter':adapter,'label':text(value['label']),'enabled':True,'model':model,'models':{model:{'label':model,'parameters':{'max_output_tokens':4096},'reasoning_levels':[],'enabled':True,'price':None}},'keys':{}}
             if adapter=='vertex':item['location']='global'

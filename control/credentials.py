@@ -77,6 +77,18 @@ class Credentials:
         data.setdefault('_managed', {})[key_id] = {'connection': connection, 'credential': credential}
         self.save(data)
 
+    def retire(self,connection,catalog):
+        """Remove active lookup paths; retain encrypted recovery and provenance."""
+        import time,uuid
+        data=load_envelope(self.path) if self.path.exists() else {}
+        managed=data.setdefault('_managed',{})
+        removed={k:managed.pop(k) for k in list(managed) if managed[k].get('connection')==connection}
+        legacy=data.pop(connection,None)
+        data.setdefault('_retired_connections',{})[uuid.uuid4().hex]={
+            'connection':connection,'catalog':catalog,'managed':removed,'legacy':legacy,'retired_at':time.time(),
+            'authority':'recovery material only; never automatically reactivate'}
+        self.save(data)
+
     def save(self, data):
         from control.development_profile import deny_external
         deny_external(self.path.parent.parent)

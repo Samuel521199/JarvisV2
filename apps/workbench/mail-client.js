@@ -8,6 +8,9 @@ export const mailApi={
  async run(operation,payload,{signal,onProgress,timeout=65000}={}){
   if(signal?.aborted)throw new DOMException('Cancelled','AbortError');
   let job=await this.command({action:'job',request_id:crypto.randomUUID(),operation,payload});
+  return this.wait(job,{signal,onProgress,timeout});
+ },
+ async wait(job,{signal,onProgress,timeout=65000}={}){
   const end=Date.now()+timeout;
   while(['READY','RUNNING'].includes(job.status)){
    onProgress?.(job);

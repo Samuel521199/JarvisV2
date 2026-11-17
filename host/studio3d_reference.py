@@ -19,7 +19,7 @@ def register(root,body):
     width,height=struct.unpack_from('>II',raw,16)
     if not 1<=width<=8192 or not 1<=height<=8192 or width*height>16000000:raise CoreError('studio3d_invalid','Reference pixel budget exceeded')
     ident=uuid.uuid4().hex;folder=child(root,'artifacts/studio3d-references');folder.mkdir(parents=True,exist_ok=True)
-    row={'id':ident,'name':body['name'],'source':body['source'],'license':body['license'],'sha256':hashlib.sha256(raw).hexdigest(),'bytes':len(raw),'resolution':[width,height],'provenance_verified':False,'mode':'Local visual reference; no automatic cloud upload or image-to-mesh. Explicit image editing or vision_reference sends PNG to the selected Google route. Not photogrammetry.'}
+    row={'id':ident,'name':body['name'],'source':body['source'],'license':body['license'],'sha256':hashlib.sha256(raw).hexdigest(),'bytes':len(raw),'resolution':[width,height],'provenance_verified':False,'mode':'Local visual reference; no automatic cloud upload or image-to-mesh. Explicit image editing or vision_reference sends PNG to the selected configured vision route. Not photogrammetry.'}
     (folder/(ident+'.png')).write_bytes(raw);(folder/(ident+'.json')).write_text(canonical(row),encoding='utf-8');return row
 
 def record(root,ident):

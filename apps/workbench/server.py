@@ -150,7 +150,7 @@ class Handler(BaseHTTPRequestHandler):
                 from control.development_profile import read as development_profile
                 profile = development_profile(self.server.data_root)
                 return self.json({'kind': 'development' if profile else 'stable',
-                                  'shared_google_models': bool(profile), 'real_account_actions': not bool(profile)})
+                                  'shared_models': bool(profile), 'shared_model_providers': profile['allowed_providers'] if profile else [], 'real_account_actions': not bool(profile)})
             if mail_http.get(self, route.path): return
             if model_library_http.get(self, route.path): return
         except (CoreError, OSError, ValueError, sqlite3.Error): return self.json({'error': 'family_unavailable'}, 503)
@@ -179,6 +179,9 @@ class Handler(BaseHTTPRequestHandler):
                     raw,mime=images.file(root,pieces[-2],pieces[-1]);return self.reply(200,raw,mime)
                 return self.json({'error':'image_missing'},404)
             except (CoreError,OSError,ValueError) as exc:return self.json({'error':exc.code if isinstance(exc,CoreError) else 'image_missing'},400)
+        if route.path=='/api/development/model-sharing':
+            from host.development_sharing import read
+            return self.json(read(data_root(self.server.data_root)))
         if route.path=='/api/studio3d/learning' or route.path.startswith('/api/studio3d/learning/runs/'):
             from host import studio3d_learning as learning
             try:
@@ -349,6 +352,9 @@ class Handler(BaseHTTPRequestHandler):
             if route.path.startswith('/api/image-studio/'):
                 from host import image_generation as images
                 if route.path=='/api/image-studio/settings':return self.json(images.configure(root,body))
+                if route.path=='/api/image-studio/models/import':
+                    from host.eachlabs_configuration import import_image
+                    return self.json(import_image(root,body))
                 if route.path=='/api/image-studio/preview':return self.json(images.preview(root,body))
                 if route.path=='/api/image-studio/annotation':return self.json(images.annotate(root,body))
                 if route.path=='/api/image-studio/jobs':return self.json(images.start(root,body),202)
@@ -453,6 +459,9 @@ class Handler(BaseHTTPRequestHandler):
                         return self.json({'ok': True, 'settings': store.public(Credentials(root).available)})
                     return self.json({'ok': True, 'ui': store.save_ui(body)})
                 finally: store.close()
+            if route.path=='/api/development/model-sharing':
+                from host.development_sharing import configure
+                return self.json(configure(root,body))
             if route.path == '/api/chat/send':
                 return self.json(self.server.dialogues.submit(body), 202)
             if route.path == '/api/speech':

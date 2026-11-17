@@ -108,7 +108,7 @@ def message(value,full=False):
     return result
 
 
-def classify(mail,rules=()):
+def _category(mail,rules=()):
     sender=parseaddr(mail.get('from',''))[1].lower();text=(mail.get('subject','')+' '+mail.get('snippet','')).lower()
     for rule in rules:
         if sender and rule.get('sender')==sender:return {'category':rule['category'],'reason':'主人的发件人规则','rule_id':rule['id']}
@@ -121,3 +121,24 @@ def classify(mail,rules=()):
     if 'CATEGORY_PROMOTIONS' in mail.get('labels',[]):return {'category':'promotion','reason':'Gmail 推广分类；不证明邮件可信或有害'}
     if any(x in text for x in ['unsubscribe','退订','优惠','促销','sale ends']):return {'category':'promotion','reason':'命中推广类关键词'}
     return {'category':'normal','reason':'暂无特别规则'}
+
+
+def classify(mail,rules=()):
+    result=_category(mail,rules)
+    sender=parseaddr(mail.get('from',''))[1].lower();subject=mail.get('subject','').casefold();domain=sender.rsplit('@',1)[-1]
+    for rule in sorted((r for r in rules if r.get('kind')=='folder_rule' and r.get('enabled',True)),key=lambda r:(-r.get('priority',50),r['id'])):
+        pattern=rule['pattern'].strip().casefold();field=rule['field']
+        matched=(pattern in subject if field=='subject' else sender==pattern if field=='sender' else domain==pattern or domain.endswith('.'+pattern))
+        if matched:return {**result,'folder':rule['folder'],'folder_reason':'你的'+{'subject':'标题','sender':'发件人','domain':'域名'}[field]+'规则：'+rule['pattern'],
+            'folder_rule_id':rule['id'],'folder_basis':'personal_rule','model_tokens':0}
+    text=subject+' '+sender
+    groups=[('账号安全',('验证码','security alert','password','登录','安全警报','安全提醒')),
+        ('账单财务',('invoice','receipt','payment','账单','收据','付款','扣款')),
+        ('物流订单',('delivery','shipment','tracking','物流','快递','订单','发货')),
+        ('工作协作',('gitlab','github','meeting','workshop','项目','会议','工单','评审','review','project')),
+        ('学习成长',('english','lesson','course','学习','课程','练习','口语')),
+        ('订阅资讯',('newsletter','unsubscribe','订阅','观察','新闻','促销','sale'))]
+    for folder,words in groups:
+        matched=next((w for w in words if w in text),None)
+        if matched:return {**result,'folder':folder,'folder_reason':'标题/发件人命中“'+matched+'”，可纠正','folder_basis':'local_hint','model_tokens':0}
+    return {**result,'folder':'待整理','folder_reason':'没有匹配的本地规则；未交给云端模型','folder_basis':'unclassified','model_tokens':0}

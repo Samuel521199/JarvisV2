@@ -13,6 +13,7 @@ from control.network import NetworkGate
 from control.recovery.gate import StopGate,RunLock
 from modules.mail.store import MailStore
 from modules.mail.provenance import fingerprint
+from modules.mail import local_views
 from sdk.mail import CHANGES,LEVELS,address,capabilities,classify,client_configuration,draft,encoded_message,identifier
 from sdk.protocol import CoreError,digest
 from control import logs
@@ -20,7 +21,7 @@ from control import logs
 LOG=logs.get('mail')
 
 WRITES={'send','remote_draft','change','undo'}
-OPERATIONS={'check','list','sync','read','analyze','send','remote_draft','change','undo','reconcile'}
+OPERATIONS={'check','counts','list','sync','read','analyze','send','remote_draft','change','undo','reconcile'}
 
 
 def public_job(row):
@@ -47,12 +48,16 @@ class Mailbox:
         store=MailStore(self.root)
         try:
             a=store.get('account',True);client=store.get('client',True)
+            rules=local_views.rules(store,(a or {}).get('generation'))
+            cached_items=[{k:m.get(k,'') for k in ('id','from','subject','date','snippet','labels')}|{'classification':classify(m,rules)}
+                for row in store.listing('message',200) if row.get('account_generation')==(a or {}).get('generation') for m in [row['message']]]
             return {'version':'1.0.0','provider':'gmail','configured':bool(client),'connected':bool(a and a.get('credentials')),
                     'email':a.get('email','') if a else '', 'account_generation':a.get('generation','') if a else '', 'health':a.get('health','unchecked') if a else 'disconnected',
                     'checked_at':a.get('checked_at') if a else None,'capabilities':capabilities(a.get('credentials',{}).get('scope','')) if a else capabilities(''),
                     'authorization':{k:v for k,v in (self.auth or {}).items() if k!='future'},
                     'jobs':[public_job(j) for j in store.listing('job',40) if a and j.get('generation')==a.get('generation')], 'drafts':store.listing('draft',30),
-                    'rules':store.listing('rule',100),'network_blocked':NetworkGate(self.root).read()['blocked']}
+                    'rules':rules,'cached_items':cached_items,'view_preferences':local_views.preferences(store,(a or {}).get('generation')),
+                    'network_blocked':NetworkGate(self.root).read()['blocked']}
         finally:store.close()
     def guard(self,job_id=None,generation=None):
         if self.closed.is_set():raise CoreError('mail_cancelled','Mailbox service is closing')
@@ -75,9 +80,10 @@ class Mailbox:
         from modules.mail.companion import project
         store=MailStore(self.root)
         try:
-            return project(store.get('account',True),store.get('client',True),store.listing('job',100),
-                           store.listing('rule',100),store.listing('message',200),self.auth or {},
-                           NetworkGate(self.root).read()['blocked'])
+            account=store.get('account',True);generation=(account or {}).get('generation')
+            return {**project(account,store.get('client',True),store.listing('job',100),
+                           local_views.rules(store,generation),store.listing('message',200),self.auth or {},
+                           NetworkGate(self.root).read()['blocked']),'view_preferences':local_views.preferences(store,generation)}
         finally:store.close()
     def save_account(self,store,generation,**patch):
         with self.lock,store.transaction():
@@ -88,11 +94,26 @@ class Mailbox:
     def command(self,value):
         fields={'configure':{'client'},'authorize':{'level'},'cancel_authorization':set(),'disconnect':set(),'job':{'request_id','operation','payload'},
                 'detail':{'id'},'cancel':{'id'},'resume':{'id'},'draft':{'value','id','revision'},'review':{'operation','payload'},
-                'approve':{'review_id','request_id'},'rule':{'sender','category'},'remove_rule':{'id','revision'}}
+                'approve':{'review_id','request_id'},'rule':{'sender','category'},'remove_rule':{'id','revision'},
+                'cached_message':{'message_id'},'view_preferences':{'revision','mark_read_on_open','account_generation'},
+                'folder_rule':{'id','revision','field','pattern','folder','priority','enabled','account_generation'}}
         if not isinstance(value,dict) or not isinstance(value.get('action'),str) or value['action'] not in fields or set(value)!={'action'}|fields[value['action']]:
             raise CoreError('mail_invalid','Unexpected mailbox command')
         action=value['action'];store=MailStore(self.root)
         try:
+            if action in {'cached_message','view_preferences','folder_rule'}:
+                a=store.get('account',True)
+                if not a or not a.get('credentials'):raise CoreError('mail_auth_required','Connect Gmail first')
+                generation=a['generation']
+                if action in {'view_preferences','folder_rule'} and value['account_generation']!=generation:
+                    raise CoreError('mail_account_changed','Mailbox changed before saving display settings')
+                if action=='view_preferences':return local_views.save_preferences(store,value,generation)
+                if action=='folder_rule':return local_views.save_rule(store,value,generation)
+                identifier(value['message_id']);record=store.get('message-'+value['message_id'],True)
+                if not record or record.get('account_generation')!=generation or 'body' not in record.get('message',{}):
+                    raise CoreError('mail_body_not_cached','Full message is not in this mailbox cache')
+                mail=record['message'];return {**mail,'classification':classify(mail,local_views.rules(store,generation)),
+                    'cached_at':record['updated'],'from_cache':True,'account_generation':generation,'source_digest':fingerprint(mail)}
             if action=='configure':
                 client=client_configuration(value['client'])
                 with store.transaction():
@@ -134,7 +155,7 @@ class Mailbox:
                 with self.lock,store.transaction():
                     if action=='remove_rule':
                         old=store.get(value['id'])
-                        if old['kind']!='rule' or old['revision']!=value['revision']:raise CoreError('conflict','Rule changed')
+                        if old['kind'] not in {'rule','folder_rule'} or old['revision']!=value['revision']:raise CoreError('conflict','Rule changed')
                         store.db.execute('DELETE FROM objects WHERE id=?',(old['id'],));return {'ok':True}
                     sender=address(value['sender']).lower()
                     if value['category'] not in {'important','normal','promotion','spam','suspicious'}:raise CoreError('mail_invalid','Unknown category')
@@ -257,8 +278,9 @@ class Mailbox:
                 if old and old.get('account_generation')==generation:m=merge_metadata(m,old['message'])
                 with store.transaction():store.put({'id':key,'kind':'message','message':m,'account_generation':generation},old['revision'] if old else 0)
                 visible={k:v for k,v in m.items() if not metadata or k!='body'}
-                return {**visible,'classification':classify(m,store.listing('rule')),'account_generation':generation,'source_digest':fingerprint(m)}
+                return {**visible,'classification':classify(m,local_views.rules(store,generation)),'account_generation':generation,'source_digest':fingerprint(m)}
             if operation=='check':result=api.profile()
+            elif operation=='counts':result={'counts':api.inbox_counts()}
             elif operation in {'list','sync'}:
                 result=api.listing(payload['query'],payload['page']);result['messages']=[cache(m) for m in result['messages']]
                 if operation=='sync':result['counts']=api.inbox_counts()
@@ -348,7 +370,7 @@ class Mailbox:
         return {'original_job':job_id,'status':'SUCCEEDED','result':result}
     def validate(self,operation,payload):
         if not isinstance(payload,dict):raise CoreError('mail_invalid','Expected mail parameters')
-        expected={'check':set(),'list':{'query','page'},'sync':{'query','page'},'read':{'message_id'},'analyze':{'message_id','instruction'},
+        expected={'check':set(),'counts':set(),'list':{'query','page'},'sync':{'query','page'},'read':{'message_id'},'analyze':{'message_id','instruction'},
                   'send':{'draft_id','revision'},'remote_draft':{'draft_id','revision'},'change':{'message_id','change'},'undo':{'job_id'},'reconcile':{'job_id'}}
         if operation not in expected or set(payload)!=expected[operation]:raise CoreError('mail_invalid','Unexpected operation parameters')
         if 'message_id' in payload:identifier(payload['message_id'])

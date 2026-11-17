@@ -65,7 +65,7 @@ class DialogueHost:
                 if 'reference_image' in command and 'reference_images' in command or not isinstance(ids,list) or not 1<=len(ids)<=2:raise CoreError('chat_invalid','Expected explicit image IDs')
                 from adapters.models.vision import encode_png,validate_encoded
                 validate_encoded([encode_png(record(self.root,i)[1]) for i in ids])
-                if selected=='auto' or route['adapter'] not in {'vertex','gemini'} or command.get('assistant_mode',False):raise CoreError('model_vision_unsupported','Select an explicit Gemini image route')
+                if selected=='auto' or route['adapter'] not in {'vertex','gemini','eachlabs'} or command.get('assistant_mode',False):raise CoreError('model_vision_unsupported','Select an explicit supported image route')
             routes = [route]
             if selected == 'auto': routes.extend(fallback_routes(cfg, route))
             with self.lock:

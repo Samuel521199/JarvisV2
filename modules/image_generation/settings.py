@@ -18,13 +18,14 @@ def read(root):
     try:r=d.execute('SELECT revision,value FROM settings WHERE id=1').fetchone();return {'revision':r[0],**json.loads(r[1])}
     finally:d.close()
 
-def save(root,body):
+def save(root,body,models=None):
+    models=MODELS if models is None else models
     if not isinstance(body,dict) or set(body)!=set(DEFAULT)|{'revision'} or type(body['revision']) is not int:raise CoreError('image_settings_invalid','Unexpected image settings')
     v={k:body[k] for k in DEFAULT}
     if not isinstance(v['provider'],str) or not re.fullmatch('[A-Za-z0-9_-]{0,80}',v['provider']):raise CoreError('image_settings_invalid','Invalid connection ID')
-    validate({k:v[k] for k in ('model','size','aspect_ratio')}|{'prompt':'settings'})
+    validate({k:v[k] for k in ('model','size','aspect_ratio')}|{'prompt':'settings'},models)
     if not isinstance(v['preset'],str) or v['preset'] not in RECIPES:raise CoreError('image_settings_invalid','Unknown design preset')
-    if not isinstance(v['enabled_models'],list) or any(not isinstance(x,str) or x not in MODELS for x in v['enabled_models']) or len(set(v['enabled_models']))!=len(v['enabled_models']) or v['model'] not in v['enabled_models']:raise CoreError('image_settings_invalid','Default model must be enabled')
+    if not isinstance(v['enabled_models'],list) or any(not isinstance(x,str) or x not in models for x in v['enabled_models']) or len(set(v['enabled_models']))!=len(v['enabled_models']) or v['model'] not in v['enabled_models']:raise CoreError('image_settings_invalid','Default model must be enabled')
     n=v['max_estimate_usd']
     if type(n) not in (int,float) or not math.isfinite(n) or not .001<=n<=100:raise CoreError('image_settings_invalid','Planning threshold must be 0.001..100 USD')
     d=connection(root)

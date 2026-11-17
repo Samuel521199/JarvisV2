@@ -26,6 +26,11 @@ def validate_price(value):
 
 
 def estimate(profile, usage, created):
+    if profile and profile.get('adapter')=='eachlabs' and 'provider_cost_usd' in usage:
+        amount=usage['provider_cost_usd']
+        if type(amount) in (int,float) and math.isfinite(amount) and amount>=0:
+            return {'amount':amount,'currency':'USD','reason':'provider_reported_cost','price':None,'basis':'Eachlabs usage receipt; separate from invoice/tax'}
+        return {'amount':None,'currency':'USD','reason':'invalid_usage','price':None}
     if profile and profile.get('image_price'):
         from sdk.image_pricing import estimate_image
         return estimate_image(profile['image_price'],usage,created)

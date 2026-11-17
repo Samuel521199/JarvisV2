@@ -29,6 +29,7 @@ FILES = ['host/development_bridge.py', 'apps/development/bridge.py', 'adapters/m
          'control/credentials.py', 'control/development_profile.py', 'control/network.py', 'control/paths.py',
          'control/atomic.py', 'control/recovery/gate.py', 'sdk/protocol.py', 'sdk/pricing.py',
          'modules/preferences/store.py']
+FILES += ['control/eachlabs_identity.py']
 FILES += [str(path.relative_to(ROOT)).replace('\\', '/') for path in (
     ROOT / name / '__init__.py' for name in ['host', 'apps', 'apps/development', 'adapters', 'adapters/models',
                                           'control', 'control/recovery', 'sdk', 'modules', 'modules/preferences']) if path.exists()]

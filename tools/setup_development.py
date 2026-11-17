@@ -1,4 +1,4 @@
-"""Prepare isolated development data and a narrow Google model proxy grant.
+"""Prepare isolated development data and a narrow configured model proxy grant.
 
 Never copies production memory, email credentials or tasks. Does not start any
 service. Owner invokes this explicitly after reviewing the separate checkout.
@@ -15,7 +15,7 @@ from control.development_profile import write_secret, read, client_secret
 from control.paths import data_root, child, reject_links
 from host.core import Core
 from host.development_bridge import Bridge
-from modules.preferences.store import Preferences
+from modules.preferences.store import Preferences,allowed_adapters
 
 
 def setup(production, development, bridge_port=18482, daily_calls=64):
@@ -38,10 +38,10 @@ def setup(production, development, bridge_port=18482, daily_calls=64):
     finally:
         prefs.close()
     names = [name for name, item in state['catalog']['providers'].items()
-             if item.get('adapter', name) in {'vertex', 'gemini'} and item.get('enabled', True)
+             if item.get('adapter', name) in (allowed_adapters(state['catalog'])-{'local'}) and item.get('enabled', True)
              and Credentials(production).available(name, item.get('credential_id'))]
     if not names:
-        raise ValueError('No configured Google provider to share')
+        raise ValueError('No configured remote text provider to share')
     if pending:
         grant = client_secret(development)
         if (grant['allowed_providers'] != names or grant['daily_call_limit'] != daily_calls
