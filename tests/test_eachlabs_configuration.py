@@ -83,6 +83,13 @@ class EachlabsTests(unittest.TestCase):
         bill=estimate({'adapter':'eachlabs','price':None},result['usage'],0)
         self.assertEqual(bill['amount'],.08);self.assertEqual(bill['reason'],'provider_reported_cost')
 
+    def test_error_terminal_preserves_reported_zero_without_recreating_prediction(self):
+        responses=[{'predictionID':'known-failure'},{'status':'error','metrics':{'cost':0,'predict_time':6.9}}]
+        with patch.object(eachlabs,'api',side_effect=responses) as api:
+            result=eachlabs.image({'image_profile':self.profile,'end_user_id':'synthetic-owner'},{'api_key':'synthetic'},self.value,[],sleep=lambda _:self.fail('terminal errors must not poll again'))
+        self.assertEqual(result['status'],'REJECTED');self.assertEqual(result['code'],'eachlabs_error')
+        self.assertEqual(result['usage']['provider_cost_usd'],0);self.assertEqual(api.call_count,2)
+
     def test_edit_uses_configured_edit_slug_and_only_explicit_references(self):
         responses=[{'predictionID':'edit-one'},{'status':'success','output':'https://cdn.eachlabs.ai/out.png'}]
         with patch.object(eachlabs,'upload',return_value='https://cdn.eachlabs.ai/input.png') as upload,patch.object(eachlabs,'api',side_effect=responses) as api,patch.object(eachlabs,'trusted_media',side_effect=lambda u:u),patch.object(eachlabs,'fetch',return_value=(png(),'image/png')):

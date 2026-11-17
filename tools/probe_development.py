@@ -1,4 +1,4 @@
-"""Explicit isolated-environment probe. --live-model spends one bounded Google request."""
+"""Explicit isolated-environment probe. --live-model spends one bounded request through the explicitly shared provider."""
 import argparse
 import json
 import sqlite3
@@ -53,7 +53,8 @@ def probe(root, live_model=False):
         finally:
             database.close()
     catalog = exchange(root, '/catalog')['catalog']
-    assert all(item['adapter'] in {'vertex', 'gemini'} for item in catalog['providers'].values())
+    assert set(catalog['providers'])==set(exchange(root,'/status')['allowed_providers'])
+    assert all(item['adapter'] in {'vertex','gemini','eachlabs','openai','xai','bailian','compatible'} for item in catalog['providers'].values())
     assert all(not set(item).intersection({'keys', 'credential_id'}) for item in catalog['providers'].values())
     result = {'schema': 1, 'checked_at_unix': time.time(), 'development_data': str(root),
               'anonymous_rejected': True, 'mail_actions_rejected': True,
@@ -61,7 +62,7 @@ def probe(root, live_model=False):
               'model_credentials_not_copied': True, 'google_only_public_catalog': True}
     if live_model:
         chat = post('/api/chats', {})['id']
-        post('/api/chat/update', {'id': chat, 'patch': {'title': '开发环境 · Google 代理验收'}})
+        post('/api/chat/update', {'id': chat, 'patch': {'title': '开发环境 · 已授权模型代理验收'}})
         connection = catalog['default_provider']
         model = catalog['providers'][connection]['model']
         request = uuid.uuid4().hex

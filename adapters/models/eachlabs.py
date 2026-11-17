@@ -74,7 +74,7 @@ def image(config,credential,value,images,progress=lambda _:None,*,clock=time.mon
         metrics={k:v for k,v in result.get('metrics',{}).items() if k in ('cost','predict_time') and type(v) in (int,float) and math.isfinite(v)}
         progress({'prediction_id':ident,'status':state,'metrics':metrics,'provider':'eachlabs'})
         if state=='success':break
-        if state in {'failed','cancelled'}:
+        if state in {'failed','cancelled','error'}:
             cost=metrics.get('cost');usage={'provider_cost_usd':cost} if type(cost) in (int,float) and cost>=0 else {}
             return {'status':'REJECTED','code':'eachlabs_'+state,'prediction_id':ident,'usage':usage}
         sleep(2)

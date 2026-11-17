@@ -772,7 +772,7 @@ SQLite 仅明文索引对象 ID、种类、修订；内容、地址、令牌、c
 | `<数据根>/deployment/retired/<sha>/` | 可恢复的旧代码退役区，不保存旧业务数据库快照 |
 | `D:/Jarvis-dev/` | 已建立的开发工作树，跟踪 `codex/pc-environments` |
 | `D:/Jarvis-dev/user-data/` | 开发配置、合成记忆、测试任务与日志 |
-| `D:/Jarvis-runtime/user-data/development/proxy-releases/<hash>/` | 已冻结的第一方 Google 代理代码，不放个人业务数据库 |
+| `D:/Jarvis-runtime/user-data/development/proxy-releases/<hash>/` | 已冻结的第一方受限模型代理代码，不放个人业务数据库 |
 | `D:/Jarvis-runtime/user-data/development/proxy-active.json` | 当前已核对代理包的摘要选择；普通开发启动不自动采用源码变化 |
 | `D:/jarvisTest/<run-id>/` | 用后可按归属管理的集成测试工程，沿现有非系统盘规则 |
 
@@ -790,14 +790,14 @@ D:\Jarvis-dev\StartJarvisDev.bat
 <a id="single-pc-development-runtime"></a>
 ### 第一阶段运行接口、维护与限制
 
-**Windows／Python 3.13 下局部 implemented／verified。** `control/development_profile.py` 定义开发策略；`adapters/development_bridge.py` 是受限客户接口；`host/development_bridge.py` 持正式凭据代发 Google 请求；`host/development_runtime.py` 负责冻结包选择、启动和开发实例停止。`apps/development/` 只是入口，工作台、领域模块和模型适配器仍沿用同一套实现，没有另建聊天或邮件业务系统。
+**Windows／Python 3.13 下局部 implemented／verified。** `control/development_profile.py` 定义开发策略；`adapters/development_bridge.py` 是受限客户接口；`host/development_bridge.py` 持正式凭据代发明确授权的模型请求（当前 Eachlabs）；`host/development_runtime.py` 负责冻结包选择、启动和开发实例停止。`apps/development/` 只是入口，工作台、领域模块和模型适配器仍沿用同一套实现，没有另建聊天或邮件业务系统。
 
 | 接口与策略 | 当前实现 |
 |---|---|
 | 代理端点 | 仅 loopback 的 `/status`、`/catalog`、`/model`、`/shutdown`；绑定客户端及 DPAPI 保存的随机许可，拒绝网页 Origin 和重定向 |
 | 可共享内容 | 正式设置中已配置且明确授权共享的远端文字路由、公开型号／价格元数据，以及代发文字／JSON 请求；v0.1.16 当前改为 Eachlabs，由后台共享范围配置，Skill 不固定型号 |
 | 不共享内容 | 不导出厂商密钥、正式记忆、邮箱令牌、邮件正文或正式任务；开发配置最初使用公开目录快照，选择独立于日用选择，尚无实时目录推送 |
-| 默认外部动作 | 开发 profile 禁止适配器直连网络、读取／保存厂商凭据及工作台邮件写操作；只有明确的 Google 代理通路；不是任意开发代码的 OS 网络沙箱 |
+| 默认外部动作 | 开发 profile 禁止适配器直连网络、读取／保存厂商凭据及工作台邮件写操作；只有明确授权的模型代理通路；不是任意开发代码的 OS 网络沙箱 |
 | 限流与费用 | 一次代理模型请求、滚动 24 小时最多 64 次、单次输出最多 4096 tokens；与正式设置取更严上限。次数账本持久化，重启不清零；不是美元金额硬上限 |
 | 不确定结果 | 同一请求 ID／相同内容返回加密回执；同 ID 改内容拒绝；已派发未知结果不自动补发。取消后已发出的模型请求仍可能计费 |
 | 采用代理更新 | 默认只运行已选中的冻结包并复核文件摘要；修改开发源码不会在下一次普通启动自动变成持凭据服务。核对候选后显式 `--adopt-proxy`；代理更新先排空和停止，摘要核对不等于供应链签名 |
@@ -805,14 +805,14 @@ D:\Jarvis-dev\StartJarvisDev.bat
 
 首次准备用 `python -m tools.setup_development --production-data <正式数据根> --development-data <空开发数据根>`；它不启动服务，不复制业务库，Windows 上双方许可均用 DPAPI 保存，中断可续装。审阅和相关测试通过后，显式运行 `python -m tools.development_runtime start --adopt-proxy` 核对并采用代理。以后双击开发批处理，或用 `python -m tools.development_runtime start`／`status`／`stop`。设置和许可在各自 `user-data` 内，不能提交到公开仓库。
 
-显式检查为 `python -m tools.probe_development`；增加 `--live-model` 才创建合成开发对话并消耗一次真实 Google 请求。适用本机默认端口，其他端口应使用相应的客户端配置；不能把该脚本当作跨平台、全业务或长时性能验收。当前 DPAPI 代理只在 Windows 上核验，Linux／macOS 密钥适配还未完成。
+显式检查为 `python -m tools.probe_development`；增加 `--live-model` 才创建合成开发对话并消耗一次当前授权提供者的真实请求。适用本机默认端口，其他端口应使用相应的客户端配置；不能把该脚本当作跨平台、全业务或长时性能验收。当前 DPAPI 代理只在 Windows 上核验，Linux／macOS 密钥适配还未完成。
 
 <a id="single-pc-development-resources"></a>
 ### 并行使用的实际边界与第一批落地
 
 普通聊天、代码编辑、Mock 和部分工具研发可以并行；真实桌面键鼠与同一微信会话按全机资源租约串行。控件接口是否能后台操作须逐应用验证。当前 RunLock 仅按数据根加锁，两个数据根不提供跨实例设备仲裁；不能直接启动两个微信 MCP 就保证不冲突。
 
-开发重任务先限制为一项，按需启动浏览器／Blender／模型 Worker；稳定交互优先。共用 API key 仍共用供应商配额与余额，不同本地数据根的费用上限不能自动合并为账户总上限。Google 受限代理已经运行；全机设备调度、账户总预算和正式数据只读视图仍待实现。开发服务与代理的单点工作集实测见[验收记录](delivery-validation.md#pc-environments-evidence)，不代表峰值、长期或 8 GiB PC 表现，不声称完全没有影响。
+开发重任务先限制为一项，按需启动浏览器／Blender／模型 Worker；稳定交互优先。共用 API key 仍共用供应商配额与余额，不同本地数据根的费用上限不能自动合并为账户总上限。受限模型代理已验证，可按需启动；全机设备调度、账户总预算和正式数据只读视图仍待实现。开发服务与代理的单点工作集实测见[验收记录](delivery-validation.md#pc-environments-evidence)，不代表峰值、长期或 8 GiB PC 表现，不声称完全没有影响。
 
 落地顺序：确认可恢复基线 → 分离源码／数据／依赖 → 补测试 profile 与受限共享接口 → Mock 和只读联调 → 在限定对象验证 → 建立 A/B 交接与故障恢复 → 有效维护授权覆盖后开放自动更新。早期架构门阻塞与后续修复保留原证据；2026-11-12已补[本机使用、开发与实际升级往返](#single-pc-local-workflow)。当前共用既有Python，未原地升级依赖；独立supervisor、跨实例设备／费用仲裁、微信接线与无人值守更新仍未完成。不据此移走业务数据或注册持续更新任务。
 
@@ -871,7 +871,7 @@ D:\Jarvis-dev\StartJarvisDev.bat
 
 日用 `user-data` 保持原位；被采用的代码位于 `deployment/packages/<sha>`。`host/application_installation.py` 仅在候选已被采用后安装根启动器，先保存原 `StartJarvis.bat`，再安装 `JarvisLaunch.py`。它先逐项核对恢复控制器摘要，随后通过同一应用账本启动当前已采用版本，避免重启后误用旧工作树。
 
-恢复控制器放在 `deployment/controllers/<build>`，带自己的检查器及回归测试；应用包退役不删除它。已补显式、独立的[控制器晋升与同身份恢复](evolution-release.md#independent-controller-runtime)；无需先升级活动应用，仍保留原固定评价策略。源码修改不会让它自动采用新规则，无人值守更新未开启。原工作树和未提交内容保留；开发仍在独立 worktree，Google 代理继续使用原已批准冻结版本。完整命令与恢复语义见[应用级交接](evolution-release.md#single-pc-application-runtime)。
+恢复控制器放在 `deployment/controllers/<build>`，带自己的检查器及回归测试；应用包退役不删除它。已补显式、独立的[控制器晋升与同身份恢复](evolution-release.md#independent-controller-runtime)；无需先升级活动应用，仍保留原固定评价策略。源码修改不会让它自动采用新规则，无人值守更新未开启。原工作树和未提交内容保留；开发仍在独立 worktree，模型代理继续使用已批准冻结版本。完整命令与恢复语义见[应用级交接](evolution-release.md#single-pc-application-runtime)。
 
 <a id="single-pc-local-workflow"></a>
 #### 一台电脑的使用、开发、升级与回退
