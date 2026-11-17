@@ -42,6 +42,14 @@ class WorkContext(unittest.TestCase):
         item=next(x for x in snapshot(self.root,SimpleNamespace())['items'] if x['id']=='independent-reply')
         self.assertEqual(item['context']['project_id'],'');self.assertEqual(item['context']['project_name'],'独立会话')
 
+    def test_unlinked_sources_have_distinct_meaningful_names(self):
+        rows=[{'source':source,'id':'unlinked-'+source,'title':'旧工作','state':'finished'} for source in ('tasks','goals','development')]
+        before=[identity(item) for item in rows]
+        self.assertTrue(attach(self.root,rows))
+        self.assertEqual([item['context']['project_name'] for item in rows],['独立任务','目标工作','能力研发'])
+        self.assertEqual([identity(item) for item in rows],before)
+        self.assertTrue(all(not item['context']['project_id'] for item in rows))
+
     def test_removed_project_is_not_resurrected_by_context(self):
         self.reply('old-project-reply',self.project['id']);store=Workspace(self.root);store.update(self.project['id'],{'removed':True});store.close()
         item=next(x for x in snapshot(self.root,SimpleNamespace())['items'] if x['id']=='old-project-reply')

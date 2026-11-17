@@ -75,7 +75,7 @@ def attach(root,items):
                         # Do not infer that every reply in a chat is its latest goal.
                         bound=action.get('goal_id') or action.get('id')
                         if bound in goal_ids:goal=bound;work_goal=roots.get(bound,bound)
-            fallback={'studio3d':'模型工作室 · 未关联项目','images':'图片工作室 · 未关联项目','commitments':'个人待办','standing':'持续安排','mail_standing':'邮件持续安排','mail':'邮件工作','knowledge':'资料库工作'}.get(item['source'],'其他工作')
+            fallback={'studio3d':'模型工作室 · 未关联项目','images':'图片工作室 · 未关联项目','commitments':'个人待办','standing':'持续安排','mail_standing':'邮件持续安排','mail':'邮件工作','knowledge':'资料库工作','tasks':'独立任务','goals':'目标工作','development':'能力研发'}.get(item['source'],'其他工作')
             item['context']={'project_id':project['id'] if project else '',
                 'group_id':project['id'] if project else '$removed' if removed_project else '$independent' if chat else '$library:'+asset[0] if asset else '$'+item['source'],
                 'project_name':text(project['name'],100) if project else '项目已移除的工作' if removed_project else '独立会话' if chat else '模型库 · '+text(asset[1],100) if asset else fallback,
