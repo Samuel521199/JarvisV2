@@ -46,15 +46,15 @@ export function mountMailCompanion(){
   generation=next.account_generation;state=next;paintDock();return next;
  }
  async function sync(){
-  if(checking)return;checking=true;message='';
+  if(checking||busy)return;checking=true;message='';
   try{
    await cached();
    if(state.status==='auth_required'||state.status==='disconnected'||state.network_blocked)return;
-   busy=true;render();
+   render();
    const job=await mailApi.run('sync',{query:'in:inbox',page:''},{signal:controller.signal});
    await cached();
    if(job.status!=='SUCCEEDED')message=jobErrors[job.status]||'同步尚未完成。';
-  }catch(error){message=error.message;}finally{busy=false;checking=false;if(!panel.hidden)render();}
+  }catch(error){message=error.message;}finally{checking=false;if(!panel.hidden)render();}
  }
  function head(){
   panel.replaceChildren();const top=el('div',undefined,'top'),title=el('div');
@@ -77,8 +77,8 @@ export function mountMailCompanion(){
   }
   if(buffer){renderDraft(content);return;}
   if(detail){renderDetail(content);return;}
-  const toolbar=el('div',undefined,'live-mail-toolbar');toolbar.append(action(busy?'正在同步…':'刷新邮件',sync),external('完整管理 ↗','/settings#mail'));
-  toolbar.querySelector('button').disabled=busy;content.append(toolbar);
+  const toolbar=el('div',undefined,'live-mail-toolbar');toolbar.append(action(checking?'正在同步…':'刷新邮件',sync),external('完整管理 ↗','/settings#mail'));
+  toolbar.querySelector('button').disabled=checking||busy;content.append(toolbar);
   const scope=state.unread_count===null?'本批 '+state.sample_unread_count+' 封未读':'收件箱 '+state.unread_count+' 封未读';
   content.append(el('p',scope+' · 以下为最近 '+state.items.length+' 封'+(state.has_more?'，可到工作台查看更早邮件':''),'lead'));
   const tabs=el('div',undefined,'live-mail-tabs');

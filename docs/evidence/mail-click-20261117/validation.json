@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "date": "2026-11-17",
+  "status": "source verified; daily update pending",
+  "problem": "Background sync shared the busy flag with reading and disabled every mail row. Its finally handler could also release a pending read guard.",
+  "fix": "Sync uses checking only, read retains busy. Repeated sync remains suppressed; cached reading stays available; selected body and closed panel are preserved.",
+  "authorization_probe": {"authorization":"SUCCEEDED","connection":"connected","read_permission":true,"modify_permission":true,"scope":"read-only metadata, no credential values or message bodies"},
+  "verification": {"browser_scenario_groups":3,"browser_errors":0,"mail_reading_tests":6,"mail_companion_tests":11,"browser_transport":"Synthetic deferred promises; actual component and browser. No real mailbox writes or remote model calls.","baseline":"Old component fails the row-enabled assertion while sync is pending; original failure retained locally."},
+  "model_calls": 0,
+  "real_mail_deleted_or_marked_read_for_testing": false,
+  "local_evidence": "E:/Jarvis/backups/mail-click-20261117"
+}
