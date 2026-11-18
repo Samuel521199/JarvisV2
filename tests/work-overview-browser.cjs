@@ -32,16 +32,70 @@ const {chromium}=require('C:/Users/samuel/.cache/codex-runtimes/codex-primary-ru
   await model.getByRole('button',{name:/将.*标记已读/}).click();
   await page.waitForFunction(n=>Number(document.getElementById('unread-total').textContent)===n-1,before);
   await page.getByRole('heading',{name:'PaK38 · 游戏资产',exact:true}).waitFor({state:'detached'});
+  await page.locator('#task-docks .task-dock').filter({hasText:'PaK38 · 游戏资产'}).waitFor({state:'detached'});
+  assert.equal(await page.locator('.work-metric[data-state=running] strong').innerText(),'1');
   await page.getByRole('tab',{name:/已读历史/}).click();await page.getByRole('heading',{name:'PaK38 · 游戏资产',exact:true}).waitFor();
-  report.checks.push('Reading one work with two receipts decrements the shared badge exactly once and retains history');
-  await page.getByRole('tab',{name:/未读成果/}).click();
-  const English=page.locator('.work-project').filter({has:page.getByRole('heading',{name:'英语学习 · 日常交流',exact:true})});
-  const nextBefore=Number(await page.locator('#unread-total').innerText());await English.getByRole('button',{name:'查看成果',exact:true}).click();
-  await page.locator('#modal[open] .answer').waitFor();await page.waitForFunction(n=>Number(document.getElementById('unread-total').textContent)===n-1,nextBefore);
-  await page.screenshot({path:path.join(folder,'native-result.png')});await page.getByRole('button',{name:'关闭对话框',exact:true}).click();
-  report.checks.push('Viewing an actual visible reply acknowledges it, including cross-surface work badge');
-  await page.getByRole('tab',{name:/进行中/}).click();assert.equal(await page.locator('.work-card').count(),1);
-  await page.getByRole('tab',{name:/待你处理/}).click();assert.equal(await page.locator('.work-card').count(),1);
+  report.checks.push('The last confirmed read removes the project dock while keeping history and running work');
+
+  const englishDock=page.locator('#task-docks .task-dock').filter({hasText:'英语学习 · 日常交流'});
+  const nextBefore=Number(await page.locator('#unread-total').innerText());
+  await englishDock.getByRole('button').click();
+  await page.getByRole('heading',{name:'英语学习 · 日常交流',exact:true}).waitFor();
+  assert.equal(await page.getByRole('tab',{name:/未读成果/}).getAttribute('aria-selected'),'true');
+  assert.equal(Number(await page.locator('#unread-total').innerText()),nextBefore);
+  await page.getByRole('button',{name:'查看成果',exact:true}).click();
+  await page.locator('#modal[open] .answer').waitFor();
+  await englishDock.waitFor({state:'detached'});
+  await page.waitForFunction(n=>Number(document.getElementById('unread-total').textContent)===n-1,nextBefore);
+  await page.screenshot({path:path.join(folder,'native-result.png')});
+  await page.getByRole('button',{name:'关闭对话框',exact:true}).click();
+  await page.getByRole('button',{name:'收起卡片',exact:true}).click();
+  report.checks.push('Desktop shortcut opens unread results and disappears when the actual reply is visible');
+
+  const last=page.locator('#task-docks .task-dock button');
+  assert.equal(await last.count(),1);
+  const lastBox=await last.boundingBox();
+  const sample=await (await context.request.get(origin+'/api/work-status')).json();
+  const unread=sample.items.filter(item=>item.attention?.unread);
+  assert.equal(unread.length,1);
+  await last.focus();
+  let releaseSnapshot,captureSnapshot;
+  const release=new Promise(resolve=>{releaseSnapshot=resolve;});
+  const captured=new Promise(resolve=>{captureSnapshot=resolve;});
+  await page.route('**/api/work-status',async route=>{
+    const response=await route.fetch();
+    captureSnapshot();
+    await release;
+    await route.fulfill({response});
+  },{times:1});
+  await page.evaluate(()=>window.dispatchEvent(new Event('jarvis:work-viewed')));
+  try {
+    await captured;
+    const source=await context.newPage();
+    // A second client reads through the original versioned API and broadcast.
+    await source.goto(origin+'/companion');
+    await source.evaluate(async item=>{
+      const {workApi}=await import('/work-client.js');
+      await workApi.viewed(item);
+    },unread[0]);
+    await source.close();
+  } finally {
+    releaseSnapshot();
+  }
+  await last.waitFor({state:'detached'});
+  assert.equal(await page.locator('#work-button').evaluate(node=>document.activeElement===node),true);
+  await page.waitForFunction(box=>window.nativeRects.every(rect=>rect.y+rect.height<=box.y),lastBox);
+  assert.equal(await page.locator('#unread-total').isHidden(),true);
+  await page.reload();
+  await page.waitForFunction(()=>document.getElementById('work-summary').textContent.includes('0 项工作有未读'));
+  assert.equal(await last.count(),0);
+  report.checks.push('Cross-window receipt removes even a focused last dock and its hit region, with no reappearance after reload');
+
+  await page.getByRole('button',{name:'所有工作与未读结果',exact:true}).click();
+  await page.getByRole('tab',{name:/进行中/}).click();
+  assert.equal(await page.locator('.work-card').count(),1);
+  await page.getByRole('tab',{name:/待你处理/}).click();
+  assert.equal(await page.locator('.work-card').count(),1);
   report.checks.push('Read receipts neither cancel work nor answer an outstanding question');
   await page.setViewportSize({width:390,height:720});await page.getByRole('tab',{name:/未读成果/}).click();await page.screenshot({path:path.join(folder,'compact.png')});
   assert.equal(await page.evaluate(()=>document.querySelector('.work-board').scrollWidth>document.querySelector('.work-board').clientWidth+2),false);

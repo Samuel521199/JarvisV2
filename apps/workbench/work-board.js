@@ -22,9 +22,9 @@ function budgetForm(body,data,refresh){
  section.append(field('结果核对',observer),button('应用核对设置',async()=>{await post('/api/operations',{action:'outcome_configure',enabled:observer.value==='1'});await refresh(true);notice('结果核对设置已保存。');}));body.append(section);
 }
 
-export function mountWorkBoard(body,{settings=false,focusKey=null,focusProject=null,onOpenChat=null,editPriority=null}={}){
+export function mountWorkBoard(body,{settings=false,focusKey=null,focusProject=null,initialTab=null,onOpenChat=null,editPriority=null}={}){
  const root=el('section',undefined,'work-board');root.setAttribute('aria-label','按项目整理的当前工作');body.append(root);
- let closed=false,loading=false,pending=false,selected=null,data=null,signature='',query='',settingsDrawn=false;
+ let closed=false,loading=false,pending=false,selected=initialTab,data=null,signature='',query='',settingsDrawn=false;
  const limits=new Map();
  const top=el('div',undefined,'work-board-top'),lead=el('div');lead.append(el('span','工作总览','work-eyebrow'),el('p','先处理需要你确认的事，再看看新成果。','work-lead'));
  const tools=el('div',undefined,'work-board-tools');tools.append(iconButton('plus','新增个人待办',()=>commitmentForm(()=>refresh(true))),iconButton('refresh','刷新工作状态',()=>refresh(true)),iconButton('calendar','持续办事安排',()=>openStanding()));top.append(lead,tools);

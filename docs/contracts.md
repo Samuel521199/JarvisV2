@@ -444,7 +444,7 @@ task_id 标识工作；intent_id 标识较高层意图，可包含多个具体�
 |---|---|---|
 | 聊天、模型／档位、技能、附件、候选记忆、计划 | `/` 与 `/conversation` 返回相同 `index.html`，执行同一 `app.js`、`ModelPicker` 和 `SessionFolders`；仍使用 `/api/chat/send`、`/api/chats`、`/api/chat/cancel`、原设置与领域接口 | 按需建立同源 iframe 卡片，仅以 `conversation.css` 改变密度；收起不销毁输入和执行 |
 | 项目与会话 | `conversation-groups.js` 统一有效项目、归档／移除过滤；`/api/projects`、`/api/chats` | 树形选择、项目路径、原会话接续；不建立第二个项目库 |
-| 工作、优先级、停止与结果记录 | `host/work_status.py` 的 `GET /api/work-status`；`work-client.js`、`work-status.js` 共享呈现和原领域命令 | 并行工作窄标签、悬停摘要、按需单项卡片。停止只支持已接入取消接口的通用任务和聊天；目标审批、其他专用来源沿原面板／模块处理，不臆造通用重试 |
+| 工作、优先级、停止与结果记录 | `host/work_status.py` 的 `GET /api/work-status`；`work-client.js`、`work-status.js` 共享呈现和原领域命令 | 未读工作窄标签、悬停摘要、按需单项卡片。全部反馈已读后撤下窄标签。“所有工作”继续呈现进行中、待处理和历史。停止只支持已接入取消接口的通用任务和聊天；目标审批、其他专用来源沿原面板／模块处理，不臆造通用重试 |
 | 邮件 | 原 `mail-client.js`、`mailApi` 与邮件领域权限／账号代际检查 | 连接状态、未读计数、摘要／正文、原有获准邮件动作；本轮不扩权、不发信 |
 | 已阅标记 | `POST /api/work-status`：严格 `{action:"viewed",key,version}`；原对象计算的稳定版本；主人身份由服务端访问门派生 | 两个入口同步。`state/attention.sqlite3` 仅保存 `(actor,item,version,viewed_at)`；不复制正文，不是任务库或个人记忆 |
 | 排空观察 | `host/runtime_participants.py` 共用的 `activity`；受认证 `/api/runtime/drain` 消费同一观察器 | 反映受管理的聊天、通用执行、后台通道、邮箱／授权、私密聊天、3D／学习修复、出图、知识、本地模型操作与在途变更 HTTP；检查失败显式 unknown 并阻止托管排空 |
