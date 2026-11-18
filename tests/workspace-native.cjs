@@ -18,7 +18,34 @@ const {chromium}=require(process.env.JARVIS_PLAYWRIGHT||'playwright');
   await assert.rejects(full.evaluate(()=>window.__TAURI_INTERNALS__.invoke('presence_workbench',{action:'hide'})));
   await assert.rejects(full.evaluate(()=>window.__TAURI_INTERNALS__.invoke('presence_regions',{rects:[]})));
   await dock.evaluate(id=>window.__TAURI_INTERNALS__.invoke('presence_workbench',{action:'open',chatId:id}),f.ids[0]);await full.waitForFunction(()=>document.getElementById('chat-title')?.textContent==='整理后的原对话');assert.equal((await state()).workbench.length,1);
-  report.checks=['Native workbench uses selected existing conversation and removes access key from address','Fold hides actual HWND, retaining WebView and draft','Reopen reuses the same HWND and draft','Full workbench has no direct native IPC permissions; fold delegates to the original dock','Repeated open selects a different conversation without spawning another window'];report.visibility=states;report.passed=true;
+  report.checks=['Native workbench uses selected existing conversation and removes access key from address','Fold hides actual HWND, retaining WebView and draft','Reopen reuses the same HWND and draft','Full workbench has no direct native IPC permissions; fold delegates to the original dock','Repeated open selects a different conversation without spawning another window'];
+  const robotPage=context.pages().find(page=>page.url().includes('/companion/native-robot'));
+  assert.ok(robotPage);
+  const setMotion=motionOff=>full.evaluate(async motionOff=>{
+   const {savePreferences}=await import('/ui.js');
+   await savePreferences({motion_off:motionOff});
+  },motionOff);
+  await setMotion(false);
+  await robotPage.waitForSelector('#robot[data-face-motion]');
+  const robot=robotPage.locator('#robot');
+  const initialBox=await robot.boundingBox();
+  assert.equal(initialBox.width,74);
+  for(const [status,expression] of [['running','focused'],['unread','attention'],['unknown','uncertain']]){
+   await dock.evaluate(status=>{document.getElementById('presence-dot').dataset.state=status;},status);
+   await robotPage.waitForSelector('#robot[data-expression="'+expression+'"]');
+   assert.deepEqual(await robot.boundingBox(),initialBox);
+  }
+  await robotPage.reload();
+  await robotPage.waitForSelector('#robot[data-face-motion][data-expression="uncertain"]');
+  assert.deepEqual(await robot.boundingBox(),initialBox);
+  report.checks.push('Actual dock-to-robot IPC changes face poses and restores the current status after robot reload, with an invariant 74 px click region');
+  await setMotion(true);
+  await robotPage.waitForSelector('#robot:not([data-face-motion])[data-expression="uncertain"]');
+  assert.deepEqual(await robot.evaluate(node=>node.getAnimations({subtree:true}).map(animation=>({type:animation.constructor.name, target:animation.effect.target.getAttribute('class'), property:animation.transitionProperty, state:animation.playState}))),[]);
+  await setMotion(false);
+  await robotPage.waitForSelector('#robot[data-face-motion]');
+  report.checks.push('Existing Workbench motion preference is applied live to the separate native robot');
+  report.visibility=states;report.passed=true;
  }finally{fs.writeFileSync(folder+'/native.json',JSON.stringify(report,null,2)+'\n');if(browser)await browser.close();}
  console.log(JSON.stringify(report));
 })().catch(e=>{console.error(e);process.exitCode=1;});

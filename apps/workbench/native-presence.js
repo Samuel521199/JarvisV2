@@ -44,8 +44,15 @@ robot.onclick=()=>invoke('presence_toggle').catch(()=>{});
 nativeWorkbenchController();
 window.addEventListener('jarvis:native:toggle-chat',()=>robot.onclick?.());
 const dot=document.getElementById('presence-dot');let previous='';
-const status=new MutationObserver(()=>{const next=dot.dataset.state||'idle';if(next===previous)return;previous=next;invoke('presence_status',{status:next}).catch(()=>{});});
+function sendStatus(force=false){
+ const next=dot.dataset.state||'idle';
+ if(!force&&next===previous)return;
+ previous=next;
+ invoke('presence_status',{status:next}).catch(()=>{if(previous===next)previous='';});
+}
+const status=new MutationObserver(()=>sendStatus());
 status.observe(dot,{attributes:true,attributeFilter:['data-state']});
+window.addEventListener('jarvis:native:sync-status',()=>sendStatus(true));
 window.addEventListener('pagehide',()=>status.disconnect());
 }
 window.addEventListener('pagehide',()=>{size.disconnect();mutations.disconnect();});schedule();

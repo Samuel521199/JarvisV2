@@ -6,6 +6,39 @@ import {workApi} from './work-client.js';
 import {workStatusView} from './work-status.js';
 import {conversationGroups} from './conversation-groups.js';
 import {workGroups} from './work-groups.js';
+import {mountCompanionFace} from './companion-face.js';
+
+const nativeRobot = location.pathname === '/companion/native-robot';
+const nativeDock = location.pathname === '/companion/native';
+const motionChannel = nativeRobot || nativeDock ? new BroadcastChannel('jarvis-companion-motion') : null;
+const setFaceMotion = nativeDock ? null : mountCompanionFace($('robot'), $('presence-dot'));
+
+function observeAppearance(initial) {
+ const settings = new BroadcastChannel('jarvis-workbench-settings');
+ let revision = 0, motionOff;
+ function apply(ui) {
+  applyPreferences(ui);
+  motionOff = !!ui.motion_off;
+  setFaceMotion?.(!motionOff);
+  motionChannel?.postMessage({motionOff});
+ }
+ if (motionChannel) motionChannel.onmessage = ({data}) => {
+  if (data?.request !== 'motion') return;
+  motionChannel.postMessage({motionOff});
+  window.dispatchEvent(new Event('jarvis:native:sync-status'));
+ };
+ settings.onmessage = async () => {
+  const request = ++revision;
+  try {
+   const fresh = await get('/api/snapshot');
+   if (request === revision) apply(fresh.settings.ui);
+  } catch {
+   // Keep the displayed preference until a read succeeds.
+  }
+ };
+ apply(initial);
+ window.addEventListener('pagehide', () => { ++revision;settings.close();motionChannel?.close(); }, {once:true});
+}
 
 let frame=null,selected='',mode='',cleanup=()=>{},mail=null,refreshing=false,workspaceView=null;
 const collapsed=new Set(),placementKey='jarvis.companion.placement.v1',selectionKey='jarvis.companion.chat.v1';
@@ -58,7 +91,7 @@ async function refresh(){
  finally{refreshing=false;}
 }
 async function boot(){
- initModal();const config=await get('/api/snapshot');applyPreferences(config.settings.ui);
+ initModal();const config=await get('/api/snapshot');observeAppearance(config.settings.ui);
  try{const id=localStorage.getItem(selectionKey);if(/^chat-[0-9a-f]{32}$/.test(id||''))selected=id;}catch{}
  let placement='right';try{placement=localStorage.getItem(placementKey)||'right';}catch{}
  if(!['left','right','desktop'].includes(placement))placement='right';$('placement').value=placement;document.querySelector('main').dataset.place=placement;
@@ -73,9 +106,16 @@ async function boot(){
   if(message?.type!=='jarvis:companion:navigate')return;
   if(message.target==='work')work();else if(message.target==='projects')run(projects);else if(message.target==='mail')mail.open();else if(message.target==='mail-standing')run(async()=>{const {openMailStanding}=await import('./mail-standing.js');await openMailStanding();});
  });
- document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh();});if(location.pathname==='/companion/native')await import('./native-presence.js');await refresh();const timer=setInterval(refresh,5000);
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh();});if(nativeDock)await import('./native-presence.js');await refresh();const timer=setInterval(refresh,5000);
  window.addEventListener('jarvis:work-viewed',refresh);
  window.addEventListener('jarvis:workspace-selection',event=>rememberSelection(event.detail));
  window.addEventListener('pagehide',()=>{clearInterval(timer);cleanup();},{once:true});
 }
-if(location.pathname==='/companion/native-robot')import('./native-presence.js');else run(boot);
+if (nativeRobot) {
+ motionChannel.onmessage = ({data}) => {
+  if (typeof data?.motionOff === 'boolean') setFaceMotion(!data.motionOff);
+ };
+ motionChannel.postMessage({request:'motion'});
+ window.addEventListener('pagehide', () => motionChannel.close(), {once:true});
+ import('./native-presence.js');
+} else run(boot);

@@ -4,7 +4,7 @@ import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
 const source=readFileSync(new URL('../apps/workbench/native-presence.js',import.meta.url),'utf8');
 function setup(handler=()=>Promise.resolve(),robotSurface=false){
- const frames=[],calls=[],events={},observers=[];
+ const frames=[],calls=[],events={},observers=[];let presentationBindings=0;
  function node(classes=[],box=[400,700,74,74]){return {hidden:false,classes:new Set(classes),box,listeners:{},classList:{contains:c=>classes.includes(c)},getBoundingClientRect(){let [left,top,width,height]=this.box;return {left,top,width,height,right:left+width,bottom:top+height};},getClientRects(){return this.hidden?[]:[this.getBoundingClientRect()];},addEventListener(type,fn){this.listeners[type]=fn;}};}
  const robot=node(['robot'],[8,8,74,74]),full=node(),error=node(),dot={dataset:{}};error.hidden=true;
  const items=Array.from({length:3},(_,i)=>node([], [510,100+i*50,47,46]));
@@ -14,10 +14,12 @@ function setup(handler=()=>Promise.resolve(),robotSurface=false){
  const document={documentElement:root,body:{},querySelectorAll:selector=>selector==='.robot'?[robot]:items,getElementById:id=>ids[id],addEventListener(type,fn){events[type]=fn;}};
  const win={__TAURI_INTERNALS__:{invoke(cmd,args){calls.push({cmd,args});return handler(cmd,args);}},addEventListener(type,fn){events[type]=fn;}};
  const context={document,window:win,location:{pathname:robotSurface?'/companion/native-robot':'/companion/native'},innerWidth:560,innerHeight:800,Promise,Math,JSON,String,getComputedStyle:n=>({visibility:n.invisible?'hidden':'visible',display:'block'}),
-  requestAnimationFrame:fn=>frames.push(fn),ResizeObserver:class{observe(){}disconnect(){}},MutationObserver:class{constructor(fn){observers.push(fn);}observe(){}disconnect(){}}};
- vm.runInNewContext(source,context);
+  nativeWorkbenchController:()=>presentationBindings++,requestAnimationFrame:fn=>frames.push(fn),ResizeObserver:class{observe(){}disconnect(){}},MutationObserver:class{constructor(fn){observers.push(fn);}observe(){}disconnect(){}}};
+ // IPC and actual presentation delegation are covered by the owned WebView2 test.
+ vm.runInNewContext(source.replace(/^import {nativeWorkbenchController} from '.\/presentation\.js';\r?\n/,''),
+  context);
  async function frame(){assert.ok(frames.length);frames.splice(0).forEach(fn=>fn());await Promise.resolve();await Promise.resolve();}
- return {items,card,robot,full,error,dot,root,events,observers,calls,frame};
+ return {items,card,robot,full,error,dot,root,events,observers,calls,frame,presentationBindings};
 }
 let tests=0;
 async function test(name,body){await body();tests++;console.log('PASS '+name);}
@@ -50,8 +52,9 @@ await test('dragging uses only own-window command and suppresses release click',
  const x=setup(undefined,true);await x.frame();x.robot.listeners.pointerdown({button:0,screenX:10,screenY:10});x.events.pointermove({screenX:22,screenY:10});
  assert.equal(x.calls.at(-1).cmd,'presence_drag');let stopped=false;x.robot.listeners.click({stopImmediatePropagation(){stopped=true;},preventDefault(){}});assert.ok(stopped);
 });
-await test('workbench continuation uses native command, no second business client',async()=>{
- const x=setup();await x.frame();let stopped=false;x.full.listeners.click({stopImmediatePropagation(){stopped=true;}});assert.ok(stopped);assert.equal(x.calls.at(-1).cmd,'presence_workbench');
+await test('only the dock binds the shared workbench presentation controller',()=>{
+ assert.equal(setup().presentationBindings,1);
+ assert.equal(setup(undefined,true).presentationBindings,0);
 });
 await test('robot surface has one small hit island, independent from dock',async()=>{
  const x=setup(undefined,true);await x.frame();assert.equal(x.calls[0].args.rects.length,1);assert.equal(x.calls[0].args.rects[0].width,74);assert.equal(x.calls[0].args.rects[0].rounded,true);
@@ -59,6 +62,8 @@ await test('robot surface has one small hit island, independent from dock',async
 });
 await test('only status values bridge to robot, no extra business client',async()=>{
  const x=setup();await x.frame();x.dot.dataset.state='running';x.observers[1]();assert.equal(x.calls.at(-1).cmd,'presence_status');assert.equal(x.calls.at(-1).args.status,'running');
+ const count=x.calls.length;x.observers[1]();assert.equal(x.calls.length,count);
+ x.events['jarvis:native:sync-status']();assert.equal(x.calls.length,count+1);assert.equal(x.calls.at(-1).args.status,'running');
 });
 await test('capabilities split dock and robot commands by window and exact page',()=>{
  const cfg=JSON.parse(readFileSync(new URL('../apps/desktop/tauri.conf.json',import.meta.url),'utf8'));
