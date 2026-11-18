@@ -194,14 +194,74 @@ function pending(title,text){const body=panel(title);body.append(el('h3',title),
 function openGoals(fromDraft=false,initialId=null){panelCleanup=goalsView(panel('目标与行动计划'),{settings:snapshot.settings,initialId,scope:projectId||'personal',memoryEnabled:$('memory-enabled').checked,initialGoal:fromDraft?$('message').value:'',inputText:fromDraft?attachments.map(a=>a.text).join('\n'):'',route:{...picker.selection,reasoning:$('reasoning').value},attach:addAttachment});}
 async function openVoice(){
  if(!chatId||chat?.archived||chat?.removed)await newChat(selectedProject()?.id||'');
- const source=chatId,body=panel('离线语音 · 录音后确认发送');let recognized=null,draftVersion=0,recognitionVersion=0;
- body.append(el('p','支持中文、英文和混说。文字确认后沿当前会话、模型、记忆和权限设置处理；打开面板不会打开麦克风。','note'));
- const draft=el('textarea');draft.rows=4;draft.maxLength=3000;draft.setAttribute('aria-label','语音识别草稿');
- draft.oninput=()=>draftVersion++;
- const error=el('p',undefined,'form-error');
- const cleanup=speechInput(body,{scope:{purpose:'chat',chat_id:source,exercise_id:null},onRecording:value=>{if(value===null)recognitionVersion=draftVersion;},onRecognized:(text,id)=>{recognized=id;if(text!==null){if(draftVersion===recognitionVersion)draft.value=text;else error.textContent='已保留你编辑的草稿；识别候选：'+text;}},onError:message=>error.textContent=message});
- body.append(field('核对你实际说的话',draft),button('确认并发送到当前会话',async()=>{if(source!==chatId){error.textContent='会话已切换，请重新打开语音输入。';return;}if(!recognized||!draft.value.trim()){error.textContent='请先录音识别并确认文字。';return;}try{$('message').value=draft.value;remember();await send(recognized);draft.value='';recognized=null;}catch(e){error.textContent=e.message;}},'primary'),error);
- panelCleanup=cleanup;
+ const source=chatId,body=panel('离线语音 · 录音后确认发送');
+ let recognized=null,draftVersion=0,recognitionVersion=0,candidateVersion=0,candidateTimer;
+ let candidateRequired=false,candidatePending=false,chosenDraft=null,disposed=false;
+ const draft=el('textarea');
+ draft.rows=4;draft.maxLength=3000;draft.setAttribute('aria-label','语音识别草稿');
+ const error=el('p',undefined,'form-error'),choices=el('div',undefined,'speech-library-choices');
+ choices.setAttribute('aria-live','polite');
+
+ const localPreviewMode=()=>$('message-mode').value==='auto'&&!attachments.length&&!deliveryEditor.value().enabled;
+ function resetCandidates(){
+  clearTimeout(candidateTimer);
+  candidateVersion++;
+  candidateRequired=false;candidatePending=false;
+  choices.replaceChildren();
+ }
+ async function suggest(){
+  resetCandidates();
+  const id=recognized,text=draft.value,version=candidateVersion;
+  if(disposed||!id||chatId!==source||!localPreviewMode()||!text.trim()||text.length>180)return;
+  candidatePending=true;
+  try{
+   const result=await post('/api/speech',{action:'library_candidates',id,chat_id:source,text});
+   if(disposed||version!==candidateVersion||text!==draft.value||source!==chatId||!localPreviewMode())return;
+   candidateRequired=result.needs_confirmation;
+   if(!result.choices.length){
+    if(candidateRequired)choices.append(el('p','请核对模型名称和 LOD 档位。','note'));
+    return;
+   }
+   choices.append(el('p','模型库候选 · 选中后核对，再发送','note'));
+   for(const item of result.choices){
+    choices.append(button(item.title+' · '+item.label+' · '+item.asset,()=>{
+     draft.value=item.text;draftVersion++;chosenDraft=item.text;
+     resetCandidates();error.textContent='';draft.focus();
+    }));
+   }
+  }catch(e){
+   if(!disposed&&version===candidateVersion&&source===chatId)error.textContent='模型库候选暂不可用，可以手动核对转写。';
+  }finally{if(version===candidateVersion)candidatePending=false;}
+ }
+ draft.oninput=()=>{
+  draftVersion++;chosenDraft=null;resetCandidates();
+  if(recognized&&localPreviewMode()){candidatePending=true;candidateTimer=setTimeout(suggest,280);}
+ };
+ const cleanup=speechInput(body,{
+  scope:{purpose:'chat',chat_id:source,exercise_id:null},
+  onRecording:value=>{
+   if(value!==null)return;
+   recognitionVersion=draftVersion;recognized=null;chosenDraft=null;resetCandidates();
+  },
+  onRecognized:(text,id)=>{
+   recognized=id;chosenDraft=null;resetCandidates();
+   if(text===null)return;
+   if(draftVersion===recognitionVersion){draft.value=text;error.textContent='';}
+   else error.textContent='已保留你编辑的草稿；识别候选：'+text;
+   void suggest();
+  },
+  onError:message=>error.textContent=message
+ });
+ body.append(field('核对你实际说的话',draft),choices,button('确认并发送到当前会话',async()=>{
+  if(source!==chatId){error.textContent='会话已切换，请重新打开语音输入。';return;}
+  if(!recognized||!draft.value.trim()){error.textContent='请先录音识别并确认文字。';return;}
+  if(candidatePending){error.textContent='正在核对本机模型库，请稍候。';return;}
+  if(candidateRequired){error.textContent='请选择本机候选，或手动校正模型名称和 LOD。';return;}
+  if(chosenDraft===draft.value&&!localPreviewMode()){error.textContent='请在自动助手模式下单独发送模型预览指令。';return;}
+  try{$('message').value=draft.value;remember();await send(recognized);draft.value='';recognized=null;resetCandidates();}
+  catch(e){error.textContent=e.message;}
+ },'primary'),error);
+ panelCleanup=()=>{disposed=true;resetCandidates();cleanup();};
 }
 async function openEnglishLearning(){
  const content=panel('英语学习 · 记录、复习与进步');

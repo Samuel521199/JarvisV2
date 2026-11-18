@@ -8,7 +8,7 @@ from unittest.mock import patch
 from host.core import Core
 from host.dialogue import DialogueHost
 from modules.dialogue.store import Dialogues
-from modules.skills.model_library.preview import preview_request, resolve_preview
+from modules.skills.model_library.preview import preview_request, resolve_preview, speech_candidates
 from modules.skills.model_library.store import Library
 
 
@@ -62,6 +62,19 @@ class LibraryPreview(unittest.TestCase):
         for change in [{'assistant_mode': False}, {'text': '如何打开纸船的 LOD2？'},
                        {'attachments': [{'text': '其他工作'}]}, {'text': '打开纸船的 LOD2，然后导出'}]:
             self.assertIsNone(preview_request({**command, **change}))
+
+    def test_speech_candidates_bind_registered_levels_and_keep_guess_out_of_typed_router(self):
+        add_display_asset(self.root, 'pack38', '演示物件 38')
+        add_display_asset(self.root, 'crate38', '另一个物件 38')
+        for text in ('打开 p三十八的 l二', '请预览 pack 38 vlog two', '打开 pack三八的 L O D 二', '请预览 PACK THIRTY EIGHT LN TWO'):
+            with self.subTest(text=text):
+                choice, = speech_candidates(self.root, text)['choices']
+                self.assertEqual(choice['text'], '打开 pack38 的 LOD2')
+        for text in ('打开 pack38 的 vlog three', '打开不存在的模型的 l二'):
+            self.assertEqual(speech_candidates(self.root, text), {'choices': [], 'needs_confirmation': True})
+        for text in ('如何打开纸船的 LOD2？', '打开纸船的 l二，然后导出'):
+            self.assertFalse(speech_candidates(self.root, text)['choices'])
+        self.assertIsNone(preview_request({'assistant_mode': True, 'text': '打开纸船的 l二'}))
 
     def test_real_queue_without_config_or_provider(self):
         store = Dialogues(self.root)

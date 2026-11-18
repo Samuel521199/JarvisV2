@@ -1,5 +1,5 @@
 """Disposable actual owner HTTP surface; synthetic projects/chats only, no inference."""
-import json,sys,threading,uuid
+import hashlib,json,sys,threading,uuid
 from pathlib import Path
 from types import SimpleNamespace
 from http.server import ThreadingHTTPServer
@@ -57,10 +57,23 @@ if managed:
     (root/'deployment/automation').mkdir(parents=True)
 if library_preview:
     from host.dialogue import DialogueHost
+    from host.speech import Speech
     server.dialogues=DialogueHost(root)
+
+    class FixtureStt:
+        def pinned(self):return {'id':'fixture-stt','revision':1}
+        def start(self,item):pass
+        def transcribe(self,raw,language,check,expected):
+            check()
+            return {'text':'打开纸传的 l二','audio_sha256':hashlib.sha256(raw).hexdigest(),
+                    'model':expected,'flags':[],'network':False}
+
+    models=SimpleNamespace(speech=FixtureStt(),item=lambda ident:{'id':ident})
+    server.speech=Speech(root,models,server.dialogues)
 (folder/'fixture.json').write_text(json.dumps({'root':str(root),'port':server.server_port,'key':key,'project':project,'ids':ids},ensure_ascii=False,indent=2),encoding='utf-8')
 print(json.dumps({'port':server.server_port,'scope':'synthetic records only'}),flush=True)
 try:server.serve_forever()
 finally:
     server.server_close()
-    if library_preview:server.dialogues.close()
+    if library_preview:
+        server.speech.close();server.dialogues.close()

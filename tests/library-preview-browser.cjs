@@ -11,8 +11,8 @@ const {chromium}=require(process.env.JARVIS_PLAYWRIGHT||'playwright');
   const fixtureFile=path.join(folder,'fixture.json');
   for(let n=0;!fs.existsSync(fixtureFile);n++){if(n>150||server.exitCode!==null)throw Error('Fixture failed '+logs);await new Promise(r=>setTimeout(r,100));}
   const fixture=JSON.parse(fs.readFileSync(fixtureFile)),origin='http://127.0.0.1:'+fixture.port;
-  browser=await chromium.launch({channel:'msedge',args:['--use-angle=swiftshader','--enable-unsafe-swiftshader']});
-  const context=await browser.newContext({viewport:{width:1100,height:820},reducedMotion:'reduce'}),errors=[];
+  browser=await chromium.launch({channel:'msedge',args:['--use-angle=swiftshader','--enable-unsafe-swiftshader','--use-fake-device-for-media-stream','--use-fake-ui-for-media-stream']});
+  const context=await browser.newContext({viewport:{width:1100,height:820},reducedMotion:'reduce',permissions:['microphone']}),errors=[];
   assert.equal((await context.request.post(origin+'/api/local-access',{data:{key:fixture.key},headers:{Origin:origin}})).status(),200);
   const asset=await (await context.request.get(origin+'/api/model-library/assets/paper-boat')).json();
   const expectedSha=asset.variants.find(v=>v.id==='lod2').file.sha256;
@@ -36,7 +36,29 @@ const {chromium}=require(process.env.JARVIS_PLAYWRIGHT||'playwright');
    await page.locator('#message').fill('预览纸船的 LOD3');await page.locator('#message').press('Enter');
    await page.getByText('纸船 没有可预览的 LOD3。',{exact:false}).first().waitFor();assert.equal(await page.locator('#panel-content iframe:visible').count(),0);
   }
-  assert.deepEqual(errors,[]);console.log('PASS desktop and compact: project controls, local typed command, both SHA-verified interactive LOD2 previews and missing LOD3');
+  await page.locator('#voice').click();
+  await page.getByRole('button',{name:'开始录音',exact:true}).click();
+  await page.getByText('正在录音，最多60秒；停止后可回听并确认转写。',{exact:true}).waitFor();
+  await page.waitForTimeout(800);
+  await page.getByRole('button',{name:'停止录音',exact:true}).click();
+  const candidate=page.getByRole('button',{name:'纸船 · LOD2 · paper-boat',exact:true});
+  try{await candidate.waitFor();}catch(error){
+   throw Error(error.message+' '+await page.locator('#panel-content').innerText()+' '+errors+' '+logs);
+  }
+  const confirm=page.getByRole('button',{name:'确认并发送到当前会话',exact:true});
+  const turnCount=async()=> (await (await context.request.get(origin+'/__fixture__/state')).json()).turns;
+  const before=await turnCount();
+  await confirm.click();
+  await page.getByText('请选择本机候选，或手动校正模型名称和 LOD。',{exact:true}).waitFor();
+  assert.equal(await turnCount(),before);
+  await candidate.click();
+  assert.equal(await page.getByLabel('语音识别草稿').inputValue(),'打开 paper-boat 的 LOD2');
+  assert.equal(await turnCount(),before);
+  await confirm.click();
+  await page.waitForFunction(sha=>document.querySelector('#panel-content iframe')?.contentWindow.studio3dViewerState?.sha256===sha,expectedSha);
+  assert.equal(await turnCount(),before+1);
+  assert.deepEqual(errors,[]);
+  console.log('PASS desktop and compact: local typed/confirmed speech preview, SHA-verified GLB, no turn before voice confirmation');
  }finally{
   if(browser)await browser.close();
   server.kill();

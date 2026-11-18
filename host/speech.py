@@ -94,7 +94,7 @@ class Speech:
             with Store(self.root) as store:store.db.execute("UPDATE requests SET state='FAILED',error=? WHERE id=? AND state IN ('QUEUED','RUNNING')",(getattr(exc,'code',type(exc).__name__),ident))
 
     def command(self,value):
-        schemas={'status':set(),'configure':{'enabled','revision'},'record':{'id','audio','purpose','chat_id','exercise_id'},'warm':{'id','purpose','chat_id','exercise_id'},'transcribe':{'id','audio_id','purpose','chat_id','exercise_id','language'},'cancel':{'id'},'withdraw':{'id'},'speak':{'id','purpose','chat_id','exercise_id','source_id'},'audio':{'id'},'submit':{'id','command'}}
+        schemas={'status':set(),'configure':{'enabled','revision'},'record':{'id','audio','purpose','chat_id','exercise_id'},'warm':{'id','purpose','chat_id','exercise_id'},'transcribe':{'id','audio_id','purpose','chat_id','exercise_id','language'},'cancel':{'id'},'withdraw':{'id'},'speak':{'id','purpose','chat_id','exercise_id','source_id'},'audio':{'id'},'library_candidates':{'id','chat_id','text'},'submit':{'id','command'}}
         if not isinstance(value,dict) or value.get('action') not in schemas or set(value)!={'action',*schemas[value['action']]}:raise CoreError('speech_request','Unexpected shared speech fields')
         action=value['action']
         if action=='status':return self.status()
@@ -110,6 +110,11 @@ class Speech:
                 if action=='withdraw':store.db.execute("UPDATE requests SET state='WITHDRAWN' WHERE id=?",(row['id'],))
                 else:store.db.execute("UPDATE requests SET state='CANCELLED' WHERE id=? AND state IN ('QUEUED','RUNNING')",(row['id'],))
             elif not cfg['enabled']:raise CoreError('speech_disabled','Shared speech is disabled')
+            elif action=='library_candidates':
+                from modules.skills.model_library.preview import speech_candidates
+                # Look up suggestions only against the completed recording for this chat.
+                speech_sources.completed(self.root,value['id'],'chat',value['chat_id'])
+                return speech_candidates(self.root,value['text'])
             elif action=='record':
                 context=speech_sources.scope(self.root,value['purpose'],value['chat_id'],value['exercise_id'])
                 return {'recording':save_audio(self.root,value['id'],value['audio'],context)}

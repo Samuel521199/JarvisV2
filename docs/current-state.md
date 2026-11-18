@@ -1,5 +1,7 @@
 # 当前真实状态
 
+v0.1.21 实现了本机语音转写的模型库候选。选择已登记的资产与 LOD 后仍需确认发送。两套现有离线 STT 的同批合成样本已实测，语音默认保持 FunASR Nano，另有 SenseVoice Small 可在本地模型管理中对照。[对话入口和试验范围](interaction-persona.md#workbench-layout)。
+
 v0.1.20.2 已日用采用至epoch44：共用成果详情固定显示“标记已读并关闭”和“仅关闭”，右侧展开提醒可按当前项目组标记已读；原记录、待答与运行状态保留。长要求折叠、回执失败不清除、跨入口同步和刷新后持久通过隔离检查。独立门214通过/1平台跳过，原受控升级前备份2022个文件并核验20份数据库；原生窗口刷新后已确认加载新控件，但CUA无法激活透明窗口，未签收原生实际点击。首次自动排空PermissionError已沿原启动器恢复旧服务；并行升级底座修改未混入本候选，也没有清除管理器attention。[浏览器验收](evidence/work-dismiss-20261118/validation.json)／[日用采用](evidence/work-dismiss-20261118/daily-adoption.json)／[失败与限制](evidence/work-dismiss-20261118/closeout.json)。
 
 v0.1.20 已由日用管理器自动采用至 epoch42，观察 180 秒通过，固定独立门 214 通过、1 项平台跳过。D 盘备份 2,017 个文件并校验 20 份数据库，4 项等待联网的只读邮件、664 个会话、675 条消息、4 个项目及 8 条已读回执逐项一致。已正常关闭旧精灵并启动支持自动刷新的窗口，只启动精灵和标签。隔离验证真实 Host 失败回退、WebView2 草稿补存及窗口接续。[采用条件与边界](stack-project-layout.md#daily-automation-runtime)。

@@ -18,7 +18,14 @@ export function captureVoice(parent,{onRecording,onError}){
    source.connect(processor);processor.connect(context.destination);status.textContent='正在录音，最多60秒；停止后可回听并确认转写。';timer=setTimeout(stop,60000);
   }catch(e){cleanup();onError('无法录音：'+e.message);}finally{opening=false;}
  });
- function cleanup(){releaseMic?.();releaseMic=null;clearTimeout(timer);if(processor){processor.disconnect();processor.onaudioprocess=null;}source?.disconnect();stream?.getTracks().forEach(t=>t.stop());stream=null;context?.close();}
+ function cleanup(){
+  releaseMic?.();releaseMic=null;clearTimeout(timer);
+  if(processor){processor.disconnect();processor.onaudioprocess=null;processor=null;}
+  source?.disconnect();source=null;
+  stream?.getTracks().forEach(track=>track.stop());stream=null;
+  const current=context;context=null;
+  if(current&&current.state!=='closed')void current.close();
+ }
  function stop(){
   if(!stream)return;
   const rate=context.sampleRate;cleanup();

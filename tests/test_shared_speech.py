@@ -85,9 +85,17 @@ class SpeechFlow(unittest.TestCase):
     def test_confirmed_transcription_opens_library_without_model_dispatch(self):
         from test_library_preview import add_display_asset
         add_display_asset(self.root)
-        self.recognition='打开纸船的 L O D 二'
+        self.recognition='打开纸传的 l二'
         row,_=self.recognize();self.speech.runner=self.host
-        command={'text':self.recognition,'provider':'auto','model':'','reasoning':'default','assistant_mode':True}
+        lookup={'action':'library_candidates','id':row['id'],'chat_id':self.chat,'text':self.recognition}
+        result=self.speech.command(lookup)
+        self.assertTrue(result['needs_confirmation'])
+        choice,=result['choices']
+        self.assertEqual(choice['asset'],'paper-boat')
+        self.assertFalse(self.chats.db.execute("SELECT 1 FROM turns WHERE id='voice-speech-one'").fetchone())
+        with self.assertRaises(CoreError):
+            self.speech.command({**lookup,'chat_id':self.chats.create()})
+        command={'text':choice['text'],'provider':'auto','model':'','reasoning':'default','assistant_mode':True}
         with patch.object(self.host,'_pump'),patch('host.dialogue.NativeModel') as provider:
             submission=self.speech.command({'action':'submit','id':row['id'],'command':command})['submission']
             self.host.run(submission['request_id'])
@@ -95,6 +103,10 @@ class SpeechFlow(unittest.TestCase):
             self.assertEqual(turn['assistant_action']['choices'][0]['version'],'lod2')
             self.assertEqual(turn['provider'],'local-library')
             provider.assert_not_called()
+        with Store(self.root) as store:
+            receipt=store.get(row['id'])['confirmation']
+            self.assertEqual(receipt['raw_text'],self.recognition)
+            self.assertEqual(receipt['confirmed_text'],choice['text'])
 
     def test_real_dialogue_submit_dedup_and_withdraw_before_provider(self):
         row,_=self.recognize();self.speech.runner=self.host
