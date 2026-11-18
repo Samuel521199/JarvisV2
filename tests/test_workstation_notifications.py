@@ -66,6 +66,20 @@ class NotificationTests(unittest.TestCase):
         self.now=1030;self.assertFalse(self.schedule.source_due(self.root))
         self.now=1120;self.assertTrue(self.schedule.source_due(self.root))
 
+    def test_source_hint_waits_through_owned_transition_then_rechecks(self):
+        self.engine.ticket_pending=True
+        self.engine.journal={'phase':'observing'};self.engine.last_status='observing'
+        self.schedule.after_tick(self.engine,True)
+        self.assertIsNone(self.schedule.source_at)
+        self.assertEqual(self.schedule.delay(self.engine),30)
+        self.now+=180
+        self.engine.ticket_pending=False
+        self.engine.journal={'phase':'complete'};self.engine.last_status='ready'
+        self.schedule.after_tick(self.engine,False)
+        self.now+=1
+        self.assertTrue(self.schedule.source_due(self.root))
+        self.assertFalse(self.schedule.source_due(self.root))
+
     def test_offline_cancels_pending_source_timer(self):
         self.schedule.source_at=1100;self.engine.last_status='offline_no_update_checks'
         self.schedule.after_tick(self.engine,True)

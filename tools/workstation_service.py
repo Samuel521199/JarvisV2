@@ -136,6 +136,7 @@ class Schedule:
     """Hourly fallback; only an in-flight operation has a short-lived timer."""
     def __init__(self,clock=time.time):
         self.clock=clock;self.passive_at=clock()+PASSIVE_SECONDS;self.source_at=None;self.last_notification=None
+        self.source_waiting_for_ticket=False
 
     def source_due(self,root):
         now=self.clock();due=False
@@ -155,10 +156,13 @@ class Schedule:
 
     def after_tick(self,engine,source_checked):
         if getattr(engine,'last_status',None) in {'offline_no_update_checks','manual_stop','owner_stopped','no_active_build','disabled'}:
-            self.source_at=None;return
+            self.source_at=None;self.source_waiting_for_ticket=False;return
         completion=getattr(engine,'completion',None)
-        if source_checked:
+        if source_checked and getattr(engine,'ticket_pending',False) is True:
+            self.source_at=None;self.source_waiting_for_ticket=True
+        elif source_checked:
             self.source_at=None
+            self.source_waiting_for_ticket=False
             if engine.source_inspected and completion is not None:
                 state=completion.state
                 if state.get('status')=='waiting_for_quiet_snapshot':
@@ -166,6 +170,10 @@ class Schedule:
                 elif state.get('status')=='daily_check_limit':
                     retry_at=state.get('next_check_at')
                     if type(retry_at) in (int,float):self.source_at=retry_at
+        elif self.source_waiting_for_ticket and getattr(engine,'ticket_pending',False) is False:
+            if engine.last_status in {'ready','ready_quarantined','update_rejected',
+                                      'waiting_for_independent_check_exit','waiting_for_reviewed_snapshot'}:
+                self.source_at=self.clock()+1;self.source_waiting_for_ticket=False
 
     def delay(self,engine):
         deadlines=[self.passive_at]
@@ -415,6 +423,7 @@ class Engine:
     def tick(self,*,check_source=True):
         self.source_check_requested=check_source
         self.source_inspected=False
+        self.ticket_pending=False
         self.config=policy(self.root)
         if not self.config['enabled']:self.close();self.status('disabled');return
         if StopGate(self.root).state()!='ready':self.close();self.status('owner_stopped');return
@@ -460,32 +469,43 @@ class Engine:
             except Exception as exc:completion.save(status='attention',error=type(exc).__name__)
         if self.journal.get('phase')=='observing':
             if current['active']['build']!=self.journal['target'] or current['epoch']!=self.journal['adopted_epoch']:
-                self.save(phase='attention',error='observation_baseline_changed')
-            elif self.clock()>=self.journal['observe_until']:self.save(phase='complete',error=None)
-            self.status('observing');return
+                self.save(phase='attention',error='observation_baseline_changed');self.status('attention');return
+            if self.clock()<self.journal['observe_until']:
+                self.ticket_pending=True;self.status('observing');return
+            self.save(phase='complete',error=None)
+        ready=self.advance_ticket(current,completion)
+        if ready is None:return
         if completion is not None and check_source:
             self.source_inspected=True
             try:completion.tick()
             except Exception as exc:completion.save(status='attention',error=type(exc).__name__)
+        self.status(ready)
+
+    def advance_ticket(self,current,completion):
+        # Preparation and live adoption use the same application release lock.
         ticket_path=self.folder/'ticket.json'
-        if not self.config['auto_updates'] or not ticket_path.exists():self.status('ready');return
+        if not self.config['auto_updates'] or not ticket_path.exists():return 'ready'
         ticket=verified(self.root,ticket_path)
         rejected=set(self.journal.get('quarantined_builds',[]))|{self.journal.get('failed_build')}
         if ticket['id']==self.journal.get('ticket') or ticket['prepared']['build'] in rejected:
-            self.status('ready_quarantined' if self.journal.get('failed_build') else 'ready');return
+            return 'ready_quarantined' if self.journal.get('failed_build') else 'ready'
         if self.clock()>=ticket['expires']:
-            self.save(ticket=ticket['id'],phase='rejected',error='ticket_expired');self.status('ready');return
+            self.save(ticket=ticket['id'],phase='rejected',error='ticket_expired');return 'ready'
         if ticket['prepared']['build']==current['active']['build']:
-            self.save(ticket=ticket['id'],phase='complete');self.status('ready');return
+            self.save(ticket=ticket['id'],phase='complete');return 'ready'
         if ticket['baseline']!=current['active'] or ticket['prepared']['expected_epoch']!=current['epoch']:
-            self.save(ticket=ticket['id'],phase='rejected',error='stale_baseline');self.status('ready');return
+            self.save(ticket=ticket['id'],phase='rejected',error='stale_baseline');return 'ready'
         commit=ticket['prepared'].get('completion_commit')
         if commit:
             if completion is None or completion.state.get('head')!=commit or completion.state.get('status')!='queued':
-                self.status('waiting_for_independent_check_exit');return
+                return 'waiting_for_independent_check_exit'
             try:load_completion().require_snapshot(self.config['completion'],commit)
             except ValueError:
-                self.idle_since=None;self.status('waiting_for_reviewed_snapshot');return
+                self.idle_since=None;return 'waiting_for_reviewed_snapshot'
+        self.ticket_pending=True
+        if completion is not None and completion.process is not None:
+            # A manual ticket can arrive after the source worker has started.
+            self.idle_since=None;self.status('waiting_for_independent_check_exit');return
         if not self.idle():self.idle_since=None;self.status('waiting_for_idle');return
         if self.idle_since is None:self.idle_since=self.clock()
         if self.clock()-self.idle_since<self.config['idle_seconds']:self.status('waiting_for_idle');return
@@ -496,6 +516,7 @@ class Engine:
             if self.journal.get('ticket')!=ticket['id']:
                 self.save(ticket=ticket['id'],phase='rejected',error=reason)
             self.status('update_rejected',error=reason)
+        self.ticket_pending=self.journal.get('phase') in {'observing','applying','rolling_back'}
 
     def close(self):
         completion=getattr(self,'completion',None)

@@ -233,6 +233,33 @@ class ServiceTests(unittest.TestCase):
         self.ticket();e=self.engine();e.idle.return_value=False;e.tick();self.assertIsNone(e.idle_since)
         e.idle.return_value=True;e.tick();self.assertEqual(e.idle_since,1000);e.operator.apply.assert_not_called()
 
+    def test_live_ticket_and_completion_worker_do_not_compete_for_release_lock(self):
+        self.ticket();e=self.engine();e.completion=Mock(state={},process=None)
+        e.idle_since=940
+        with patch.object(e,'transition',side_effect=lambda _:e.journal.update(phase='observing',target='a'*64,
+                                                                                adopted_epoch=3,observe_until=1180)) as transition:
+            e.completion.process=object()
+            e.tick()
+            transition.assert_not_called();e.completion.tick.assert_not_called()
+            self.assertEqual(e.last_status,'waiting_for_independent_check_exit')
+            e.completion.process=None;e.idle_since=940
+            e.tick()
+            transition.assert_called_once();e.completion.tick.assert_not_called()
+            e.tick()
+            e.completion.tick.assert_not_called()
+            e.journal['ticket']='x'*32;e.clock=lambda:1180
+            e.tick()
+            e.completion.tick.assert_called_once();self.assertEqual(e.journal['phase'],'complete')
+
+    def test_obsolete_completion_ticket_cannot_block_a_new_reviewed_commit(self):
+        ticket=self.ticket();ticket['prepared']['completion_commit']='d'*40
+        service.signed(self.root,service.base(self.root)/'ticket.json',ticket)
+        e=self.engine();e.completion=Mock(state={'head':'e'*40,'status':'failed'},process=None)
+        e.tick()
+        e.completion.tick.assert_called_once()
+        e.operator.apply.assert_not_called()
+        self.assertEqual(e.last_status,'waiting_for_independent_check_exit')
+
     def test_expired_or_changed_baseline_before_stop(self):
         ticket=self.ticket();e=self.engine()
         for change in [{'expires':999},{'prepared':{**ticket['prepared'],'expected_epoch':2}},{'baseline':{**ticket['baseline'],'build':'c'*64}}]:
