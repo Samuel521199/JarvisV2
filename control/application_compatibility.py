@@ -4,12 +4,58 @@ Read-only inspection, no migration or business restore. Candidate declarations
 are provenance-bound by normal package inspection and reviewed-source tests;
 they are not proof of arbitrary third-party code compatibility.
 """
+import hashlib
 import json
+import re
 from itertools import chain
 from pathlib import Path
 import sqlite3
 from control.paths import child,reject_links
 from sdk.protocol import CoreError
+
+
+# Audited readers before this declaration existed. Keep former stable packages
+# usable for code rollback without changing their signed manifests.
+_LEGACY_PREVIEW_READERS={
+    'cf5221f8a5da76e5146ea845c2e73126dc9f71eea79ef90be4af081e80f6e43b',
+    '5fe51831cd3b18a68623cdd9b2cdd5a34db6c77f12b48ab0fc187970c3c231b0',
+}
+_LEGACY_PREVIEW_ROUTE='8d423a1b7df6deb1dce4706ded2c59a6feeef93e700e5e56900e38c98b202321'
+
+
+def _library_preview(action):
+    choices=action.get('choices')
+    if (set(action)!={'kind','choices','auto_open'} or type(action.get('auto_open')) is not bool
+            or not isinstance(choices,list) or action['auto_open'] and len(choices)!=1):
+        return False
+    patterns={'asset':r'[a-z0-9][a-z0-9-]{0,63}','version':r'[a-z0-9][a-z0-9-]{0,63}',
+              'sha256':r'[a-f0-9]{64}'}
+    return all(isinstance(choice,dict) and set(choice)=={*patterns,'title'}
+               and isinstance(choice['title'],str)
+               and all(isinstance(choice[key],str) and re.fullmatch(pattern,choice[key])
+                       for key,pattern in patterns.items()) for choice in choices)
+
+
+def declares_library_preview(package):
+    declaration=Path(package)/'config/library-preview-compatibility.json'
+    reject_links(declaration)
+    if not declaration.exists():return None
+    if declaration.stat().st_size>1024:return False
+    value=json.loads(declaration.read_bytes())
+    return (isinstance(value,dict) and set(value)=={'schema','library_preview_schema'}
+            and all(type(version) is int and version==1 for version in value.values()))
+
+
+def _preview_reader(package):
+    declared=declares_library_preview(package)
+    if declared is not None:return declared
+    def source_digest(name):
+        source=Path(package)/'apps/workbench'/name
+        reject_links(source)
+        if not source.is_file() or source.stat().st_size>1024*1024:return None
+        return hashlib.sha256(source.read_bytes()).hexdigest()
+    return (source_digest('app.js') in _LEGACY_PREVIEW_READERS
+            and source_digest('model_library_http.py')==_LEGACY_PREVIEW_ROUTE)
 
 
 def required(root):
@@ -47,6 +93,11 @@ def required(root):
                 if 'assistant_action' not in columns:continue
                 for row in db.execute('SELECT assistant_action FROM turns WHERE assistant_action IS NOT NULL ORDER BY rowid DESC'):
                     action=json.loads(row[0])
+                    if isinstance(action,dict) and action.get('kind')=='library_preview':
+                        if not _library_preview(action):
+                            raise CoreError('application_data_compatibility','Invalid persisted model-library preview')
+                        needs['library_preview_schema']=1
+                        continue
                     if not isinstance(action,dict) or action.get('kind') not in {'chat','goal','amend','cancel','resume','commitment'}:
                         raise CoreError('application_data_compatibility','Unknown persisted assistant action')
                     if action['kind']=='commitment':needs['assistant_commitments']=True
@@ -140,6 +191,8 @@ def require_compatible(root,package):
         if (needs['commitments_schema']>declared['commitments_schema'] or
                 needs['assistant_commitments'] and not declared['assistant_commitments']):
             raise CoreError('application_data_compatibility','Target cannot serve existing commitment data/actions')
+        if needs.get('library_preview_schema') and not _preview_reader(package):
+            raise CoreError('application_data_compatibility','Target cannot preserve model-library preview actions')
         if needs.get('standing_schema'):
             standing=Path(package)/'config/standing-compatibility.json';reject_links(standing)
             if not standing.exists() or standing.stat().st_size>1024 or json.loads(standing.read_text(encoding='utf-8'))!={'schema':1,'standing_schema':1}:

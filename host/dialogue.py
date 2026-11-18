@@ -55,6 +55,13 @@ class DialogueHost:
             check_speech_turn(self.root,command.get('request_id'),command)
             selected = command.get('provider', 'auto')
             local_preview = lane == 'foreground' and preview_request(command)
+            if local_preview:
+                from control.application_runtime import coordination
+                if coordination(self.root) is not None:
+                    from control.application_compatibility import declares_library_preview
+                    from control.controller_pin import read as pinned_controller
+                    if declares_library_preview(pinned_controller(self.root)['controller']) is not True:
+                        raise CoreError('controller_protocol','Managed model-library previews need a compatible rollback controller')
             routes = []
             if not local_preview:
                 settings = prefs.read()

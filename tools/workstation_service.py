@@ -450,9 +450,10 @@ class Engine:
         self.idle_since=None
         try:self.transition(ticket)
         except Exception as exc:
+            reason=exc.code if isinstance(exc,CoreError) else type(exc).__name__
             if self.journal.get('ticket')!=ticket['id']:
-                self.save(ticket=ticket['id'],phase='rejected',error=type(exc).__name__)
-            self.status('update_rejected',error=type(exc).__name__)
+                self.save(ticket=ticket['id'],phase='rejected',error=reason)
+            self.status('update_rejected',error=reason)
 
     def close(self):
         completion=getattr(self,'completion',None)

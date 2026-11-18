@@ -180,6 +180,30 @@ class ApplicationCompatibility(unittest.TestCase):
         finally:chats.close()
         with self.assertRaises(CoreError):require_compatible(self.root,package)
 
+    def test_model_preview_requires_known_reader_and_no_operational_fields(self):
+        target=self.candidate('preview')
+        package=Path(self.app.record(target)['path'])
+        action={'kind':'library_preview','choices':[{'asset':'paper-boat','version':'lod2','sha256':'a'*64,'title':'Fixture'}],
+                'auto_open':True}
+        chats=Dialogues(self.root)
+        try:
+            chat=chats.create()
+            chats.begin({'chat_id':chat,'request_id':'preview-action','text':'Synthetic preview',
+                         'provider':'fixture','model':'fixture','reasoning':'default'},[])
+            chats.finish('preview-action',{'status':'SUCCEEDED','text':'preview','assistant_action':action})
+            with self.assertRaisesRegex(CoreError,'cannot preserve model-library preview'):
+                require_compatible(self.root,package)
+            file=package/'config/library-preview-compatibility.json';file.parent.mkdir(exist_ok=True)
+            file.write_text('{"schema":1,"library_preview_schema":true}')
+            with self.assertRaises(CoreError):require_compatible(self.root,package)
+            file.write_text('{"schema":1,"library_preview_schema":1}')
+            self.assertTrue(require_compatible(self.root,package)['compatible'])
+            action['target']='task-unsafe'
+            chats.db.execute('UPDATE turns SET assistant_action=? WHERE id=?',(json.dumps(action),'preview-action'))
+            with self.assertRaisesRegex(CoreError,'Invalid persisted model-library preview'):
+                require_compatible(self.root,package)
+        finally:chats.close()
+
     def test_non_object_declaration_and_boolean_schema_fail_closed(self):
         current=self.candidate('typed-declaration',True,True);package=Path(self.app.record(current)['path'])
         path=package/'config/runtime-compatibility.json'
