@@ -32,7 +32,10 @@ turn(a,'补充模型库中的查看说明','模型库可以切换高模与 LOD�
 b=chat('轮组材质与贴图',projects[0]['id']);turn(b,'正在检查轮盘金属与橡胶表现',state='running')
 turn(b,'生成固定光照下的材质对比',state='queued')
 c=chat('咖啡店口语练习',projects[1]['id']);turn(c,'本轮口语场景已准备好','街角咖啡店已经准备好。你可以用英语点一杯小杯热咖啡，确认转写后提交。\n这里只是场景准备，没有计入你的学习成绩。')
-d=chat('日常安排','');turn(d,'今天的工作反馈已整理','待办与已完成反馈已归入原会话，随时可以继续。')
+d=chat('日常安排','')
+long_result='--long-result' in sys.argv[2:]
+turn(d,'合成测试清单按名称合计并保存结果。'*60 if long_result else '今天的工作反馈已整理',
+     '\n\n'.join('这是合成测试的成果段落 '+str(i) for i in range(160)) if long_result else '待办与已完成反馈已归入原会话，随时可以继续。')
 core=Core(root)
 with core.db.transaction() as tx:
     goal,_=Plans(core.db).create({'request_id':'fixture-review','goal':'确认模型交付后的下一步'},[],[],tx)

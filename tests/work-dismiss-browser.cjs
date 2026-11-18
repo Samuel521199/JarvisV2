@@ -1,0 +1,61 @@
+// Disposable owner fixture only: no real mail, model calls or user receipts.
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const {chromium}=require('C:/Users/samuel/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+(async()=>{
+ const folder=path.resolve(process.argv[2]),fixture=JSON.parse(fs.readFileSync(path.join(folder,'fixture.json'))),origin='http://127.0.0.1:'+fixture.port;
+ const browser=await chromium.launch({channel:'msedge',headless:true}),report={passed:false,checks:[],errors:[],scope:'actual browser on isolated synthetic HTTP data; native geometry stub, not desktop OS clicks'};
+ try{
+  const context=await browser.newContext({viewport:{width:560,height:800},reducedMotion:'reduce'});
+  await context.addInitScript(()=>{window.__TAURI_INTERNALS__={invoke:()=>Promise.resolve()};});
+  assert.ok((await context.request.post(origin+'/api/local-access',{data:{key:fixture.key},headers:{Origin:origin}})).ok());
+  const page=await context.newPage();page.on('pageerror',e=>report.errors.push(e.message));
+  await page.goto(origin+'/companion/native');
+  const dock=page.locator('#task-docks .task-dock').filter({hasText:'独立会话'});
+  await dock.locator('.task-icon').click();await page.getByRole('button',{name:'查看成果',exact:true}).click();
+  const modal=page.locator('#modal[open]');await modal.locator('.work-result-entry .answer').waitFor();
+  const read=modal.getByRole('button',{name:'标记已读并关闭',exact:true}),close=modal.getByRole('button',{name:'仅关闭',exact:true});
+  const before=await(await context.request.get(origin+'/api/work-status')).json();
+  assert.ok(before.items.some(i=>i.title.startsWith('合成测试清单')&&i.attention.unread));
+  await page.screenshot({path:path.join(folder,'long-result-top.png')});
+  assert.ok(await read.isVisible());assert.ok(await close.isVisible());
+  await modal.locator('#modal-content').evaluate(n=>n.scrollTop=n.scrollHeight);
+  const bounds=await read.boundingBox(),frame=await modal.boundingBox();
+  assert.ok(bounds.y>=Math.max(0,frame.y)&&bounds.y+bounds.height<=Math.min(800,frame.y+frame.height),'read action stays inside visible scrolled dialog');
+  const headerClose=await modal.getByRole('button',{name:'关闭对话框',exact:true}).boundingBox();
+  assert.ok(headerClose.y>=0&&headerClose.y+headerClose.height<=800,'header close stays within screen');
+  await page.screenshot({path:path.join(folder,'long-result-bottom.png')});
+  report.scrolledGeometry=await read.boundingBox();
+  assert.ok(report.scrolledGeometry.y>=0&&report.scrolledGeometry.y+report.scrolledGeometry.height<=800,'read action remains visible after browser paint');
+  report.checks.push('Long instructions are collapsed; sticky read/close and header close remain visible after scroll');
+  await close.click();assert.equal(await modal.count(),0);
+  let state=await(await context.request.get(origin+'/api/work-status')).json();
+  assert.ok(state.items.some(i=>i.title.startsWith('合成测试清单')&&i.attention.unread),'close alone is not a receipt');
+  await page.getByRole('button',{name:'查看成果',exact:true}).click();await modal.locator('.work-result-entry .answer').waitFor();
+  await page.route('**/api/work-status',route=>route.request().method()==='POST'?route.fulfill({status:400,contentType:'application/json',body:JSON.stringify({error:'attention_stale'})}):route.continue());
+  await read.click();await modal.getByRole('status').filter({hasText:'未能全部标记已读'}).waitFor();
+  assert.ok(await read.isEnabled());assert.ok(await dock.isVisible());
+  await page.unroute('**/api/work-status');report.checks.push('Failed receipt keeps dialog and unread dock, with retry available');
+  await read.click();await modal.waitFor({state:'hidden'});await dock.waitFor({state:'detached'});
+  state=await(await context.request.get(origin+'/api/work-status')).json();
+  assert.equal(state.items.length,before.items.length);assert.ok(state.items.some(i=>i.title.startsWith('合成测试清单')&&!i.attention.unread));
+  assert.equal(state.items.filter(i=>i.state==='running').length,before.items.filter(i=>i.state==='running').length);
+  report.checks.push('Explicit read closes detail and removes only its confirmed notification; records and running work retained');
+  const other=await context.newPage();await other.goto(origin+'/companion');
+  const english=page.locator('#task-docks .task-dock').filter({hasText:'英语学习'});
+  await english.locator('.task-icon').focus();await english.getByRole('button',{name:/当前未读提醒标记已读/}).click();
+  await english.waitFor({state:'detached'});await other.locator('#task-docks .task-dock').filter({hasText:'英语学习'}).waitFor({state:'detached'});
+  await page.reload();await page.locator('#work-summary').filter({hasText:'未读反馈'}).waitFor();
+  assert.equal(await english.count(),0);assert.equal(await dock.count(),0);
+  report.checks.push('Expanded dock read action shares durable receipts across clients and reload');
+  await other.goto(origin+'/');
+  await other.evaluate(async()=>{const {workStatusView}=await import('/work-status.js');const h=document.createElement('div');h.id='fixture-board';h.style.cssText='position:fixed;inset:20px;background:var(--surface);z-index:100;overflow:auto';document.body.append(h);workStatusView(h,{initialTab:'history'});});
+  await other.locator('#fixture-board .work-card').first().waitFor();
+  await other.locator('#fixture-board .work-project').filter({has:other.getByRole('heading',{name:'独立会话',exact:true})}).getByRole('button',{name:'查看成果',exact:true}).click();
+  await other.getByRole('button',{name:'仅关闭',exact:true}).waitFor();
+  assert.equal(await other.getByRole('button',{name:'标记已读并关闭',exact:true}).count(),0);
+  await other.getByRole('button',{name:'仅关闭',exact:true}).click();
+  report.checks.push('Workbench history reopens the same result component and closes without deleting history');
+  assert.deepEqual(report.errors,[]);report.passed=true;
+ }catch(e){report.error=e.stack;}
+ finally{await browser.close();fs.writeFileSync(path.join(folder,'dismiss-result.json'),JSON.stringify(report,null,2));console.log(JSON.stringify(report));process.exitCode=report.passed?0:1;}
+})();

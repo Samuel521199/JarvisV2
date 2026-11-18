@@ -1,9 +1,22 @@
-import {el,button,get,post,modal,details,markdown,outcomeView,completionView} from './ui.js';
+import {el,button,get,post,modal,closeModal,details,markdown,outcomeView,completionView} from './ui.js';
 import {watchReply,workApi} from './work-client.js';
 
 const labels={finished:'执行已结束',failed:'执行遇到问题',cancelled:'已经取消',running:'正在进行',queued:'正在排队',needs_input:'等待你确认',waiting:'等待条件',external:'等待外部响应',unknown:'结果需要核对'};
 export async function openWorkResult(unit,{onOpenChat=null,refresh=()=>{}}={}){
- const body=modal(unit.title);body.classList.add('work-result');
+ const body=modal('工作成果');body.classList.add('work-result');
+ document.getElementById('modal').classList.add('work-result-dialog');
+ const controls=el('div',undefined,'work-result-controls'),receiptError=el('p',undefined,'form-error');
+ receiptError.setAttribute('role','status');
+ if(unit.members.some(item=>item.attention?.unread)){
+  const read=button('标记已读并关闭',async()=>{
+   read.disabled=true;receiptError.textContent='';
+   try{await workApi.viewedGroup(unit);await refresh();if(controls.isConnected)closeModal();}
+   catch(error){if(controls.isConnected)receiptError.textContent='未能全部标记已读，请重试：'+error.message;}
+   finally{read.disabled=false;}
+  },'work-read-action');controls.append(read);
+ }
+ controls.append(button('仅关闭',closeModal,'work-read-action'));
+ body.append(controls,receiptError);
  body.append(el('p',unit.project_name+(unit.chat_title?' / '+unit.chat_title:''),'work-breadcrumb'));
  const loading=el('p','正在读取原始成果…','note');body.append(loading);
  let shown=0;
@@ -11,18 +24,19 @@ export async function openWorkResult(unit,{onOpenChat=null,refresh=()=>{}}={}){
   const chats=new Map();
   for(const item of unit.members){
    const section=el('section',undefined,'work-result-entry');let raw=item,readable=false,attention=item.attention;
-   section.append(el('h3',item.title),el('p',labels[item.state]||'工作反馈','note'));
+   const title=el('h3',item.title);title.title=item.title;
+   section.append(title,el('p',labels[item.state]||'工作反馈','note'));
    if(item.source==='dialogue'){
     const id=item.context?.chat_id||item.chat_id;
     if(!chats.has(id))chats.set(id,await get('/api/chats/'+encodeURIComponent(id)));
     const turn=chats.get(id).turns.find(t=>t.id===item.id);
-    if(turn){raw=turn;attention=turn.attention;section.append(el('p',turn.request?.text||'原会话中的任务','work-request'));
+    if(turn){raw=turn;attention=turn.attention;const request=el('details',undefined,'work-request');request.append(el('summary','原始任务要求'),el('p',turn.request?.text||'原会话中的任务'));section.append(request);
      if(turn.reply){section.append(markdown(turn.reply));readable=true;}
      else if(turn.error)section.append(el('p','这次回复未完成，请在原会话核对。','note'));
     }
    }else if(item.source==='tasks'){
     raw=await post('/api/operations',{action:'task_detail',id:item.id});
-    section.append(el('p',raw.task?.body?.goal||item.title));
+    const request=el('details',undefined,'work-request');request.append(el('summary','原始任务要求'),el('p',raw.task?.body?.goal||item.title));section.append(request);
     for(const action of raw.actions||[]){if(action.result!=null){section.append(el('h4','步骤成果'),el('pre',typeof action.result==='string'?action.result:JSON.stringify(action.result,null,2),'work-output'));readable=true;}}
     outcomeView(section,raw.outcome,{taskId:item.id,refresh});completionView(section,raw.completion,{refresh});
    }else if(item.source==='studio3d'||item.source==='images'){
@@ -36,6 +50,7 @@ export async function openWorkResult(unit,{onOpenChat=null,refresh=()=>{}}={}){
    // Technical receipts remain available, but never replace the human result.
    const technical=el('details',undefined,'work-technical');technical.append(el('summary','原始回执与技术记录'),el('pre',JSON.stringify(raw,null,2)));section.append(technical);
    if(item.attention?.unread&&!readable)section.append(button('这一项已看完',async()=>{await workApi.viewed(item);await refresh();},'work-read-action'));
+   if(!controls.isConnected)return;
    body.append(section);shown++;
    // Only actual displayed results use the same visibility receipt as chat.
    // Opening a list, hovering or collapsing the panel never acknowledges it.
@@ -43,6 +58,6 @@ export async function openWorkResult(unit,{onOpenChat=null,refresh=()=>{}}={}){
   }
   if(unit.chat_id){const open=button('到原会话继续',()=>{if(onOpenChat){document.getElementById('modal').close();onOpenChat(unit.chat_id);}else location.href='/#chat='+encodeURIComponent(unit.chat_id);},'work-result-link');body.append(open);}
   if(!shown)body.append(el('p','当前成果暂不可用，请刷新后再查看。','note'));
- }catch(error){body.append(el('p','原始成果暂未读取成功，未自动标记已读：'+error.message,'form-error'));}
+ }catch(error){if(controls.isConnected)body.append(el('p','原始成果暂未读取成功，未自动标记已读：'+error.message,'form-error'));}
  finally{loading.remove();}
 }

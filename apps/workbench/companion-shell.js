@@ -99,7 +99,8 @@ function paint(data){
   if(!unreadUnits.length)continue;
   const {title,state,bucket}=unreadUnits[0];
   projects.push({id:project.id,projectTitle:project.title,count:unreadUnits.length,state,bucket,
-   preview:title+' · '+(data.labels[state]||'工作反馈')});
+   preview:title+' · '+(data.labels[state]||'工作反馈'),
+   readings:unreadUnits.flatMap(unit=>unit.members).filter(item=>item.attention?.unread).map(item=>({attention:item.attention}))});
  }
  paintUnreadDocks(projects);
 }
@@ -119,7 +120,13 @@ function paintUnreadDocks(projects){
   b.append(el('span',({running:'◌',finished:'✓',failed:'!',cancelled:'−',needs_input:'?'}[item.state]||'◇'),'task-symbol'),
    el('span',item.count>99?'99+':String(item.count),'count'));
   const preview=el('div',undefined,'task-preview');
-  preview.append(el('strong',item.projectTitle),el('span',item.preview));dock.append(b,preview);target.append(dock);
+  const read=button('标记已读',async()=>{
+   read.disabled=true;
+   try{await workApi.viewedGroup({members:item.readings});await refresh(true);}
+   finally{read.disabled=false;}
+  },'task-read');
+  read.title='只收起当前提醒，保留工作记录';read.setAttribute('aria-label','将“'+item.projectTitle+'”的当前未读提醒标记已读');read.dataset.projectId=item.id;
+  preview.append(el('strong',item.projectTitle),el('span',item.preview),read);dock.append(b,preview);target.append(dock);
   if(hadFocus&&focused.dataset.projectId===item.id)restoreFocus=b;
  }
  if(remaining){

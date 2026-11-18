@@ -39,7 +39,7 @@ const {chromium}=require('C:/Users/samuel/.cache/codex-runtimes/codex-primary-ru
 
   const englishDock=page.locator('#task-docks .task-dock').filter({hasText:'英语学习 · 日常交流'});
   const nextBefore=Number(await page.locator('#unread-total').innerText());
-  await englishDock.getByRole('button').click();
+  await englishDock.locator('.task-icon').click();
   await page.getByRole('heading',{name:'英语学习 · 日常交流',exact:true}).waitFor();
   assert.equal(await page.getByRole('tab',{name:/未读成果/}).getAttribute('aria-selected'),'true');
   assert.equal(Number(await page.locator('#unread-total').innerText()),nextBefore);
@@ -52,7 +52,7 @@ const {chromium}=require('C:/Users/samuel/.cache/codex-runtimes/codex-primary-ru
   await page.getByRole('button',{name:'收起卡片',exact:true}).click();
   report.checks.push('Desktop shortcut opens unread results and disappears when the actual reply is visible');
 
-  const last=page.locator('#task-docks .task-dock button');
+  const last=page.locator('#task-docks .task-dock .task-icon');
   assert.equal(await last.count(),1);
   const lastBox=await last.boundingBox();
   const sample=await (await context.request.get(origin+'/api/work-status')).json();
