@@ -3,7 +3,7 @@ import json
 import re
 import unicodedata
 
-from .store import Library
+from modules.skills.model_library.store import Library
 
 
 _REQUEST = re.compile(
