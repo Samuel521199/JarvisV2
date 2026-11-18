@@ -36,29 +36,65 @@ const {chromium}=require(process.env.JARVIS_PLAYWRIGHT||'playwright');
    await page.locator('#message').fill('预览纸船的 LOD3');await page.locator('#message').press('Enter');
    await page.getByText('纸船 没有可预览的 LOD3。',{exact:false}).first().waitFor();assert.equal(await page.locator('#panel-content iframe:visible').count(),0);
   }
-  await page.locator('#voice').click();
-  await page.getByRole('button',{name:'开始录音',exact:true}).click();
-  await page.getByText('正在录音，最多60秒；停止后可回听并确认转写。',{exact:true}).waitFor();
+  await page.goto(origin+'/companion');
+  await page.locator('#robot').click();
+  const conversation=page.frameLocator('#conversation-host iframe');
+  await page.waitForFunction(()=>typeof document.querySelector('#conversation-host iframe')?.contentDocument?.getElementById('message')?.oninput==='function');
+  const voice=conversation.locator('#voice'),message=conversation.locator('#message'),feedback=conversation.locator('#voice-status');
+  await voice.click();
+  await conversation.getByText('正在录音 · 再点麦克风停止',{exact:true}).waitFor();
+  assert.equal(await voice.getAttribute('aria-pressed'),'true');
+  assert.equal(await conversation.locator('#inspector').isVisible(),false);
   await page.waitForTimeout(800);
-  await page.getByRole('button',{name:'停止录音',exact:true}).click();
-  const candidate=page.getByRole('button',{name:'纸船 · LOD2 · paper-boat',exact:true});
+  await voice.click();
+  const candidate=conversation.getByRole('button',{name:'纸船 · LOD2 · paper-boat',exact:true});
   try{await candidate.waitFor();}catch(error){
-   throw Error(error.message+' '+await page.locator('#panel-content').innerText()+' '+errors+' '+logs);
+   throw Error(error.message+' '+await feedback.innerText()+' '+errors+' '+logs);
   }
-  const confirm=page.getByRole('button',{name:'确认并发送到当前会话',exact:true});
   const turnCount=async()=> (await (await context.request.get(origin+'/__fixture__/state')).json()).turns;
   const before=await turnCount();
-  await confirm.click();
-  await page.getByText('请选择本机候选，或手动校正模型名称和 LOD。',{exact:true}).waitFor();
+  assert.equal(await message.inputValue(),'打开纸传的 l二');
+  await conversation.locator('#send').click();
+  await conversation.getByText('请选择模型候选，或修改模型名和 LOD 后发送。',{exact:true}).waitFor();
   assert.equal(await turnCount(),before);
   await candidate.click();
-  assert.equal(await page.getByLabel('语音识别草稿').inputValue(),'打开 paper-boat 的 LOD2');
+  assert.equal(await message.inputValue(),'打开 paper-boat 的 LOD2');
   assert.equal(await turnCount(),before);
-  await confirm.click();
-  await page.waitForFunction(sha=>document.querySelector('#panel-content iframe')?.contentWindow.studio3dViewerState?.sha256===sha,expectedSha);
+  await conversation.locator('#send').click();
+  const viewer=conversation.locator('#panel-content iframe');
+  await viewer.waitFor();
+  await viewer.evaluate(async(frame,sha)=>{
+   const deadline=Date.now()+18000;
+   while(Date.now()<deadline){
+    if(frame.contentWindow.studio3dViewerState?.sha256===sha)return;
+    await new Promise(resolve=>setTimeout(resolve,100));
+   }
+   throw Error('Voice preview did not load the registered file');
+  },expectedSha);
+  assert.equal(await turnCount(),before+1);
+  await conversation.locator('#close-panel').click();
+  await message.fill('已有草稿');
+  await voice.click();
+  await conversation.getByText('正在录音 · 再点麦克风停止',{exact:true}).waitFor();
+  await page.waitForTimeout(800);
+  await voice.click();
+  await conversation.getByText('已转写，编辑后可直接发送。',{exact:true}).waitFor();
+  assert.equal(await message.inputValue(),'已有草稿\n打开纸传的 l二');
+  assert.equal(await turnCount(),before+1);
+
+  const denied=await context.newPage();
+  await denied.addInitScript(()=>{
+   navigator.mediaDevices.getUserMedia=()=>Promise.reject(new DOMException('blocked','NotAllowedError'));
+  });
+  denied.setDefaultTimeout(14000);
+  await denied.goto(origin+'/conversation');
+  await denied.waitForFunction(()=>typeof document.getElementById('message').oninput==='function');
+  await denied.locator('#voice').click();
+  await denied.getByText('麦克风权限未开启，请允许 Jarvis 使用麦克风后重试。',{exact:true}).waitFor();
+  assert.equal(await denied.locator('#message').inputValue(),'');
   assert.equal(await turnCount(),before+1);
   assert.deepEqual(errors,[]);
-  console.log('PASS desktop and compact: local typed/confirmed speech preview, SHA-verified GLB, no turn before voice confirmation');
+  console.log('PASS desktop and compact: one-button recording in the companion, editable transcript, verified GLB and microphone denial');
  }finally{
   if(browser)await browser.close();
   server.kill();

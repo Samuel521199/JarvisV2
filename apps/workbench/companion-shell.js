@@ -59,6 +59,7 @@ function captureDock(){
 const collapsed=new Set(),placementKey='jarvis.companion.placement.v1',selectionKey='jarvis.companion.chat.v1';
 function rememberSelection(id){selected=id;try{localStorage.setItem(selectionKey,id);}catch{}}
 function hide(){
+ if(mode==='chat')frame?.contentWindow.postMessage({type:'jarvis:conversation:hidden'},location.origin);
  workspaceView?.close();workspaceView=null;cleanup();cleanup=()=>{};mode='';$('card').hidden=true;$('project-dialog').hidden=true;
  $('robot').setAttribute('aria-expanded','false');$('project-button').setAttribute('aria-expanded','false');
  if(mail&&!$('mail-dialog').hidden)mail.close();
