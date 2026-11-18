@@ -11,10 +11,13 @@ const assistantForecast = process.argv.includes('--assistant-forecast');
 const growthLearning = process.argv.includes('--growth-learning');
 const trinityIntegration = process.argv.includes('--trinity-integration');
 const loopClosure = process.argv.includes('--loop-closure');
-if (process.argv.slice(2).some(argument => !['--guide', '--assistant-forecast', '--growth-learning', '--trinity-integration', '--loop-closure'].includes(argument)) || [guide, assistantForecast, growthLearning, trinityIntegration, loopClosure].filter(Boolean).length > 1) {
-  throw new Error('Supported option: --guide OR --assistant-forecast OR --growth-learning OR --trinity-integration OR --loop-closure');
+const systemMap = process.argv.includes('--system-map');
+if (process.argv.slice(2).some(argument => !['--guide', '--assistant-forecast', '--growth-learning', '--trinity-integration', '--loop-closure', '--system-map'].includes(argument)) || [guide, assistantForecast, growthLearning, trinityIntegration, loopClosure, systemMap].filter(Boolean).length > 1) {
+  throw new Error('Select one diagram group: --guide, --assistant-forecast, --growth-learning, --trinity-integration, --loop-closure or --system-map');
 }
-const names = loopClosure
+const names = systemMap
+  ? ['assistant-system-map', 'assistant-model-inventory', 'assistant-asset-library', 'assistant-software-contract', 'assistant-device-path', 'assistant-device-topology', 'assistant-display-journey']
+  : loopClosure
   ? ['assistant-loop-closure']
   : trinityIntegration
   ? ['assistant-trinity-integration']
@@ -26,7 +29,8 @@ const names = loopClosure
   ? ['memory-guide-data', 'memory-guide-parallel', 'memory-guide-branches',
      'memory-guide-forget-race', 'memory-guide-reconnect', 'memory-guide-private-output']
   : ['memory-context-architecture', 'memory-context-lifecycle'];
-const receipt = loopClosure ? 'closed-loop-render-2026-10-26.json'
+const receipt = systemMap ? 'assistant-system-map-render-2026-11-18.json'
+  : loopClosure ? 'closed-loop-render-2026-10-26.json'
   : trinityIntegration ? 'trinity-implementation-render-2026-10-26.json'
   : growthLearning ? 'learning-knowledge-render-2026-10-26.json'
   : assistantForecast ? 'assistant-forecast-render-2026-10-26.json'

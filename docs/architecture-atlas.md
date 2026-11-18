@@ -55,6 +55,7 @@
 - [条件化经验复用与持续纠正](#figure-assistant-knowledge-reuse)
 - [三位一体的增量接入](#figure-assistant-trinity-integration)
 - [闭环交接与反馈回流](#figure-assistant-loop-closure)
+- [对话入口、模型仓库、领域软件与外设](#figure-conversation-ecosystem)
 <!-- book-nav:end -->
 
 <a id="diagram-index"></a>
@@ -461,6 +462,55 @@
 [SVG](diagrams/assistant-loop-closure.svg) · [唯一图源](diagrams/assistant-loop-closure.mmd) · [审查结论](decisions-review.md#closed-loop-audit) · [联合验收](delivery-validation.md#closure-validation-protocol)。等待和退出不是自动失败，反馈也不能绕过原目标和效果核对。
 
 使用已有固定 Mermaid 11.12.0 / Playwright / Edge：`node tools/render_memory_diagrams.cjs --loop-closure`。实际渲染资源及输出摘要见[记录](evidence/closed-loop-render-2026-10-26.json)，不代表通用运行闭环已实现。
+
+<a id="figure-conversation-ecosystem"></a>
+## 对话入口、模型仓库、领域软件与外设
+
+配套[系统图解](conversation-first.html#systems)按用户任务说明模块职责、现有实现和拟接入路径。完整外设链路属于设计提案；已有能力分别见[本地模型中心](models-offline.md#local-model-manager-runtime)、[独立软件契约](contracts.md#ai-mediated-software-contract)与[节点分工](federation.md#offline-federation-1)。
+
+**系统地图**
+
+![系统地图](diagrams/assistant-system-map.png)
+
+[SVG](diagrams/assistant-system-map.svg) · [图源](diagrams/assistant-system-map.mmd) · [阅读图解](conversation-first.html#map-assistant-system-map)。
+
+**AI 模型仓库**
+
+![AI 模型仓库](diagrams/assistant-model-inventory.png)
+
+[SVG](diagrams/assistant-model-inventory.svg) · [图源](diagrams/assistant-model-inventory.mmd) · [阅读图解](conversation-first.html#map-assistant-model-inventory)。
+
+**三维资产仓库**
+
+![三维资产仓库](diagrams/assistant-asset-library.png)
+
+[SVG](diagrams/assistant-asset-library.svg) · [图源](diagrams/assistant-asset-library.mmd) · [阅读图解](conversation-first.html#map-assistant-asset-library)。
+
+**独立软件接入**
+
+![独立软件接入](diagrams/assistant-software-contract.png)
+
+[SVG](diagrams/assistant-software-contract.svg) · [图源](diagrams/assistant-software-contract.mmd) · [阅读图解](conversation-first.html#map-assistant-software-contract)。
+
+**设备执行路径**
+
+![设备执行路径](diagrams/assistant-device-path.png)
+
+[SVG](diagrams/assistant-device-path.svg) · [图源](diagrams/assistant-device-path.mmd) · [阅读图解](conversation-first.html#map-assistant-device-path)。
+
+**多设备部署**
+
+![多设备部署](diagrams/assistant-device-topology.png)
+
+[SVG](diagrams/assistant-device-topology.svg) · [图源](diagrams/assistant-device-topology.mmd) · [阅读图解](conversation-first.html#map-assistant-device-topology)。
+
+**端到端示例**
+
+![端到端示例](diagrams/assistant-display-journey.png)
+
+[SVG](diagrams/assistant-display-journey.svg) · [图源](diagrams/assistant-display-journey.mmd) · [阅读图解](conversation-first.html#map-assistant-display-journey)。
+
+同组图复用固定 Mermaid 渲染器，命令为 `node tools/render_memory_diagrams.cjs --system-map`，产物及资源摘要见[渲染记录](evidence/assistant-system-map-render-2026-11-18.json)。
 
 <!-- book-footer:start -->
 [返回工程主入口](../README.md) · [全书目录](../README.md#book-tree) · [上一章：Grok Bot 功能、界面与运行机制：Jarvis 对比研究（2026-10-26）](grok-bot-comparison.md) · [下一章：研究资料与证据边界](references.md)

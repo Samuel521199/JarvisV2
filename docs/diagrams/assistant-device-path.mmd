@@ -1,0 +1,15 @@
+sequenceDiagram
+    participant H as Jarvis
+    participant A as 显示软件
+    participant D as 目标屏幕
+    H->>A: 查询设备身份、能力和在线状态
+    A-->>H: 返回目标与可接受的格式
+    H->>A: 提交授权的版本引用与动作编号
+    A->>D: 驱动在本机加载并显示
+    alt 收到可核验的显示状态
+      D-->>A: 当前版本及视图状态
+      A-->>H: 与原动作关联的回执
+    else 传输中断或只收到接收确认
+      H->>A: 按原动作编号查询状态
+      A-->>H: 已完成、仍在运行或结果未知
+    end
