@@ -87,6 +87,31 @@ class ServiceTests(unittest.TestCase):
                 self.assertEqual(e.journal['error'],'baseline_recovered')
                 self.assertEqual(e.journal['original_error'],'PermissionError')
 
+    def test_attention_reconciles_only_receipted_owner_adoption(self):
+        initial=self.ticket();baseline=self.state['active']
+        previous={**baseline,'epoch':4}
+        target={'build':initial['prepared']['build'],'epoch':5,'version':'b','slot':'B'}
+        ticket={**initial,'id':'m'*32,'baseline':previous,'prepared':{**initial['prepared'],'expected_epoch':4}}
+        service.signed(self.root,service.base(self.root)/'ticket.json',ticket)
+        current={**self.state,'epoch':5,'active':target,'previous':previous,'error':None}
+        record={'build':target['build'],'before':{'active':previous},'after':current,'passed':True,
+                'backup':{'folder':str(self.base/'backup')}}
+        path=self.dev/'state/workstation-last-update.json'
+        for valid in (False,True):
+            write_json(path,{**record,'passed':valid})
+            e=self.engine()
+            e.journal.update(phase='attention',error='PermissionError',baseline=baseline,
+                             ticket=initial['id'],target=target['build'])
+            e.app.state.return_value=current
+            with patch.object(service,'coordination',return_value={'phase':'active','build':target['build'],'epoch':5}):
+                e.tick()
+            e.operator.apply.assert_not_called()
+            self.assertEqual(e.journal['phase'],'complete' if valid else 'attention')
+            if valid:
+                self.assertEqual(e.journal['ticket'],ticket['id'])
+                self.assertEqual(e.journal['interrupted_ticket'],initial['id'])
+                self.assertEqual(e.journal['error'],'manual_adoption_confirmed')
+
     def test_policy_tamper_fails_closed(self):
         path=service.base(self.root)/'policy.json';value=service.read(path);value['value']['auto_updates']=False;write_json(path,value)
         with self.assertRaises(CoreError):service.policy(self.root)
