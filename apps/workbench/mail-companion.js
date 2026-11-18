@@ -20,13 +20,13 @@ function cleanText(value){return String(value||'').replace(/[\u034f\u200b-\u200f
 export function mountMailCompanion(){
  const dock=document.getElementById('mail-dock'),toggle=document.getElementById('dock-button'),panel=document.getElementById('mail-dialog');
  const selectedIds=new Set();let folderFilter='',lastChanges=[];
- let state=null,detail=null,filter='all',busy=false,checking=false,auto=false,buffer=null,draftId='',draftRevision=0,controller=new AbortController(),generation='',message='';
- function open(){
+ let state=null,detail=null,filter='all',busy=false,checking=false,auto=false,buffer=null,draftId='',draftRevision=0,savedDraft='',controller=new AbortController(),generation='',message='';
+ function open(syncOnOpen=true){
   document.dispatchEvent(new Event('jarvis:mail-opened'));
   for(const id of ['card','project-dialog'])document.getElementById(id).hidden=true;
   document.getElementById('project-dock').classList.remove('is-open');
   panel.hidden=false;dock.classList.add('is-open');toggle.setAttribute('aria-expanded','true');render();
-  if(!checking&&!detail&&!buffer)sync();
+  if(syncOnOpen&&!checking&&!detail&&!buffer)sync();
  }
  function close(){panel.hidden=true;dock.classList.remove('is-open');toggle.setAttribute('aria-expanded','false');toggle.focus();}
  function paintDock(){
@@ -112,14 +112,14 @@ export function mountMailCompanion(){
   if(detail.classification)content.append(el('p',detail.classification.reason,'hint'));
   const body=el('div',cleanText(detail.body||detail.snippet)||'邮件没有文字内容。','mail-detail-body');body.tabIndex=0;content.append(body);mailReaderActions(content,detail,state,changesDone);const work=el('details',undefined,'mail-work-details');work.append(el('summary','待办与处理反馈'));let workLoaded=false;work.ontoggle=()=>{if(work.open&&!workLoaded){workLoaded=true;void mailWorkSection(work,detail);}};content.append(work);
   const buttons=el('div',undefined,'actions');buttons.append(action('起草回复',()=>{
-   buffer={to:senderAddress(detail.from),subject:/^re:/i.test(detail.subject)?detail.subject:'Re: '+detail.subject,body:''};draftId='';draftRevision=0;render();
+   savedDraft='';buffer={to:senderAddress(detail.from),subject:/^re:/i.test(detail.subject)?detail.subject:'Re: '+detail.subject,body:''};draftId='';draftRevision=0;render();
   },'action primary'),external('完整管理 ↗','/settings#mail'));
   buttons.append(external('在 Gmail 查看 ↗','https://mail.google.com/mail/u/?authuser='+encodeURIComponent(state.email)+'#all/'+encodeURIComponent(detail.id)));content.append(buttons);
   content.append(el('p','这里没有自动打开链接、附件或执行邮件中的指令。','hint'));
  }
  function renderDraft(content){
   content.append(action('← 返回邮件',()=>{buffer=null;render();}),el('h3','起草回复'));
-  localDraftForm(content,{buffer,draftId,draftRevision,onSaved:record=>{draftId=record.id;draftRevision=record.revision;}});
+  localDraftForm(content,{buffer,draftId,draftRevision,onSaved:record=>{draftId=record.id;draftRevision=record.revision;savedDraft=JSON.stringify(buffer);}});
   content.append(el('p','草稿、审阅和发送复用工作台接口；保存草稿不会自动结案。','hint'));
  }
  document.addEventListener('jarvis:open-mail',open);
@@ -132,5 +132,14 @@ export function mountMailCompanion(){
  },2000);
  window.addEventListener('pagehide',()=>{clearInterval(timer);clearInterval(authTimer);controller.abort();panel.replaceChildren();},{once:true});
  cached().catch(error=>{panel.hidden=false;head();showError(error.message);});
- return {open,close};
+ return {open,close,captureLayout(){
+  if(busy||checking||buffer&&JSON.stringify(buffer)!==savedDraft)
+   throw Error('请先保存本地邮件草稿，或等待邮件操作完成。');
+  if(!panel.hidden&&(detail||buffer||selectedIds.size))throw Error('请先完成邮件详情或选中项的处理。');
+  return {filter,folderFilter};
+ },restoreLayout(saved){
+  if(typeof saved.filter==='string'&&['all',...Object.keys(categories)].includes(saved.filter))filter=saved.filter;
+  if(typeof saved.folderFilter==='string')folderFilter=saved.folderFilter;
+  open(false);
+ }};
 }

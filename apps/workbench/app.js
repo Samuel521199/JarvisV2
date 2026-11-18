@@ -5,6 +5,7 @@ import {foldWorkbench} from './presentation.js';
 import {conversationGroups} from './conversation-groups.js';
 import {surfaceIntent} from './surface-intent.js';
 import {watchReply} from './work-client.js';
+import {observeNativeUpdate,savePresentationState,takePresentationState} from './native-upgrade.js';
 import {basisEditor,deliveryReviewView} from './delivery-review.js';
 import {workStatusView} from './work-status.js';
 import {mailboxView,updateMailIndicator,mailIntent} from './mailbox.js';
@@ -23,7 +24,21 @@ import {goalsView} from './goals.js';
 import {actionCard} from './assistant-actions.js';
 import {brandState,cinema,enterCinema,setSound,unlockSound,soundState} from './brand.js';
 import {projectBrand,brandLabels} from './brand-state.js';
-let connected=true,away=false,presentationVisible=true;
+const restoredPresentation=takePresentationState();
+let connected=true,away=false,presentationVisible=restoredPresentation.visible!==false;
+function captureConversation(){
+ return {visible:presentationVisible,nav:!document.body.classList.contains('nav-hidden'),
+  scroll:$('messages').scrollTop,selection:[$('message').selectionStart,$('message').selectionEnd],
+  focused:document.activeElement===$('message'),chat:chatId};
+}
+function restoreConversation(){
+ if(restoredPresentation.chat!==chatId)return;
+ if(restoredPresentation.nav===true)workspaceVisibility(true,false);
+ if(Number.isFinite(restoredPresentation.scroll))$('messages').scrollTop=restoredPresentation.scroll;
+ if(Array.isArray(restoredPresentation.selection)&&restoredPresentation.selection.length===2)
+  $('message').setSelectionRange(...restoredPresentation.selection);
+ if(restoredPresentation.focused&&presentationVisible&&document.hasFocus())$('message').focus({preventScroll:true});
+}
 function syncBrand(){const state=projectBrand({connected,away,control:snapshot?.status.control||'ready',pending:busy,turns:chat?.turns||[]});brandState(state);const readout=$('brand-readout');if(readout)readout.textContent=brandLabels[state];const control=$('core-state');if(control){control.dataset.status=connected?snapshot?.status.control:'offline';control.setAttribute('aria-label','工作状态与资源');control.dataset.tooltip='工作状态与资源';}}
 document.addEventListener('jarvis-cinema',e=>{away=!!e.detail?.away;syncBrand();});
 let snapshot,skills=[],chats=[],projects=[],chat=null,chatId=null,projectId='',picker,busy=false,active=null,lastTurns='',polling=false;
@@ -84,17 +99,27 @@ async function switchChat(item){if(chatId!==item.id){pendingPreview=null;if($('p
 async function newChat(project=''){remember();const created=await post('/api/chats',{project_id:project});workspaceChanged();collapsedProjects.delete(project||independentKey);saveSidebar();await refreshLists();await switchChat(chats.find(c=>c.id===created.id));$('message').focus();}
 
 function syncComposerLock(){const pending=transitioningChats.has(chatId),unavailable=!!(chat?.archived||chat?.removed||projects.find(p=>p.id===projectId)?.removed);$('composer').inert=pending;$('composer').setAttribute('aria-busy',String(pending));$('message').readOnly=unavailable;$('send').disabled=pending||busy||unavailable;}
-async function holdWorkspaceDrafts(ids){
+function draftHasInputs(){return $('message').value||$('requirements').value||attachments.length||deliveryEditor.value()?.enabled;}
+function unsavedConversation(){return chatId&&sessionFolders.items.has(chatId)?sessionFolders.dirty(chatId):!!draftHasInputs();}
+async function holdWorkspaceDrafts(ids,purpose){
+ const reloading=purpose==='reload';
+ if(reloading&&(!document.documentElement.hasAttribute('data-presentation-ready')||busy||document.querySelector('dialog[open]')||!$('inspector').hidden))
+  throw Error('请先完成正在提交的消息，或收起正在使用的表单和工具面板。');
  if(!ids.length&&projectUI.dirty())throw Error('项目文件仍有未保存修改，请先保存或还原再切换视图。');
  if((!ids.length||ids.includes(chatId))&&$('messages').querySelector('form[data-commitment-dirty]'))throw Error('当前反馈表单仍有未保存修改，请先完成或取消。');
- if(!ids.length&&!chatId&&($('message').value.trim()||attachments.length)){
+ if(!ids.length&&!chatId&&draftHasInputs()){
   const key='new:'+projectId;remember();const created=await post('/api/chats',{project_id:projectId});drafts.set(created.id,drafts.get(key));await refreshLists();await switchChat(chats.find(c=>c.id===created.id));
  }
  const targets=ids.length?ids:[...new Set([...sessionFolders.items.keys(),...(chatId?[chatId]:[])])];
  if(targets.some(id=>transitioningChats.has(id)))throw Error('相关会话正在保存或整理，请稍候。');
  if(chatId&&targets.includes(chatId))remember();targets.forEach(id=>transitioningChats.add(id));syncComposerLock();
  const release=()=>{targets.forEach(id=>transitioningChats.delete(id));syncComposerLock();};
- try{await sessionFolders.settle(targets);return release;}catch(error){release();throw error;}
+ try{
+  await sessionFolders.settle(targets);
+  if(reloading&&unsavedConversation())throw Error('当前草稿还没有可核对的保存回执。');
+  if(reloading&&compact)savePresentationState(captureConversation());
+  return release;
+ }catch(error){release();throw error;}
 }
 async function hideChats(ids,action){return workspaceMutation(ids,action);}
 async function changeChat(item,patch){const apply=async()=>{await post('/api/chat/update',{id:item.id,patch});await refreshLists();render();};return hideChats([item.id],apply);}
@@ -126,12 +151,12 @@ function openRequestedPreview(){
   openLibraryPreview(action.choices[0]);
  }
 }
-function workspaceVisibility(open){
+function workspaceVisibility(open,focus=true){
  document.body.classList.toggle('nav-hidden',!open);
  document.body.classList.toggle('mobile-nav',open);
  const toggle=document.querySelector('[data-action=navigation]');
  toggle.setAttribute('aria-expanded',String(open));
- if(open)$('close-workspace').focus();else toggle.focus();
+ if(focus){if(open)$('close-workspace').focus();else toggle.focus();}
 }
 async function send(speechId=null){
  if(busy||transitioningChats.has(chatId)||chat?.archived||chat?.removed||projects.find(p=>p.id===projectId)?.removed)return;
@@ -185,7 +210,10 @@ async function openEnglishLearning(){
 function openTools(){panelCleanup=toolsView(panel('本地工具'),{attach:addAttachment});}
 function taskPanel(){const body=panel('任务与自主研发');body.append(button('使用已发布本地工具',openTools),link('发起编码与自主研发 →','/settings#coding')); body.append(el('p','这里展示新核心的真实任务账本；普通对话不会自动派发执行任务。','note'));for(const x of [...snapshot.developments,...snapshot.tasks]){const c=el('div',undefined,'card');c.append(el('h3',x.id),el('p',(states[x.status]||x.status)+' · '+(x.phase||x.error||'任务')),button('查看记录',()=>details('任务记录',x)));body.append(c);}if(!snapshot.tasks.length&&!snapshot.developments.length)body.append(el('p','暂无任务记录。','empty'));}
 function topTools(){const tools=$('top-tools');const add=(name,label,fn)=>tools.append(iconButton(name,label,fn));add('calendar','目标与行动计划',()=>openGoals());add('mail','Gmail · 连接与邮件管理',async()=>{panelCleanup=await mailboxView(panel('Gmail 邮件助手'),{attach:addAttachment});});tools.lastElementChild.id='mail-button';get('/api/mail').then(updateMailIndicator).catch(()=>{});add('explorer','资源管理器',()=>projectUI.explorer(selectedProject()));add('archive','模型库 · 模型、部件与人物',()=>window.open('/model-library','_blank','noopener'));add('save','会话专属文件夹与保存状态',()=>sessionFolders.view(panel('会话专属文件夹'),chatId));if(!compact)document.querySelector('.topbar').append(iconButton('leave','收回桌面精灵',async()=>{remember();await foldWorkbench(chatId||'');}));add('cpu','工作状态与资源',()=>{panelCleanup=workStatusView(panel('工作状态'));});add('refresh','刷新状态',async()=>{snapshot=await get('/api/snapshot');connected=true;await refreshLists();await refreshChat();notice('已刷新本机状态。');});add('sound','切换交互音效',async()=>{const old=soundState(),value=!(old.enabled&&old.unlocked);setSound(value);if(value)await unlockSound();snapshot.settings.ui=await savePreferences({sound:value});const b=document.querySelector('[aria-label="切换交互音效"]');b.setAttribute('aria-pressed',String(value));notice(value?'交互音效已开启。':'交互音效已关闭。');});add('tools','技能与工具',()=>{openTools();$('panel-content').prepend(link('文字技能与 MCP 管理 →','/settings#skill'));});add('file','AI 资料范围',()=>{const body=panel('AI 资料范围');body.append(el('p','发送范围：你的消息、会话要求、附件，以及当前接入方获准的有效记忆与兼容历史。纠正记忆、切换接入方或关闭记忆会重新装配历史窗口。','note'),el('p','打开项目仅授权本地浏览与编辑，不会自动递归读取文件或导入知识库。','note'),el('h3','当前附件'));for(const a of attachments)body.append(el('p',a.name+' · '+a.text.length+' 字'));if(!attachments.length)body.append(el('p','当前没有附入文件。','empty'));});add('chat','英语学习 · 跨会话记录与复习',()=>openEnglishLearning());add('memory','个人记忆与知识',openMemory);add('lock','隐私遮屏',()=>{const body=modal('已遮挡当前会话');body.append(el('p','仅遮挡工作台显示；此功能不替代系统锁屏或身份验证。','note'),button('返回工作台',closeModal));});add('star','Logo 动效与启动预览',()=>window.open('/brand/','_blank','noopener'));add('settings','设置',()=>window.open('/settings','_blank','noopener'));}
-async function boot(){initModal();registerWorkspaceEditor(holdWorkspaceDrafts);splitters();snapshot=await get('/api/snapshot');applyPreferences(snapshot.settings.ui);setSound(!!snapshot.settings.ui.sound);$('version').textContent='v'+snapshot.status.release;picker=new ModelPicker(snapshot.settings,remember);skills=await get('/api/skills');for(const s of skills){const option=new Option(s.name+(s.state!=='ready'?' · 待接入':''),s.id);option.disabled=!s.enabled||s.state!=='ready';$('skill').add(option);}topTools();const memorySwitch=el('input');memorySwitch.id='memory-enabled';memorySwitch.type='checkbox';memorySwitch.checked=true;memorySwitch.onchange=remember;$('requirements').parentElement.after(field('使用获准记忆',memorySwitch));document.querySelector('[aria-label="切换交互音效"]').setAttribute('aria-pressed',String(!!snapshot.settings.ui.sound));const coreButton=document.querySelector('[aria-label="工作状态与资源"]');coreButton.id='core-state';coreButton.dataset.status=snapshot.status.control;await refreshLists();const hash=new URLSearchParams(location.hash.slice(1)).get('chat');const found=chats.find(c=>c.id===hash);if(found)await switchChat(found);else render();$('new-chat').onclick=()=>run(()=>newChat());$('open-folder').onclick=()=>run(()=>projectUI.openFolder());$('create-project').onclick=()=>run(()=>projectUI.openFolder('new'));for(const id of ['skill','skills-enabled','reasoning','message-mode'])$(id).addEventListener('change',remember);$('workspace-context').onclick=()=>run(()=>selectedProject()?projectUI.explorer(selectedProject()):chatId?sessionFolders.view(panel('会话专属文件夹'),chatId):projectUI.openFolder());$('history').onclick=()=>run(historyPanel);$('session-tasks').onclick=taskPanel;$('plan-goal').onclick=()=>run(()=>openGoals(true));$('close-panel').onclick=()=>{panelCleanup();panelCleanup=()=>{};$('inspector').hidden=true;$('right-divider').hidden=true;document.body.classList.remove('panel-focus');};$('focus-panel').onclick=()=>document.body.classList.toggle('panel-focus');document.querySelector('[data-action=navigation]').onclick=()=>workspaceVisibility(document.body.classList.contains('nav-hidden'));$('close-workspace').onclick=()=>workspaceVisibility(false);document.addEventListener('pointerdown',e=>{if(innerWidth<=700&&document.body.classList.contains('mobile-nav')&&!$('navigation').contains(e.target)&&!e.target.closest('[data-action=navigation],#model-popover,dialog'))workspaceVisibility(false);});$('chat-form').onsubmit=e=>{e.preventDefault();run(send);};$('message').onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey&&!e.isComposing){e.preventDefault();run(send);}};$('message').oninput=remember;$('requirements').oninput=()=>{$('requirements-state').textContent=$('requirements').value?'已设置':'未设置';remember();};$('cancel-response').onclick=()=>run(async()=>{await post('/api/chat/cancel',{request_id:active});await refreshChat();});$('add-attachment').onclick=()=>$('attachment-input').click();$('attachment-input').onchange=()=>run(async()=>{await filesAttached($('attachment-input').files);$('attachment-input').value='';});$('chat-form').ondragover=e=>e.preventDefault();$('chat-form').ondrop=e=>{e.preventDefault();run(()=>filesAttached(e.dataTransfer.files));};$('attach-current').onclick=()=>run(()=>{if(!projectUI.file)throw Error('请先在资源管理器打开文本文件。');addAttachment({name:projectUI.file.path,text:projectUI.file.draft});});$('voice').onclick=()=>run(openVoice);if(!compact)enterCinema();window.addEventListener('beforeunload',e=>{if(projectUI.dirty()||(chatId?sessionFolders.dirty(chatId):$('message').value)){e.preventDefault();e.returnValue='';}});setInterval(async()=>{if(document.hidden||!presentationVisible||polling)return;polling=true;try{const health=await get('/api/health');snapshot.status.control=health.control;connected=true;if(chatId)await refreshChat();syncBrand();}catch(e){connected=false;syncBrand();notice('与本机服务的连接中断，正在等待恢复；不会重新发送消息。');}finally{polling=false;}},1800);}
+async function boot(){initModal();registerWorkspaceEditor(holdWorkspaceDrafts);splitters();snapshot=await get('/api/snapshot');applyPreferences(snapshot.settings.ui);setSound(!!snapshot.settings.ui.sound);$('version').textContent='v'+snapshot.status.release;picker=new ModelPicker(snapshot.settings,remember);skills=await get('/api/skills');for(const s of skills){const option=new Option(s.name+(s.state!=='ready'?' · 待接入':''),s.id);option.disabled=!s.enabled||s.state!=='ready';$('skill').add(option);}topTools();const memorySwitch=el('input');memorySwitch.id='memory-enabled';memorySwitch.type='checkbox';memorySwitch.checked=true;memorySwitch.onchange=remember;$('requirements').parentElement.after(field('使用获准记忆',memorySwitch));document.querySelector('[aria-label="切换交互音效"]').setAttribute('aria-pressed',String(!!snapshot.settings.ui.sound));const coreButton=document.querySelector('[aria-label="工作状态与资源"]');coreButton.id='core-state';coreButton.dataset.status=snapshot.status.control;await refreshLists();const hash=new URLSearchParams(location.hash.slice(1)).get('chat');const found=chats.find(c=>c.id===hash);if(found)await switchChat(found);else render();$('new-chat').onclick=()=>run(()=>newChat());$('open-folder').onclick=()=>run(()=>projectUI.openFolder());$('create-project').onclick=()=>run(()=>projectUI.openFolder('new'));for(const id of ['skill','skills-enabled','reasoning','message-mode'])$(id).addEventListener('change',remember);$('workspace-context').onclick=()=>run(()=>selectedProject()?projectUI.explorer(selectedProject()):chatId?sessionFolders.view(panel('会话专属文件夹'),chatId):projectUI.openFolder());$('history').onclick=()=>run(historyPanel);$('session-tasks').onclick=taskPanel;$('plan-goal').onclick=()=>run(()=>openGoals(true));$('close-panel').onclick=()=>{panelCleanup();panelCleanup=()=>{};$('inspector').hidden=true;$('right-divider').hidden=true;document.body.classList.remove('panel-focus');};$('focus-panel').onclick=()=>document.body.classList.toggle('panel-focus');document.querySelector('[data-action=navigation]').onclick=()=>workspaceVisibility(document.body.classList.contains('nav-hidden'));$('close-workspace').onclick=()=>workspaceVisibility(false);document.addEventListener('pointerdown',e=>{if(innerWidth<=700&&document.body.classList.contains('mobile-nav')&&!$('navigation').contains(e.target)&&!e.target.closest('[data-action=navigation],#model-popover,dialog'))workspaceVisibility(false);});$('chat-form').onsubmit=e=>{e.preventDefault();run(send);};$('message').onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey&&!e.isComposing){e.preventDefault();run(send);}};$('message').oninput=remember;$('requirements').oninput=()=>{$('requirements-state').textContent=$('requirements').value?'已设置':'未设置';remember();};$('cancel-response').onclick=()=>run(async()=>{await post('/api/chat/cancel',{request_id:active});await refreshChat();});$('add-attachment').onclick=()=>$('attachment-input').click();$('attachment-input').onchange=()=>run(async()=>{await filesAttached($('attachment-input').files);$('attachment-input').value='';});$('chat-form').ondragover=e=>e.preventDefault();$('chat-form').ondrop=e=>{e.preventDefault();run(()=>filesAttached(e.dataTransfer.files));};$('attach-current').onclick=()=>run(()=>{if(!projectUI.file)throw Error('请先在资源管理器打开文本文件。');addAttachment({name:projectUI.file.path,text:projectUI.file.draft});});$('voice').onclick=()=>run(openVoice);if(!compact&&!Object.hasOwn(restoredPresentation,'chat'))enterCinema();
+ restoreConversation();document.documentElement.setAttribute('data-presentation-ready','');
+ const update=observeNativeUpdate({capture:captureConversation});void update();
+ window.addEventListener('beforeunload',e=>{if(projectUI.dirty()||unsavedConversation()){e.preventDefault();e.returnValue='';}});setInterval(async()=>{if(document.hidden||!presentationVisible||polling)return;polling=true;try{const health=await get('/api/health');snapshot.status.control=health.control;connected=true;sessionFolders.retryInterrupted();if(chatId)await refreshChat();syncBrand();}catch(e){connected=false;syncBrand();notice('与本机服务的连接中断，正在等待恢复；不会重新发送消息。');}finally{polling=false;}},1800);}
 document.addEventListener('jarvis-sound',()=>{const b=document.querySelector('[aria-label="切换交互音效"]');if(b)b.setAttribute('aria-pressed',String(soundState().enabled));});
 const channel=new BroadcastChannel('jarvis-workbench-settings');
 channel.onmessage=()=>run(async()=>{if(!picker)return;snapshot=await get('/api/snapshot');applyPreferences(snapshot.settings.ui);setSound(!!snapshot.settings.ui.sound);picker.settings=snapshot.settings;picker.refresh();skills=await get('/api/skills');for(const option of $('skill').options){const item=skills.find(x=>x.id===option.value);if(item)option.disabled=!item.enabled||item.state!=='ready';}});

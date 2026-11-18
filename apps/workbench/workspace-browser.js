@@ -5,8 +5,10 @@ import {conversationMenu} from './workspace-menus.js';
 import {workspaceMutation,updateWorkspaceChat,workspaceChanged} from './workspace-events.js';
 import {expandWorkbench} from './presentation.js';
 
-export function workspaceBrowser(container,{onOpenChat,onClose,selected=()=>''}={}){
- let projects=[],chats=[],tab='active',query='',disposed=false,detail=null;const collapsed=new Set(),limits=new Map(),folders=new SessionFolders();
+export function workspaceBrowser(container,{onOpenChat,onClose,selected=()=>'',resume={}}={}){
+ let projects=[],chats=[],tab=['archived','removed'].includes(resume.tab)?resume.tab:'active',
+  query=typeof resume.query==='string'?resume.query:'',disposed=false,detail=null;
+ const collapsed=new Set(Array.isArray(resume.collapsed)?resume.collapsed:[]),limits=new Map(),folders=new SessionFolders();
  const panel=title=>{detail={title};render();return container.querySelector('.workspace-detail-content');};
  const refresh=async()=>{[projects,chats]=await Promise.all([get('/api/projects'),get('/api/chats')]);if(!disposed)render();};
  const changed=async()=>{detail=null;workspaceChanged();await refresh();};
@@ -53,5 +55,9 @@ export function workspaceBrowser(container,{onOpenChat,onClose,selected=()=>''}=
   if(searchFocus){search.focus();search.setSelectionRange(query.length,query.length);}
  }
  const onChanged=()=>{if(!detail)void refresh().catch(e=>notice(e.message));};window.addEventListener('jarvis:workspace-changed',onChanged);
- const ready=refresh();return {ready,close(){if(projectUI.dirty())throw Error('项目文件仍有未保存修改，请先保存或还原。');disposed=true;window.removeEventListener('jarvis:workspace-changed',onChanged);}};
+ const ready=refresh().then(()=>{const list=container.querySelector('.workspace-list');if(list&&Number.isFinite(resume.scroll))list.scrollTop=resume.scroll;});
+ return {ready,captureLayout(){
+   if(detail)throw Error('请先完成项目文件或详情的查看与编辑，再返回项目列表。');
+   return {tab,query,collapsed:[...collapsed],scroll:container.querySelector('.workspace-list')?.scrollTop||0};
+ },close(){if(projectUI.dirty())throw Error('项目文件仍有未保存修改，请先保存或还原。');disposed=true;window.removeEventListener('jarvis:workspace-changed',onChanged);}};
 }

@@ -1,8 +1,41 @@
 """Authenticated managed-host handoff. No business database restoration."""
+import json
+import re
 import threading
+
+from control.paths import child
 
 from control.application_runtime import coordination, LocalApprovals
 from sdk.protocol import CoreError
+
+
+def presentation_build(server):
+    build = getattr(server, 'application_build', '')
+    return build if re.fullmatch('[0-9a-f]{64}', build) else ''
+
+
+def presentation_ready(server):
+    build = presentation_build(server)
+    if not build:
+        return False
+    try:
+        current = coordination(server.data_root)
+        if (not current or current['phase'] != 'active' or current['build'] != build
+                or current['epoch'] != server.application_epoch):
+            return False
+        from control.recovery.gate import StopGate
+        if StopGate(server.data_root).state() != 'ready':
+            return False
+        path = child(server.data_root, 'deployment/automation/journal.json')
+        if path.exists():
+            if path.stat().st_size > 4 * 1024**2:
+                return False
+            journal = json.loads(path.read_bytes())
+            if journal.get('phase') in {'applying', 'observing', 'rolling_back', 'attention'}:
+                return False
+        return True
+    except (AttributeError, CoreError, OSError, ValueError):
+        return False
 
 
 def owner_control(handler, path):

@@ -30,7 +30,7 @@ with (folder/'native.stderr.log').open('wb') as errors:
         def log_message(self,*args):pass
     server=ThreadingHTTPServer(('127.0.0.1',0),Probe);threading.Thread(target=server.serve_forever,daemon=True).start()
     try:
-        result=subprocess.run(['node',str(Path(__file__).with_name('workspace-native.cjs')),str(folder),str(cdp),str(server.server_port)],env=environment,timeout=90,capture_output=True,text=True,encoding='utf-8');print(result.stdout);print(result.stderr)
+        result=subprocess.run(['node',str(Path(__file__).with_name('native-upgrade.cjs' if '--upgrade' in sys.argv[3:] else 'workspace-native.cjs')),str(folder),str(cdp),str(server.server_port)],env=environment,timeout=90,capture_output=True,text=True,encoding='utf-8');print(result.stdout);print(result.stderr)
     finally:
         server.shutdown();server.server_close()
         if child.poll() is None:child.terminate()

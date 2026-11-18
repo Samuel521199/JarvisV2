@@ -42,7 +42,7 @@ class ControllerTransitions(unittest.TestCase):
 
     def candidate(self,name,modern=False):
         source=self.base/(name+'-source');source.mkdir()
-        for top in ['control','sdk']:shutil.copytree(PROJECT/top,source/top,ignore=shutil.ignore_patterns('__pycache__','*.pyc'))
+        for top in ['control','sdk']:shutil.copytree(PROJECT/top,source/top,ignore=shutil.ignore_patterns('__pycache__','*.pyc','target'))
         # Empty test policy is a synthetic fixture, never a production qualification.
         (source/'sdk/application_policy.py').write_text('TESTS=[]\nTEST_SUPPORT=[]\n')
         (source/'VERSION').write_text(name);(source/'apps/workbench').mkdir(parents=True)

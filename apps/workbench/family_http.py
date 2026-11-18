@@ -62,12 +62,14 @@ def get(handler, path):
     if path == '/api/instance':
         from pathlib import Path
         from control.development_profile import read as development_profile
+        from apps.workbench.runtime_http import presentation_ready
         root = str(Path(handler.server.data_root).resolve()).casefold()
         handler.json({'service': 'jarvis-workbench', 'root_digest': hashlib.sha256(root.encode()).hexdigest(),
                       'boot_id': getattr(handler.server, 'boot_id', ''), 'family_version': '1.0.0',
                       'environment': 'development' if development_profile(handler.server.data_root) else 'stable',
                       'application_build': getattr(handler.server, 'application_build', ''),
                       'presence_protocol': 2,
+                      'presentation_ready': presentation_ready(handler.server),
                       'application_epoch': getattr(handler.server, 'application_epoch', 0)})
         return True
     if path == '/api/family/status':

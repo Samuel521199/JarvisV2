@@ -22,15 +22,17 @@ function budgetForm(body,data,refresh){
  section.append(field('结果核对',observer),button('应用核对设置',async()=>{await post('/api/operations',{action:'outcome_configure',enabled:observer.value==='1'});await refresh(true);notice('结果核对设置已保存。');}));body.append(section);
 }
 
-export function mountWorkBoard(body,{settings=false,focusKey=null,focusProject=null,initialTab=null,onOpenChat=null,editPriority=null}={}){
+export function mountWorkBoard(body,{settings=false,focusKey=null,focusProject=null,initialTab=null,onOpenChat=null,editPriority=null,resume={}}={}){
  const root=el('section',undefined,'work-board');root.setAttribute('aria-label','按项目整理的当前工作');body.append(root);
- let closed=false,loading=false,pending=false,selected=initialTab,data=null,signature='',query='',settingsDrawn=false;
+ let closed=false,loading=false,pending=false,selected=tabs.some(([key])=>key===initialTab)?initialTab:null,data=null,signature='',
+  query=typeof resume.query==='string'?resume.query.trim().toLocaleLowerCase():'',settingsDrawn=false;
+ let restoreScroll=Number.isFinite(resume.scroll)?resume.scroll:null;
  const limits=new Map();
  const top=el('div',undefined,'work-board-top'),lead=el('div');lead.append(el('span','工作总览','work-eyebrow'),el('p','先处理需要你确认的事，再看看新成果。','work-lead'));
  const tools=el('div',undefined,'work-board-tools');tools.append(iconButton('plus','新增个人待办',()=>commitmentForm(()=>refresh(true))),iconButton('refresh','刷新工作状态',()=>refresh(true)),iconButton('calendar','持续办事安排',()=>openStanding()));top.append(lead,tools);
  const metrics=el('div',undefined,'work-metrics');metrics.setAttribute('aria-label','当前工作状态');
  const nav=el('div',undefined,'work-tabs');nav.setAttribute('role','tablist');nav.setAttribute('aria-label','工作分类');
- const search=el('input');search.type='search';search.placeholder='查找项目或任务';search.setAttribute('aria-label','查找项目或任务');search.className='work-search';
+ const search=el('input');search.type='search';search.placeholder='查找项目或任务';search.setAttribute('aria-label','查找项目或任务');search.className='work-search';search.value=typeof resume.query==='string'?resume.query:'';
  const list=el('div',undefined,'work-projects');list.setAttribute('role','tabpanel');list.id='work-projects-'+Math.random().toString(36).slice(2);list.tabIndex=-1;
  const status=el('p',undefined,'work-live-status');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
  const footer=el('details',undefined,'work-coverage');footer.append(el('summary','来源与核对状态'));const coverage=el('p',undefined,'note');footer.append(coverage);
@@ -48,12 +50,12 @@ export function mountWorkBoard(body,{settings=false,focusKey=null,focusProject=n
    const glyph=el('span',undefined,'work-metric-icon');glyph.append(icon(symbols[state]));b.append(glyph,el('strong',String(count)),el('span',label));b.setAttribute('aria-label',label+' '+count+' 项');metrics.append(b);
   }
   const focusTab=nav.contains(document.activeElement);
-  nav.replaceChildren();for(const [key,label] of tabs){const b=button('',()=>choose(key),'work-tab');b.setAttribute('role','tab');b.setAttribute('aria-label',label+' '+projection.counts[key]);b.setAttribute('aria-selected',String(selected===key));b.setAttribute('aria-controls',list.id);b.tabIndex=selected===key?0:-1;const short=el('span',({attention:'待处理',active:'进行中',unread:'未读',history:'已读'}[key]),'work-short');short.setAttribute('aria-hidden','true');b.append(el('span',label,'work-tab-label'),short,el('span',String(projection.counts[key]),'work-tab-count'));nav.append(b);}
+  nav.replaceChildren();for(const [key,label] of tabs){const b=button('',()=>choose(key),'work-tab');b.dataset.bucket=key;b.setAttribute('role','tab');b.setAttribute('aria-label',label+' '+projection.counts[key]);b.setAttribute('aria-selected',String(selected===key));b.setAttribute('aria-controls',list.id);b.tabIndex=selected===key?0:-1;const short=el('span',({attention:'待处理',active:'进行中',unread:'未读',history:'已读'}[key]),'work-short');short.setAttribute('aria-hidden','true');b.append(el('span',label,'work-tab-label'),short,el('span',String(projection.counts[key]),'work-tab-count'));nav.append(b);}
   if(focusTab)nav.querySelector('[aria-selected=true]')?.focus({preventScroll:true});
   renderList();
  }
  function renderList(){
-  if(!data)return;const projection=current();const scroll=list.scrollTop;
+  if(!data)return;const projection=current();const scroll=restoreScroll??list.scrollTop;restoreScroll=null;
   list.replaceChildren();let total=0;
   for(const project of projection.projects){
    if(focusProject&&project.id!==focusProject)continue;

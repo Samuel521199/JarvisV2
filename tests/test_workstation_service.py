@@ -132,6 +132,34 @@ class ServiceTests(unittest.TestCase):
         self.assertEqual(set(e.journal['quarantined_builds']),{'b'*64,'c'*64})
         self.ticket(build='b'*64);e.tick();e.operator.apply.assert_not_called()
 
+    def test_only_proven_parked_waits_are_allowed(self):
+        from modules.mail.store import MailStore
+        store=MailStore(self.root)
+        try:
+            job=store.job('fixture-waiting-network','read',{'message_id':'synthetic'})[0]
+            store.update(job['id'],status='WAITING_NETWORK')
+            row={'id':job['id'],'source':'mail','operation':'read','state':'waiting'}
+            sample={'activity':{'drained':True},'counts':{'waiting':1,'running':0,'queued':0,'external':0,'unknown':0},
+                    'items':[row],'sources':[{'status':'connected'}]}
+            self.assertTrue(service.quiet_for_handoff(self.root,sample))
+            for change in ({'activity':{'drained':False}},{'items':[]},{'sources':[{'status':'unavailable'}]},
+                           {'items':[dict(row,operation='send')]},{'counts':dict(sample['counts'],queued=1)}):
+                self.assertFalse(service.quiet_for_handoff(self.root,{**sample,**change}))
+            store.update(job['id'],effect_started=True)
+            self.assertFalse(service.quiet_for_handoff(self.root,sample))
+            task={'id':'unrequested','source':'tasks','state':'waiting','raw_status':'READY'}
+            self.assertTrue(service.quiet_for_handoff(self.root,{**sample,'items':[task]}))
+            self.assertFalse(service.quiet_for_handoff(self.root,{**sample,'items':[dict(task,raw_status='WAITING')]}))
+        finally:store.close()
+
+    def test_superseded_ticket_is_rejected_even_if_worker_state_was_lost(self):
+        ticket=self.ticket();ticket['prepared']['completion_commit']='d'*40
+        service.signed(self.root,service.base(self.root)/'ticket.json',ticket)
+        e=self.engine();e.completion=Mock(state={})
+        e.app.state.return_value={**self.state,'epoch':4};e.tick()
+        self.assertEqual(e.journal['error'],'stale_baseline')
+        e.operator.apply.assert_not_called()
+
     def test_busy_and_newly_idle_host_not_updated(self):
         self.ticket();e=self.engine();e.idle.return_value=False;e.tick();self.assertIsNone(e.idle_since)
         e.idle.return_value=True;e.tick();self.assertEqual(e.idle_since,1000);e.operator.apply.assert_not_called()
@@ -281,6 +309,12 @@ class NativeAutomationTests(unittest.TestCase):
             driver=WorkbenchProcess(root,port,timeout=3)
             sentinel=root/'state/owner-data.json';sentinel.write_text('{"revoked":true,"revision":7}')
             original=sentinel.read_bytes()
+            from modules.mail.store import MailStore
+            mail=MailStore(root)
+            job=mail.job('fixture-safe-wait','read',{'message_id':'synthetic'})[0]
+            original_wait=mail.update(job['id'],status='WAITING_NETWORK');mail.close()
+            sample={'activity':{'drained':True},'counts':{'waiting':1,'running':0,'queued':0,'external':0,'unknown':0},
+                    'items':[{'id':job['id'],'source':'mail','operation':'read','state':'waiting'}]}
             try:
                 app.adopt(versions[0],driver)
                 config={'schema':2,'enabled':True,'auto_updates':True,'daily_data':str(root),'development_data':str(dev),
@@ -292,6 +326,8 @@ class NativeAutomationTests(unittest.TestCase):
                 e.root=root;e.folder=service.base(root);e.config=config;e.app=app;e.driver=driver;e.clock=time.time
                 e.started=True;e.bad=0;e.error_count=0;e.idle_since=None;e.port=port;e.operator=workstation
                 e.journal={'phase':'idle','restarts':[]}
+                now=[time.time()];e.clock=lambda:now[0]
+                e.idle=lambda:service.quiet_for_handoff(root,sample)
                 target=Path(app.record(versions[1])['path']);manifest=inspect_package(target)[1]
                 prepared={'build':versions[1],'expected_epoch':app.state()['epoch'],'daily_data':str(root),
                     'source':str(base/'auto-fixture-v2'),'files':{n:v['sha256'] for n,v in manifest['files'].items()}}
@@ -308,7 +344,9 @@ class NativeAutomationTests(unittest.TestCase):
                 # Only controller CLI transport and source Git inventory are
                 # adapted to this Git-free fixture; real stop/backup/adopt/health.
                 with patch.object(workstation,'controller',return_value=(base,port)),patch.object(workstation,'require_prepared',side_effect=source_check),patch.object(workstation,'release',side_effect=release),patch.object(workstation,'start_daily',side_effect=lambda root:driver.health(app.state()['active'],app.state()['epoch'])):
-                    e.transition(ticket)
+                    service.signed(root,service.base(root)/'ticket.json',ticket)
+                    e.tick();self.assertEqual(e.idle_since,now[0])
+                    now[0]+=60;e.tick()
                 adopted=app.state();self.assertEqual(e.journal['phase'],'observing')
                 backup=Path(json.loads((dev/'state/workstation-last-update.json').read_text())['backup']['folder'])
                 self.assertEqual((backup/'state/owner-data.json').read_bytes(),original)
@@ -317,6 +355,10 @@ class NativeAutomationTests(unittest.TestCase):
                 for _ in range(3):e.tick()
                 self.assertEqual(app.state()['active']['build'],versions[0]);self.assertEqual(e.journal['phase'],'quarantined')
                 self.assertEqual(sentinel.read_bytes(),original);driver.health(app.state()['active'],app.state()['epoch'])
+                for data in (root,backup):
+                    mail=MailStore(data)
+                    try:self.assertEqual(mail.get(job['id']),original_wait)
+                    finally:mail.close()
                 self.assertEqual(e.journal['failed_build'],versions[1])
                 # Once observation has ended, an ordinary missing daily process
                 # is not an invitation to inspect Git or start the application.

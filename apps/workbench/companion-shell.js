@@ -7,6 +7,7 @@ import {workStatusView} from './work-status.js';
 import {conversationGroups} from './conversation-groups.js';
 import {workGroups} from './work-groups.js';
 import {mountCompanionFace} from './companion-face.js';
+import {observeNativeUpdate,takePresentationState} from './native-upgrade.js';
 
 const nativeRobot = location.pathname === '/companion/native-robot';
 const nativeDock = location.pathname === '/companion/native';
@@ -41,7 +42,20 @@ function observeAppearance(initial) {
 }
 
 let frame=null,selected='',mode='',cleanup=()=>{},mail=null,refreshing=false,workspaceView=null;
-let refreshPending=false,dockSignature='';
+let refreshPending=false,dockSignature='',workContext=null;
+const restored=takePresentationState();
+let checkUpdate=()=>{};
+function captureDock(){
+ if(document.querySelector('dialog[open]'))throw Error('请先处理当前弹窗。');
+ if(frame&&!frame.contentDocument?.documentElement.hasAttribute('data-presentation-ready'))
+  throw Error('正在等待对话视图就绪。');
+ const frameChat=frame&&new URLSearchParams(frame.contentWindow.location.hash.slice(1)).get('chat');
+ return {mode,selected:mode==='chat'&&frameChat?frameChat:selected,work:mode==='work'?{...workContext,
+   tab:document.querySelector('.work-tab[aria-selected=true]')?.dataset.bucket,
+   query:document.querySelector('.work-search')?.value||'',
+   scroll:document.querySelector('.work-projects')?.scrollTop||0}:null,
+  projects:workspaceView?.captureLayout(),mail:mail?.captureLayout()};
+}
 const collapsed=new Set(),placementKey='jarvis.companion.placement.v1',selectionKey='jarvis.companion.chat.v1';
 function rememberSelection(id){selected=id;try{localStorage.setItem(selectionKey,id);}catch{}}
 function hide(){
@@ -60,13 +74,19 @@ function openChat(id=selected){
  card('Jarvis · 对话','chat');rememberSelection(id||'');
  if(!frame){
   frame=el('iframe');frame.title='Jarvis 共用聊天';frame.src='/conversation'+(selected?'#chat='+encodeURIComponent(selected):'');
-  frame.addEventListener('load',()=>{if(selected)chooseChat(selected);});$('conversation-host').append(frame);
+  frame.addEventListener('load',()=>{
+   const loadedChat=new URLSearchParams(frame.contentWindow.location.hash.slice(1)).get('chat');
+   if(selected&&selected!==loadedChat)chooseChat(selected);
+  });$('conversation-host').append(frame);
  }else if(selected)chooseChat(selected);
 }
-function work(key=null,project=null,initialTab=null){card(key?'Jarvis · 工作详情':'Jarvis · 当前工作','work');cleanup=workStatusView($('card-content'),{focusKey:key,focusProject:project,initialTab,onOpenChat:openChat});}
-async function projects(){
+function work(key=null,project=null,initialTab=null,resume={}){
+ card(key?'Jarvis · 工作详情':'Jarvis · 当前工作','work');workContext={key,project};
+ cleanup=workStatusView($('card-content'),{focusKey:key,focusProject:project,initialTab,onOpenChat:openChat,resume});
+}
+async function projects(resume={}){
  hide();mode='projects';$('project-dialog').hidden=false;$('project-button').setAttribute('aria-expanded','true');
- workspaceView=workspaceBrowser($('project-dialog'),{onOpenChat:openChat,onClose:hide,selected:()=>selected});await workspaceView.ready;
+ workspaceView=workspaceBrowser($('project-dialog'),{onOpenChat:openChat,onClose:hide,selected:()=>selected,resume});await workspaceView.ready;
 }
 function paint(data){
  const projection=workGroups(data.items),active=projection.units.filter(i=>i.state==='running').length;
@@ -136,7 +156,15 @@ async function boot(){
   if(message?.type!=='jarvis:companion:navigate')return;
   if(message.target==='work')work();else if(message.target==='projects')run(projects);else if(message.target==='mail')mail.open();else if(message.target==='mail-standing')run(async()=>{const {openMailStanding}=await import('./mail-standing.js');await openMailStanding();});
  });
- document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh();});if(nativeDock)await import('./native-presence.js');await refresh();const timer=setInterval(()=>refresh(),5000);
+ document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh();});if(nativeDock)await import('./native-presence.js');
+ if(restored.mode==='chat')openChat(/^chat-[0-9a-f]{32}$/.test(restored.selected||'')?restored.selected:selected);
+ else if(restored.mode==='work'&&restored.work){
+  const {key,project,tab}=restored.work;work(key,project,tab,restored.work);
+ }else if(restored.mode==='projects')await projects(restored.projects);
+ else if(restored.mode==='mail'&&restored.mail)mail.restoreLayout(restored.mail);
+ checkUpdate=observeNativeUpdate({capture:captureDock});
+ await refresh();void checkUpdate();
+ const timer=setInterval(()=>{void refresh();void checkUpdate();},5000);
  window.addEventListener('jarvis:work-viewed',()=>refresh(true));
  window.addEventListener('jarvis:workspace-selection',event=>rememberSelection(event.detail));
  window.addEventListener('pagehide',()=>{clearInterval(timer);cleanup();},{once:true});
@@ -147,5 +175,5 @@ if (nativeRobot) {
  };
  motionChannel.postMessage({request:'motion'});
  window.addEventListener('pagehide', () => motionChannel.close(), {once:true});
- import('./native-presence.js');
+ void import('./native-presence.js').then(()=>{const update=observeNativeUpdate();void update();});
 } else run(boot);

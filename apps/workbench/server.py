@@ -283,7 +283,12 @@ class Handler(BaseHTTPRequestHandler):
             finally: store.close()
         if route.path not in ASSETS: return self.reply(404, b"Not found", "text/plain")
         filename, mime = ASSETS[route.path]
-        self.reply(200, (Path(__file__).parent / filename).read_bytes(), mime, conversation=route.path == '/conversation')
+        raw = (Path(__file__).parent / filename).read_bytes()
+        build = runtime_http.presentation_build(self.server)
+        if build and route.path in {'/companion/native','/companion/native-robot','/workbench/native','/conversation'}:
+            stamp = '<meta name="jarvis-application" content="'+build+'">'
+            raw = raw.replace(b'<head>', b'<head>'+stamp.encode(), 1)
+        self.reply(200, raw, mime, conversation=route.path == '/conversation')
 
     def chat_projection(self, store, ident):
         from host.work_status import decorate_chat

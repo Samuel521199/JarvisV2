@@ -29,7 +29,7 @@ from control.recovery.gate import StopGate
 from adapters.application_host import WorkbenchProcess
 from modules.release_recovery.application import Applications,inspect_package
 from control.application_compatibility import require_compatible
-from sdk.protocol import canonical,CoreError
+from sdk.protocol import canonical,CoreError,decode
 
 SCHEMA=1
 POLICY_SCHEMA=2
@@ -221,7 +221,57 @@ def queue(root,development,prepared):
             if previous['id']==journal.get('ticket') and journal.get('phase') in {'applying','observing','rolling_back'}:
                 raise ValueError('An automatic transition already owns the queue')
         signed(root,path,ticket)
+    signal(root)
     return {'queued':True,'ticket':ticket['id'],'expires':ticket['expires']}
+
+
+def parked_waits(root, items):
+    """Prove only known persisted waits safe to leave to the next host."""
+    mail = []
+    for row in items:
+        if row.get('source') == 'tasks' and (
+                row.get('raw_status') == 'READY'
+                or (row.get('raw_status') == 'WAITING'
+                    and (row.get('recovery_wait') or {}).get('state') == 'WAITING'
+                    and row['recovery_wait'].get('reason') == 'module_disabled')):
+            continue
+        if row.get('source') != 'mail' or row.get('operation') not in {'check','counts','list','sync','read'}:
+            return False
+        mail.append(row)
+    if not mail:
+        return True
+    # Older active packages project mail waits without their exact status.
+    # Re-read only these original records, without acquiring a mailbox writer.
+    from control.credentials import crypt
+    path = root/'private/mail.sqlite3'
+    reject_links(path)
+    try:
+        db = sqlite3.connect(path.as_uri()+'?mode=ro', uri=True, timeout=2)
+        try:
+            for row in mail:
+                raw = db.execute("SELECT revision,payload FROM objects WHERE kind='job' AND id=?", (row['id'],)).fetchone()
+                if raw is None:
+                    return False
+                job = decode(crypt(raw[1], decrypt=True))
+                if (job.get('id') != row['id'] or job.get('kind') != 'job' or job.get('revision') != raw[0]
+                        or job.get('operation') != row['operation'] or job.get('status') != 'WAITING_NETWORK'
+                        or job.get('effect_started') is not False):
+                    return False
+            return True
+        finally:
+            db.close()
+    except (CoreError, OSError, ValueError, sqlite3.Error):
+        return False
+
+
+def quiet_for_handoff(root, value):
+    counts = value.get('counts', {})
+    if (value.get('activity', {}).get('drained') is not True
+            or not all(type(counts.get(k)) is int and counts[k] == 0 for k in ('running','queued','external','unknown'))
+            or any(row.get('status') == 'unavailable' for row in value.get('sources', []))):
+        return False
+    waiting = [row for row in value.get('items', []) if row.get('state') == 'waiting']
+    return type(counts.get('waiting')) is int and len(waiting) == counts['waiting'] and parked_waits(root, waiting)
 
 
 class Engine:
@@ -257,9 +307,7 @@ class Engine:
             headers={'Origin':origin,'Content-Type':'application/json'})
         with opener.open(request,timeout=3) as response:response.read(4096)
         with opener.open(origin+'/api/work-status',timeout=4) as response:value=json.load(response)
-        # Unknown runtime participants and queued/new foreground work fail closed.
-        return (value.get('activity',{}).get('drained') is True
-            and not any(value.get('counts',{}).get(k,0) for k in ('running','queued','waiting')))
+        return quiet_for_handoff(self.root, value)
 
     def restart(self):
         now=self.clock();attempts=[t for t in self.journal.get('restarts',[]) if now-t<3600]
@@ -385,14 +433,21 @@ class Engine:
             self.status('ready_quarantined' if self.journal.get('failed_build') else 'ready');return
         if self.clock()>=ticket['expires']:
             self.save(ticket=ticket['id'],phase='rejected',error='ticket_expired');self.status('ready');return
-        commit=ticket['prepared'].get('completion_commit')
-        if commit and (completion is None or completion.state.get('head')!=commit or completion.state.get('status')!='queued'):
-            self.status('waiting_for_independent_check_exit');return
         if ticket['prepared']['build']==current['active']['build']:
             self.save(ticket=ticket['id'],phase='complete');self.status('ready');return
+        if ticket['baseline']!=current['active'] or ticket['prepared']['expected_epoch']!=current['epoch']:
+            self.save(ticket=ticket['id'],phase='rejected',error='stale_baseline');self.status('ready');return
+        commit=ticket['prepared'].get('completion_commit')
+        if commit:
+            if completion is None or completion.state.get('head')!=commit or completion.state.get('status')!='queued':
+                self.status('waiting_for_independent_check_exit');return
+            try:load_completion().require_snapshot(self.config['completion'],commit)
+            except ValueError:
+                self.idle_since=None;self.status('waiting_for_reviewed_snapshot');return
         if not self.idle():self.idle_since=None;self.status('waiting_for_idle');return
         if self.idle_since is None:self.idle_since=self.clock()
         if self.clock()-self.idle_since<self.config['idle_seconds']:self.status('waiting_for_idle');return
+        self.idle_since=None
         try:self.transition(ticket)
         except Exception as exc:
             if self.journal.get('ticket')!=ticket['id']:
