@@ -21,7 +21,7 @@ import time
 import urllib.request
 import uuid
 
-from control.application_runtime import LocalApprovals
+from control.application_runtime import LocalApprovals,coordination
 from control.atomic import write_json
 from control.local_access import read_key
 from control.paths import reject_links
@@ -158,9 +158,14 @@ class Schedule:
             self.source_at=None;return
         completion=getattr(engine,'completion',None)
         if source_checked:
-            self.source_at=(completion.state['stable_since']+120
-                if engine.source_inspected and completion is not None
-                and completion.state.get('status')=='waiting_for_quiet_snapshot' else None)
+            self.source_at=None
+            if engine.source_inspected and completion is not None:
+                state=completion.state
+                if state.get('status')=='waiting_for_quiet_snapshot':
+                    self.source_at=state['stable_since']+120
+                elif state.get('status')=='daily_check_limit':
+                    retry_at=state.get('next_check_at')
+                    if type(retry_at) in (int,float):self.source_at=retry_at
 
     def delay(self,engine):
         deadlines=[self.passive_at]
@@ -371,6 +376,28 @@ class Engine:
         if current['phase']=='active' and current['active'] and self.journal.get('phase') not in {'observing','applying','rolling_back','attention'}:
             if not self.driver.running(current['active'],current['epoch']):self.restart()
 
+    def acknowledge_recovered_baseline(self,current):
+        """Consume an interrupted ticket only after the controller restored its exact baseline."""
+        baseline=self.journal.get('baseline')
+        if (not baseline or current.get('phase')!='active' or current.get('error')!='interrupted_handoff'
+                or current.get('pending') is not None or current.get('pending_epoch') is not None
+                or current.get('epoch',0)<=baseline['epoch'] or not current.get('active')
+                or current['active']['build']!=baseline['build']):
+            return False
+        path=self.folder/'ticket.json'
+        if not path.exists():return False
+        ticket=verified(self.root,path)
+        if (ticket['id']!=self.journal.get('ticket') or ticket['baseline']!=baseline
+                or ticket['prepared']['build']!=self.journal.get('target')):
+            return False
+        control=coordination(self.root)
+        if (not control or control['phase']!='active' or control['build']!=baseline['build']
+                or control['epoch']!=current['epoch'] or not self.driver.running(current['active'],current['epoch'])):
+            return False
+        self.save(phase='rejected',recovery_epoch=current['epoch'],original_error=self.journal.get('error'),
+                  error='baseline_recovered')
+        return True
+
     def tick(self,*,check_source=True):
         self.source_check_requested=check_source
         self.source_inspected=False
@@ -384,7 +411,8 @@ class Engine:
             if current['phase']=='active' and current.get('active',{}).get('build')==self.journal.get('target') and phase=='applying':
                 self.save(phase='observing',adopted_epoch=current['epoch'],observe_until=self.clock()+self.config['observation_seconds'])
             else:self.save(phase='attention',error='interrupted_transition');self.status('attention');return
-        if self.journal.get('phase')=='attention':self.close();self.status('attention');return
+        if self.journal.get('phase')=='attention' and not self.acknowledge_recovered_baseline(current):
+            self.close();self.status('attention');return
         if current['phase'] not in {'active','stopped'}:self.close();self.status('maintenance_owned_elsewhere');return
         if not current['active']:self.close();self.status('no_active_build');return
         if current['phase']=='stopped':

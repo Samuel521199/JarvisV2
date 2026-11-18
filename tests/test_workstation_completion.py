@@ -104,6 +104,7 @@ class CompletionTests(unittest.TestCase):
         with patch.object(completion,'repository',return_value=self.repo),patch.object(e,'spawn') as spawn:
             e.tick();spawn.assert_not_called()
         self.assertEqual(e.state['status'],'daily_check_limit')
+        self.assertEqual(e.state['next_check_at'],min(x['time'] for x in e.state['attempts'])+86400)
 
     def test_interrupted_check_does_not_reexecute_after_restart(self):
         (self.folder/'completion-state.json').write_text(json.dumps({'schema':1,'status':'checking','head':'b'*40,

@@ -43,6 +43,50 @@ class ServiceTests(unittest.TestCase):
         service.signed(self.root,service.base(self.root)/'ticket.json',value)
         return value
 
+    @unittest.skipUnless(os.name=='nt','Windows sharing mode must be reproduced')
+    def test_atomic_control_publish_retries_transient_windows_reader(self):
+        import ctypes
+        from ctypes import wintypes
+        abi=ctypes.WinDLL('kernel32',use_last_error=True)
+        abi.CreateFileW.argtypes=[wintypes.LPCWSTR,wintypes.DWORD,wintypes.DWORD,wintypes.LPVOID,wintypes.DWORD,wintypes.DWORD,wintypes.HANDLE]
+        abi.CreateFileW.restype=wintypes.HANDLE
+        abi.CloseHandle.argtypes=[wintypes.HANDLE]
+        target=self.base/'control.json';write_json(target,{'phase':'active'})
+        handle=abi.CreateFileW(str(target),0x80000000,1,None,3,0,None)
+        self.assertNotEqual(handle,ctypes.c_void_p(-1).value)
+        from control import atomic
+        replace=atomic.os.replace
+        rejected=[]
+        def locked_once(src,dst):
+            try:return replace(src,dst)
+            except PermissionError as error:
+                rejected.append(error.winerror)
+                abi.CloseHandle(handle)
+                raise
+        with patch.object(atomic.os,'replace',side_effect=locked_once):
+            try:write_json(target,{'phase':'draining'})
+            finally:
+                if not rejected:abi.CloseHandle(handle)
+        self.assertTrue(rejected)
+        self.assertEqual(service.read(target),{'phase':'draining'})
+
+    def test_recovered_baseline_only_consumes_exact_interrupted_ticket(self):
+        ticket=self.ticket()
+        for matches in (False,True):
+            e=self.engine()
+            e.journal.update(phase='attention',error='PermissionError',baseline=self.state['active'],
+                             ticket=ticket['id'],target=ticket['prepared']['build'])
+            active={**self.state['active'],'epoch':4}
+            e.app.state.return_value={**self.state,'epoch':4,'active':active,'error':'interrupted_handoff'}
+            control={'phase':'active','build':active['build'],'epoch':4 if matches else 3}
+            with patch.object(service,'coordination',return_value=control):
+                e.tick()
+            e.operator.apply.assert_not_called()
+            self.assertEqual(e.journal['phase'],'rejected' if matches else 'attention')
+            if matches:
+                self.assertEqual(e.journal['error'],'baseline_recovered')
+                self.assertEqual(e.journal['original_error'],'PermissionError')
+
     def test_policy_tamper_fails_closed(self):
         path=service.base(self.root)/'policy.json';value=service.read(path);value['value']['auto_updates']=False;write_json(path,value)
         with self.assertRaises(CoreError):service.policy(self.root)

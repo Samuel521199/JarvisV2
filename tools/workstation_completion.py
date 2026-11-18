@@ -162,7 +162,9 @@ class Completion:
             self.save(status='waiting_for_quiet_snapshot',seen_head=head,stable_since=self.clock());return
         if self.clock()-self.state['stable_since']<QUIET_SECONDS:return
         attempts=[item for item in self.state.get('attempts',[]) if item.get('checked',True) and self.clock()-item['time']<86400]
-        if len(attempts)>=MAX_CHECKS:self.save(status='daily_check_limit');return
+        if len(attempts)>=MAX_CHECKS:
+            retry_at=sorted(item['time'] for item in attempts)[-MAX_CHECKS]+86400
+            self.save(status='daily_check_limit',next_check_at=retry_at);return
         if not self.resources_changed():
             self.save(status='no_runtime_change',head=head,attempts=self.state.get('attempts',[])+[{'head':head,'time':self.clock(),'checked':False}]);return
         self.spawn(head)

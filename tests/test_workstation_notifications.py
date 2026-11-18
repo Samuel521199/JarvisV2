@@ -31,6 +31,12 @@ class NotificationTests(unittest.TestCase):
         value={'schema':1,'id':'a'*32,'source':str(self.source),'created':self.now,**patch_value}
         service.signed(self.root,service.base(self.root)/'notification.json',value)
 
+    def test_reviewed_candidate_rechecks_at_budget_reset(self):
+        self.engine.completion=Mock(state={'status':'daily_check_limit','next_check_at':1045},process=None)
+        self.engine.source_inspected=True
+        self.schedule.after_tick(self.engine,True)
+        self.assertEqual(self.schedule.delay(self.engine),45)
+
     def test_passive_source_inspection_is_hourly_not_every_health_tick(self):
         for offset in (0,30,60,120,3599):
             self.now=1000+offset;self.assertFalse(self.schedule.source_due(self.root))
