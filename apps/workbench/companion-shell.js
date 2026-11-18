@@ -71,7 +71,7 @@ function card(title,next){
 }
 function chooseChat(id){rememberSelection(id);frame?.contentWindow.postMessage({type:'jarvis:conversation:select',chat_id:id},location.origin);}
 function openChat(id=selected){
- card('Jarvis · 对话','chat');rememberSelection(id||'');
+ card('Jarvis · 当前会话','chat');rememberSelection(id||'');
  if(!frame){
   frame=el('iframe');frame.title='Jarvis 共用聊天';frame.src='/conversation'+(selected?'#chat='+encodeURIComponent(selected):'');
   frame.addEventListener('load',()=>{
