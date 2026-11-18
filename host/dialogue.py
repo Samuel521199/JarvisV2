@@ -12,6 +12,7 @@ from control.credentials import Credentials
 from modules.preferences.store import Preferences, fallback_routes, resolve
 from modules.dialogue.store import Dialogues
 from modules.skills.catalog import Skills
+from modules.skills.model_library.preview import preview_request, resolve_preview
 from sdk.protocol import CoreError, decode
 from host import memory
 from host import session_workspace
@@ -49,14 +50,19 @@ class DialogueHost:
         StopGate(self.root).require_running()
         prefs = Preferences(self.root); store = Dialogues(self.root)
         try:
-            settings = prefs.read()
-            if not settings: raise CoreError('settings_missing', 'Configure model connections first')
-            cfg = settings['catalog']
             if not isinstance(command, dict): raise CoreError('chat_invalid', 'Expected a conversation request')
             from host.speech_sources import check_turn as check_speech_turn
             check_speech_turn(self.root,command.get('request_id'),command)
             selected = command.get('provider', 'auto')
-            route = resolve(cfg, selected, command.get('model') or None, command.get('reasoning', 'default'))
+            local_preview = lane == 'foreground' and preview_request(command)
+            routes = []
+            if not local_preview:
+                settings = prefs.read()
+                if not settings: raise CoreError('settings_missing', 'Configure model connections first')
+                cfg = settings['catalog']
+                route = resolve(cfg, selected, command.get('model') or None, command.get('reasoning', 'default'))
+                routes = [route]
+                if selected == 'auto': routes.extend(fallback_routes(cfg, route))
             if 'reference_image' in command or 'reference_images' in command:
                 from host.studio3d_reference import record
                 from host.studio3d import enabled
@@ -66,8 +72,6 @@ class DialogueHost:
                 from adapters.models.vision import encode_png,validate_encoded
                 validate_encoded([encode_png(record(self.root,i)[1]) for i in ids])
                 if selected=='auto' or route['adapter'] not in {'vertex','gemini','eachlabs'} or command.get('assistant_mode',False):raise CoreError('model_vision_unsupported','Select an explicit supported image route')
-            routes = [route]
-            if selected == 'auto': routes.extend(fallback_routes(cfg, route))
             with self.lock:
                 if self.closing.is_set(): raise CoreError('chat_capacity', 'Dialogue host is closing')
                 existing = store.db.execute('SELECT 1 FROM turns WHERE id=?', (command.get('request_id'),)).fetchone()
@@ -82,7 +86,7 @@ class DialogueHost:
                 capture={'state':'not_requested'}
                 if fresh:
                     from host.memory_capture import capture as capture_memory
-                    if lane == 'foreground': capture=capture_memory(self.root,command)
+                    if lane == 'foreground' and not local_preview: capture=capture_memory(self.root,command)
                     self.active.add(command['request_id'])
                     self.pending[command['request_id']] = {'chat_id': command['chat_id'], 'lane': lane, 'queued': time.monotonic()}
                     self._pump()
@@ -141,7 +145,14 @@ class DialogueHost:
                 if learning_job:english_learning.checkpoint(self.root,ident)
                 if view is not None:memory.refresh_view(self.root,view,chats=store,memory_db=memory_db)
             checkpoint()
-            for route in decode(store.turn(ident)['routes']):
+            turn = store.turn(ident)
+            routes = decode(turn['routes'])
+            if not routes and turn['lane'] == 'foreground':
+                preview = preview_request(decode(turn['request']))
+                if preview:
+                    session_workspace.ensure(self.root, store.header(turn['chat_id']), write=True)
+                    result = resolve_preview(self.root, *preview)
+            for route in routes:
                 checkpoint()
                 if learning_job and learning_job['body'].get('fixed_question'):
                     from sdk.protocol import canonical

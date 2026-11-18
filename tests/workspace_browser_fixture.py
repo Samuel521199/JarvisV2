@@ -15,7 +15,12 @@ from modules.preferences.store import Preferences
 folder=Path(sys.argv[1]).resolve();folder.mkdir(parents=True,exist_ok=False);root=folder/'user-data';Core.initialize(root).close()
 location=folder/'示例项目';location.mkdir();(location/'notes.md').write_text('Synthetic project file retained.\n',encoding='utf-8')
 ws=Workspace(root);project=ws.open(str(location));ws.close()
-prefs=Preferences(root);prefs.install({'schema_version':1,'default_provider':'fixture','automatic_fallback':False,'fallback_order':['fixture'],'providers':{'fixture':{'adapter':'eachlabs','model':'synthetic-model','enabled':True,'models':{'synthetic-model':{'parameters':{'max_output_tokens':128},'reasoning_levels':[],'enabled':True}}}}},{});prefs.close()
+library_preview='--library-preview' in sys.argv[2:]
+if library_preview:
+    from test_library_preview import add_display_asset
+    add_display_asset(root)
+else:
+    prefs=Preferences(root);prefs.install({'schema_version':1,'default_provider':'fixture','automatic_fallback':False,'fallback_order':['fixture'],'providers':{'fixture':{'adapter':'eachlabs','model':'synthetic-model','enabled':True,'models':{'synthetic-model':{'parameters':{'max_output_tokens':128},'reasoning_levels':[],'enabled':True}}}}},{});prefs.close()
 store=Dialogues(root);ids=[]
 for index in range(12):
     key=store.create(project['id']);store.update(key,{'title':'同名设计讨论' if index>1 else ['原对话','草稿对话'][index]})
@@ -36,7 +41,12 @@ class Fixture(Handler):
         return super()._do_POST()
 server=ThreadingHTTPServer(('127.0.0.1',0),Fixture);server.data_root=root;server.nonce='synthetic-workspace-browser';server.request_activity=RequestActivity()
 key='fixture-access-'+uuid.uuid4().hex;server.access=LocalAccess(root,key=key);server.dialogues=SimpleNamespace(state=lambda:{'running':[],'queued':[]})
+if library_preview:
+    from host.dialogue import DialogueHost
+    server.dialogues=DialogueHost(root)
 (folder/'fixture.json').write_text(json.dumps({'root':str(root),'port':server.server_port,'key':key,'project':project,'ids':ids},ensure_ascii=False,indent=2),encoding='utf-8')
 print(json.dumps({'port':server.server_port,'scope':'synthetic records only'}),flush=True)
 try:server.serve_forever()
-finally:server.server_close()
+finally:
+    server.server_close()
+    if library_preview:server.dialogues.close()

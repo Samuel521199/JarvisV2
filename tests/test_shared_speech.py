@@ -82,6 +82,20 @@ class SpeechFlow(unittest.TestCase):
         finally:store.close()
         self.speech.command({'action':'withdraw','id':row['id']});self.assertFalse(speech_sources.learning_valid(self.root,record))
         view=self.call({'action':'status'});self.assertEqual(view['oral_progress']['domains']['life']['attempts'],0)
+    def test_confirmed_transcription_opens_library_without_model_dispatch(self):
+        from test_library_preview import add_display_asset
+        add_display_asset(self.root)
+        self.recognition='打开纸船的 L O D 二'
+        row,_=self.recognize();self.speech.runner=self.host
+        command={'text':self.recognition,'provider':'auto','model':'','reasoning':'default','assistant_mode':True}
+        with patch.object(self.host,'_pump'),patch('host.dialogue.NativeModel') as provider:
+            submission=self.speech.command({'action':'submit','id':row['id'],'command':command})['submission']
+            self.host.run(submission['request_id'])
+            turn=self.chats.read(self.chat)['turns'][-1]
+            self.assertEqual(turn['assistant_action']['choices'][0]['version'],'lod2')
+            self.assertEqual(turn['provider'],'local-library')
+            provider.assert_not_called()
+
     def test_real_dialogue_submit_dedup_and_withdraw_before_provider(self):
         row,_=self.recognize();self.speech.runner=self.host
         command={'request_id':'unused','chat_id':self.chat,'text':'Could I have a box, please?','provider':'openai','model':'test-model','reasoning':'default','skill':'none','memory_enabled':False,'assistant_mode':False}

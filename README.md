@@ -35,7 +35,7 @@
 <p align="center"><strong>与你交流 · 为你办事 · 与你一同成长</strong></p>
 <p align="center">A personal AI companion, built around your computer and your context.</p>
 <p align="center">
-  <img src="https://img.shields.io/badge/source-v0.1.18.1-38bdf8?style=for-the-badge" alt="Source v0.1.18.1">
+  <img src="https://img.shields.io/badge/source-v0.1.19-38bdf8?style=for-the-badge" alt="Source v0.1.19">
   <img src="https://img.shields.io/badge/Local_First-0f172a?style=for-the-badge" alt="Local first">
   <img src="https://img.shields.io/badge/Python-3.13-3776AB?style=for-the-badge" alt="Python 3.13">
   <img src="https://img.shields.io/badge/Stage-Early_Preview-8b5cf6?style=for-the-badge" alt="Early preview">
