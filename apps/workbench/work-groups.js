@@ -5,6 +5,7 @@ export function bucket(item){return ['needs_input','unknown'].includes(item.stat
 export function workGroups(items){
  const units=new Map();
  for(const item of items){
+  if(item.validation_archive)continue;
   if(item.context?.routine===true&&item.state==='finished')continue;
   const c=item.context||{},project=c.project_id||c.group_id||(c.chat_id||item.chat_id?'$independent':'$other');
   const kind=bucket(item),key=kind+':'+(c.unit_id||item.source+':'+item.id);

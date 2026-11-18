@@ -36,6 +36,15 @@ d=chat('日常安排','')
 long_result='--long-result' in sys.argv[2:]
 turn(d,'合成测试清单按名称合计并保存结果。'*60 if long_result else '今天的工作反馈已整理',
      '\n\n'.join('这是合成测试的成果段落 '+str(i) for i in range(160)) if long_result else '待办与已完成反馈已归入原会话，随时可以继续。')
+if long_result:
+    archive_dir=folder/'升级验收项目';archive_dir.mkdir()
+    workspace=Workspace(root);archive_project=workspace.open(str(archive_dir));workspace.close()
+    archived=chat('仅供升级验收的合成会话',archive_project['id'])
+    turn(archived,'仅供升级验收的合成会话','合成结果保留在归档。')
+    header=store.header(archived);ids['validation_chat']=archived
+    (root/'state/validation-archive.json').write_text(canonical({'schema':1,
+        'chats':{archived:[header['updated'],header['project_id']]},
+        'projects':{archive_project['id']:[archive_project['path'],archive_project['name']]},'work':{}}),encoding='utf-8')
 core=Core(root)
 with core.db.transaction() as tx:
     goal,_=Plans(core.db).create({'request_id':'fixture-review','goal':'确认模型交付后的下一步'},[],[],tx)

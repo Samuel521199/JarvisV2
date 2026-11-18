@@ -125,7 +125,40 @@ async function hideChats(ids,action){return workspaceMutation(ids,action);}
 async function changeChat(item,patch){const apply=async()=>{await post('/api/chat/update',{id:item.id,patch});await refreshLists();render();};return hideChats([item.id],apply);}
 
 function chatMenu(item,anchor){return conversationMenu(item,anchor,{change:changeChat,folders:sessionFolders,panel});}
-async function historyPanel(){await refreshLists();const body=panel('归档与已删除');body.append(el('p','归档、删除会话和移除项目均可恢复；聊天内容及原文件保留。这里不执行永久清除。','note'));for(const p of projects.filter(x=>x.removed)){const c=el('div',undefined,'card');c.append(el('h3',p.name),el('p','已移除项目 · '+p.path),button('恢复项目',async()=>{await post('/api/project/update',{id:p.id,patch:{removed:false}});workspaceChanged();await historyPanel();}));body.append(c);}for(const c of chats.filter(x=>x.removed||x.archived)){const card=el('div',undefined,'card'),parent=projects.find(p=>p.id===c.project_id);card.append(el('h3',c.title),el('p',(c.removed?'已删除':'已归档')+' · '+(parent?.name||'独立会话')),button(parent?.removed?'恢复项目及会话':'恢复会话',async()=>{if(parent?.removed)await post('/api/project/update',{id:parent.id,patch:{removed:false}});await post('/api/chat/update',{id:c.id,patch:{removed:false,archived:false}});workspaceChanged();await historyPanel();}));body.append(card);}if(body.children.length===1)body.append(el('p','还没有归档、已删除的会话或已移除的项目。','empty'));}
+async function historyPanel(){
+ await refreshLists();const body=panel('归档与已删除');
+ body.append(el('p','归档、删除会话和移除项目均可恢复，原内容和文件保留。','note'));
+ for(const p of projects.filter(x=>x.removed&&!x.validation_archive)){
+  const card=el('div',undefined,'card');
+  card.append(el('h3',p.name),el('p','已移除项目 · '+p.path),button('恢复项目',async()=>{await post('/api/project/update',{id:p.id,patch:{removed:false}});workspaceChanged();await historyPanel();}));body.append(card);
+ }
+ for(const chat of chats.filter(c=>!c.validation_archive&&(c.removed||c.archived))){
+  const card=el('div',undefined,'card'),parent=projects.find(p=>p.id===chat.project_id);
+  card.append(el('h3',chat.title),el('p',(chat.removed?'已删除':'已归档')+' · '+(parent?.name||'独立会话')),
+   button(parent?.removed?'恢复项目及会话':'恢复会话',async()=>{
+    if(parent?.removed)await post('/api/project/update',{id:parent.id,patch:{removed:false}});
+    await post('/api/chat/update',{id:chat.id,patch:{removed:false,archived:false}});
+    workspaceChanged();await historyPanel();
+   }));body.append(card);
+ }
+ const validation=chats.filter(chat=>chat.validation_archive);
+ const validationProjects=projects.filter(project=>project.validation_archive);
+ if(validation.length||validationProjects.length){
+  const archive=el('details',undefined,'work-coverage');
+  archive.append(el('summary','测试归档（'+validation.length+' 个会话，'+validationProjects.length+' 个项目）'));
+  archive.addEventListener('toggle',()=>{
+   if(!archive.open||archive.children.length>1)return;
+   for(const project of validationProjects){
+    const entry=el('p');entry.append(button(project.name,()=>projectUI.explorer(project)));archive.append(entry);
+   }
+   for(const chat of validation){
+    const entry=el('p');entry.append(link(chat.title,'/#chat='+encodeURIComponent(chat.id)));archive.append(entry);
+   }
+  });
+  body.append(archive);
+ }
+ if(body.children.length===1)body.append(el('p','还没有归档、已删除的会话或已移除的项目。','empty'));
+}
 function render(){renderSidebar();updateContext();renderMessages();}
 function renderMessages(){deliveryEditor.update(chat);syncComposerLock();const signature=JSON.stringify(chat?.turns||[])+(chat?.archived||0)+(chat?.removed||0)+(projects.find(p=>p.id===projectId)?.removed||0);if(lastTurns===signature){syncBrand();return;}if(lastTurns&&$('messages').querySelector('form[data-commitment-dirty]')){syncBrand();return;}lastTurns=signature;const content=$('messages'),nearBottom=content.scrollHeight-content.scrollTop-content.clientHeight<80;content.replaceChildren();active=chat?.turns.find(t=>['READY','RUNNING'].includes(t.status))?.id||null;if(!chat?.turns?.length){const welcome=el('div',undefined,'welcome'),brand=el('div',undefined,'jarvis-welcome-brand');const readout=el('div','待命','brand-state');readout.id='brand-readout';brand.append(el('jarvis-logo'),el('div','JARVIS','jarvis-wordmark'),readout);welcome.append(brand,el('h1','今天，一起做点什么？'));content.append(welcome);}for(const t of chat?.turns||[]){const user=el('article',undefined,'message user');user.append(el('div','你','speaker'),el('div',t.request.text,'bubble'));if(t.request.attachments?.length)user.append(el('p','附入：'+t.request.attachments.map(a=>a.name).join('、'),'note'));user.append(button('整理为候选记忆',async()=>{await post('/api/memory',{action:'propose',turn_id:t.id});await openMemory();},'message-meta'));const reply=el('article',undefined,'message assistant'+(['READY','RUNNING'].includes(t.status)?' pending':''));reply.append(el('div','✦ Jarvis','speaker'));reply.append(t.reply?markdown(t.reply):el('p',t.error?errorText(t.error):states[t.status]||t.status,['READY','RUNNING'].includes(t.status)?'busy-dot':''));const model=picker.profile({provider:t.provider||t.request.provider,model:t.model||t.request.model});reply.append(button((t.provider==='local-library'?'本机模型库':model.m?.label||t.model||'自动路由')+' · '+(states[t.status]||t.status)+' · 详情',()=>details('本轮模型与技能记录',t),'message-meta'));if(t.guidance){try{reply.append(el('span','✧ '+JSON.parse(t.guidance).name,'badge'));}catch{}}if(t.memory_context?.retrieval?.version)reply.append(el('span',retrievalLabel(t.memory_context.retrieval)+' · '+(t.memory_context.facts?.length||0)+' 条记忆','badge'));else if(t.memory_context?.facts?.length)reply.append(el('span','已使用 '+t.memory_context.facts.length+' 条有效记忆','badge'));if(t.reply)reply.append(button('复制',()=>navigator.clipboard.writeText(t.reply),'message-meta'),button('导出回答',()=>download('jarvis-answer.md',t.reply),'message-meta'),button('朗读回答（前450字）',()=>{const body=panel('本机朗读');const speaker=speechOutput(body,notice);panelCleanup=()=>speaker.close();speaker.play({purpose:'chat',chat_id:t.chat_id||chatId,exercise_id:null,source_id:t.id});},'message-meta'));deliveryReviewView(reply,t);if(t.provider==='local-library'&&t.assistant_action?.kind==='library_preview')showPreviewChoices(reply,t);else actionCard(reply,t,{openGoal:id=>openGoals(false,id),refresh:refreshChat,openMemory});content.append(user,reply);watchReply(reply,t.attention);}const unavailable=!!(chat?.archived||chat?.removed||projects.find(p=>p.id===projectId)?.removed);$('message').readOnly=unavailable;if(unavailable)content.append(el('p','此会话已归档、删除或所属项目已移除，请从左下角恢复后继续。','note'));$('send').disabled=busy||unavailable;$('send').hidden=false;$('send').title=active?'发送后续消息（将按顺序处理）':'发送消息';$('send').setAttribute('aria-label',$('send').title);$('cancel-response').hidden=!active;syncBrand();if(nearBottom||active)content.scrollTop=content.scrollHeight;}
 function renderAttachments(){const list=$('attachments');list.replaceChildren();for(const [i,a] of attachments.entries())list.append(button(a.name+' ×',()=>{attachments.splice(i,1);renderAttachments();remember();}));}

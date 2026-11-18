@@ -2,12 +2,12 @@ import {el,button,get,post,modal,closeModal,details,markdown,outcomeView,complet
 import {watchReply,workApi} from './work-client.js';
 
 const labels={finished:'执行已结束',failed:'执行遇到问题',cancelled:'已经取消',running:'正在进行',queued:'正在排队',needs_input:'等待你确认',waiting:'等待条件',external:'等待外部响应',unknown:'结果需要核对'};
-export async function openWorkResult(unit,{onOpenChat=null,refresh=()=>{}}={}){
+export async function openWorkResult(unit,{onOpenChat=null,refresh=()=>{},archive=false}={}){
  const body=modal('工作成果');body.classList.add('work-result');
  document.getElementById('modal').classList.add('work-result-dialog');
  const controls=el('div',undefined,'work-result-controls'),receiptError=el('p',undefined,'form-error');
  receiptError.setAttribute('role','status');
- if(unit.members.some(item=>item.attention?.unread)){
+ if(!archive&&unit.members.some(item=>item.attention?.unread)){
   const read=button('标记已读并关闭',async()=>{
    read.disabled=true;receiptError.textContent='';
    try{await workApi.viewedGroup(unit);await refresh();if(controls.isConnected)closeModal();}
@@ -49,12 +49,12 @@ export async function openWorkResult(unit,{onOpenChat=null,refresh=()=>{}}={}){
    }else if(item.reason)section.append(el('p',item.reason));
    // Technical receipts remain available, but never replace the human result.
    const technical=el('details',undefined,'work-technical');technical.append(el('summary','原始回执与技术记录'),el('pre',JSON.stringify(raw,null,2)));section.append(technical);
-   if(item.attention?.unread&&!readable)section.append(button('这一项已看完',async()=>{await workApi.viewed(item);await refresh();},'work-read-action'));
+   if(!archive&&item.attention?.unread&&!readable)section.append(button('这一项已看完',async()=>{await workApi.viewed(item);await refresh();},'work-read-action'));
    if(!controls.isConnected)return;
    body.append(section);shown++;
    // Only actual displayed results use the same visibility receipt as chat.
    // Opening a list, hovering or collapsing the panel never acknowledges it.
-   if(readable)watchReply(section,attention);
+   if(readable&&!archive)watchReply(section,attention);
   }
   if(unit.chat_id){const open=button('到原会话继续',()=>{if(onOpenChat){document.getElementById('modal').close();onOpenChat(unit.chat_id);}else location.href='/#chat='+encodeURIComponent(unit.chat_id);},'work-result-link');body.append(open);}
   if(!shown)body.append(el('p','当前成果暂不可用，请刷新后再查看。','note'));

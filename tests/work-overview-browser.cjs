@@ -34,7 +34,7 @@ const {chromium}=require('C:/Users/samuel/.cache/codex-runtimes/codex-primary-ru
   await page.getByRole('heading',{name:'PaK38 · 游戏资产',exact:true}).waitFor({state:'detached'});
   await page.locator('#task-docks .task-dock').filter({hasText:'PaK38 · 游戏资产'}).waitFor({state:'detached'});
   assert.equal(await page.locator('.work-metric[data-state=running] strong').innerText(),'1');
-  await page.getByRole('tab',{name:/已读历史/}).click();await page.getByRole('heading',{name:'PaK38 · 游戏资产',exact:true}).waitFor();
+  assert.equal(await page.getByRole('tab',{name:/已读历史/}).count(),0);
   report.checks.push('The last confirmed read removes the project dock while keeping history and running work');
 
   const englishDock=page.locator('#task-docks .task-dock').filter({hasText:'英语学习 · 日常交流'});
@@ -99,7 +99,7 @@ const {chromium}=require('C:/Users/samuel/.cache/codex-runtimes/codex-primary-ru
   report.checks.push('Read receipts neither cancel work nor answer an outstanding question');
   await page.setViewportSize({width:390,height:720});await page.getByRole('tab',{name:/未读成果/}).click();await page.screenshot({path:path.join(folder,'compact.png')});
   assert.equal(await page.evaluate(()=>document.querySelector('.work-board').scrollWidth>document.querySelector('.work-board').clientWidth+2),false);
-  await page.getByRole('tab',{name:/未读成果/}).focus();await page.keyboard.press('ArrowRight');assert.equal(await page.getByRole('tab',{name:/已读历史/}).getAttribute('aria-selected'),'true');
+  await page.getByRole('tab',{name:/未读成果/}).focus();await page.keyboard.press('ArrowRight');assert.equal(await page.getByRole('tab',{name:/待你处理/}).getAttribute('aria-selected'),'true');
   await page.emulateMedia({reducedMotion:'reduce'});assert.equal(await page.locator('.work-board').evaluate(n=>getComputedStyle(n).animationName),'none');
   report.checks.push('Compact layout, keyboard tabs and reduced-motion preference');
   await page.setViewportSize({width:1100,height:820});await page.goto(origin+'/settings#work');

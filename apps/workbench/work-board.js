@@ -1,4 +1,4 @@
-import {workApi} from './work-client.js';
+import {readAllWork,workApi} from './work-client.js';
 import {workGroups,relativeTime} from './work-groups.js';
 import {openWorkResult} from './work-results.js';
 import {el,button,icon,iconButton,get,post,field,input,select,notice} from './ui.js';
@@ -22,9 +22,10 @@ function budgetForm(body,data,refresh){
  section.append(field('结果核对',observer),button('应用核对设置',async()=>{await post('/api/operations',{action:'outcome_configure',enabled:observer.value==='1'});await refresh(true);notice('结果核对设置已保存。');}));body.append(section);
 }
 
-export function mountWorkBoard(body,{settings=false,focusKey=null,focusProject=null,initialTab=null,onOpenChat=null,editPriority=null,resume={}}={}){
+export function mountWorkBoard(body,{settings=false,focusKey=null,focusProject=null,initialTab=null,onOpenChat=null,editPriority=null,resume={},showHistory=true}={}){
+ const visibleTabs=showHistory?tabs:tabs.slice(0,3);
  const root=el('section',undefined,'work-board');root.setAttribute('aria-label','按项目整理的当前工作');body.append(root);
- let closed=false,loading=false,pending=false,selected=tabs.some(([key])=>key===initialTab)?initialTab:null,data=null,signature='',
+ let closed=false,loading=false,pending=false,selected=visibleTabs.some(([key])=>key===initialTab)?initialTab:null,data=null,signature='',
   query=typeof resume.query==='string'?resume.query.trim().toLocaleLowerCase():'',settingsDrawn=false;
  let restoreScroll=Number.isFinite(resume.scroll)?resume.scroll:null;
  const limits=new Map();
@@ -35,22 +36,26 @@ export function mountWorkBoard(body,{settings=false,focusKey=null,focusProject=n
  const search=el('input');search.type='search';search.placeholder='查找项目或任务';search.setAttribute('aria-label','查找项目或任务');search.className='work-search';search.value=typeof resume.query==='string'?resume.query:'';
  const list=el('div',undefined,'work-projects');list.setAttribute('role','tabpanel');list.id='work-projects-'+Math.random().toString(36).slice(2);list.tabIndex=-1;
  const status=el('p',undefined,'work-live-status');status.setAttribute('role','status');status.setAttribute('aria-live','polite');
+ const readAll=button('全部已读',()=>readAllWork(readAll,workGroups(data.items).units,()=>refresh(true)),'work-mark-read');
+ readAll.hidden=true;
  const footer=el('details',undefined,'work-coverage');footer.append(el('summary','来源与核对状态'));const coverage=el('p',undefined,'note');footer.append(coverage);
- const options=el('div');root.append(top,metrics,nav,search,list,status,footer,options);
+ const options=el('div'),filters=el('div',undefined,'work-filters');filters.append(search,readAll);
+ root.append(top,metrics,nav,filters,list,status,footer,options);
  function choose(value,focus=false){selected=value;limits.clear();render();if(focus)nav.querySelector('[aria-selected="true"]')?.focus();}
  search.addEventListener('input',()=>{query=search.value.trim().toLocaleLowerCase();renderList();});
- nav.addEventListener('keydown',e=>{const index=tabs.findIndex(t=>t[0]===selected);if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();choose(e.key==='Home'?tabs[0][0]:e.key==='End'?tabs.at(-1)[0]:tabs[(index+(e.key==='ArrowRight'?1:3))%4][0],true);}});
+ nav.addEventListener('keydown',e=>{const index=visibleTabs.findIndex(t=>t[0]===selected);if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();choose(e.key==='Home'?visibleTabs[0][0]:e.key==='End'?visibleTabs.at(-1)[0]:visibleTabs[(index+visibleTabs.length+(e.key==='ArrowRight'?1:-1))%visibleTabs.length][0],true);}});
  function current(){return workGroups((data?.items||[]).filter(i=>!focusKey||i.attention?.key===focusKey));}
  function render(){
   if(!data)return;const projection=current();
-  if(!selected)selected=projection.counts.attention?'attention':projection.counts.unread?'unread':projection.counts.active?'active':'history';
+  if(!selected)selected=projection.counts.attention?'attention':projection.counts.unread?'unread':projection.counts.active?'active':showHistory?'history':'unread';
+  readAll.hidden=!workGroups(data.items).unread_count;
   metrics.replaceChildren();
   for(const [state,label,kind] of [['running','正在进行','active'],['queued','排队中','active'],['needs_input','待你确认','attention']]){
    const count=projection.units.filter(u=>u.members.some(i=>i.state===state)).length,b=button('',()=>choose(kind),'work-metric');b.dataset.state=state;
    const glyph=el('span',undefined,'work-metric-icon');glyph.append(icon(symbols[state]));b.append(glyph,el('strong',String(count)),el('span',label));b.setAttribute('aria-label',label+' '+count+' 项');metrics.append(b);
   }
   const focusTab=nav.contains(document.activeElement);
-  nav.replaceChildren();for(const [key,label] of tabs){const b=button('',()=>choose(key),'work-tab');b.dataset.bucket=key;b.setAttribute('role','tab');b.setAttribute('aria-label',label+' '+projection.counts[key]);b.setAttribute('aria-selected',String(selected===key));b.setAttribute('aria-controls',list.id);b.tabIndex=selected===key?0:-1;const short=el('span',({attention:'待处理',active:'进行中',unread:'未读',history:'已读'}[key]),'work-short');short.setAttribute('aria-hidden','true');b.append(el('span',label,'work-tab-label'),short,el('span',String(projection.counts[key]),'work-tab-count'));nav.append(b);}
+  nav.replaceChildren();for(const [key,label] of visibleTabs){const b=button('',()=>choose(key),'work-tab');b.dataset.bucket=key;b.setAttribute('role','tab');b.setAttribute('aria-label',label+' '+projection.counts[key]);b.setAttribute('aria-selected',String(selected===key));b.setAttribute('aria-controls',list.id);b.tabIndex=selected===key?0:-1;const short=el('span',({attention:'待处理',active:'进行中',unread:'未读',history:'已读'}[key]),'work-short');short.setAttribute('aria-hidden','true');b.append(el('span',label,'work-tab-label'),short,el('span',String(projection.counts[key]),'work-tab-count'));nav.append(b);}
   if(focusTab)nav.querySelector('[aria-selected=true]')?.focus({preventScroll:true});
   renderList();
  }
@@ -92,6 +97,22 @@ export function mountWorkBoard(body,{settings=false,focusKey=null,focusProject=n
    list.append(section);total+=units.length;
   }
   if(!total){const empty=el('div',undefined,'work-empty'),symbol=el('span');symbol.append(icon(selected==='unread'?'star':'calendar'));empty.append(symbol,el('strong',query?'没有找到匹配的工作':({attention:'暂时没有需要你处理的事',active:'当前没有进行中的工作',unread:'新成果都看完了',history:'这里会保留已读的工作记录'}[selected])),el('p',query?'试试项目名或任务中的关键词。':selected==='unread'?'有新反馈时，数量和标记会一起更新。':'你可以继续聊天，或添加一个待办。'));list.append(empty);}
+  if(selected==='history'){
+   const archived=data.items.filter(item=>item.validation_archive&&(!query||item.title.toLocaleLowerCase().includes(query)));
+   if(archived.length){
+    const archive=el('details',undefined,'work-coverage');
+    archive.append(el('summary','测试工作归档（'+archived.length+'）'));
+    archive.addEventListener('toggle',()=>{
+     if(!archive.open||archive.children.length>1)return;
+     for(const item of archived){
+      const entry=el('p');
+      entry.append(button(item.title,()=>openWorkResult({title:item.title,project_name:'测试工作归档',members:[item]},{archive:true}),'work-open'));
+      archive.append(entry);
+     }
+    });
+    list.append(archive);
+   }
+  }
   list.scrollTop=scroll;
  }
  async function refresh(force=false){

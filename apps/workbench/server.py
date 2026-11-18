@@ -276,9 +276,13 @@ class Handler(BaseHTTPRequestHandler):
             try: return self.json(workbench.read(data_root(self.server.data_root), route.path))
             except (CoreError, OSError, ValueError, sqlite3.Error): return self.json({'error': 'local_io_or_config'}, 503)
         if route.path == '/api/chats' or re.fullmatch(r'/api/chats/chat-[0-9a-f]{32}', route.path):
-            store = Dialogues(data_root(self.server.data_root))
+            root = data_root(self.server.data_root)
+            store = Dialogues(root)
             try:
-                return self.json(store.list() if route.path == '/api/chats' else self.chat_projection(store, route.path.rsplit('/', 1)[-1]))
+                if route.path == '/api/chats':
+                    from host.validation_archive import annotate_chats
+                    return self.json(annotate_chats(root, store.list(), store.db))
+                return self.json(self.chat_projection(store, route.path.rsplit('/', 1)[-1]))
             except CoreError as exc: return self.json({'error': exc.code}, 404)
             finally: store.close()
         if route.path not in ASSETS: return self.reply(404, b"Not found", "text/plain")

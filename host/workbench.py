@@ -23,6 +23,9 @@ def read(root, route):
                 x.pop('billing_profile',None)
                 rows.append({**x,'usage':usage,'billing':estimate(profile,usage,x['created']),'connection_label':(profile or {}).get('connection_label',x['provider']),'key_label':(profile or {}).get('key_label','')})
             return rows
+        if route == '/api/projects':
+            from host.validation_archive import annotate_projects
+            return annotate_projects(root, store.list())
         return store.list()
     finally: store.close()
 

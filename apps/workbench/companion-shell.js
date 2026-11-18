@@ -2,7 +2,7 @@ import {workspaceBrowser} from './workspace-browser.js';
 import {expandWorkbench} from './presentation.js';
 import {$,el,button,get,run,initModal,applyPreferences} from './ui.js';
 import {mountMailCompanion} from './mail-companion.js';
-import {workApi} from './work-client.js';
+import {readAllWork,workApi} from './work-client.js';
 import {workStatusView} from './work-status.js';
 import {conversationGroups} from './conversation-groups.js';
 import {workGroups} from './work-groups.js';
@@ -82,7 +82,7 @@ function openChat(id=selected){
 }
 function work(key=null,project=null,initialTab=null,resume={}){
  card(key?'Jarvis · 工作详情':'Jarvis · 当前工作','work');workContext={key,project};
- cleanup=workStatusView($('card-content'),{focusKey:key,focusProject:project,initialTab,onOpenChat:openChat,resume});
+ cleanup=workStatusView($('card-content'),{focusKey:key,focusProject:project,initialTab,onOpenChat:openChat,resume,showHistory:false});
 }
 async function projects(resume={}){
  hide();mode='projects';$('project-dialog').hidden=false;$('project-button').setAttribute('aria-expanded','true');
@@ -90,6 +90,11 @@ async function projects(resume={}){
 }
 function paint(data){
  const projection=workGroups(data.items),active=projection.units.filter(i=>i.state==='running').length;
+ const readAll=$('read-all-work');
+ if(readAll){
+  readAll.hidden=!projection.unread_count;
+  readAll.onclick=()=>run(()=>readAllWork(readAll,projection.units,()=>refresh(true)));
+ }
  const unread=projection.unread_count;$('unread-total').textContent=unread>99?'99+':String(unread);$('unread-total').hidden=unread===0;$('work-summary').textContent=active+' 项正在进行 · '+unread+' 项工作有未读反馈';
  const uncertain=data.activity.participants.some(p=>p.state==='unknown'),executing=active||data.activity.participants.some(p=>p.state==='busy');
  $('presence-state').textContent=uncertain?'部分状态待核对':executing?'正在工作':'已接入项待命';$('presence-dot').dataset.state=uncertain?'unknown':executing?'running':unread?'unread':'idle';

@@ -49,11 +49,14 @@ class Attention:
             raise CoreError('attention_stale', 'The result changed; open its current version')
         if not needs_receipt(item):
             raise CoreError('attention_pending', 'This work has no terminal result')
-        with self.db:
-            self.db.execute('INSERT INTO viewed VALUES(?,?,?,?) ON CONFLICT(actor,item) '
-                'DO UPDATE SET version=excluded.version,viewed_at=excluded.viewed_at',
-                ('owner.local', key, version, time.time()))
+        self.record([(key, version)])
         return {'key': key, 'version': version, 'unread': False}
+
+    def record(self, versions):
+        with self.db:
+            self.db.executemany('INSERT INTO viewed VALUES(?,?,?,?) ON CONFLICT(actor,item) '
+                'DO UPDATE SET version=excluded.version,viewed_at=excluded.viewed_at',
+                [('owner.local', key, version, time.time()) for key, version in versions])
 
     def close(self):
         self.db.close()

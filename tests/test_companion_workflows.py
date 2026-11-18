@@ -30,6 +30,22 @@ class CompanionTests(unittest.TestCase):
     def tearDown(self):
         self.temp.cleanup()
 
+    def test_bulk_read_only_marks_the_supplied_current_versions(self):
+        self.reply('bulk-current')
+        self.reply('bulk-stale')
+        self.reply('arrived-after-click')
+        server = SimpleNamespace()
+        before = snapshot(self.root, server)
+        items = {item['id']: item for item in before['items']}
+        receipts = [{'key': items['bulk-current']['attention']['key'],
+                     'version': items['bulk-current']['attention']['version']},
+                    {'key': items['bulk-stale']['attention']['key'], 'version': '0' * 64}]
+        result = acknowledge(self.root, server, {'action': 'viewed_many', 'receipts': receipts})
+        self.assertEqual(result['skipped'], 1)
+        self.assertEqual([item['key'] for item in result['viewed']], ['dialogue:bulk-current'])
+        unread = {item['id'] for item in snapshot(self.root, server)['items'] if item['attention']['unread']}
+        self.assertEqual(unread, {'bulk-stale', 'arrived-after-click'})
+
     def reply(self, request='synthetic-reply'):
         store = Dialogues(self.root)
         try:

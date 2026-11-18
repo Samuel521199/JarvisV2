@@ -163,6 +163,8 @@ def snapshot(root, server):
     attention = Attention(root)
     try: attention.project(items)
     finally: attention.close()
+    from host.validation_archive import annotate_work
+    annotate_work(root, items)
     from host.runtime_participants import snapshot as participants
     activity = participants(root, server)
     counts = {key: sum(i['state'] == key for i in items) for key in LABELS}
@@ -171,7 +173,7 @@ def snapshot(root, server):
             'sources': sources, 'policy': policy, 'runner': runner.state() if runner else None,
             'outcome_observer': outcome_observer, 'activity': activity,
             'context_ready':context_ready,
-            'unread_count': sum(item['attention']['unread'] for item in items),
+            'unread_count': sum(item['attention']['unread'] and not item.get('validation_archive') for item in items),
             'coverage': '已接入来源的近期记录；未接入来源不等于没有工作'}
 
 
@@ -196,6 +198,8 @@ def decorate_chat(root, chat):
 def acknowledge(root, server, body):
     from modules.continuity.attention import Attention
     from sdk.protocol import CoreError
+    if isinstance(body, dict) and body.get('action') == 'viewed_many':
+        return acknowledge_many(root, server, body)
     if not isinstance(body, dict) or set(body) != {'action', 'key', 'version'} or body['action'] != 'viewed':
         raise CoreError('attention_invalid', 'Expected a result read receipt')
     if not isinstance(body['key'], str) or len(body['key']) > 200 or not isinstance(body['version'], str) or len(body['version']) != 64:
@@ -215,3 +219,28 @@ def acknowledge(root, server, body):
     store = Attention(root)
     try: return store.acknowledge(item, body['version'])
     finally: store.close()
+
+
+def acknowledge_many(root, server, body):
+    from modules.continuity.attention import Attention, needs_receipt
+    import re
+
+    receipts = body.get('receipts')
+    if set(body) != {'action', 'receipts'} or not isinstance(receipts, list) or not 1 <= len(receipts) <= 2048:
+        raise CoreError('attention_invalid', 'Invalid read receipt batch')
+    requested = {}
+    for receipt in receipts:
+        if (not isinstance(receipt, dict) or set(receipt) != {'key', 'version'}
+                or not isinstance(receipt['key'], str) or not 1 <= len(receipt['key']) <= 200
+                or not isinstance(receipt['version'], str) or not re.fullmatch('[0-9a-f]{64}', receipt['version'])
+                or receipt['key'] in requested):
+            raise CoreError('attention_invalid', 'Invalid result identity')
+        requested[receipt['key']] = receipt['version']
+    eligible = {item['attention']['key']: item['attention']['version'] for item in snapshot(root, server)['items']
+                if not item.get('validation_archive') and not item.get('context', {}).get('routine') and needs_receipt(item)}
+    versions = [(key, version) for key, version in requested.items() if eligible.get(key) == version]
+    store = Attention(root)
+    try: store.record(versions)
+    finally: store.close()
+    return {'viewed': [{'key': key, 'version': version, 'unread': False} for key, version in versions],
+            'skipped': len(requested) - len(versions)}

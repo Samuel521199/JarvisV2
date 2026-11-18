@@ -10,7 +10,12 @@ export function workspaceBrowser(container,{onOpenChat,onClose,selected=()=>'',r
   query=typeof resume.query==='string'?resume.query:'',disposed=false,detail=null;
  const collapsed=new Set(Array.isArray(resume.collapsed)?resume.collapsed:[]),limits=new Map(),folders=new SessionFolders();
  const panel=title=>{detail={title};render();return container.querySelector('.workspace-detail-content');};
- const refresh=async()=>{[projects,chats]=await Promise.all([get('/api/projects'),get('/api/chats')]);if(!disposed)render();};
+ const refresh=async()=>{
+  const [nextProjects,nextChats]=await Promise.all([get('/api/projects'),get('/api/chats')]);
+  projects=nextProjects.filter(project=>!project.validation_archive);
+  chats=nextChats.filter(chat=>!chat.validation_archive);
+  if(!disposed)render();
+ };
  const changed=async()=>{detail=null;workspaceChanged();await refresh();};
  const change=async(item,patch)=>{await updateWorkspaceChat(item,patch);await changed();};
  const create=async p=>{const c=await post('/api/chats',{project_id:p?.id||''});await changed();onOpenChat(c.id);};
