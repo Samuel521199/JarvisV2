@@ -4,22 +4,22 @@ import {readFileSync} from 'node:fs';
 import vm from 'node:vm';
 const source=readFileSync(new URL('../apps/workbench/native-presence.js',import.meta.url),'utf8');
 function setup(handler=()=>Promise.resolve(),robotSurface=false){
- const frames=[],calls=[],events={},observers=[];let presentationBindings=0;
- function node(classes=[],box=[400,700,74,74]){return {hidden:false,classes:new Set(classes),box,listeners:{},classList:{contains:c=>classes.includes(c)},getBoundingClientRect(){let [left,top,width,height]=this.box;return {left,top,width,height,right:left+width,bottom:top+height};},getClientRects(){return this.hidden?[]:[this.getBoundingClientRect()];},addEventListener(type,fn){this.listeners[type]=fn;}};}
+ const frames=[],calls=[],motionCalls=[],events={},observers=[];let presentationBindings=0;
+ function node(classes=[],box=[400,700,74,74]){return {hidden:false,attributes:new Set(),hasAttribute(name){return this.attributes.has(name);},classes:new Set(classes),box,listeners:{},classList:{contains:c=>classes.includes(c)},getBoundingClientRect(){let [left,top,width,height]=this.box;return {left,top,width,height,right:left+width,bottom:top+height};},getClientRects(){return this.hidden?[]:[this.getBoundingClientRect()];},addEventListener(type,fn){this.listeners[type]=fn;}};}
  const robot=node(['robot'],[8,8,74,74]),full=node(),error=node(),dot={dataset:{}};error.hidden=true;
  const items=Array.from({length:3},(_,i)=>node([], [510,100+i*50,47,46]));
- const card=node([], [20,40,400,660]);card.hidden=true;items.push(card,error);
+ const card=node([], [20,40,400,660]);card.id='card';card.hidden=true;items.push(card,error);
  const ids={robot,'open-full':full,error,'presence-dot':dot};
  const root={classList:{add(){}},dataset:{}};
  const document={documentElement:root,body:{},querySelectorAll:selector=>selector==='.robot'?[robot]:items,getElementById:id=>ids[id],addEventListener(type,fn){events[type]=fn;}};
- const win={__TAURI_INTERNALS__:{invoke(cmd,args){calls.push({cmd,args});return handler(cmd,args);}},addEventListener(type,fn){events[type]=fn;}};
+ const win={__TAURI_INTERNALS__:{invoke(cmd,args){if(['presence_motion_policy','presence_panel_state'].includes(cmd)){motionCalls.push({cmd,args});return Promise.resolve();}calls.push({cmd,args});return handler(cmd,args);}},addEventListener(type,fn){events[type]=fn;}};
  const context={document,window:win,location:{pathname:robotSurface?'/companion/native-robot':'/companion/native'},innerWidth:560,innerHeight:800,Promise,Math,JSON,String,getComputedStyle:n=>({visibility:n.invisible?'hidden':'visible',display:'block'}),
   nativeWorkbenchController:()=>presentationBindings++,requestAnimationFrame:fn=>frames.push(fn),ResizeObserver:class{observe(){}disconnect(){}},MutationObserver:class{constructor(fn){observers.push(fn);}observe(){}disconnect(){}}};
  // IPC and actual presentation delegation are covered by the owned WebView2 test.
  vm.runInNewContext(source.replace(/^import {nativeWorkbenchController} from '.\/presentation\.js';\r?\n/,''),
   context);
  async function frame(){assert.ok(frames.length);frames.splice(0).forEach(fn=>fn());await Promise.resolve();await Promise.resolve();}
- return {items,card,robot,full,error,dot,root,events,observers,calls,frame,presentationBindings};
+ return {items,card,robot,full,error,dot,root,events,observers,calls,motionCalls,frame,presentationBindings};
 }
 let tests=0;
 async function test(name,body){await body();tests++;console.log('PASS '+name);}
@@ -70,5 +70,13 @@ await test('capabilities split dock and robot commands by window and exact page'
  const [dock,robot]=cfg.app.security.capabilities;assert.deepEqual(dock.windows,['presence']);assert.deepEqual(robot.windows,['robot']);
  assert.deepEqual(dock.remote.urls,['http://127.0.0.1:*/companion/native']);assert.deepEqual(robot.remote.urls,['http://127.0.0.1:*/companion/native-robot']);
  assert.ok(!dock.permissions.includes('allow-presence-drag'));assert.ok(!robot.permissions.includes('allow-presence-workbench'));assert.ok([...dock.permissions,...robot.permissions].every(p=>p.startsWith('allow-presence-')));
+});
+await test('only dock reports visible panel and only robot reports motion policy',async()=>{
+ const dock=setup();await dock.frame();dock.card.hidden=false;dock.observers[0]();await dock.frame();
+ dock.card.hidden=true;dock.observers[0]();await dock.frame();
+ assert.deepEqual(dock.motionCalls.map(c=>[c.cmd,c.args.open]),[false,true,false].map(v=>['presence_panel_state',v]));
+ const robot=setup(undefined,true);await robot.frame();robot.robot.attributes.add('data-face-motion');robot.observers[1]();
+ robot.robot.attributes.delete('data-face-motion');robot.observers[1]();
+ assert.deepEqual(robot.motionCalls.map(c=>[c.cmd,c.args.allowed]),[false,true,false].map(v=>['presence_motion_policy',v]));
 });
 console.log(JSON.stringify({passed:true,tests,scope:'synthetic DOM unit tests; no real click acceptance'}));

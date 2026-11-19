@@ -36,11 +36,19 @@ const {chromium}=require(process.env.JARVIS_PLAYWRIGHT||'playwright');
    assert.deepEqual(await robot.boundingBox(),initialBox);
   }
   await robotPage.reload();
-  await robotPage.waitForSelector('#robot[data-face-motion][data-expression="uncertain"]');
+  await robotPage.waitForSelector('#robot[data-face-motion]');
+  // The timed dock refresh can supersede the last synthetic state before reload completes.
+  const poses={running:'focused',unread:'attention',unknown:'uncertain',idle:'resting'};let converged=false;
+  for(let i=0;i<70;i++){
+   const current=await dock.locator('#presence-dot').getAttribute('data-state');
+   if(await robot.getAttribute('data-expression')===poses[current]){converged=true;break;}
+   await new Promise(resolve=>setTimeout(resolve,100));
+  }
+  assert.ok(converged,'reloaded robot did not converge to the live dock status');
   assert.deepEqual(await robot.boundingBox(),initialBox);
   report.checks.push('Actual dock-to-robot IPC changes face poses and restores the current status after robot reload, with an invariant 74 px click region');
   await setMotion(true);
-  await robotPage.waitForSelector('#robot:not([data-face-motion])[data-expression="uncertain"]');
+  await robotPage.waitForSelector('#robot:not([data-face-motion])[data-expression]');
   assert.deepEqual(await robot.evaluate(node=>node.getAnimations({subtree:true}).map(animation=>({type:animation.constructor.name, target:animation.effect.target.getAttribute('class'), property:animation.transitionProperty, state:animation.playState}))),[]);
   await setMotion(false);
   await robotPage.waitForSelector('#robot[data-face-motion]');

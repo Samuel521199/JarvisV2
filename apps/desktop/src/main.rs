@@ -7,12 +7,40 @@ use tauri::{Manager, State, WebviewUrl, WebviewWindow, WebviewWindowBuilder};
 struct Launch { protocol:u8, data_root:String, origin:String, access:String, #[serde(default)] diagnostics:bool }
 #[derive(Deserialize)]
 struct Rect { x:f64, y:f64, width:f64, height:f64, rounded:bool }
-struct Presence { dock_ready:AtomicBool, robot_ready:AtomicBool, visible:AtomicBool }
+struct Presence { dock_ready:AtomicBool, robot_ready:AtomicBool, visible:AtomicBool, motion:motion::Motion }
 impl Presence {
-    fn new()->Self{Self{dock_ready:AtomicBool::new(false),robot_ready:AtomicBool::new(false),visible:AtomicBool::new(true)}}
+    fn new(playful:bool)->Self{Self{dock_ready:AtomicBool::new(false),robot_ready:AtomicBool::new(false),visible:AtomicBool::new(true),motion:motion::Motion::new(playful)}}
     fn ready(&self,label:&str)->&AtomicBool {if label=="robot"{&self.robot_ready}else{&self.dock_ready}}
 }
+mod motion;
 #[cfg(windows)] mod regions;
+fn motion_path(cfg:&Launch)->std::path::PathBuf{
+    std::path::Path::new(&cfg.data_root).join("optional/desktop-presence/motion-mode")
+}
+fn playful_saved(cfg:&Launch)->bool{
+    let mut mode=String::new();
+    std::fs::File::open(motion_path(cfg)).and_then(|f|f.take(12).read_to_string(&mut mode)).is_ok() && mode.trim()=="playful"
+}
+fn save_motion(cfg:&Launch,playful:bool)->io::Result<()> {
+    let path=motion_path(cfg);
+    let staged=path.with_extension(format!("{}.tmp",std::process::id()));
+    std::fs::write(&staged,if playful {"playful\n"} else {"still\n"})?;
+    std::fs::rename(staged,path)
+}
+#[tauri::command]
+fn presence_motion_policy(window:WebviewWindow,allowed:bool)->Result<(),String>{
+    if window.label()!="robot"{return Err("invalid motion source".into());}
+    let state=window.state::<Presence>();
+    if state.motion.allowed.swap(allowed,Ordering::AcqRel)!=allowed{state.motion.interrupt();}
+    Ok(())
+}
+#[tauri::command]
+fn presence_panel_state(window:WebviewWindow,open:bool)->Result<(),String>{
+    if window.label()!="presence"{return Err("invalid panel source".into());}
+    let state=window.state::<Presence>();
+    if state.motion.panel_open.swap(open,Ordering::AcqRel)!=open{state.motion.interrupt();}
+    Ok(())
+}
 #[tauri::command]
 fn presence_regions(window:WebviewWindow,rects:Vec<Rect>)->Result<(),String>{
     #[cfg(windows)] regions::apply(&window,&rects)?;
@@ -27,13 +55,14 @@ fn presence_regions(window:WebviewWindow,rects:Vec<Rect>)->Result<(),String>{
 #[tauri::command]
 fn presence_drag(window:WebviewWindow)->Result<(),String>{
     if window.label()!="robot"{return Err("only robot may be dragged".into());}
+    window.state::<Presence>().motion.interrupt();
     window.start_dragging().map_err(|_|"drag unavailable".into())
 }
 #[tauri::command]
 fn presence_toggle(window:WebviewWindow)->Result<(),String>{
     if window.label()!="robot"{return Err("only robot may toggle the dock".into());}
     let dock=window.app_handle().get_webview_window("presence").ok_or("dock unavailable")?;
-    let state=window.state::<Presence>();state.visible.store(true,Ordering::Release);
+    let state=window.state::<Presence>();state.motion.interrupt();state.visible.store(true,Ordering::Release);
     if state.dock_ready.load(Ordering::Acquire){dock.show().map_err(|_|"dock unavailable")?;}
     dock.eval("window.dispatchEvent(new Event('jarvis:native:toggle-chat'))").map_err(|_|"dock unavailable".into())
 }
@@ -78,10 +107,21 @@ fn position(window:&WebviewWindow,index:usize)->tauri::Result<()> {
     let monitor=monitors.get(index).or_else(||monitors.first()).ok_or(tauri::Error::InvalidWindowHandle)?;
     let scale=monitor.scale_factor();let size=monitor.size();let point=monitor.position();
     let robot=window.label()=="robot";
-    let width=((if robot{90.0}else{560.0})*scale).min(size.width as f64) as u32;
-    let height=((if robot{90.0}else{800.0})*scale).min(size.height.saturating_sub(48) as f64) as u32;
-    window.set_size(tauri::PhysicalSize::new(width,height))?;
-    window.set_position(tauri::PhysicalPosition::new(point.x+size.width as i32-width as i32- if robot{14}else{0},point.y+size.height as i32-height as i32-40))?;
+    if robot {
+        let work=monitor.work_area();let inset=(8.0*scale).round() as u32;
+        let side=(90.0*scale).round() as u32;
+        let width=side.min(work.size.width.saturating_sub(inset));
+        let height=side.min(work.size.height.saturating_sub(inset));
+        window.set_size(tauri::PhysicalSize::new(width,height))?;
+        window.set_position(tauri::PhysicalPosition::new(
+            work.position.x+work.size.width.saturating_sub(width+inset) as i32,
+            work.position.y+work.size.height.saturating_sub(height+inset) as i32))?;
+    } else {
+        let width=(560.0*scale).min(size.width as f64) as u32;
+        let height=(800.0*scale).min(size.height.saturating_sub(48) as f64) as u32;
+        window.set_size(tauri::PhysicalSize::new(width,height))?;
+        window.set_position(tauri::PhysicalPosition::new(point.x+size.width as i32-width as i32,point.y+size.height as i32-height as i32-40))?;
+    }
     Ok(())
 }
 fn create_window(app:&tauri::App,label:&str,origin:&tauri::Url,cfg:&Launch)->tauri::Result<WebviewWindow>{
@@ -117,28 +157,40 @@ fn main(){
         let handle=CreateMutexW(std::ptr::null_mut(),1,name.as_ptr());if handle.is_null()||GetLastError()==183{return;}
     }
     let secret=cfg.access.clone();
-    let result=tauri::Builder::default().manage(cfg).manage(Presence::new())
-        .invoke_handler(tauri::generate_handler![presence_regions,presence_drag,presence_toggle,presence_status,presence_workbench])
+    let playful=playful_saved(&cfg);
+    let result=tauri::Builder::default().manage(cfg).manage(Presence::new(playful))
+        .invoke_handler(tauri::generate_handler![presence_regions,presence_drag,presence_toggle,presence_status,presence_workbench,presence_motion_policy,presence_panel_state])
         .setup(move |app| {
             let dock=create_window(app,"presence",&origin,&app.state::<Launch>())?;
-            create_window(app,"robot",&origin,&app.state::<Launch>())?;
-            use tauri::menu::{Menu,MenuItem};
+            let robot=create_window(app,"robot",&origin,&app.state::<Launch>())?;
+            #[cfg(windows)] if let Ok(hwnd)=robot.hwnd(){motion::run(robot,hwnd.0 as isize);}
+            use tauri::menu::{CheckMenuItem,Menu,MenuItem,Submenu};
+            let still=CheckMenuItem::with_id(app,"motion-still","原地灵动",true,!playful,None::<&str>)?;
+            let roam=CheckMenuItem::with_id(app,"motion-playful","淘气跳跳",true,playful,None::<&str>)?;
+            let modes=Submenu::with_items(app,"精灵动效",true,&[&still,&roam])?;
             let show=MenuItem::with_id(app,"show","显示精灵与标签",true,None::<&str>)?;
             let hide=MenuItem::with_id(app,"hide","隐藏精灵与标签",true,None::<&str>)?;
             let recall=MenuItem::with_id(app,"recall","召回精灵到主屏",true,None::<&str>)?;
             let full=MenuItem::with_id(app,"workbench","打开工作台",true,None::<&str>)?;
             let quit=MenuItem::with_id(app,"quit","退出精灵（后台任务继续）",true,None::<&str>)?;
-            let menu=Menu::with_items(app,&[&show,&hide,&recall,&full])?;
+            let menu=Menu::with_items(app,&[&show,&hide,&recall,&modes,&full])?;
             for (index,_) in dock.available_monitors()?.iter().enumerate(){menu.append(&MenuItem::with_id(app,format!("screen-{index}"),format!("标签停靠到屏幕 {} 右侧",index+1),true,None::<&str>)?)?;}
             menu.append(&quit)?;
             let icon=tauri::image::Image::from_bytes(include_bytes!("../assets/icon.png"))?;
             tauri::tray::TrayIconBuilder::new().icon(icon).tooltip("Jarvis 精灵").menu(&menu)
-                .on_menu_event(|app,event|{
+                .on_menu_event(move |app,event|{
                     let state=app.state::<Presence>();
                     match event.id.as_ref(){
-                        "show"|"hide"=>{let show=event.id.as_ref()=="show";state.visible.store(show,Ordering::Release);
+                        "motion-still"|"motion-playful"=>{
+                            let next=event.id.as_ref()=="motion-playful";
+                            if save_motion(&app.state::<Launch>(),next).is_err(){eprintln!("Jarvis preference could not be saved");}
+                            state.motion.playful.store(next,Ordering::Release);
+                            state.motion.interrupt();
+                            let _=still.set_checked(!next);let _=roam.set_checked(next);
+                        },
+                        "show"|"hide"=>{state.motion.interrupt();let show=event.id.as_ref()=="show";state.visible.store(show,Ordering::Release);
                             for label in ["presence","robot"] {if let Some(window)=app.get_webview_window(label){if show&&state.ready(label).load(Ordering::Acquire){let _=window.show();}else if !show{let _=window.hide();}}}},
-                        "recall"=>{if let Some(robot)=app.get_webview_window("robot"){let _=position(&robot,0);if state.robot_ready.load(Ordering::Acquire){state.visible.store(true,Ordering::Release);let _=robot.show();}}},
+                        "recall"=>{state.motion.interrupt();if let Some(robot)=app.get_webview_window("robot"){let _=position(&robot,0);if state.robot_ready.load(Ordering::Acquire){state.visible.store(true,Ordering::Release);let _=robot.show();}}},
                         "workbench"=>{let handle=app.clone();let cfg=app.state::<Launch>().inner().clone();tauri::async_runtime::spawn(async move{let _=open_workbench(&handle,&cfg,None);});},"quit"=>app.exit(0),
                         id=>{if let Some(index)=id.strip_prefix("screen-").and_then(|n|n.parse::<usize>().ok()){if let Some(dock)=app.get_webview_window("presence"){let _=position(&dock,index);}}}
                     }

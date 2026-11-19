@@ -11,7 +11,7 @@ class DesktopPresence(unittest.TestCase):
             root=Path(folder)/'data';root.mkdir();binary=Path(folder)/'fixture.exe';binary.write_bytes(b'not-executed-test-fixture'*5000)
             prepare(root,binary);self.assertEqual(hashlib.sha256(prepared(root).read_bytes()).hexdigest(),hashlib.sha256(binary.read_bytes()).hexdigest())
             record=json.loads((root/'optional/desktop-presence/prepared.json').read_text());self.assertEqual(record['protocol'],2)
-            self.assertTrue({'apps/desktop/build.rs','apps/desktop/tauri.conf.json','apps/desktop/src/regions.rs'}<=record['source_sha256'].keys())
+            self.assertTrue({'apps/desktop/build.rs','apps/desktop/tauri.conf.json','apps/desktop/src/regions.rs','apps/desktop/src/motion.rs'}<=record['source_sha256'].keys())
             prepared(root).write_bytes(b'changed')
             with self.assertRaises(ValueError):prepared(root)
     def test_escaped_executable_and_legacy_protocol_are_rejected(self):
@@ -28,6 +28,8 @@ class DesktopPresence(unittest.TestCase):
         self.assertEqual(dock['remote']['urls'],['http://127.0.0.1:*/companion/native'])
         self.assertEqual(robot['remote']['urls'],['http://127.0.0.1:*/companion/native-robot'])
         self.assertNotIn('allow-presence-drag',dock['permissions']);self.assertNotIn('allow-presence-workbench',robot['permissions'])
+        self.assertIn('allow-presence-panel-state',dock['permissions']);self.assertNotIn('allow-presence-panel-state',robot['permissions'])
+        self.assertIn('allow-presence-motion-policy',robot['permissions']);self.assertNotIn('allow-presence-motion-policy',dock['permissions'])
         self.assertTrue(all(p.startswith('allow-presence-') for c in (dock,robot) for p in c['permissions']))
 
     def test_full_workbench_does_not_gain_direct_native_permissions(self):

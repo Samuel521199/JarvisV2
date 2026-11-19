@@ -8,3 +8,21 @@
 .native-robot .companion{inset:0;display:grid;place-items:center}
 .native-robot .robot{width:74px;height:74px}
 .native-robot .presence-dot{right:10px;top:14px}
+
+/* Paint only the inner artwork; the native window and click target stay the same size. */
+@media (prefers-reduced-motion:no-preference){
+ .native-robot[data-hop-pose=launch] .robot[data-face-motion] svg{
+  animation:jarvis-hop-launch 360ms cubic-bezier(.21,.71,.3,1) both;transform-origin:50% 85%;
+ }
+ .native-robot[data-hop-pose=land] .robot[data-face-motion] svg{
+  animation:jarvis-hop-land 270ms cubic-bezier(.21,.71,.3,1) both;transform-origin:50% 86%;
+ }
+ .native-robot[data-hop-pose=launch][data-hop-direction=left] .robot[data-face-motion] .face-gaze{transform:translate(-49px,-25px)}
+ .native-robot[data-hop-pose=launch][data-hop-direction=right] .robot[data-face-motion] .face-gaze{transform:translate(49px,-25px)}
+}
+@keyframes jarvis-hop-launch{
+ 0%{transform:scale(1.06,.91)}25%{transform:scale(.91,1.07)}62%{transform:scale(.95,1.04)}100%{transform:none}
+}
+@keyframes jarvis-hop-land{
+ 0%{transform:scale(1.11,.84)}36%{transform:scale(.95,1.06)}68%{transform:scale(1.03,.96)}100%{transform:none}
+}

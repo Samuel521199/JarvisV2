@@ -5,6 +5,10 @@ const robotSurface=location.pathname==='/companion/native-robot';
 if(robotSurface)document.documentElement.classList.add('native-robot');
 const invoke=(command,args={})=>window.__TAURI_INTERNALS__.invoke(command,args);
 let queued=false,last='',pending=null,sending=false,dragged=false,pointer=null,reported=false;
+// Older protocol-2 hosts do not implement the two optional motion commands.
+async function optional(command,args){try{await invoke(command,args);}catch{}}
+let panelOpen;
+const panels=new Set(['card','project-dialog','mail-dialog']);
 async function flush(){
  if(sending||!pending||pending.value===last)return;
  const update=pending;pending=null;sending=true;
@@ -16,13 +20,18 @@ async function flush(){
  finally{sending=false;if(pending&&pending.value!==last)flush();}
 }
 function layout(){
- queued=false;const rects=[];
+ queued=false;const rects=[];let open=false;
  for(const node of document.querySelectorAll(robotSurface?'.robot':'.edge-rail>aside,.task-dock,#card,#project-dialog,#mail-dialog,dialog[open],#error')){
   if(node.hidden||!node.getClientRects().length)continue;
   const style=getComputedStyle(node);if(style.visibility==='hidden'||style.display==='none')continue;
+  if(!robotSurface&&(panels.has(node.id)||node.tagName==='DIALOG'))open=true;
   let box=node.getBoundingClientRect(),x=Math.max(0,box.left),y=Math.max(0,box.top),right=Math.min(innerWidth,box.right),bottom=Math.min(innerHeight,box.bottom);
   if(node.classList.contains('task-dock')){const clip=node.parentElement.getBoundingClientRect();y=Math.max(y,clip.top);bottom=Math.min(bottom,clip.bottom);}
   if(right>x&&bottom>y)rects.push({x,y,width:right-x,height:bottom-y,rounded:robotSurface});
+ }
+ if(!robotSurface&&open!==panelOpen){
+  panelOpen=open;
+  void optional('presence_panel_state',{open});
  }
  const value=JSON.stringify(rects);if(!rects.length||value===last)return;
  pending={rects,value};flush();
@@ -34,6 +43,17 @@ observe();mutations.observe(document.body,{subtree:true,childList:true,attribute
 document.addEventListener('transitionend',schedule);document.addEventListener('animationend',schedule);document.addEventListener('scroll',schedule,true);window.addEventListener('resize',schedule);
 const robot=document.getElementById('robot');
 if(robotSurface){
+  let lastPolicy;
+  function sendMotionPolicy(){
+    const allowed=robot.hasAttribute('data-face-motion');
+    if(allowed===lastPolicy)return;
+    lastPolicy=allowed;
+    void optional('presence_motion_policy',{allowed});
+  }
+  const motion=new MutationObserver(sendMotionPolicy);
+  motion.observe(robot,{attributes:true,attributeFilter:['data-face-motion']});
+  sendMotionPolicy();
+  window.addEventListener('pagehide',()=>{motion.disconnect();if(lastPolicy)void optional('presence_motion_policy',{allowed:false});},{once:true});
 robot.addEventListener('pointerdown',event=>{if(event.button===0){dragged=false;pointer=[event.screenX,event.screenY];}});
 document.addEventListener('pointermove',event=>{if(pointer&&!dragged&&Math.hypot(event.screenX-pointer[0],event.screenY-pointer[1])>5){dragged=true;pointer=null;invoke('presence_drag').catch(()=>{});}});
 document.addEventListener('pointerup',()=>pointer=null);
