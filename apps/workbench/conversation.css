@@ -31,7 +31,7 @@
 #navigation .sidebar-browser{flex:1 0 120px}
 #navigation .session-operations{flex:none;border-top:1px solid var(--line);padding:8px 0}
 .session-operations summary{cursor:pointer;padding:6px 0}
-.session-operations .composer-tools,.session-operations .attachment-tools,.session-operations .model-controls,.session-operations .top-tools{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.session-operations .composer-tools,.session-operations .attachment-tools,.session-operations .model-controls{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
 .session-operations .advanced-content{position:static;max-width:100%;overflow:auto}
 .session-operations .attachment-tools>span,.session-operations .context-help{display:none}
 #chat-form .composer-bottom{justify-content:flex-end}
@@ -48,4 +48,17 @@
 .conversation-surface .topbar{display:flex!important;min-height:34px;padding:2px 10px}
 .conversation-surface .breadcrumb>jarvis-logo,.conversation-surface .breadcrumb>span{display:none}
 .conversation-surface body.mobile-nav #navigation{display:flex!important;position:absolute;inset:0 auto 0 0;width:min(320px,92vw);z-index:30;box-shadow:0 0 0 100vw #0008}
+.topbar:has(#top-tools){
+ height:auto;min-height:56px;flex-flow:row wrap;align-items:center;gap:4px 12px;
+}
+.topbar .breadcrumb{flex:1 1 150px}
+.topbar #top-tools{
+ display:flex;flex:0 1 auto;flex-wrap:wrap;justify-content:flex-end;max-width:100%;margin-left:auto;
+}
+.topbar #top-tools .icon{flex:none}
+@media(max-width:700px){
+ .topbar:has(#top-tools){padding:4px 10px;min-height:34px}
+ .topbar .breadcrumb{flex-basis:100%}
+ .topbar #top-tools .icon{width:30px;height:30px}
+}
 @media(max-width:700px){body.mobile-nav:not(.nav-hidden) #navigation{display:flex}}
