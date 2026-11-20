@@ -19,8 +19,8 @@ const {chromium} = require(process.env.JARVIS_PLAYWRIGHT || 'playwright');
       Math.random = () => window.faceRandom;
       const animate = Element.prototype.animate;
       Element.prototype.animate = function (frames, options) {
-        if (this.matches('.face-lids, .face-glance')) {
-          window.faceAnimations.push({className:this.getAttribute('class'), time:Date.now(), frames:frames.length, duration:options.duration});
+        if (this.matches('.face-lids, .face-glance, .face-wink')) {
+          window.faceAnimations.push({className:this.getAttribute('class'), time:Date.now(), frames:frames.map(frame=>frame.transform), duration:options.duration});
         }
         return animate.call(this, frames, options);
       };
@@ -31,6 +31,8 @@ const {chromium} = require(process.env.JARVIS_PLAYWRIGHT || 'playwright');
       const statuses = {
         idle:[],
         running:[{...item, state:'running'}],
+        queued:[{...item, state:'queued'}],
+        needs_input:[{...item, state:'needs_input'}],
         unread:[{...item, state:'finished', attention:{unread:true}}],
         unknown:[],
       };
@@ -52,23 +54,19 @@ const {chromium} = require(process.env.JARVIS_PLAYWRIGHT || 'playwright');
     const pose = async name => robot.screenshot({path:path.join(folder, name + '.png'), animations:'disabled'});
     await pose('resting');
 
-    await page.clock.runFor(3500);
-    assert.equal((await events()).length, 0);
-    await page.clock.runFor(1100);
+    await page.clock.runFor(1250);
     const first = (await events())[0];
-    assert.equal(first.className, 'face-lids');
-    assert.equal(first.frames, 6);
-    assert.ok(first.duration >= 410 && first.duration <= 510);
-
-    await page.evaluate(() => { window.faceRandom = .95; });
-    await page.clock.runFor(14000);
+    assert.equal(first.className, 'face-glance');
+    assert.equal(new Set(first.frames.slice(1,-1)).size, 2, 'a scan includes a look and a quick correction');
+    await page.evaluate(() => { window.faceRandom = .97; });
+    await page.clock.runFor(4600);
+    assert.ok((await events()).some(event => event.className === 'face-wink'), 'one eye winks on its own');
+    await page.evaluate(() => { window.faceRandom = .88; });
+    await page.clock.runFor(4300);
+    assert.ok((await events()).some(event => event.className === 'face-lids' && event.frames.length === 6));
     const sample = await events();
-    assert.ok(sample.length >= 3);
-    assert.equal(sample[1].className, 'face-glance');
-    assert.equal(sample[2].className, 'face-glance');
-    assert.notEqual(sample[1].time - sample[0].time, sample[2].time - sample[1].time);
     assert.deepEqual(await robot.boundingBox(), box);
-    report.checks.push('Variable ambient timing, occasional double blink, and glances leave the button hit region unchanged');
+    report.checks.push('Idle scans include a correction, an occasional wink, and a double blink without moving the hit region');
 
     await page.mouse.move(box.x + 17, box.y + 20);
     assert.equal(await robot.getAttribute('data-expression'), 'curious');
@@ -87,12 +85,23 @@ const {chromium} = require(process.env.JARVIS_PLAYWRIGHT || 'playwright');
     assert.equal(await robot.getAttribute('data-expression'), 'resting');
     report.checks.push('Pointer gaze and brief eye smile acknowledge the click while opening the original chat');
 
-    for (const [underlying, expression] of [['running','focused'], ['unread','attention'], ['unknown','uncertain']]) {
+    const signatures = new Set();
+    for (const [underlying, expression] of [['running','focused'], ['queued','waiting'], ['needs_input','asking'], ['unread','attention'], ['unknown','uncertain']]) {
       workState = underlying;
       await page.evaluate(() => window.dispatchEvent(new Event('jarvis:work-viewed')));
       await page.waitForSelector('#robot[data-expression="' + expression + '"]');
       await pose(expression);
+      await page.clock.runFor(290);
+      signatures.add(await robot.locator('.face-eye').evaluateAll(nodes => nodes.map(node => {
+        const style = getComputedStyle(node); return style.fill + style.transform;
+      }).join('|')));
+      const before = (await events()).length;
+      await page.clock.runFor(6400);
+      const action = (await events())[before];
+      assert.ok(action, expression + ' should show a bounded ambient action');
+      assert.equal(action.className, underlying === 'unknown' ? 'face-lids' : 'face-glance');
     }
+    assert.equal(signatures.size, 5, 'all active work expressions must be visually distinct');
     await page.mouse.move(box.x + 15, box.y + 20);
     assert.equal(await robot.getAttribute('data-expression'), 'uncertain');
     assert.equal(await robot.getAttribute('data-gaze-x'), '');

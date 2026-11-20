@@ -1,6 +1,6 @@
 # 当前真实状态
 
-v0.1.25 将 Windows 原生精灵的「淘气跳跳」改为待命时沿屏幕底部来回连续蹦跳，保留已选的「原地灵动」。切换入口仍在 Windows 托盘 Jarvis 图标的「精灵动效」菜单。标签与工作台位置不变；需要新版原生外壳，后台或网页自动刷新不替换已运行的外壳进程。[行为与验证](interaction-persona.md#desktop-face-settings)。
+v0.1.26 的 Windows 原生精灵保留 v0.1.25 的来回蹦跳；两种模式共用灵活眼神和六种真实工作状态表情。排队或等待确认时不巡游。新增状态表情需要新版原生外壳；切换仍在 Windows 托盘 Jarvis 图标的「精灵动效」菜单。[行为与验证](interaction-persona.md#desktop-face-settings)。
 
 v0.1.23 的语音输入已合入聊天输入框。一个按钮开始或停止录音，离线转写填入草稿，并继续使用正常发送；录音状态及失败提示贴近输入框。[对话语音交互](interaction-persona.md#workbench-layout)。
 

@@ -71,7 +71,7 @@ fn presence_toggle(window:WebviewWindow)->Result<(),String>{
 }
 #[tauri::command]
 fn presence_status(window:WebviewWindow,status:String)->Result<(),String>{
-    if window.label()!="presence" || !["idle","running","unread","unknown"].contains(&status.as_str()){return Err("invalid presence status".into());}
+    if window.label()!="presence" || !["idle","running","queued","needs_input","unread","unknown"].contains(&status.as_str()){return Err("invalid presence status".into());}
     let state=window.state::<Presence>();
     let idle=matches!(status.as_str(),"idle"|"unread");
     if state.motion.idle.swap(idle,Ordering::AcqRel)!=idle{state.motion.interrupt();}

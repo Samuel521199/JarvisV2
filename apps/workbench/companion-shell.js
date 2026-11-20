@@ -98,7 +98,10 @@ function paint(data){
  }
  const unread=projection.unread_count;$('unread-total').textContent=unread>99?'99+':String(unread);$('unread-total').hidden=unread===0;$('work-summary').textContent=active+' 项正在进行 · '+unread+' 项工作有未读反馈';
  const uncertain=data.activity.participants.some(p=>p.state==='unknown'),executing=active||data.activity.participants.some(p=>p.state==='busy');
- $('presence-state').textContent=uncertain?'部分状态待核对':executing?'正在工作':'已接入项待命';$('presence-dot').dataset.state=uncertain?'unknown':executing?'running':unread?'unread':'idle';
+ const waitingForOwner=data.items.some(item=>item.state==='needs_input'),queued=data.items.some(item=>item.state==='queued');
+ const state=uncertain?'unknown':waitingForOwner?'needs_input':executing?'running':queued?'queued':unread?'unread':'idle';
+ $('presence-state').textContent={unknown:'部分状态待核对',needs_input:'等你确认',running:'正在工作',queued:'工作排队中',unread:'有未读工作反馈',idle:'已接入项待命'}[state];
+ $('presence-dot').dataset.state=state;
  const projects=[];
  for(const project of projection.projects){
   const unreadUnits=project.units.filter(unit=>unit.unread);

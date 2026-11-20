@@ -1,18 +1,23 @@
-const idle = {expression:'resting', pause:[3600, 9100], blinks:.68, doubles:.17};
+// Timing and destinations belong to the face, independently of desktop position.
+const idle = {expression:'resting', pause:[900, 2650], actions:['scan','scan','scan','blink','double','wink'], picks:[[67,-36],[-70,-31],[47,42],[-49,37],[0,-52]]};
 const workStates = {
   idle,
-  running:{expression:'focused', pause:[5300, 11500], blinks:.85, doubles:.05},
-  unread:{expression:'attention', pause:[4100, 9600], blinks:.9, doubles:.1},
-  unknown:{expression:'uncertain', pause:[7200, 13900], blinks:1, doubles:0},
+  running:{expression:'focused', pause:[1450, 3350], actions:['read','read','blink'], picks:[[43,15],[-43,15],[45,-12],[-45,-12]]},
+  queued:{expression:'waiting', pause:[2300, 4600], actions:['peek','peek','blink'], picks:[[0,30],[-32,18],[32,18]]},
+  needs_input:{expression:'asking', pause:[1500, 3100], actions:['peek','peek','double','blink'], picks:[[0,-36],[-36,-24],[36,-24]]},
+  unread:{expression:'attention', pause:[1450, 3000], actions:['perk','perk','blink','double'], picks:[[37,-34],[-37,-34],[0,-40]]},
+  unknown:{expression:'uncertain', pause:[3300, 6100], actions:['blink','peek'], picks:[[-22,10],[25,10],[0,18]]},
 };
-const glances = [[-46, -16], [43, -21], [-38, 18], [36, 17]];
+const semanticState = status => Object.hasOwn(workStates, status) ? workStates[status] : workStates.unknown;
 const jitter = ([min, max]) => min + Math.random() * (max - min);
+const choose = list => list[Math.floor(Math.random() * list.length)];
 
 export function mountCompanionFace(robot, status) {
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const lids = robot.querySelector('.face-lids');
   const glanceLayer = robot.querySelector('.face-glance');
-  let state = workStates[status.dataset.state] ?? idle;
+  const winkEyes = [...robot.querySelectorAll('.face-wink')];
+  let state = semanticState(status.dataset.state), lastAction, lastPick;
   let allowed = false, moving = false, hovering = false, gaze = null, acknowledged = false;
   let ambientTimer, acknowledgeTimer, ambientAnimation;
 
@@ -30,8 +35,9 @@ export function mountCompanionFace(robot, status) {
     ambientAnimation = null;
   }
 
-  function blink() {
-    const double = !hovering && Math.random() < state.doubles;
+  function blink(action) {
+    const double = action === 'double';
+    const eye = action === 'wink' ? choose(winkEyes) : lids;
     const frames = double ? [
       {transform:'scaleY(1)', offset:0}, {transform:'scaleY(.14)', offset:.14},
       {transform:'scaleY(1)', offset:.33}, {transform:'scaleY(1)', offset:.69},
@@ -39,27 +45,47 @@ export function mountCompanionFace(robot, status) {
     ] : [
       {transform:'scaleY(1)'}, {transform:'scaleY(.13)', offset:.44}, {transform:'scaleY(1)'},
     ];
-    ambientAnimation = lids.animate(frames, {duration:jitter(double ? [410, 510] : [145, 205]), easing:'ease-in-out'});
+    const duration = jitter(double ? [410, 510] : action === 'wink' ? [230, 310] : [145, 205]);
+    ambientAnimation = eye.animate(frames, {duration, easing:'ease-in-out'});
+    return duration;
   }
 
-  function glance() {
-    const [x, y] = glances[Math.floor(Math.random() * glances.length)];
-    const target = 'translate(' + x + 'px,' + y + 'px)';
+  function glance(action) {
+    const pick = choose(state.picks.filter(value => value !== lastPick));
+    lastPick = pick;
+    const [x, y] = pick;
+    const shift = (a,b) => 'translate(' + a + 'px,' + b + 'px)';
+    const settle = action === 'scan' ? shift(-x*.56, -y*.62)
+      : action === 'read' ? shift(x*.28, y+10)
+      : action === 'perk' ? shift(x*.52, y*.55) : shift(x, y);
+    const duration = jitter(action === 'scan' ? [870, 1260] : [640, 990]);
     ambientAnimation = glanceLayer.animate([
       {transform:'none', offset:0, easing:'cubic-bezier(.16,.7,.29,1)'},
-      {transform:target, offset:.18}, {transform:target, offset:.67, easing:'ease-in-out'},
+      {transform:shift(x,y), offset:.13}, {transform:shift(x,y), offset:.49},
+      {transform:settle, offset:.6}, {transform:settle, offset:.82, easing:'ease-in-out'},
       {transform:'none', offset:1},
-    ], {duration:jitter([710, 1420])});
+    ], {duration});
+    return duration;
   }
 
-  function schedule() {
+  function schedule(previousDuration=0) {
     if (!moving || acknowledged) return;
     ambientTimer = setTimeout(() => {
       if (document.hidden) return;
-      if (hovering || Math.random() < state.blinks) blink();
-      else glance();
-      schedule();
-    }, jitter(state.pause));
+      const airborne = document.documentElement.dataset.hopPose === 'launch';
+      let action;
+      if (hovering || airborne) {
+        // Keep the deliberate pointer/flight gaze, but still blink.
+        action = 'blink';
+      } else if (!lastAction) {
+        action = state.actions[0];
+      } else {
+        action = choose(state.actions.filter(value => value !== lastAction));
+      }
+      lastAction = action;
+      const duration = ['blink','double','wink'].includes(action) ? blink(action) : glance(action);
+      schedule(duration);
+    }, previousDuration + jitter(hovering ? [2250, 4200] : state.pause));
   }
 
   function clearInteraction() {
@@ -76,14 +102,16 @@ export function mountCompanionFace(robot, status) {
     robot.toggleAttribute('data-face-motion', moving);
     cancelAmbient();
     clearInteraction();
+    lastAction = lastPick = null;
     paint();
     schedule();
   }
 
   const observer = new MutationObserver(() => {
-    const next = workStates[status.dataset.state] ?? idle;
+    const next = semanticState(status.dataset.state);
     if (next === state) return;
     state = next;
+    lastAction = lastPick = null;
     cancelAmbient();
     clearTimeout(acknowledgeTimer);
     acknowledged = false;
@@ -91,6 +119,12 @@ export function mountCompanionFace(robot, status) {
     schedule();
   });
   observer.observe(status, {attributes:true, attributeFilter:['data-state']});
+
+  const flight = new MutationObserver(() => {
+    if (document.documentElement.dataset.hopPose === 'launch' && ambientAnimation?.effect?.target === glanceLayer)
+      ambientAnimation.cancel();
+  });
+  flight.observe(document.documentElement, {attributes:true, attributeFilter:['data-hop-pose']});
 
   robot.addEventListener('pointerenter', event => {
     if (!moving || event.pointerType === 'touch') return;
@@ -137,6 +171,7 @@ export function mountCompanionFace(robot, status) {
     cancelAmbient();
     clearInteraction();
     observer.disconnect();
+    flight.disconnect();
     document.removeEventListener('visibilitychange', syncMotion);
     reduced.removeEventListener('change', syncMotion);
   }, {once:true});

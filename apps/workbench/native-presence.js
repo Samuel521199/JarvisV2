@@ -68,7 +68,12 @@ function sendStatus(force=false){
  const next=dot.dataset.state||'unknown';
  if(!force&&next===previous)return;
  previous=next;
- invoke('presence_status',{status:next}).catch(()=>{if(previous===next)previous='';});
+ invoke('presence_status',{status:next}).catch(async()=>{
+  if(previous!==next)return;
+  const fallback={needs_input:'unknown',queued:'running'}[next];
+  if(fallback){try{await invoke('presence_status',{status:fallback});return;}catch{}}
+  if(previous===next)previous='';
+ });
 }
 const status=new MutationObserver(()=>sendStatus());
 status.observe(dot,{attributes:true,attributeFilter:['data-state']});

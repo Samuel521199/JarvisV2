@@ -29,7 +29,7 @@
   transform: translate(var(--gaze-x, 0px), var(--gaze-y, 0px));
 }
 
-.face-lids, .face-eye {
+.face-lids, .face-wink, .face-eye {
   transform-box: fill-box;
   transform-origin: center;
 }
@@ -49,9 +49,29 @@
 }
 
 .robot[data-expression="focused"] {
-  --eye-height: .72;
-  --eye-width: 1.05;
-  --eye-light: #81deff;
+  --eye-height: .60;
+  --eye-width: 1.10;
+  --eye-light: #82caff;
+  --gaze-y: 12px;
+}
+.robot[data-expression="focused"] .face-eye-left { --eye-tilt: 11deg; }
+.robot[data-expression="focused"] .face-eye-right { --eye-tilt: -11deg; }
+
+.robot[data-expression="waiting"] {
+  --eye-height: .49;
+  --eye-width: 1.06;
+  --eye-light: #9bc8eb;
+  --gaze-y: 27px;
+}
+
+.robot[data-expression="asking"] {
+  --eye-height: 1.20;
+  --eye-width: .91;
+  --eye-light: #a7f7ec;
+  --gaze-y: -14px;
+}
+.robot[data-expression="asking"] .face-eye-left { --eye-height: .82; --eye-tilt: 12deg; }
+.robot[data-expression="asking"] .face-eye-right { --eye-tilt: -8deg;
 }
 
 .robot[data-expression="attention"] {
@@ -66,6 +86,7 @@
   --eye-width: .95;
   --eye-light: #78b9ce;
 }
+.robot[data-expression="uncertain"] .face-eye-left { --eye-height: .46; --eye-tilt: 13deg; }
 .robot[data-expression="uncertain"] .face-eye-right {
   --eye-height: .79;
   --eye-tilt: -8deg;
@@ -88,3 +109,6 @@
 .robot[data-gaze-x="right"] { --gaze-x: 31px; }
 .robot[data-gaze-y="up"] { --gaze-y: -27px; }
 .robot[data-gaze-y="down"] { --gaze-y: 25px; }
+
+.presence-dot[data-state=queued]{background:#a5c1e4}
+.presence-dot[data-state=needs_input]{background:#ffd79a;box-shadow:0 0 5px #ffcc835f}
