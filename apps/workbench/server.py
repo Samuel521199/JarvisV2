@@ -152,6 +152,9 @@ class Handler(BaseHTTPRequestHandler):
                 profile = development_profile(self.server.data_root)
                 return self.json({'kind': 'development' if profile else 'stable',
                                   'shared_models': bool(profile), 'shared_model_providers': profile['allowed_providers'] if profile else [], 'real_account_actions': not bool(profile)})
+            if route.path in {'/api/news-brief','/api/news-brief/badge'}:
+                from host.news_brief import snapshot as news_snapshot
+                return self.json(news_snapshot(data_root(self.server.data_root),badge=route.path.endswith('/badge')))
             if mail_http.get(self, route.path): return
             if model_library_http.get(self, route.path): return
         except (CoreError, OSError, ValueError, sqlite3.Error): return self.json({'error': 'family_unavailable'}, 503)
@@ -357,6 +360,9 @@ class Handler(BaseHTTPRequestHandler):
             if development_profile(root) and route.path.startswith('/api/mail'):
                 return self.json({'error': 'development_external_denied'}, 403)
             if family_http.post(self, route.path, body): return
+            if route.path=='/api/news-brief':
+                from host.news_brief import command as news_command
+                return self.json(news_command(self.server,body))
             if mail_http.post(self, route.path, body): return
             if model_library_http.post(self, route.path, body): return
             if route.path.startswith('/api/image-studio/'):
@@ -579,6 +585,10 @@ def _serve(args):
             tasks=runner.state();dialogues=server.dialogues.state()
             return bool(tasks['active'] or tasks['queued'] or any(r['lane']=='foreground' for r in dialogues['queued']+dialogues['running']))
         def idle_maintenance():
+            from host.news_brief import advance as advance_news
+            try: advance_news(server)
+            except (CoreError, OSError, sqlite3.Error):
+                logs.throttled(LOG,'news-pump','Daily news is pending')
             mail_http.advance(server)
             from host.repair_return import advance as advance_returns
             advance_returns(server.data_root,server.background_lane,interrupted=learning_interrupted)

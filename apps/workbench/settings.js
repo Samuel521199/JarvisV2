@@ -15,20 +15,21 @@ import {goalsView} from './goals.js';
 const modelManager=new ModelSettings(()=>snapshot.settings,value=>{snapshot.settings=value;route();});
 let snapshot,skills=[],usage=[],tab='home',cleanup=()=>{};
 async function refresh(){[snapshot,skills,usage]=await Promise.all([get('/api/snapshot'),get('/api/skills'),get('/api/usage')]);applyPreferences(snapshot.settings.ui);syncAppearance();route();}
-const pages={mail:['mail','Gmail 邮件助手','连接与重连、阅读、分类、草稿和经过审阅的邮箱操作。'],'local-models':['cpu','本地模型','下载、启动、待命、修复与版本更换。'],home:['home','设置总览','偏好与后台管理，集中在一个地方。'],appearance:['star','外观','配色、动画与阅读体验。'],memory:['memory','记忆与知识','可纠正的个人背景、项目资料与候选记忆。'],plans:['calendar','目标与计划','从目标到可修改计划，再到执行和交付。'],skill:['star','技能与工具','按任务选用合适的技能，集中管理使用条件。'],devices:['devices','设备与共享','设备能力与分域共享。'],private:['lock','人员与私密资料','个人、家庭与小团体的独立资料边界。'],network:['network','网络与离线','查看模型通道与离线准备状态。'],coding:['code','编码协作','候选、独立检查与外部 Codex。'],growth:['cpu','成长中心','自检、自愈与进化各司其职。'],modules:['grid','模块与升级','独立能力、运行状态与发布恢复记录。'],overview:['levels','用量总览','用真实调用回执了解模型消耗。'],connections:['network','接入方与 Key','模型供应商、凭据状态与连接记录。'],models:['levels','模型与价格','默认模型、推理级别与备选顺序。'],calls:['file','调用明细','逐次查看本机保存的调用回执。'],tasks:['tools','后台任务','任务、研发过程与执行记录。']};
+const pages={news:['file','每日新闻简报','选择栏目、来源和排除词，按本机时间投递到桌面信息栏。'],mail:['mail','Gmail 邮件助手','连接与重连、阅读、分类、草稿和经过审阅的邮箱操作。'],'local-models':['cpu','本地模型','下载、启动、待命、修复与版本更换。'],home:['home','设置总览','偏好与后台管理，集中在一个地方。'],appearance:['star','外观','配色、动画与阅读体验。'],memory:['memory','记忆与知识','可纠正的个人背景、项目资料与候选记忆。'],plans:['calendar','目标与计划','从目标到可修改计划，再到执行和交付。'],skill:['star','技能与工具','按任务选用合适的技能，集中管理使用条件。'],devices:['devices','设备与共享','设备能力与分域共享。'],private:['lock','人员与私密资料','个人、家庭与小团体的独立资料边界。'],network:['network','网络与离线','查看模型通道与离线准备状态。'],coding:['code','编码协作','候选、独立检查与外部 Codex。'],growth:['cpu','成长中心','自检、自愈与进化各司其职。'],modules:['grid','模块与升级','独立能力、运行状态与发布恢复记录。'],overview:['levels','用量总览','用真实调用回执了解模型消耗。'],connections:['network','接入方与 Key','模型供应商、凭据状态与连接记录。'],models:['levels','模型与价格','默认模型、推理级别与备选顺序。'],calls:['file','调用明细','逐次查看本机保存的调用回执。'],tasks:['tools','后台任务','任务、研发过程与执行记录。']};
 // A single navigation registry preserves every existing hash and business view.
 const domains=[
  {id:'interface',title:'外观与交互',code:'INTERFACE',icon:'star',pages:['appearance'],note:'主题、声音与品牌动效'},
  {id:'cognition',title:'思考与成长',code:'COGNITION',icon:'memory',pages:['memory','plans','growth'],note:'记忆、目标与成长路径'},
  {id:'inference',title:'模型与费用',code:'INFERENCE',icon:'network',pages:['connections','models','local-models','overview','calls'],note:'模型连接、路由与每笔消耗'},
  {id:'execution',title:'技能与执行',code:'EXECUTION',icon:'tools',pages:['skill','coding','tasks'],note:'工具协作、研发与后台任务'},
- {id:'connection',title:'设备与连接',code:'CONNECTION',icon:'devices',pages:['devices','network','mail'],note:'设备互联与离线准备'},
+ {id:'connection',title:'设备与连接',code:'CONNECTION',icon:'devices',pages:['devices','network','mail','news'],note:'设备互联与离线准备'},
  {id:'system',title:'系统与资料',code:'SYSTEM',icon:'grid',pages:['modules','private'],note:'模块维护与个人资料边界'}
 ];
 const themes=[['dark','深空冷蓝'],['light','明亮'],['warm','暖砂'],['mist','雾蓝'],['forest','森林'],['midnight','午夜'],['system','跟随系统']];
 // Each destination owns its symbol and illustration. These show the purpose of
 // the page, never fabricated telemetry or completion of a real operation.
 const sectionDesigns={
+ news:{code:'DAILY BRIEF',title:'你的每日新闻',steps:['选择栏目','设定时间','阅读简报'],symbol:'M3 4h18v16H3zM6 9h11M6 13h8',art:'<path class="accent" d="M45 25h160v86H45zM61 45h120M61 61h50M61 77h50M130 61h49v25h-49z"/>'},
  mail:{code:'MAIL ASSISTANT',title:'读懂来信，核对每一次行动',steps:['连接邮箱','阅读与分类','审阅与恢复'],symbol:'M3 5h18v14H3zM3 6l9 7 9-7',art:'<path class="faint" d="M34 26h182v84H34zM34 29l91 61 91-61"/><path class="accent" d="M49 98l53-38M201 98l-53-38"/><circle class="accent" cx="206" cy="27" r="11"/>'},
  appearance:{code:'VISUAL LAB',title:'为你的工作空间校准每一处细节',steps:['选择配色','调整反馈','即时预览'],symbol:'M4 4h16v16H4zM4 10h16M10 10v10M7 7h.1M14 14h3M14 17h3',art:'<g class="prism-back"><path d="M66 92V38l60-20 56 20v54l-56 20Z"/><path d="m66 38 60 20 56-20M126 58v54"/></g><g class="accent fx"><path d="m88 29 60 21v54M108 22l60 22v54"/><path d="m66 59 60 20 56-20"/></g><path class="faint" d="M30 105h44M178 26h36M36 101v8M208 22v8"/>'},
  memory:{code:'MEMORY ARCHIVE',title:'留下有用的记忆，保持清晰的边界',steps:['分域整理','核对来源','随时纠正'],symbol:'M4 7 12 3l8 4-8 4ZM4 12l8 4 8-4M4 17l8 4 8-4',art:'<path class="faint" d="M35 30v78h180M42 24v8M32 105h6"/><g class="archive-back"><path d="m65 57 62-30 65 30-65 30Z"/><path d="m65 72 62 30 65-30"/><path d="m65 87 62 30 65-30"/></g><path class="accent" d="m65 42 62-30 65 30-65 30Z"/><circle class="accent fill fx" cx="127" cy="42" r="4"/><path d="M112 42h-17M159 42h-17"/>'},
@@ -161,6 +162,7 @@ function route(){
  const stop=cleanup,observer=new IntersectionObserver(entries=>{for(const e of entries)e.target.dataset.inView=String(e.isIntersecting);});observer.observe(lead);cleanup=()=>{stop();observer.disconnect();};
 }
 function render(body){
+ if(tab==='news'){run(async()=>{const {newsSettings}=await import('./news-brief.js');await newsSettings(body);});return;}
  if(tab==='private'){run(async()=>{const {privateView}=await import('./settings-private.js');await privateView(body);});return;}
  if(tab==='local-models'){
   const mount=el('div');body.append(mount);mount.append(el('p','正在加载本地模型管理…','note'));let closed=false,stop=()=>{};cleanup=()=>{closed=true;stop();};

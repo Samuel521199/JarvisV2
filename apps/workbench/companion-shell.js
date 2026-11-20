@@ -1,6 +1,7 @@
 import {workspaceBrowser} from './workspace-browser.js';
 import {expandWorkbench} from './presentation.js';
 import {$,el,button,get,run,initModal,applyPreferences} from './ui.js';
+import {newsInbox,watchNewsBadge} from './news-brief.js';
 import {mountMailCompanion} from './mail-companion.js';
 import {readAllWork,workApi} from './work-client.js';
 import {workStatusView} from './work-status.js';
@@ -162,6 +163,7 @@ async function boot(){
  let placement='right';try{placement=localStorage.getItem(placementKey)||'right';}catch{}
  if(!['left','right','desktop'].includes(placement))placement='right';$('placement').value=placement;document.querySelector('main').dataset.place=placement;
  $('placement').onchange=()=>{document.querySelector('main').dataset.place=$('placement').value;try{localStorage.setItem(placementKey,$('placement').value);}catch{}};
+ const news=$('news-button');watchNewsBadge(news,'每日新闻简报');news.onclick=()=>run(async()=>{card('Jarvis · 每日新闻','news');await newsInbox($('card-content'));});
  mail=mountMailCompanion();$('dock-button').onclick=()=>run(()=>{workspaceView?.close();workspaceView=null;mail.open();});$('robot').onclick=()=>run(()=>mode==='chat'&&!$('card').hidden?hide():openChat());$('project-button').onclick=()=>run(projects);$('work-button').onclick=()=>run(()=>work());$('close-card').onclick=()=>run(hide);
  $('open-full').onclick=()=>run(async()=>{await expandWorkbench(selected);hide();});
  document.addEventListener('jarvis:mail-opened',()=>{cleanup();cleanup=()=>{};mode='mail';$('card').hidden=true;$('project-dialog').hidden=true;$('robot').setAttribute('aria-expanded','false');$('project-button').setAttribute('aria-expanded','false');});
