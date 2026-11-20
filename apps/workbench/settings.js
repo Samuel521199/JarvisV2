@@ -157,7 +157,7 @@ function route(){
  document.title=pages[tab][1]+' · Jarvis';$('page-title').textContent=pages[tab][1];$('page-subtitle').textContent=pages[tab][2];syncNavigation();
  const body=$('settings-body');body.replaceChildren();body.classList.remove('settings-enter');void body.offsetWidth;body.classList.add('settings-enter');
  if(previous!==id){document.querySelector('.settings-main').scrollTop=0;if(document.scrollingElement)document.scrollingElement.scrollTop=0;}
- if(tab==='home'){render(body);return;}
+ if(tab==='home'||tab==='news'){render(body);return;}
  const lead=sectionLead(id),content=el('div',undefined,'settings-page-content');body.append(lead,content);render(content);
  const stop=cleanup,observer=new IntersectionObserver(entries=>{for(const e of entries)e.target.dataset.inView=String(e.isIntersecting);});observer.observe(lead);cleanup=()=>{stop();observer.disconnect();};
 }

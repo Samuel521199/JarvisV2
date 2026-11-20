@@ -9,6 +9,7 @@ from urllib.error import HTTPError
 from urllib.parse import urlsplit, urlunsplit
 from urllib.request import build_opener, HTTPRedirectHandler, Request
 import xml.etree.ElementTree as ET
+from host.news_topics import topic_filter
 
 # One editorial section per selectable source. Region is publisher location.
 BBC = 'https://feeds.bbci.co.uk/'
@@ -107,10 +108,13 @@ def collect(keys, now, check):
 def select_items(rows, prefs, rank=None):
     buckets, urls, titles = {}, set(), set()
     banned = [word.casefold() for word in prefs['exclude']]
+    matches = topic_filter(prefs)
     ordered = sorted(rows, key=lambda r:r['published'], reverse=True)
     for row in ordered:
         title = ' '.join(row['title'].casefold().split())
         if row['url'] in urls or title in titles or any(w in title+' '+row['summary'].casefold() for w in banned):
+            continue
+        if matches and not matches(FEEDS[row['source']][2],title+' '+row['summary']):
             continue
         urls.add(row['url'])
         titles.add(title)
@@ -122,7 +126,7 @@ def select_items(rows, prefs, rank=None):
         for bucket in buckets.values():
             if bucket and len(candidates)<64:
                 candidates.append(bucket.pop(0))
-    method = '按栏目与时间'
+    method = '兴趣筛选 · 按栏目与时间' if matches else '按栏目与时间'
     if rank and prefs['interest'] and candidates:
         texts = [dict(id=str(i), key=row['title'][:125], value='') for i,row in enumerate(candidates)]
         result = rank(texts, prefs['interest'], wait_seconds=2.2)

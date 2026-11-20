@@ -63,6 +63,29 @@ class NewsBriefTests(unittest.TestCase):
         with patch.object(news.time,'time',return_value=self.now+86400):news.start(self.server,True)
         self.assertEqual(self.server.background_lane.submit.call_count,2)
 
+    def test_interests_filter_across_desks_without_model(self):
+        prefs={**news.DEFAULT,'topics':['股票','人工智能 AI'],'custom_topics':['火星'],'exclude':['blocked']}
+        rows=[story('Company said nothing'),story('Chipmaker shares jump','cna-business'),story('AI researchers'),
+              story('火星任务','nasa'),story('Blocked stocks'),story('A pleasant day','bbc-tech')]
+        selected,_=select_items(rows,prefs)
+        self.assertEqual({r['title'] for r in selected},{'Chipmaker shares jump','AI researchers','火星任务'})
+        self.assertEqual(select_items([story('A match','bbc-sport')],{**prefs,'topics':['体育']})[0][0]['title'],'A match')
+
+    def test_previous_settings_switch_and_stale_editor(self):
+        legacy={k:v for k,v in news.DEFAULT.items() if k not in news.TOPIC_FIELDS}
+        with news.store(self.root) as db:
+            db.execute('UPDATE preferences SET body=?',(news.json.dumps(legacy),))
+        self.assertEqual(news.snapshot(self.root)['settings']['topics'],[])
+        prefs={**news.DEFAULT,'topics':['股票'],'enabled':True}
+        news.command(self.server,dict(action='save',revision=0,settings=prefs))
+        news.command(self.server,dict(action='toggle',revision=1,enabled=False))
+        news.start(self.server,True)
+        self.server.background_lane.submit.assert_not_called()
+        with self.assertRaises(CoreError):news.start(self.server)
+        with self.assertRaises(CoreError):news.command(self.server,dict(action='toggle',revision=1,enabled=True))
+        news.command(self.server,dict(action='save',revision=2,settings=legacy))
+        self.assertEqual(news.snapshot(self.root)['settings']['topics'],['股票'])
+
     def test_changed_subscription_discards_inflight_result(self):
         def changed(*args):
             news.command(self.server,dict(action='save',revision=0,settings=news.DEFAULT))

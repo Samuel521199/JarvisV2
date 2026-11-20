@@ -13,8 +13,10 @@ from control.paths import child, data_root
 from control.recovery.gate import StopGate
 from host.news_feeds import FEEDS, collect, select_items
 from sdk.protocol import CoreError, digest
+from host.news_topics import PRESETS
 
-DEFAULT = dict(enabled=False, at='08:00', sources=list(FEEDS), exclude=[], interest='', limit=12)
+DEFAULT = dict(enabled=False, at='08:00', sources=list(FEEDS), exclude=[], interest='', limit=12, topics=[], custom_topics=[])
+TOPIC_FIELDS = {'topics','custom_topics'}
 LOCK = threading.RLock()
 POLL = {}
 
@@ -37,6 +39,12 @@ def checked(value):
     if not isinstance(value,dict) or set(value)!=set(DEFAULT):
         raise CoreError('invalid_request','Invalid news preferences')
     sources, exclude, interest = value['sources'],value['exclude'],value['interest']
+    topics, custom = value['topics'], value['custom_topics']
+    if (not isinstance(topics,list) or len(topics)>len(PRESETS)
+        or any(not isinstance(t,str) or t not in PRESETS for t in topics)
+        or not isinstance(custom,list) or len(custom)>20
+        or any(not isinstance(t,str) or not 1<=len(t.strip())<=48 for t in custom)):
+        raise CoreError('invalid_request','Invalid news topics')
     if (type(value['enabled']) is not bool or not isinstance(value['at'],str)
         or not re.fullmatch(r'(?:[01]\d|2[0-3]):[0-5]\d',value['at'])
         or type(value['limit']) is not int or not 1<=value['limit']<=30
@@ -46,7 +54,8 @@ def checked(value):
         or any(not isinstance(s,str) or not 1<=len(s.strip())<=60 for s in exclude)
         or not isinstance(interest,str) or len(interest)>160):
         raise CoreError('invalid_request','Invalid news filters or delivery time')
-    return {**value,'exclude':[w.strip() for w in exclude],'interest':interest.strip()}
+    return {**value,'topics':list(dict.fromkeys(topics)), 'custom_topics':list(dict.fromkeys(t.strip() for t in custom)),
+            'exclude':[w.strip() for w in exclude],'interest':interest.strip()}
 
 
 def snapshot(root, badge=False):
@@ -55,7 +64,7 @@ def snapshot(root, badge=False):
         if badge:
             return {'unread':unread}
         prefs = db.execute('SELECT * FROM preferences').fetchone()
-        return {'unread':unread, 'settings':json.loads(prefs['body']), 'revision':prefs['rev'],
+        return {'unread':unread, 'settings':{**DEFAULT,**json.loads(prefs['body'])}, 'topics':list(PRESETS), 'revision':prefs['rev'],
                 'status':prefs['status'], 'attempt':prefs['attempt'],
                 'catalog':[dict(id=k,name=v[0],region=v[1],topic=v[2]) for k,v in FEEDS.items()],
                 'briefs':[{**json.loads(r['body']),'edition':r['edition'],'unread':r['edition']!=r['seen']}
@@ -110,7 +119,10 @@ def start(server, automatic=False):
     with LOCK,store(root) as db:
         row=db.execute('SELECT * FROM preferences').fetchone()
         prefs=json.loads(row['body'])
-        if automatic and (not prefs['enabled'] or local.strftime('%H:%M')<prefs['at']
+        if not prefs['enabled']:
+            if automatic:return
+            raise CoreError('news_disabled','News subscription is paused')
+        if automatic and (local.strftime('%H:%M')<prefs['at']
                 or now-row['attempt']<1800 or db.execute('SELECT 1 FROM briefs WHERE day=?',(local.date().isoformat(),)).fetchone()):
             return
         checkpoint(root)
@@ -138,10 +150,21 @@ def command(server,value):
         return start(server)
     with LOCK,store(root) as db:
         if set(value)=={'action','revision','settings'} and value['action']=='save' and type(value['revision']) is int:
-            prefs=checked(value['settings'])
+            proposed=value['settings']
+            if isinstance(proposed,dict) and set(proposed)==set(DEFAULT)-TOPIC_FIELDS:
+                saved=json.loads(db.execute('SELECT body FROM preferences').fetchone()[0])
+                proposed={**proposed,**{k:saved.get(k,[]) for k in TOPIC_FIELDS}}
+            prefs=checked(proposed)
             if not db.execute("UPDATE preferences SET body=?,rev=rev+1,attempt=0,status='设置已保存' WHERE rev=?",
                               (json.dumps(prefs),value['revision'])).rowcount:
                 raise CoreError('conflict','News preferences changed')
+        elif set(value)=={'action','revision','enabled'} and value['action']=='toggle' and type(value['revision']) is int and type(value['enabled']) is bool:
+            current=db.execute('SELECT body FROM preferences WHERE rev=?',(value['revision'],)).fetchone()
+            if not current:
+                raise CoreError('conflict','News preferences changed')
+            prefs={**json.loads(current[0]),'enabled':value['enabled']}
+            db.execute('UPDATE preferences SET body=?,rev=rev+1,attempt=0,status=? WHERE rev=?',
+                       (json.dumps(prefs),'已启用' if prefs['enabled'] else '已停用',value['revision']))
         elif set(value)=={'action','day','edition'} and value['action']=='read' and all(isinstance(value[k],str) for k in ('day','edition')):
             if not db.execute('UPDATE briefs SET seen=edition WHERE day=? AND edition=?',(value['day'],value['edition'])).rowcount:
                 raise CoreError('conflict','News edition changed')

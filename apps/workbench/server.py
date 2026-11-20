@@ -45,6 +45,9 @@ LOG = logs.get('http')
 ASSETS = {"/": ("index.html", "text/html"), "/app.js": ("app.js", "text/javascript"),
           "/style.css": ("style.css", "text/css"), "/brand/core.png": ("brand/core.png", "image/png"),
           "/brand/icon.png": ("brand/icon.png", "image/png")}
+for publisher in ('bbc','un','cna','dw','ebc','sanews','abc','nasa'):
+    path = 'brand/news/'+publisher+'.png'
+    ASSETS['/'+path] = (path,'image/png')
 ASSETS['/settings'] = ('settings.html', 'text/html')
 ASSETS['/login'] = ('login.html', 'text/html')
 ASSETS['/family'] = ('family.html', 'text/html')

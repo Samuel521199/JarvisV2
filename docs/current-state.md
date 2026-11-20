@@ -1,5 +1,7 @@
 # 当前真实状态
 
+v0.1.29 在[新闻订阅](interaction-persona.md#daily-news-brief)提供按主题筛选、带来源图标的频道选择和投递开关。
+
 v0.1.28 将工作台全局工具放回[顶栏右侧](interaction-persona.md#workbench-settings)，与项目及会话侧栏独立。
 
 v0.1.27 源码加入[每日新闻订阅与右栏简报](interaction-persona.md#daily-news-brief)，使用公开 RSS 和本机筛选。
