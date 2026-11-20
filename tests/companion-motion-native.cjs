@@ -38,7 +38,7 @@ const equal=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
    assert.ok(points.every(p=>equal(p.rect,first.rect)));
    await dock.evaluate(()=>window.__TAURI_INTERNALS__.invoke('presence_status',{status:'running'}));
    await robot.locator('#robot[data-expression=focused]').waitFor();
-   report.checks.push('Default mode keeps the native window stationary and retains the face renderer');
+   report.checks.push('Explicit stationary preference keeps the native window in place and retains the face renderer');
   }else{
    const phases=robot.evaluate(()=>new Promise(resolve=>{
     const root=document.documentElement,poses={};
@@ -48,7 +48,12 @@ const equal=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
     });observer.observe(root,{attributes:true,attributeFilter:['data-hop-pose']});
     setTimeout(()=>{observer.disconnect();resolve(poses);},15000);
    }));
-   const trail=await sample(10000);
+   const trail=await sample(19500);
+   const x=trail.map(p=>p.rect[0]), width=first.rect[2]-first.rect[0];
+   const span=trail[0].work[2]-trail[0].work[0]-width;
+   assert.ok(Math.max(...x)-Math.min(...x)>=span*.75,'the default route must cover most of the monitor work width');
+   const leftmost=x.indexOf(Math.min(...x));
+   assert.ok(leftmost>0&&x.slice(leftmost+1).some(value=>value>x[leftmost]+width)&&x[0]>x[leftmost]+width,'the robot must turn and travel back after reaching the left side');
    assert.ok(new Set(trail.map(p=>p.rect[0])).size>8,'actual native horizontal movement was not seen');
    assert.ok(new Set(trail.map(p=>p.rect[1])).size>5,'actual vertical jump was not seen');
    assert.ok(trail.every(({rect:r,work:w})=>r[0]>=w[0]&&r[1]>=w[1]&&r[2]<=w[2]&&r[3]<=w[3]),'robot must stay in the monitor work area');
@@ -66,6 +71,15 @@ const equal=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
    await dock.locator('#close-card').click();await dock.locator('#card').waitFor({state:'hidden'});
    const resumed=await sample(4500);assert.ok(resumed.some(p=>!equal(p.rect,panel[0].rect)),'jump did not resume after closing conversation');
    report.checks.push('Actual robot-to-dock chat pauses movement and closing chat resumes it');
+   async function status(value,expression){
+    await dock.evaluate(value=>{document.querySelector('#presence-dot').dataset.state=value;},value);
+    await robot.locator('#robot[data-expression='+expression+']').waitFor();
+   }
+   await status('running','focused');await wait(200);
+   const busy=await sample(1700);assert.ok(busy.every(p=>equal(p.rect,busy[0].rect)));
+   await status('idle','resting');
+   const idle=await sample(3600);assert.ok(idle.some(p=>!equal(p.rect,busy[0].rect)),'patrol did not resume when work became idle');
+   report.checks.push('Actual running status parks the native window; idle resumes the patrol');
    await robot.emulateMedia({reducedMotion:'reduce'});
    await robot.locator('#robot[data-face-motion]').waitFor({state:'hidden'});await wait(250);
    const reduced=await sample(1800);assert.ok(reduced.every(p=>equal(p.rect,reduced[0].rect)));

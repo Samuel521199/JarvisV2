@@ -19,7 +19,10 @@ fn motion_path(cfg:&Launch)->std::path::PathBuf{
 }
 fn playful_saved(cfg:&Launch)->bool{
     let mut mode=String::new();
-    std::fs::File::open(motion_path(cfg)).and_then(|f|f.take(12).read_to_string(&mut mode)).is_ok() && mode.trim()=="playful"
+    match std::fs::File::open(motion_path(cfg)) {
+        Ok(file) => file.take(12).read_to_string(&mut mode).is_ok() && mode.trim()=="playful",
+        Err(error) => error.kind()==io::ErrorKind::NotFound,
+    }
 }
 fn save_motion(cfg:&Launch,playful:bool)->io::Result<()> {
     let path=motion_path(cfg);
@@ -69,6 +72,9 @@ fn presence_toggle(window:WebviewWindow)->Result<(),String>{
 #[tauri::command]
 fn presence_status(window:WebviewWindow,status:String)->Result<(),String>{
     if window.label()!="presence" || !["idle","running","unread","unknown"].contains(&status.as_str()){return Err("invalid presence status".into());}
+    let state=window.state::<Presence>();
+    let idle=matches!(status.as_str(),"idle"|"unread");
+    if state.motion.idle.swap(idle,Ordering::AcqRel)!=idle{state.motion.interrupt();}
     if let Some(robot)=window.app_handle().get_webview_window("robot") {
         robot.eval(format!("document.getElementById('presence-dot').dataset.state={}",serde_json::to_string(&status).unwrap())).map_err(|_|"robot unavailable")?;
     }

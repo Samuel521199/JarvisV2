@@ -3,6 +3,7 @@ use std::sync::atomic::{AtomicBool, AtomicU64, Ordering::Relaxed};
 pub struct Motion {
     pub playful: AtomicBool,
     pub allowed: AtomicBool,
+    pub idle: AtomicBool,
     pub panel_open: AtomicBool,
     revision: AtomicU64,
 }
@@ -12,7 +13,8 @@ impl Motion {
         Self {
             playful: AtomicBool::new(playful),
             allowed: AtomicBool::new(false),
-            panel_open: AtomicBool::new(false),
+            idle: AtomicBool::new(false),
+            panel_open: AtomicBool::new(true),
             revision: AtomicU64::new(0),
         }
     }
@@ -134,6 +136,67 @@ mod windows {
         }
     }
 
+    #[derive(Clone, Copy)]
+    enum Direction {
+        Left,
+        Right,
+    }
+
+    impl Direction {
+        fn label(self) -> &'static str {
+            match self {
+                Self::Left => "left",
+                Self::Right => "right",
+            }
+        }
+
+        fn opposite(self) -> Self {
+            match self {
+                Self::Left => Self::Right,
+                Self::Right => Self::Left,
+            }
+        }
+
+        fn edge(self, field: &Field) -> i32 {
+            match self {
+                Self::Left => field.left,
+                Self::Right => field.right,
+            }
+        }
+    }
+
+    fn next_hop(
+        field: &Field,
+        heading: Option<Direction>,
+        rng: &mut Random,
+    ) -> (Direction, i32, bool) {
+        let x = field.start.left.clamp(field.left, field.right);
+        // Start toward the farther edge, then keep a heading until the leg ends.
+        let mut heading = heading.unwrap_or_else(|| {
+            if x - field.left > field.right - x {
+                Direction::Left
+            } else {
+                Direction::Right
+            }
+        });
+        if heading.edge(field) == x {
+            heading = heading.opposite();
+        }
+        let edge = heading.edge(field);
+        let remaining = (edge - x).abs();
+        let stride = (f64::from(field.right - field.left) * rng.next(13, 20) as f64 / 100.)
+            .clamp(75. * field.scale, 290. * field.scale)
+            .round() as i32;
+        // Avoid a tiny last step at the edge; rest there and turn for the return trip.
+        let at_edge = remaining <= stride + (30. * field.scale).round() as i32;
+        let target = if at_edge {
+            edge
+        } else {
+            x + (edge - x).signum() * stride
+        };
+        (heading, target, at_edge)
+    }
+
     struct Random(u64);
     impl Random {
         fn next(&mut self, min: u64, max: u64) -> u64 {
@@ -184,12 +247,15 @@ mod windows {
                 let can_move = || {
                     motion.playful.load(Relaxed)
                         && motion.allowed.load(Relaxed)
+                        && motion.idle.load(Relaxed)
+                        && presence.dock_ready.load(Relaxed)
                         && !motion.panel_open.load(Relaxed)
                         && presence.visible.load(Relaxed)
                         && presence.robot_ready.load(Relaxed)
                         && unsafe { IsWindowVisible(hwnd) != 0 && GetAsyncKeyState(1) >= 0 }
                 };
-                let mut quick_follow = false;
+                let mut heading = None;
+                let mut last_work = None;
                 loop {
                     if unsafe { IsWindow(hwnd) == 0 } {
                         break;
@@ -200,14 +266,15 @@ mod windows {
                             paint(&robot, "", "");
                         }
                         active = false;
-                        quick_follow = false;
+                        heading = None;
+                        last_work = None;
                         observed = revision;
                         thread::sleep(REST_POLL);
                         continue;
                     }
                     if !active {
                         active = true;
-                        due = Instant::now() + Duration::from_millis(rng.next(650, 1350));
+                        due = Instant::now() + Duration::from_millis(rng.next(650, 1050));
                     }
                     if Instant::now() < due {
                         thread::sleep(REST_POLL);
@@ -225,34 +292,15 @@ mod windows {
                         due = Instant::now() + Duration::from_millis(1150);
                         continue;
                     }
-                    let x = field.start.left.clamp(field.left, field.right);
-                    let mut distance = if quick_follow {
-                        rng.next(24, 88)
-                    } else {
-                        rng.next(54, 245)
-                    } as f64;
-                    // Some small hops are almost in place, including when boxed in along the edge.
-                    if !quick_follow && rng.next(0, 7) == 0 {
-                        distance *= 0.16;
+                    if last_work != Some(field.work) {
+                        heading = None;
+                        last_work = Some(field.work);
                     }
-                    let distance = (distance * field.scale).round() as i32;
-                    let sign = if rng.next(0, 1) == 0 { -1 } else { 1 };
-                    let mut target = (x + sign * distance).clamp(field.left, field.right);
-                    if (target - x).abs() < distance / 2 {
-                        target = (x - sign * distance).clamp(field.left, field.right);
-                    }
-                    let direction = if target < x { "left" } else { "right" };
-                    let rise = (rng.next(
-                        if quick_follow { 17 } else { 25 },
-                        if quick_follow { 44 } else { 96 },
-                    ) as f64
-                        * field.scale) as i32;
-                    let flight = Duration::from_millis(if quick_follow {
-                        rng.next(320, 475)
-                    } else {
-                        rng.next(420, 720)
-                    });
-                    paint(&robot, "launch", direction);
+                    let (direction, target, at_edge) = next_hop(&field, heading, &mut rng);
+                    let direction_label = direction.label();
+                    let rise = (rng.next(35, 84) as f64 * field.scale).round() as i32;
+                    let flight = Duration::from_millis(rng.next(390, 620));
+                    paint(&robot, "launch", direction_label);
                     let start = Instant::now();
                     let landed = loop {
                         let t = (start.elapsed().as_secs_f64() / flight.as_secs_f64()).min(1.);
@@ -282,14 +330,20 @@ mod windows {
                         }
                         thread::sleep(FRAME);
                     };
-                    paint(&robot, if landed { "land" } else { "" }, direction);
-                    quick_follow = landed && !quick_follow && rng.next(0, 3) == 0;
-                    let rest = if quick_follow {
-                        rng.next(240, 430)
-                    } else if landed {
-                        rng.next(2100, 6800)
+                    paint(&robot, if landed { "land" } else { "" }, direction_label);
+                    heading = Some(if landed && at_edge {
+                        direction.opposite()
                     } else {
-                        1250
+                        direction
+                    });
+                    let rest = if !landed {
+                        1150
+                    } else if at_edge {
+                        rng.next(980, 1650)
+                    } else if rng.next(0, 3) == 0 {
+                        rng.next(680, 1000)
+                    } else {
+                        rng.next(260, 520)
                     };
                     due = Instant::now() + Duration::from_millis(rest);
                 }

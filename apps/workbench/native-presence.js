@@ -65,7 +65,7 @@ nativeWorkbenchController();
 window.addEventListener('jarvis:native:toggle-chat',()=>robot.onclick?.());
 const dot=document.getElementById('presence-dot');let previous='';
 function sendStatus(force=false){
- const next=dot.dataset.state||'idle';
+ const next=dot.dataset.state||'unknown';
  if(!force&&next===previous)return;
  previous=next;
  invoke('presence_status',{status:next}).catch(()=>{if(previous===next)previous='';});

@@ -20,8 +20,8 @@ mode='playful' if '--motion' in sys.argv[3:] else 'still' if '--motion-still' in
 if mode:
     preference=Path(fixture['root'])/'optional/desktop-presence/motion-mode'
     preference.parent.mkdir(parents=True,exist_ok=True)
-    if mode=='playful':preference.write_text('playful\n',encoding='ascii')
-    else:assert not preference.exists(),'Use a clean isolated fixture for default mode'
+    assert not preference.exists(),'Use a clean isolated fixture for mode verification'
+    if mode=='still':preference.write_text('still\n',encoding='ascii')
 callback=ctypes.WINFUNCTYPE(wintypes.BOOL,wintypes.HWND,wintypes.LPARAM);user.EnumWindows.argtypes=[callback,wintypes.LPARAM]
 with (folder/'native.stderr.log').open('wb') as errors:
     child=subprocess.Popen([str(binary)],stdin=subprocess.PIPE,stdout=subprocess.DEVNULL,stderr=errors,env=environment,creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))

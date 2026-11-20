@@ -10,18 +10,21 @@
 .native-robot .presence-dot{right:10px;top:14px}
 
 /* Paint only the inner artwork; the native window and click target stay the same size. */
+.native-robot[data-hop-direction=left]{--hop-tilt:-9deg;--hop-gaze:-49px}
+.native-robot[data-hop-direction=right]{--hop-tilt:9deg;--hop-gaze:49px}
 @media (prefers-reduced-motion:no-preference){
  .native-robot[data-hop-pose=launch] .robot[data-face-motion] svg{
-  animation:jarvis-hop-launch 360ms cubic-bezier(.21,.71,.3,1) both;transform-origin:50% 85%;
+  animation:jarvis-hop-launch 390ms cubic-bezier(.21,.71,.3,1) both;transform-origin:50% 85%;
  }
  .native-robot[data-hop-pose=land] .robot[data-face-motion] svg{
   animation:jarvis-hop-land 270ms cubic-bezier(.21,.71,.3,1) both;transform-origin:50% 86%;
  }
- .native-robot[data-hop-pose=launch][data-hop-direction=left] .robot[data-face-motion] .face-gaze{transform:translate(-49px,-25px)}
- .native-robot[data-hop-pose=launch][data-hop-direction=right] .robot[data-face-motion] .face-gaze{transform:translate(49px,-25px)}
+ .native-robot:is([data-hop-pose=launch],[data-hop-pose=land]) .robot[data-face-motion] .face-gaze{
+  transform:translate(var(--hop-gaze,0px),-22px);
+ }
 }
 @keyframes jarvis-hop-launch{
- 0%{transform:scale(1.06,.91)}25%{transform:scale(.91,1.07)}62%{transform:scale(.95,1.04)}100%{transform:none}
+ 0%{transform:scale(1.06,.91)}26%{transform:rotate(var(--hop-tilt,0deg)) scale(.91,1.09)}65%{transform:rotate(calc(var(--hop-tilt,0deg) * .65)) scale(.96,1.04)}100%{transform:none}
 }
 @keyframes jarvis-hop-land{
  0%{transform:scale(1.11,.84)}36%{transform:scale(.95,1.06)}68%{transform:scale(1.03,.96)}100%{transform:none}
